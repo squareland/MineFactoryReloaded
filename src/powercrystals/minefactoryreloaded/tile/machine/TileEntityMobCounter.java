@@ -22,15 +22,15 @@ public class TileEntityMobCounter extends TileEntityFactory {
 
 		super.update();
 
-		if (worldObj == null) {
+		if (world == null) {
 			return;
 		}
 
-		int mobCount = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB()).size();
+		int mobCount = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB()).size();
 		if (mobCount != _lastMobCount) {
 			_lastMobCount = mobCount;
-			if (!worldObj.isRemote) {
-				worldObj.notifyNeighborsOfStateChange(pos, this._machine.getBlock());
+			if (!world.isRemote) {
+				world.notifyNeighborsOfStateChange(pos, this._machine.getBlock());
 			}
 		}
 	}

@@ -63,10 +63,10 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 	@Override
 	public boolean activateMachine() {
 
-		if (worldObj.getWorldInfo().isRaining()) {
+		if (world.getWorldInfo().isRaining()) {
 			l:
 			{
-				Biome bgb = worldObj.getBiome(pos);
+				Biome bgb = world.getBiome(pos);
 
 				if (_canWeather && _biome == bgb)
 					break l;
@@ -120,13 +120,13 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 		if (--_canSeeSky > 0)
 			return _openSky;
 		_canSeeSky = 70;
-		int h = BlockHelper.getHighestY(worldObj, pos.getX(), pos.getZ());
+		int h = BlockHelper.getHighestY(world, pos.getX(), pos.getZ());
 		_openSky = true;
 		for (int y = pos.getY() + 1; y < h; y++) {
 			BlockPos offsetPos = new BlockPos(pos.getX(), y, pos.getZ());
-			IBlockState state = worldObj.getBlockState(offsetPos);
+			IBlockState state = world.getBlockState(offsetPos);
 			Block block = state.getBlock();
-			if (block.getCollisionBoundingBox(state, worldObj, offsetPos) == null)
+			if (block.getCollisionBoundingBox(state, world, offsetPos) == null)
 				continue;
 			_openSky = false;
 			break;

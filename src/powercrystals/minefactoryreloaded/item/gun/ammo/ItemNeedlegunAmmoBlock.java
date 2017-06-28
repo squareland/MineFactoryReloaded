@@ -45,7 +45,7 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 	public boolean onHitEntity(ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
 		super.onHitEntity(stack, owner, hit, distance);
 		Vec3d placement = calculatePlacement(hit);
-		placeBlockAt(hit.worldObj, new BlockPos((int)placement.xCoord, (int)placement.yCoord, (int)placement.zCoord),
+		placeBlockAt(hit.world, new BlockPos((int)placement.xCoord, (int)placement.yCoord, (int)placement.zCoord),
 				distance);
 		return true;
 	}

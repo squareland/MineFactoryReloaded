@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.render.block;
 
-import codechicken.lib.model.blockbakery.ISimpleBlockBakery;
+import codechicken.lib.model.bakery.generation.ISimpleBlockBakery;
 import codechicken.lib.render.CCModel;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.buffer.BakingVertexBuffer;
@@ -14,6 +14,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlassPane;
@@ -197,7 +199,7 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public IExtendedBlockState handleState(IExtendedBlockState state, TileEntity tileEntity) {
+	public IExtendedBlockState handleState(IExtendedBlockState state, IBlockAccess access, BlockPos pos) {
 		return null;
 	}
 
@@ -205,4 +207,5 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 	public List<BakedQuad> bakeItemQuads(EnumFacing face, ItemStack stack) {
 		return null;
 	}
+
 }

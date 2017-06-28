@@ -38,7 +38,7 @@ public class MFRPacket extends PacketCoFHBase {
 			int type = getByte();
 			BlockPos pos;
 			TileEntity te;
-			World world = player.worldObj;
+			World world = player.world;
 
 			switch(PacketType.values()[type]) {
 				case HAM_UPDATE:

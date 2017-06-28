@@ -50,7 +50,7 @@ public class TileEntityChronotyper extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		List<EntityAgeable> entities = worldObj.getEntitiesWithinAABB(EntityAgeable.class, _areaManager.getHarvestArea().toAxisAlignedBB());
+		List<EntityAgeable> entities = world.getEntitiesWithinAABB(EntityAgeable.class, _areaManager.getHarvestArea().toAxisAlignedBB());
 
 		for (EntityAgeable a : entities) {
 			if ((a.getGrowingAge() < 0 && !_moveOld) || (a.getGrowingAge() >= 0 && _moveOld)) {

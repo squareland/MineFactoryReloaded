@@ -94,16 +94,16 @@ public class TileEntityLaserDrillPrecharger extends TileEntityFactoryPowered imp
 
 		BlockPos bp = pos.offset(getDirectionFacing());
 
-		if (!worldObj.isBlockLoaded(bp))
+		if (!world.isBlockLoaded(bp))
 			return null;
 
-		if (!TileEntityLaserDrill.canReplaceBlock(worldObj.getBlockState(bp).getBlock(),
-				worldObj, bp))
+		if (!TileEntityLaserDrill.canReplaceBlock(world.getBlockState(bp).getBlock(),
+				world, bp))
 			return null;
 
 		bp = bp.offset(getDirectionFacing());
 
-		TileEntity te = worldObj.getTileEntity(bp);
+		TileEntity te = world.getTileEntity(bp);
 		if (te instanceof IFactoryLaserTarget)
 			return ((IFactoryLaserTarget) te);
 
@@ -122,10 +122,10 @@ public class TileEntityLaserDrillPrecharger extends TileEntityFactoryPowered imp
 
 		EnumFacing facing = getDirectionFacing();
 		BlockPos laserPos = pos.offset(facing);
-		if (set == worldObj.getBlockState(laserPos).getBlock().equals(MFRThings.fakeLaserBlock))
-			worldObj.setBlockState(laserPos, MFRThings.fakeLaserBlock.getDefaultState().withProperty(BlockFakeLaser.FACING, facing.getOpposite()), 3);
+		if (set == world.getBlockState(laserPos).getBlock().equals(MFRThings.fakeLaserBlock))
+			world.setBlockState(laserPos, MFRThings.fakeLaserBlock.getDefaultState().withProperty(BlockFakeLaser.FACING, facing.getOpposite()), 3);
 		else if (set)
-			worldObj.scheduleBlockUpdate(laserPos, MFRThings.fakeLaserBlock, 1, 1);
+			world.scheduleBlockUpdate(laserPos, MFRThings.fakeLaserBlock, 1, 1);
 	}
 
 	@Override

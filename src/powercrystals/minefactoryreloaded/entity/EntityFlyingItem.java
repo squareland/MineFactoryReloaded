@@ -56,7 +56,7 @@ public class EntityFlyingItem extends EntitySafariNet {
 	@Override
 	protected boolean onHitBlock(ItemStack storedEntity, RayTraceResult result) {
 
-		if (canBePickedUp == 0 && (pickupChance > 0 && (pickupChance == 1 || worldObj.rand.nextInt(pickupChance) == 0))) {
+		if (canBePickedUp == 0 && (pickupChance > 0 && (pickupChance == 1 || world.rand.nextInt(pickupChance) == 0))) {
 			dropAsStack(this.getStoredEntity());
 			return false;
 		}
@@ -113,17 +113,17 @@ public class EntityFlyingItem extends EntitySafariNet {
 			}
 		}
 		for (int j = 0; j < 8; ++j) {
-			float f = (worldObj.rand.nextFloat() - 0.5f) * 0.37f;
+			float f = (world.rand.nextFloat() - 0.5f) * 0.37f;
 			if (X != 0) f = Math.copySign(f, X);
-			float f2 = (worldObj.rand.nextFloat() - 0.5f) * 0.37f;
+			float f2 = (world.rand.nextFloat() - 0.5f) * 0.37f;
 			if (Z != 0) f2 = Math.copySign(f2, Z);
 			if (stack == null) {
-				worldObj.spawnParticle(EnumParticleTypes.SNOWBALL, x, y, z, f, Y, f2);
+				world.spawnParticle(EnumParticleTypes.SNOWBALL, x, y, z, f, Y, f2);
 			} else {
-				worldObj.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, f, Y, f2, Item.getIdFromItem(stack.getItem()));
+				world.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, f, Y, f2, Item.getIdFromItem(stack.getItem()));
 			}
 		}
-		if (!worldObj.isRemote)
+		if (!world.isRemote)
 			setDead();
 	}
 

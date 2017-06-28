@@ -39,6 +39,6 @@ public class TileEntityRedNote extends TileEntityFactory
 		
 		float f = (float)Math.pow(2.0D, (note - 12) / 12.0D);
 		
-		worldObj.playSound(null, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, INSTRUMENTS.get(instrument), SoundCategory.BLOCKS, 3.0F, f);
+		world.playSound(null, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, INSTRUMENTS.get(instrument), SoundCategory.BLOCKS, 3.0F, f);
 	}
 }

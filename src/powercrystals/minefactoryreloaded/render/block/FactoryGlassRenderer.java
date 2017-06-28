@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.render.block;
 
-import codechicken.lib.model.bakery.PlanarFaceBakery;
-import codechicken.lib.model.blockbakery.ISimpleBlockBakery;
+import codechicken.lib.model.PlanarFaceBakery;
+import codechicken.lib.model.bakery.generation.ISimpleBlockBakery;
 import codechicken.lib.texture.SpriteSheetManager;
 import codechicken.lib.texture.TextureUtils;
 import net.minecraft.client.renderer.block.model.BakedQuad;

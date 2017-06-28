@@ -52,9 +52,9 @@ public class TileEntityConveyor extends TileEntityBase
 
 	public void setDyeColor(MFRDyeColor dye)
 	{
-		if(worldObj != null && !worldObj.isRemote && _dye != dye)
+		if(world != null && !world.isRemote && _dye != dye)
 		{
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 		_dye = dye;
 	}
@@ -88,36 +88,36 @@ public class TileEntityConveyor extends TileEntityBase
 	@Override
 	public void rotate(EnumFacing axis)
 	{
-		BlockConveyor.ConveyorDirection dir = worldObj.getBlockState(pos).getValue(BlockConveyor.DIRECTION);
+		BlockConveyor.ConveyorDirection dir = world.getBlockState(pos).getValue(BlockConveyor.DIRECTION);
 		if (dir == EAST)
 		{
 			if (isSideSolid(EnumFacing.EAST, EnumFacing.WEST))
 			{
-				rotateTo(worldObj, pos, ASCENDING_EAST);
+				rotateTo(world, pos, ASCENDING_EAST);
 			}
 			else if (isSideSolid(EnumFacing.WEST, EnumFacing.EAST))
 			{
-				rotateTo(worldObj, pos, DESCENDING_EAST);
+				rotateTo(world, pos, DESCENDING_EAST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, SOUTH);
+				rotateTo(world, pos, SOUTH);
 			}
 		}
 		else if (dir == ASCENDING_EAST)
 		{
 			if (isSideSolid(EnumFacing.WEST, EnumFacing.EAST))
 			{
-				rotateTo(worldObj, pos, DESCENDING_EAST);
+				rotateTo(world, pos, DESCENDING_EAST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, SOUTH);
+				rotateTo(world, pos, SOUTH);
 			}
 		}
 		else if (dir == DESCENDING_EAST)
 		{
-			rotateTo(worldObj, pos, SOUTH);
+			rotateTo(world, pos, SOUTH);
 		}
 		else
 
@@ -125,31 +125,31 @@ public class TileEntityConveyor extends TileEntityBase
 		{
 			if (isSideSolid(EnumFacing.SOUTH, EnumFacing.NORTH))
 			{
-				rotateTo(worldObj, pos, ASCENDING_SOUTH);
+				rotateTo(world, pos, ASCENDING_SOUTH);
 			}
 			else if (isSideSolid(EnumFacing.NORTH, EnumFacing.SOUTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_SOUTH);
+				rotateTo(world, pos, DESCENDING_SOUTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, WEST);
+				rotateTo(world, pos, WEST);
 			}
 		}
 		else if (dir == ASCENDING_SOUTH)
 		{
 			if (isSideSolid(EnumFacing.NORTH, EnumFacing.SOUTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_SOUTH);
+				rotateTo(world, pos, DESCENDING_SOUTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, WEST);
+				rotateTo(world, pos, WEST);
 			}
 		}
 		else if (dir == DESCENDING_SOUTH)
 		{
-			rotateTo(worldObj, pos, WEST);
+			rotateTo(world, pos, WEST);
 		}
 		else
 
@@ -157,31 +157,31 @@ public class TileEntityConveyor extends TileEntityBase
 		{
 			if (isSideSolid(EnumFacing.WEST, EnumFacing.EAST))
 			{
-				rotateTo(worldObj, pos, ASCENDING_WEST);
+				rotateTo(world, pos, ASCENDING_WEST);
 			}
 			else if (isSideSolid(EnumFacing.EAST, EnumFacing.WEST) )
 			{
-				rotateTo(worldObj, pos, DESCENDING_WEST);
+				rotateTo(world, pos, DESCENDING_WEST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, NORTH);
+				rotateTo(world, pos, NORTH);
 			}
 		}
 		else if (dir == ASCENDING_WEST)
 		{
 			if (isSideSolid(EnumFacing.EAST, EnumFacing.WEST))
 			{
-				rotateTo(worldObj, pos, DESCENDING_WEST);
+				rotateTo(world, pos, DESCENDING_WEST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, NORTH);
+				rotateTo(world, pos, NORTH);
 			}
 		}
 		else if (dir == DESCENDING_WEST)
 		{
-			rotateTo(worldObj, pos, NORTH);
+			rotateTo(world, pos, NORTH);
 		}
 		else
 
@@ -189,40 +189,40 @@ public class TileEntityConveyor extends TileEntityBase
 		{
 			if (isSideSolid(EnumFacing.NORTH, EnumFacing.SOUTH))
 			{
-				rotateTo(worldObj, pos, ASCENDING_NORTH);
+				rotateTo(world, pos, ASCENDING_NORTH);
 			}
 			else if (isSideSolid(EnumFacing.SOUTH, EnumFacing.NORTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_NORTH);
+				rotateTo(world, pos, DESCENDING_NORTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, EAST);
+				rotateTo(world, pos, EAST);
 			}
 		}
 		else if (dir == ASCENDING_NORTH)
 		{
 			if (isSideSolid(EnumFacing.SOUTH, EnumFacing.NORTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_NORTH);
+				rotateTo(world, pos, DESCENDING_NORTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, EAST);
+				rotateTo(world, pos, EAST);
 			}
 		}
 		else if (dir == DESCENDING_NORTH)
 		{
-			rotateTo(worldObj, pos, EAST);
+			rotateTo(world, pos, EAST);
 		}
 	}
 
 	private boolean isSideSolid(EnumFacing offset, EnumFacing dir)
 	{
-		return worldObj.isSideSolid(pos.offset(offset), dir) &&
-				((!worldObj.isSideSolid(pos.offset(offset).up(), dir) ||
-						!worldObj.isAirBlock(pos.up())) ||
-							!worldObj.isSideSolid(pos.offset(offset.getOpposite()), EnumFacing.UP));
+		return world.isSideSolid(pos.offset(offset), dir) &&
+				((!world.isSideSolid(pos.offset(offset).up(), dir) ||
+						!world.isAirBlock(pos.up())) ||
+							!world.isSideSolid(pos.offset(offset.getOpposite()), EnumFacing.UP));
 	}
 
 	private void rotateTo(World world, BlockPos pos, BlockConveyor.ConveyorDirection newDir)
@@ -235,7 +235,7 @@ public class TileEntityConveyor extends TileEntityBase
 	{
 		//TODO rotateDirectlyTo in cofhcore needs to be changed to EnumFacing
 		if (facing >= 2 && facing <= 5)
-			rotateTo(worldObj, pos, byFacing(EnumFacing.VALUES[facing]));
+			rotateTo(world, pos, byFacing(EnumFacing.VALUES[facing]));
 	}
 
 	@Override
@@ -375,12 +375,12 @@ public class TileEntityConveyor extends TileEntityBase
 			case 6: //UNKNOWN
 		}
 
-		EntityItem entityitem = new EntityItem(worldObj, pos.getX() + dropOffsetX, pos.getY() + dropOffsetY, pos.getZ() + dropOffsetZ, stack.copy());
+		EntityItem entityitem = new EntityItem(world, pos.getX() + dropOffsetX, pos.getY() + dropOffsetY, pos.getZ() + dropOffsetZ, stack.copy());
 		entityitem.motionX = motionX;
 		entityitem.motionY = motionY;
 		entityitem.motionZ = motionZ;
 		entityitem.setPickupDelay(20);
-		worldObj.spawnEntityInWorld(entityitem);
+		world.spawnEntityInWorld(entityitem);
 	}
 
 	@Override
@@ -469,7 +469,7 @@ public class TileEntityConveyor extends TileEntityBase
     	if (!_conveyorActive)
     		return false;
 
-    	IBlockState state = worldObj.getBlockState(pos);
+    	IBlockState state = world.getBlockState(pos);
 		BlockConveyor.ConveyorDirection dir = state.getValue(BlockConveyor.DIRECTION);
 
 		if (side == EnumFacing.UP)
@@ -496,7 +496,7 @@ public class TileEntityConveyor extends TileEntityBase
 			updateConveyorActive();
 		}
 		setReversed(_gateReversed | (_rednetReversed = value < 0));
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public void updateConveyorActive()
@@ -516,7 +516,7 @@ public class TileEntityConveyor extends TileEntityBase
 
 		if(wasActive ^ _conveyorActive)
 		{
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 	}
 
@@ -543,8 +543,8 @@ public class TileEntityConveyor extends TileEntityBase
 
 		if(wasReversed ^ _isReversed)
 		{
-			IBlockState state = worldObj.getBlockState(pos);
-			worldObj.setBlockState(pos, state.withProperty(BlockConveyor.DIRECTION, state.getValue(BlockConveyor.DIRECTION).getReverse()));
+			IBlockState state = world.getBlockState(pos);
+			world.setBlockState(pos, state.withProperty(BlockConveyor.DIRECTION, state.getValue(BlockConveyor.DIRECTION).getReverse()));
 		}
 	}
 

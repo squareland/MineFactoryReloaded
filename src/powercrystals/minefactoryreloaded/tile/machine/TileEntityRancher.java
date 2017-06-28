@@ -67,13 +67,13 @@ public class TileEntityRancher extends TileEntityFactoryPowered {
 
 		boolean didDrop = false;
 
-		List<?> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
+		List<?> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
 
 		for (Object o : entities) {
 			EntityLivingBase e = (EntityLivingBase) o;
 			if (MFRRegistry.getRanchables().containsKey(e.getClass())) {
 				IFactoryRanchable r = MFRRegistry.getRanchables().get(e.getClass());
-				List<RanchedItem> drops = r.ranch(worldObj, e, this);
+				List<RanchedItem> drops = r.ranch(world, e, this);
 				if (drops != null) {
 					for (RanchedItem s : drops) {
 						if (s.hasFluid()) {

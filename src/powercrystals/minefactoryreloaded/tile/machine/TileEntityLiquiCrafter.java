@@ -69,7 +69,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	public void update() {
 
 		super.update();
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 
 		{
@@ -259,7 +259,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		try {
 			_inventory[9] = recipe.getCraftingResult(craft);
 		} catch (Throwable t) {
-			if (recipe.matches(craft, worldObj))
+			if (recipe.matches(craft, world))
 				_inventory[9] = recipe.getCraftingResult(craft);
 		}
 
@@ -470,7 +470,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		for (int i = 0, e = recipes.size(); i < e; ++i) {
 			IRecipe irecipe = recipes.get(i);
 
-			if (irecipe.matches(craft, worldObj)) {
+			if (irecipe.matches(craft, world)) {
 				recipe = irecipe;
 				return irecipe.getCraftingResult(craft);
 			}

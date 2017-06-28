@@ -47,7 +47,7 @@ public class TileEntityCollector extends TileEntityFactoryInventory implements I
 	protected ItemStack addToChests(ItemStack s) {
 
 		s = UtilInventory.dropStack(this, s,
-				MFRUtil.directionsWithoutConveyors(worldObj, pos), null);
+				MFRUtil.directionsWithoutConveyors(world, pos), null);
 		if (canStuff & failedDrops == null & s != null) {
 			doDrop(s);
 			s = null;
@@ -58,7 +58,7 @@ public class TileEntityCollector extends TileEntityFactoryInventory implements I
 	@Override
 	public boolean hasWorldObj() {
 
-		return worldObj != null & failedDrops != null;
+		return world != null & failedDrops != null;
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class TileEntityCollector extends TileEntityFactoryInventory implements I
 	@Override
 	public EnumFacing[] getDropDirections() {
 
-		return MFRUtil.directionsWithoutConveyors(worldObj, pos);
+		return MFRUtil.directionsWithoutConveyors(world, pos);
 	}
 
 	@Override

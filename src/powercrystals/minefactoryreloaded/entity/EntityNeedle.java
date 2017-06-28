@@ -147,7 +147,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		++ticksInAir;
 		Vec3d pos = new Vec3d(posX, posY, posZ);
 		Vec3d nextPos = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
-		RayTraceResult hit = worldObj.rayTraceBlocks(pos, nextPos, false, true, false);
+		RayTraceResult hit = world.rayTraceBlocks(pos, nextPos, false, true, false);
 		pos = new Vec3d(posX, posY, posZ);
 		nextPos = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
 
@@ -156,11 +156,11 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		}
 
 		Entity entityHit = null;
-		List<?> list = worldObj.getEntitiesWithinAABBExcludingEntity(this,
+		List<?> list = world.getEntitiesWithinAABBExcludingEntity(this,
 			getEntityBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
 		double closestRange = 0.0D;
 		double collisionRange = 0.3D;
-		EntityPlayer owner = _owner == null ? null : worldObj.getPlayerEntityByName(_owner);
+		EntityPlayer owner = _owner == null ? null : world.getPlayerEntityByName(_owner);
 
 		for (int l = 0; l < list.size(); ++l) {
 			Entity e = (Entity) list.get(l);
@@ -195,14 +195,14 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		float speed = 0.0F;
 		speed = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ);
 		distance += speed;
-		if (hit != null && !worldObj.isRemote) {
+		if (hit != null && !world.isRemote) {
 			if (MFRRegistry.getNeedleAmmoTypes().containsKey(_ammoSource.getItem())) {
 				if (hit.entityHit != null) {
 					MFRRegistry.getNeedleAmmoTypes().get(_ammoSource.getItem()).onHitEntity(_ammoSource,
 						owner, hit.entityHit, distance);
 				} else {
 					MFRRegistry.getNeedleAmmoTypes().get(_ammoSource.getItem()).onHitBlock(_ammoSource,
-						owner, worldObj, hit.getBlockPos(), hit.sideHit, distance);
+						owner, world, hit.getBlockPos(), hit.sideHit, distance);
 				}
 			}
 			setDead();
@@ -244,7 +244,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		if (isInWater()) {
 			double particleOffset = 0.25D;
 			for (int i = 0; i < 4; ++i) {
-				worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * particleOffset, posY - motionY *
+				world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * particleOffset, posY - motionY *
 						particleOffset, posZ - motionZ * particleOffset, motionX, motionY, motionZ);
 			}
 

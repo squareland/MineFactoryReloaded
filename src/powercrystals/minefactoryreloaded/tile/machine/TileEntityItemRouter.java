@@ -58,7 +58,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 	public void update() {
 
 		super.update();
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			for (int i = 45; i < getSizeInventory(); i++) {
 				if (_inventory[i] != null) {
 					_inventory[i] = routeItem(_inventory[i]);
@@ -130,7 +130,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 
 	private int weightedRandomSide(int[] routeWeights) {
 
-		int random = worldObj.rand.nextInt(totalWeight(routeWeights));
+		int random = world.rand.nextInt(totalWeight(routeWeights));
 		for (int i = 0; i < routeWeights.length; i++) {
 			random -= routeWeights[i];
 			if (random < 0)
@@ -253,7 +253,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack stack) {
 
-		if (worldObj != null && !worldObj.isRemote) {
+		if (world != null && !world.isRemote) {
 			int start = getStartInventorySide(null);
 			if (i >= start && i <= (start + getSizeInventorySide(null))) {
 				l: if (stack != null) {

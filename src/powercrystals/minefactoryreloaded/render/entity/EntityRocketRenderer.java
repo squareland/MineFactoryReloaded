@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.render.entity;
 
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.render.CCRenderState;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -27,7 +27,7 @@ public class EntityRocketRenderer extends Render
 		super(renderManager);
 		try
 		{
-			model = CCOBJParser.parseObjModels(new ResourceLocation(
+			model = OBJParser.parseModels(new ResourceLocation(
 					MineFactoryReloadedCore.modelFolder + "rocket.obj")).get("Tube");
 		}
 		catch(Exception e)

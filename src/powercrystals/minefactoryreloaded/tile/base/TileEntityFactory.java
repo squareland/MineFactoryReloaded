@@ -73,7 +73,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 	public void validate() {
 
 		super.validate();
-		if (worldObj.isRemote && hasHAM()) {
+		if (world.isRemote && hasHAM()) {
 			MineFactoryReloadedClient.addTileToAreaList(this);
 		}
 	}
@@ -87,7 +87,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 	private void removeTileFromAreaList() {
 
-		if (worldObj != null && worldObj.isRemote && hasHAM()) {
+		if (world != null && world.isRemote && hasHAM()) {
 			MineFactoryReloadedClient.removeTileFromAreaList(this);
 		}
 	}
@@ -142,7 +142,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 	public World getWorld() {
 
-		return worldObj;
+		return world;
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 	public void rotate(boolean reverse) {
 
-		if (worldObj != null && !worldObj.isRemote) {
+		if (world != null && !world.isRemote) {
 			switch ((reverse ? _forwardDirection.getOpposite() : _forwardDirection).ordinal()) {
 			case 2://NORTH:
 				_forwardDirection = EnumFacing.EAST;
@@ -206,17 +206,17 @@ public abstract class TileEntityFactory extends TileEntityBase
 		if (rotation < EnumFacing.VALUES.length)
 			_forwardDirection = EnumFacing.VALUES[rotation];
 
-		if (worldObj != null && p != _forwardDirection) {
+		if (world != null && p != _forwardDirection) {
 			onRotate();
 		}
 	}
 
 	protected void onRotate() {
 
-		if (!isInvalid() && worldObj.isBlockLoaded(pos)) {
+		if (!isInvalid() && world.isBlockLoaded(pos)) {
 			markForUpdate();
-			MFRUtil.notifyNearbyBlocks(worldObj, pos, getBlockType());
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyNearbyBlocks(world, pos, getBlockType());
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 	}
 
@@ -239,11 +239,11 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 	public void setIsActive(boolean isActive) {
 
-		if (_isActive != isActive & worldObj != null &&
-				!worldObj.isRemote && _lastActive < worldObj.getTotalWorldTime()) {
-			_lastActive = worldObj.getTotalWorldTime() + _activeSyncTimeout;
+		if (_isActive != isActive & world != null &&
+				!world.isRemote && _lastActive < world.getTotalWorldTime()) {
+			_lastActive = world.getTotalWorldTime() + _activeSyncTimeout;
 			_prevActive = _isActive;
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 		_isActive = isActive;
 	}
@@ -253,9 +253,9 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 		super.update();
 
-		if (!worldObj.isRemote && _prevActive != _isActive && _lastActive < worldObj.getTotalWorldTime()) {
+		if (!world.isRemote && _prevActive != _isActive && _lastActive < world.getTotalWorldTime()) {
 			_prevActive = _isActive;
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 	}
 
@@ -288,7 +288,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 	@Override
 	public void markDirty() {
 
-		if (worldObj != null && !worldObj.isRemote && hasHAM()) {
+		if (world != null && !world.isRemote && hasHAM()) {
 			HarvestAreaManager<TileEntityFactory> ham = getHAM();
 			int u = ham.getUpgradeLevel();
 			if (_lastUpgrade != u)
@@ -314,7 +314,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 		_prevActive = _isActive;
 		_isActive = tag.getBoolean("a");
 		if (_prevActive != _isActive)
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		if (_lastActive < 0 && hasHAM()) {
 			MFRPacket.sendHAMUpdateToServer(this);
 		}

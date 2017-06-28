@@ -46,27 +46,27 @@ public class TileEntityBlockBreaker extends TileEntityFactoryPowered
 	@Override
 	public void onNeighborBlockChange()
 	{
-		if (breakPos != null && !worldObj.isAirBlock(breakPos))
+		if (breakPos != null && !world.isAirBlock(breakPos))
 			setIdleTicks(0);
 	}
 
 	@Override
 	public boolean activateMachine()
 	{
-		World worldObj = this.worldObj;
-		IBlockState state = worldObj.getBlockState(breakPos);
+		World world = this.world;
+		IBlockState state = world.getBlockState(breakPos);
 		Block block = state.getBlock();
 
-		if (!block.isAir(state, worldObj, breakPos) &&
+		if (!block.isAir(state, world, breakPos) &&
 				!state.getMaterial().isLiquid() &&
-				state.getBlockHardness(worldObj, breakPos) >= 0)
+				state.getBlockHardness(world, breakPos) >= 0)
 		{
-			List<ItemStack> drops = block.getDrops(worldObj, breakPos, state, 0);
-			if (worldObj.setBlockToAir(breakPos))
+			List<ItemStack> drops = block.getDrops(world, breakPos, state, 0);
+			if (world.setBlockToAir(breakPos))
 			{
 				doDrop(drops);
 				if (MFRConfig.playSounds.getBoolean(true))
-					worldObj.playEvent(null, 2001, breakPos, Block.getStateId(state));
+					world.playEvent(null, 2001, breakPos, Block.getStateId(state));
 			}
 			return true;
 		}

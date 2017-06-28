@@ -65,7 +65,7 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	@Override
 	public void validate()
 	{
-		if (!worldObj.isRemote)
+		if (!world.isRemote)
 		{
 			setSelectedSubnet(_currentSubnet);
 		}
@@ -81,7 +81,7 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	public void update()
 	{
 		super.update();
-		if (worldObj.isRemote)
+		if (world.isRemote)
 		{
 			_valuesClient.pop();
 			_valuesClient.push(_currentValueClient);
@@ -104,7 +104,7 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	public void setSelectedSubnet(int newSubnet)
 	{
 		_currentSubnet = newSubnet;
-		if (worldObj.isRemote)
+		if (world.isRemote)
 		{
 			_valuesClient.fill(null);
 		}
@@ -133,7 +133,7 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	{
 		NBTTagCompound data = new NBTTagCompound();
 		data.setInteger("value", value);
-		Packets.sendToAllPlayersInRange(worldObj, pos, 50,
+		Packets.sendToAllPlayersInRange(world, pos, 50,
 				new SPacketUpdateTileEntity(pos, 1, data));
 	}
 

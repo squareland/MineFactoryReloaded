@@ -117,7 +117,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 			return;
 		_radius = r;
 		markDirty();
-		if (worldObj != null && !worldObj.isRemote)
+		if (world != null && !world.isRemote)
 			forceChunks();
 	}
 
@@ -150,12 +150,12 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 			return;
 		}
 		activated = false;
-		if (!worldObj.isRemote && MFRConfig.enableChunkLoaderRequiresOwner.getBoolean(false) &&
+		if (!world.isRemote && MFRConfig.enableChunkLoaderRequiresOwner.getBoolean(false) &&
 				!ConnectionHandler.onlinePlayerMap.containsKey(_owner)) {
 			setIdleTicks(getIdleTicksMax());
 		}
 		super.update();
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 		if (getIdleTicks() > 0) {
 			if (_ticket != null)
@@ -195,7 +195,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 			if (_ticket == null) {
 				_ticket = ForgeChunkManager.
 						requestPlayerTicket(MineFactoryReloadedCore.instance(),
-							_owner, worldObj, Type.NORMAL);
+							_owner, world, Type.NORMAL);
 				if (_ticket == null) {
 					unableToRequestTicket = true;
 					return;
@@ -303,7 +303,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 				ForgeChunkManager.releaseTicket(ticket);
 				_ticket = ForgeChunkManager.
 						requestPlayerTicket(MineFactoryReloadedCore.instance(),
-							_owner, worldObj, Type.NORMAL);
+							_owner, world, Type.NORMAL);
 				if (_ticket == null) {
 					unableToRequestTicket = true;
 					return true;

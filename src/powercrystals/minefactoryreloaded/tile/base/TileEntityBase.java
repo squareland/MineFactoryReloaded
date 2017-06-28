@@ -77,13 +77,13 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 
 	public void markChunkDirty() {
 
-		worldObj.markChunkDirty(this.pos, this);
+		world.markChunkDirty(this.pos, this);
 	}
 
 	public void notifyNeighborTileChange() {
 
 		if (getBlockType() != null) {
-			worldObj.updateComparatorOutputLevel(this.pos, this.getBlockType());
+			world.updateComparatorOutputLevel(this.pos, this.getBlockType());
 		}
 	}
 
@@ -107,7 +107,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
 
-		if (worldObj != null && !isInvalid()) {
+		if (world != null && !isInvalid()) {
 			return new SPacketUpdateTileEntity(pos, 0, writePacketData(new NBTTagCompound()));
 		}
 		return null;
@@ -125,7 +125,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 		super.handleUpdateTag(tag);
 		handlePacketData(tag);
 
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 			break;
 		}
 
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	protected NBTTagCompound writePacketData(NBTTagCompound tag) {
@@ -200,7 +200,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 
 		if (obj instanceof TileEntityBase) {
 			TileEntityBase te = (TileEntityBase) obj;
-			return te.getPos().equals(this.getPos()) && worldObj == te.worldObj && te.isInvalid() == isInvalid();
+			return te.getPos().equals(this.getPos()) && world == te.world && te.isInvalid() == isInvalid();
 		}
 		return false;
 	}

@@ -59,7 +59,7 @@ public class TileEntityBreeder extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		List<EntityAnimal> entities = worldObj.getEntitiesWithinAABB(EntityAnimal.class,
+		List<EntityAnimal> entities = world.getEntitiesWithinAABB(EntityAnimal.class,
 				_areaManager.getHarvestArea().toAxisAlignedBB());
 
 		if (entities.size() > MFRConfig.breederShutdownThreshold.getInt()) {
@@ -94,7 +94,7 @@ public class TileEntityBreeder extends TileEntityFactoryPowered {
 		}
 
 		if (doors.size() > 0) {
-			List<EntityVillager> villagers = worldObj.getEntitiesWithinAABB(EntityVillager.class,
+			List<EntityVillager> villagers = world.getEntitiesWithinAABB(EntityVillager.class,
 					_areaManager.getHarvestArea().toAxisAlignedBB());
 
 			if (villagers.size() > MFRConfig.breederShutdownThreshold.getInt()) {

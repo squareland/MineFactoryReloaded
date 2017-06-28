@@ -79,7 +79,7 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventor
 
 		_energyStored = Math.min(_energyStored, getEnergyStoredMax());
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			machineDisplayTick();
 			return;
 		}

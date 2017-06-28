@@ -28,7 +28,7 @@ public class EntityHandler {
 	@SubscribeEvent
 	public void onMinecartInteract(MinecartInteractEvent e) {
 
-		if (e.getPlayer().worldObj.isRemote)
+		if (e.getPlayer().world.isRemote)
 			return;
 		if (!MFRConfig.enableSpawnerCarts.getBoolean(true))
 			return;
@@ -44,10 +44,10 @@ public class EntityHandler {
 						e.getPlayer().setHeldItem(e.getHand(), null);
 						e.getMinecart().writeToNBT(tag);
 						e.getMinecart().setDead();
-						EntityMinecartMobSpawner ent = new EntityMinecartMobSpawner(e.getMinecart().worldObj);
+						EntityMinecartMobSpawner ent = new EntityMinecartMobSpawner(e.getMinecart().world);
 						ent.readFromNBT(tag);
-						ent.worldObj.spawnEntityInWorld(ent);
-						ent.worldObj.playEvent(null, 2004, ent.getPosition(), 0); // particles
+						ent.world.spawnEntityInWorld(ent);
+						ent.world.playEvent(null, 2004, ent.getPosition(), 0); // particles
 					}
 				}
 				else if (e.getMinecart().getType() == EntityMinecart.Type.SPAWNER) {

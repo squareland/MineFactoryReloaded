@@ -11,9 +11,9 @@ public class DrinkHandlerMobEssence implements ILiquidDrinkHandler {
 	@Override
 	public void onDrink(EntityLivingBase player, FluidStack fluid) {
 
-		player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj,
+		player.world.spawnEntityInWorld(new EntityXPOrb(player.world,
 				player.posX, player.posY, player.posZ,
-				player.worldObj.rand.nextInt(6) + 10));
+				player.world.rand.nextInt(6) + 10));
 	}
 
 }

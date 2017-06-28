@@ -98,7 +98,7 @@ public class TileEntityLaserDrill extends TileEntityFactoryInventory implements 
 	@Override
 	public void update() {
 
-		if (isInvalid() || worldObj.isRemote) {
+		if (isInvalid() || world.isRemote) {
 			return;
 		}
 
@@ -112,18 +112,18 @@ public class TileEntityLaserDrill extends TileEntityFactoryInventory implements 
 		}
 
 		BlockPos downPos = pos.offset(EnumFacing.DOWN);
-		Block lowerId = worldObj.getBlockState(downPos).getBlock();
+		Block lowerId = world.getBlockState(downPos).getBlock();
 
 		if (_bedrockLevel < 0) {
 			if (lowerId.equals(MFRThings.fakeLaserBlock)) {
-				worldObj.setBlockToAir(downPos);
+				world.setBlockToAir(downPos);
 			}
 			return;
 		}
 
 		if (!lowerId.equals(MFRThings.fakeLaserBlock) &&
-				canReplaceBlock(lowerId, worldObj, downPos)) {
-			worldObj.setBlockState(downPos, MFRThings.fakeLaserBlock.getDefaultState());
+				canReplaceBlock(lowerId, world, downPos)) {
+			world.setBlockState(downPos, MFRThings.fakeLaserBlock.getDefaultState());
 		}
 
 		int energyToDraw = Math.min(_energyPerWork, _energyStored);
@@ -171,7 +171,7 @@ public class TileEntityLaserDrill extends TileEntityFactoryInventory implements 
 
 	private boolean shouldCheckDrill() {
 
-		return worldObj.getTotalWorldTime() % 32 == 0;
+		return world.getTotalWorldTime() % 32 == 0;
 	}
 
 	private void updateDrill() {
@@ -179,17 +179,17 @@ public class TileEntityLaserDrill extends TileEntityFactoryInventory implements 
 		int y = Integer.MAX_VALUE;
 		for (y = pos.getY(); y-- > 0;) {
 			BlockPos offsetPos = new BlockPos(pos.getX(), y, pos.getZ());
-			Block block = worldObj.getBlockState(offsetPos).getBlock();
+			Block block = world.getBlockState(offsetPos).getBlock();
 			if (!block.equals(MFRThings.fakeLaserBlock)) {
-				if (!worldObj.isAirBlock(offsetPos) &&
-						canReplaceBlock(block, worldObj, offsetPos))
-					if (worldObj.destroyBlock(offsetPos, true))
+				if (!world.isAirBlock(offsetPos) &&
+						canReplaceBlock(block, world, offsetPos))
+					if (world.destroyBlock(offsetPos, true))
 						continue;
 
 				if (block.isAssociatedBlock(Blocks.BEDROCK)) {
 					_bedrockLevel = y;
 					return;
-				} else if (!worldObj.isAirBlock(offsetPos)) {
+				} else if (!world.isAirBlock(offsetPos)) {
 					_bedrockLevel = -1;
 					return;
 				}
@@ -226,8 +226,8 @@ public class TileEntityLaserDrill extends TileEntityFactoryInventory implements 
 		g /= d;
 		b /= d;
 		color = (r << 16) | (g << 8) | b;
-		if (worldObj != null) {
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+		if (world != null) {
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 	}
 

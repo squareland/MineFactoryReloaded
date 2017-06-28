@@ -81,25 +81,25 @@ public class EntityRocket extends Entity
 		{
 			if (MFRConfig.enableSPAMRExploding.getBoolean(true))
 			{
-				worldObj.newExplosion(this, posX, posY, posZ, 4.0F, true, true);
+				world.newExplosion(this, posX, posY, posZ, 4.0F, true, true);
 			}
 			setDead();
 		}
 		
-		if(worldObj.isRemote)
+		if(world.isRemote)
 		{
 			for(int i = 0; i < 4; i++)
 			{
-				worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + motionX * i / 4.0D, posY + motionY * i / 4.0D, posZ + motionZ * i / 4.0D,
+				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + motionX * i / 4.0D, posY + motionY * i / 4.0D, posZ + motionZ * i / 4.0D,
 						-motionX, -motionY + 0.2D, -motionZ);
 			}
 		}
 		
-		if(!worldObj.isRemote)
+		if(!world.isRemote)
 		{
 			Vec3d pos = new Vec3d(this.posX, this.posY, this.posZ);
 			Vec3d nextPos = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-			RayTraceResult hit = this.worldObj.rayTraceBlocks(pos, nextPos, false, true, false);
+			RayTraceResult hit = this.world.rayTraceBlocks(pos, nextPos, false, true, false);
 			pos = new Vec3d(this.posX, this.posY, this.posZ);
 			nextPos = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 			
@@ -109,11 +109,11 @@ public class EntityRocket extends Entity
 			}
 			
 			Entity entityHit = null;
-			List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, 
+			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
 					this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
 			double closestRange = 0.0D;
 			double collisionRange = 0.3D;
-			EntityPlayer owner = _owner == null ? null : this.worldObj.getPlayerEntityByName(_owner);
+			EntityPlayer owner = _owner == null ? null : this.world.getPlayerEntityByName(_owner);
 			
 			for(int i = 0, end = list.size(); i < end; ++i)
 			{
@@ -152,16 +152,16 @@ public class EntityRocket extends Entity
 				}
 			}
 			
-			if(hit != null && !worldObj.isRemote)
+			if(hit != null && !world.isRemote)
 			{
 				if(hit.entityHit != null)
 				{
-					worldObj.newExplosion(this, hit.entityHit.posX, hit.entityHit.posY,
+					world.newExplosion(this, hit.entityHit.posX, hit.entityHit.posY,
 							hit.entityHit.posZ, 4.0F, true, true);
 				}
 				else
 				{ // spawn explosion at nextPos x/y/z?
-					worldObj.newExplosion(this, hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ(), 4.0F, true, true);
+					world.newExplosion(this, hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ(), 4.0F, true, true);
 				}
 				setDead();
 			}
@@ -257,7 +257,7 @@ public class EntityRocket extends Entity
             double x = _lostTarget.getDouble("xTarget");
             double y = _lostTarget.getDouble("yTarget");
             double z = _lostTarget.getDouble("zTarget");
-            List list = this.worldObj.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - 5, y - 5, z - 5, x + 5, y + 5, z + 5));
+            List list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - 5, y - 5, z - 5, x + 5, y + 5, z + 5));
             Iterator iterator = list.iterator();
 
             while (iterator.hasNext())

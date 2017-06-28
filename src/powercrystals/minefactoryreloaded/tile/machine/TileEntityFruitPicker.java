@@ -48,8 +48,8 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 	public void validate() {
 
 		super.validate();
-		if (!worldObj.isRemote) {
-			_treeManager = new FruitHarvestManager(worldObj,
+		if (!world.isRemote) {
+			_treeManager = new FruitHarvestManager(world,
 					new Area(pos, 0, 0, 0),
 					HarvestMode.FruitTree);
 		}
@@ -84,23 +84,23 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		IBlockState targetState = worldObj.getBlockState(targetCoords);
+		IBlockState targetState = world.getBlockState(targetCoords);
 		Block harvestedBlock = targetState.getBlock();
 
 		IFactoryFruit harvestable = MFRRegistry.getFruits().get(harvestedBlock);
 
-		List<ItemStack> drops = harvestable.getDrops(worldObj, _rand, targetCoords);
+		List<ItemStack> drops = harvestable.getDrops(world, _rand, targetCoords);
 
-		ReplacementBlock replacement = harvestable.getReplacementBlock(worldObj, targetCoords);
+		ReplacementBlock replacement = harvestable.getReplacementBlock(world, targetCoords);
 
 		if (replacement == null) {
-			if (!worldObj.setBlockToAir(targetCoords))
+			if (!world.setBlockToAir(targetCoords))
 				return false;
 			if (MFRConfig.playSounds.getBoolean(true)) {
-				worldObj.playEvent(null, 2001, targetCoords, Block.getStateId(targetState));
+				world.playEvent(null, 2001, targetCoords, Block.getStateId(targetState));
 			}
 		} else {
-			if (!replacement.replaceBlock(worldObj, targetCoords, null))
+			if (!replacement.replaceBlock(world, targetCoords, null))
 				return false;
 		}
 
@@ -114,15 +114,15 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 	private BlockPos getNextTree() {
 
 		BlockPos bp = _areaManager.getNextBlock();
-		if (!worldObj.isBlockLoaded(bp)) {
+		if (!world.isBlockLoaded(bp)) {
 			return null;
 		}
 
-		Block search = worldObj.getBlockState(bp).getBlock();
+		Block search = world.getBlockState(bp).getBlock();
 
 		IFactoryFruit f = MFRRegistry.getFruits().get(search);
 		if (!MFRRegistry.getFruitLogBlocks().contains(search)) {
-			return f != null && f.canBePicked(worldObj, bp) ? bp : null;
+			return f != null && f.canBePicked(world, bp) ? bp : null;
 		}
 
 		BlockPos temp = getNextTreeSegment(bp, f instanceof FruitChorus);
@@ -142,16 +142,16 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 
 			Area a = new Area(pos, MFRConfig.fruitTreeSearchMaxHorizontal.getInt(), lowerBound, upperBound);
 
-			_treeManager.reset(worldObj, a, invertedSearch ? HarvestMode.FruitTreeInverted : HarvestMode.FruitTree, null);
+			_treeManager.reset(world, a, invertedSearch ? HarvestMode.FruitTreeInverted : HarvestMode.FruitTree, null);
 		}
 
 		Map<Block, IFactoryFruit> fruits = MFRRegistry.getFruits();
 		while (!_treeManager.getIsDone()) {
 			BlockPos bp = _treeManager.getNextBlock();
-			block = worldObj.getBlockState(bp).getBlock();
+			block = world.getBlockState(bp).getBlock();
 			IFactoryFruit fruit = fruits.containsKey(block) ? fruits.get(block) : null;
 
-			if (fruit != null && fruit.canBePicked(worldObj, bp))
+			if (fruit != null && fruit.canBePicked(world, bp))
 				return bp;
 
 			_treeManager.moveNext();

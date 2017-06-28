@@ -348,7 +348,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@SubscribeEvent(priority= EventPriority.HIGHEST)
 	public void onBlockHighlight(DrawBlockHighlightEvent event) {
 		EntityPlayer player = event.getPlayer();
-		World world = player.worldObj;
+		World world = player.world;
 		RayTraceResult mop = event.getTarget();
 		if (mop == null)
 			return;

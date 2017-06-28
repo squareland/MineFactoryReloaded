@@ -202,7 +202,7 @@ public abstract class UtilInventory
 	 * Drops an ItemStack, checks pipes > chests > world in that order. It generally shouldn't be necessary to call this explicitly.
 	 *
 	 * @param world
-	 *            the worldObj
+	 *            the world
 	 * @param pos
 	 *            the BlockPos to drop from
 	 * @param stack

@@ -67,7 +67,7 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 
 		super.cofh_validate();
 
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 		if (_grid == null) {
 			incorporateTiles();
@@ -132,8 +132,8 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 
 		if (deadCache) {
 			for (EnumFacing dir : EnumFacing.VALUES)
-				if (worldObj.isBlockLoaded(this.getPos().offset(dir)))
-					addCache(MFRUtil.getTile(worldObj, this.getPos().offset(dir)));
+				if (world.isBlockLoaded(this.getPos().offset(dir)))
+					addCache(MFRUtil.getTile(world, this.getPos().offset(dir)));
 			deadCache = false;
 			RedstoneEnergyNetwork.HANDLER.addConduitForUpdate(this);
 		}
@@ -146,8 +146,8 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 				if (readFromNBT && (sideMode[dir.getOpposite().ordinal()] & 1) == 0)
 					continue;
 				BlockPos offsetPos = pos.offset(dir);
-				if (worldObj.isBlockLoaded(offsetPos)) {
-					TileEntityRedNetEnergy pipe = MFRUtil.getTile(worldObj, pos.offset(dir), TileEntityRedNetEnergy.class);
+				if (world.isBlockLoaded(offsetPos)) {
+					TileEntityRedNetEnergy pipe = MFRUtil.getTile(world, pos.offset(dir), TileEntityRedNetEnergy.class);
 					if (pipe != null) {
 						if (pipe._grid != null && pipe.canInterface(this, dir)) {
 							pipe._grid.addConduit(this);
@@ -166,9 +166,9 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 	@Override
 	public void onNeighborTileChange(BlockPos neighborPos) {
 
-		if (worldObj.isRemote | deadCache)
+		if (world.isRemote | deadCache)
 			return;
-		TileEntity tile = worldObj.isBlockLoaded(neighborPos) ? worldObj.getTileEntity(neighborPos) : null;
+		TileEntity tile = world.isBlockLoaded(neighborPos) ? world.getTileEntity(neighborPos) : null;
 
 		Vec3i diff = neighborPos.subtract(pos);
 		addCache(tile, EnumFacing.getFacingFromVector(diff.getX(), diff.getY(), diff.getZ()));
@@ -246,7 +246,7 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 		if (!deadCache) {
 			if (lastMode != sideMode[side.ordinal()]) {
 				RedstoneEnergyNetwork.HANDLER.addConduitForUpdate(this);
-				MFRUtil.notifyBlockUpdate(worldObj, pos);
+				MFRUtil.notifyBlockUpdate(world, pos);
 			}
 		}
 	}
@@ -536,7 +536,7 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 
 		if (subHit >= (2 + 6 * 4) && subHit < (2 + 6 * 6)) {
 			if (MFRUtil.isHoldingUsableTool(player, pos)) {
-				if (!player.worldObj.isRemote) {
+				if (!player.world.isRemote) {
 					int dir = subSide < 6 ? EnumFacing.VALUES[subSide].getOpposite().ordinal() : 6;
 					if (sideMode[dir] == 9) {
 						removeFromGrid();
@@ -551,7 +551,7 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 					}
 					RedstoneEnergyNetwork.HANDLER.addConduitForUpdate(this);
 					Packets.sendToAllPlayersWatching(this);
-					MFRUtil.notifyBlockUpdate(worldObj, pos);
+					MFRUtil.notifyBlockUpdate(world, pos);
 				}
 				return true;
 			}

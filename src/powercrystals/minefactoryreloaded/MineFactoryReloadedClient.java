@@ -177,11 +177,11 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 		if (world.getWorld().provider == null ||
 				Minecraft.getMinecraft().thePlayer == null ||
-				Minecraft.getMinecraft().thePlayer.worldObj == null ||
-				Minecraft.getMinecraft().thePlayer.worldObj.provider == null) {
+				Minecraft.getMinecraft().thePlayer.world == null ||
+				Minecraft.getMinecraft().thePlayer.world.provider == null) {
 			return;
 		}
-		if (world.getWorld().provider.getDimension() == Minecraft.getMinecraft().thePlayer.worldObj.provider.getDimension()) {
+		if (world.getWorld().provider.getDimension() == Minecraft.getMinecraft().thePlayer.world.provider.getDimension()) {
 			_areaTileEntities.clear();
 			prcPages.clear();
 		}

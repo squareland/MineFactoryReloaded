@@ -105,7 +105,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	public void update() {
 
 		super.update();
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			boolean active = _ticksSinceLastConsumption < _ticksUntilConsumption;
 			setIsActive(active);
 
@@ -123,7 +123,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 			}
 
 			if (_temp == 0 && _inventory[3] == null) {
-				if ((worldObj.getTotalWorldTime() & 0x6F) == 0 && !(_rednetState != 0 || CoreUtils.isRedstonePowered(this)))
+				if ((world.getTotalWorldTime() & 0x6F) == 0 && !(_rednetState != 0 || CoreUtils.isRedstonePowered(this)))
 					mergeFuel();
 				return; // we're not burning anything and not changing the temp
 			}
@@ -278,7 +278,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 		if (resource != null && resource.getFluid() == FluidRegistry.WATER) {
 			if (MFRConfig.steamBoilerExplodes.getBoolean(false)) {
 				if (_temp > 80 && _tanks[1].getFluidAmount() == 0) {
-					worldObj.createExplosion(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, 3, true);
+					world.createExplosion(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, 3, true);
 				}
 			}
 			return _tanks[1].fill(resource, doFill);

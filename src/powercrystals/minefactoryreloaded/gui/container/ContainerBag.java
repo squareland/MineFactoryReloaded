@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import cofh.lib.gui.container.ContainerInventoryItem;
 import cofh.lib.gui.slot.SlotAcceptValid;
-import cofh.lib.gui.slot.SlotViewOnly;
+import cofh.lib.gui.slot.SlotLocked;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -32,7 +32,7 @@ public class ContainerBag extends ContainerInventoryItem
 
 		for (int i = 0; i < 9; i++) {
 			if (i == containerIndex) {
-				addSlotToContainer(new SlotViewOnly(inventoryPlayer, i, 8 + i * 18, 66 + 58));
+				addSlotToContainer(new SlotLocked(inventoryPlayer, i, 8 + i * 18, 66 + 58));
 			} else {
 				addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 66 + 58));
 			}

@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.CustomProperty;
@@ -25,7 +24,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -60,7 +58,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 	public static final String modId = "minefactoryreloaded";
 	public static final String modName = "MineFactory Reloaded";
 	public static final String version = "2.9.0B1";
-	public static final String dependencies = CoFHCore.VERSION_GROUP + "required-after:CodeChickenLib@[" + CodeChickenLib.version + ",)";
+	public static final String dependencies = CoFHCore.VERSION_GROUP + CodeChickenLib.MOD_VERSION_DEP;
 	public static final String modNetworkChannel = "MFReloaded";
 
 	@SidedProxy(clientSide = "powercrystals.minefactoryreloaded.net.ClientProxy",
@@ -128,15 +126,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 		Vanilla.registerOredict();
 
 		Blocks.FIRE.setFireInfo(MFRFluids.biofuelLiquid, 300, 30);
-
-		//TODO remove once mods actually switch over to fluid caps instead of IFluidContainerItem
-		FluidContainerRegistry.registerFluidContainer(new FluidContainerRegistry.FluidContainerData(FluidRegistry.getFluidStack("milk",
-				FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(milkBottleItem), new ItemStack(Items.GLASS_BOTTLE)));
-
-		FluidContainerRegistry.registerFluidContainer(new FluidContainerRegistry.FluidContainerData(FluidRegistry.getFluidStack("milk",
-				FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.MILK_BUCKET), new ItemStack(Items.BUCKET)));
-		FluidContainerRegistry.registerFluidContainer(new FluidContainerRegistry.FluidContainerData(FluidRegistry.getFluidStack("mushroom_soup",
-				FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.MUSHROOM_STEW), new ItemStack(Items.BOWL)));
 
 		GameRegistry.registerFuelHandler(new MineFactoryReloadedFuelHandler());
 		
@@ -293,7 +282,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 		}
 		list = MFRConfig.safarinetBlacklist.getStringList();
 		for (String s : list) {
-			Class<?> cl = (Class<?>) EntityList.NAME_TO_CLASS.get(s);
+			Class<?> cl = EntityList.getClass(new ResourceLocation(s));
 			if (cl != null)
 				MFRRegistry.registerSafariNetBlacklist(cl);
 		}

@@ -92,7 +92,7 @@ public class ItemXpExtractor extends ItemFactoryTool {
 				if (!target.capabilities.isCreativeMode) {
 					target.addExperienceLevel(-1);
 					target.attackEntityFrom(damage, 0.25f);
-					target.worldObj.playSound(null, target.posX, target.posY, target.posZ, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.15f, 0.25f);
+					target.world.playSound(null, target.posX, target.posY, target.posZ, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.15f, 0.25f);
 				}
 				ItemStack essenceBucket = MFRUtil.getBucketFor(MFRFluids.essence);
 				if (!player.inventory.addItemStackToInventory(essenceBucket)) {

@@ -66,9 +66,9 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 		if (grid != null) {
 			for (EnumFacing to : EnumFacing.VALUES) {
 				BlockPos offsetPos = pos.offset(to);
-				if ((sides & (1 << to.ordinal())) == 0 || (chunkUnloaded && !worldObj.isBlockLoaded(offsetPos)))
+				if ((sides & (1 << to.ordinal())) == 0 || (chunkUnloaded && !world.isBlockLoaded(offsetPos)))
 					continue;
-				TileEntityTank tank = MFRUtil.getTile(worldObj, offsetPos, TileEntityTank.class);
+				TileEntityTank tank = MFRUtil.getTile(world, offsetPos, TileEntityTank.class);
 				if (tank != null)
 					tank.part(to.getOpposite());
 			}
@@ -96,9 +96,9 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 
 		if (!inWorld) return;
 		for (EnumFacing to : EnumFacing.VALUES) {
-			if (to.getFrontOffsetY() != 0 || !worldObj.isBlockLoaded(pos.offset(to)))
+			if (to.getFrontOffsetY() != 0 || !world.isBlockLoaded(pos.offset(to)))
 				continue;
-			TileEntityTank tank = MFRUtil.getTile(worldObj, pos.offset(to), TileEntityTank.class);
+			TileEntityTank tank = MFRUtil.getTile(world, pos.offset(to), TileEntityTank.class);
 			if (tank != null && tank.grid != null && FluidHelper.isFluidEqualOrNull(tank.grid.getStorage().getFluid(), _tank.getFluid())) {
 				if (tank.grid != null)
 					if (tank.grid == grid || tank.grid.addNode(this)) {
@@ -115,7 +115,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	public void cofh_validate() {
 
 		super.cofh_validate();
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 		firstTick();
 	}
@@ -124,14 +124,14 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 
 		sides |= (1 << from.ordinal());
 		markChunkDirty();
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public void part(EnumFacing from) {
 
 		sides &= ~(1 << from.ordinal());
 		markChunkDirty();
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public boolean isInterfacing(EnumFacing to) {
@@ -167,7 +167,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 		_tank.setFluid(fluid);
 		sides = tag.getByte("sides");
 
-		worldObj.checkLight(pos);
+		world.checkLight(pos);
 	}
 
 	@Override
@@ -250,7 +250,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	public FluidStack drain(EnumFacing facing, int maxDrain, boolean doDrain) {
 
 		if (grid == null)
-			return worldObj.isRemote ? _tank.drain(maxDrain, false) : null;
+			return world.isRemote ? _tank.drain(maxDrain, false) : null;
 		return grid.getStorage().drain(maxDrain, doDrain);
 	}
 

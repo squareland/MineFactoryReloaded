@@ -80,7 +80,7 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 	@Override
 	protected boolean supportsShiftClick(EntityPlayer player, int slot) {
 
-		return !player.worldObj.isRemote ? true : slot > 37;
+		return !player.world.isRemote ? true : slot > 37;
 	}
 
 	@Override

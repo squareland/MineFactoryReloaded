@@ -130,8 +130,8 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 			handlerCache[side.ordinal()] = null;
 		ConnectionType lastConnection = sideConnection[side.ordinal()];
 
-		if (worldObj.isBlockLoaded(sidePos)) {
-			TileEntity te = MFRUtil.getTile(worldObj, sidePos);
+		if (world.isBlockLoaded(sidePos)) {
+			TileEntity te = MFRUtil.getTile(world, sidePos);
 			if (te instanceof TileEntityPlasticPipe) {
 				if(!initialized || sideConnection[side.ordinal()] != CABLE_DISCONNECTED) {
 					TileEntityPlasticPipe pipe = (TileEntityPlasticPipe) te;
@@ -155,7 +155,7 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 		}
 
 		if (!deadCache && lastConnection != sideConnection[side.ordinal()])
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@Override
@@ -164,7 +164,7 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 		boolean last = isPowered;
 		isPowered = upgrade.getPowered(CoreUtils.isRedstonePowered(this));
 		if (last != isPowered)
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@Override
@@ -185,16 +185,16 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 		super.cofh_validate();
 		deadCache = true;
 		handlerCache = null;
-		if (worldObj.isRemote) return;
+		if (world.isRemote) return;
 		updateCache();
 		markDirty();
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@Override
 	public void onNeighborTileChange(BlockPos neighborPos) {
 
-		if (worldObj.isRemote || deadCache)
+		if (world.isRemote || deadCache)
 			return;
 
 		Vec3i diff = neighborPos.subtract(pos);
@@ -262,7 +262,7 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 		notifyNeighborTileChange();
 		deadCache = true;
 		updateCache();
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@Override
@@ -270,10 +270,10 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 
 		if (subHit >= 0 && subHit < (2 + 6 * 2)) {
 			if (MFRUtil.isHoldingUsableTool(player, pos)) {
-				if (!worldObj.isRemote) {
+				if (!world.isRemote) {
 					EnumFacing side = subSide < 6 ? EnumFacing.VALUES[subSide] : null;
 					if (side != null && (sideConnection[side.ordinal()] == CABLE || sideConnection[side.ordinal()] == CABLE_DISCONNECTED)) {
-						TileEntityPlasticPipe cable = MFRUtil.getTile(worldObj, pos.offset(side), TileEntityPlasticPipe.class);
+						TileEntityPlasticPipe cable = MFRUtil.getTile(world, pos.offset(side), TileEntityPlasticPipe.class);
 						if (!canInterface(side)) {
 							if (cable.grid.mergeGrid(grid)) {
 								sideConnection[side.ordinal()] = CABLE;

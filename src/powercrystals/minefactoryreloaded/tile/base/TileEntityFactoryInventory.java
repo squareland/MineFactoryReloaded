@@ -85,29 +85,29 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 				if (itemstack == null || itemstack.getItem() == null) {
 					continue;
 				}
-				float xOffset = worldObj.rand.nextFloat() * 0.8F + 0.1F;
-				float yOffset = worldObj.rand.nextFloat() * 0.8F + 0.1F;
-				float zOffset = worldObj.rand.nextFloat() * 0.8F + 0.1F;
+				float xOffset = world.rand.nextFloat() * 0.8F + 0.1F;
+				float yOffset = world.rand.nextFloat() * 0.8F + 0.1F;
+				float zOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 				do {
 					if (itemstack.stackSize <= 0) {
 						continue inv;
 					}
-					int amountToDrop = worldObj.rand.nextInt(21) + 10;
+					int amountToDrop = world.rand.nextInt(21) + 10;
 					if (amountToDrop > itemstack.stackSize) {
 						amountToDrop = itemstack.stackSize;
 					}
 					itemstack.stackSize -= amountToDrop;
-					EntityItem entityitem = new EntityItem(worldObj,
+					EntityItem entityitem = new EntityItem(world,
 							pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset,
 							new ItemStack(itemstack.getItem(), amountToDrop, itemstack.getItemDamage()));
 					if (itemstack.getTagCompound() != null) {
 						entityitem.getEntityItem().setTagCompound(itemstack.getTagCompound());
 					}
 					float motionMultiplier = 0.05F;
-					entityitem.motionX = (float) worldObj.rand.nextGaussian() * motionMultiplier;
-					entityitem.motionY = (float) worldObj.rand.nextGaussian() * motionMultiplier + 0.2F;
-					entityitem.motionZ = (float) worldObj.rand.nextGaussian() * motionMultiplier;
-					worldObj.spawnEntityInWorld(entityitem);
+					entityitem.motionX = (float) world.rand.nextGaussian() * motionMultiplier;
+					entityitem.motionY = (float) world.rand.nextGaussian() * motionMultiplier + 0.2F;
+					entityitem.motionZ = (float) world.rand.nextGaussian() * motionMultiplier;
+					world.spawnEntityInWorld(entityitem);
 				} while (true);
 			}
 	}
@@ -244,7 +244,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 
 		super.update();
 
-		if (!worldObj.isRemote && shouldPumpLiquid()) {
+		if (!world.isRemote && shouldPumpLiquid()) {
 			for (IFluidTank tank : getTanks())
 				if (shouldPumpTank(tank))
 					MFRLiquidMover.pumpLiquid(tank, this);
@@ -435,7 +435,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 
-		if (isInvalid() || worldObj.getTileEntity(pos) != this) {
+		if (isInvalid() || world.getTileEntity(pos) != this) {
 			return false;
 		}
 		return entityplayer.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64D;

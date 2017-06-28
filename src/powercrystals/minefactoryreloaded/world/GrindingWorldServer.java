@@ -64,7 +64,7 @@ public class GrindingWorldServer extends WorldServerProxy {
 		}
 
 		if (allowSpawns) {
-			entity.worldObj = this.proxiedWorld;
+			entity.world = this.proxiedWorld;
 			return super.spawnEntityInWorld(entity);
 		}
 		entity.setDead();
@@ -79,10 +79,10 @@ public class GrindingWorldServer extends WorldServerProxy {
 	public boolean addEntityForGrinding(Entity entity) {
 
 		cofh_updateProps();
-		if (entity.worldObj == this)
+		if (entity.world == this)
 			return true;
-		if (entity.worldObj == this.proxiedWorld) {
-			entity.worldObj = this;
+		if (entity.world == this.proxiedWorld) {
+			entity.world = this;
 			entitiesToGrind.add(entity);
 			return true;
 		}
@@ -92,8 +92,8 @@ public class GrindingWorldServer extends WorldServerProxy {
 	public void clearReferences() {
 
 		for (Entity ent : entitiesToGrind) {
-			if (ent.worldObj == this)
-				ent.worldObj = this.proxiedWorld;
+			if (ent.world == this)
+				ent.world = this.proxiedWorld;
 		}
 		entitiesToGrind.clear();
 	}

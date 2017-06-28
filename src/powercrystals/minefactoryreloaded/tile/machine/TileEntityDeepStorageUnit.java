@@ -109,7 +109,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 
 		super.update();
 
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 	}
 
@@ -124,7 +124,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	protected void onFactoryInventoryChanged() {
 
 		super.onFactoryInventoryChanged();
-		if (_ignoreChanges | worldObj == null || worldObj.isRemote)
+		if (_ignoreChanges | world == null || world.isRemote)
 			return;
 
 		if (!isActive() && (_inventory[2] == null) & _storedItem != null & _storedQuantity == 0) {
@@ -310,7 +310,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	@SideOnly(Side.CLIENT)
 	public void setStoredItemRaw(ItemStack type) {
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			_storedItem = type;
 		}
 	}

@@ -47,17 +47,17 @@ public class EntityPinkSlime extends EntitySlime
 	{
 		if (size > 4)
 		{
-			worldObj.newExplosion(this, posX, posY, posZ, 0.1F, false, true);
+			world.newExplosion(this, posX, posY, posZ, 0.1F, false, true);
 			this.attackEntityFrom(DamageSource.generic, 50);
 
-			if(!worldObj.isRemote)
+			if(!world.isRemote)
 			{
-				ItemStack meats = new ItemStack(MFRThings.meatNuggetRawItem, worldObj.rand.nextInt(12) + size);
-				EntityItem e = new EntityItem(worldObj, posX, posY, posZ, meats);
+				ItemStack meats = new ItemStack(MFRThings.meatNuggetRawItem, world.rand.nextInt(12) + size);
+				EntityItem e = new EntityItem(world, posX, posY, posZ, meats);
 				e.motionX = rand.nextDouble() - 0.5D;
 				e.motionY = rand.nextDouble() - 0.5D;
 				e.motionZ = rand.nextDouble() - 0.5D;
-				worldObj.spawnEntityInWorld(e);
+				world.spawnEntityInWorld(e);
 			}
 		}
 		else
@@ -75,13 +75,13 @@ public class EntityPinkSlime extends EntitySlime
 	@Override
 	protected EntityPinkSlime createInstance()
 	{
-		return new EntityPinkSlime(this.worldObj);
+		return new EntityPinkSlime(this.world);
 	}
 
 	@Override
     public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
     {
-        if (!this.worldObj.isRemote)
+        if (!this.world.isRemote)
         {
         	this.setSlimeSize(this.getSlimeSize() + 3);
         }

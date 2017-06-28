@@ -87,13 +87,13 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	public void validate() {
 
 		super.validate();
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			createHAM(this, 1);
 			onFactoryInventoryChanged();
 			if (_treeManager != null && _areaManager.getHarvestArea().contains(_treeManager.getOrigin())) {
-				_treeManager.setWorld(worldObj);
+				_treeManager.setWorld(world);
 			} else {
-				_treeManager = new TreeHarvestManager(worldObj,
+				_treeManager = new TreeHarvestManager(world,
 						new Area(pos, 0, 0, 0),
 						HarvestMode.FruitTree, _immutableSettings);
 			}
@@ -156,25 +156,25 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		IBlockState state = worldObj.getBlockState(target);
+		IBlockState state = world.getBlockState(target);
 		Block harvestedBlock = state.getBlock();
 
 		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(harvestedBlock);
 
-		List<ItemStack> drops = harvestable.getDrops(worldObj, _rand, _immutableSettings, target);
+		List<ItemStack> drops = harvestable.getDrops(world, _rand, _immutableSettings, target);
 
-		harvestable.preHarvest(worldObj, target);
+		harvestable.preHarvest(world, target);
 
 		if (drops instanceof ArrayList) {
-			ForgeEventFactory.fireBlockHarvesting(drops, worldObj, target, state, 0,
+			ForgeEventFactory.fireBlockHarvesting(drops, world, target, state, 0,
 				1f, _settings.get("silkTouch"), null);
 		}
 
 		if (harvestable.breakBlock()) {
-			if (!worldObj.setBlockState(target, Blocks.AIR.getDefaultState(), 2))
+			if (!world.setBlockState(target, Blocks.AIR.getDefaultState(), 2))
 				return false;
 			if (_settings.get("playSounds") == Boolean.TRUE) {
-				worldObj.playEvent(null, 2001, target, Block.getStateId(state));
+				world.playEvent(null, 2001, target, Block.getStateId(state));
 			}
 		}
 
@@ -183,7 +183,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		doDrop(drops);
 		_tanks[0].fill(FluidRegistry.getFluidStack("sludge", 10), true);
 
-		harvestable.postHarvest(worldObj, target);
+		harvestable.postHarvest(world, target);
 
 		return true;
 	}
@@ -199,11 +199,11 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			if (extra > 0 && extra > _rand.nextInt(15))
 				return null;
 		}
-		if (!worldObj.isBlockLoaded(bp)) {
+		if (!world.isBlockLoaded(bp)) {
 			return null;
 		}
 
-		Block search = worldObj.getBlockState(bp).getBlock();
+		Block search = world.getBlockState(bp).getBlock();
 
 		if (!MFRRegistry.getHarvestables().containsKey(search)) {
 			_lastTree = null;
@@ -214,7 +214,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(search);
 		HarvestType type = harvestable.getHarvestType();
-		if (type == HarvestType.Gourd || harvestable.canBeHarvested(worldObj, _immutableSettings, bp)) {
+		if (type == HarvestType.Gourd || harvestable.canBeHarvested(world, _immutableSettings, bp)) {
 			switch (type) {
 			case Gourd:
 				return getNextAdjacent(bp, harvestable);
@@ -237,7 +237,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		for (EnumFacing side : EnumFacing.HORIZONTALS) {
 			BlockPos offsetPos = pos.offset(side);
-			if (worldObj.isBlockLoaded(offsetPos) && harvestable.canBeHarvested(worldObj, _immutableSettings, offsetPos))
+			if (world.isBlockLoaded(offsetPos) && harvestable.canBeHarvested(world, _immutableSettings, offsetPos))
 				return offsetPos;
 		}
 		return null;
@@ -251,9 +251,9 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		Block plant = harvestable.getPlant();
 		for (int currentYoffset = startOffset; currentYoffset < maxBlockOffset; ++currentYoffset) {
 			BlockPos offsetPos = pos.offset(EnumFacing.UP, currentYoffset);
-			Block block = worldObj.getBlockState(offsetPos).getBlock();
+			Block block = world.getBlockState(offsetPos).getBlock();
 			if (!block.equals(plant) ||
-					!harvestable.canBeHarvested(worldObj, _immutableSettings, offsetPos))
+					!harvestable.canBeHarvested(world, _immutableSettings, offsetPos))
 				break;
 
 			highestBlockOffset = currentYoffset;
@@ -282,7 +282,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 			Area a = new Area(_lastTree, MFRConfig.treeSearchMaxHorizontal.getInt(), lowerBound, upperBound);
 
-			_treeManager.reset(worldObj, a,
+			_treeManager.reset(world, a,
 				treeFlipped ? HarvestMode.HarvestTreeInverted : HarvestMode.HarvestTree,
 				_immutableSettings);
 		}
@@ -291,17 +291,17 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		while (!_treeManager.getIsDone()) {
 			BlockPos bp = _treeManager.getNextBlock();
 			_treeManager.moveNext();
-			if (!worldObj.isBlockLoaded(bp)) {
+			if (!world.isBlockLoaded(bp)) {
 				return null;
 			}
-			block = worldObj.getBlockState(bp).getBlock();
+			block = world.getBlockState(bp).getBlock();
 
 			if (harvestables.containsKey(block)) {
 				IFactoryHarvestable obj = harvestables.get(block);
 				HarvestType t = obj.getHarvestType();
 				if (t == HarvestType.Tree | t == HarvestType.TreeFlipped |
 						t == HarvestType.TreeLeaf | t == HarvestType.TreeFruit)
-					if (obj.canBeHarvested(worldObj, _immutableSettings, bp))
+					if (obj.canBeHarvested(world, _immutableSettings, bp))
 						return bp;
 			}
 		}

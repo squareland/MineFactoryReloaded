@@ -53,7 +53,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 
 		super.cofh_validate();
 		if (_rand == null) {
-			_rand = new Random(worldObj.getSeed() ^ worldObj.rand.nextLong());
+			_rand = new Random(world.getSeed() ^ world.rand.nextLong());
 		}
 		validateLocation();
 	}
@@ -80,7 +80,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 	@Override
 	public boolean activateMachine() {
 
-		if (_isJammed || worldObj.getTotalWorldTime() % 137 == 0) {
+		if (_isJammed || world.getTotalWorldTime() % 137 == 0) {
 			validateLocation();
 		}
 		if (_isJammed | _needItem)
@@ -90,9 +90,9 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 
 		if (getWorkDone() > getWorkMax()) {
 			setInventorySlotContents(0, ItemHelper.damageItem(_inventory[0], 1, _rand));
-			LootContext.Builder context = new LootContext.Builder((WorldServer)this.worldObj);
+			LootContext.Builder context = new LootContext.Builder((WorldServer)this.world);
 			context.withLuck(_luck);
-			for (ItemStack stack : this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(_rand, context.build())) {
+			for (ItemStack stack : this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(_rand, context.build())) {
 				if (_inventory[0] == null && isItemValidForSlot(0, stack)) {
 					setInventorySlotContents(0, stack);
 				} else {
@@ -142,7 +142,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 	protected boolean isFisher(int x, int y, int z) {
 
 		if (y == pos.getY() - 1 && !(x == pos.getX() && z == pos.getZ())) {
-			IBlockState state = worldObj.getBlockState(new BlockPos(x, pos.getY(), z));
+			IBlockState state = world.getBlockState(new BlockPos(x, pos.getY(), z));
 			if (state.getBlock() == _machine.getBlock()
 					&& state.getValue(BlockFactoryMachine.TYPE) == BlockFactoryMachine.Type.FISHER)
 				return true;
@@ -153,9 +153,9 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 	protected boolean isValidBlock(int x, int y, int z) {
 
 		BlockPos loc = new BlockPos(x, y, z);
-		if (!worldObj.isBlockLoaded(loc) || isFisher(x, y, z))
+		if (!world.isBlockLoaded(loc) || isFisher(x, y, z))
 			return false;
-		IBlockState state = worldObj.getBlockState(loc);
+		IBlockState state = world.getBlockState(loc);
 		if (state.getBlock() != Blocks.WATER || state.getValue(BlockFluidBase.LEVEL) != 0) return false;
 		Block block = state.getBlock();
 		return block.isAssociatedBlock(Blocks.WATER) || block.isAssociatedBlock(Blocks.FLOWING_WATER);
@@ -185,7 +185,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 		super.onFactoryInventoryChanged();
 		boost = 0;
 		_needItem = false;
-		if (!worldObj.isRemote && _inventory[0] != null) {
+		if (!world.isRemote && _inventory[0] != null) {
 			_luck = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, _inventory[0]);
 			_speed = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LURE, _inventory[0]);
 			boost = 75 * _speed + 75;

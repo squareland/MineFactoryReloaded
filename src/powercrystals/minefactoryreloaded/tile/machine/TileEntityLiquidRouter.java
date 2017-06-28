@@ -103,7 +103,7 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 		if (amountRemaining >= totalWeight(routes)) {
 			int startingAmount = amountRemaining;
 			for (int i = 0; i < routes.length; i++) {
-				TileEntity te = MFRUtil.getTile(worldObj, pos.offset(_outputDirections[i]));
+				TileEntity te = MFRUtil.getTile(world, pos.offset(_outputDirections[i]));
 				int amountForThisRoute = startingAmount * routes[i] / totalWeight(routes);
 				if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[i].getOpposite()) && amountForThisRoute > 0) {
 					amountRemaining -= te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[i].getOpposite())
@@ -117,7 +117,7 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 
 		if (0 < amountRemaining && amountRemaining < totalWeight(routes)) {
 			int outdir = weightedRandomSide(routes);
-			TileEntity te = MFRUtil.getTile(worldObj, pos.offset(_outputDirections[outdir]));
+			TileEntity te = MFRUtil.getTile(world, pos.offset(_outputDirections[outdir]));
 			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outdir].getOpposite())) {
 				amountRemaining -= te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outdir].getOpposite())
 						.fill(new FluidStack(resource, amountRemaining), doFill);
@@ -129,7 +129,7 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 
 	private int weightedRandomSide(int[] routeWeights) {
 
-		int random = worldObj.rand.nextInt(totalWeight(routeWeights));
+		int random = world.rand.nextInt(totalWeight(routeWeights));
 		for (int i = 0; i < routeWeights.length; i++) {
 			random -= routeWeights[i];
 			if (random < 0) {

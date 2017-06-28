@@ -75,8 +75,8 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 			_grindingWorld.clearReferences();
 			_grindingWorld.setMachine(null);
 		}
-		if (this.worldObj instanceof WorldServer)
-			_grindingWorld = new GrindingWorldServer((WorldServer) this.worldObj, this);
+		if (this.world instanceof WorldServer)
+			_grindingWorld = new GrindingWorldServer((WorldServer) this.world, this);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 	public boolean activateMachine() {
 
 		_grindingWorld.cleanReferences();
-		List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
 
 		entityList:
 		for (EntityLivingBase e : entities) {
@@ -129,7 +129,7 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 			{
 				if (MFRRegistry.getGrindables().containsKey(e.getClass())) {
 					IFactoryGrindable r = MFRRegistry.getGrindables().get(e.getClass());
-					List<MobDrop> drops = r.grind(e.worldObj, e, getRandom());
+					List<MobDrop> drops = r.grind(e.world, e, getRandom());
 					if (drops != null && drops.size() > 0 && WeightedRandom.getTotalWeight(drops) > 0) {
 						ItemStack drop = WeightedRandom.getRandomItem(_rand, drops).getStack();
 						doDrop(drop);

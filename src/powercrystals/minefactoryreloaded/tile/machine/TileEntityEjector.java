@@ -60,7 +60,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 	public void update() {
 
 		super.update();
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return;
 		}
 		boolean redstoneState = _rednetState != 0 || CoreUtils.isRedstonePowered(this);
@@ -68,7 +68,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 		if (redstoneState & !_lastRedstoneState & (!_whitelist | (_whitelist == _hasItems))) {
 			final EnumFacing facing = getDirectionFacing();
 			Map<EnumFacing, IInventory> chests = UtilInventory.
-					findChests(worldObj, pos, _pullDirections);
+					findChests(world, pos, _pullDirections);
 			inv:
 			for (Entry<EnumFacing, IInventory> chest : chests.entrySet()) {
 				if (chest.getKey() == facing) {

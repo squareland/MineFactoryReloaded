@@ -54,14 +54,14 @@ public class TileEntityFertilizer extends TileEntityFactoryPowered {
 	public boolean activateMachine() {
 
 		BlockPos bp = _areaManager.getNextBlock();
-		if (!worldObj.isBlockLoaded(bp)) {
+		if (!world.isBlockLoaded(bp)) {
 			setIdleTicks(getIdleTicksMax());
 			return false;
 		}
 
 		Map<Block, IFactoryFertilizable> fertalizables = MFRRegistry.getFertilizables();
 
-		Block target = worldObj.getBlockState(bp).getBlock();
+		Block target = world.getBlockState(bp).getBlock();
 		if (!fertalizables.containsKey(target)) {
 			setIdleTicks(getIdleTicksMax());
 			return false;
@@ -79,13 +79,13 @@ public class TileEntityFertilizer extends TileEntityFactoryPowered {
 
 			if (type == FertilizerType.None)
 				continue;
-			if (!fertilizable.canFertilize(worldObj, bp, type))
+			if (!fertilizable.canFertilize(world, bp, type))
 				continue;
 
-			if (fertilizable.fertilize(worldObj, _rand, bp, type)) {
+			if (fertilizable.fertilize(world, _rand, bp, type)) {
 				fertilizer.consume(fertStack);
 				if (MFRConfig.playSounds.getBoolean(true)) // particles
-					worldObj.playEvent(null, 2005, bp, _rand.nextInt(10) + 5);
+					world.playEvent(null, 2005, bp, _rand.nextInt(10) + 5);
 				if (fertStack.stackSize <= 0)
 					setInventorySlotContents(stackIndex, null);
 

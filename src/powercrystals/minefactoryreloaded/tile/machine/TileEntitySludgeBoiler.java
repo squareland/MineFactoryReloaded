@@ -92,7 +92,7 @@ public class TileEntitySludgeBoiler extends TileEntityFactoryPowered {
 			}
 
 			if (_tick >= 23) {
-				List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _area.toAxisAlignedBB());
+				List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, _area.toAxisAlignedBB());
 				for (EntityLivingBase ent : entities) {
 					ent.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 20 * 20, 0));
 					ent.addPotionEffect(new PotionEffect(MobEffects.POISON, 6 * 20, 0));
@@ -119,7 +119,7 @@ public class TileEntitySludgeBoiler extends TileEntityFactoryPowered {
 			int color = MFRFluids.sludgeLiquid.color;
 			for (int a = 8 >> s, i = 4 >> s;
 				 i-- > 0; )
-				worldObj.spawnParticle(_rand.nextInt(a) == 0 ? EnumParticleTypes.SPELL_MOB : EnumParticleTypes.SPELL_MOB_AMBIENT,
+				world.spawnParticle(_rand.nextInt(a) == 0 ? EnumParticleTypes.SPELL_MOB : EnumParticleTypes.SPELL_MOB_AMBIENT,
 						_area.xMin + _rand.nextFloat() * (_area.xMax - _area.xMin),
 						_area.yMin + _rand.nextFloat() * (_area.yMax - _area.yMin),
 						_area.zMin + _rand.nextFloat() * (_area.zMax - _area.zMin),

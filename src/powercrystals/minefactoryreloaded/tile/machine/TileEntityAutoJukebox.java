@@ -50,7 +50,7 @@ public class TileEntityAutoJukebox extends TileEntityFactoryInventory {
 
 	public boolean getCanCopy() {
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return _canCopy;
 		} else if (_inventory[0] != null && _inventory[0].getItem() instanceof ItemRecord && _inventory[1] != null &&
 				_inventory[1].getItem().equals(MFRThings.blankRecordItem)) {
@@ -67,7 +67,7 @@ public class TileEntityAutoJukebox extends TileEntityFactoryInventory {
 
 	public boolean getCanPlay() {
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return _canPlay;
 		} else if (_inventory[0] != null && _inventory[0].getItem() instanceof ItemRecord) {
 			return true;
@@ -77,7 +77,7 @@ public class TileEntityAutoJukebox extends TileEntityFactoryInventory {
 
 	public void copyRecord() {
 
-		if (!worldObj.isRemote && getCanCopy()) {
+		if (!world.isRemote && getCanCopy()) {
 			_inventory[1] = _inventory[0].copy();
 		}
 	}
@@ -85,14 +85,14 @@ public class TileEntityAutoJukebox extends TileEntityFactoryInventory {
 	public void playRecord() {
 
 		if (_inventory[0] != null && _inventory[0].getItem() instanceof ItemRecord)
-			worldObj.playEvent(1010, pos, Item.getIdFromItem(_inventory[0].getItem()));
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+			world.playEvent(1010, pos, Item.getIdFromItem(_inventory[0].getItem()));
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public void stopRecord() {
 
-		worldObj.playEvent(1010, pos, 0);
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		world.playEvent(1010, pos, 0);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class TileEntityAutoJukebox extends TileEntityFactoryInventory {
 
 		super.update();
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return;
 		}
 

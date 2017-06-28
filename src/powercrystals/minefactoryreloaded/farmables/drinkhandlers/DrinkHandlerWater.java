@@ -20,7 +20,7 @@ public class DrinkHandlerWater implements ILiquidDrinkHandler {
 
 		player.extinguish();
 		NBTTagCompound tag = player.getEntityData();
-		World world = player.worldObj;
+		World world = player.world;
 		if (tag.hasKey("drankLavaTime") && (world.getTotalWorldTime() - tag.getLong("drankLavaTime")) < 100) {
 			//{
 			EntityItem entityitem = player.entityDropItem(new ItemStack(Blocks.OBSIDIAN), player.getEyeHeight());

@@ -70,21 +70,21 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 				} else {
 					fillPos = pos.up();
 				}
-				if (!worldObj.isBlockLoaded(fillPos)) break l;
+				if (!world.isBlockLoaded(fillPos)) break l;
 
-				IBlockState state = worldObj.getBlockState(fillPos);
+				IBlockState state = world.getBlockState(fillPos);
 				Block block = state.getBlock();
 				if (_reverse) {
 					idleTicks = 10;
 					l2: if (state.getMaterial().isLiquid())
 						if (block instanceof IFluidBlock) {
 							IFluidBlock fluidBlock = ((IFluidBlock) block);
-							if (!fluidBlock.canDrain(worldObj, fillPos))
+							if (!fluidBlock.canDrain(world, fillPos))
 								break l;
-							FluidStack fluid = fluidBlock.drain(worldObj, fillPos, false);
+							FluidStack fluid = fluidBlock.drain(world, fillPos, false);
 							int amt = _tanks[0].fill(fluid, false);
 							if (amt != fluid.amount) break l2;
-							_tanks[0].fill(fluidBlock.drain(worldObj, fillPos, true), true);
+							_tanks[0].fill(fluidBlock.drain(world, fillPos, true), true);
 							setIdleTicks(5);
 							return true;
 						}
@@ -99,16 +99,16 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 								if (_tanks[0].fill(new FluidStack(FluidRegistry.LAVA, BUCKET_VOLUME), true) != 0)
 									drained = true;
 							if (drained) {
-								worldObj.setBlockToAir(fillPos);
+								world.setBlockToAir(fillPos);
 								setIdleTicks(5);
 								return true;
 							}
 						}
 				}
-				else if (block.isReplaceable(worldObj, fillPos)) {
+				else if (block.isReplaceable(world, fillPos)) {
 					if (state.getMaterial().isLiquid())
 						if (block instanceof BlockFluidClassic) {
-							if (((BlockFluidClassic) block).isSourceBlock(worldObj, fillPos))
+							if (((BlockFluidClassic) block).isSourceBlock(world, fillPos))
 								break l;
 						}
 						else if (block instanceof BlockLiquid) {
@@ -118,11 +118,11 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 					if (_tanks[0].getFluid().getFluid().doesVaporize(_tanks[0].getFluid())) {
 						FluidStack drained = _tanks[0].getFluid().copy();
 						drained.amount = drain(BUCKET_VOLUME, true, _tanks[0]);
-						_tanks[0].getFluid().getFluid().vaporize(null, worldObj, fillPos, drained);
+						_tanks[0].getFluid().getFluid().vaporize(null, world, fillPos, drained);
 						setIdleTicks(1);
 						return true;
 					}
-					else if (worldObj.setBlockState(fillPos, getFlowingState(_tanks[0].getFluid()), 11)) {// TODO: when forge supports NBT fluid blocks, adapt this
+					else if (world.setBlockState(fillPos, getFlowingState(_tanks[0].getFluid()), 11)) {// TODO: when forge supports NBT fluid blocks, adapt this
 						drain(BUCKET_VOLUME, true, _tanks[0]);
 						setIdleTicks(1);
 						return true;
@@ -165,9 +165,9 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 				_areaManager.setUpgradeLevel(r);
 				Area area = new Area(pos.up(), r, 0, r * 2);
 				if (_fillingManager == null)
-					_fillingManager = new FluidFillingManager(worldObj, area);
+					_fillingManager = new FluidFillingManager(world, area);
 				else
-					_fillingManager.reset(worldObj, area, null, null);
+					_fillingManager.reset(world, area, null, null);
 			} else if (r < 0) {
 				_reverse = true;
 				r = -r;
@@ -175,9 +175,9 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 					_areaManager.setUpgradeLevel(r - 1);
 					Area area = new Area(pos.up(), r, 0, r * 2);
 					if (_fillingManager == null)
-						_fillingManager = new FluidFillingManager(worldObj, area);
+						_fillingManager = new FluidFillingManager(world, area);
 					else
-						_fillingManager.reset(worldObj, area, null, null);
+						_fillingManager.reset(world, area, null, null);
 				}
 			} else {
 				_fillingManager = null;

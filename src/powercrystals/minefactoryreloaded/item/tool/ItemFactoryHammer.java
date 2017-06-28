@@ -167,10 +167,10 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 
-		IBlockState state = player.worldObj.getBlockState(pos);
-		if (state.getBlockHardness(player.worldObj, pos) > 2.9f) {
+		IBlockState state = player.world.getBlockState(pos);
+		if (state.getBlockHardness(player.world, pos) > 2.9f) {
 			Random rnd = player.getRNG();
-			player.worldObj.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 0.8F + rnd.nextFloat() * 0.4F, 0.4F);
+			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 0.8F + rnd.nextFloat() * 0.4F, 0.4F);
 
 			for (int i = 0, e = 10 + rnd.nextInt(5); i < e; ++i) {
 				Vec3d vec3 = new Vec3d((rnd.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
@@ -180,7 +180,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 				vec31.rotatePitch(-player.rotationPitch * (float) Math.PI / 180.0F);
 				vec31.rotateYaw(-player.rotationYaw * (float) Math.PI / 180.0F);
 				vec31 = vec31.addVector(player.posX, player.posY + player.getEyeHeight(), player.posZ);
-				player.worldObj.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord,
+				player.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord,
 					vec3.yCoord + 0.05D, vec3.zCoord, Block.getStateId(Blocks.FIRE.getDefaultState()));
 			}
 			return true;

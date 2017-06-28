@@ -100,7 +100,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return false;
 		}
 		ItemStack input = _inventory[0];

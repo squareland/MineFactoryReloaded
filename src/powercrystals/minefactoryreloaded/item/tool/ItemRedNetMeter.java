@@ -50,7 +50,7 @@ public class ItemRedNetMeter extends ItemMulti {
 		if (stack.getItemDamage() != 2)
 			return false;
 		player.swingArm(hand);
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			return true;
 		player.addChatMessage(new TextComponentString("ID: " + EntityList.getEntityString(entity)));
 		return true;

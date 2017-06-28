@@ -269,7 +269,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 	public static boolean captureEntity(ItemStack itemstack, EntityLivingBase entity, EntityPlayer player, EnumHand hand) {
 
-		if (entity.worldObj.isRemote) {
+		if (entity.world.isRemote) {
 			return false;
 		}
 		if (!isEmpty(itemstack)) {
@@ -300,7 +300,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 					itemstack.stackSize = 1;
 					itemstack.setTagCompound(c);
 					if (flag && (player == null || !player.inventory.addItemStackToInventory(itemstack)))
-						UtilInventory.dropStackInAir(entity.worldObj, entity, itemstack);
+						UtilInventory.dropStackInAir(entity.world, entity, itemstack);
 					else if (flag) {
 						player.openContainer.detectAndSendChanges();
 						((EntityPlayerMP) player).updateCraftingInventory(player.openContainer,

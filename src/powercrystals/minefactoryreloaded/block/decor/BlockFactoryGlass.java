@@ -1,11 +1,9 @@
 package powercrystals.minefactoryreloaded.block.decor;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import codechicken.lib.model.blockbakery.BlockBakery;
-import codechicken.lib.model.blockbakery.CCBakeryModel;
-import codechicken.lib.model.blockbakery.IBakeryBlock;
-import codechicken.lib.model.blockbakery.ICustomBlockBakery;
-import codechicken.lib.texture.SpriteSheetManager;
+import codechicken.lib.model.bakery.CCBakeryModel;
+import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.generation.IBakery;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
 import net.minecraft.block.BlockGlass;
@@ -46,7 +44,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, IBakeryBlock, IInitializer, IModelRegister, IColorRegister
+public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, IBakeryProvider, IInitializer, IModelRegister, IColorRegister
 {
 	public static final PropertyEnum<MFRDyeColor> COLOR = PropertyEnum.create("color", MFRDyeColor.class); //TODO move properties to one place
 	public static final IUnlistedProperty<Integer>[] CTM_VALUE = new IUnlistedProperty[6];
@@ -217,7 +215,7 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	}
 
 	@Override
-	public ICustomBlockBakery getCustomBakery() {
+	public IBakery getBakery() {
 		
 		return FactoryGlassRenderer.INSTANCE;
 	}

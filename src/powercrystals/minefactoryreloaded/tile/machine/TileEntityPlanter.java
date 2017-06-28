@@ -50,7 +50,7 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 	public boolean activateMachine() {
 
 		BlockPos bp = _areaManager.getNextBlock();
-		if (!worldObj.isBlockLoaded(bp)) {
+		if (!world.isBlockLoaded(bp)) {
 			setIdleTicks(getIdleTicksMax());
 			return false;
 		}
@@ -75,11 +75,11 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 			IFactoryPlantable plantable = MFRRegistry.getPlantables().get(availableStack.getItem());
 
 			if (!plantable.canBePlanted(availableStack, false) ||
-					!plantable.canBePlantedHere(worldObj, bp, availableStack))
+					!plantable.canBePlantedHere(world, bp, availableStack))
 				continue;
 
-			ReplacementBlock block = plantable.getPlantedBlock(worldObj, bp, availableStack);
-			if (block == null || !block.replaceBlock(worldObj, bp, availableStack))
+			ReplacementBlock block = plantable.getPlantedBlock(world, bp, availableStack);
+			if (block == null || !block.replaceBlock(world, bp, availableStack))
 				continue;
 			decrStackSize(stackIndex, 1);
 			return true;

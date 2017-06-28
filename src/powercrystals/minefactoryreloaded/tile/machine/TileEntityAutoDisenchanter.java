@@ -115,7 +115,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 						_inventory[4] = new ItemStack(Items.BOOK, 1);
 					}
 				} else {
-					int enchIndex = worldObj.rand.nextInt(list.tagCount());
+					int enchIndex = world.rand.nextInt(list.tagCount());
 					enchTag = list.getCompoundTagAt(enchIndex);
 
 					list.removeTag(enchIndex);
@@ -127,10 +127,10 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 					}
 
 					if (stack.isItemStackDamageable()) {
-						int damage = worldObj.rand.nextInt(1 + (stack.getMaxDamage() / 4));
+						int damage = world.rand.nextInt(1 + (stack.getMaxDamage() / 4));
 						int m = stack.getMaxDamage();
 						damage = Math.min(m, damage + 1 + (m / 10)) + (m == 1 ? 1 : 0);
-						if (stack.attemptDamageItem(damage, worldObj.rand)) {
+						if (stack.attemptDamageItem(damage, world.rand)) {
 							_inventory[4] = null;
 						}
 					}

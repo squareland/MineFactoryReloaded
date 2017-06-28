@@ -48,7 +48,7 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	@Override
 	public void update() {
 		super.update();
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			if (deadCache) reCache();
 
 			boolean skipConsumption = ++_ticksSinceLastConsumption < _ticksBetweenConsumption;
@@ -139,7 +139,7 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	@Override
 	public void onNeighborTileChange(BlockPos pos) {
 
-		TileEntity tile = worldObj.getTileEntity(pos);
+		TileEntity tile = world.getTileEntity(pos);
 
 		int xCoord = this.pos.getX(), yCoord = this.pos.getY(), zCoord = this.pos.getZ();
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();

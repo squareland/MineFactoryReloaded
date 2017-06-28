@@ -63,15 +63,15 @@ public class TileEntityBlockPlacer extends TileEntityFactoryPowered {
 			Block block = item.getBlock();
 
 			BlockPos bp = pos.offset(getDirectionFacing());
-			if (worldObj.isAirBlock(bp) &&
-					block.canPlaceBlockOnSide(worldObj, bp, EnumFacing.DOWN)) {
+			if (world.isAirBlock(bp) &&
+					block.canPlaceBlockOnSide(world, bp, EnumFacing.DOWN)) {
 				int j1 = item.getMetadata(stack.getItemDamage());
-				FakePlayer fakePlayer = FakePlayerFactory.getMinecraft((WorldServer) worldObj);
-				IBlockState placementState = block.getStateForPlacement(worldObj, bp, EnumFacing.DOWN, 0, 0, 0, j1, fakePlayer, stack);
-				if (item.placeBlockAt(stack, fakePlayer, worldObj, bp, EnumFacing.DOWN, 0, 0, 0, placementState)) {
+				FakePlayer fakePlayer = FakePlayerFactory.getMinecraft((WorldServer) world);
+				IBlockState placementState = block.getStateForPlacement(world, bp, EnumFacing.DOWN, 0, 0, 0, j1, fakePlayer, stack);
+				if (item.placeBlockAt(stack, fakePlayer, world, bp, EnumFacing.DOWN, 0, 0, 0, placementState)) {
 					if (MFRConfig.playSounds.getBoolean(true)) {
-						SoundType soundType = block.getSoundType(placementState, worldObj, bp, null);
-						worldObj.playSound(null, bp, soundType.getStepSound(), SoundCategory.BLOCKS,
+						SoundType soundType = block.getSoundType(placementState, world, bp, null);
+						world.playSound(null, bp, soundType.getStepSound(), SoundCategory.BLOCKS,
 							(soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
 					}
 					decrStackSize(i, 1);

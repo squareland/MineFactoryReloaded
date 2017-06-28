@@ -34,7 +34,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 	private Random rand = new Random();
 
 	/** Running variables */
-	private World worldObj;
+	private World world;
 	private int[] basePos = new int[] { 0, 0, 0 };
 	private int heightLimit = 0;
 	private int minHeight = -1;
@@ -184,14 +184,14 @@ public class WorldGenMassiveTree extends WorldGenerator {
 					do {
 						z = Z + zMod * t;
 						BlockPos placementPos = placement.setPos(x, y, z);
-						IBlockState state = worldObj.getBlockState(placementPos);
+						IBlockState state = world.getBlockState(placementPos);
 						Block block = state.getBlock();
 
-						if (safeGrowth ? (block.isAir(state, worldObj, placementPos) ||
-								block.isLeaves(state, worldObj, placementPos) ||
-								block.canBeReplacedByLeaves(state, worldObj, placementPos)) :
+						if (safeGrowth ? (block.isAir(state, world, placementPos) ||
+								block.isLeaves(state, world, placementPos) ||
+								block.canBeReplacedByLeaves(state, world, placementPos)) :
 								block != Blocks.BEDROCK) {
-							this.setBlockAndNotifyAdequately(worldObj, x, y, z, leaves.getDefaultState());
+							this.setBlockAndNotifyAdequately(world, x, y, z, leaves.getDefaultState());
 						}
 
 						if (t == 1) break;
@@ -271,7 +271,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 					}
 				}
 
-				this.setBlockAndNotifyAdequately(worldObj, var14[0], var14[1], var14[2], state.withProperty(BlockRubberWood.LOG_AXIS, axis));
+				this.setBlockAndNotifyAdequately(world, var14[0], var14[1], var14[2], state.withProperty(BlockRubberWood.LOG_AXIS, axis));
 			}
 		}
 	}
@@ -305,11 +305,11 @@ public class WorldGenMassiveTree extends WorldGenerator {
 						topPoint[1] = y + sinc2(lim * i, lim * j, height) - (rand.nextInt(3) - 1);
 
 					this.placeBlockLine(bottomPoint, topPoint, log.getDefaultState());
-					this.setBlockAndNotifyAdequately(worldObj, topPoint[0], topPoint[1], topPoint[2],
+					this.setBlockAndNotifyAdequately(world, topPoint[0], topPoint[1], topPoint[2],
 							log.getDefaultState().withProperty(BlockRubberWood.LOG_AXIS, BlockLog.EnumAxis.NONE));
 					BlockPos placementPos = placement.setPos(bottomPoint[0], bottomPoint[1] - 1, bottomPoint[2]);
-					IBlockState state = worldObj.getBlockState(placementPos);
-					state.getBlock().onPlantGrow(state, worldObj, placementPos, base);
+					IBlockState state = world.getBlockState(placementPos);
+					state.getBlock().onPlantGrow(state, world, placementPos, base);
 				}
 			}
 		}
@@ -389,14 +389,14 @@ public class WorldGenMassiveTree extends WorldGenerator {
 				var13[var6] = MathHelper.floor_float(par1[var6] + var14 * var9);
 				var13[var7] = MathHelper.floor_float(par1[var7] + var14 * var11);
 				BlockPos pos = placement.setPos(var13[0], var13[1], var13[2]);
-				IBlockState state = worldObj.getBlockState(pos);
+				IBlockState state = world.getBlockState(pos);
 				Block block = state.getBlock();
 
-				if (safeGrowth ? !(block.isAir(state, worldObj, pos) ||
-						block.isReplaceable(worldObj, pos) ||
-						block.canBeReplacedByLeaves(state, worldObj, pos) ||
-						block.isLeaves(state, worldObj, pos) ||
-						block.isWood(worldObj, pos) ||
+				if (safeGrowth ? !(block.isAir(state, world, pos) ||
+						block.isReplaceable(world, pos) ||
+						block.canBeReplacedByLeaves(state, world, pos) ||
+						block.isLeaves(state, world, pos) ||
+						block.isWood(world, pos) ||
 						block instanceof BlockSapling) :
 						block == Blocks.BEDROCK)
 					break;
@@ -418,10 +418,10 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		heightLimit = newHeight;
 
 		BlockPos pos = placement.setPos(basePos[0], basePos[1] - 1, basePos[2]);
-		IBlockState state = worldObj.getBlockState(pos);
+		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 
-		if (!block.canSustainPlant(state, worldObj, pos, EnumFacing.UP, MFRThings.rubberSaplingBlock))
+		if (!block.canSustainPlant(state, world, pos, EnumFacing.UP, MFRThings.rubberSaplingBlock))
 			return false;
 		else {
 			int[] var5 = new int[] { basePos[0], basePos[1], basePos[2] };
@@ -535,7 +535,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 	public boolean generate(World world, Random par2Random, BlockPos pos) {
 
 		//long time = System.nanoTime();
-		worldObj = world;
+		world = world;
 		long var6 = par2Random.nextLong();
 		rand.setSeed(var6);
 		basePos[0] = pos.getX();

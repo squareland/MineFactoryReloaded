@@ -58,14 +58,14 @@ public class EntityFishingRod extends EntityThrowable {
 			motionY *= -0.5D;
 		}
 
-		if (worldObj.isRemote) {
-			worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY + 0.25, posZ, 0, 0, 0);
+		if (world.isRemote) {
+			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY + 0.25, posZ, 0, 0, 0);
 		} else if (fuse-- <= 0) {
 			explode();
 			setDead();
 		} else if (fuse == 1) {
-			if (worldObj instanceof WorldServer) {
-				((WorldServer)worldObj).setEntityState(this, (byte)18);
+			if (world instanceof WorldServer) {
+				((WorldServer)world).setEntityState(this, (byte)18);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public class EntityFishingRod extends EntityThrowable {
 	public void handleStatusUpdate(byte id) {
 		super.handleStatusUpdate(id);
 		if (id == 18) {
-			IBlockState state = worldObj.getBlockState(new BlockPos((int) Math.floor(posX), (int) Math.floor(posY + 0.25), (int) Math.floor(posZ)));
+			IBlockState state = world.getBlockState(new BlockPos((int) Math.floor(posX), (int) Math.floor(posY + 0.25), (int) Math.floor(posZ)));
 			Block block = state.getBlock();
 			if (block.isAssociatedBlock(Blocks.WATER) || block.isAssociatedBlock(Blocks.FLOWING_WATER)) {
 				double f = 0.75;
@@ -85,7 +85,7 @@ public class EntityFishingRod extends EntityThrowable {
 					for (int i = 60; i --> 0; ) {
 						double x = MathHelper.cos((i * 6) * Math.PI / 180) * m;
 						double z = MathHelper.sin((i * 6) * Math.PI / 180) * m;
-						worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, posX, posY + 0.25, posZ, x * f, y * f, z * f,
+						world.spawnParticle(EnumParticleTypes.BLOCK_DUST, posX, posY + 0.25, posZ, x * f, y * f, z * f,
 								Block.getStateId(Blocks.WATER.getDefaultState()));
 					}
 				}
@@ -95,16 +95,16 @@ public class EntityFishingRod extends EntityThrowable {
 
 	private void explode() {
 		float f = 2.5F;
-		worldObj.createExplosion(this, this.posX, this.posY, this.posZ, f, true);
+		world.createExplosion(this, this.posX, this.posY, this.posZ, f, true);
 		int rate = MFRConfig.fishingDropRate.getInt();
 		for (float x = (float)(posX - f); x < posX + f; ++x)
 			for (float y = (float)(posY - f); y < posY + f; ++y)
 				for (float z = (float)(posZ - f); z < posZ + f; ++z) {
-					Block block = worldObj.getBlockState(new BlockPos((int)Math.floor(x), (int)Math.floor(y), (int)Math.floor(z))).getBlock();
+					Block block = world.getBlockState(new BlockPos((int)Math.floor(x), (int)Math.floor(y), (int)Math.floor(z))).getBlock();
 					if (block.isAssociatedBlock(Blocks.WATER) || block.isAssociatedBlock(Blocks.FLOWING_WATER))
 						if (rand.nextInt(rate) == 0) {
-							LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
-							Iterator iterator = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING_FISH).
+							LootContext.Builder builder = new LootContext.Builder((WorldServer)this.world);
+							Iterator iterator = this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING_FISH).
 									generateLootForPools(rand, builder.build()).iterator();
 
 							while (iterator.hasNext()) {
@@ -113,11 +113,11 @@ public class EntityFishingRod extends EntityThrowable {
 								if (rand.nextInt(30) == 0 && ((smelted = FurnaceRecipes.instance().getSmeltingResult(stack)) != null)) {
 									stack = smelted;
 								}
-								EntityItem e = new EntityItem(worldObj, x, y, z, stack);
+								EntityItem e = new EntityItem(world, x, y, z, stack);
 								e.motionX = rand.nextGaussian() / 2;
 								e.motionZ = rand.nextGaussian() / 2;
 								e.motionY = 0.4 + (rand.nextDouble() - 0.4) / 2;
-								worldObj.spawnEntityInWorld(e);
+								world.spawnEntityInWorld(e);
 							}
 						}
 				}

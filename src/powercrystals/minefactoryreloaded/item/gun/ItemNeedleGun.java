@@ -84,7 +84,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 			}
 
 			if (!(world.isRemote | creative)) {
-				UtilInventory.dropStackInAir(player.worldObj, player, new ItemStack(MFRThings.needlegunAmmoEmptyItem, 1), 5);
+				UtilInventory.dropStackInAir(player.world, player, new ItemStack(MFRThings.needlegunAmmoEmptyItem, 1), 5);
 			}
 		}
 		stack.setTagInfo("ammo", t);

@@ -65,7 +65,7 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 
 	private void unifyInventory() {
 
-		if (worldObj != null && !worldObj.isRemote) {
+		if (world != null && !world.isRemote) {
 			ItemStack output;
 			if (_inventory[0] != null) {
 				List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory[0]);

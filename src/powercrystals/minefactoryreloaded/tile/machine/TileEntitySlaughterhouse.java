@@ -44,7 +44,7 @@ public class TileEntitySlaughterhouse extends TileEntityGrinder
 	public boolean activateMachine()
 	{
 		_grindingWorld.cleanReferences();
-		List<?> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
+		List<?> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
 
 		entityList: for(Object o : entities)
 		{

@@ -143,7 +143,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 				return false;
 			}
 
-			Entity spawnedEntity = _spawn = EntityList.createEntityByName(entityID, worldObj);
+			Entity spawnedEntity = _spawn = EntityList.createEntityByName(entityID, world);
 
 			if (!(spawnedEntity instanceof EntityLivingBase)) {
 				_spawn = null;
@@ -165,7 +165,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 
 			if (!_spawnExact) {
 				if (spawnedLiving instanceof EntityLiving)
-					((EntityLiving) spawnedLiving).onInitialSpawn(worldObj.getDifficultyForLocation(pos), null);
+					((EntityLiving) spawnedLiving).onInitialSpawn(world.getDifficultyForLocation(pos), null);
 				if (handler != null)
 					handler.onMobSpawn(spawnedLiving);
 			} else {
@@ -194,22 +194,22 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 
 			EntityLivingBase spawnedLiving = (EntityLivingBase) spawnedEntity;
 
-			double x = pos.getX() + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * _spawnRange;
-			double y = pos.getY() + worldObj.rand.nextInt(3) - 1;
-			double z = pos.getZ() + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * _spawnRange;
+			double x = pos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * _spawnRange;
+			double y = pos.getY() + world.rand.nextInt(3) - 1;
+			double z = pos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * _spawnRange;
 
-			spawnedLiving.setLocationAndAngles(x, y, z, worldObj.rand.nextFloat() * 360.0F, 0.0F);
+			spawnedLiving.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
 
-			if (!worldObj.checkNoEntityCollision(spawnedLiving.getEntityBoundingBox()) ||
-					!worldObj.getCollisionBoxes(spawnedLiving, spawnedLiving.getEntityBoundingBox()).isEmpty() ||
-					(worldObj.containsAnyLiquid(spawnedLiving.getEntityBoundingBox()) != (spawnedLiving instanceof EntityWaterMob))) {
+			if (!world.checkNoEntityCollision(spawnedLiving.getEntityBoundingBox()) ||
+					!world.getCollisionBoxes(spawnedLiving, spawnedLiving.getEntityBoundingBox()).isEmpty() ||
+					(world.containsAnyLiquid(spawnedLiving.getEntityBoundingBox()) != (spawnedLiving instanceof EntityWaterMob))) {
 				// TODO: mob valid spawn location logic shifted to mob, but includes random shit too. need to review the logic
 				setIdleTicks(10);
 				return false;
 			}
 
-			worldObj.spawnEntityInWorld(spawnedLiving);
-			worldObj.playEvent(2004, pos, 0);
+			world.spawnEntityInWorld(spawnedLiving);
+			world.playEvent(2004, pos, 0);
 
 			if (spawnedLiving instanceof EntityLiving) {
 				((EntityLiving) spawnedLiving).spawnExplosionParticle();

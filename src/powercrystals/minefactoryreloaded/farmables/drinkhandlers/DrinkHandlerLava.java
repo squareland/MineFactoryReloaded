@@ -15,7 +15,7 @@ public class DrinkHandlerLava implements ILiquidDrinkHandler {
 		player.attackEntityFrom(new InternalLavaDamage(), 7);
 		player.setFire(30);
 		NBTTagCompound tag = player.getEntityData();
-		tag.setLong("drankLavaTime", player.worldObj.getTotalWorldTime());
+		tag.setLong("drankLavaTime", player.world.getTotalWorldTime());
 	}
 	
 	protected class InternalLavaDamage extends DamageSource {

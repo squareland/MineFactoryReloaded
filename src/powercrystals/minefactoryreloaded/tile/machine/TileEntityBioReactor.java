@@ -75,7 +75,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 
 		super.update();
 
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			Map<Item, IFactoryPlantable> plantables = MFRRegistry.getPlantables();
 			for (int i = 0; i < 9; i++) {
 				ItemStack item = _inventory[i];

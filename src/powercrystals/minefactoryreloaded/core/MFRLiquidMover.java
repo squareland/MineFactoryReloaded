@@ -44,7 +44,7 @@ public abstract class MFRLiquidMover {
 					drop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).drain(liquid, true);
 					if (!entityplayer.capabilities.isCreativeMode) {
 						disposePlayerItem(heldItem, drop, entityplayer, true);
-						if (!entityplayer.worldObj.isRemote) {
+						if (!entityplayer.world.isRemote) {
 							entityplayer.openContainer.detectAndSendChanges();
 							((EntityPlayerMP) entityplayer).updateCraftingInventory(entityplayer.openContainer, entityplayer.openContainer.getInventory());
 						}
@@ -92,7 +92,7 @@ public abstract class MFRLiquidMover {
 					continue;
 
 				if (containerToDrop == null || disposePlayerItem(heldItem, containerToDrop, entityplayer, MFRConfig.dropFilledContainers.getBoolean(true))) {
-					if (!entityplayer.worldObj.isRemote) {
+					if (!entityplayer.world.isRemote) {
 						entityplayer.openContainer.detectAndSendChanges();
 						((EntityPlayerMP) entityplayer).updateCraftingInventory(entityplayer.openContainer, entityplayer.openContainer.getInventory());
 					}

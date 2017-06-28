@@ -69,7 +69,7 @@ public class EntitySafariNet extends EntityThrowable {
 		if (ItemSafariNet.isEmpty(storedEntity)) {
 			dropAsStack(storedEntity);
 		} else {
-			ItemSafariNet.releaseEntity(storedEntity, worldObj, result.getBlockPos(), result.sideHit);
+			ItemSafariNet.releaseEntity(storedEntity, world, result.getBlockPos(), result.sideHit);
 			if (ItemSafariNet.isSingleUse(storedEntity)) {
 				dropAsStack(null);
 			} else {
@@ -86,7 +86,7 @@ public class EntitySafariNet extends EntityThrowable {
 			dropAsStack(storedEntity);
 		} else {
 			if (!ItemSafariNet.isEmpty(storedEntity)) {
-				Entity releasedEntity = ItemSafariNet.releaseEntity(storedEntity, worldObj, result.entityHit.getPosition(), EnumFacing.UP);
+				Entity releasedEntity = ItemSafariNet.releaseEntity(storedEntity, world, result.entityHit.getPosition(), EnumFacing.UP);
 
 				if (result.entityHit instanceof EntityLivingBase) {
 					if (releasedEntity instanceof EntityLiving) {
@@ -142,10 +142,10 @@ public class EntitySafariNet extends EntityThrowable {
 
 	protected void dropAsStack(ItemStack stack) {
 
-		if (!worldObj.isRemote && stack != null) {
-			EntityItem ei = new EntityItem(worldObj, posX, posY, posZ, stack.copy());
+		if (!world.isRemote && stack != null) {
+			EntityItem ei = new EntityItem(world, posX, posY, posZ, stack.copy());
 			ei.setPickupDelay(40);
-			worldObj.spawnEntityInWorld(ei);
+			world.spawnEntityInWorld(ei);
 		}
 		setDead();
 	}
