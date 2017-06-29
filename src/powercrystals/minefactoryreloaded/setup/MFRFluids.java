@@ -111,7 +111,7 @@ public class MFRFluids {
 				while (i > 0) {
 					int j = EntityXPOrb.getXPSplit(i);
 					i -= j;
-					world.spawnEntityInWorld(new EntityXPOrb(world,
+					world.spawnEntity(new EntityXPOrb(world,
 							pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), j));
 				}
 				return true;

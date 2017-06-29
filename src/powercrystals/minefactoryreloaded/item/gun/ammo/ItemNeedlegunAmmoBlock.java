@@ -34,10 +34,10 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 
 	protected Vec3d calculatePlacement(Entity hit) {
 		AxisAlignedBB bb = hit.getEntityBoundingBox();
-		int i = MathHelper.floor_double(bb.minX + 0.001D);
-		int k = MathHelper.floor_double(bb.minZ + 0.001D);
-		int l = MathHelper.floor_double(bb.maxX - 0.001D);
-		int j1 = MathHelper.floor_double(bb.maxZ - 0.001D);
+		int i = MathHelper.floor(bb.minX + 0.001D);
+		int k = MathHelper.floor(bb.minZ + 0.001D);
+		int l = MathHelper.floor(bb.maxX - 0.001D);
+		int j1 = MathHelper.floor(bb.maxZ - 0.001D);
 		return new Vec3d((i + l) / 2, bb.minY + 0.25, (k + j1) / 2);
 	}
 

@@ -86,7 +86,7 @@ public class TileEntityFertilizer extends TileEntityFactoryPowered {
 				fertilizer.consume(fertStack);
 				if (MFRConfig.playSounds.getBoolean(true)) // particles
 					world.playEvent(null, 2005, bp, _rand.nextInt(10) + 5);
-				if (fertStack.stackSize <= 0)
+				if (fertStack.getCount() <= 0)
 					setInventorySlotContents(stackIndex, null);
 
 				return true;

@@ -24,7 +24,10 @@ public abstract class ItemFactoryGun extends ItemFactory {
 	protected abstract String getDelayTag(ItemStack stack);
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+
+		ItemStack stack = player.getHeldItem(hand);
+
 		if (stack.getTagCompound() == null)
 			stack.setTagCompound(new NBTTagCompound());
 

@@ -109,17 +109,17 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 			setWorkDone(0);
 			return false;
 		}
-		if (input.stackSize <= 0) {
+		if (input.getCount() <= 0) {
 			setInventorySlotContents(0, null);
 			setWorkDone(0);
 			return false;
 		}
 		if (output != null) {
-			if (output.stackSize >= output.getMaxStackSize() || output.stackSize >= getInventoryStackLimit()) {
+			if (output.getCount() >= output.getMaxStackSize() || output.getCount() >= getInventoryStackLimit()) {
 				setWorkDone(0);
 				return false;
 			}
-			if (output.stackSize <= 0) {
+			if (output.getCount() <= 0) {
 				setInventorySlotContents(1, null);
 				output = null;
 			}
@@ -132,15 +132,15 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 				setInventorySlotContents(1, input);
 			}
 			else if (input.isItemEqual(output) && ItemStack.areItemStackTagsEqual(input, output)) {
-				int amountToCopy = Math.min(output.getMaxStackSize() - output.stackSize, input.stackSize);
-				amountToCopy = Math.min(getInventoryStackLimit() - output.stackSize, amountToCopy);
+				int amountToCopy = Math.min(output.getMaxStackSize() - output.getCount(), input.getCount());
+				amountToCopy = Math.min(getInventoryStackLimit() - output.getCount(), amountToCopy);
 				if (amountToCopy <= 0) {
 					setWorkDone(0);
 					return false;
 				}
-				output.stackSize += amountToCopy;
-				input.stackSize -= amountToCopy;
-				if (input.stackSize <= 0) {
+				output.grow(amountToCopy);
+				input.shrink(amountToCopy);
+				if (input.getCount() <= 0) {
 					setInventorySlotContents(0, null);
 				}
 			}
@@ -160,16 +160,17 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 					setWorkDone(0);
 					return false;
 				}
-				if (--input.stackSize <= 0) {
+				input.shrink(1);
+				if (input.getCount() <= 0) {
 					_inventory[0] = null;
 				}
-				output.stackSize++;
+				output.shrink(1);
 				setInventorySlotContents(1, output);
 				setWorkDone(0);
 			}
 			else if (output == null) {
 				output = AutoEnchantmentHelper.addRandomEnchantment(this._rand, input, _targetLevel);
-				if (input.stackSize <= 0) {
+				if (input.getCount() <= 0) {
 					_inventory[0] = null;
 				}
 				setInventorySlotContents(1, output);
@@ -214,7 +215,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 		if(slot == 0) {
 			ItemStack contents = _inventory[0];
 			// TODO: limit input to glass bottles and items with an enchantability > 0
-			return contents == null || (contents.stackSize < getInventoryStackLimit() &&
+			return contents == null || (contents.getCount() < getInventoryStackLimit() &&
 					input.isItemEqual(contents) && ItemStack.areItemStackTagsEqual(input, contents));
 		}
 		return false;

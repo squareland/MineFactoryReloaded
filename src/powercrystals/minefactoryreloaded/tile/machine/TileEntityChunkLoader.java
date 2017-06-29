@@ -76,7 +76,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 
 		if (unableToRequestTicket &&
 				inventoryPlayer.player.getName().equals(_owner)) {
-			inventoryPlayer.player.addChatMessage(
+			inventoryPlayer.player.sendMessage(
 					new TextComponentTranslation("chat.info.mfr.chunkloader.noticket"));
 		}
 		return new ContainerChunkLoader(this, inventoryPlayer);

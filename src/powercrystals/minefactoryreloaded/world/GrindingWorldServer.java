@@ -42,7 +42,7 @@ public class GrindingWorldServer extends WorldServerProxy {
 	}
 
 	@Override
-	public boolean spawnEntityInWorld(Entity entity) {
+	public boolean spawnEntity(Entity entity) {
 
 		if (grinder != null) {
 			if (entity instanceof EntityItem) {
@@ -65,7 +65,7 @@ public class GrindingWorldServer extends WorldServerProxy {
 
 		if (allowSpawns) {
 			entity.world = this.proxiedWorld;
-			return super.spawnEntityInWorld(entity);
+			return super.spawnEntity(entity);
 		}
 		entity.setDead();
 		return true;

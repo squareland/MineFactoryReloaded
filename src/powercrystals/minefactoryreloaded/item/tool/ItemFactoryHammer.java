@@ -50,13 +50,15 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world,
 			BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+
+		ItemStack stack = player.getHeldItem(hand);
 
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (block != null) {
-			PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, stack, pos, side, new Vec3d(hitX, hitY, hitZ));
+			PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(hitX, hitY, hitZ));
 			if (MinecraftForge.EVENT_BUS.post(e) || e.getResult() == Result.DENY
 					|| e.getUseBlock() == Result.DENY || e.getUseItem() == Result.DENY) {
 				return EnumActionResult.PASS;

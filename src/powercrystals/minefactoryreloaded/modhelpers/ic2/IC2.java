@@ -1,9 +1,9 @@
 package powercrystals.minefactoryreloaded.modhelpers.ic2;
 
 import cofh.asm.relauncher.Strippable;
+import ic2.api.recipe.IRecipeInput;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import ic2.api.item.IC2Items;
 import ic2.api.recipe.ISemiFluidFuelManager.BurnProperty;
-import ic2.api.recipe.RecipeInputItemStack;
 import ic2.api.recipe.Recipes;
 
 import net.minecraft.block.Block;
@@ -25,11 +24,13 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import java.util.Collections;
+import java.util.List;
 
 /*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatIC2",
 		name = "MFR Compat: IC2",
@@ -97,9 +98,17 @@ public class IC2 {
 			});
 
 			ItemStack item = new ItemStack(MFRThings.rubberSaplingBlock);
-			rubber.stackSize = 1;
+			rubber.setCount(1);
 			try {
-				Recipes.extractor.addRecipe(new RecipeInputItemStack(item), null, false, rubber);
+				Recipes.extractor.addRecipe(
+						new IRecipeInput() {
+							@Override public boolean matches(ItemStack itemStack) {
+								return itemStack.getItem() == Item.getItemFromBlock(MFRThings.rubberSaplingBlock);
+							}
+							@Override public int getAmount() { return 1; }
+							@Override public List<ItemStack> getInputs() { return Collections.singletonList(item); }
+						}
+					, null, false, rubber);
 			} catch (Throwable $) {
 				ModContainer This = FMLCommonHandler.instance().findContainerFor(this);
 				LogManager.getLogger(This.getModId()).log(Level.ERROR, "There was a problem loading " + This.getName(), $);

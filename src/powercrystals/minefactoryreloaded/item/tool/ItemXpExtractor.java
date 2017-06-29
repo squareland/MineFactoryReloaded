@@ -63,12 +63,13 @@ public class ItemXpExtractor extends ItemFactoryTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+
 		if (player.experienceLevel > 0 && UtilInventory.playerHasItem(player, Items.BUCKET)) {
 			player.setActiveHand(hand);
 		}
 
-		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
 	@Nullable

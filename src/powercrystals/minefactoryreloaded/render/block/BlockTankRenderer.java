@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.render.block;
 
-import codechicken.lib.model.bakery.PlanarFaceBakery;
-import codechicken.lib.model.blockbakery.ISimpleBlockBakery;
+import codechicken.lib.model.PlanarFaceBakery;
+import codechicken.lib.model.bakery.generation.ISimpleBlockBakery;
 import codechicken.lib.texture.SpriteSheetManager;
 import codechicken.lib.texture.TextureUtils;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -9,9 +9,10 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fluids.FluidStack;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -52,12 +53,12 @@ public class BlockTankRenderer implements ISimpleBlockBakery {
 	public static final BlockTankRenderer INSTANCE = new BlockTankRenderer();
 
 	@Override
-	public IExtendedBlockState handleState(IExtendedBlockState state, TileEntity tileEntity) {
+	public IExtendedBlockState handleState(IExtendedBlockState state, IBlockAccess world, BlockPos pos) {
 
 		String fluid = null;
 		byte sides = 0;
-		if (tileEntity instanceof TileEntityTank) {
-			TileEntityTank tank = (TileEntityTank) tileEntity;
+		if (world.getTileEntity(pos) instanceof TileEntityTank) {
+			TileEntityTank tank = (TileEntityTank) world.getTileEntity(pos);
 
 			if (tank.getFluid() != null)
 				fluid = tank.getFluid().getFluid().getStill().toString();

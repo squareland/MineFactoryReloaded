@@ -85,7 +85,7 @@ public class FruitIC2Resin implements IFactoryFruit, IFactoryFertilizable
 	{
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		ItemStack a = _resin.copy();
-		a.stackSize = 1 + rand.nextInt(3);
+		a.setCount(1 + rand.nextInt(3));
 		list.add(a);
 		return list;
 	}

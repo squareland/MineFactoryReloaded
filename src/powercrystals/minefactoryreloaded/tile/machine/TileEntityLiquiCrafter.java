@@ -89,7 +89,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 			if (_resourcesChangedSinceLastFailedCraft && recipe != null &&
 					_inventory[9] != null &&
 					(_inventory[10] == null ||
-							(_inventory[10].stackSize + _inventory[9].stackSize <= _inventory[9].getMaxStackSize() &&
+							(_inventory[10].getCount() + _inventory[9].getCount() <= _inventory[9].getMaxStackSize() &&
 									ItemHelper.itemsEqualWithMetadata(_inventory[9], _inventory[10], true))))
 				checkResources();
 		}
@@ -131,7 +131,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		for (int i = 11; i < 29; i++) {
 			ItemStack item = _inventory[i];
 			if (item != null) {
-				int size = item.stackSize;
+				int size = item.getCount();
 				for (ItemResourceTracker t : requiredItems) {
 					if (t.fluid != null && t.fluid.isFluidEqual(MFRUtil.getFluidContents(item))) {
 						int a = MFRUtil.getFluidContents(item).amount;
@@ -209,16 +209,16 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 							if (nul)
 								_inventory[i] = null;
 						} else if (fluid) {
-							int use2 = Math.min((int) Math.ceil(t.required / (float) use), item.stackSize);
-							item.stackSize -= use2;
+							int use2 = Math.min((int) Math.ceil(t.required / (float) use), item.getCount());
+							item.shrink(use2);
 							use = Math.min(use * use2, t.required);
 						} else {
-							use = Math.min(t.required, item.stackSize);
-							item.stackSize -= use;
+							use = Math.min(t.required, item.getCount());
+							item.shrink(use);
 						}
 						t.required -= use;
 
-						if (item.stackSize <= 0)
+						if (item.getCount() <= 0)
 							_inventory[i] = null;
 
 						if (t.required == 0) {
@@ -270,7 +270,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 			_inventory[10] = ItemHelper.cloneStack(_inventory[9]);
 		} else {
 			if (ItemHelper.itemsEqualWithMetadata(_inventory[10], _inventory[9], true))
-				_inventory[10].stackSize += _inventory[9].stackSize;
+				_inventory[10].grow(_inventory[9].getCount());
 			else
 				outputs.add(ItemHelper.cloneStack(_inventory[9]));
 		}
@@ -313,7 +313,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
+	public boolean isUsableByPlayer(EntityPlayer player) {
 
 		return player.getDistanceSq(pos) <= 64D;
 	}
@@ -521,8 +521,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 			NBTTagList nbttaglist = tag.getTagList("OutItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0; ) {
 				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				ItemStack item = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-				if (item != null && item.stackSize > 0) {
+				ItemStack item = new ItemStack(nbttagcompound1);
+				if (item != null && item.getCount() > 0) {
 					drops.add(item);
 				}
 			}

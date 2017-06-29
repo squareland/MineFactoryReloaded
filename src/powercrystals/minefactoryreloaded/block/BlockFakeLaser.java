@@ -134,7 +134,7 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 
 		world.scheduleBlockUpdate(pos, this, 1, 1);
 	}

@@ -66,9 +66,9 @@ public class IMCHandler {
 				 */
 				if ("addLaserPreferredOre".equals(k)) {
 					if (m.isNBTMessage()) {
-						NBTTagCompound item = m.getNBTValue();
-						MFRRegistry.addLaserPreferredOre(item.getInteger("value"),
-							ItemStack.loadItemStackFromNBT(item));
+						NBTTagCompound itemNBT = m.getNBTValue();
+						MFRRegistry.addLaserPreferredOre(itemNBT.getInteger("value"),
+							new ItemStack(itemNBT));
 					} else {
 						ValuedItem item = (ValuedItem) getValue(m);
 						MFRRegistry.addLaserPreferredOre(item.value, item.item);
@@ -125,9 +125,9 @@ public class IMCHandler {
 				 */
 				else if ("registerLaserOre".equals(k)) {
 					if (m.isNBTMessage()) {
-						NBTTagCompound item = m.getNBTValue();
-						MFRRegistry.registerLaserOre(item.getInteger("value"),
-							ItemStack.loadItemStackFromNBT(item));
+						NBTTagCompound itemNBT = m.getNBTValue();
+						MFRRegistry.registerLaserOre(itemNBT.getInteger("value"),
+							new ItemStack(itemNBT));
 					} else {
 						ValuedItem item = (ValuedItem) getValue(m);
 						MFRRegistry.registerLaserOre(item.value, item.item);
@@ -199,9 +199,9 @@ public class IMCHandler {
 				 */
 				else if ("registerSludgeDrop".equals(k)) {
 					if (m.isNBTMessage()) {
-						NBTTagCompound item = m.getNBTValue();
-						MFRRegistry.registerSludgeDrop(item.getInteger("value"),
-							ItemStack.loadItemStackFromNBT(item));
+						NBTTagCompound itemNBT = m.getNBTValue();
+						MFRRegistry.registerSludgeDrop(itemNBT.getInteger("value"),
+							new ItemStack(itemNBT));
 					} else {
 						ValuedItem item = (ValuedItem) getValue(m);
 						MFRRegistry.registerSludgeDrop(item.value, item.item);

@@ -39,7 +39,7 @@ public class ItemSyringeGrowth extends ItemSyringe
 		{
 			EntityGiantZombie e = new EntityGiantZombie(world);
 			e.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
-			world.spawnEntityInWorld(e);
+			world.spawnEntity(e);
 			entity.setDead();
 		}
 		return true;

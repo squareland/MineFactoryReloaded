@@ -46,7 +46,7 @@ public class EntityHandler {
 						e.getMinecart().setDead();
 						EntityMinecartMobSpawner ent = new EntityMinecartMobSpawner(e.getMinecart().world);
 						ent.readFromNBT(tag);
-						ent.world.spawnEntityInWorld(ent);
+						ent.world.spawnEntity(ent);
 						ent.world.playEvent(null, 2004, ent.getPosition(), 0); // particles
 					}
 				}
@@ -64,7 +64,7 @@ public class EntityHandler {
 		if (stack.getItem().equals(rubberLeavesItem) && stack.getItemDamage() == 0) {
 			e.setCanceled(true);
 			e.setExtraLife(e.getEntityItem().lifespan);
-			e.getEntityItem().setEntityItemStack(new ItemStack(stack.getItem(), stack.stackSize, 1));
+			e.getEntityItem().setEntityItemStack(new ItemStack(stack.getItem(), stack.getCount(), 1));
 		}
 	}
 

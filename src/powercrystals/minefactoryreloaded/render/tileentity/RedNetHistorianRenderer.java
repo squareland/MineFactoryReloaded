@@ -166,7 +166,7 @@ public class RedNetHistorianRenderer extends TileEntitySpecialRenderer  implemen
 	}
 
 	@Override
-	public void renderItem(ItemStack item) {
+	public void renderItem(ItemStack item, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 

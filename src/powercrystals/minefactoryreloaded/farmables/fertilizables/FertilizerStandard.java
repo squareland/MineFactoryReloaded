@@ -40,6 +40,6 @@ public class FertilizerStandard implements IFactoryFertilizer
 	@Override
 	public void consume(ItemStack fertilizer)
 	{
-		fertilizer.stackSize--;
+		fertilizer.shrink(1);
 	}
 }

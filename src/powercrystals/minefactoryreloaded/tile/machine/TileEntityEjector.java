@@ -82,7 +82,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 				set:
 				for (Entry<Integer, ItemStack> stack : contents.entrySet()) {
 					ItemStack itemstack = stack.getValue();
-					if (itemstack == null || itemstack.stackSize < 1 || !inventory.canRemoveItem(itemstack, stack.getKey()))
+					if (itemstack == null || itemstack.getCount() < 1 || !inventory.canRemoveItem(itemstack, stack.getKey()))
 						continue;
 
 					boolean hasMatch = false;
@@ -91,7 +91,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 					for (int i = getSizeItemList(); i-- > 0; )
 						if (itemMatches(_inventory[i], itemstack)) {
 							hasMatch = true;
-							amt = Math.max(1, _inventory[i].stackSize);
+							amt = Math.max(1, _inventory[i].getCount());
 							break;
 						}
 
@@ -99,14 +99,14 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 						continue set;
 
 					ItemStack stackToDrop = itemstack.copy();
-					amt = Math.min(itemstack.stackSize, amt);
-					stackToDrop.stackSize = amt;
+					amt = Math.min(itemstack.getCount(), amt);
+					stackToDrop.setCount(amt);
 					ItemStack remaining = UtilInventory.dropStack(this, stackToDrop,
 							facing, facing);
 
 					// remaining == null if dropped successfully.
-					if (remaining == null || remaining.stackSize < amt) {
-						inventory.removeItem(amt - (remaining == null ? 0 : remaining.stackSize), stackToDrop);
+					if (remaining == null || remaining.getCount() < amt) {
+						inventory.removeItem(amt - (remaining == null ? 0 : remaining.getCount()), stackToDrop);
 						break inv;
 					}
 				}

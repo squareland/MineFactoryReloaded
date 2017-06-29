@@ -106,8 +106,10 @@ public class ItemPortaSpawner extends ItemFactory {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack itemstack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
+
+		ItemStack itemstack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.SUCCESS;
@@ -126,14 +128,14 @@ public class ItemPortaSpawner extends ItemFactory {
 				return EnumActionResult.PASS;
 		} else {
 			if (getDelay(itemstack) <= 0 &&
-					placeBlock(itemstack, player, world, pos, side, xOffset, yOffset, zOffset)) {
+					placeBlock(itemstack, player, hand, world, pos, side, xOffset, yOffset, zOffset)) {
 				return EnumActionResult.SUCCESS;
 			}
 			return EnumActionResult.PASS;
 		}
 	}
 
-	private boolean placeBlock(ItemStack itemstack, EntityPlayer player, World world, BlockPos pos, EnumFacing side,
+	private boolean placeBlock(ItemStack itemstack, EntityPlayer player, EnumHand hand, World world, BlockPos pos, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
 
 		IBlockState state = world.getBlockState(pos);
@@ -147,20 +149,20 @@ public class ItemPortaSpawner extends ItemFactory {
 			placePos = placePos.offset(side);
 		}
 
-		if (itemstack.stackSize == 0) {
+		if (itemstack.getCount() == 0) {
 			return false;
 		} else if (!player.canPlayerEdit(placePos, side, itemstack)) {
 			return false;
 		} else if (placePos.getY() == 255 && state.getMaterial().isSolid()) {
 			return false;
-		} else if (world.canBlockBePlaced(_block, placePos, false, side, player, itemstack)) {
-			IBlockState placedState = _block.getStateForPlacement(world, placePos, side, xOffset, yOffset, zOffset, 0, player, itemstack);
+		} else if (world.mayPlace(_block, placePos, false, side, player)) {
+			IBlockState placedState = _block.getStateForPlacement(world, placePos, side, xOffset, yOffset, zOffset, 0, player, hand);
 
 			if (placeBlockAt(itemstack, player, world, placePos, side, xOffset, yOffset, zOffset, placedState)) {
 				SoundType soundType = block.getSoundType(state, world, placePos, null);
 				world.playSound(null, placePos.getX() + 0.5F, placePos.getY() + 0.5F, placePos.getZ() + 0.5F, soundType.getStepSound(), SoundCategory.BLOCKS,
 					(soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
-				--itemstack.stackSize;
+				itemstack.shrink(1);
 			}
 
 			return true;

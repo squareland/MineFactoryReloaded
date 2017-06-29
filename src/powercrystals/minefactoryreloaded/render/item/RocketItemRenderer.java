@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.render.item;
 
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.texture.TextureUtils;
 import codechicken.lib.util.TransformUtils;
 import codechicken.lib.vec.SwapYZ;
@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.TRSRTransformation;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.entity.EntityRocket;
 import powercrystals.minefactoryreloaded.render.entity.EntityRocketRenderer;
 
 import java.util.Map;
@@ -24,7 +23,8 @@ public class RocketItemRenderer extends BaseItemRenderer {
 
 	public RocketItemRenderer() {
 
-		Map<String, CCModel> models = CCOBJParser.parseObjModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket.obj"), new SwapYZ());
+		Map<String, CCModel> models = OBJParser
+				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket.obj"), new SwapYZ());
 		launcherModel = models.get("Tube");
 
 		TRSRTransformation thirdPerson = TransformUtils.get(0, 0, 1, 90, 180, 0, 0.015f);

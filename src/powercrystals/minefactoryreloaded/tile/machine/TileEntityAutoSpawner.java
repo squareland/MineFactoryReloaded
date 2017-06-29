@@ -12,6 +12,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -92,14 +93,14 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 			int t = Math.abs(el.experienceValue) + 1;
 			r += t + t / 3;
 
-			for (int j = 0; j < el.inventoryArmor.length; ++j) {
-				if (el.inventoryArmor[j] != null && el.inventoryArmorDropChances[j] <= 1.0F) {
+			for (int j = 0; j < el.inventoryArmor.size(); ++j) {
+				if (!el.inventoryArmor.get(j).isEmpty() && el.inventoryArmorDropChances[j] <= 1.0F) {
 					r += 1 + 4;
 				}
 			}
 
-			for (int k = 0; k < el.inventoryHands.length; ++k) {
-				if (el.inventoryHands[k] != null && el.inventoryHandsDropChances[k] <= 1.0F) {
+			for (int k = 0; k < el.inventoryHands.size(); ++k) {
+				if (!el.inventoryHands.get(k).isEmpty() && el.inventoryHandsDropChances[k] <= 1.0F) {
 					r += 1 + 4;
 				}
 			}
@@ -126,7 +127,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 			boolean isBlackListed = MFRRegistry.getAutoSpawnerBlacklist().contains(entityID);
 			blackList:
 			if (!isBlackListed) {
-				Class<?> e = (Class<?>) EntityList.NAME_TO_CLASS.get(entityID);
+				Class<?> e = EntityList.getClass(new ResourceLocation(entityID));
 				if (e == null) {
 					isBlackListed = true;
 					break blackList;
@@ -143,7 +144,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 				return false;
 			}
 
-			Entity spawnedEntity = _spawn = EntityList.createEntityByName(entityID, world);
+			Entity spawnedEntity = _spawn = EntityList.createEntityByIDFromName(new ResourceLocation(entityID), world);
 
 			if (!(spawnedEntity instanceof EntityLivingBase)) {
 				_spawn = null;
@@ -208,7 +209,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 				return false;
 			}
 
-			world.spawnEntityInWorld(spawnedLiving);
+			world.spawnEntity(spawnedLiving);
 			world.playEvent(2004, pos, 0);
 
 			if (spawnedLiving instanceof EntityLiving) {

@@ -68,9 +68,9 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public void setWorldObj(World world) {
+	public void setWorld(World world) {
 
-		super.setWorldObj(world);
+		super.setWorld(world);
 		if (_grindingWorld != null) {
 			_grindingWorld.clearReferences();
 			_grindingWorld.setMachine(null);

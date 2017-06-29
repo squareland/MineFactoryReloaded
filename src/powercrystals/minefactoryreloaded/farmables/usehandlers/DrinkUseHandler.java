@@ -34,7 +34,7 @@ public class DrinkUseHandler implements IUseHandler {
 
 	@Override
 	public boolean isUsable(ItemStack item) {
-		return item.stackSize == 1 && isDrinkableLiquid(getFluidName(item));
+		return item.getCount() == 1 && isDrinkableLiquid(getFluidName(item));
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class DrinkUseHandler implements IUseHandler {
 
 		String liquid = getFluidName(item);
 		ItemStack r = item;
-		if (item.stackSize == 1 && liquid != null &&
+		if (item.getCount() == 1 && liquid != null &&
 				entity instanceof EntityPlayer && isDrinkableLiquid(liquid)) {
 			EntityPlayer player = (EntityPlayer)entity;
 			FluidStack stack;
@@ -55,7 +55,7 @@ public class DrinkUseHandler implements IUseHandler {
 				ItemStack drop = item.splitStack(1);
 				IFluidHandler fluidHandler = drop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 				stack = fluidHandler.drain(Fluid.BUCKET_VOLUME, true);
-				if (item.stackSize < 1)
+				if (item.getCount() < 1)
 					item = drop;
 				else if (drop != null && !player.inventory.addItemStackToInventory(drop))
 					player.dropItem(drop, false, true);
@@ -68,7 +68,7 @@ public class DrinkUseHandler implements IUseHandler {
 		if (item == null)
 		{
 			item = r;
-			item.stackSize = 0;
+			item.setCount(0);
 		}
 		return item;
 	}

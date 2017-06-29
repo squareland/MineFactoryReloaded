@@ -65,25 +65,25 @@ public abstract class Schematic {
             if (req.getItemDamage() + stack.getItemDamage() <= stack.getMaxDamage()) {
                 stack.setItemDamage(req.getItemDamage() + stack.getItemDamage());
                 result.setItemDamage(req.getItemDamage());
-                req.stackSize = 0;
+                req.setCount(0);
             }
 
             if (stack.getItemDamage() >= stack.getMaxDamage()) {
                 slot.decreaseStackInSlot(1);
             }
         } else {
-            if (stack.stackSize >= req.stackSize) {
-                result.stackSize = req.stackSize;
-                stack.stackSize -= req.stackSize;
-                req.stackSize = 0;
+            if (stack.getCount() >= req.getCount()) {
+                result.setCount(req.getCount());
+                stack.shrink(req.getCount());
+                req.setCount(0);
             } else {
-                req.stackSize -= stack.stackSize;
-                stack.stackSize = 0;
+                req.shrink(stack.getCount());
+                stack.setCount(0);
             }
         }
 
-        if (stack.stackSize == 0) {
-            stack.stackSize = 1;
+        if (stack.getCount() == 0) {
+            stack.setCount(1);
             if (stack.getItem().hasContainerItem(stack)) {
                 ItemStack newStack = stack.getItem().getContainerItem(stack);
                 slot.setStackInSlot(newStack);
@@ -134,7 +134,7 @@ public abstract class Schematic {
 
         if (stacksUsed != null) {
             for (ItemStack s : stacksUsed) {
-                result += s.stackSize ;//* BuilderAPI.BUILD_ENERGY;
+                result += s.getCount() ;//* BuilderAPI.BUILD_ENERGY;
             }
         }
 

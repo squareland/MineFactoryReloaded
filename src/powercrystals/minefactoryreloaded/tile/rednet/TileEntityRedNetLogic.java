@@ -377,9 +377,9 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		writeCricuitsOnly(tag, false);
 		if (tag.hasKey("circuits", 9)) {
 			tag.setByte("p_rot", (byte) world.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal());
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.uploaded"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.uploaded"));
 		} else {
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.empty"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.empty"));
 		}
 	}
 
@@ -387,15 +387,15 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 	public void readPortableData(EntityPlayer player, NBTTagCompound tag) {
 
 		if (!canRotate()) {
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error2"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error2"));
 			return;
 		}
 		int circuitCount = tag.getTagList("circuits", 10).tagCount();
 		if (circuitCount > getCircuitCount()) {
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error"));
 		} else {
 			readCircuitsOnly(tag);
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.downloaded"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.downloaded"));
 		}
 	}
 

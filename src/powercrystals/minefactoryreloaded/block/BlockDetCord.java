@@ -73,7 +73,7 @@ public class BlockDetCord extends BlockFactory {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World w, BlockPos pos, AxisAlignedBB t, List l, Entity e) {
+	public void addCollisionBoxToList(IBlockState state, World w, BlockPos pos, AxisAlignedBB t, List l, Entity e, boolean p_185477_7_) {
 
 	}
 

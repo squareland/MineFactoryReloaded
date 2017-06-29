@@ -145,13 +145,13 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
-		if (stack.stackSize <= 0)
+		if (stack.getCount() <= 0)
 			return null;
 		ItemStack r = stack.copy();
 		NBTTagCompound tag = r.getTagCompound();
 		if (tag != null) {
 			if (tag.hasKey("drained")) {
-				r.stackSize = 1;
+				r.setCount(1);
 				r.attemptDamageItem(1, itemRand);
 			}
 			tag.removeTag("drained");
@@ -172,7 +172,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	public boolean hasDrinkableLiquid(ItemStack stack) {
 
 		IFluidTankProperties[] tankProps = getFluidHandler(stack).getTankProperties();
-		return stack.stackSize == 1 &&
+		return stack.getCount() == 1 &&
 				MFRRegistry.getLiquidDrinkHandlers().containsKey(getFluidName(stack)) &&
 				getFluid(stack).amount == tankProps[0].getCapacity();
 	}
@@ -203,11 +203,13 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack item, World world, EntityPlayer entity, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+
+		ItemStack item = player.getHeldItem(hand);
 		for (IUseHandler handler : useHandlers)
-			if (handler.canUse(item, entity, hand))
-				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, handler.onTryUse(item, world, entity, hand));
-		return new ActionResult<ItemStack>(EnumActionResult.PASS, item);
+			if (handler.canUse(item, player, hand))
+				return new ActionResult<>(EnumActionResult.SUCCESS, handler.onTryUse(item, world, player, hand));
+		return new ActionResult<>(EnumActionResult.PASS, item);
 	}
 
 	@Override
@@ -321,7 +323,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		@Override
 		public int fill(FluidStack resource, boolean doFill) {
 
-			if (resource == null || stack.stackSize != 1)
+			if (resource == null || stack.getCount() != 1)
 				//|| resource.getFluid().getTemperature(resource) > MELTING_POINT)
 				return 0;
 			int fillAmount = 0, capacity = getTankProperties()[0].getCapacity();

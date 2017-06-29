@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlass;
@@ -117,7 +119,7 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 	}
 	
 	@Override
-	public IExtendedBlockState handleState(IExtendedBlockState state, TileEntity tileEntity) {
+	public IExtendedBlockState handleState(IExtendedBlockState state, IBlockAccess access, BlockPos pos) {
 		return null;
 	}
 

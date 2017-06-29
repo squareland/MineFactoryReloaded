@@ -1,10 +1,10 @@
 package powercrystals.minefactoryreloaded.block.fluid;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import codechicken.lib.model.blockbakery.BlockBakery;
-import codechicken.lib.model.blockbakery.CCBakeryModel;
-import codechicken.lib.model.blockbakery.IBakeryBlock;
-import codechicken.lib.model.blockbakery.ICustomBlockBakery;
+import codechicken.lib.model.bakery.CCBakeryModel;
+import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.ModelBakery;
+import codechicken.lib.model.bakery.generation.IBakery;
 import cofh.api.block.IBlockInfo;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -36,7 +36,7 @@ import powercrystals.minefactoryreloaded.tile.tank.TileEntityTank;
 
 import java.util.List;
 
-public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock {
+public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvider {
 
 	public static final IUnlistedProperty<String> FLUID = new IUnlistedProperty<String>() {
 
@@ -71,7 +71,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 	@Override
 	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
 
-		return BlockBakery.handleExtendedState((IExtendedBlockState) super.getExtendedState(state, world, pos), world.getTileEntity(pos));
+		return ModelBakery.handleExtendedState((IExtendedBlockState) super.getExtendedState(state, world, pos), world, pos);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 	}
 
 	@Override
-	public ICustomBlockBakery getCustomBakery() {
+	public IBakery getBakery() {
 		return BlockTankRenderer.INSTANCE;
 	}
 
@@ -158,10 +158,10 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 		
 		ModelRegistryHelper.register(BlockTankRenderer.MODEL_LOCATION, new CCBakeryModel(MineFactoryReloadedCore.modId + ":blocks/machines/tile.mfr.tank.bottom"));
 		
-		BlockBakery.registerBlockKeyGenerator(this,
+		ModelBakery.registerBlockKeyGenerator(this,
 				state -> state.getBlock().getRegistryName().toString() + "," + state.getValue(FLUID) + "," + state.getValue(SIDES));
-		
-		BlockBakery.registerItemKeyGenerator(Item.getItemFromBlock(this), stack -> {
+
+		ModelBakery.registerItemKeyGenerator(Item.getItemFromBlock(this), stack -> {
 			String key = stack.getItem().getRegistryName().toString();
 			if (stack.getItem() instanceof ItemBlockTank) {
 				FluidStack fluidStack = MFRUtil.getFluidContents(stack);

@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
@@ -80,7 +81,7 @@ public class ItemBlockFactory extends ItemBlock
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs creativeTab, List<ItemStack> subTypes)
+	public void getSubItems(Item item, CreativeTabs creativeTab, NonNullList<ItemStack> subTypes)
 	{
 		getSubItems(item, subTypes);
 	}

@@ -38,13 +38,13 @@ public class ItemSpyglass extends ItemFactoryTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (world.isRemote) {
 			RayTraceResult result = rayTrace();
 			if (result == null || (result.typeOfHit == Type.ENTITY && result.entityHit == null)) {
-				player.addChatMessage(new TextComponentTranslation("chat.info.mfr.spyglass.nosight"));
+				player.sendMessage(new TextComponentTranslation("chat.info.mfr.spyglass.nosight"));
 			} else if(result.typeOfHit == Type.ENTITY) {
-				player.addChatMessage(new TextComponentString("")
+				player.sendMessage(new TextComponentString("")
 						.appendText(I18n
 								.translateToLocalFormatted("chat.info.mfr.spyglass.hitentity",
 										getEntityName(result.entityHit),
@@ -58,14 +58,14 @@ public class ItemSpyglass extends ItemFactoryTool {
 				if (tempStack == null)
 					tempStack = new ItemStack(block, 1, block.getMetaFromState(state));
 				if (tempStack.getItem() != null) {
-					player.addChatMessage(new TextComponentString("")
+					player.sendMessage(new TextComponentString("")
 							.appendText(I18n
 									.translateToLocalFormatted("chat.info.mfr.spyglass.hitblock",
 											tempStack.getDisplayName(), block.getRegistryName(),
 											block.getMetaFromState(state), //TODO replace with list of properties and their values
 											result.getBlockPos())));
 				} else {
-					player.addChatMessage(new TextComponentString("")
+					player.sendMessage(new TextComponentString("")
 							.appendText(I18n
 									.translateToLocalFormatted("chat.info.mfr.spyglass.hitunknown",
 										result.getBlockPos())));
@@ -73,7 +73,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 			}
 		}
 
-		return super.onItemRightClick(stack, world, player, hand);
+		return super.onItemRightClick(world, player, hand);
 	}
 
 	private String getEntityName(Entity entity) {
@@ -82,7 +82,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 	}
 
 	private RayTraceResult rayTrace() {
-		if (Minecraft.getMinecraft().getRenderViewEntity() == null || Minecraft.getMinecraft().theWorld == null) {
+		if (Minecraft.getMinecraft().getRenderViewEntity() == null || Minecraft.getMinecraft().world == null) {
 			return null;
 		}
 
@@ -101,7 +101,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 
 		Vec3d playerLook = Minecraft.getMinecraft().getRenderViewEntity().getLook(1.0F);
 		Vec3d playerLookRel = playerPos.addVector(playerLook.xCoord * range, playerLook.yCoord * range, playerLook.zCoord * range);
-		List<?> list = Minecraft.getMinecraft().theWorld.getEntitiesWithinAABBExcludingEntity(
+		List<?> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 				Minecraft.getMinecraft().getRenderViewEntity(),
 				Minecraft.getMinecraft().getRenderViewEntity().getEntityBoundingBox().addCoord(playerLook.xCoord * range, playerLook.yCoord * range, playerLook.zCoord * range).expand(1, 1, 1));
 

@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded;
 
 import cofh.lib.util.WeightedRandomItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -349,7 +350,7 @@ public abstract class MFRRegistry {
 		List<ItemStack> oresForColor = _laserPreferredOres.get(color);
 
 		if (oresForColor == null) {
-			List<ItemStack> oresList = new ArrayList<ItemStack>();
+			List<ItemStack> oresList = new ArrayList<>();
 			oresList.add(ore);
 			_laserPreferredOres.put(color, oresList);
 		} else {
@@ -426,7 +427,7 @@ public abstract class MFRRegistry {
 		if (block == null) {
 			id = remapName(id);
 			if (id != null)
-				block = GameRegistry.findBlock("MineFactoryReloaded", id);
+				block = Block.REGISTRY.getObject(new ResourceLocation(MineFactoryReloadedCore.modId, id));
 		}
 
 		return block;
@@ -438,7 +439,7 @@ public abstract class MFRRegistry {
 		if (item == null) {
 			id = remapName(id);
 			if (id != null)
-				item = GameRegistry.findItem("MineFactoryReloaded", id);
+				item = Item.REGISTRY.getObject(new ResourceLocation(MineFactoryReloadedCore.modId, id));
 		}
 		return item;
 	}
@@ -455,20 +456,6 @@ public abstract class MFRRegistry {
 		}
 	}
 	
-	@Deprecated
-	static void registerBlock(Block block, Class<? extends ItemBlock> item, Object... args) {
-
-		String name = block.getUnlocalizedName();
-		blocks.put(name, block);
-
-		name = remapName(name);
-
-		block.setRegistryName(MineFactoryReloadedCore.modId, name);
-		GameRegistry.registerBlock(block, item, MineFactoryReloadedCore.modId + ":" + name, args);
-		if (item != null)
-			items.put(block.getUnlocalizedName(), Item.getItemFromBlock(block));
-	}
-
 	public static void registerItem(Item item) {
 
 		items.put(item.getRegistryName().getResourcePath(), item);

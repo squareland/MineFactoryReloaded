@@ -1,21 +1,19 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import codechicken.lib.model.blockbakery.BlockBakery;
-import codechicken.lib.model.blockbakery.CCBakeryModel;
-import codechicken.lib.model.blockbakery.IBakeryBlock;
-import codechicken.lib.model.blockbakery.ICustomBlockBakery;
+import codechicken.lib.model.bakery.CCBakeryModel;
+import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.ModelBakery;
+import codechicken.lib.model.bakery.generation.IBakery;
 import codechicken.lib.raytracer.RayTracer;
 import codechicken.lib.vec.Cuboid6;
 import cofh.api.block.IBlockInfo;
-
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,7 +22,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -32,12 +33,10 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -56,10 +55,9 @@ import powercrystals.minefactoryreloaded.tile.rednet.RedstoneNetwork;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetCable;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetEnergy;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, IBakeryBlock {
+public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, IBakeryProvider {
 
 	public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
 	public static final IUnlistedProperty<Boolean>[] CABLE_CONNECTION = new IUnlistedProperty[6];
@@ -227,7 +225,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, ItemStack stack) {
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 
 		return getDefaultState().withProperty(VARIANT, Variant.byMetadata(meta));
 	}
@@ -305,10 +303,10 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 							cable.setMode(subSide, mode);
 							switch (mode) {
 							case 0:
-								player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.standard"));
+								player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.standard"));
 								break;
 							case 1:
-								player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.cableonly"));
+								player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.cableonly"));
 								break;
 							default:
 							}
@@ -320,16 +318,16 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 						cable.setMode(subSide, mode);
 						switch (mode) {
 						case 0:
-							player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.standard"));
+							player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.standard"));
 							break;
 						case 1:
-							player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.forced"));
+							player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.forced"));
 							break;
 						case 2:
-							player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.forcedstrong"));
+							player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.forcedstrong"));
 							break;
 						case 3:
-							player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.cableonly"));
+							player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.connection.cableonly"));
 							break;
 						default:
 						}
@@ -549,7 +547,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 				return RedNetCableRenderer.sprite;
 			}
 		});
-		BlockBakery.registerBlockKeyGenerator(this,
+		ModelBakery.registerBlockKeyGenerator(this,
 				state -> state.getBlock().getRegistryName().toString() + "," + state.getValue(VARIANT).getMetadata()
 						+ "," + getBooleanPropertyArrayKey(state, CABLE_CONNECTION)
 						+ "," + getBooleanPropertyArrayKey(state, IFACE)
@@ -590,11 +588,11 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	@Override
 	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
 
-		return RedNetCableRenderer.INSTANCE.handleState((IExtendedBlockState) super.getExtendedState(state, world, pos), world.getTileEntity(pos));
+		return RedNetCableRenderer.INSTANCE.handleState((IExtendedBlockState) super.getExtendedState(state, world, pos), world, pos);
 	}
 
 	@Override
-	public ICustomBlockBakery getCustomBakery() {
+	public IBakery getBakery() {
 
 		return RedNetCableRenderer.INSTANCE;
 	}

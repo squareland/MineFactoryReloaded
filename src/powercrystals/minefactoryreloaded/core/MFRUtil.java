@@ -360,7 +360,7 @@ public class MFRUtil {
 		if (world.isBlockLoaded(pos)) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (world.isBlockLoaded(pos.offset(facing)))
-					world.notifyBlockOfStateChange(pos.offset(facing), block);
+					world.neighborChanged(pos.offset(facing), block, pos);
 			}
 		}
 	}
@@ -368,11 +368,11 @@ public class MFRUtil {
 	public static void notifyNearbyBlocksExcept(World world, BlockPos pos, Block block) {
 
 		if (world.isBlockLoaded(pos) && world.getBlockState(pos).getBlock() != block) {
-			world.notifyBlockOfStateChange(pos, block);
+			world.neighborChanged(pos, block, pos);
 			for (EnumFacing d2 : EnumFacing.VALUES) {
 				BlockPos neighborPos = pos.offset(d2);
 				if (world.isBlockLoaded(neighborPos) && world.getBlockState(neighborPos).getBlock() != block)
-					world.notifyBlockOfStateChange(neighborPos, block);
+					world.neighborChanged(neighborPos, block, pos);
 			}
 		}
 	}
@@ -382,13 +382,13 @@ public class MFRUtil {
 		for (EnumFacing d : EnumFacing.VALUES) {
 			BlockPos firstPos = pos.offset(d);
 			if (world.isBlockLoaded(firstPos) && world.getBlockState(firstPos).getBlock() != block) {
-				world.notifyNeighborsOfStateChange(firstPos, block);
+				world.notifyNeighborsOfStateChange(firstPos, block, false);
 				for (EnumFacing d2 : EnumFacing.VALUES) {
 					if (d2.getOpposite() == d)
 						continue;
 					BlockPos secondPos = firstPos.offset(d2);
 					if (world.isBlockLoaded(secondPos) && world.getBlockState(secondPos).getBlock() != block)
-						world.notifyNeighborsOfStateChange(secondPos, block);
+						world.notifyNeighborsOfStateChange(secondPos, block, false);
 				}
 			}
 		}

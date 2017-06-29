@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.slot.SlotViewOnly;
+import cofh.lib.gui.slot.SlotLocked;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -38,7 +38,7 @@ public class ContainerNeedlegun extends Container
 		for (int i = 0; i < 9; i++)
 		{
 			if (i == _nsi)
-				addSlotToContainer(new SlotViewOnly(inventoryPlayer, i, 8 + i * 18, 84 + 58));
+				addSlotToContainer(new SlotLocked(inventoryPlayer, i, 8 + i * 18, 84 + 58));
 			else
 				addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 84 + 58));
 		}
@@ -59,8 +59,8 @@ public class ContainerNeedlegun extends Container
 	@Override
 	public void onContainerClosed(EntityPlayer player)
 	{
-		if (UtilInventory.stacksEqual(player.inventory.mainInventory[_nsi], _ncw.getStack(), false))
-			player.inventory.mainInventory[_nsi] = _ncw.getStack();
+		if (UtilInventory.stacksEqual(player.inventory.mainInventory.get(_nsi), _ncw.getStack(), false))
+			player.inventory.mainInventory.set(_nsi, _ncw.getStack());
 		else
 			player.dropItem(inventorySlots.get(0).getStack(), false, true);
 		super.onContainerClosed(player);

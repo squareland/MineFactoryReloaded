@@ -219,7 +219,7 @@ public abstract class UtilInventory
 			EnumFacing[] dropdirections, EnumFacing airdropdirection)
 	{
 		// (0) Sanity check. Don't bother dropping if there's nothing to drop, and never try to drop items on the client.
-		if (world.isRemote | stack == null || stack.stackSize == 0 || stack.getItem() == null)
+		if (world.isRemote | stack == null || stack.getCount() == 0 || stack.getItem() == null)
 			return null;
 
 		stack = stack.copy();/*
@@ -228,7 +228,7 @@ public abstract class UtilInventory
 		{
 			EnumFacing from = pipe.getKey().getOpposite();
 			stack = pipe.getValue().insertItem(from, stack);
-			if (stack == null || stack.stackSize <= 0)
+			if (stack == null || stack.getCount() <= 0)
 			{
 				return null;
 			}
@@ -236,7 +236,7 @@ public abstract class UtilInventory
 		// (1) Try to put stack in pipes that are in valid directions
 		if (handlePipeTiles) {
 			stack = handleIPipeTile(world, pos, dropdirections, stack);
-			if (stack == null || stack.stackSize <= 0)
+			if (stack == null || stack.getCount() <= 0)
 			{
 				return null;
 			}
@@ -246,7 +246,7 @@ public abstract class UtilInventory
 		{
 			IInventoryManager manager = InventoryManager.create(chest.getValue(), chest.getKey().getOpposite());
 			stack = manager.addItem(stack);
-			if (stack == null || stack.stackSize <= 0)
+			if (stack == null || stack.getCount() <= 0)
 			{
 				return null;
 			}
@@ -279,10 +279,10 @@ public abstract class UtilInventory
 			if (pipe.getValue().isPipeConnected(from))
 			{
 				ItemStack returnedStack = pipe.getValue().injectItem(stack.copy(), false, from, null, 0);
-				if (returnedStack == null || returnedStack.stackSize < stack.stackSize)
+				if (returnedStack == null || returnedStack.getCount() < stack.getCount())
 				{
 					stack = pipe.getValue().injectItem(stack.copy(), true, from, null, 0);
-					if (stack != null && stack.stackSize <= 0)
+					if (stack != null && stack.getCount() <= 0)
 					{
 						return null;
 					}
@@ -379,7 +379,7 @@ public abstract class UtilInventory
 			entityitem.motionZ = 0.0D;
 		}
 		entityitem.setPickupDelay(delay);
-		world.spawnEntityInWorld(entityitem);
+		world.spawnEntity(entityitem);
 	}
 
 	public static ItemStack consumeItem(ItemStack stack, EntityPlayer player)
@@ -392,9 +392,9 @@ public abstract class UtilInventory
 		if (!stacksEqual(to, from))
 			return;
 
-		int amountToCopy = Math.min(to.getMaxStackSize() - to.stackSize, from.stackSize);
-		to.stackSize += amountToCopy;
-		from.stackSize -= amountToCopy;
+		int amountToCopy = Math.min(to.getMaxStackSize() - to.getCount(), from.getCount());
+		to.grow(amountToCopy);
+		from.shrink(amountToCopy);
 	}
 
 	public static boolean stacksEqual(ItemStack s1, ItemStack s2)
@@ -404,7 +404,7 @@ public abstract class UtilInventory
 
 	public static boolean stacksEqual(ItemStack s1, ItemStack s2, boolean nbtSensitive)
 	{
-		if (s1 == null | s2 == null) return false;
+		if (s1.isEmpty() | s2.isEmpty()) return false;
 		if (!s1.isItemEqual(s2)) return false;
 		if (!nbtSensitive) return true;
 

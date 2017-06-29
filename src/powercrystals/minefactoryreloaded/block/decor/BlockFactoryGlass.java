@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.block.decor;
 import codechicken.lib.model.ModelRegistryHelper;
 import codechicken.lib.model.bakery.CCBakeryModel;
 import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.ModelBakery;
 import codechicken.lib.model.bakery.generation.IBakery;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
@@ -21,7 +22,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
@@ -257,7 +257,7 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 				return FactoryGlassRenderer.spriteSheet.getSprite(FactoryGlassRenderer.FULL_FRAME);
 			}
 		});
-		BlockBakery.registerBlockKeyGenerator(this,
+		ModelBakery.registerBlockKeyGenerator(this,
 				state -> state.getBlock().getRegistryName().toString() + "," + state.getValue(BlockFactoryGlass.COLOR).getMetadata()
 						+ "," + state.getValue(BlockFactoryGlass.CTM_VALUE[0])
 						+ "," + state.getValue(BlockFactoryGlass.CTM_VALUE[1])

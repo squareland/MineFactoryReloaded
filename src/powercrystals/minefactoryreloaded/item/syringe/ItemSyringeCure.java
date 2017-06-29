@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.item.syringe;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.EntityZombieVillager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -27,13 +28,13 @@ public class ItemSyringeCure extends ItemSyringe
 	@Override
 	public boolean canInject(World world, EntityLivingBase entity, ItemStack syringe)
 	{
-		return (entity instanceof EntityZombie && ((EntityZombie)entity).isVillager()); 
+		return entity instanceof EntityZombieVillager;
 	}
 	
 	@Override
 	public boolean inject(World world, EntityLivingBase entity, ItemStack syringe)
 	{
-		((EntityZombie)entity).startConversion(300);
+		((EntityZombieVillager)entity).startConverting(300);
 		return true;
 	}
 

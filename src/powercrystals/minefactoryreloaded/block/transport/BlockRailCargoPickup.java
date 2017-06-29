@@ -49,15 +49,15 @@ public class BlockRailCargoPickup extends BlockFactoryRail
 
 				if (remaining != null)
 				{
-					stackToAdd.stackSize -= remaining.stackSize;
-					if (stackToAdd.stackSize > 0)
+					stackToAdd.shrink(remaining.getCount());
+					if (stackToAdd.getCount() > 0)
 					{
-						chest.removeItem(stackToAdd.stackSize, stackToAdd);
+						chest.removeItem(stackToAdd.getCount(), stackToAdd);
 					}
 				}
 				else
 				{
-					chest.removeItem(stackToAdd.stackSize, stackToAdd);
+					chest.removeItem(stackToAdd.getCount(), stackToAdd);
 					break;
 				}
 			}

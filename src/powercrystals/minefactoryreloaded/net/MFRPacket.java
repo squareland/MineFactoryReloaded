@@ -216,12 +216,12 @@ public class MFRPacket extends PacketCoFHBase {
 							((IInventory) te).setInventorySlotContents(slotNumber, null);
 						} else {
 							playerStack = playerStack.copy();
-							playerStack.stackSize = click == 1 ? -1 : 1;
+							playerStack.setCount(click == 1 ? -1 : 1);
 							ItemStack s = ((IInventory) te).getStackInSlot(slotNumber);
 							if (!UtilInventory.stacksEqual(s, playerStack))
-								playerStack.stackSize = 1;
+								playerStack.setCount(1);
 							else
-								playerStack.stackSize = Math.max(playerStack.stackSize + s.stackSize, 1);
+								playerStack.setCount(Math.max(playerStack.getCount() + s.getCount(), 1));
 							((IInventory) te).setInventorySlotContents(slotNumber, playerStack);
 						}
 					}
@@ -236,7 +236,7 @@ public class MFRPacket extends PacketCoFHBase {
 
 					if (owner instanceof EntityLivingBase) {
 						EntityRocket r = new EntityRocket(world, ((EntityLivingBase) owner), target);
-						world.spawnEntityInWorld(r);
+						world.spawnEntity(r);
 					}
 					break;
 			}

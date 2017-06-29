@@ -132,7 +132,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, ItemStack stack) {
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		
 		return getDefaultState().withProperty(DIRECTION, ConveyorDirection.byFacing(placer.getHorizontalFacing()));
 	}
@@ -154,7 +154,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 
-		neighborChanged(state, world, pos, this);
+		neighborChanged(state, world, pos, this, pos);
 	}
 
 	@Override
@@ -175,7 +175,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 		if(!world.isRemote) {
 			if(entity instanceof EntityItem)
-				specialRoute(world, pos, (EntityItem) entity);
+				specialRoute(world, pos, (EntityItem) entity, (TileEntityConveyor) conveyor);
 			else if(entity instanceof EntityPlayer)
 				return;
 		}
@@ -223,11 +223,11 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 			double yO;
 			if(xVelocity != 0) {
 				yO = Math.abs(entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) / 2;
-				yO = MathHelper.clamp_double(Math.abs(entity.posX - pos.getX() + (direction.getFacing() == EnumFacing.WEST ? 1 : 0))
+				yO = MathHelper.clamp(Math.abs(entity.posX - pos.getX() + (direction.getFacing() == EnumFacing.WEST ? 1 : 0))
 						+ Math.abs(xVelocity) + yO, 0, 1);
 			} else {
 				yO = Math.abs(entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) / 2;
-				yO = MathHelper.clamp_double(Math.abs(entity.posZ - pos.getZ() + (direction.getFacing() == EnumFacing.NORTH ? 1 : 0))
+				yO = MathHelper.clamp(Math.abs(entity.posZ - pos.getZ() + (direction.getFacing() == EnumFacing.NORTH ? 1 : 0))
 						+ Math.abs(zVelocity) + yO, 0, 1);
 			}
 			setYPos(entity, pos.getY() + yO + .1);
@@ -306,7 +306,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 	private void repositionEntity(World world, BlockPos pos, Entity ent, double xO, double yO, double zO) {
 
-			if (!world.getCollisionBoxes(ent.getEntityBoundingBox()).isEmpty() || !world.getCollisionBoxes(ent.getEntityBoundingBox().offset(xO, yO, zO)).isEmpty()) {
+			if (!world.getCollisionBoxes(ent, ent.getEntityBoundingBox()).isEmpty() || !world.getCollisionBoxes(ent, ent.getEntityBoundingBox().offset(xO, yO, zO)).isEmpty()) {
 				return;
 			}
 			if (isZero(ent.motionX) && isZero(ent.motionZ)) {
@@ -339,7 +339,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
 
 		return CONVEYOR_COLLISION_AABB;
 	}
@@ -396,7 +396,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 				((TileEntityConveyor) te).setFast(true);
 				MFRUtil.notifyBlockUpdate(world, pos);
 				if (!player.capabilities.isCreativeMode)
-					heldItem.stackSize--;
+					heldItem.shrink(1);
 				return true;
 			}
 		}
@@ -404,7 +404,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 
 		if (!canBlockStay(world, pos)) {
 			dropBlockAsItem(world, pos, world.getBlockState(pos), 0);
@@ -486,7 +486,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 		}
 	}
 
-	private void specialRoute(World world, BlockPos pos, EntityItem entityitem) {
+	private void specialRoute(World world, BlockPos pos, EntityItem entityitem, TileEntityConveyor conveyor) {
 
 		TileEntity teBelow = world.getTileEntity(pos.down());
 		if (teBelow == null || entityitem.isDead) {
@@ -496,15 +496,15 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 		} else if (teBelow instanceof TileEntityHopper) {
 			if (!((TileEntityHopper) teBelow).isOnTransferCooldown()) {
 				ItemStack toInsert = entityitem.getEntityItem().copy();
-				toInsert.stackSize = 1;
-				toInsert = TileEntityHopper.putStackInInventoryAllSlots((IInventory) teBelow, toInsert, EnumFacing.UP);
+				toInsert.setCount(1);
+				toInsert = TileEntityHopper.putStackInInventoryAllSlots(conveyor, (IInventory) teBelow, toInsert, EnumFacing.UP);
 				if (toInsert == null) {
-					entityitem.getEntityItem().stackSize--;
+					entityitem.getEntityItem().shrink(1);
 					((TileEntityHopper) teBelow).setTransferCooldown(8);
 				}
 			}
 		}
-		if (entityitem.getEntityItem().stackSize <= 0) {
+		if (entityitem.getEntityItem().getCount() <= 0) {
 			entityitem.setDead();
 		}
 	}

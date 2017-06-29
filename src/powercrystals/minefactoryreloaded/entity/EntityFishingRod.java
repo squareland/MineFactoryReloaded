@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.entity;
 import cofh.lib.util.helpers.MathHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.MoverType;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -47,7 +48,7 @@ public class EntityFishingRod extends EntityThrowable {
 		prevPosY = posY;
 		prevPosZ = posZ;
 		motionY -= 0.03999999910593033D;
-		moveEntity(motionX, motionY, motionZ);
+		move(MoverType.SELF, motionX, motionY, motionZ);
 		motionX *= 0.9800000190734863D;
 		motionY *= 0.9800000190734863D;
 		motionZ *= 0.9800000190734863D;
@@ -117,7 +118,7 @@ public class EntityFishingRod extends EntityThrowable {
 								e.motionX = rand.nextGaussian() / 2;
 								e.motionZ = rand.nextGaussian() / 2;
 								e.motionY = 0.4 + (rand.nextDouble() - 0.4) / 2;
-								world.spawnEntityInWorld(e);
+								world.spawnEntity(e);
 							}
 						}
 				}

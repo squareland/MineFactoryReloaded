@@ -1,22 +1,19 @@
 package powercrystals.minefactoryreloaded.render.item;
 
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.texture.TextureUtils;
 import codechicken.lib.util.TransformUtils;
 import codechicken.lib.vec.SwapYZ;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.TRSRTransformation;
-import org.apache.commons.lang3.tuple.Pair;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 
-import javax.vecmath.Matrix4f;
 import java.util.Map;
 
 public class PotatoLauncherItemRenderer extends BaseItemRenderer {
@@ -26,7 +23,8 @@ public class PotatoLauncherItemRenderer extends BaseItemRenderer {
 	
 	public PotatoLauncherItemRenderer() {
 
-		Map<String, CCModel> models = CCOBJParser.parseObjModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "potato_launcher.obj"), new SwapYZ());
+		Map<String, CCModel> models = OBJParser
+				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "potato_launcher.obj"), new SwapYZ());
 		launcherModel = models.get("Box009");
 
 		TRSRTransformation thirdPerson = TransformUtils.get(0, 3, 0, 90, 180, 0, 0.015f);

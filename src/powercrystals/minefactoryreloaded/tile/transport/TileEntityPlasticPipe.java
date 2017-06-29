@@ -299,9 +299,9 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 						FluidNetwork.HANDLER.addConduitForUpdate(this);
 						markDirty();
 						if (cableOnly) {
-							player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.cableonly"));
+							player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.cableonly"));
 						} else {
-							player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.standard"));
+							player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.tile.standard"));
 						}
 						return true;
 					}
@@ -321,7 +321,7 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 					}
 					FluidNetwork.HANDLER.addConduitForUpdate(this);
 					markDirty();
-					player.addChatMessage(new TextComponentTranslation(messageKey));
+					player.sendMessage(new TextComponentTranslation(messageKey));
 				}
 				return true;
 			}

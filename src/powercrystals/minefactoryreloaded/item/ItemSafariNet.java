@@ -5,9 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -29,10 +27,10 @@ import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
@@ -103,7 +101,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		} else {
 			infoList.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("id")));
 			// See Entity.getEntityName()
-			Class<?> c = EntityList.NAME_TO_CLASS.get(stack.getTagCompound().getString("id"));
+			Class<?> c = EntityList.getClass(new ResourceLocation(stack.getTagCompound().getString("id")));
 			if (c == null) {
 				return;
 			}
@@ -116,8 +114,10 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack itemstack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
+
+		ItemStack itemstack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.PASS;
@@ -172,7 +172,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			}
 
 			if (isSingleUse(itemstack)) {
-				itemstack.stackSize--;
+				itemstack.shrink(1);
 			} else if (itemstack.getItemDamage() != 0) {
 				itemstack.setItemDamage(0);
 			}
@@ -215,7 +215,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				z + (bb.maxZ - bb.minZ) * 0.5 * offsetZ,
 				world.rand.nextFloat() * 360.0F, 0.0F);
 
-			world.spawnEntityInWorld(e);
+			world.spawnEntity(e);
 			if (e instanceof EntityLiving) {
 				((EntityLiving) e).playLivingSound();
 			}
@@ -224,7 +224,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			while (riddenByEntity != null) {
 				riddenByEntity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
 
-				world.spawnEntityInWorld(riddenByEntity);
+				world.spawnEntity(riddenByEntity);
 				if (riddenByEntity instanceof EntityLiving) {
 					((EntityLiving) riddenByEntity).playLivingSound();
 				}
@@ -247,7 +247,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				e.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
 				if (e instanceof EntityLiving)
 					((EntityLiving) e).onInitialSpawn(world.getDifficultyForLocation(e.getPosition()), null);
-				world.spawnEntityInWorld(e);
+				world.spawnEntity(e);
 				if (e instanceof EntityLiving)
 					((EntityLiving) e).playLivingSound();
 			}
@@ -293,11 +293,12 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 					entity.setDead();
 				if (flag | entity.isDead) {
 					flag = false;
-					if (--itemstack.stackSize > 0) { //TODO why is there this logic here and the one below to add to inventory when nets can't stack?
+					itemstack.shrink(1);
+					if (itemstack.getCount() > 0) { //TODO why is there this logic here and the one below to add to inventory when nets can't stack?
 						flag = true;
 						itemstack = itemstack.copy();
 					}
-					itemstack.stackSize = 1;
+					itemstack.setCount(1);
 					itemstack.setTagCompound(c);
 					if (flag && (player == null || !player.inventory.addItemStackToInventory(itemstack)))
 						UtilInventory.dropStackInAir(entity.world, entity, itemstack);
@@ -351,12 +352,12 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			int mobId = s.getItemDamage();
 			if (!EntityList.ENTITY_EGGS.containsKey(Integer.valueOf(mobId)))
 				return null;
-			return (Class<?>) EntityList.ID_TO_CLASS.get(mobId);
+			return EntityList.getClassFromID(mobId);
 		} else {
 			String mobId = s.getTagCompound().getString("id");
-			if (!EntityList.NAME_TO_CLASS.containsKey(mobId))
+			if (!ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(mobId)))
 				return null;
-			return (Class<?>) EntityList.NAME_TO_CLASS.get(mobId);
+			return (Class<?>) EntityList.getClass(new ResourceLocation(mobId));
 		}
 	}
 
@@ -399,7 +400,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 					return 16777215;
 				}
 				if (stack.getTagCompound() != null && stack.getTagCompound().getBoolean("hide")) {
-					World world = Minecraft.getMinecraft().theWorld;
+					World world = Minecraft.getMinecraft().world;
 					colorRand.setSeed(world.getSeed() ^ (world.getTotalWorldTime() / (7 * 20)) * tintIndex);
 					if (tintIndex == 2)
 						return colorRand.nextInt();

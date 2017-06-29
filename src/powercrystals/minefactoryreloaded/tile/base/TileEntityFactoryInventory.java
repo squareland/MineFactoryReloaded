@@ -89,14 +89,14 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 				float yOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 				float zOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 				do {
-					if (itemstack.stackSize <= 0) {
+					if (itemstack.getCount() <= 0) {
 						continue inv;
 					}
 					int amountToDrop = world.rand.nextInt(21) + 10;
-					if (amountToDrop > itemstack.stackSize) {
-						amountToDrop = itemstack.stackSize;
+					if (amountToDrop > itemstack.getCount()) {
+						amountToDrop = itemstack.getCount();
 					}
-					itemstack.stackSize -= amountToDrop;
+					itemstack.shrink(amountToDrop);
 					EntityItem entityitem = new EntityItem(world,
 							pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset,
 							new ItemStack(itemstack.getItem(), amountToDrop, itemstack.getItemDamage()));
@@ -107,7 +107,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 					entityitem.motionX = (float) world.rand.nextGaussian() * motionMultiplier;
 					entityitem.motionY = (float) world.rand.nextGaussian() * motionMultiplier + 0.2F;
 					entityitem.motionZ = (float) world.rand.nextGaussian() * motionMultiplier;
-					world.spawnEntityInWorld(entityitem);
+					world.spawnEntity(entityitem);
 				} while (true);
 			}
 	}
@@ -267,7 +267,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public boolean doDrop(ItemStack drop) {
 
 		drop = UtilInventory.dropStack(this, drop, this.getDropDirections(), this.getDropDirection());
-		if (drop != null && drop.stackSize > 0) {
+		if (drop != null && drop.getCount() > 0) {
 			if (failedDrops == null) {
 				failedDrops = new ArrayList<ItemStack>();
 			}
@@ -287,7 +287,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		for (int i = drops.size(); i-- > 0;) {
 			ItemStack dropStack = drops.get(i);
 			dropStack = UtilInventory.dropStack(this, dropStack, this.getDropDirections(), this.getDropDirection());
-			if (dropStack != null && dropStack.stackSize > 0) {
+			if (dropStack != null && dropStack.getCount() > 0) {
 				missed.add(dropStack);
 			}
 		}
@@ -364,14 +364,14 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public ItemStack decrStackSize(int slot, int size) {
 
 		if (_inventory[slot] != null) {
-			if (_inventory[slot].stackSize <= size) {
+			if (_inventory[slot].getCount() <= size) {
 				ItemStack itemstack = _inventory[slot];
 				_inventory[slot] = null;
 				markDirty();
 				return itemstack;
 			}
 			ItemStack itemstack1 = _inventory[slot].splitStack(size);
-			if (_inventory[slot].stackSize <= 0) {
+			if (_inventory[slot].getCount() <= 0) {
 				_inventory[slot] = null;
 			}
 			markDirty();
@@ -387,9 +387,9 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 
 		if (itemstack != null) {
-			if (itemstack.stackSize > getInventoryStackLimit())
-				itemstack.stackSize = getInventoryStackLimit();
-			else if (itemstack.stackSize < 0)
+			if (itemstack.getCount() > getInventoryStackLimit())
+				itemstack.setCount(getInventoryStackLimit());
+			else if (itemstack.getCount() < 0)
 				itemstack = null;
 		}
 		_inventory[i] = itemstack;
@@ -426,14 +426,14 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			return false;
 		if (itemstack == null)
 			return true;
-		if (itemstack.stackSize > Math.min(itemstack.getMaxStackSize(), getInventoryStackLimit()))
+		if (itemstack.getCount() > Math.min(itemstack.getMaxStackSize(), getInventoryStackLimit()))
 			return false;
 		ItemStack slotContent = this.getStackInSlot(slot);
 		return slotContent == null || UtilInventory.stacksEqual(itemstack, slotContent);
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+	public boolean isUsableByPlayer(EntityPlayer entityplayer) {
 
 		if (isInvalid() || world.getTileEntity(pos) != this) {
 			return false;
@@ -450,11 +450,11 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		if (tag.hasKey("Items")) {
 			nbttaglist = tag.getTagList("Items", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
-				NBTTagCompound slot = nbttaglist.getCompoundTagAt(i);
-				int j = slot.getByte("Slot") & 0xff;
+				NBTTagCompound slotNBT = nbttaglist.getCompoundTagAt(i);
+				int j = slotNBT.getByte("Slot") & 0xff;
 				if (j < _inventory.length) {
-					_inventory[j] = ItemStack.loadItemStackFromNBT(slot);
-					if (_inventory[j].stackSize < 0)
+					_inventory[j] = new ItemStack(slotNBT);
+					if (_inventory[j].getCount() < 0)
 						_inventory[j] = null;
 				}
 			}
@@ -482,8 +482,8 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			nbttaglist = tag.getTagList("DropItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
 				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				ItemStack item = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-				if (item != null && item.stackSize > 0) {
+				ItemStack item = new ItemStack(nbttagcompound1);
+				if (item != null && item.getCount() > 0) {
 					drops.add(item);
 				}
 			}
@@ -500,7 +500,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		if (_inventory.length > 0) {
 			NBTTagList items = new NBTTagList();
 			for (int i = 0; i < _inventory.length; i++) {
-				if (_inventory[i] != null && _inventory[i].stackSize >= 0) {
+				if (_inventory[i] != null && _inventory[i].getCount() >= 0) {
 					NBTTagCompound slot = new NBTTagCompound();
 					slot.setByte("Slot", (byte) i);
 					_inventory[i].writeToNBT(slot);
@@ -617,7 +617,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 					ItemStack stack = getStackInSlot(slot);
 					if (stack != null) {
 						float maxStack = Math.min(stack.getMaxStackSize(), getInventoryStackLimit());
-						ret += Math.max(Math.min(stack.stackSize / maxStack, 1), 0);
+						ret += Math.max(Math.min(stack.getCount() / maxStack, 1), 0);
 					}
 					++len;
 				}
@@ -648,6 +648,17 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		for(int slot=0; slot < getSizeInventory(); slot++) {
 			removeStackFromSlot(slot);
 		}
+	}
+
+	@Override
+	public boolean isEmpty() {
+
+		for (int slot=0; slot < getSizeInventory(); slot++) {
+			if (!_inventory[slot].isEmpty())
+				return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -242,7 +242,7 @@ public class GuiRedNetLogic extends GuiBase {
 			@Override
 			public void onClick() {
 
-				MFRPacket.sendLogicReinitializeToServer(_logic,	Minecraft.getMinecraft().thePlayer.getEntityId());
+				MFRPacket.sendLogicReinitializeToServer(_logic,	Minecraft.getMinecraft().player.getEntityId());
 				_reinitCountdown = 0;
 				_listNeedsUpdated = true;
 			}

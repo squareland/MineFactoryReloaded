@@ -22,7 +22,7 @@ public class EntityDebugTrackerRenderer extends Render {
 	@Override
 	public void doRender(Entity p_76986_1_, double x, double y, double z, float yaw, float partialTicks) {
 
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayer player = Minecraft.getMinecraft().player;
 
 		float playerOffsetX = -(float)(player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks);
 		float playerOffsetY = -(float)(player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks);

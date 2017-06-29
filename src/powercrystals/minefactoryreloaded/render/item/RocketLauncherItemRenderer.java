@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.render.item;
 
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.texture.TextureUtils;
 import codechicken.lib.util.TransformUtils;
 import codechicken.lib.vec.Scale;
@@ -28,7 +28,8 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 	private RocketLauncherItemRenderer(boolean offHand) {
 
-		Map<String, CCModel> models = CCOBJParser.parseObjModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket_launcher.obj"), new SwapYZ());
+		Map<String, CCModel> models = OBJParser
+				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket_launcher.obj"), new SwapYZ());
 		launcherModel = models.get("Box009");
 	}
 
@@ -36,7 +37,7 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 		offHandRenderrer = new RocketLauncherItemRenderer(true);
 
-		Map<String, CCModel> models = CCOBJParser.parseObjModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket_launcher.obj"), new SwapYZ());
+		Map<String, CCModel> models = OBJParser.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket_launcher.obj"), new SwapYZ());
 		launcherModel = models.get("Box009").copy().apply(new Scale(-1, 1, 1)).backfacedCopy();
 
 		setupTransformations();

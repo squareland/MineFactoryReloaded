@@ -76,14 +76,14 @@ public class BlockRailPassengerDropoff extends BlockFactoryRail {
 
 					if (!isBadBlockToStandIn(world, bb, entity) &&
 							world.getEntitiesWithinAABBExcludingEntity(entity, bb).isEmpty()) {
-						int targetX = MathHelper.floor_double(bb.minX + halfX);
-						int targetY = MathHelper.floor_double(bb.minY);
-						int targetZ = MathHelper.floor_double(bb.minZ + halfZ);
+						int targetX = MathHelper.floor(bb.minX + halfX);
+						int targetY = MathHelper.floor(bb.minY);
+						int targetZ = MathHelper.floor(bb.minZ + halfZ);
 
 						if (!isBadBlockToStandOn(world, new BlockPos(targetX, targetY, targetZ))) // may be on top of a slab or other thin block
 							return bb.offset(halfX, 0, halfZ);
 
-						targetY = MathHelper.floor_double(bb.minY - 0.15625);
+						targetY = MathHelper.floor(bb.minY - 0.15625);
 						if (!isBadBlockToStandOn(world, new BlockPos(targetX, targetY, targetZ)))
 							return bb.offset(halfX, 0, halfZ);
 					}
@@ -114,12 +114,12 @@ public class BlockRailPassengerDropoff extends BlockFactoryRail {
 
 	private boolean isBadBlockToStandIn(World world, AxisAlignedBB bb, Entity entity) {
 
-		int i = MathHelper.floor_double(bb.minX);
-		int j = MathHelper.floor_double(bb.maxX) + 1;
-		int k = MathHelper.floor_double(bb.minY) - 1; // fences.
-		int l = MathHelper.floor_double(bb.maxY) + 1;
-		int i1 = MathHelper.floor_double(bb.minZ);
-		int j1 = MathHelper.floor_double(bb.maxZ) + 1;
+		int i = MathHelper.floor(bb.minX);
+		int j = MathHelper.floor(bb.maxX) + 1;
+		int k = MathHelper.floor(bb.minY) - 1; // fences.
+		int l = MathHelper.floor(bb.maxY) + 1;
+		int i1 = MathHelper.floor(bb.minZ);
+		int j1 = MathHelper.floor(bb.maxZ) + 1;
 
 		if (bb.minX < 0.0D) {
 			--i;

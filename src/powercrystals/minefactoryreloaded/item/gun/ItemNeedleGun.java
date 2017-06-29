@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
@@ -51,7 +53,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 
 	@Override
 	protected boolean fire(ItemStack stack, World world, EntityPlayer player) {
-		ItemStack ammo = ItemStack.loadItemStackFromNBT(stack.getTagCompound().getCompoundTag("ammo"));
+		ItemStack ammo = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
 		boolean reloaded = false, creative = player.capabilities.isCreativeMode;
 
 		if (!world.isRemote) {
@@ -59,7 +61,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 			if (MFRRegistry.getNeedleAmmoTypes().containsKey(ammo.getItem()))
 				spread = MFRRegistry.getNeedleAmmoTypes().get(ammo.getItem()).getSpread(ammo);
 			EntityNeedle needle = new EntityNeedle(world, player, ammo, spread);
-			world.spawnEntityInWorld(needle);
+			world.spawnEntity(needle);
 			world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + 2.0F);
 		}
 
@@ -71,13 +73,13 @@ public class ItemNeedleGun extends ItemFactoryGun {
 		if (ammo.getItemDamage() <= ammo.getMaxDamage()) {
 			ammo.writeToNBT(t);
 		} else {
-			ItemStack[] inv = player.inventory.mainInventory;
-			for (int i = 0, e = inv.length; i < e; ++i) {
-				ItemStack item = inv[i];
+			NonNullList<ItemStack> inv = player.inventory.mainInventory;
+			for (int i = 0, e = inv.size(); i < e; ++i) {
+				ItemStack item = inv.get(i);
 				if (item != null && ammo.getItem().equals(item.getItem())) {
 					ammo = ItemHelper.cloneStack(item, 1);
 					ammo.writeToNBT(t);
-					if (!creative) inv[i] = ItemHelper.consumeItem(item);
+					if (!creative) inv.set(i, ItemHelper.consumeItem(item));
 					reloaded = true;
 					break;
 				}
@@ -105,7 +107,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	public boolean preInit() {
 
 		super.preInit();
-		EntityRegistry.registerModEntity(EntityNeedle.class, "Needle", 2, MineFactoryReloadedCore.instance(), 160, 3, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "needle_gun"), EntityNeedle.class, "Needle", 2, MineFactoryReloadedCore.instance(), 160, 3, true);
 
 		return true;
 	}

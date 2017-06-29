@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.translation.I18n;
@@ -52,9 +53,9 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 			stack.setItemDamage(stack.getItemDamage() == 0 ? 1 : 0);
 			if (world.isRemote) {
 				if (isCaptureMode(stack)) {
-					player.addChatMessage(new TextComponentTranslation("chat.info.mfr.safarinet.capture"));
+					player.sendMessage(new TextComponentTranslation("chat.info.mfr.safarinet.capture"));
 				} else {
-					player.addChatMessage(new TextComponentTranslation("chat.info.mfr.safarinet.release"));
+					player.sendMessage(new TextComponentTranslation("chat.info.mfr.safarinet.release"));
 				}
 			}
 			return false;
@@ -65,14 +66,14 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 			if (ItemSafariNet.isSafariNet(ammo)) {
 				if (ItemSafariNet.isEmpty(ammo) == isCaptureMode(stack)) {
 					player.inventory.setInventorySlotContents(i, ItemHelper.consumeItem(ammo));
-					if (ammo.stackSize > 0) {
+					if (ammo.getCount() > 0) {
 						ammo = ammo.copy();
 					}
-					ammo.stackSize = 1;
+					ammo.setCount(1);
 					if (!world.isRemote) {
 						EntitySafariNet esn = new EntitySafariNet(world, player, ammo);
 						esn.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 2f, .5f);
-						world.spawnEntityInWorld(esn);
+						world.spawnEntity(esn);
 
 						world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS,  0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 					}
@@ -101,7 +102,7 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 	public boolean preInit() {
 
 		super.preInit();
-		EntityRegistry.registerModEntity(EntitySafariNet.class, "SafariNet", 0, MineFactoryReloadedCore.instance(), 160, 5, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "safari_net"), EntitySafariNet.class, "SafariNet", 0, MineFactoryReloadedCore.instance(), 160, 5, true);
 
 		return true;
 	}

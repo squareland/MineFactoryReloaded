@@ -86,11 +86,11 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 		_routing = true;
 		if (hasRoutes(filteredRoutes)) {
 			stack = weightedRouteItem(stack, filteredRoutes);
-			stack = (stack == null || stack.stackSize <= 0) ? null : stack;
+			stack = (stack == null || stack.getCount() <= 0) ? null : stack;
 		}
 		else if (!_rejectUnmapped && hasRoutes(_defaultRoutes)) {
 			stack = weightedRouteItem(stack, _defaultRoutes);
-			stack = (stack == null || stack.stackSize <= 0) ? null : stack;
+			stack = (stack == null || stack.getCount() <= 0) ? null : stack;
 		}
 		_routing = false;
 		return stack;
@@ -100,28 +100,28 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 
 		ItemStack remainingOverall = stack.copy();
 		int weight = totalWeight(routes);
-		if (stack.stackSize >= weight) {
-			int startingAmount = stack.stackSize;
+		if (stack.getCount() >= weight) {
+			int startingAmount = stack.getCount();
 			for (int i = 0; i < routes.length; i++) {
 				ItemStack stackForThisRoute = stack.copy();
-				stackForThisRoute.stackSize = startingAmount * routes[i] / weight;
-				if (stackForThisRoute.stackSize > 0) {
+				stackForThisRoute.setCount(startingAmount * routes[i] / weight);
+				if (stackForThisRoute.getCount() > 0) {
 					ItemStack remainingFromThisRoute = UtilInventory.dropStack(this, stackForThisRoute, _outputDirections[i], _outputDirections[i]);
 					if (remainingFromThisRoute == null) {
-						remainingOverall.stackSize -= stackForThisRoute.stackSize;
+						remainingOverall.shrink(stackForThisRoute.getCount());
 					}
 					else {
-						remainingOverall.stackSize -= (stackForThisRoute.stackSize - remainingFromThisRoute.stackSize);
+						remainingOverall.shrink((stackForThisRoute.getCount() - remainingFromThisRoute.getCount()));
 					}
 
-					if (remainingOverall.stackSize <= 0) {
+					if (remainingOverall.getCount() <= 0) {
 						break;
 					}
 				}
 			}
 		}
 
-		if (0 < remainingOverall.stackSize && remainingOverall.stackSize < totalWeight(routes)) {
+		if (0 < remainingOverall.getCount() && remainingOverall.getCount() < totalWeight(routes)) {
 			int outdir = weightedRandomSide(routes);
 			remainingOverall = UtilInventory.dropStack(this, remainingOverall, _outputDirections[outdir], _outputDirections[outdir]);
 		}
@@ -171,7 +171,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 					if (_inventory[j].getItem().equals(item) &&
 							(stack.isItemStackDamageable() ||
 							_inventory[j].getItemDamage() == stack.getItemDamage())) {
-						routeWeights[i] += _inventory[j].stackSize;
+						routeWeights[i] += _inventory[j].getCount();
 					}
 				}
 			}
@@ -257,14 +257,14 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 			int start = getStartInventorySide(null);
 			if (i >= start && i <= (start + getSizeInventorySide(null))) {
 				l: if (stack != null) {
-					if (stack.stackSize <= 0) {
+					if (stack.getCount() <= 0) {
 						stack = null;
 						break l;
 					}
 					stack = routeItem(stack);
 					if (stack != null)
-						if (stack.stackSize > getInventoryStackLimit()) {
-							stack.stackSize = getInventoryStackLimit();
+						if (stack.getCount() > getInventoryStackLimit()) {
+							stack.setCount(getInventoryStackLimit());
 						}
 				}
 				_inventory[i] = stack;

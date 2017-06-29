@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class ItemBlockFactoryRoad extends ItemBlockFactory
 {
@@ -17,7 +18,7 @@ public class ItemBlockFactoryRoad extends ItemBlockFactory
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void getSubItems(net.minecraft.item.Item item, CreativeTabs creativeTab, List subTypes)
+	public void getSubItems(net.minecraft.item.Item item, CreativeTabs creativeTab, NonNullList<ItemStack> subTypes)
 	{
 		subTypes.add(new ItemStack(item, 1, 0));
 		subTypes.add(new ItemStack(item, 1, 1));

@@ -31,7 +31,7 @@ public class RedNetCardItemRenderer extends BaseItemRenderer {
 	}
 
 	@Override
-	public void renderItem(ItemStack stack) {
+	public void renderItem(ItemStack stack, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 

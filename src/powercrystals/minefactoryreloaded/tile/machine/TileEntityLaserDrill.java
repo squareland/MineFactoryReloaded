@@ -355,7 +355,7 @@ public class TileEntityLaserDrill extends TileEntityFactoryInventory implements 
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+	public boolean isUsableByPlayer(EntityPlayer entityplayer) {
 
 		return entityplayer.getDistanceSq(pos) <= 64;
 	}

@@ -2,8 +2,8 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import cofh.lib.gui.slot.SlotAcceptValid;
 import cofh.lib.gui.slot.SlotInvisible;
+import cofh.lib.gui.slot.SlotLocked;
 import cofh.lib.gui.slot.SlotRemoveOnly;
-import cofh.lib.gui.slot.SlotViewOnly;
 import net.minecraft.inventory.ClickType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,7 +31,7 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 		addSlotToContainer(new SlotAcceptValid(_te, 0, 134, 16));
 		addSlotToContainer(new SlotAcceptValid(_te, 1, 152, 16));
 		addSlotToContainer(new SlotRemoveOnly(_te, 2, 152, 49));
-		addSlotToContainer(new SlotViewOnly(_te, 3, 9, 63, true) {
+		addSlotToContainer(new SlotLocked(_te, 3, 9, 63) {
 			@Override
 			public ItemStack getStack() {
 

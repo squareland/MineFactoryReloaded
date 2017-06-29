@@ -153,9 +153,9 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	protected void mergeFuel() {
 
 		if (_inventory[3] != null)
-			for (int i = 0; _inventory[3].stackSize < _inventory[3].getMaxStackSize() && i < 3; ++i) {
+			for (int i = 0; _inventory[3].getCount() < _inventory[3].getMaxStackSize() && i < 3; ++i) {
 				UtilInventory.mergeStacks(_inventory[3], _inventory[i]);
-				if (_inventory[i] != null && _inventory[i].stackSize == 0)
+				if (_inventory[i] != null && _inventory[i].getCount() == 0)
 					_inventory[i] = null;
 			}
 		else

@@ -119,7 +119,7 @@ public class Machine {
 
 			NBTTagCompound c = stack.getTagCompound();
 			if (c != null && c.hasKey("storedStack")) {
-				ItemStack storedItem = ItemStack.loadItemStackFromNBT(c.getCompoundTag("storedStack"));
+				ItemStack storedItem = new ItemStack(c.getCompoundTag("storedStack"));
 				int storedQuantity = c.getInteger("storedQuantity");
 				if (storedItem != null & storedQuantity > 0) {
 					info.add(String.format(MFRUtil.localize("tip.info.mfr.dsu.contains", true),

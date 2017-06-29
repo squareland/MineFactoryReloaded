@@ -22,7 +22,7 @@ public class ItemFactoryTool extends ItemFactory {
 		
 		int dmg = getWeaponDamage(stack);
 		if (dmg != 0) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(),
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
 					new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", dmg, 0));
 		}
 		return multimap;

@@ -176,12 +176,12 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 	public void onPlayerChangedDimension(Unload world) {
 
 		if (world.getWorld().provider == null ||
-				Minecraft.getMinecraft().thePlayer == null ||
-				Minecraft.getMinecraft().thePlayer.world == null ||
-				Minecraft.getMinecraft().thePlayer.world.provider == null) {
+				Minecraft.getMinecraft().player == null ||
+				Minecraft.getMinecraft().player.world == null ||
+				Minecraft.getMinecraft().player.world.provider == null) {
 			return;
 		}
-		if (world.getWorld().provider.getDimension() == Minecraft.getMinecraft().thePlayer.world.provider.getDimension()) {
+		if (world.getWorld().provider.getDimension() == Minecraft.getMinecraft().player.world.provider.getDimension()) {
 			_areaTileEntities.clear();
 			prcPages.clear();
 		}
@@ -231,7 +231,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 		if (mc.gameSettings.hideGUI)
 			return;
 
-		if (!mc.isGamePaused() && mc.currentScreen == null && holdsRocketLauncher(mc.thePlayer)) {
+		if (!mc.isGamePaused() && mc.currentScreen == null && holdsRocketLauncher(mc.player)) {
 			ScaledResolution sr = new ScaledResolution(mc);
 			Point center = new Point(sr.getScaledWidth() / 2, sr.getScaledHeight() / 2);
 
@@ -244,7 +244,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.translate(center.getX(), center.getY(), 0);
-			GlStateManager.rotate(((mc.theWorld.getTotalWorldTime() & 511) * 4) % 360 + partialTicks, 0, 0, 1);
+			GlStateManager.rotate(((mc.world.getTotalWorldTime() & 511) * 4) % 360 + partialTicks, 0, 0, 1);
 
 			float distance = MineFactoryReloadedClient.instance.getLockTimeRemaining();
 
@@ -289,8 +289,8 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 	// first to render, so everything else is overlayed
 	public void renderWorldLast(RenderWorldLastEvent e) {
 
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		if (player.inventory.getCurrentItem() == null ||
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if (player.inventory.getCurrentItem().isEmpty() ||
 				!player.inventory.getCurrentItem().getItem().equals(factoryHammerItem)) {
 			return;
 		}
@@ -364,7 +364,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 	private Entity rayTrace() {
 
-		if (Minecraft.getMinecraft().getRenderViewEntity() == null || Minecraft.getMinecraft().theWorld == null) {
+		if (Minecraft.getMinecraft().getRenderViewEntity() == null || Minecraft.getMinecraft().world == null) {
 			return null;
 		}
 
@@ -373,7 +373,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 		Vec3d playerLook = Minecraft.getMinecraft().getRenderViewEntity().getLook(1);
 		Vec3d playerLookRel = playerPos.addVector(playerLook.xCoord * range, playerLook.yCoord * range, playerLook.zCoord * range);
-		List<?> list = Minecraft.getMinecraft().theWorld.getEntitiesWithinAABBExcludingEntity(
+		List<?> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 			Minecraft.getMinecraft().getRenderViewEntity(),
 			Minecraft.getMinecraft().getRenderViewEntity().getEntityBoundingBox().addCoord(playerLook.xCoord * range, playerLook.yCoord * range,
 				playerLook.zCoord * range)

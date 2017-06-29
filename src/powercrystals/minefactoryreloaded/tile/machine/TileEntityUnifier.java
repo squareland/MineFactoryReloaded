@@ -76,10 +76,10 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 					output = _inventory[0].copy();
 				} else if (_preferredOutputs.containsKey(names.get(0))) {
 					output = _preferredOutputs.get(names.get(0)).copy();
-					output.stackSize = _inventory[0].stackSize;
+					output.setCount(_inventory[0].getCount());
 				} else {
 					output = OreDictionaryArbiter.getOres(names.get(0)).get(0).copy();
-					output.stackSize = _inventory[0].stackSize;
+					output.setCount(_inventory[0].getCount());
 				}
 
 				if (_inventory[0].getItem().equals(output.getItem()))
@@ -96,30 +96,30 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 			return;
 		}
 
-		int amt = source.stackSize;
+		int amt = source.getCount();
 
 		if (_inventory[1] == null) {
 			amt = Math.min(Math.min(getInventoryStackLimit(), source.getMaxStackSize()),
-					source.stackSize);
+					source.getCount());
 		} else if (!UtilInventory.stacksEqual(source, _inventory[1], false)) {
 			return;
 		} else if (source.getTagCompound() != null || _inventory[1].getTagCompound() != null) {
 			return;
 		} else {
-			amt = Math.min(source.stackSize,
-					_inventory[1].getMaxStackSize() - _inventory[1].stackSize);
+			amt = Math.min(source.getCount(),
+					_inventory[1].getMaxStackSize() - _inventory[1].getCount());
 		}
 
 		if (_inventory[1] == null) {
 			_inventory[1] = source.copy();
-			_inventory[1].stackSize = amt;
-			_inventory[0].stackSize -= amt;
+			_inventory[1].setCount(amt);
+			_inventory[0].shrink(amt);
 		} else {
-			_inventory[1].stackSize += amt;
-			_inventory[0].stackSize -= amt;
+			_inventory[1].grow(amt);
+			_inventory[0].shrink(amt);
 		}
 
-		if (_inventory[0].stackSize == 0) {
+		if (_inventory[0].getCount() == 0) {
 			_inventory[0] = null;
 		}
 	}
@@ -130,7 +130,7 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 		_inventory[slot] = stack;
 		if (slot > 1)
 			updatePreferredOutput();
-		if (stack != null && stack.stackSize <= 0)
+		if (stack != null && stack.getCount() <= 0)
 			_inventory[slot] = null;
 		unifyInventory();
 		ignoreChange = true;

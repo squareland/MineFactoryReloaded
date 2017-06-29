@@ -56,12 +56,12 @@ public class TileEntityEnchantmentRouter extends TileEntityItemRouter {
 					for (Object stackEnchantId : stackEnchants.keySet()) {
 						if (inventoryEnchants.containsKey(stackEnchantId)) {
 							if (!_matchLevels || inventoryEnchants.get(stackEnchantId).equals(stackEnchants.get(stackEnchantId))) {
-								routeWeights[i] += _inventory[j].stackSize;
+								routeWeights[i] += _inventory[j].getCount();
 							}
 						}
 					}
 				} else if (_inventory[j].getItem().equals(Items.BOOK)) {
-					routeWeights[i] += (1 + _inventory[j].stackSize) / 2;
+					routeWeights[i] += (1 + _inventory[j].getCount()) / 2;
 				}
 			}
 		}

@@ -15,6 +15,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
@@ -61,7 +62,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	public boolean isItemTool(ItemStack stack) {
+	public boolean isEnchantable(ItemStack stack) {
 
 		return true;
 	}
@@ -93,7 +94,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
             	if (sStack != null)
             		fstack = sStack;
             }
-            fstack.stackSize = 1;
+            fstack.setCount(1);
 			EntityFlyingItem item = new EntityFlyingItem(world, player, fstack);
 			item.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 1.5f, 0.5f);
 
@@ -109,16 +110,16 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 				item.canBePickedUp = 2;
 			} else {
 				ItemStack ammoStack = UtilInventory.findItem(player, ammo[i]);
-				--ammoStack.stackSize;
+				ammoStack.shrink(1);
 
-				if (ammoStack.stackSize == 0)
+				if (ammoStack.getCount() == 0)
 				{
 					player.inventory.deleteStack(ammoStack);
 				}
 			}
 			if (!world.isRemote) {
 				world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1F, 0.5F / (itemRand.nextFloat() * 0.4F + 1.2F));
-				world.spawnEntityInWorld(item);
+				world.spawnEntity(item);
 			}
 			return true;
 		}
@@ -141,7 +142,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	public boolean preInit() {
 
 		super.preInit();
-		EntityRegistry.registerModEntity(EntityFlyingItem.class, "Item", 5, MineFactoryReloadedCore.instance(), 160, 7, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "potato_cannon"), EntityFlyingItem.class, "PotatoCannon", 5, MineFactoryReloadedCore.instance(), 160, 7, true);
 
 		return true;
 	}

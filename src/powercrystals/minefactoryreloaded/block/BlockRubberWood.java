@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -122,7 +123,7 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void getSubBlocks(Item blockId, CreativeTabs tab, List subBlocks)
+	public void getSubBlocks(Item blockId, CreativeTabs tab, NonNullList<ItemStack> subBlocks)
 	{
 		subBlocks.add(new ItemStack(blockId, 1, 0));
 		subBlocks.add(new ItemStack(blockId, 1, 1));

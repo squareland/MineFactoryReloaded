@@ -23,7 +23,7 @@ public abstract class ItemSyringe extends ItemFactory implements ISyringe
 		{
 			if (inject(entity.world, entity, stack))
 			{
-				stack.setItem(MFRThings.syringeEmptyItem);
+				player.setHeldItem(hand, new ItemStack(MFRThings.syringeEmptyItem));
 				return true;
 			}
 		}

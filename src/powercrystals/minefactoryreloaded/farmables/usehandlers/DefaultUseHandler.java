@@ -45,9 +45,9 @@ public class DefaultUseHandler implements IUseHandler {
 		FluidStack liquid = fluidHandler.getTankProperties().length > 0 ? fluidHandler.getTankProperties()[0].getContents() : null;
 		if (liquid == null || liquid.amount <= 0) {
 			if (!fluidHandler.canBeFilledFromWorld()) return bucket;
-			ItemStack bucket2 = bucket.stackSize > 1 ? bucket.copy() : bucket;
+			ItemStack bucket2 = bucket.getCount() > 1 ? bucket.copy() : bucket;
 			IAdvFluidContainerItem fluidHandler2 = (IAdvFluidContainerItem) bucket2.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-			bucket2.stackSize = 1;
+			bucket2.setCount(1);
 			RayTraceResult objectPosition = ((IUseable)item).rayTrace(world, entity, false);
 			if (objectPosition != null && objectPosition.typeOfHit == Type.BLOCK) {
 				BlockPos pos = objectPosition.getBlockPos();
@@ -69,7 +69,7 @@ public class DefaultUseHandler implements IUseHandler {
 				}
 			}
 			if (player == null) return bucket;
-			q = q.getItem().onItemRightClick(q, world, player, hand).getResult();
+			q = q.getItem().onItemRightClick(world, player, hand).getResult();
 			IFluidTankProperties[] tankProps = q.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).getTankProperties();
 			FluidStack contents = tankProps.length > 0 ? tankProps[0].getContents() : null;
 			if (contents == null || contents.amount == 0) return bucket;

@@ -12,8 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import net.minecraftforge.fluids.IFluidHandler;
-
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.core.IZone;
 import buildcraft.api.mj.MjAPI;

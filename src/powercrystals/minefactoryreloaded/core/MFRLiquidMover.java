@@ -40,7 +40,7 @@ public abstract class MFRLiquidMover {
 					tankFilled = true;
 					liquid.amount = itcb.fill(facing, liquid, true);
 					ItemStack drop = heldItem.splitStack(1);
-					heldItem.stackSize++;
+					heldItem.grow(1);
 					drop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).drain(liquid, true);
 					if (!entityplayer.capabilities.isCreativeMode) {
 						disposePlayerItem(heldItem, drop, entityplayer, true);
@@ -75,9 +75,9 @@ public abstract class MFRLiquidMover {
 				ItemStack containerToDrop = null;
 				FluidStack bucketLiquid;
 
-				if (heldItem.stackSize > 1) {
+				if (heldItem.getCount() > 1) {
 					containerToDrop = heldItem.copy();
-					containerToDrop.stackSize = 1;
+					containerToDrop.setCount(1);
 					fluidHandler = containerToDrop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 				}
 
@@ -114,11 +114,11 @@ public abstract class MFRLiquidMover {
 
 		if (entityplayer == null || entityplayer.capabilities.isCreativeMode)
 			return true;
-		if (allowReplace && stack.stackSize <= 1) {
+		if (allowReplace && stack.getCount() <= 1) {
 			entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, dropStack);
 			return true;
 		} else if (allowDrop) {
-			stack.stackSize -= 1;
+			stack.shrink(1);
 			if (dropStack != null && !entityplayer.inventory.addItemStackToInventory(dropStack)) {
 				entityplayer.dropItem(dropStack, false, true);
 			}

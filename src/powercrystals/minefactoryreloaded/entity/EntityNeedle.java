@@ -50,7 +50,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		motionY = (-MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI));
 		setThrowableHeading(motionX, motionY, motionZ, 3.25F, spread);
 		distance = 0;
-		//world.spawnEntityInWorld(new DebugTracker(world, owner, this));
+		//world.spawnEntity(new DebugTracker(world, owner, this));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -89,7 +89,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 	@Override
 	public void setThrowableHeading(double x, double y, double z, float speedMult, float spreadConst) {
 
-		double normal = MathHelper.sqrt_double(x * x + y * y + z * z);
+		double normal = MathHelper.sqrt(x * x + y * y + z * z);
 		x /= normal;
 		y /= normal;
 		z /= normal;
@@ -102,7 +102,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		motionX = x;
 		motionY = y;
 		motionZ = z;
-		float horizSpeed = MathHelper.sqrt_double(x * x + z * z);
+		float horizSpeed = MathHelper.sqrt(x * x + z * z);
 		prevRotationYaw = rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
 		prevRotationPitch = rotationPitch = (float) (Math.atan2(y, horizSpeed) * 180.0D / Math.PI);
 	}
@@ -124,7 +124,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		motionZ = z;
 
 		if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F) {
-			float f = MathHelper.sqrt_double(x * x + z * z);
+			float f = MathHelper.sqrt(x * x + z * z);
 			prevRotationYaw = rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
 			prevRotationPitch = rotationPitch = (float) (Math.atan2(y, f) * 180.0D / Math.PI);
 			prevRotationPitch = rotationPitch;
@@ -139,7 +139,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		super.onUpdate();
 
 		if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F) {
-			float f = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
+			float f = MathHelper.sqrt(motionX * motionX + motionZ * motionZ);
 			prevRotationYaw = rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
 			prevRotationPitch = rotationPitch = (float) (Math.atan2(motionY, f) * 180.0D / Math.PI);
 		}
@@ -193,7 +193,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		}
 
 		float speed = 0.0F;
-		speed = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ);
+		speed = MathHelper.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ);
 		distance += speed;
 		if (hit != null && !world.isRemote) {
 			if (MFRRegistry.getNeedleAmmoTypes().containsKey(_ammoSource.getItem())) {
@@ -211,7 +211,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		posX += motionX;
 		posY += motionY;
 		posZ += motionZ;
-		speed = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
+		speed = MathHelper.sqrt(motionX * motionX + motionZ * motionZ);
 		rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
 
 		for (rotationPitch = (float) (Math.atan2(motionY, speed) * 180.0D / Math.PI); rotationPitch - prevRotationPitch < -180.0F; ) {
@@ -272,7 +272,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 	public void readEntityFromNBT(NBTTagCompound tag) {
 
 		if (tag.hasKey("ammoSource")) {
-			_ammoSource = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("ammoSource"));
+			_ammoSource = new ItemStack(tag.getCompoundTag("ammoSource"));
 			distance = tag.getDouble("distance");
 			_falling = tag.getBoolean("falling");
 			if (tag.hasKey("owner"))

@@ -145,7 +145,7 @@ public class EntitySafariNet extends EntityThrowable {
 		if (!world.isRemote && stack != null) {
 			EntityItem ei = new EntityItem(world, posX, posY, posZ, stack.copy());
 			ei.setPickupDelay(40);
-			world.spawnEntityInWorld(ei);
+			world.spawnEntity(ei);
 		}
 		setDead();
 	}

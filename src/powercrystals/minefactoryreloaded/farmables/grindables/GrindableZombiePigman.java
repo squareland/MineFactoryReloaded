@@ -33,7 +33,7 @@ public class GrindableZombiePigman implements IFactoryGrindable
 		sign.addEnchantment(Enchantments.FIRE_ASPECT, 1);
 		NBTTagList list = new NBTTagList();
 		list.appendTag(MFRUtil.writeModifierToNBT(
-				SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier));
+				SharedMonsterAttributes.MAX_HEALTH.getName(), modifier));
 		sign.setTagInfo("AttributeModifiers", list);
 	}
 

@@ -380,7 +380,7 @@ public class TileEntityConveyor extends TileEntityBase
 		entityitem.motionY = motionY;
 		entityitem.motionZ = motionZ;
 		entityitem.setPickupDelay(20);
-		world.spawnEntityInWorld(entityitem);
+		world.spawnEntity(entityitem);
 	}
 
 	@Override
@@ -407,7 +407,7 @@ public class TileEntityConveyor extends TileEntityBase
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player)
+	public boolean isUsableByPlayer(EntityPlayer player)
 	{
 		return false;
 	}
@@ -448,6 +448,12 @@ public class TileEntityConveyor extends TileEntityBase
 	@Override
 	public void clear()
 	{
+	}
+
+	@Override
+	public boolean isEmpty() {
+
+		return true;
 	}
 
 	//ISidedInventory

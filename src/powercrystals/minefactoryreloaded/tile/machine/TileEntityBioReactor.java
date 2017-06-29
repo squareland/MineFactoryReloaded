@@ -92,7 +92,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 						_inventory[i] = null;
 					} else {
 						UtilInventory.mergeStacks(_inventory[targetSlot], _inventory[i]);
-						if (_inventory[i].stackSize <= 0)
+						if (_inventory[i].getCount() <= 0)
 							_inventory[i] = null;
 					}
 				}

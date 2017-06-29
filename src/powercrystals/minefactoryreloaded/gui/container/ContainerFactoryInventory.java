@@ -15,6 +15,8 @@ import net.minecraftforge.fluids.FluidTankInfo;
 
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import java.util.Map;
+
 public class ContainerFactoryInventory extends ContainerBase {
 
 	protected TileEntityFactoryInventory _te;
@@ -59,7 +61,7 @@ public class ContainerFactoryInventory extends ContainerBase {
 				listeners.get(i).sendProgressBarUpdate(this, 30, j);
 				if (tank[j] != null && tank[j].fluid != null) {
 					listeners.get(i).sendProgressBarUpdate(this, 31, tank[j].fluid.amount);
-					listeners.get(i).sendProgressBarUpdate(this, 32, FluidRegistry.getFluidID(tank[j].fluid.getFluid()));
+					listeners.get(i).sendProgressBarUpdate(this, 32, FluidRegistry.getRegisteredFluidIDs().get(tank[j].fluid.getFluid()));
 				} else if (tank[j] != null) {
 					listeners.get(i).sendProgressBarUpdate(this, 31, 0);
 					listeners.get(i).sendProgressBarUpdate(this, 32, 0);
@@ -79,7 +81,13 @@ public class ContainerFactoryInventory extends ContainerBase {
 		else if (var == 31)
 			_tankAmount = value;
 		else if (var == 32) {
-			Fluid fluid = FluidRegistry.getFluid(value);
+			Fluid fluid = null;
+			for (Map.Entry<Fluid, Integer> entry : FluidRegistry.getRegisteredFluidIDs().entrySet()) {
+				if (entry.getValue() == value) {
+					fluid = entry.getKey();
+				}
+			}
+
 			if (fluid == null) {
 				_te.getTanks()[_tankIndex].setFluid(null);
 			} else {
@@ -94,7 +102,7 @@ public class ContainerFactoryInventory extends ContainerBase {
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 
-		return !_te.isInvalid() && _te.isUseableByPlayer(player);
+		return !_te.isInvalid() && _te.isUsableByPlayer(player);
 	}
 
 	@Override

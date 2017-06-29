@@ -32,4 +32,7 @@ public interface IDeepStorageUnit {
 	 */
 	int getMaxStoredCount();
 
+	//TODO add proper comment and change the one for getStoredItemType
+
+	default int getStoredItemCount() { return this.getStoredItemType().getCount(); }
 }

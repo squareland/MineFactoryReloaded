@@ -134,9 +134,10 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public final boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float xOffset, float yOffset, float zOffset)
+	public final boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float xOffset, float yOffset, float zOffset)
 	{
-		PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, heldItem, pos, side, new Vec3d(xOffset, yOffset, zOffset));
+		ItemStack heldItem = player.getHeldItem(hand);
+		PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(xOffset, yOffset, zOffset));
 		if (MinecraftForge.EVENT_BUS.post(e) || e.getResult() == Result.DENY || e.getUseBlock() == Result.DENY)
 			return false;
 
@@ -232,13 +233,13 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state)
 	{
-		neighborChanged(state, world, pos, this);
+		neighborChanged(state, world, pos, this, pos);
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos)
 	{
-		super.neighborChanged(state, world, pos, block);
+		super.neighborChanged(state, world, pos, block, fromPos);
 		if (world.isRemote)
 		{
 			return;
@@ -266,7 +267,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
 	{
 		TileEntity te = getTile(world, pos);
 		if (te instanceof IEntityCollidable)
@@ -295,7 +296,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB collisionTest, List collisionBoxList,
-			Entity entity)
+			Entity entity, boolean p_185477_7_)
 	{
 		TileEntity te = getTile(world, pos);
 		if (te instanceof ITraceable)
@@ -311,7 +312,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		}
 		else
 		{
-			super.addCollisionBoxToList(state, world, pos, collisionTest, collisionBoxList, entity);
+			super.addCollisionBoxToList(state, world, pos, collisionTest, collisionBoxList, entity, p_185477_7_);
 		}
 	}
 
@@ -335,7 +336,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		{
 			List<IndexedCuboid6> cuboids = new LinkedList<IndexedCuboid6>();
 			((ITraceable)te).addTraceableCuboids(cuboids, true, MFRUtil.isHoldingUsableTool(harvesters.get(), pos), false);
-			return RayTracer.rayTraceCuboidsClosest(start, end, cuboids, pos);
+			return RayTracer.rayTraceCuboidsClosest(start, end, pos, cuboids);
 		}
 		else if (world instanceof World)
 		{

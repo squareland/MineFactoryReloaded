@@ -28,7 +28,7 @@ public class SmashingWorld extends WorldProxy
 	}
 
 	@Override
-	public boolean spawnEntityInWorld(Entity par1Entity)
+	public boolean spawnEntity(Entity par1Entity)
 	{
 		return true;
 	}

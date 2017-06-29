@@ -46,10 +46,10 @@ public class BlockRailCargoDropoff extends BlockFactoryRail
 
 			if (remaining != null)
 			{
-				stackToAdd.stackSize -= remaining.stackSize;
+				stackToAdd.shrink(remaining.getCount());
 			}
 
-			minecart.removeItem(stackToAdd.stackSize, stackToAdd);
+			minecart.removeItem(stackToAdd.getCount(), stackToAdd);
 		}
 	}
 

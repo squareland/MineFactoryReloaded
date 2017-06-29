@@ -3,10 +3,8 @@ package powercrystals.minefactoryreloaded.entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -25,7 +23,7 @@ public class EntityPinkSlime extends EntitySlime
 	public EntityPinkSlime(World world)
 	{
 		super(world);
-		setSlimeSize(1);
+		setSlimeSize(1, true);
 	}
 
 	@Override
@@ -43,12 +41,12 @@ public class EntityPinkSlime extends EntitySlime
 	}
 
 	@Override
-	public void setSlimeSize(int size)
+	public void setSlimeSize(int size, boolean updateHealthToMax)
 	{
 		if (size > 4)
 		{
 			world.newExplosion(this, posX, posY, posZ, 0.1F, false, true);
-			this.attackEntityFrom(DamageSource.generic, 50);
+			this.attackEntityFrom(DamageSource.GENERIC, 50);
 
 			if(!world.isRemote)
 			{
@@ -57,12 +55,12 @@ public class EntityPinkSlime extends EntitySlime
 				e.motionX = rand.nextDouble() - 0.5D;
 				e.motionY = rand.nextDouble() - 0.5D;
 				e.motionZ = rand.nextDouble() - 0.5D;
-				world.spawnEntityInWorld(e);
+				world.spawnEntity(e);
 			}
 		}
 		else
 		{
-			super.setSlimeSize(size);
+			super.setSlimeSize(size, true);
 		}
 	}
 
@@ -83,7 +81,7 @@ public class EntityPinkSlime extends EntitySlime
     {
         if (!this.world.isRemote)
         {
-        	this.setSlimeSize(this.getSlimeSize() + 3);
+        	this.setSlimeSize(this.getSlimeSize() + 3, true);
         }
     }
 }

@@ -52,14 +52,15 @@ public class ItemRedNetMeter extends ItemMulti {
 		player.swingArm(hand);
 		if (player.world.isRemote)
 			return true;
-		player.addChatMessage(new TextComponentString("ID: " + EntityList.getEntityString(entity)));
+		player.sendMessage(new TextComponentString("ID: " + EntityList.getEntityString(entity)));
 		return true;
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
-			BlockPos pos, EnumFacing hitSide, float hitX, float hitY, float hitZ, EnumHand hand) {
-		boolean r = doItemThing(stack, player, world, pos, hitSide, hitX, hitY, hitZ);
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing hitSide,
+			float hitX, float hitY, float hitZ, EnumHand hand) {
+
+		boolean r = doItemThing(player.getHeldItem(hand), player, world, pos, hitSide, hitX, hitY, hitZ);
 		if (r) // HACK: forge is fucking stupid with this method
 			ServerHelper.sendItemUsePacket(world, pos, hitSide, hand, hitX, hitY, hitZ);
 		return r ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
@@ -80,7 +81,7 @@ public class ItemRedNetMeter extends ItemMulti {
 				}
 				((IBlockInfo) (block)).getBlockInfo(info, world, pos, hitSide, player, true);
 				for (int i = 0; i < info.size(); i++) {
-					player.addChatMessage(info.get(i));
+					player.sendMessage(info.get(i));
 				}
 				return true;
 			} else {
@@ -89,7 +90,7 @@ public class ItemRedNetMeter extends ItemMulti {
 					if (ServerHelper.isServerWorld(world)) {
 						((ITileInfo) theTile).getTileInfo(info, hitSide, player, player.isSneaking());
 						for (int i = 0; i < info.size(); i++) {
-							player.addChatMessage(info.get(i));
+							player.sendMessage(info.get(i));
 						}
 					}
 					return true;
@@ -111,7 +112,7 @@ public class ItemRedNetMeter extends ItemMulti {
 			if (block instanceof IBlockInfo) {
 				((IBlockInfo) (block)).getBlockInfo(info, world, pos, hitSide, player, false);
 				for (int i = 0; i < info.size(); i++) {
-					player.addChatMessage(info.get(i));
+					player.sendMessage(info.get(i));
 				}
 				return true;
 			} else {
@@ -120,7 +121,7 @@ public class ItemRedNetMeter extends ItemMulti {
 					if (ServerHelper.isServerWorld(world)) {
 						((ITileInfo) theTile).getTileInfo(info, hitSide, player, false);
 						for (int i = 0; i < info.size(); i++) {
-							player.addChatMessage(info.get(i));
+							player.sendMessage(info.get(i));
 						}
 					}
 					return true;
@@ -133,13 +134,13 @@ public class ItemRedNetMeter extends ItemMulti {
 			}
 			info = new ArrayList<>();
 			if (block.equals(Blocks.REDSTONE_WIRE)) {
-				player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.meter.dustprefix")
+				player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.meter.dustprefix")
 						.appendText(": " + state.getValue(BlockRedstoneWire.POWER)));
 			}
 			else if (block instanceof IRedNetInfo) {
 				((IRedNetInfo) (block)).getRedNetInfo(world, pos, hitSide, player, info);
 				for (int i = 0; i < info.size(); i++) {
-					player.addChatMessage(info.get(i));
+					player.sendMessage(info.get(i));
 				}
 				return true;
 			}

@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ExistingSubstitutionException;
@@ -322,12 +323,12 @@ public class MFRThings {
 		rocketItem = new ItemRocket();
 
 		EntityRegistry
-				.registerModEntity(EntityPinkSlime.class, "mfrEntityPinkSlime", 1, MineFactoryReloadedCore.instance(), 160, 5,
+				.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "pink_slime"), EntityPinkSlime.class, "mfrEntityPinkSlime", 1, MineFactoryReloadedCore.instance(), 160, 5,
 						true);
 		LootTableList.register(EntityPinkSlime.PINK_SLIME);
 
 		EntityRegistry
-				.registerModEntity(DebugTracker.class, "DebugTracker", 99, MineFactoryReloadedCore.instance(), 250, 10, true);
+				.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "debug_tracker"), DebugTracker.class, "DebugTracker", 99, MineFactoryReloadedCore.instance(), 250, 10, true);
 
 		for (IInitializer init : initList) {
 			init.preInit();

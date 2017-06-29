@@ -2,8 +2,8 @@ package powercrystals.minefactoryreloaded.render.tileentity;
 
 import codechicken.lib.lighting.LightModel;
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.render.item.IItemRenderer;
 import codechicken.lib.texture.TextureUtils;
 import codechicken.lib.util.TransformUtils;
@@ -49,7 +49,7 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 
 	static {
 		try {
-			Map<String, CCModel> cableModels = CCOBJParser.parseObjModels(MineFactoryReloadedCore.class.
+			Map<String, CCModel> cableModels = OBJParser.parseModels(MineFactoryReloadedCore.class.
 							getResourceAsStream("/powercrystals/minefactoryreloaded/models/RedComp.obj"),
 					7, new Scale(1/16f));
 			base = cableModels.get("case").backfacedCopy();
@@ -170,7 +170,7 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 	}
 
 	@Override
-	public void renderItem(ItemStack item) {
+	public void renderItem(ItemStack item, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();

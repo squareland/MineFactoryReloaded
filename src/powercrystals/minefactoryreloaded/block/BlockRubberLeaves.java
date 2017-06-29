@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
@@ -234,7 +235,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void getSubBlocks(Item blockId, CreativeTabs creativeTab, List subTypes) {
+	public void getSubBlocks(Item blockId, CreativeTabs creativeTab, NonNullList<ItemStack> subTypes) {
 
 		subTypes.add(new ItemStack(blockId, 1, 0));
 		subTypes.add(new ItemStack(blockId, 1, 1));

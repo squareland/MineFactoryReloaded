@@ -1,10 +1,10 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import codechicken.lib.model.blockbakery.BlockBakery;
-import codechicken.lib.model.blockbakery.CCBakeryModel;
-import codechicken.lib.model.blockbakery.IBakeryBlock;
-import codechicken.lib.model.blockbakery.ICustomBlockBakery;
+import codechicken.lib.model.bakery.CCBakeryModel;
+import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.ModelBakery;
+import codechicken.lib.model.bakery.generation.IBakery;
 import codechicken.lib.raytracer.RayTracer;
 import cofh.api.block.IBlockInfo;
 import cofh.lib.util.helpers.ItemHelper;
@@ -49,7 +49,7 @@ import java.util.Random;
 
 import static powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable._subSideMappings;
 
-public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBakeryBlock {
+public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBakeryProvider {
 
 	public static final IUnlistedProperty<TileEntityPlasticPipe.ConnectionType>[] CONNECTION = new IUnlistedProperty[6];
 
@@ -82,7 +82,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
 
 		return PlasticPipeRenderer.INSTANCE
-				.handleState((IExtendedBlockState) super.getExtendedState(state, world, pos), world.getTileEntity(pos));
+				.handleState((IExtendedBlockState) super.getExtendedState(state, world, pos), world, pos);
 	}
 
 	@Override
@@ -135,8 +135,8 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 						ItemHelper.consumeItem(heldItem);
 					}
 					cable.setUpgrade(newUpgrade);
-					neighborChanged(state, world, pos, Blocks.AIR);
-					player.addChatMessage(new TextComponentTranslation(newUpgrade.getChatMessageKey()));
+					neighborChanged(state, world, pos, Blocks.AIR, pos);
+					player.sendMessage(new TextComponentTranslation(newUpgrade.getChatMessageKey()));
 				}
 				return true;
 			}
@@ -228,13 +228,13 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 						return PlasticPipeRenderer.sprite;
 					}
 				});
-		BlockBakery.registerBlockKeyGenerator(this,
+		ModelBakery.registerBlockKeyGenerator(this,
 				state -> state.getBlock().getRegistryName().toString() + "," + getConnectionTypesKey(state));
 
 	}
 
 	@Override
-	public ICustomBlockBakery getCustomBakery() {
+	public IBakery getBakery() {
 
 		return PlasticPipeRenderer.INSTANCE;
 	}

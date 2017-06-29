@@ -69,7 +69,7 @@ public class EntityFlyingItem extends EntitySafariNet {
 		DamageSource d = DamageSource.causeThrownDamage(this, getThrower() == null ? this : getThrower());
 		if (result.entityHit.attackEntityFrom(d, damage)) {
 			if (this.knockbackStrength > 0) {
-				float f4 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+				float f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
 				if (f4 > 0.0F) {
 					result.entityHit.addVelocity(this.motionX * this.knockbackStrength * 0.6D /

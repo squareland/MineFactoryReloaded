@@ -157,7 +157,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 					while (i > 0) {
 						int j = EntityXPOrb.getXPSplit(i);
 						i -= j;
-						world.spawnEntityInWorld(new EntityXPOrb(world,
+						world.spawnEntity(new EntityXPOrb(world,
 								pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), j));
 					}
 					fizz(world, pos, rand);
@@ -192,7 +192,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 					drop = new ItemStack(Blocks.RED_MUSHROOM, rand.nextInt(2));
 			}
 			if (world.setBlockState(pos, block.getDefaultState(), 3)) {
-				if (drop != null && drop.stackSize > 0) {
+				if (drop != null && drop.getCount() > 0) {
 					UtilInventory.dropStackInAir(world, pos, drop);
 				}
 

@@ -33,7 +33,7 @@ public class BlockExplodingFluid extends BlockFactoryFluid {
 	@Override
 	protected void checkCanStay(World world, BlockPos pos, Random rand) {
 
-		if (BiomeDictionary.isBiomeOfType(world.getBiome(pos), BiomeDictionary.Type.NETHER))  {
+		if (BiomeDictionary.hasType(world.getBiome(pos), BiomeDictionary.Type.NETHER))  {
 			explode(world, pos, rand, false);
 		}
 	}

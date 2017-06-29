@@ -139,7 +139,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				}
 				for (int i = 0; i < 3; i++) {
 					int slot = getResourceSlot(row, i);
-					if (ingredient.stackSize <= 0 && !UtilInventory.stacksEqual(_inventory[slot], ingredient)) {
+					if (ingredient.getCount() <= 0 && !UtilInventory.stacksEqual(_inventory[slot], ingredient)) {
 						continue;
 					}
 
@@ -157,19 +157,19 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 					if (current == newPotion)
 						break;
 
-					if (ingredient.stackSize > 0) {
-						--ingredient.stackSize;
+					if (ingredient.getCount() > 0) {
+						ingredient.shrink(1);
 						break;
 					}
-					--_inventory[slot].stackSize;
-					++ingredient.stackSize;
+					_inventory[slot].shrink(1);
+					ingredient.grow(1);
 					if (ingredient.getItem().hasContainerItem(_inventory[slot])) {
 						ItemStack r = ingredient.getItem().getContainerItem(_inventory[slot]);
 						if (r != null && r.isItemStackDamageable() && r.getItemDamage() > r.getMaxDamage())
 							r = null;
 						_inventory[slot] = r;
 					}
-					if (_inventory[slot] != null && _inventory[slot].stackSize <= 0)
+					if (_inventory[slot] != null && _inventory[slot].getCount() <= 0)
 						_inventory[slot] = null;
 					break;
 				}
@@ -190,7 +190,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		boolean hasIngredients = ingredient.stackSize > 0;
+		boolean hasIngredients = ingredient.getCount() > 0;
 		if (!hasIngredients) for (int i = 0; i < 3; i++) {
 			if (UtilInventory.stacksEqual(ingredient, _inventory[getResourceSlot(row, i)])) {
 				hasIngredients = true;
@@ -273,7 +273,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 	public void setInventorySlotContents(int slot, ItemStack itemstack) {
 
 		if (itemstack != null && !shouldDropSlotWhenBroken(slot))
-			itemstack.stackSize = 0; // ghost item; stack size (0, 1) also used to reduce resource consumption
+			itemstack.setCount(0); // ghost item; stack size (0, 1) also used to reduce resource consumption
 		super.setInventorySlotContents(slot, itemstack);
 	}
 

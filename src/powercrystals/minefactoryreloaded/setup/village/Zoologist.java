@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.setup.village;
 
+import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -66,7 +67,7 @@ public class Zoologist
 		}
 
 		@Override
-		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random)
+		public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
 		{
 			ItemStack itemCost1;
 			ItemStack itemCost2;

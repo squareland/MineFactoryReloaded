@@ -156,7 +156,7 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 				cropDrops[i] = crop.getGain(tec);
 				if((cropDrops[i] != null) && (rand.nextInt(100) <= tec.getStatGain()))
 				{
-					cropDrops[i].stackSize += 1;
+					cropDrops[i].grow(1);
 				}
 			}
 

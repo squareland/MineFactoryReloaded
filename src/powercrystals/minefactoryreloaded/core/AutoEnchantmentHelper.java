@@ -48,7 +48,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper
 
 		if (isBook)
 		{
-			output.setItem(Items.ENCHANTED_BOOK);
+			output = new ItemStack(Items.ENCHANTED_BOOK);
 		}
 
 		Collections.shuffle(enchantments);
@@ -136,7 +136,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper
 						{
 							Enchantment ench = iter.next().enchantmentobj;
 							for(EnchantmentData newEnchantment : returnList)
-								if (!newEnchantment.enchantmentobj.canApplyTogether(ench))
+								if (!newEnchantment.enchantmentobj.func_191560_c(ench))
 								{
 									iter.remove();
 									break;

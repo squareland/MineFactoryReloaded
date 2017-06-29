@@ -26,7 +26,7 @@ public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwa
 	ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformations;
 
 	@Override
-	public void renderItem(ItemStack stack) {
+	public void renderItem(ItemStack stack, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 		CCRenderState ccrs = CCRenderState.instance();

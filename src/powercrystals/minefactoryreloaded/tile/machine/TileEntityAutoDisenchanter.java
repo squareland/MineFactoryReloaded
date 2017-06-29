@@ -89,7 +89,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 			if (_inventory[0] == null)
 				return false;
 			_inventory[4] = _inventory[0].splitStack(1);
-			if (_inventory[0].stackSize <= 0)
+			if (_inventory[0].getCount() <= 0)
 				_inventory[0] = null;
 			markChunkDirty();
 		}

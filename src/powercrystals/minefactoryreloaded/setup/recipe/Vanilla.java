@@ -656,7 +656,7 @@ public class Vanilla {
 
 		if (machine.getIsRecipeEnabled()) {
 			ItemStack item = machine.getItemStack();
-			item.stackSize = amount;
+			item.setCount(amount);
 			for (int i = recipe.length; i-- > 0;)
 				if (recipe[i] instanceof Machine)
 					recipe[i] = ((Machine) recipe[i]).getItemStack();

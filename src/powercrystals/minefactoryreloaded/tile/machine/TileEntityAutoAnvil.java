@@ -61,7 +61,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				return _inventory[0].getItem().equals(item);
 			return false;
 		}
-		if (slot == 0) return (item.isItemTool(stack) || item.equals(Items.ENCHANTED_BOOK)) || item.isRepairable();
+		if (slot == 0) return (item.isEnchantable(stack) || item.equals(Items.ENCHANTED_BOOK)) || item.isRepairable();
 		if (slot == 1 && _inventory[0] != null) {
 			if (item.equals(Items.ENCHANTED_BOOK) && !Items.ENCHANTED_BOOK.getEnchantments(stack).hasNoTags())
 				return true;
@@ -127,7 +127,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 			if (drain(4, false, _tanks[0]) != 4) {
 				return false;
 			}
-			if (stackSizeToBeUsedInRepair > 0 && (_inventory[1] == null || _inventory[1].stackSize < stackSizeToBeUsedInRepair)) {
+			if (stackSizeToBeUsedInRepair > 0 && (_inventory[1] == null || _inventory[1].getCount() < stackSizeToBeUsedInRepair)) {
 				return false;
 			}
 
@@ -138,8 +138,8 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				_inventory[0] = null;
 				_inventory[2] = _output;
 
-				if (stackSizeToBeUsedInRepair > 0 && _inventory[1].stackSize > stackSizeToBeUsedInRepair) {
-					_inventory[1].stackSize -= stackSizeToBeUsedInRepair;
+				if (stackSizeToBeUsedInRepair > 0 && _inventory[1].getCount() > stackSizeToBeUsedInRepair) {
+					_inventory[1].shrink(stackSizeToBeUsedInRepair);
 				} else {
 					_inventory[1] = null;
 				}
@@ -232,7 +232,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 					}
 
 					int repairStackSize = 0;
-					for (; currentDamage > 0 && repairStackSize < addedItem.stackSize; repairStackSize++) {
+					for (; currentDamage > 0 && repairStackSize < addedItem.getCount(); repairStackSize++) {
 						outputItem.setItemDamage(outputItem.getItemDamage() - currentDamage);
 						totalEnchCost += Math.max(1, currentDamage / 100) + existingEnchantments.size();
 						currentDamage = Math.min(outputItem.getItemDamage(), outputItem.getMaxDamage() / 4);
@@ -290,7 +290,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 						}
 
 						for (Enchantment existingEnchant : existingEnchantments.keySet()) {
-							if (!existingEnchant.equals(addedEnchant) && !addedEnchant.canApplyTogether(existingEnchant)) {
+							if (!existingEnchant.equals(addedEnchant) && !addedEnchant.func_191560_c(existingEnchant)) {
 								canEnchantmentBeAdded = false;
 								totalEnchCost += levelDifference;
 							}

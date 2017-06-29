@@ -27,27 +27,29 @@ public class ItemCeramicDye extends ItemFactoryColored {
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+
+		ItemStack stack = player.getHeldItem(hand);
 
 		Block block = world.getBlockState(pos).getBlock();
 		if (!world.isRemote & block != null) {
 			if (Blocks.GLASS.equals(block)) {
 				if (world.setBlockState(pos, MFRThings.factoryGlassBlock.getStateFromMeta(stack.getItemDamage()), 3)) {
 					if (!player.capabilities.isCreativeMode)
-						stack.stackSize--;
+						stack.shrink(1);
 					return EnumActionResult.SUCCESS;
 				}
 			}
 			if (Blocks.GLASS_PANE.equals(block)) {
 				if (world.setBlockState(pos, MFRThings.factoryGlassPaneBlock.getStateFromMeta(stack.getItemDamage()), 3)) {
 					if (!player.capabilities.isCreativeMode)
-						stack.stackSize--;
+						stack.shrink(1);
 					return EnumActionResult.SUCCESS;
 				}
 			}
 			if (block.recolorBlock(world, pos, side, EnumDyeColor.byMetadata(stack.getItemDamage()))) {
 				if (!player.capabilities.isCreativeMode)
-					stack.stackSize--;
+					stack.shrink(1);
 				return EnumActionResult.SUCCESS;
 			}
 		}

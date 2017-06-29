@@ -1,9 +1,9 @@
 package powercrystals.minefactoryreloaded.render.block;
 
-import codechicken.lib.model.blockbakery.ISimpleBlockBakery;
+import codechicken.lib.model.bakery.generation.ISimpleBlockBakery;
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.render.buffer.BakingVertexBuffer;
 import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Scale;
@@ -16,19 +16,20 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.transport.BlockPlasticPipe;
-import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe.ConnectionType;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe;
-
-import static powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe.ConnectionType.*;
+import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe.ConnectionType;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import static powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe.ConnectionType.*;
 
 public class PlasticPipeRenderer implements ISimpleBlockBakery {
 
@@ -48,7 +49,7 @@ public class PlasticPipeRenderer implements ISimpleBlockBakery {
 
 	static {
 		try {
-			Map<String, CCModel> cableModels = CCOBJParser.parseObjModels(MineFactoryReloadedCore.class.
+			Map<String, CCModel> cableModels = OBJParser.parseModels(MineFactoryReloadedCore.class.
 							getResourceAsStream("/powercrystals/minefactoryreloaded/models/PlasticPipe.obj"),
 					7, new Scale(1 / 16f));
 			Vector3 p = new Vector3(0, 0, 0);
@@ -146,9 +147,9 @@ public class PlasticPipeRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public IExtendedBlockState handleState(IExtendedBlockState blockState, TileEntity tileEntity) {
+	public IExtendedBlockState handleState(IExtendedBlockState blockState, IBlockAccess world, BlockPos pos) {
 
-		TileEntityPlasticPipe pipe = (TileEntityPlasticPipe) tileEntity;
+		TileEntityPlasticPipe pipe = (TileEntityPlasticPipe) world.getTileEntity(pos);
 
 		for (EnumFacing side : EnumFacing.VALUES) {
 			ConnectionType connType = pipe.getSideConnection(side.ordinal());

@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.tile.machine;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.FakePlayer;
@@ -67,7 +68,8 @@ public class TileEntityBlockPlacer extends TileEntityFactoryPowered {
 					block.canPlaceBlockOnSide(world, bp, EnumFacing.DOWN)) {
 				int j1 = item.getMetadata(stack.getItemDamage());
 				FakePlayer fakePlayer = FakePlayerFactory.getMinecraft((WorldServer) world);
-				IBlockState placementState = block.getStateForPlacement(world, bp, EnumFacing.DOWN, 0, 0, 0, j1, fakePlayer, stack);
+				fakePlayer.setHeldItem(EnumHand.MAIN_HAND, stack);
+				IBlockState placementState = block.getStateForPlacement(world, bp, EnumFacing.DOWN, 0, 0, 0, j1, fakePlayer, EnumHand.MAIN_HAND);
 				if (item.placeBlockAt(stack, fakePlayer, world, bp, EnumFacing.DOWN, 0, 0, 0, placementState)) {
 					if (MFRConfig.playSounds.getBoolean(true)) {
 						SoundType soundType = block.getSoundType(placementState, world, bp, null);

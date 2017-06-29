@@ -56,7 +56,7 @@ public class TileEntityCollector extends TileEntityFactoryInventory implements I
 	}
 
 	@Override
-	public boolean hasWorldObj() {
+	public boolean hasWorld() {
 
 		return world != null & failedDrops != null;
 	}

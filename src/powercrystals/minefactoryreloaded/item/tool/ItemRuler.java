@@ -29,13 +29,14 @@ public class ItemRuler extends ItemFactoryTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+
 		if (world.isRemote) {
 			RayTraceResult mop = player.rayTrace(MFRConfig.spyglassRange.getInt(), 1.0F);
 			if (mop == null || (mop.typeOfHit == Type.ENTITY && mop.entityHit == null)) {
-				player.addChatMessage(new TextComponentTranslation("chat.info.mfr.ruler.nosight"));
+				player.sendMessage(new TextComponentTranslation("chat.info.mfr.ruler.nosight"));
 			} else if (mop.typeOfHit == Type.ENTITY) {
-				player.addChatMessage(new TextComponentTranslation("chat.info.mfr.ruler.hitentity"));
+				player.sendMessage(new TextComponentTranslation("chat.info.mfr.ruler.hitentity"));
 			} else {
 				NBTTagCompound data = player.getEntityData();
 				NBTTagCompound tag = data.getCompoundTag("ruler");
@@ -44,7 +45,7 @@ public class ItemRuler extends ItemFactoryTool {
 					tag.setInteger("y", mop.getBlockPos().getY());
 					tag.setInteger("z", mop.getBlockPos().getZ());
 					data.setTag("ruler", tag);
-					player.addChatMessage(new TextComponentTranslation("chat.info.mfr.ruler.startposition"));
+					player.sendMessage(new TextComponentTranslation("chat.info.mfr.ruler.startposition"));
 				} else {
 					int x = tag.getInteger("x");
 					int y = tag.getInteger("y");
@@ -58,16 +59,16 @@ public class ItemRuler extends ItemFactoryTool {
 					double distAll = Math.sqrt(Math.pow(distX, 2) +
 							Math.pow(distY, 2) + Math.pow(distZ, 2));
 
-					player.addChatMessage(new TextComponentString("X: ").appendText(I18n
+					player.sendMessage(new TextComponentString("X: ").appendText(I18n
 									.translateToLocalFormatted("chat.info.mfr.ruler.distance",
 											distX, distX + 1)));
-					player.addChatMessage(new TextComponentString("Y: ").appendText(I18n
+					player.sendMessage(new TextComponentString("Y: ").appendText(I18n
 									.translateToLocalFormatted("chat.info.mfr.ruler.distance",
 											distY, distY + 1)));
-					player.addChatMessage(new TextComponentString("Z: ").appendText(I18n
+					player.sendMessage(new TextComponentString("Z: ").appendText(I18n
 									.translateToLocalFormatted("chat.info.mfr.ruler.distance",
 											distZ, distZ + 1)));
-					player.addChatMessage(new TextComponentString("")
+					player.sendMessage(new TextComponentString("")
 							.appendText(I18n
 									.translateToLocalFormatted("chat.info.mfr.ruler.total",
 											distAll)));
@@ -75,7 +76,7 @@ public class ItemRuler extends ItemFactoryTool {
 			}
 		}
 
-		return super.onItemRightClick(stack, world, player, hand);
+		return super.onItemRightClick(world, player, hand);
 	}
 
 	@Override

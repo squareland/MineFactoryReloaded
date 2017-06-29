@@ -151,14 +151,14 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	private void dropStack(World world, BlockPos pos, ItemStack itemstack) {
 
 		do {
-			if (itemstack.stackSize <= 0)
+			if (itemstack.getCount() <= 0)
 				break;
 
 			float xOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 			float yOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 			float zOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 
-			int amountToDrop = Math.min(world.rand.nextInt(21) + 10, itemstack.stackSize);
+			int amountToDrop = Math.min(world.rand.nextInt(21) + 10, itemstack.getCount());
 
 			EntityItem entityitem = new EntityItem(world,
 					pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset,
@@ -169,7 +169,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 			entityitem.motionY = (float) world.rand.nextGaussian() * motionMultiplier + 0.2F;
 			entityitem.motionZ = (float) world.rand.nextGaussian() * motionMultiplier;
 
-			world.spawnEntityInWorld(entityitem);
+			world.spawnEntity(entityitem);
 		} while (true);
 	}
 
@@ -225,7 +225,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 			TileEntity te = getTile(world, pos);
 			if (te instanceof IRotateableTile)
 				if (((IRotateableTile) te).canRotate())
-					switch (MathHelper.floor_double((entity.rotationYaw * 4F) / 360F + 0.5D) & 3) {
+					switch (MathHelper.floor((entity.rotationYaw * 4F) / 360F + 0.5D) & 3) {
 					case 0:
 						((IRotateableTile) te).rotateDirectlyTo(3);
 						break;
@@ -288,9 +288,9 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		if (te instanceof TileEntityFactoryInventory) {
 			if (((TileEntityFactoryInventory)te).acceptUpgrade(heldItem)) {
 				if (entityplayer.capabilities.isCreativeMode) {
-					++heldItem.stackSize;
+					heldItem.grow(1);
 				}
-				if (heldItem.stackSize <= 0) {
+				if (heldItem.getCount() <= 0) {
 					EntityEquipmentSlot slot = hand == EnumHand.OFF_HAND ? EntityEquipmentSlot.OFFHAND : EntityEquipmentSlot.MAINHAND;
 					entityplayer.setItemStackToSlot(slot, null);
 				}
@@ -363,7 +363,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		TileEntity te = getTile(world, pos);
 		if (te instanceof TileEntityFactory) {
 			((TileEntityFactory) te).onRedNetChanged(side, inputValue);
-			neighborChanged(world.getBlockState(pos), world, pos, MFRThings.rednetCableBlock);
+			neighborChanged(world.getBlockState(pos), world, pos, MFRThings.rednetCableBlock, pos);
 		}
 	}
 

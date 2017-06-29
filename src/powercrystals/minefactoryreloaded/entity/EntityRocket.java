@@ -241,7 +241,7 @@ public class EntityRocket extends Entity
 		
 		if(prevRotationPitch == 0.0F && prevRotationYaw == 0.0F)
 		{
-			double f = MathHelper.sqrt_double(x * x + z * z);
+			double f = MathHelper.sqrt(x * x + z * z);
 			prevRotationYaw = rotationYaw = (float)(Math.atan2(x, z) * 180.0D / Math.PI);
 			prevRotationPitch = rotationPitch = (float)(Math.atan2(y, f) * 180.0D / Math.PI);
 			setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);

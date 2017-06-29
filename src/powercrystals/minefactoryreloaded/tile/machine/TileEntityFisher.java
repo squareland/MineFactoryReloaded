@@ -242,7 +242,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
 
-		return stack == null || (stack.isItemStackDamageable() && stack.getItem().isItemTool(stack) && Enchantments.LURE.canApply(stack));
+		return stack == null || (stack.isItemStackDamageable() && stack.getItem().isEnchantable(stack) && Enchantments.LURE.canApply(stack));
 	}
 
 	@Override

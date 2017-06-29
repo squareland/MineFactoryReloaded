@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.item.base;
 
 import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -55,7 +56,7 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister{
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public void getSubItems(Item item, CreativeTabs creativeTab, List subTypes) {
+	public void getSubItems(Item item, CreativeTabs creativeTab, NonNullList<ItemStack> subTypes) {
 
 		getSubItems(item, subTypes);
 	}

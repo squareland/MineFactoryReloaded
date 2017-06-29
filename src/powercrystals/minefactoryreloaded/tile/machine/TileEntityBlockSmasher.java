@@ -45,9 +45,9 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public void setWorldObj(World world) {
+	public void setWorld(World world) {
 
-		super.setWorldObj(world);
+		super.setWorld(world);
 		_smashingWorld = new SmashingWorld(this.world);
 	}
 
@@ -96,14 +96,14 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 				setWorkDone(0);
 			return false;
 		}
-		if (outSlot != null && outSlot.getMaxStackSize() - outSlot.stackSize < output.stackSize) {
+		if (outSlot != null && outSlot.getMaxStackSize() - outSlot.getCount() < output.getCount()) {
 			return false;
 		}
 
 		if (getWorkDone() >= getWorkMax()) {
 			if (_shouldWork) {
-				_inventory[0].stackSize--;
-				if (_inventory[0].stackSize == 0) {
+				_inventory[0].shrink(1);
+				if (_inventory[0].getCount() == 0) {
 					_inventory[0] = null;
 				}
 			}
@@ -111,7 +111,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 			if (_inventory[1] == null) {
 				_inventory[1] = output.copy();
 			} else {
-				_inventory[1].stackSize += output.stackSize;
+				_inventory[1].grow(output.getCount());
 			}
 			_lastOutput.remove(output);
 			if (_lastOutput.size() == 0) {
@@ -129,7 +129,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 
 	private static ItemStack getEqualStack(ItemStack a, List<ItemStack> b) {
 
-		if (a != null & b != null && a.stackSize > 0 && b.size() > 0)
+		if (a != null & b != null && a.getCount() > 0 && b.size() > 0)
 			for (ItemStack i : b)
 				if (UtilInventory.stacksEqual(a, i)) return i;
 		return a == null && b.size() > 0 ? b.get(0) : null;
@@ -248,15 +248,15 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 		_fortune = tag.getInteger("fortune");
 		_shouldWork = tag.hasKey("shouldWork") ? tag.getBoolean("shouldWork") : true;
 		if (tag.hasKey("stack"))
-			_lastInput = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("stack"));
+			_lastInput = new ItemStack(tag.getCompoundTag("stack"));
 
 		if (tag.hasKey("SmashedItems")) {
 			List<ItemStack> drops = new ArrayList<ItemStack>();
 			NBTTagList nbttaglist = tag.getTagList("SmashedItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
 				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				ItemStack item = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-				if (item != null && item.stackSize > 0) {
+				ItemStack item = new ItemStack(nbttagcompound1);
+				if (item != null && item.getCount() > 0) {
 					drops.add(item);
 				}
 			}

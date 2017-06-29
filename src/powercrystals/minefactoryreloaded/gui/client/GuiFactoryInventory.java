@@ -70,9 +70,9 @@ public class GuiFactoryInventory extends GuiBase {
 				continue;
 			}
 			SlotFake s = (SlotFake) o;
-			if (x >= s.xDisplayPosition && x <= s.xDisplayPosition + 16 && y >= s.yDisplayPosition &&
-					y <= s.yDisplayPosition + 16) {
-				MFRPacket.sendFakeSlotToServer(_tileEntity, Minecraft.getMinecraft().thePlayer.getEntityId(),
+			if (x >= s.xPos && x <= s.xPos + 16 && y >= s.yPos &&
+					y <= s.yPos + 16) {
+				MFRPacket.sendFakeSlotToServer(_tileEntity, Minecraft.getMinecraft().player.getEntityId(),
 						s.slotNumber, (byte) button);
 			}
 		}

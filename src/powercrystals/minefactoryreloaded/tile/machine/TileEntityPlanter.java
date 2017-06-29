@@ -62,14 +62,14 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 
 			// skip planting attempt if there's no stack in that slot,
 			// or if there's a template item that's not matched
-			if (availableStack == null ||
-					(match != null &&
+			if (availableStack.isEmpty() ||
+					(!match.isEmpty() &&
 					!stacksEqual(match, availableStack)) ||
 					!MFRRegistry.getPlantables().containsKey(availableStack.getItem())) {
 				continue;
 			}
 
-			if (keepLastItem && availableStack.stackSize < 2) {
+			if (keepLastItem && availableStack.getCount() < 2) {
 				continue;
 			}
 			IFactoryPlantable plantable = MFRRegistry.getPlantables().get(availableStack.getItem());

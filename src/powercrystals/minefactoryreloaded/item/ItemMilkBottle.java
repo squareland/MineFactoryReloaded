@@ -42,17 +42,17 @@ public class ItemMilkBottle extends ItemFactory {
 		}
 
 		if (!player.capabilities.isCreativeMode) {
-			stack.stackSize--;
+			stack.shrink(1);
 
-			if (stack.stackSize <= 0) {
+			if (stack.getCount() <= 0) {
 				return new ItemStack(Items.GLASS_BOTTLE);
 			} else if (!player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) {
 				player.dropItem(new ItemStack(Items.GLASS_BOTTLE), false, true);
 			}
 		}
 
-		if (stack.stackSize <= 0) {
-			stack.stackSize = 0;
+		if (stack.getCount() <= 0) {
+			stack.setCount(0);
 		}
 
 		return stack;
@@ -71,10 +71,10 @@ public class ItemMilkBottle extends ItemFactory {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
 		player.setActiveHand(hand);
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
 	@Override

@@ -92,7 +92,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 
 	@Nullable
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return COLLISION_AABB;
 	}
 
@@ -122,8 +122,10 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float xOffset,
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float xOffset,
 			float yOffset, float zOffset) {
+
+		ItemStack heldItem = player.getHeldItem(hand);
 
 		if (heldItem != null && Block.getBlockFromItem(heldItem.getItem()).equals(this)) {
 			for (int i = pos.getY() + 1, e = world.getActualHeight(); i < e; ++i) {
@@ -133,9 +135,9 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 					if (!world.isRemote && world.setBlockState(placePos, getDefaultState())) {
 						world.playEvent(null, 2001, placePos, Block.getIdFromBlock(this));
 						if (!player.capabilities.isCreativeMode) {
-							heldItem.stackSize--;
-							if (heldItem.stackSize == 0) {
-								player.inventory.mainInventory[player.inventory.currentItem] = null;
+							heldItem.shrink(1);
+							if (heldItem.getCount() == 0) {
+								player.inventory.mainInventory.set(player.inventory.currentItem, ItemStack.EMPTY);
 							}
 						}
 					}
@@ -181,11 +183,11 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 
-		neighborChanged(state, world, pos, null);
+		neighborChanged(state, world, pos, null, pos);
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 
 		if (!canBlockStay(world, pos)) {
 			int height = world.getActualHeight();

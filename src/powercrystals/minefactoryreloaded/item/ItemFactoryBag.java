@@ -75,11 +75,13 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		if (stack.stackSize != 1) {
+		ItemStack stack = player.getHeldItem(hand);
+
+		if (stack.getCount() != 1) {
 			if (!world.isRemote)
-				player.addChatMessage(new TextComponentTranslation("chat.info.mfr.bag.stacksize"));
+				player.sendMessage(new TextComponentTranslation("chat.info.mfr.bag.stacksize"));
 			return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 		}
 

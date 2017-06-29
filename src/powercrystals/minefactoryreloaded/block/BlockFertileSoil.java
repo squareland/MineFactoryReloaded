@@ -107,19 +107,21 @@ public class BlockFertileSoil extends Block implements IGrowable, IInitializer, 
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
 	{
 		return FULL_BLOCK_AABB;
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			@Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+			EnumFacing side, float hitX, float hitY, float hitZ)
 	{
+
+		ItemStack heldItem = player.getHeldItem(hand);
 		if (!canGrow(world, pos, state, world.isRemote))
 			return false;
 
-		if (heldItem != null)
+		if (!heldItem.isEmpty())
 		{
 			if (MFRRegistry.getFertilizers().get(heldItem.getItem()) != null)
 			{
@@ -159,9 +161,9 @@ public class BlockFertileSoil extends Block implements IGrowable, IInitializer, 
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos)
 	{
-		super.neighborChanged(state, world, pos, block);
+		super.neighborChanged(state, world, pos, block, fromPos);
 		if (true) return; // TODO: if neighborChange becomes sided, remove
 		IBlockState stateAbove = world.getBlockState(pos.up());
 		Block above = stateAbove.getBlock();

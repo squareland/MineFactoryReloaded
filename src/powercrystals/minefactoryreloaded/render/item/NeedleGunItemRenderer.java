@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.render.item;
 
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.texture.TextureUtils;
 import codechicken.lib.util.TransformUtils;
 import codechicken.lib.vec.SwapYZ;
@@ -27,7 +27,8 @@ public class NeedleGunItemRenderer extends BaseItemRenderer {
 
 	public NeedleGunItemRenderer() {
 
-		Map<String, CCModel> models = CCOBJParser.parseObjModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "needle_gun.obj"), new SwapYZ());
+		Map<String, CCModel> models = OBJParser
+				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "needle_gun.obj"), new SwapYZ());
 		gunModel = models.get("gun");
 		magazineModel = models.get("magazine");
 

@@ -118,7 +118,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		return prod;
 	}
 
-	private static ITree[] getSaplings(ITree tree, World world, BlockPos pos, float modifier) {
+	private static List<ITree> getSaplings(ITree tree, World world, BlockPos pos, float modifier) {
 		return tree.getSaplings(world, null, pos, modifier);
 	}
 

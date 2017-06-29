@@ -337,7 +337,7 @@ public class Vanilla {
 		for (ItemStack ore : OreDictionary.getOres(name))
 			if (ore != null) {
 				ore = ore.copy();
-				ore.stackSize = 1;
+				ore.setCount(1);
 				MFRRegistry.registerLaserOre(weight, ore);
 				if (focus >= 0)
 					MFRRegistry.addLaserPreferredOre(focus, ore);

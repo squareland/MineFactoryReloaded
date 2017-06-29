@@ -1,9 +1,8 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import cofh.lib.gui.slot.SlotAcceptInsertable;
+import cofh.lib.gui.slot.SlotLocked;
 import cofh.lib.gui.slot.SlotRemoveOnly;
-import cofh.lib.gui.slot.SlotViewOnly;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,7 +29,7 @@ public class ContainerAutoAnvil extends ContainerFactoryPowered
 		addSlotToContainer(new SlotAcceptInsertable(_te, 0, 8, 24));
 		addSlotToContainer(new SlotAcceptInsertable(_te, 1, 26, 24));
 		addSlotToContainer(new SlotRemoveOnly(_te, 2, 8, 48));
-		addSlotToContainer(new SlotViewOnly(_te, 2, 45, 24, true) {
+		addSlotToContainer(new SlotLocked(_te, 2, 45, 24) {
 			@Override
 			public ItemStack getStack() {
 				return _anvil.getRepairOutput();

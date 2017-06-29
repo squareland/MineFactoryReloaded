@@ -120,7 +120,7 @@ public class BlockDecorativeStone extends BlockFactory {
 			if (!BlockSand.fallInstantly && world.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32))) {
 				if (!world.isRemote) {
 					EntityFallingBlock entityfallingsand = new EntityFallingBlock(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, state);
-					world.spawnEntityInWorld(entityfallingsand);
+					world.spawnEntity(entityfallingsand);
 				}
 			} else {
 				world.setBlockToAir(pos);

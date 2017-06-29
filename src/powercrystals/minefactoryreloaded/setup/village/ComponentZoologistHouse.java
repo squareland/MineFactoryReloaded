@@ -21,6 +21,7 @@ import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.PieceWeight;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 
+import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import powercrystals.minefactoryreloaded.block.BlockRubberWood;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
@@ -85,9 +86,9 @@ public class ComponentZoologistHouse extends StructureVillagePieces.Village
 	}
 
 	@Override // read from NBT
-	protected void readStructureFromNBT(NBTTagCompound tag)
+	protected void readStructureFromNBT(NBTTagCompound tag, TemplateManager p_143011_2_)
 	{
-		super.readStructureFromNBT(tag);
+		super.readStructureFromNBT(tag, p_143011_2_);
 		this.hasMadeChest = tag.getBoolean("Chest");
 		int[] blocks = tag.getIntArray("blocks");
 		if (blocks == null || blocks.length != 4)
@@ -226,7 +227,7 @@ public class ComponentZoologistHouse extends StructureVillagePieces.Village
 		//{ Door
 		setBlockState(world, Blocks.AIR.getDefaultState(), 1, 1, 0, sbb);
 		setBlockState(world, Blocks.AIR.getDefaultState(), 1, 2, 0, sbb);
-		func_189927_a(world, sbb, random, 1, 1, 0, EnumFacing.NORTH);
+		createVillageDoor(world, sbb, random, 1, 1, 0, EnumFacing.NORTH);
 		//}
 
 		if (getBlockStateFromPos(world, 1, 0, -1, sbb).getBlock().equals(Blocks.AIR) &&

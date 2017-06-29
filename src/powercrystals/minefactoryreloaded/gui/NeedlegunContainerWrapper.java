@@ -35,11 +35,11 @@ public class NeedlegunContainerWrapper implements IInventory
 	{
 		if(_stack.getTagCompound().getCompoundTag("ammo") == null || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
 		{
-			return null;
+			return ItemStack.EMPTY;
 		}
 		else
 		{
-			return ItemStack.loadItemStackFromNBT(_stack.getTagCompound().getCompoundTag("ammo"));
+			return new ItemStack(_stack.getTagCompound().getCompoundTag("ammo"));
 		}
 	}
 
@@ -48,11 +48,11 @@ public class NeedlegunContainerWrapper implements IInventory
 	{
 		if(_stack.getTagCompound().getCompoundTag("ammo") == null || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
 		{
-			return null;
+			return ItemStack.EMPTY;
 		}
-		ItemStack s = ItemStack.loadItemStackFromNBT(_stack.getTagCompound().getCompoundTag("ammo"));
+		ItemStack s = new ItemStack(_stack.getTagCompound().getCompoundTag("ammo"));
 		ItemStack r = s.splitStack(j);
-		if(s.stackSize <= 0)
+		if(s.getCount() <= 0)
 		{
 			_stack.getTagCompound().setTag("ammo", new NBTTagCompound());
 		}
@@ -69,13 +69,13 @@ public class NeedlegunContainerWrapper implements IInventory
 	@Override
 	public ItemStack removeStackFromSlot(int index)
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack)
 	{
-		if(itemstack == null)
+		if(itemstack.isEmpty())
 		{
 			_stack.getTagCompound().setTag("ammo", new NBTTagCompound());
 		}
@@ -116,7 +116,7 @@ public class NeedlegunContainerWrapper implements IInventory
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer)
+	public boolean isUsableByPlayer(EntityPlayer entityplayer)
 	{
 		return true;
 	}
@@ -154,6 +154,12 @@ public class NeedlegunContainerWrapper implements IInventory
 
 	@Override
 	public void clear() {
-		_stack = null;
+		_stack = ItemStack.EMPTY;
+	}
+
+	@Override
+	public boolean isEmpty() {
+
+		return _stack.isEmpty();
 	}
 }

@@ -137,18 +137,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 		MFRRegistry.registerBlock(block, itemBlock);		
 	}
 
-	@Deprecated
-	private void registerBlock(Block block, Class<? extends ItemBlock> item, String[] args) {
-
-		MFRRegistry.registerBlock(block, item, new Object[] { args });
-	}
-
-	@Deprecated
-	private void registerBlock(Block block, Class<? extends ItemBlock> item, Object... args) {
-
-		MFRRegistry.registerBlock(block, item, args);
-	}
-
 	@EventHandler
 	public void missingMappings(FMLMissingMappingsEvent e) {
 

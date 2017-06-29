@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
+import cofh.lib.gui.slot.SlotLocked;
 import cofh.lib.gui.slot.SlotRemoveOnly;
-import cofh.lib.gui.slot.SlotViewOnly;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -26,7 +26,7 @@ public class ContainerLiquiCrafter extends ContainerFactoryInventory {
 			}
 		}
 
-		addSlotToContainer(new SlotViewOnly(_te, 9, 28 + 80, 38));
+		addSlotToContainer(new SlotLocked(_te, 9, 28 + 80, 38));
 		addSlotToContainer(new SlotRemoveOnly(_te, 10, 28 + 134, 38));
 
 		for (int i = 0; i < 2; i++) {

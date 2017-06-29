@@ -64,7 +64,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 
 	private int getTransferRate(ItemStack container) {
 
-		if (container.stackSize != 1)
+		if (container.getCount() != 1)
 			return 0;
 		return getMachine(container).getActivationEnergy();
 	}
