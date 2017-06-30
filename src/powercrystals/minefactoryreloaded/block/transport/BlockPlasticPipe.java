@@ -114,9 +114,9 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 			int subSide = _subSideMappings[subHit];
 
 			l2:
-			if (cable.onPartHit(player, subSide, subHit)) {
-				if (MFRUtil.isHoldingUsableTool(player, pos)) {
-					MFRUtil.usedWrench(player, pos);
+			if (cable.onPartHit(player, hand, subSide, subHit)) {
+				if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
+					MFRUtil.usedWrench(player, hand, pos, side);
 					return true;
 				}
 			} else if (PlasticPipeUpgrade.isUpgradeItem(heldItem)) {

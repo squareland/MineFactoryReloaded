@@ -80,7 +80,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 	private void setup() {
 
-		leafBases = MathHelper.ceiling_float_int(heightLimit * heightAttenuation);
+		leafBases = MathHelper.ceil(heightLimit * heightAttenuation);
 		density = Math.max(1, (int) (1.382D + Math.pow(branchDensity * heightLimit / 13.0D, 2.0D)));
 		chunkMap = new TLongObjectHashMap<Chunk>((int) (scaleWidth * heightLimit));
 	}
@@ -255,9 +255,9 @@ public class WorldGenMassiveTree extends WorldGenerator {
 			int[] var14 = var4;
 
 			for (int var15 = 0; var15 != var16; var15 += var9) {
-				var14[var6] = MathHelper.floor_float(par1[var6] + var15 + 0.5F);
-				var14[var7] = MathHelper.floor_float(par1[var7] + var15 * var10 + 0.5F);
-				var14[var8] = MathHelper.floor_float(par1[var8] + var15 * var12 + 0.5F);
+				var14[var6] = MathHelper.floor(par1[var6] + var15 + 0.5F);
+				var14[var7] = MathHelper.floor(par1[var7] + var15 * var10 + 0.5F);
+				var14[var8] = MathHelper.floor(par1[var8] + var15 * var12 + 0.5F);
 				BlockLog.EnumAxis axis = BlockLog.EnumAxis.Y;
 				int var18 = var14[0] - par1[0];
 				var18 = ((t = var18 >> 31) ^ var18) - t;
@@ -386,8 +386,8 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 			for (; var14 != var15; var14 += var8) {
 				var13[var5] = par1[var5] + var14;
-				var13[var6] = MathHelper.floor_float(par1[var6] + var14 * var9);
-				var13[var7] = MathHelper.floor_float(par1[var7] + var14 * var11);
+				var13[var6] = MathHelper.floor(par1[var6] + var14 * var9);
+				var13[var7] = MathHelper.floor(par1[var7] + var14 * var11);
 				BlockPos pos = placement.setPos(var13[0], var13[1], var13[2]);
 				IBlockState state = world.getBlockState(pos);
 				Block block = state.getBlock();
@@ -599,7 +599,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		ExtendedBlockStorage[] storage = chunk.getBlockStorageArray();
 		ExtendedBlockStorage subChunk = storage[y >> 4];
 		if (subChunk == null)
-			storage[y >> 4] = subChunk = new ExtendedBlockStorage(y & ~15, !world.provider.getHasNoSky());
+			storage[y >> 4] = subChunk = new ExtendedBlockStorage(y & ~15, !world.provider.hasNoSky());
 
 		x &= 15;
 		z &= 15;

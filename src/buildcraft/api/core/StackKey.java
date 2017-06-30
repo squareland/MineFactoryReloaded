@@ -54,7 +54,7 @@ public final class StackKey {
     }
 
     public static StackKey fluid(Fluid fluid) {
-        return new StackKey(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
+        return new StackKey(new FluidStack(fluid, 1000));
     }
 
     public static StackKey fluid(FluidStack fluidStack) {

@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.tile.rednet;
 
-import buildcraft.api.transport.IPipeTile.PipeType;
+//import buildcraft.api.transport.IPipeTile.PipeType;
 
 import cofh.asm.relauncher.Strippable;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -169,11 +169,13 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 		return nbttagcompound;
 	}
 
+/*	TODO readd when BC team figure out what they want to do
 	@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
 		return ConnectOverride.DISCONNECT;
 	}
+*/
 
     @Override
 	@SideOnly(Side.CLIENT)

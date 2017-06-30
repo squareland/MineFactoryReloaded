@@ -10,6 +10,9 @@ import cofh.lib.util.helpers.StringHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
@@ -209,45 +212,50 @@ public class MFRUtil {
 
 	public static final List<EnumFacing> VALID_DIRECTIONS = Arrays.asList(EnumFacing.VALUES);
 
-	public static boolean isHoldingUsableTool(EntityPlayer player, BlockPos pos) {
+	public static boolean isHoldingUsableTool(EntityPlayer player, EnumHand hand, BlockPos pos, EnumFacing side) {
 
 		if (player == null) {
 			return false;
 		}
-		if (player.inventory.getCurrentItem() == null) {
+
+		ItemStack heldItem = player.getHeldItem(hand);
+
+		if (heldItem.isEmpty()) {
 			return false;
 		}
-		Item currentItem = player.inventory.getCurrentItem().getItem();
-		if (currentItem instanceof IToolHammer) {
-			return ((IToolHammer) currentItem).isUsable(player.inventory.getCurrentItem(), player, pos);
+
+		if (heldItem.getItem() instanceof IToolHammer) {
+			return ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos);
 		}
-		else if (currentItem instanceof IMFRHammer) {
+		else if (heldItem.getItem() instanceof IMFRHammer) {
 			return true;
 		}
-		else if (bcWrenchExists && canHandleBCWrench(currentItem, player, pos)) {
+		else if (bcWrenchExists && canHandleBCWrench(player, hand, heldItem, new RayTraceResult(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), side, pos))) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public static void usedWrench(EntityPlayer player, BlockPos pos) {
+	public static void usedWrench(EntityPlayer player, EnumHand hand, BlockPos pos, EnumFacing side) {
 
 		if (player == null) {
 			return;
 		}
-		if (player.inventory.getCurrentItem() == null) {
+		ItemStack heldItem = player.getHeldItem(hand);
+
+		if (heldItem.isEmpty()) {
 			return;
 		}
-		Item currentItem = player.inventory.getCurrentItem().getItem();
-		if (currentItem instanceof IToolHammer) {
-			((IToolHammer) currentItem).toolUsed(player.inventory.getCurrentItem(), player, pos);
+
+		if (heldItem.getItem() instanceof IToolHammer) {
+			((IToolHammer) heldItem.getItem()).toolUsed(player.inventory.getCurrentItem(), player, pos);
 		}
-		else if (currentItem instanceof IMFRHammer) {
+		else if (heldItem.getItem() instanceof IMFRHammer) {
 			;
 		}
 		else if (bcWrenchExists) {
-			bcWrenchUsed(currentItem, player, pos);
+			bcWrenchUsed(player, hand, heldItem, new RayTraceResult(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), side, pos));
 		}
 	}
 
@@ -260,14 +268,14 @@ public class MFRUtil {
 		}
 	}
 
-	private static boolean canHandleBCWrench(Item item, EntityPlayer p, BlockPos pos) {
+	private static boolean canHandleBCWrench(EntityPlayer p, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
-		return item instanceof IToolWrench && ((IToolWrench) item).canWrench(p, pos);
+		return wrench.getItem() instanceof IToolWrench && ((IToolWrench) wrench.getItem()).canWrench(p, hand, wrench, rayTrace);
 	}
 
-	private static void bcWrenchUsed(Item item, EntityPlayer p, BlockPos pos) {
+	private static void bcWrenchUsed(EntityPlayer p, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
-		if (item instanceof IToolWrench) ((IToolWrench) item).wrenchUsed(p, pos);
+		if (wrench.getItem() instanceof IToolWrench) ((IToolWrench) wrench.getItem()).wrenchUsed(p, hand, wrench, rayTrace);
 	}
 
 	public static boolean isHoldingHammer(EntityPlayer player) {
@@ -406,4 +414,13 @@ public class MFRUtil {
 		return tag;
 	}
 
+	public static Item findItem(String modId, String itemName) {
+
+		return Item.REGISTRY.getObject(new ResourceLocation(modId, itemName));
+	}
+
+	public static Block findBlock(String modId, String blockName) {
+
+		return Block.REGISTRY.getObject(new ResourceLocation(modId, blockName));
+	}
 }

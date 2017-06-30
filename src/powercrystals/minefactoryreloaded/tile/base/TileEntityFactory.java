@@ -1,7 +1,9 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
+/*
 import buildcraft.api.transport.IPipeConnection;
 import buildcraft.api.transport.IPipeTile.PipeType;
+*/
 
 import cofh.api.core.IPortableData;
 import cofh.api.tileentity.IInventoryConnection;
@@ -34,7 +36,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 @Strippable("buildcraft.api.transport.IPipeConnection")
 public abstract class TileEntityFactory extends TileEntityBase
 		implements IRotateableTile, IInventoryConnection, IPortableData,
-				   IHarvestAreaContainer, IPipeConnection {
+				   IHarvestAreaContainer/*, IPipeConnection*/ {
 
 	protected static class FactoryAreaManager extends HarvestAreaManager<TileEntityFactory> {
 
@@ -404,6 +406,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 		return manageSolids() ? ConnectionType.FORCE : ConnectionType.DENY;
 	}
 
+/*	TODO: readd once BC team figure out what they want to do here
 	@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
@@ -416,5 +419,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 			return ConnectOverride.CONNECT;
 		return ConnectOverride.DEFAULT;
 	}
+*/
 
 }

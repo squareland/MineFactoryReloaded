@@ -149,9 +149,9 @@ public class BlockRedNetLogic extends BlockFactory implements IRedNetOmniNode, I
 	@Override
 	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
 
-		if (MFRUtil.isHoldingUsableTool(player, pos)) {
+		if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 			if (rotateBlock(world, pos, side)) {
-				MFRUtil.usedWrench(player, pos);
+				MFRUtil.usedWrench(player, hand, pos, side);
 				return true;
 			}
 		}

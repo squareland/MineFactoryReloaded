@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.core;
 
-import buildcraft.api.transport.IPipeTile;
+//import buildcraft.api.transport.IPipeTile;
 
 //import cofh.api.tileentity.IItemDuct;
 import cofh.asm.relauncher.Strippable;
@@ -60,22 +60,27 @@ public abstract class UtilInventory
 		return pipes;
 	}//*/
 
-	/**
+/*
+	*/
+/**
 	 * Searches from position x, y, z, checking for BC-compatible pipes in all directions.
 	 *
 	 * @return Map<EnumFacing, IPipeTile> specifying all found pipes and their directions.
-	 */
+	 *//*
+
 	@Strippable(pipeClass)
 	public static Map<EnumFacing, IPipeTile> findPipes(World world, BlockPos pos)
 	{
 		return findPipes(world, pos, EnumFacing.VALUES);
 	}
 
-	/**
+	*/
+/**
 	 * Searches from position x, y, z, checking for BC-compatible pipes in each directiontocheck.
 	 *
 	 * @return Map<EnumFacing, IPipeTile> specifying all found pipes and their directions.
-	 */
+	 *//*
+
 	@Strippable(pipeClass)
 	public static Map<EnumFacing, IPipeTile> findPipes(World world, BlockPos pos,
 			EnumFacing[] directionstocheck)
@@ -91,6 +96,7 @@ public abstract class UtilInventory
 		}
 		return pipes;
 	}
+*/
 
 	/**
 	 * Searches from position x, y, z, checking for inventories in all directions.
@@ -234,6 +240,7 @@ public abstract class UtilInventory
 			}
 		}//*/
 		// (1) Try to put stack in pipes that are in valid directions
+/*		TODO: readd once BC team figures out what they want to do with IPipeTile
 		if (handlePipeTiles) {
 			stack = handleIPipeTile(world, pos, dropdirections, stack);
 			if (stack == null || stack.getCount() <= 0)
@@ -241,6 +248,7 @@ public abstract class UtilInventory
 				return null;
 			}
 		}
+*/
 		// (2) Try to put stack in chests that are in valid directions
 		for (Entry<EnumFacing, IInventory> chest : findChests(world, pos, dropdirections).entrySet())
 		{
@@ -270,6 +278,7 @@ public abstract class UtilInventory
 		return block.getCollisionBoundingBox(state, world, pos) == null;
 	}
 
+/*
 	@SuppressWarnings("deprecation")
 	private static ItemStack handleIPipeTile(World world, BlockPos pos, EnumFacing[] dropdirections, ItemStack stack)
 	{
@@ -291,6 +300,7 @@ public abstract class UtilInventory
 		}
 		return stack;
 	}
+*/
 
 	public static void dropStackInAir(World world, BlockPos pos, ItemStack stack) {
 		dropStackInAir(world, pos, stack, null);

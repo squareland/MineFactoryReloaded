@@ -4,17 +4,20 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.api.robots;
 
+import java.util.Arrays;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraftforge.fluids.capability.IFluidHandler;
+
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.statements.StatementSlot;
 import buildcraft.api.transport.IInjectable;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public abstract class DockingStation {
     public EnumFacing side;
@@ -133,7 +136,7 @@ public abstract class DockingStation {
             if (array.length == 3) {
                 pos = new BlockPos(array[0], array[1], array[2]);
             } else if (array.length != 0) {
-                BCLog.logger.warn("Found an integer array that wwas not the right length! (" + array + ")");
+                BCLog.logger.warn("Found an integer array that wwas not the right length! (" + Arrays.toString(array) + ")");
             } else {
                 BCLog.logger.warn("Did not find any integer positions! This is a bug!");
             }

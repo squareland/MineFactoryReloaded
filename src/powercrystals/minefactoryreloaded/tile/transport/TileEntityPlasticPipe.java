@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -211,7 +212,7 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 	public CustomHitBox getCustomHitBox(int hit, EntityPlayer player) {
 
 		final List<IndexedCuboid6> list = new ArrayList<>(7);
-		addTraceableCuboids(list, true, MFRUtil.isHoldingUsableTool(player, pos), true);
+		addTraceableCuboids(list, true, MFRUtil.isHoldingUsableTool(player, EnumHand.MAIN_HAND, pos, EnumFacing.UP), true);
 		IndexedCuboid6 cube = list.get(0);
 		cube.expand(0.003);
 		Vector3 min = cube.min, max = cube.max.subtract(min);
@@ -266,10 +267,10 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 	}
 
 	@Override
-	public boolean onPartHit(EntityPlayer player, int subSide, int subHit) {
+	public boolean onPartHit(EntityPlayer player, EnumHand hand, int subSide, int subHit) {
 
 		if (subHit >= 0 && subHit < (2 + 6 * 2)) {
-			if (MFRUtil.isHoldingUsableTool(player, pos)) {
+			if (MFRUtil.isHoldingUsableTool(player, hand, pos, subSide < 6 ? EnumFacing.VALUES[subSide] : EnumFacing.UP)) {
 				if (!world.isRemote) {
 					EnumFacing side = subSide < 6 ? EnumFacing.VALUES[subSide] : null;
 					if (side != null && (sideConnection[side.ordinal()] == CABLE || sideConnection[side.ordinal()] == CABLE_DISCONNECTED)) {

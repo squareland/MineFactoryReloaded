@@ -82,8 +82,7 @@ public class EntityFlyingItem extends EntitySafariNet {
 
 	@Override
 	protected void impact(double x, double y, double z, EnumFacing side) {
-		Optional<ItemStack> entity = dataManager.get(STORED_ENTITY);
-		ItemStack stack = entity.isPresent() ? entity.get() : null;
+		ItemStack stack = dataManager.get(STORED_ENTITY);
 
 		float X = 0, Y = 0.14f, Z = 0;
 		if (side != null) {
@@ -117,7 +116,7 @@ public class EntityFlyingItem extends EntitySafariNet {
 			if (X != 0) f = Math.copySign(f, X);
 			float f2 = (world.rand.nextFloat() - 0.5f) * 0.37f;
 			if (Z != 0) f2 = Math.copySign(f2, Z);
-			if (stack == null) {
+			if (stack.isEmpty()) {
 				world.spawnParticle(EnumParticleTypes.SNOWBALL, x, y, z, f, Y, f2);
 			} else {
 				world.spawnParticle(EnumParticleTypes.ITEM_CRACK, x, y, z, f, Y, f2, Item.getIdFromItem(stack.getItem()));

@@ -22,7 +22,7 @@ public class DrinkHandlerLava implements ILiquidDrinkHandler {
 
 		public InternalLavaDamage() {
 
-			super(DamageSource.lava.damageType);
+			super(DamageSource.LAVA.damageType);
 			this.setDamageBypassesArmor();
 			this.setFireDamage();
 			this.setDifficultyScaled();

@@ -79,7 +79,7 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 
 		if (!world.isRemote) {
 			Variant variant = state.getValue(VARIANT);
@@ -138,7 +138,7 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 
-		neighborChanged(state, world, pos, this);
+		neighborChanged(state, world, pos, this, pos);
 	}
 
 	@Override

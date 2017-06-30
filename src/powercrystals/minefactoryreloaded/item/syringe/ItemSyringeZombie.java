@@ -1,14 +1,12 @@
 package powercrystals.minefactoryreloaded.item.syringe;
 
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.HorseType;
+import net.minecraft.entity.passive.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -43,17 +41,14 @@ public class ItemSyringeZombie extends ItemSyringe
 			{
 				e = new EntityPigZombie(world);
 			}
-			else if (entity instanceof EntityHorse)
+			else if (entity instanceof AbstractHorse)
 			{
-				EntityHorse ent = (EntityHorse)entity;
-				switch (ent.getType())
-				{
-				case HORSE:
-					ent.setType(HorseType.ZOMBIE);
-					break;
-				case ZOMBIE:
-					ent.setType(HorseType.SKELETON);
-					break;
+				if (entity instanceof EntityHorse) {
+					e = new EntityZombieHorse(world);
+					copyHorseAttributes((AbstractHorse) entity, (AbstractHorse) e);
+				} else if (entity instanceof EntityZombieHorse) {
+					e = new EntitySkeletonHorse(world);
+					copyHorseAttributes((AbstractHorse) entity, (AbstractHorse) e);
 				}
 			}
 			else
@@ -69,6 +64,14 @@ public class ItemSyringeZombie extends ItemSyringe
 			}
 		}
 		return true;
+	}
+
+	private void copyHorseAttributes(AbstractHorse originalHorse, AbstractHorse newHorse) {
+
+		newHorse.copyLocationAndAnglesFrom(originalHorse);
+		newHorse.setHorseSaddled(originalHorse.isHorseSaddled());
+		newHorse.jumpPower = originalHorse.jumpPower;
+		newHorse.setTemper(originalHorse.getTemper());
 	}
 
 	@Override

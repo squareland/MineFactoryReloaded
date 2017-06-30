@@ -4,6 +4,8 @@
  * should be located as "LICENSE.API" in the BuildCraft source code distribution. */
 package buildcraft.api.core;
 
+import java.util.Locale;
+
 import net.minecraft.world.World;
 
 /** Provides a way to quickly enable or disable certain debug conditions via VM arguments or whether the client/server
@@ -13,11 +15,18 @@ public class BCDebugging {
         NONE,
         ENABLE,
         LOGGING_ONLY,
-        ALL;
+        ALL
+    }
+
+    enum DebugLevel {
+        LOG,
+        COMPLEX;
+
+        final String name = name().toLowerCase(Locale.ROOT);
+        boolean isAllOn;
     }
 
     private static final DebugStatus DEBUG_STATUS;
-    private static final boolean DEBUG_LOGGING, DEBUG_ALL;
 
     static {
         // Basically we enable debugging for the dev-environment, and disable everything for normal players.
@@ -56,45 +65,45 @@ public class BCDebugging {
             BCLog.logger.info("              To remove this message and all future ones add \"-Dbuildcraft.debug=disable\" to your launch VM arguments");
         }
 
-        DEBUG_ALL = DEBUG_STATUS == DebugStatus.ALL;
-        DEBUG_LOGGING = DEBUG_ALL || DEBUG_STATUS == DebugStatus.LOGGING_ONLY;
+        DebugLevel.COMPLEX.isAllOn = DEBUG_STATUS == DebugStatus.ALL;
+        DebugLevel.LOG.isAllOn = DEBUG_STATUS == DebugStatus.ALL || DEBUG_STATUS == DebugStatus.LOGGING_ONLY;
     }
 
     public static boolean shouldDebugComplex(String string) {
-        return shouldDebug(string, "complex", DEBUG_ALL);
+        return shouldDebug(string, DebugLevel.COMPLEX);
     }
 
     public static boolean shouldDebugLog(String string) {
-        return shouldDebug(string, "log", DEBUG_LOGGING);
+        return shouldDebug(string, DebugLevel.LOG);
     }
 
-    private static boolean shouldDebug(String string, String type, boolean isAll) {
-        String prop = getProp(string);
-        if (isAll) {
-            BCLog.logger.info("[debugger] Debugging automatically enabled for \"" + string + "\" (" + type + ").");
+    private static boolean shouldDebug(String option, DebugLevel type) {
+        String prop = getProp(option);
+        String actual = System.getProperty(prop);
+        if ("false".equals(actual)) {
+            BCLog.logger.info("[debugger] Debugging manually disabled for \"" + option + "\" (" + type + ").");
+            return false;
+        } else if ("true".equals(actual)) {
+            BCLog.logger.info("[debugger] Debugging enabled for \"" + option + "\" (" + type + ").");
             return true;
         }
-        if (DEBUG_STATUS == DebugStatus.NONE) {
-            return false;
+        if (type.isAllOn) {
+            BCLog.logger.info("[debugger] Debugging automatically enabled for \"" + option + "\" (" + type + ").");
+            return true;
         }
-        boolean enabled = getRaw(prop);
-        if (enabled) {
-            BCLog.logger.info("[debugger] Debugging enabled for \"" + string + "\" (" + type + ").");
+        if ("complex".equals(actual) || type.name.equals(actual)) {
+            BCLog.logger.info("[debugger] Debugging enabled for \"" + option + "\" (" + type + ").");
             return true;
         } else {
             StringBuilder log = new StringBuilder();
             log.append("[debugger] To enable debugging for ");
-            log.append(string);
+            log.append(option);
             log.append(" add the option \"-D");
             log.append(prop);
-            log.append("=true\" to your launch config as a VM argument (" + type + ").");
+            log.append("=true\" to your launch config as a VM argument (").append(type).append(").");
             BCLog.logger.info(log);
         }
         return false;
-    }
-
-    private static boolean getRaw(String string) {
-        return "true".equals(System.getProperty(string));
     }
 
     private static String getProp(String string) {

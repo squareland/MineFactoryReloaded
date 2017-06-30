@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
@@ -532,10 +533,10 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 	}
 
 	@Override
-	public boolean onPartHit(EntityPlayer player, int subSide, int subHit) {
+	public boolean onPartHit(EntityPlayer player, EnumHand hand, int subSide, int subHit) {
 
 		if (subHit >= (2 + 6 * 4) && subHit < (2 + 6 * 6)) {
-			if (MFRUtil.isHoldingUsableTool(player, pos)) {
+			if (MFRUtil.isHoldingUsableTool(player, hand, pos, subSide < 6 ? EnumFacing.VALUES[subSide] : EnumFacing.UP)) {
 				if (!player.world.isRemote) {
 					int dir = subSide < 6 ? EnumFacing.VALUES[subSide].getOpposite().ordinal() : 6;
 					if (sideMode[dir] == 9) {

@@ -33,7 +33,7 @@ public class ItemSyringeSlime extends ItemSyringe
 	public boolean inject(World world, EntityLivingBase entity, ItemStack syringe)
 	{
 		EntitySlime slime = (EntitySlime)entity;
-		slime.setSlimeSize(slime.getSlimeSize() << 1);
+		slime.setSlimeSize(slime.getSlimeSize() << 1, true);
 		return true;
 	}
 

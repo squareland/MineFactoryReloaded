@@ -383,12 +383,12 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	@Override
 	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
 
-		if (MFRUtil.isHoldingUsableTool(player, pos)) {
+		if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof IRotateableTile) {
 				((IRotateableTile) te).rotate(side);
 			}
-			MFRUtil.usedWrench(player, pos);
+			MFRUtil.usedWrench(player, hand, pos, side);
 			return true;
 		} else if (heldItem != null && heldItem.getItem().equals(Items.GLOWSTONE_DUST)) {
 			TileEntity te = world.getTileEntity(pos);

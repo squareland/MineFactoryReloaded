@@ -41,7 +41,7 @@ public class EntityPinkSlime extends EntitySlime
 	}
 
 	@Override
-	public void setSlimeSize(int size, boolean updateHealthToMax)
+	public void setSlimeSize(int size, boolean refreshHealth)
 	{
 		if (size > 4)
 		{

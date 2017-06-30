@@ -27,5 +27,6 @@ public interface ICustomPaintHandler {
      * @return The result of attempting to paint. SUCCESS means that you changed the block from before to a new value,
      *         FAIL means you COULD have handled the block, but it was already painted to that colour, or PASS if you
      *         have no idea how to handle the block in question. */
-    EnumActionResult attemptPaint(World world, BlockPos pos, IBlockState state, Vec3d hitPos, @Nullable EnumFacing hitSide, @Nullable EnumDyeColor paintColour);
+    EnumActionResult attemptPaint(World world, BlockPos pos, IBlockState state, Vec3d hitPos, @Nullable EnumFacing hitSide,
+			@Nullable EnumDyeColor paintColour);
 }

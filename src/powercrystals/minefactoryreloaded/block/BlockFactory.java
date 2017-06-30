@@ -335,7 +335,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		if (te instanceof ITraceable)
 		{
 			List<IndexedCuboid6> cuboids = new LinkedList<IndexedCuboid6>();
-			((ITraceable)te).addTraceableCuboids(cuboids, true, MFRUtil.isHoldingUsableTool(harvesters.get(), pos), false);
+			((ITraceable)te).addTraceableCuboids(cuboids, true, MFRUtil.isHoldingUsableTool(harvesters.get(), EnumHand.MAIN_HAND, pos, EnumFacing.UP), false);
 			return RayTracer.rayTraceCuboidsClosest(start, end, pos, cuboids);
 		}
 		else if (world instanceof World)

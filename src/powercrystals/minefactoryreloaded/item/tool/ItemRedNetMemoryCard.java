@@ -60,8 +60,10 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
+
+		ItemStack stack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.SUCCESS;

@@ -21,7 +21,7 @@ public class BlockPinkSlimeFluid extends BlockFactoryFluid
 				world.setBlockToAir(pos);
 				EntityPinkSlime s = new EntityPinkSlime(world);
 				s.onInitialSpawn(world.getDifficultyForLocation(pos), null);
-				s.setSlimeSize(1);
+				s.setSlimeSize(1, true);
 				s.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 				world.spawnEntity(s);
 				return;

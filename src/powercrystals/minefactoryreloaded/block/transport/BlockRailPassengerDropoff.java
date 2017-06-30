@@ -148,7 +148,7 @@ public class BlockRailPassengerDropoff extends BlockFactoryRail {
 						return true;
 					}
 
-					state.addCollisionBoxToList(world, pos, bb, collisionList, entity);
+					state.addCollisionBoxToList(world, pos, bb, collisionList, entity, false);
 					if (!collisionList.isEmpty()) {
 						collisionList.clear();
 						pos.release();

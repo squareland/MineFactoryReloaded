@@ -25,9 +25,9 @@ public class ItemMFRBucketMilk extends ItemBucketMilk {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
-		return bucketDelegate.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
+		return bucketDelegate.onItemRightClick(worldIn, playerIn, hand);
 	}
 
 	@Override

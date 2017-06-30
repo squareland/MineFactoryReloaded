@@ -112,11 +112,11 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 		IBlockState state = world.getBlockState(pos);
 
 		TileEntity te = getTile(world, pos);
-		if (MFRUtil.isHoldingUsableTool(player, pos) && te instanceof TileEntityFactory && ((TileEntityFactory)te).canRotate())
+		if (MFRUtil.isHoldingUsableTool(player, hand, pos, side) && te instanceof TileEntityFactory && ((TileEntityFactory)te).canRotate())
 		{
 			((TileEntityFactory)te).rotate(side);
 			MFRUtil.notifyBlockUpdate(world, pos, state);
-			MFRUtil.usedWrench(player, pos);
+			MFRUtil.usedWrench(player, hand, pos, side);
 			return true;
 		}
 		else if(te instanceof TileEntityFactory && ((TileEntityFactory)te).getContainer(player.inventory) != null)

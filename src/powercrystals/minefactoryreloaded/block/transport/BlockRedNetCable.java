@@ -252,10 +252,10 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 			}
 			int subSide = _subSideMappings[subHit];
 
-			if (cable.onPartHit(player, subSide, subHit)) {
+			if (cable.onPartHit(player, hand, subSide, subHit)) {
 				;
 			} else if (subHit >= (2 + 6 * 2) && subHit < (2 + 6 * 3)) {
-				if (MFRUtil.isHoldingUsableTool(player, pos)) {
+				if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 					if (!world.isRemote) {
 						int nextColor;
 						if (!player.isSneaking()) {
@@ -275,7 +275,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 					return true;
 				}
 			} else if (subHit >= 0 && subHit < (2 + 6 * 2) || subHit >= (2 + 6 * 5)) {
-				l: if (MFRUtil.isHoldingUsableTool(player, pos)) {
+				l: if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 					if (!world.isRemote) {
 						if (subSide > 6) {
 							EnumFacing dir = EnumFacing.VALUES[subSide - 7];
@@ -332,7 +332,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 						default:
 						}
 					}
-					MFRUtil.usedWrench(player, pos);
+					MFRUtil.usedWrench(player, hand, pos, side);
 					return true;
 				} else if (heldItem != null && heldItem.getItem().equals(Items.DYE)) {
 					if (!world.isRemote && subSide < 6) {

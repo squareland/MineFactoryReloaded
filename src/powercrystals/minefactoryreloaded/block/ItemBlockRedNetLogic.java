@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.block;
 
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -144,7 +145,7 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(net.minecraft.item.Item itemId, CreativeTabs creativeTab, List subTypes) {
+	public void getSubItems(net.minecraft.item.Item itemId, CreativeTabs creativeTab, NonNullList<ItemStack> subTypes) {
 
 		subTypes.add(new ItemStack(itemId, 1, 0));
 		subTypes.add(manual);

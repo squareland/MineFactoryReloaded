@@ -32,7 +32,7 @@ public class MFRCreativeTab extends CreativeTabs
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Item getTabIconItem()
+	public ItemStack getTabIconItem()
 	{
 		return null;
 	}

@@ -1,6 +1,8 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
+/*
 import buildcraft.api.transport.IPipeTile.PipeType;
+*/
 
 import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
@@ -281,6 +283,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 		return from == getDirectionFacing() ? ConnectionType.FORCE : ConnectionType.DENY;
 	}
 
+/*	TODO readd once BC team figure out what they want to do
 	@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
@@ -291,5 +294,6 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 			return super.overridePipeConnection(type, with);
 		return ConnectOverride.DISCONNECT;
 	}
+*/
 
 }

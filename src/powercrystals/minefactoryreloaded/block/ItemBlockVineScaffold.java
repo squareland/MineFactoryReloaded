@@ -23,7 +23,7 @@ public class ItemBlockVineScaffold extends ItemBlock
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world,
 			BlockPos pos, EnumFacing side, float xOffset, float yOffset, float zOffset, EnumHand hand)
 	{
 		IBlockState state = world.getBlockState(pos);
@@ -31,7 +31,7 @@ public class ItemBlockVineScaffold extends ItemBlock
 				state.getBlock().equals(MFRThings.vineScaffoldBlock))
 		{
 			if (MFRThings.vineScaffoldBlock.onBlockActivated(world, pos, state,
-						player, hand, stack, side, xOffset, yOffset, zOffset))
+						player, hand, side, xOffset, yOffset, zOffset))
 				player.setActiveHand(hand);
 		}
 		return EnumActionResult.PASS;

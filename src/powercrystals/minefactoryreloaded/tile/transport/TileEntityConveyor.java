@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.tile.transport;
 
-import buildcraft.api.transport.IPipeConnection;
-import buildcraft.api.transport.IPipeTile.PipeType;
+import buildcraft.api.transport.pipe.IPipeConnection;
 
 import cofh.api.tileentity.IInventoryConnection;
 import cofh.asm.relauncher.Strippable;
@@ -31,7 +30,7 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 
 @Strippable("buildcraft.api.transport.IPipeConnection")
 public class TileEntityConveyor extends TileEntityBase
-		implements IRotateableTile, ISidedInventory, IPipeConnection, IInventoryConnection
+		implements IRotateableTile, ISidedInventory, /*IPipeConnection,*/ IInventoryConnection
 {
 	MFRDyeColor _dye = null;
 
@@ -566,15 +565,17 @@ public class TileEntityConveyor extends TileEntityBase
 		return ConnectionType.FORCE;
 	}
 
-	@Override
+/*	TODO: readd once BC team figure out what they want to do with this
+
+@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
-	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
+	public ConnectOverride overridePipeConnection(Object type, EnumFacing with) {
 		if (type == PipeType.ITEM)
 			return ConnectOverride.CONNECT;
 		if (with == EnumFacing.DOWN & type == PipeType.STRUCTURE)
 			return ConnectOverride.CONNECT;
 		return ConnectOverride.DISCONNECT;
-	}
+	}*/
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {

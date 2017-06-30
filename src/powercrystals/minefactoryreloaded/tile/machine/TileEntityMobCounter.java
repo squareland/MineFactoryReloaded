@@ -30,7 +30,7 @@ public class TileEntityMobCounter extends TileEntityFactory {
 		if (mobCount != _lastMobCount) {
 			_lastMobCount = mobCount;
 			if (!world.isRemote) {
-				world.notifyNeighborsOfStateChange(pos, this._machine.getBlock());
+				world.notifyNeighborsOfStateChange(pos, this._machine.getBlock(), false);
 			}
 		}
 	}

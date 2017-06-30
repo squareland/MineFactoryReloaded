@@ -6,19 +6,32 @@ package buildcraft.api.statements;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class StatementParameterItemStack implements IStatementParameter {
+    // needed because ItemStack.EMPTY doesn't have @Nonnull applied to it :/
+    @Nonnull
+    private static final ItemStack EMPTY_STACK;
 
-    protected ItemStack stack;
+    static {
+        ItemStack stack = ItemStack.EMPTY;
+        if (stack == null) throw new Error("Somehow ItemStack.EMPTY was null!");
+        EMPTY_STACK = stack;
+    }
+
+    @Nonnull
+    protected ItemStack stack = EMPTY_STACK;
 
     @Override
     public TextureAtlasSprite getGuiSprite() {
         return null;
     }
 
+    @Nonnull
     @Override
     public ItemStack getItemStack() {
         return stack;
@@ -28,16 +41,16 @@ public class StatementParameterItemStack implements IStatementParameter {
     public boolean onClick(IStatementContainer source, IStatement stmt, ItemStack stack, StatementMouseClick mouse) {
         if (stack != null) {
             this.stack = stack.copy();
-            this.stack.stackSize = 1;
+            this.stack.setCount(1);
         } else {
-            this.stack = null;
+            this.stack = EMPTY_STACK;
         }
         return true;
     }
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
-        if (stack != null) {
+        if (!stack.isEmpty()) {
             NBTTagCompound tagCompound = new NBTTagCompound();
             stack.writeToNBT(tagCompound);
             compound.setTag("stack", tagCompound);
@@ -46,7 +59,12 @@ public class StatementParameterItemStack implements IStatementParameter {
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
-        stack = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("stack"));
+        ItemStack read = new ItemStack(compound.getCompoundTag("stack"));
+        if (read.isEmpty()) {
+            stack = EMPTY_STACK;
+        } else {
+            stack = read;
+        }
     }
 
     @Override
@@ -67,10 +85,10 @@ public class StatementParameterItemStack implements IStatementParameter {
 
     @Override
     public String getDescription() {
-        if (stack != null) {
-            return stack.getDisplayName();
-        } else {
+        if (stack.isEmpty()) {
             return "";
+        } else {
+            return stack.getDisplayName();
         }
     }
 

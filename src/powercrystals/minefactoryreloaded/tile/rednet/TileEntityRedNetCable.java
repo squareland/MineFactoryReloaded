@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -317,7 +318,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	}
 
 	@Override
-	public boolean onPartHit(EntityPlayer player, int subSide, int subHit) {
+	public boolean onPartHit(EntityPlayer player, EnumHand hand, int subSide, int subHit) {
 
 		markChunkDirty();
 		return false;
@@ -373,7 +374,9 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	public CustomHitBox getCustomHitBox(int hit, EntityPlayer player) {
 
 		final List<IndexedCuboid6> list = new ArrayList<>(7);
-		addTraceableCuboids(list, true, MFRUtil.isHoldingUsableTool(player, pos), true);
+		addTraceableCuboids(list, true,
+				MFRUtil.isHoldingUsableTool(player, EnumHand.MAIN_HAND, pos, EnumFacing.UP) || MFRUtil.isHoldingUsableTool(player, EnumHand.OFF_HAND, pos, EnumFacing.UP),
+				true);
 		IndexedCuboid6 cube = list.get(0);
 		cube.expand(0.003);
 		Vector3 min = cube.min, max = cube.max.subtract(min);

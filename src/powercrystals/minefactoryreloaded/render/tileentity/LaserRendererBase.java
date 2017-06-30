@@ -66,7 +66,7 @@ public class LaserRendererBase {
 		GlStateManager.depthMask(true);
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		float ticks = (Minecraft.getMinecraft().ingameGUI.getUpdateCounter() + partialTicks);
-		float f3 = -ticks * 0.2F - MathHelper.floor_float(-ticks * 0.1F);
+		float f3 = -ticks * 0.2F - MathHelper.floor(-ticks * 0.1F);
 		double d3 = ticks * 0.025D * (1.0D - 2.5D);
 		VertexBuffer buffer = tessellator.getBuffer();
 		buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
