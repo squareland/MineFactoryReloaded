@@ -136,7 +136,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> ret = new ArrayList<>();
 		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
 		if (!state.getValue(DECAYABLE)) // HACK: shears drop saplings AND the block because forge doesn't pay attention to the code they edit
@@ -244,7 +244,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	@Override
 	public List<ItemStack> onSheared(@Nonnull ItemStack itemStack, IBlockAccess iBlockAccess, BlockPos blockPos, int i) {
 
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> ret = new ArrayList<>();
 		ret.add(new ItemStack(this, 1, this.getMetaFromState(iBlockAccess.getBlockState(blockPos)) & 3));
 		return ret;
 	}

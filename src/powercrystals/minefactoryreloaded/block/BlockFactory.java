@@ -187,7 +187,6 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		return true;
 	}
 
-	@Nonnull
 	@Override
 	public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnBlock)
 	{
@@ -201,11 +200,10 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		return list;
 	}
 
-	@Nonnull
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
 	{
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> drops = new ArrayList<>();
 
 		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 

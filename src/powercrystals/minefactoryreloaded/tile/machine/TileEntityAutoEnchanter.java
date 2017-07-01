@@ -55,7 +55,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 	@Override
 	public int getWorkMax() {
 
-		if(_inventory[0] != null && _inventory[0].getItem().equals(Items.GLASS_BOTTLE)) {
+		if(!_inventory.get(0).isEmpty() && _inventory.get(0).getItem().equals(Items.GLASS_BOTTLE)) {
 
 			return 250;
 		}
@@ -64,7 +64,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 
 	private double getEnchantmentMultiplier() {
 
-		@Nonnull ItemStack s = _inventory[0];
+		@Nonnull ItemStack s = _inventory.get(0);
 		if(s.isEmpty()) {
 			return 1;
 		}
@@ -104,8 +104,8 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 		if (world.isRemote) {
 			return false;
 		}
-		@Nonnull ItemStack input = _inventory[0];
-		@Nonnull ItemStack output = _inventory[1];
+		@Nonnull ItemStack input = _inventory.get(0);
+		@Nonnull ItemStack output = _inventory.get(1);
 		if(input.isEmpty()) {
 			setWorkDone(0);
 			return false;
@@ -129,7 +129,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 				!input.getItem().equals(Items.GLASS_BOTTLE)) ||
 				input.getItem().equals(Items.ENCHANTED_BOOK)) {
 			if (output == null) {
-				_inventory[0] = null;
+				_inventory.set(0, ItemStack.EMPTY);
 				setInventorySlotContents(1, input);
 			}
 			else if (input.isItemEqual(output) && ItemStack.areItemStackTagsEqual(input, output)) {
@@ -163,7 +163,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 				}
 				input.shrink(1);
 				if (input.getCount() <= 0) {
-					_inventory[0] = null;
+					_inventory.set(0, ItemStack.EMPTY);
 				}
 				output.shrink(1);
 				setInventorySlotContents(1, output);
@@ -172,7 +172,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 			else if (output == null) {
 				output = AutoEnchantmentHelper.addRandomEnchantment(this._rand, input, _targetLevel);
 				if (input.getCount() <= 0) {
-					_inventory[0] = null;
+					_inventory.set(0, ItemStack.EMPTY);
 				}
 				setInventorySlotContents(1, output);
 				setWorkDone(0);
@@ -214,7 +214,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 	public boolean canInsertItem(int slot, @Nonnull ItemStack input, EnumFacing side) {
 
 		if(slot == 0) {
-			@Nonnull ItemStack contents = _inventory[0];
+			@Nonnull ItemStack contents = _inventory.get(0);
 			// TODO: limit input to glass bottles and items with an enchantability > 0
 			return contents.isEmpty() || (contents.getCount() < getInventoryStackLimit() &&
 					input.isItemEqual(contents) && ItemStack.areItemStackTagsEqual(input, contents));

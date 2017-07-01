@@ -74,7 +74,7 @@ public class BlockDecorativeStone extends BlockFactory {
 	@Override
 	public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnBlock) {
 
-		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> list = new ArrayList<>();
 		int meta = getMetaFromState(state);
 		list.add(new ItemStack(getItemDropped(state, world.rand, 0), quantityDropped(world.rand), meta)); // persist metadata
 

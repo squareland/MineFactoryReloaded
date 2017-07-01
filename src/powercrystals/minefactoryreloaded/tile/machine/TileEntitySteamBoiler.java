@@ -123,7 +123,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 				_ticksUntilConsumption = 0;
 			}
 
-			if (_temp == 0 && _inventory[3] == null) {
+			if (_temp == 0 && _inventory.get(3).isEmpty()) {
 				if ((world.getTotalWorldTime() & 0x6F) == 0 && !(_rednetState != 0 || CoreUtils.isRedstonePowered(this)))
 					mergeFuel();
 				return; // we're not burning anything and not changing the temp
@@ -153,32 +153,32 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 
 	protected void mergeFuel() {
 
-		if (_inventory[3] != null)
-			for (int i = 0; _inventory[3].getCount() < _inventory[3].getMaxStackSize() && i < 3; ++i) {
-				UtilInventory.mergeStacks(_inventory[3], _inventory[i]);
-				if (_inventory[i] != null && _inventory[i].getCount() == 0)
-					_inventory[i] = null;
+		if (!_inventory.get(3).isEmpty())
+			for (int i = 0; _inventory.get(3).getCount() < _inventory.get(3).getMaxStackSize() && i < 3; ++i) {
+				UtilInventory.mergeStacks(_inventory.get(3), _inventory.get(i));
+				if (!_inventory.get(i).isEmpty() && _inventory.get(i).getCount() == 0)
+					_inventory.set(i, ItemStack.EMPTY);
 			}
 		else
 			for (int i = 0; i < 3; ++i)
-				if (_inventory[i] != null) {
-					_inventory[3] = _inventory[i];
-					_inventory[i] = null;
+				if (!_inventory.get(i).isEmpty()) {
+					_inventory.set(3, _inventory.get(i));
+					_inventory.set(i, ItemStack.EMPTY);
 					break;
 				}
 	}
 
 	protected boolean consumeFuel() {
 
-		if (_inventory[3] == null)
+		if (_inventory.get(3).isEmpty())
 			return false;
 
-		int burnTime = getItemBurnTime(_inventory[3]);
+		int burnTime = getItemBurnTime(_inventory.get(3));
 		if (burnTime <= 0)
 			return false;
 
 		_ticksUntilConsumption = burnTime;
-		_inventory[3] = ItemHelper.consumeItem(_inventory[3]);
+		_inventory.set(3, ItemHelper.consumeItem(_inventory.get(3)));
 		notifyNeighborTileChange();
 
 		return true;
@@ -227,7 +227,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	@Override
 	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
-		return getItemBurnTime(_inventory[slot]) <= 0;
+		return getItemBurnTime(_inventory.get(slot)) <= 0;
 	}
 	//}
 

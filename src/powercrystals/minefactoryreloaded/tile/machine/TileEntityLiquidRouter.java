@@ -163,11 +163,11 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 		int[] routeWeights = new int[6];
 
 		for (int i = 0; i < 6; i++) {
-			@Nonnull ItemStack stack = _inventory[i];
+			@Nonnull ItemStack stack = _inventory.get(i);
 			Item item = stack != null ? stack.getItem() : null;
 			if (item != null &&
-					resource.isFluidEqual(MFRUtil.getFluidContents(_inventory[i]))) {
-				routeWeights[i] = _inventory[i].getCount();
+					resource.isFluidEqual(MFRUtil.getFluidContents(_inventory.get(i)))) {
+				routeWeights[i] = _inventory.get(i).getCount();
 			} else {
 				routeWeights[i] = 0;
 			}
@@ -180,8 +180,8 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 		int[] routeWeights = new int[6];
 
 		for (int i = 0; i < 6; i++) {
-			if (_inventory[i] != null && MFRUtil.getFluidContents(_inventory[i]) == null) {
-				routeWeights[i] = _inventory[i].getCount();
+			if (!_inventory.get(i).isEmpty() && MFRUtil.getFluidContents(_inventory.get(i)) == null) {
+				routeWeights[i] = _inventory.get(i).getCount();
 			} else {
 				routeWeights[i] = 0;
 			}

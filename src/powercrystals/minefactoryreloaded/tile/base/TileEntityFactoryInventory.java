@@ -36,27 +36,27 @@ import java.util.List;
 
 public abstract class TileEntityFactoryInventory extends TileEntityFactory implements ISidedInventory, ITankContainerBucketable {
 
-	public final static FluidTankCore[] emptyIFluidTank = new FluidTankCore[] { };
-	public final static FluidTankInfo[] emptyFluidTankInfo = FluidHelper.NULL_TANK_INFO;
+	private final static FluidTankCore[] emptyIFluidTank = new FluidTankCore[] { };
+	private final static FluidTankInfo[] emptyFluidTankInfo = FluidHelper.NULL_TANK_INFO;
 	public final static IFluidTankProperties[] emptyIFluidTankProperties = new IFluidTankProperties[] { };
 	protected final static int BUCKET_VOLUME = Fluid.BUCKET_VOLUME;
 
 	protected NonNullList<ItemStack> failedDrops = null;
 	private NonNullList<ItemStack> missedDrops = NonNullList.withSize(5, ItemStack.EMPTY);
-	protected int _failedDropTicksMax = 20;
+	private int _failedDropTicksMax = 20;
 	private int _failedDropTicks = 0;
 
 	protected FluidTankCore[] _tanks;
 
 	@Nonnull
-	protected ItemStack[] _inventory;
+	protected NonNullList<ItemStack> _inventory;
 
 	protected boolean internalChange = false;
 
 	protected TileEntityFactoryInventory(Machine machine) {
 
 		super(machine);
-		_inventory = new ItemStack[getSizeInventory()];
+		_inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		_tanks = createTanks();
 		setManageFluids(_tanks != null);
 	}
@@ -345,7 +345,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	@Override
 	public ItemStack getStackInSlot(int i) {
 
-		return _inventory[i];
+		return _inventory.get(i);
 	}
 
 	@Override
@@ -362,16 +362,16 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	@Override
 	public ItemStack decrStackSize(int slot, int size) {
 
-		if (_inventory[slot] != null) {
-			if (_inventory[slot].getCount() <= size) {
-				@Nonnull ItemStack itemstack = _inventory[slot];
-				_inventory[slot] = null;
+		if (!_inventory.get(slot).isEmpty()) {
+			if (_inventory.get(slot).getCount() <= size) {
+				@Nonnull ItemStack itemstack = _inventory.get(slot);
+				_inventory.set(slot, ItemStack.EMPTY);
 				markDirty();
 				return itemstack;
 			}
-			@Nonnull ItemStack itemstack1 = _inventory[slot].splitStack(size);
-			if (_inventory[slot].getCount() <= 0) {
-				_inventory[slot] = null;
+			@Nonnull ItemStack itemstack1 = _inventory.get(slot).splitStack(size);
+			if (_inventory.get(slot).getCount() <= 0) {
+				_inventory.set(slot, ItemStack.EMPTY);
 			}
 			markDirty();
 			return itemstack1;
@@ -389,9 +389,9 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			if (itemstack.getCount() > getInventoryStackLimit())
 				itemstack.setCount(getInventoryStackLimit());
 			else if (itemstack.getCount() < 0)
-				itemstack = null;
+				itemstack = ItemStack.EMPTY;
 		}
-		_inventory[i] = itemstack;
+		_inventory.set(i, itemstack);
 		markDirty();
 	}
 
@@ -444,17 +444,17 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public void readFromNBT(NBTTagCompound tag) {
 
 		super.readFromNBT(tag);
-		_inventory = new ItemStack[getSizeInventory()];
+		_inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		NBTTagList nbttaglist;
 		if (tag.hasKey("Items")) {
 			nbttaglist = tag.getTagList("Items", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
 				NBTTagCompound slotNBT = nbttaglist.getCompoundTagAt(i);
 				int j = slotNBT.getByte("Slot") & 0xff;
-				if (j < _inventory.length) {
-					_inventory[j] = new ItemStack(slotNBT);
-					if (_inventory[j].getCount() < 0)
-						_inventory[j] = null;
+				if (j < _inventory.size()) {
+					_inventory.set(j, new ItemStack(slotNBT));
+					if (_inventory.get(j).getCount() < 0)
+						_inventory.set(j, ItemStack.EMPTY);
 				}
 			}
 		}
@@ -496,13 +496,13 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 
 		tag = super.writeToNBT(tag);
-		if (_inventory.length > 0) {
+		if (_inventory.size() > 0) {
 			NBTTagList items = new NBTTagList();
-			for (int i = 0; i < _inventory.length; i++) {
-				if (_inventory[i] != null && _inventory[i].getCount() >= 0) {
+			for (int i = 0; i < _inventory.size(); i++) {
+				if (!_inventory.get(i).isEmpty() && _inventory.get(i).getCount() >= 0) {
 					NBTTagCompound slot = new NBTTagCompound();
 					slot.setByte("Slot", (byte) i);
-					_inventory[i].writeToNBT(slot);
+					_inventory.get(i).writeToNBT(slot);
 					items.appendTag(slot);
 				}
 			}
@@ -608,11 +608,11 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 				tankPercent = ((float) tank.getFluid().amount) / tank.getCapacity();
 			}
 		}
-		if (_inventory.length > 0) {
+		if (_inventory.size() > 0) {
 			hasInventory = true;
 			int len = 0;
 			float ret = 0;
-			for (int slot = _inventory.length; slot-- > 0;) {
+			for (int slot = _inventory.size(); slot-- > 0;) {
 				if (canInsertItem(slot, ItemStack.EMPTY, null)) {
 					@Nonnull ItemStack stack = getStackInSlot(slot);
 					if (!stack.isEmpty()) {
@@ -654,7 +654,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public boolean isEmpty() {
 
 		for (int slot=0; slot < getSizeInventory(); slot++) {
-			if (!_inventory[slot].isEmpty())
+			if (!_inventory.get(slot).isEmpty())
 				return false;
 		}
 

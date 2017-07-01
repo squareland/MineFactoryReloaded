@@ -74,12 +74,12 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		if (_shouldWork && _inventory[0] == null) {
+		if (_shouldWork && _inventory.get(0).isEmpty()) {
 			setWorkDone(0);
 			return false;
 		}
-		if (_inventory[0] != null && (_lastInput.isEmpty() || !UtilInventory.stacksEqual(_lastInput, _inventory[0]))) {
-			_lastInput = _inventory[0].copy(); // protect against amorphous itemstacks
+		if (!_inventory.get(0).isEmpty() && (_lastInput.isEmpty() || !UtilInventory.stacksEqual(_lastInput, _inventory.get(0)))) {
+			_lastInput = _inventory.get(0).copy(); // protect against amorphous itemstacks
 			_lastOutput = getOutput(_lastInput);
 		}
 		if (_lastOutput == null) {
@@ -89,7 +89,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 		if (_shouldWork && _fortune > 0 && (drain(_fortune, false, _tanks[0]) != _fortune)) {
 			return false;
 		}
-		@Nonnull ItemStack outSlot = _inventory[1];
+		@Nonnull ItemStack outSlot = _inventory.get(1);
 		@Nonnull ItemStack output = getEqualStack(outSlot, _lastOutput);
 		// TODO: ^ inefficient
 		if (output.isEmpty()) {
@@ -103,16 +103,16 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 
 		if (getWorkDone() >= getWorkMax()) {
 			if (_shouldWork) {
-				_inventory[0].shrink(1);
-				if (_inventory[0].getCount() == 0) {
-					_inventory[0] = null;
+				_inventory.get(0).shrink(1);
+				if (_inventory.get(0).getCount() == 0) {
+					_inventory.set(0, ItemStack.EMPTY);
 				}
 			}
 			_shouldWork = false;
-			if (_inventory[1] == null) {
-				_inventory[1] = output.copy();
+			if (_inventory.get(1).isEmpty()) {
+				_inventory.set(1, output.copy());
 			} else {
-				_inventory[1].grow(output.getCount());
+				_inventory.get(1).grow(output.getCount());
 			}
 			_lastOutput.remove(output);
 			if (_lastOutput.size() == 0) {
@@ -184,15 +184,13 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 	@Override
 	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (slot == 0) return true;
-		return false;
+		return slot == 0;
 	}
 
 	@Override
 	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
-		if (slot == 1) return true;
-		return false;
+		return slot == 1;
 	}
 
 	@Override

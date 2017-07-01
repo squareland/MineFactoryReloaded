@@ -85,25 +85,25 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		if (_inventory[4] == null) {
-			if (_inventory[0] == null)
+		if (_inventory.get(4).isEmpty()) {
+			if (_inventory.get(0).isEmpty())
 				return false;
-			_inventory[4] = _inventory[0].splitStack(1);
-			if (_inventory[0].getCount() <= 0)
-				_inventory[0] = null;
+			_inventory.set(4, _inventory.get(0).splitStack(1));
+			if (_inventory.get(0).getCount() <= 0)
+				_inventory.set(0, ItemStack.EMPTY);
 			markChunkDirty();
 		}
 
-		@Nonnull ItemStack stack = _inventory[4];
+		@Nonnull ItemStack stack = _inventory.get(4);
 		boolean isBook = stack.getItem().equals(Items.ENCHANTED_BOOK);
 		NBTTagList list = isBook ? Items.ENCHANTED_BOOK.getEnchantments(stack) : stack.getEnchantmentTagList();
-		if ((list == null || list.tagCount() <= 0) && _inventory[2] == null) {
-			_inventory[2] = stack;
+		if ((list == null || list.tagCount() <= 0) && _inventory.get(2).isEmpty()) {
+			_inventory.set(2, stack);
 			setInventorySlotContents(4, ItemStack.EMPTY);
 		} else if ((list != null && list.tagCount() > 0) &&
-				(_inventory[1] != null && _inventory[1].getItem().equals(Items.BOOK)) &
-				_inventory[2] == null &
-				_inventory[3] == null) {
+				(!_inventory.get(1).isEmpty() && _inventory.get(1).getItem().equals(Items.BOOK)) &
+				_inventory.get(2).isEmpty() &
+				_inventory.get(3).isEmpty()) {
 			if (getWorkDone() >= getWorkMax()) {
 				decrStackSize(1, 1);
 
@@ -112,7 +112,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 					enchTag = list.getCompoundTagAt(0);
 					list.removeTag(0);
 					if (list.tagCount() == 0) {
-						_inventory[4] = new ItemStack(Items.BOOK, 1);
+						_inventory.set(4, new ItemStack(Items.BOOK, 1));
 					}
 				} else {
 					int enchIndex = world.rand.nextInt(list.tagCount());
@@ -131,14 +131,14 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 						int m = stack.getMaxDamage();
 						damage = Math.min(m, damage + 1 + (m / 10)) + (m == 1 ? 1 : 0);
 						if (stack.attemptDamageItem(damage, world.rand)) {
-							_inventory[4] = null;
+							_inventory.set(4, ItemStack.EMPTY);
 						}
 					}
 				}
 
-				if (!_repeatDisenchant || (_inventory[4] != null && _inventory[4].getEnchantmentTagList() == null)) {
-					_inventory[2] = _inventory[4];
-					_inventory[4] = null;
+				if (!_repeatDisenchant || (!_inventory.get(4).isEmpty() && _inventory.get(4).getEnchantmentTagList() == null)) {
+					_inventory.set(2, _inventory.get(4));
+					_inventory.set(4, ItemStack.EMPTY);
 				}
 
 				setInventorySlotContents(3, new ItemStack(Items.ENCHANTED_BOOK, 1));
@@ -147,7 +147,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 				NBTTagList enchList = new NBTTagList();
 				enchList.appendTag(enchTag);
 				baseTag.setTag("StoredEnchantments", enchList);
-				_inventory[3].setTagCompound(baseTag);
+				_inventory.get(3).setTagCompound(baseTag);
 
 				setWorkDone(0);
 			} else {

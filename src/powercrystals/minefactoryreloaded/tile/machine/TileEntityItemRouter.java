@@ -60,8 +60,8 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 		super.update();
 		if (!world.isRemote) {
 			for (int i = 45; i < getSizeInventory(); i++) {
-				if (_inventory[i] != null) {
-					_inventory[i] = routeItem(_inventory[i]);
+				if (!_inventory.get(i).isEmpty()) {
+					_inventory.set(i, routeItem(_inventory.get(i)));
 				}
 			}
 		}
@@ -169,11 +169,11 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 			int sideStart = _invOffsets[_outputDirections[i].ordinal()];
 			routeWeights[i] = 0;
 			for (int j = sideStart; j < sideStart + 9; j++) {
-				if (_inventory[j] != null) {
-					if (_inventory[j].getItem().equals(item) &&
+				if (!_inventory.get(j).isEmpty()) {
+					if (_inventory.get(j).getItem().equals(item) &&
 							(stack.isItemStackDamageable() ||
-							_inventory[j].getItemDamage() == stack.getItemDamage())) {
-						routeWeights[i] += _inventory[j].getCount();
+							_inventory.get(j).getItemDamage() == stack.getItemDamage())) {
+						routeWeights[i] += _inventory.get(j).getCount();
 					}
 				}
 			}
@@ -201,7 +201,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 		int sideStart = _invOffsets[side.ordinal()];
 
 		for (int i = sideStart; i < sideStart + 9; i++) {
-			if (_inventory[i] != null) {
+			if (!_inventory.get(i).isEmpty()) {
 				return false;
 			}
 		}
@@ -260,7 +260,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 			if (i >= start && i <= (start + getSizeInventorySide(null))) {
 				l: if (!stack.isEmpty()) {
 					if (stack.getCount() <= 0) {
-						stack = null;
+						stack = ItemStack.EMPTY;
 						break l;
 					}
 					stack = routeItem(stack);
@@ -269,7 +269,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 							stack.setCount(getInventoryStackLimit());
 						}
 				}
-				_inventory[i] = stack;
+				_inventory.set(i, stack);
 				return;
 			}
 		}

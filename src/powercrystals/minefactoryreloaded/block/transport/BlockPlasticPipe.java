@@ -148,7 +148,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> drops = new ArrayList<>();
 
 		Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 

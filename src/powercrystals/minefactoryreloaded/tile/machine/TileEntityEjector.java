@@ -89,9 +89,9 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 
 					int amt = 1;
 					for (int i = getSizeItemList(); i-- > 0; )
-						if (itemMatches(_inventory[i], itemstack)) {
+						if (itemMatches(_inventory.get(i), itemstack)) {
 							hasMatch = true;
-							amt = Math.max(1, _inventory[i].getCount());
+							amt = Math.max(1, _inventory.get(i).getCount());
 							break;
 						}
 
@@ -143,7 +143,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 
 		super.onFactoryInventoryChanged();
 		for (int i = getSizeItemList(); i-- > 0; )
-			if (_inventory[i] != null) {
+			if (!_inventory.get(i).isEmpty()) {
 				_hasItems = true;
 				return;
 			}

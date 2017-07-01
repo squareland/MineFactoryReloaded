@@ -55,7 +55,7 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		@Nonnull ItemStack match = _inventory[getPlanterSlotIdFromBp(bp)];
+		@Nonnull ItemStack match = _inventory.get(getPlanterSlotIdFromBp(bp));
 
 		for (int stackIndex = 10; stackIndex <= 25; stackIndex++) {
 			@Nonnull ItemStack availableStack = getStackInSlot(stackIndex);

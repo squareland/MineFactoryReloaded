@@ -88,11 +88,11 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 		if (!incrementWorkDone()) return false;
 
 		if (getWorkDone() > getWorkMax()) {
-			setInventorySlotContents(0, ItemHelper.damageItem(_inventory[0], 1, _rand));
+			setInventorySlotContents(0, ItemHelper.damageItem(_inventory.get(0), 1, _rand));
 			LootContext.Builder context = new LootContext.Builder((WorldServer)this.world);
 			context.withLuck(_luck);
 			for (@Nonnull ItemStack stack : this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(_rand, context.build())) {
-				if (_inventory[0] == null && isItemValidForSlot(0, stack)) {
+				if (_inventory.get(0).isEmpty() && isItemValidForSlot(0, stack)) {
 					setInventorySlotContents(0, stack);
 				} else {
 					doDrop(stack);
@@ -184,9 +184,9 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 		super.onFactoryInventoryChanged();
 		boost = 0;
 		_needItem = false;
-		if (!world.isRemote && _inventory[0] != null) {
-			_luck = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, _inventory[0]);
-			_speed = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LURE, _inventory[0]);
+		if (!world.isRemote && !_inventory.get(0).isEmpty()) {
+			_luck = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, _inventory.get(0));
+			_speed = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LURE, _inventory.get(0));
 			boost = 75 * _speed + 75;
 		} else {
 			_needItem = MFRConfig.fisherNeedsRod.getBoolean(false);

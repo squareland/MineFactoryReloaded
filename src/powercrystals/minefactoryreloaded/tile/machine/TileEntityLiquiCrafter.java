@@ -36,8 +36,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 
 	protected RemoteInventoryCrafting craft = new RemoteInventoryCrafting();
 	protected IRecipe recipe;
-	protected ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
-	protected List<ItemResourceTracker> requiredItems = new LinkedList<ItemResourceTracker>();
+	protected ArrayList<ItemStack> outputs = new ArrayList<>();
+	private List<ItemResourceTracker> requiredItems = new LinkedList<>();
 
 	public TileEntityLiquiCrafter() {
 
@@ -74,8 +74,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		{
 			int s = outputs.size();
 			if (s > 0) {
-				if (_inventory[10] == null) {
-					_inventory[10] = outputs.get(--s);
+				if (_inventory.get(10).isEmpty()) {
+					_inventory.set(10, outputs.get(--s));
 					outputs.remove(s);
 				}
 				return;
@@ -86,10 +86,10 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 
 		if (redstoneState && !_lastRedstoneState) {
 			if (_resourcesChangedSinceLastFailedCraft && recipe != null &&
-					_inventory[9] != null &&
-					(_inventory[10] == null ||
-							(_inventory[10].getCount() + _inventory[9].getCount() <= _inventory[9].getMaxStackSize() &&
-									ItemHelper.itemsEqualWithMetadata(_inventory[9], _inventory[10], true))))
+					!_inventory.get(9).isEmpty() &&
+					(_inventory.get(10).isEmpty() ||
+							(_inventory.get(10).getCount() + _inventory.get(9).getCount() <= _inventory.get(9).getMaxStackSize() &&
+									ItemHelper.itemsEqualWithMetadata(_inventory.get(9), _inventory.get(10), true))))
 				checkResources();
 		}
 
@@ -111,16 +111,16 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		 * Tracking
 		 */
 		for (int i = 0; i < 9; i++) {
-			if (_inventory[i] != null) {
-				FluidStack l = MFRUtil.getFluidContents(_inventory[i]);
+			if (!_inventory.get(i).isEmpty()) {
+				FluidStack l = MFRUtil.getFluidContents(_inventory.get(i));
 				if (l != null) {
 					ItemResourceTracker t = new ItemResourceTracker(i, l, l.amount);
-					t.item = _inventory[i];
+					t.item = _inventory.get(i);
 					requiredItems.add(t);
 					continue;
 				}
 
-				requiredItems.add(new ItemResourceTracker(i, _inventory[i], 1));
+				requiredItems.add(new ItemResourceTracker(i, _inventory.get(i), 1));
 			}
 		}
 
@@ -128,8 +128,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		 * Checking
 		 */
 		for (int i = 11; i < 29; i++) {
-			@Nonnull ItemStack item = _inventory[i];
-			if (item != null) {
+			@Nonnull ItemStack item = _inventory.get(i);
+			if (!item.isEmpty()) {
 				int size = item.getCount();
 				for (ItemResourceTracker t : requiredItems) {
 					if (t.fluid != null && t.fluid.isFluidEqual(MFRUtil.getFluidContents(item))) {
@@ -180,8 +180,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		// TODO: this stage needs broken apart; cloning into the <tt>craft</tt> object, then getCraftingResult, then call IRecipie.getRemainingItems
 		// afterwards we can then consume items and process the outputs correctly; extra outputs should be done after the main crafting output logic to ensure ordering consistency
 		for (int i = 11; i < 29; i++) {
-			@Nonnull ItemStack item = _inventory[i];
-			if (item != null) {
+			@Nonnull ItemStack item = _inventory.get(i);
+			if (!item.isEmpty()) {
 				for (ItemResourceTracker t : requiredItems) {
 					boolean fluid = t.fluid != null &&
 							t.fluid.isFluidEqual(MFRUtil.getFluidContents(item));
@@ -193,7 +193,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 						if (item.getItem().hasContainerItem(item)) {
 							if (!fluid)
 								use = 1;
-							@Nonnull ItemStack container = item.getItem().getContainerItem(_inventory[i]);
+							@Nonnull ItemStack container = item.getItem().getContainerItem(_inventory.get(i));
 							boolean nul = true;
 							l:
 							{
@@ -201,12 +201,12 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 									break l;
 								if (!container.isItemStackDamageable() ||
 										container.getItemDamage() <= container.getMaxDamage()) {
-									_inventory[i] = container;
+									_inventory.set(i, container);
 									nul = false;
 								}
 							}
 							if (nul)
-								_inventory[i] = null;
+								_inventory.set(i, ItemStack.EMPTY);
 						} else if (fluid) {
 							int use2 = Math.min((int) Math.ceil(t.required / (float) use), item.getCount());
 							item.shrink(use2);
@@ -218,7 +218,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 						t.required -= use;
 
 						if (item.getCount() <= 0)
-							_inventory[i] = null;
+							_inventory.set(i, ItemStack.EMPTY);
 
 						if (t.required == 0) {
 							craft.setInventorySlotContents(t.slot, ItemHelper.cloneStack(item, use));
@@ -243,7 +243,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 					t.required -= use;
 
 					if (t.required == 0) {
-						craft.setInventorySlotContents(t.slot, ItemHelper.cloneStack(_inventory[t.slot]));
+						craft.setInventorySlotContents(t.slot, ItemHelper.cloneStack(_inventory.get(t.slot)));
 						requiredItems.remove(t);
 						--i;
 						break;
@@ -256,28 +256,28 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		 * Crafting
 		 */
 		try {
-			_inventory[9] = recipe.getCraftingResult(craft);
+			_inventory.set(9, recipe.getCraftingResult(craft));
 		} catch (Throwable t) {
 			if (recipe.matches(craft, world))
-				_inventory[9] = recipe.getCraftingResult(craft);
+				_inventory.set(9, recipe.getCraftingResult(craft));
 		}
 
-		if (_inventory[9] == null)
+		if (_inventory.get(9).isEmpty())
 			return;
 
-		if (_inventory[10] == null) {
-			_inventory[10] = ItemHelper.cloneStack(_inventory[9]);
+		if (_inventory.get(10).isEmpty()) {
+			_inventory.set(10, ItemHelper.cloneStack(_inventory.get(9)));
 		} else {
-			if (ItemHelper.itemsEqualWithMetadata(_inventory[10], _inventory[9], true))
-				_inventory[10].grow(_inventory[9].getCount());
+			if (ItemHelper.itemsEqualWithMetadata(_inventory.get(10), _inventory.get(9), true))
+				_inventory.get(10).grow(_inventory.get(9).getCount());
 			else
-				outputs.add(ItemHelper.cloneStack(_inventory[9]));
+				outputs.add(ItemHelper.cloneStack(_inventory.get(9)));
 		}
 	}
 
 	private void calculateOutput() {
 
-		_inventory[9] = findMatchingRecipe();
+		_inventory.set(9, findMatchingRecipe());
 	}
 
 	@Override
@@ -289,7 +289,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	@Override
 	public void setInventorySlotContents(int slot, @Nonnull ItemStack stack) {
 
-		_inventory[slot] = stack;
+		_inventory.set(slot, stack);
 		if (slot < 9)
 			calculateOutput();
 		onFactoryInventoryChanged();
@@ -464,7 +464,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	private ItemStack findMatchingRecipe() {
 
 		for (int i = 0; i < 9; i++) {
-			craft.setInventorySlotContents(i, (_inventory[i].isEmpty() ? ItemStack.EMPTY : _inventory[i].copy()));
+			craft.setInventorySlotContents(i, (_inventory.get(i).isEmpty() ? ItemStack.EMPTY : _inventory.get(i).copy()));
 		}
 
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
@@ -533,14 +533,14 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 
 	private static class ItemResourceTracker {
 
-		public ItemResourceTracker(int s, @Nonnull ItemStack stack, int amt) {
+		ItemResourceTracker(int s, @Nonnull ItemStack stack, int amt) {
 
 			slot = s;
 			item = stack;
 			required = amt;
 		}
 
-		public ItemResourceTracker(int s, FluidStack resource, int amt) {
+		ItemResourceTracker(int s, FluidStack resource, int amt) {
 
 			slot = s;
 			fluid = resource;

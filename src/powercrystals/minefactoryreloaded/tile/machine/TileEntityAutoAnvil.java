@@ -56,17 +56,17 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 		Item item = stack.getItem();
 		if (repairOnly) {
 			if (slot == 0) return item.isRepairable();
-			if (slot == 1 && _inventory[0] != null && item.isRepairable())
-				return _inventory[0].getItem().equals(item);
+			if (slot == 1 && !_inventory.get(0).isEmpty() && item.isRepairable())
+				return _inventory.get(0).getItem().equals(item);
 			return false;
 		}
 		if (slot == 0) return (item.isEnchantable(stack) || item.equals(Items.ENCHANTED_BOOK)) || item.isRepairable();
-		if (slot == 1 && _inventory[0] != null) {
+		if (slot == 1 && !_inventory.get(0).isEmpty()) {
 			if (item.equals(Items.ENCHANTED_BOOK) && !Items.ENCHANTED_BOOK.getEnchantments(stack).hasNoTags())
 				return true;
-			return (item.equals(_inventory[0].getItem()) &&
+			return (item.equals(_inventory.get(0).getItem()) &&
 					stack.isItemStackDamageable() && item.isRepairable()) ||
-					_inventory[0].getItem().getIsRepairable(_inventory[0], stack);
+					_inventory.get(0).getItem().getIsRepairable(_inventory.get(0), stack);
 		}
 		return false;
 	}
@@ -100,19 +100,19 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		if (_output.isEmpty() || _inventory[2] != null) {
+		if (_output.isEmpty() || !_inventory.get(2).isEmpty()) {
 			return false;
 		} else {
 			if (repairOnly) {
-				if (_inventory[0] != null && _inventory[1] != null &&
-						_inventory[0].getItem().equals(_inventory[1].getItem()) &&
-						_inventory[0].getItem().isRepairable()) {
+				if (!_inventory.get(0).isEmpty() && !_inventory.get(1).isEmpty() &&
+						_inventory.get(0).getItem().equals(_inventory.get(1).getItem()) &&
+						_inventory.get(0).getItem().isRepairable()) {
 					if (!incrementWorkDone()) return false;
 
 					if (getWorkDone() >= getWorkMax()) {
-						_inventory[0] = null;
-						_inventory[1] = null;
-						_inventory[2] = _output;
+						_inventory.set(0, ItemStack.EMPTY);
+						_inventory.set(1, ItemStack.EMPTY);
+						_inventory.set(2, _output);
 
 						setWorkDone(0);
 						_output = ItemStack.EMPTY;
@@ -126,7 +126,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 			if (drain(4, false, _tanks[0]) != 4) {
 				return false;
 			}
-			if (stackSizeToBeUsedInRepair > 0 && (_inventory[1] == null || _inventory[1].getCount() < stackSizeToBeUsedInRepair)) {
+			if (stackSizeToBeUsedInRepair > 0 && (_inventory.get(1).isEmpty() || _inventory.get(1).getCount() < stackSizeToBeUsedInRepair)) {
 				return false;
 			}
 
@@ -134,13 +134,13 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 			if (!incrementWorkDone()) return false;
 
 			if (getWorkDone() >= getWorkMax()) {
-				_inventory[0] = null;
-				_inventory[2] = _output;
+				_inventory.set(0, ItemStack.EMPTY);
+				_inventory.set(2, _output);
 
-				if (stackSizeToBeUsedInRepair > 0 && _inventory[1].getCount() > stackSizeToBeUsedInRepair) {
-					_inventory[1].shrink(stackSizeToBeUsedInRepair);
+				if (stackSizeToBeUsedInRepair > 0 && _inventory.get(1).getCount() > stackSizeToBeUsedInRepair) {
+					_inventory.get(1).shrink(stackSizeToBeUsedInRepair);
 				} else {
-					_inventory[1] = null;
+					_inventory.set(1, ItemStack.EMPTY);
 				}
 
 				setWorkDone(0);
@@ -172,7 +172,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 	@Nonnull
 	private ItemStack getAnvilOutput() {
 
-		@Nonnull ItemStack startingItem = _inventory[0];
+		@Nonnull ItemStack startingItem = _inventory.get(0);
 		this.maximumCost = 0;
 		int totalEnchCost = 0;
 
@@ -180,7 +180,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 			return ItemStack.EMPTY;
 		} else if (repairOnly) {
 			this.stackSizeToBeUsedInRepair = 0;
-			@Nonnull ItemStack addedItem = _inventory[1];
+			@Nonnull ItemStack addedItem = _inventory.get(1);
 			Item item = startingItem.getItem();
 
 			if (!addedItem.isEmpty() && item.isRepairable() &&
@@ -198,7 +198,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 			return ItemStack.EMPTY;
 		} else {
 			@Nonnull ItemStack outputItem = startingItem.copy();
-			@Nonnull ItemStack addedItem = _inventory[1];
+			@Nonnull ItemStack addedItem = _inventory.get(1);
 
 			Map<Enchantment, Integer> existingEnchantments = EnchantmentHelper.getEnchantments(outputItem);
 
@@ -367,19 +367,19 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 			}
 
 			if (enchantingWithBook && !outputItem.getItem().isBookEnchantable(outputItem, addedItem)) {
-				outputItem = null;
+				outputItem = ItemStack.EMPTY;
 			}
 
 			this.maximumCost = repairCost + totalEnchCost;
 
 			if (totalEnchCost <= 0) {
-				outputItem = null;
+				outputItem = ItemStack.EMPTY;
 			}
 
-			if (outputItem != null) {
+			if (!outputItem.isEmpty()) {
 				int newRepairCost = outputItem.getRepairCost();
 
-				if (addedItem != null && newRepairCost < addedItem.getRepairCost()) {
+				if (!addedItem.isEmpty() && newRepairCost < addedItem.getRepairCost()) {
 					newRepairCost = addedItem.getRepairCost();
 				}
 				if (totalEnchCost > (outputItem.hasDisplayName() ? 1 : 0)) {

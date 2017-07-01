@@ -68,23 +68,23 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 
 		if (world != null && !world.isRemote) {
 			@Nonnull ItemStack output;
-			if (_inventory[0] != null) {
-				List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory[0]);
+			if (!_inventory.get(0).isEmpty()) {
+				List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory.get(0));
 				// tracker does *not* also check the wildcard meta,
 				// avoiding issues with saplings and logs, etc.
 
 				if (names == null || names.size() != 1 || MFRRegistry.getUnifierBlacklist().containsKey(names.get(0))) {
-					output = _inventory[0].copy();
+					output = _inventory.get(0).copy();
 				} else if (_preferredOutputs.containsKey(names.get(0))) {
 					output = _preferredOutputs.get(names.get(0)).copy();
-					output.setCount(_inventory[0].getCount());
+					output.setCount(_inventory.get(0).getCount());
 				} else {
 					output = OreDictionaryArbiter.getOres(names.get(0)).get(0).copy();
-					output.setCount(_inventory[0].getCount());
+					output.setCount(_inventory.get(0).getCount());
 				}
 
-				if (_inventory[0].getItem().equals(output.getItem()))
-					output = _inventory[0].copy();
+				if (_inventory.get(0).getItem().equals(output.getItem()))
+					output = _inventory.get(0).copy();
 
 				moveItemStack(output);
 			}
@@ -99,40 +99,40 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 
 		int amt = source.getCount();
 
-		if (_inventory[1] == null) {
+		if (_inventory.get(1).isEmpty()) {
 			amt = Math.min(Math.min(getInventoryStackLimit(), source.getMaxStackSize()),
 					source.getCount());
-		} else if (!UtilInventory.stacksEqual(source, _inventory[1], false)) {
+		} else if (!UtilInventory.stacksEqual(source, _inventory.get(1), false)) {
 			return;
-		} else if (source.getTagCompound() != null || _inventory[1].getTagCompound() != null) {
+		} else if (source.getTagCompound() != null || _inventory.get(1).getTagCompound() != null) {
 			return;
 		} else {
 			amt = Math.min(source.getCount(),
-					_inventory[1].getMaxStackSize() - _inventory[1].getCount());
+					_inventory.get(1).getMaxStackSize() - _inventory.get(1).getCount());
 		}
 
-		if (_inventory[1] == null) {
-			_inventory[1] = source.copy();
-			_inventory[1].setCount(amt);
-			_inventory[0].shrink(amt);
+		if (_inventory.get(1).isEmpty()) {
+			_inventory.set(1, source.copy());
+			_inventory.get(1).setCount(amt);
+			_inventory.get(0).shrink(amt);
 		} else {
-			_inventory[1].grow(amt);
-			_inventory[0].shrink(amt);
+			_inventory.get(1).grow(amt);
+			_inventory.get(0).shrink(amt);
 		}
 
-		if (_inventory[0].getCount() == 0) {
-			_inventory[0] = null;
+		if (_inventory.get(0).getCount() == 0) {
+			_inventory.set(0, ItemStack.EMPTY);
 		}
 	}
 
 	@Override
 	public void setInventorySlotContents(int slot, @Nonnull ItemStack stack) {
 
-		_inventory[slot] = stack;
+		_inventory.set(slot, stack);
 		if (slot > 1)
 			updatePreferredOutput();
 		if (!stack.isEmpty() && stack.getCount() <= 0)
-			_inventory[slot] = null;
+			_inventory.set(slot, ItemStack.EMPTY);
 		unifyInventory();
 		ignoreChange = true;
 		markDirty();
@@ -143,13 +143,13 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 
 		_preferredOutputs.clear();
 		for (int i = 2; i < 11; i++) {
-			if (_inventory[i] == null) {
+			if (_inventory.get(i).isEmpty()) {
 				continue;
 			}
-			List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory[i]);
+			List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory.get(i));
 			if (names != null) {
 				for (String name : names) {
-					_preferredOutputs.put(name, _inventory[i].copy());
+					_preferredOutputs.put(name, _inventory.get(i).copy());
 				}
 			}
 		}

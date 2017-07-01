@@ -90,20 +90,20 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			final int waterCost = MFRConfig.autobrewerFluidCost.getInt();
 			for (int row = 0; row < 6; row++) {
 				int processSlot = getProcessSlot(row), templateSlot = getTemplateSlot(row);
-				if (_inventory[31] != null && _inventory[processSlot] == null && _inventory[templateSlot] != null) {
-					if (row == 0 || _inventory[getTemplateSlot(row - 1)] == null) {
+				if (!_inventory.get(31).isEmpty() && _inventory.get(processSlot).isEmpty() && !_inventory.get(templateSlot).isEmpty()) {
+					if (row == 0 || _inventory.get(getTemplateSlot(row - 1)).isEmpty()) {
 						@Nonnull ItemStack waterBottle = new ItemStack(Items.POTIONITEM);
-						if (getPotionResult(waterBottle, _inventory[templateSlot]) != waterBottle)
+						if (getPotionResult(waterBottle, _inventory.get(templateSlot)) != waterBottle)
 							if (drain(waterCost, false, _tanks[0]) == waterCost) {
 								drain(waterCost, true, _tanks[0]);
-								_inventory[31] = ItemHelper.consumeItem(_inventory[31]);
-								_inventory[processSlot] = new ItemStack(Items.POTIONITEM);
+								_inventory.set(31, ItemHelper.consumeItem(_inventory.get(31)));
+								_inventory.set(processSlot, new ItemStack(Items.POTIONITEM));
 								didWork = true;
 							}
 					}
 				}
-				if (_inventory[processSlot] != null) {
-					if (_inventory[getProcessSlot(row + 1)] == null && canBrew(row))
+				if (!_inventory.get(processSlot).isEmpty()) {
+					if (_inventory.get(getProcessSlot(row + 1)).isEmpty() && canBrew(row))
 						hasWorkToDo = true;
 				}
 			}
@@ -123,24 +123,24 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 		setWorkDone(0);
 
 		for (int row = 6; row-- > 0;) {
-			@Nonnull ItemStack current = _inventory[getProcessSlot(row)];
-			@Nonnull ItemStack next = _inventory[getProcessSlot(row + 1)];
-			if (next != null && current != null) {
+			@Nonnull ItemStack current = _inventory.get(getProcessSlot(row));
+			@Nonnull ItemStack next = _inventory.get(getProcessSlot(row + 1));
+			if (!next.isEmpty() && !current.isEmpty()) {
 				continue;
 				// no exiting early, we know there's a potion that can be moved/brewed
 			}
 
-			@Nonnull ItemStack ingredient = _inventory[getTemplateSlot(row)];
+			@Nonnull ItemStack ingredient = _inventory.get(getTemplateSlot(row));
 
-			if (current != null) {
-				if (ingredient == null) {
-					_inventory[getProcessSlot(row + 1)] = current;
-					_inventory[getProcessSlot(row)] = null;
+			if (!current.isEmpty()) {
+				if (ingredient.isEmpty()) {
+					_inventory.set(getProcessSlot(row + 1), current);
+					_inventory.set(getProcessSlot(row), ItemStack.EMPTY);
 					continue;
 				}
 				for (int i = 0; i < 3; i++) {
 					int slot = getResourceSlot(row, i);
-					if (ingredient.getCount() <= 0 && !UtilInventory.stacksEqual(_inventory[slot], ingredient)) {
+					if (ingredient.getCount() <= 0 && !UtilInventory.stacksEqual(_inventory.get(slot), ingredient)) {
 						continue;
 					}
 
@@ -148,12 +148,12 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 					// if they modify the ingredient stack, we need either defensive copies, or to pass the storage slot stack
 
 					if (!newPotion.isEmpty() && current != newPotion) {
-						_inventory[getProcessSlot(row + 1)] = newPotion;
+						_inventory.set(getProcessSlot(row + 1), newPotion);
 					} else {
-						_inventory[getProcessSlot(row + 1)] = current;
+						_inventory.set(getProcessSlot(row + 1), current);
 					}
 
-					_inventory[getProcessSlot(row)] = null;
+					_inventory.set(getProcessSlot(row), ItemStack.EMPTY);
 
 					if (current == newPotion)
 						break;
@@ -162,16 +162,16 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 						ingredient.shrink(1);
 						break;
 					}
-					_inventory[slot].shrink(1);
+					_inventory.get(slot).shrink(1);
 					ingredient.grow(1);
-					if (ingredient.getItem().hasContainerItem(_inventory[slot])) {
-						@Nonnull ItemStack r = ingredient.getItem().getContainerItem(_inventory[slot]);
+					if (ingredient.getItem().hasContainerItem(_inventory.get(slot))) {
+						@Nonnull ItemStack r = ingredient.getItem().getContainerItem(_inventory.get(slot));
 						if (!r.isEmpty() && r.isItemStackDamageable() && r.getItemDamage() > r.getMaxDamage())
 							r = ItemStack.EMPTY;
-						_inventory[slot] = r;
+						_inventory.set(slot, r);
 					}
-					if (_inventory[slot] != null && _inventory[slot].getCount() <= 0)
-						_inventory[slot] = null;
+					if (!_inventory.get(slot).isEmpty() && _inventory.get(slot).getCount() <= 0)
+						_inventory.set(slot, ItemStack.EMPTY);
 					break;
 				}
 			}
@@ -181,11 +181,11 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 
 	private boolean canBrew(int row) {
 
-		if (_inventory[getTemplateSlot(row)] == null) {
+		if (_inventory.get(getTemplateSlot(row)).isEmpty()) {
 			return false;
 		}
 
-		@Nonnull ItemStack ingredient = _inventory[getTemplateSlot(row)];
+		@Nonnull ItemStack ingredient = _inventory.get(getTemplateSlot(row));
 
 		if (!BrewingRecipeRegistry.isValidIngredient(ingredient)) {
 			return false;
@@ -193,7 +193,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 
 		boolean hasIngredients = ingredient.getCount() > 0;
 		if (!hasIngredients) for (int i = 0; i < 3; i++) {
-			if (UtilInventory.stacksEqual(ingredient, _inventory[getResourceSlot(row, i)])) {
+			if (UtilInventory.stacksEqual(ingredient, _inventory.get(getResourceSlot(row, i)))) {
 				hasIngredients = true;
 				break;
 			}
@@ -202,10 +202,10 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		if (_inventory[getProcessSlot(row)] != null) {
-			@Nonnull ItemStack newPotion = this.getPotionResult(_inventory[getProcessSlot(row)], ingredient);
+		if (!_inventory.get(getProcessSlot(row)).isEmpty()) {
+			@Nonnull ItemStack newPotion = this.getPotionResult(_inventory.get(getProcessSlot(row)), ingredient);
 
-			if (!newPotion.isEmpty() && _inventory[getProcessSlot(row)] != newPotion) {
+			if (!newPotion.isEmpty() && _inventory.get(getProcessSlot(row)) != newPotion) {
 				return true; //existingPotion != newPotion;
 				// push potions without effects that have been previously brewed on through
 			}
@@ -245,10 +245,10 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 		if (slot == 31) return itemstack.getItem().equals(Items.GLASS_BOTTLE);
 		if (row == 6) return false;
 		if (column == 1) return false;
-		if (column == 0) return _inventory[getTemplateSlot(row)] != null &&
+		if (column == 0) return !_inventory.get(getTemplateSlot(row)).isEmpty() &&
 				BrewingRecipeRegistry.isValidInput(itemstack) &&
-				(row == 0 || _inventory[getTemplateSlot(row - 1)] == null);
-		return ingredientsEqual(_inventory[getTemplateSlot(row)], itemstack);
+				(row == 0 || _inventory.get(getTemplateSlot(row - 1)).isEmpty());
+		return ingredientsEqual(_inventory.get(getTemplateSlot(row)), itemstack);
 	}
 
 	@Override
@@ -259,8 +259,8 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 
 		if (row == 6) return slot != 31;
 		if (column == 1) return false;
-		if (column == 0) return _inventory[getTemplateSlot(row)] == null;
-		return !ingredientsEqual(_inventory[getTemplateSlot(row)], itemstack);
+		if (column == 0) return _inventory.get(getTemplateSlot(row)).isEmpty();
+		return !ingredientsEqual(_inventory.get(getTemplateSlot(row)), itemstack);
 	}
 
 	private boolean ingredientsEqual(@Nonnull ItemStack template, @Nonnull ItemStack ingredient) {

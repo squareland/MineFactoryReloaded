@@ -56,8 +56,8 @@ public class TileEntityBlockPlacer extends TileEntityFactoryPowered {
 	protected boolean activateMachine() {
 
 		for (int i = 0; i < getSizeInventory(); i++) {
-			@Nonnull ItemStack stack = _inventory[i];
-			if (stack == null || !(stack.getItem() instanceof ItemBlock))
+			@Nonnull ItemStack stack = _inventory.get(i);
+			if (stack.isEmpty() || !(stack.getItem() instanceof ItemBlock))
 				continue;
 
 			ItemBlock item = (ItemBlock) stack.getItem();

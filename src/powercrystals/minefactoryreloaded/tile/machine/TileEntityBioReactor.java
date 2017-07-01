@@ -58,7 +58,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 
 		int occupiedSlots = 0;
 		for (int i = 9; i < 18; i++) {
-			if (_inventory[i] != null) {
+			if (!_inventory.get(i).isEmpty()) {
 				occupiedSlots++;
 			}
 		}
@@ -79,22 +79,22 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 		if (!world.isRemote) {
 			Map<Item, IFactoryPlantable> plantables = MFRRegistry.getPlantables();
 			for (int i = 0; i < 9; i++) {
-				@Nonnull ItemStack item = _inventory[i];
-				if (item == null)
+				@Nonnull ItemStack item = _inventory.get(i);
+				if (item.isEmpty())
 					continue;
 				if (plantables.containsKey(item.getItem()) &&
 						plantables.get(item.getItem()).canBePlanted(item, true)) {
-					int targetSlot = findMatchingSlot(_inventory[i]);
+					int targetSlot = findMatchingSlot(_inventory.get(i));
 					if (targetSlot < 0)
 						continue;
 
-					if (_inventory[targetSlot] == null) {
-						_inventory[targetSlot] = _inventory[i];
-						_inventory[i] = null;
+					if (_inventory.get(targetSlot).isEmpty()) {
+						_inventory.set(targetSlot, _inventory.get(i));
+						_inventory.set(i, ItemStack.EMPTY);
 					} else {
-						UtilInventory.mergeStacks(_inventory[targetSlot], _inventory[i]);
-						if (_inventory[i].getCount() <= 0)
-							_inventory[i] = null;
+						UtilInventory.mergeStacks(_inventory.get(targetSlot), _inventory.get(i));
+						if (_inventory.get(i).getCount() <= 0)
+							_inventory.set(i, ItemStack.EMPTY);
 					}
 				}
 			}
@@ -106,7 +106,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 			if (_burnTimeMax - _burnTime >= newBurn) {
 				_burnTime += newBurn;
 				for (int i = 9; i < 18; i++)
-					if (_inventory[i] != null)
+					if (!_inventory.get(i).isEmpty())
 						decrStackSize(i, 1);
 			}
 
@@ -121,10 +121,10 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 
 		int emptySlot = -1;
 		for (int i = 9; i < 18; i++) {
-			if (_inventory[i] == null) {
+			if (_inventory.get(i).isEmpty()) {
 				if (emptySlot == -1)
 					emptySlot = i;
-			} else if (_inventory[i].isItemEqual(s)) {
+			} else if (_inventory.get(i).isItemEqual(s)) {
 				return i;
 			}
 		}

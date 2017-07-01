@@ -80,12 +80,12 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 		return 1;
 	}
 
-	protected int getSpawnCost() {
+	private int getSpawnCost() {
 
 		return _spawnExact ? MFRConfig.autospawnerCostExact.getInt() : MFRConfig.autospawnerCostStandard.getInt();
 	}
 
-	protected int getSpawnCost(Entity e, String id) {
+	private int getSpawnCost(Entity e, String id) {
 
 		int r = MFRRegistry.getBaseSpawnCost(id);
 
@@ -227,11 +227,11 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	protected void onFactoryInventoryChanged() {
 
 		super.onFactoryInventoryChanged();
-		if (!internalChange && !UtilInventory.stacksEqual(_lastSpawnStack, _inventory[0])) {
+		if (!internalChange && !UtilInventory.stacksEqual(_lastSpawnStack, _inventory.get(0))) {
 			setWorkDone(0);
 			setIdleTicks(getIdleTicksMax());
 		}
-		_lastSpawnStack = _inventory[0];
+		_lastSpawnStack = _inventory.get(0);
 	}
 
 	@Override

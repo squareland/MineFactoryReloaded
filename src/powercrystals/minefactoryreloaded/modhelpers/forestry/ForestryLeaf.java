@@ -125,7 +125,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		if (tree == null)
 			return null;
 
-		ArrayList<ItemStack> prod = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> prod = new ArrayList<>();
 		getFruits(world, pos, tree, prod);
 		return prod;
 	}
@@ -150,7 +150,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 			if (fruit.hasFruit())
 			{
 				//int period = tree.getGenome().getFruitProvider().getRipeningPeriod();
-				//@Nonnull ItemStack[] o = tree.produceStacks(world, pos, (int)(fruit.getRipeness() * period + 0.1f));
+				//ItemStack[] o = tree.produceStacks(world, pos, (int)(fruit.getRipeness() * period + 0.1f));
 				prod.addAll(fruit.pickFruit(ItemStack.EMPTY));
 			}
 		}

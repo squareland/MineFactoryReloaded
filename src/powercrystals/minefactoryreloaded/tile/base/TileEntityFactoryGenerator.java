@@ -78,8 +78,8 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	protected abstract int produceEnergy();
 
 	protected final int transmitEnergy(int energy) {
-		if (_inventory[0] != null)
-			energy -= EnergyHelper.insertEnergyIntoContainer(_inventory[0], energy, false);
+		if (!_inventory.get(0).isEmpty())
+			energy -= EnergyHelper.insertEnergyIntoContainer(_inventory.get(0), energy, false);
 		if (energy <= 0)
 			return 0;
 
@@ -124,7 +124,7 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 
 	@Override
 	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
-		return _inventory[0] != null && EnergyHelper.insertEnergyIntoContainer(_inventory[0], 2, true) < 2;
+		return !_inventory.get(0).isEmpty() && EnergyHelper.insertEnergyIntoContainer(_inventory.get(0), 2, true) < 2;
 	}
 
 	private void reCache() {

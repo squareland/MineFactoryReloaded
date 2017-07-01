@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.*;
 import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -143,23 +142,20 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 				numDrops++;
 				chance -= rand.nextFloat();
 			}
-			@Nonnull ItemStack[] cropDrops = new ItemStack[numDrops];
+			NonNullList<ItemStack> cropDrops = NonNullList.withSize(numDrops, ItemStack.EMPTY);
 			for (int i = 0; i < numDrops; i++)
 			{
-				cropDrops[i] = crop.getGain(tec);
-				if((cropDrops[i] != null) && (rand.nextInt(100) <= tec.getStatGain()))
+				cropDrops.set(i, crop.getGain(tec));
+				if((!cropDrops.get(i).isEmpty()) && (rand.nextInt(100) <= tec.getStatGain()))
 				{
-					cropDrops[i].grow(1);
+					cropDrops.get(i).grow(1);
 				}
 			}
 
 			tec.setCurrentSize(crop.getSizeAfterHarvest(tec));
 			tec.updateState();
 
-			for(@Nonnull ItemStack s : cropDrops)
-			{
-				drops.add(s);
-			}
+			drops.addAll(cropDrops);
 		}
 		catch(Exception e)
 		{

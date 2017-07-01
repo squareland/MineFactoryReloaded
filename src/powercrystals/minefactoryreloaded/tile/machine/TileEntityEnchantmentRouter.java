@@ -45,22 +45,22 @@ public class TileEntityEnchantmentRouter extends TileEntityItemRouter {
 			routeWeights[i] = 0;
 
 			for (int j = sideStart; j < sideStart + 9; j++) {
-				if (_inventory[j] == null)
+				if (_inventory.get(j).isEmpty())
 					continue;
-				if (_inventory[j].hasTagCompound()) {
-					Map inventoryEnchants = EnchantmentHelper.getEnchantments(_inventory[j]);
+				if (_inventory.get(j).hasTagCompound()) {
+					Map inventoryEnchants = EnchantmentHelper.getEnchantments(_inventory.get(j));
 					if (inventoryEnchants.isEmpty()) {
 						continue;
 					}
 					for (Object stackEnchantId : stackEnchants.keySet()) {
 						if (inventoryEnchants.containsKey(stackEnchantId)) {
 							if (!_matchLevels || inventoryEnchants.get(stackEnchantId).equals(stackEnchants.get(stackEnchantId))) {
-								routeWeights[i] += _inventory[j].getCount();
+								routeWeights[i] += _inventory.get(j).getCount();
 							}
 						}
 					}
-				} else if (_inventory[j].getItem().equals(Items.BOOK)) {
-					routeWeights[i] += (1 + _inventory[j].getCount()) / 2;
+				} else if (_inventory.get(j).getItem().equals(Items.BOOK)) {
+					routeWeights[i] += (1 + _inventory.get(j).getCount()) / 2;
 				}
 			}
 		}

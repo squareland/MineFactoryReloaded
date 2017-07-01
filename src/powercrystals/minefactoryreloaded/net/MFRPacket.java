@@ -214,7 +214,7 @@ public class MFRPacket extends PacketCoFHBase {
 							click = getByte();
 					if (te instanceof IInventory) {
 						if (playerStack.isEmpty()) {
-							((IInventory) te).setInventorySlotContents(slotNumber, null);
+							((IInventory) te).setInventorySlotContents(slotNumber, ItemStack.EMPTY);
 						} else {
 							playerStack = playerStack.copy();
 							playerStack.setCount(click == 1 ? -1 : 1);

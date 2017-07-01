@@ -160,9 +160,9 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 
 		super.onFactoryInventoryChanged();
 		_reverse = false;
-		if (isUsableAugment(_inventory[0])) {
-			IAugmentItem upgrade = (IAugmentItem) _inventory[0].getItem();
-			int r = "radius".equals(upgrade.getAugmentIdentifier(_inventory[0])) ? ((ItemUpgrade)upgrade).getAugmentLevel(_inventory[0], "radius") : 0;
+		if (isUsableAugment(_inventory.get(0))) {
+			IAugmentItem upgrade = (IAugmentItem) _inventory.get(0).getItem();
+			int r = "radius".equals(upgrade.getAugmentIdentifier(_inventory.get(0))) ? ((ItemUpgrade)upgrade).getAugmentLevel(_inventory.get(0), "radius") : 0;
 			if (r > 0) {
 				_areaManager.setUpgradeLevel(r);
 				Area area = new Area(pos.up(), r, 0, r * 2);

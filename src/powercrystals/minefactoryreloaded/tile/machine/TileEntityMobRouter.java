@@ -1,24 +1,22 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import static powercrystals.minefactoryreloaded.item.ItemSafariNet.*;
-
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiMobRouter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerMobRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import java.util.List;
+
+import static powercrystals.minefactoryreloaded.item.ItemSafariNet.*;
 
 public class TileEntityMobRouter extends TileEntityFactoryPowered {
 
@@ -49,10 +47,10 @@ public class TileEntityMobRouter extends TileEntityFactoryPowered {
 	protected boolean activateMachine() {
 
 		Class<?> matchClass;
-		if (_inventory[0] != null) {
-			if (!isSafariNet(_inventory[0]) || isSingleUse(_inventory[0]))
+		if (!_inventory.get(0).isEmpty()) {
+			if (!isSafariNet(_inventory.get(0)) || isSingleUse(_inventory.get(0)))
 				return false;
-			matchClass = getEntityClass(_inventory[0]);
+			matchClass = getEntityClass(_inventory.get(0));
 		} else
 			matchClass = EntityLivingBase.class;
 
