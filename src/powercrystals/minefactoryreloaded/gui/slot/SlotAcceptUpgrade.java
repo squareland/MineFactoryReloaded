@@ -3,11 +3,11 @@ package powercrystals.minefactoryreloaded.gui.slot;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+
+import javax.annotation.Nonnull;
 
 public class SlotAcceptUpgrade extends Slot
 {
@@ -29,7 +29,7 @@ public class SlotAcceptUpgrade extends Slot
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack stack)
+	public boolean isItemValid(@Nonnull ItemStack stack)
 	{
 		return _inv.isUsableAugment(stack);
 	}

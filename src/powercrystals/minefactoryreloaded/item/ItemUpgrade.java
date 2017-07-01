@@ -1,21 +1,17 @@
 package powercrystals.minefactoryreloaded.item;
 
 import cofh.api.item.IAugmentItem;
-import com.google.common.collect.ImmutableSet;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Set;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemUpgrade extends ItemMulti implements IAugmentItem {
 
@@ -31,7 +27,7 @@ public class ItemUpgrade extends ItemMulti implements IAugmentItem {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 
 		super.addInfo(stack, player, infoList, advancedTooltips);
 		infoList.add(String.format(MFRUtil.localize("tip.info.mfr.upgrade.radius", true), getAugmentLevel(stack, "radius")));
@@ -39,7 +35,7 @@ public class ItemUpgrade extends ItemMulti implements IAugmentItem {
 
 	//TODO fix upgrades when it comes to former augment level implementation
 	//@Override
-	public int getAugmentLevel(ItemStack stack, String type) {
+	public int getAugmentLevel(@Nonnull ItemStack stack, String type) {
 
 		if (type.equals("radius")) {
 			int dmg = stack.getItemDamage();
@@ -51,13 +47,13 @@ public class ItemUpgrade extends ItemMulti implements IAugmentItem {
 	}
 
 	@Override
-	public AugmentType getAugmentType(ItemStack stack) {
+	public AugmentType getAugmentType(@Nonnull ItemStack stack) {
 
 		return AugmentType.BASIC;
 	}
 
 	@Override
-	public String getAugmentIdentifier(ItemStack stack) {
+	public String getAugmentIdentifier(@Nonnull ItemStack stack) {
 
 		return "radius";
 	}

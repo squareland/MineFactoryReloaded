@@ -4,24 +4,17 @@ package powercrystals.minefactoryreloaded.tile.machine;
 import buildcraft.api.transport.IPipeTile.PipeType;
 */
 
-import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
 import cofh.lib.inventory.IInventoryManager;
 import cofh.lib.inventory.InventoryManager;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiEjector;
@@ -30,6 +23,11 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerEjector;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+
+import javax.annotation.Nonnull;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class TileEntityEjector extends TileEntityFactoryInventory {
 
@@ -83,8 +81,8 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 
 				set:
 				for (Entry<Integer, ItemStack> stack : contents.entrySet()) {
-					ItemStack itemstack = stack.getValue();
-					if (itemstack == null || itemstack.getCount() < 1 || !inventory.canRemoveItem(itemstack, stack.getKey()))
+					@Nonnull ItemStack itemstack = stack.getValue();
+					if (itemstack.isEmpty() || itemstack.getCount() < 1 || !inventory.canRemoveItem(itemstack, stack.getKey()))
 						continue;
 
 					boolean hasMatch = false;
@@ -100,15 +98,15 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 					if (_whitelist != hasMatch)
 						continue set;
 
-					ItemStack stackToDrop = itemstack.copy();
+					@Nonnull ItemStack stackToDrop = itemstack.copy();
 					amt = Math.min(itemstack.getCount(), amt);
 					stackToDrop.setCount(amt);
-					ItemStack remaining = UtilInventory.dropStack(this, stackToDrop,
+					@Nonnull ItemStack remaining = UtilInventory.dropStack(this, stackToDrop,
 							facing, facing);
 
 					// remaining == null if dropped successfully.
-					if (remaining == null || remaining.getCount() < amt) {
-						inventory.removeItem(amt - (remaining == null ? 0 : remaining.getCount()), stackToDrop);
+					if (remaining.isEmpty() || remaining.getCount() < amt) {
+						inventory.removeItem(amt - (remaining.isEmpty() ? 0 : remaining.getCount()), stackToDrop);
 						break inv;
 					}
 				}
@@ -117,9 +115,9 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 		_lastRedstoneState = redstoneState;
 	}
 
-	protected boolean itemMatches(ItemStack itemA, ItemStack itemB) {
+	private boolean itemMatches(@Nonnull ItemStack itemA, @Nonnull ItemStack itemB) {
 
-		if (itemA == null | itemB == null)
+		if (itemA.isEmpty() || itemB.isEmpty())
 			return false;
 
 		if (!itemA.getItem().equals(itemB.getItem()))
@@ -169,19 +167,19 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int i, @Nonnull ItemStack itemstack) {
 
 		return false;
 	}

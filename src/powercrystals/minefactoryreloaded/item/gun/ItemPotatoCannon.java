@@ -18,7 +18,6 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -31,6 +30,8 @@ import powercrystals.minefactoryreloaded.item.base.ItemFactoryGun;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.entity.RenderSafarinet;
 import powercrystals.minefactoryreloaded.render.item.PotatoLauncherItemRenderer;
+
+import javax.annotation.Nonnull;
 
 public class ItemPotatoCannon extends ItemFactoryGun {
 
@@ -47,12 +48,12 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean hasGUI(ItemStack stack) {
+	protected boolean hasGUI(@Nonnull ItemStack stack) {
 
 		return false;
 	}
 
-	public int cofh_canEnchantApply(ItemStack stack, Enchantment ench) { //TODO implement (or change to an anvil event)
+	public int cofh_canEnchantApply(@Nonnull ItemStack stack, Enchantment ench) { //TODO implement (or change to an anvil event)
 
 		if (ench == Enchantments.LOOTING)
 			return 1;
@@ -62,7 +63,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	public boolean isEnchantable(ItemStack stack) {
+	public boolean isEnchantable(@Nonnull ItemStack stack) {
 
 		return true;
 	}
@@ -74,7 +75,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean fire(ItemStack stack, World world, EntityPlayer player) {
+	protected boolean fire(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 
 		boolean flag = player.capabilities.isCreativeMode, a = false;
 
@@ -88,10 +89,10 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 		}
 		if (flag || a) {
 
-			ItemStack fstack = new ItemStack(ammo[i]);
+			@Nonnull ItemStack fstack = new ItemStack(ammo[i]);
             if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-            	ItemStack sStack = FurnaceRecipes.instance().getSmeltingResult(fstack);
-            	if (sStack != null)
+            	@Nonnull ItemStack sStack = FurnaceRecipes.instance().getSmeltingResult(fstack);
+            	if (!sStack.isEmpty())
             		fstack = sStack;
             }
             fstack.setCount(1);
@@ -109,7 +110,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 			if (flag) {
 				item.canBePickedUp = 2;
 			} else {
-				ItemStack ammoStack = UtilInventory.findItem(player, ammo[i]);
+				@Nonnull ItemStack ammoStack = UtilInventory.findItem(player, ammo[i]);
 				ammoStack.shrink(1);
 
 				if (ammoStack.getCount() == 0)
@@ -127,13 +128,13 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	protected int getDelay(ItemStack stack, boolean fired) {
+	protected int getDelay(@Nonnull ItemStack stack, boolean fired) {
 
 		return fired ? 10 : 20;
 	}
 
 	@Override
-	protected String getDelayTag(ItemStack stack) {
+	protected String getDelayTag(@Nonnull ItemStack stack) {
 
 		return "mfr:PotatoLaunched";
 	}

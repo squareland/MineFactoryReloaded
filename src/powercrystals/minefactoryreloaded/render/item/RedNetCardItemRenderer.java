@@ -11,6 +11,8 @@ import net.minecraftforge.common.model.TRSRTransformation;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.model.RedNetCardsModel;
 
+import javax.annotation.Nonnull;
+
 public class RedNetCardItemRenderer extends BaseItemRenderer {
 
 	private static RedNetCardsModel cardsModel = new RedNetCardsModel();
@@ -31,7 +33,7 @@ public class RedNetCardItemRenderer extends BaseItemRenderer {
 	}
 
 	@Override
-	public void renderItem(ItemStack stack, ItemCameraTransforms.TransformType transformType) {
+	public void renderItem(@Nonnull ItemStack stack, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 

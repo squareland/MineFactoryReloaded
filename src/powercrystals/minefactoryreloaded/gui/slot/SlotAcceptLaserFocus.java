@@ -1,15 +1,12 @@
 package powercrystals.minefactoryreloaded.gui.slot;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.ResourceLocation;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
 
 public class SlotAcceptLaserFocus extends Slot {
 
@@ -21,9 +18,9 @@ public class SlotAcceptLaserFocus extends Slot {
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack stack) {
+	public boolean isItemValid(@Nonnull ItemStack stack) {
 
-		return stack != null && stack.getItem().equals(MFRThings.laserFocusItem);
+		return !stack.isEmpty() && stack.getItem().equals(MFRThings.laserFocusItem);
 	}
 
 	@Override

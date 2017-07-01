@@ -22,9 +22,11 @@ import powercrystals.minefactoryreloaded.core.IUseHandler;
 import powercrystals.minefactoryreloaded.core.IUseable;
 import powercrystals.minefactoryreloaded.core.MFRLiquidMover;
 
+import javax.annotation.Nonnull;
+
 public class DefaultUseHandler implements IUseHandler {
 	@Override
-	public boolean canUse(ItemStack bucket, EntityLivingBase entity, EnumHand hand) {
+	public boolean canUse(@Nonnull ItemStack bucket, EntityLivingBase entity, EnumHand hand) {
 
 		IAdvFluidContainerItem fluidHandler = (IAdvFluidContainerItem) bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 
@@ -34,18 +36,19 @@ public class DefaultUseHandler implements IUseHandler {
 		return fluidHandler.canPlaceInWorld();
 	}
 
+	@Nonnull
 	@Override
-	public ItemStack onTryUse(ItemStack bucket, World world, EntityLivingBase entity, EnumHand hand) {
+	public ItemStack onTryUse(@Nonnull ItemStack bucket, World world, EntityLivingBase entity, EnumHand hand) {
 		EntityPlayer player = entity instanceof EntityPlayer ? (EntityPlayer)entity : null;
 		if (world.isRemote) return bucket;
 		Item item = bucket.getItem();
 
-		ItemStack q = new ItemStack(Items.BUCKET, 1, 0);
+		@Nonnull ItemStack q = new ItemStack(Items.BUCKET, 1, 0);
 		IAdvFluidContainerItem fluidHandler = (IAdvFluidContainerItem) bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 		FluidStack liquid = fluidHandler.getTankProperties().length > 0 ? fluidHandler.getTankProperties()[0].getContents() : null;
 		if (liquid == null || liquid.amount <= 0) {
 			if (!fluidHandler.canBeFilledFromWorld()) return bucket;
-			ItemStack bucket2 = bucket.getCount() > 1 ? bucket.copy() : bucket;
+			@Nonnull ItemStack bucket2 = bucket.getCount() > 1 ? bucket.copy() : bucket;
 			IAdvFluidContainerItem fluidHandler2 = (IAdvFluidContainerItem) bucket2.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 			bucket2.setCount(1);
 			RayTraceResult objectPosition = ((IUseable)item).rayTrace(world, entity, false);
@@ -90,12 +93,12 @@ public class DefaultUseHandler implements IUseHandler {
 					if (world.setBlockState(pos, block.getDefaultState(), 3))
 					{
 						liquid = ((IFluidBlock)block).drain(world, pos, false);
-						ItemStack drop = bucket.splitStack(1);
+						@Nonnull ItemStack drop = bucket.splitStack(1);
 						drop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).drain(liquid.amount, true);
 						if (item.hasContainerItem(drop)) {
 							drop = item.getContainerItem(drop);
-							if (drop != null && drop.isItemStackDamageable() && drop.getItemDamage() > drop.getMaxDamage())
-								drop = null;
+							if (!drop.isEmpty() && drop.isItemStackDamageable() && drop.getItemDamage() > drop.getMaxDamage())
+								drop = ItemStack.EMPTY;
 						}
 						return drop;
 					}
@@ -106,7 +109,7 @@ public class DefaultUseHandler implements IUseHandler {
 	}
 
 	private boolean canEntityAct(World world, EntityLivingBase entity, BlockPos pos, EnumFacing side,
-			ItemStack item, boolean isPlace) {
+			@Nonnull ItemStack item, boolean isPlace) {
 		EntityPlayer player = (entity instanceof EntityPlayer) ? (EntityPlayer)entity : null;
 		return (player == null || (world.isBlockModifiable(player, pos) &&
 						player.canPlayerEdit(pos, side, item))) &&
@@ -115,19 +118,21 @@ public class DefaultUseHandler implements IUseHandler {
 	}
 
 	@Override
-	public int getMaxUseDuration(ItemStack item) {
+	public int getMaxUseDuration(@Nonnull ItemStack item) {
 		return 0;
 	}
 	@Override
-	public boolean isUsable(ItemStack item) {
+	public boolean isUsable(@Nonnull ItemStack item) {
 		return false;
 	}
 	@Override
-	public EnumAction useAction(ItemStack item) {
+	public EnumAction useAction(@Nonnull ItemStack item) {
 		return EnumAction.NONE;
 	}
+
+	@Nonnull
 	@Override
-	public ItemStack onUse(ItemStack item, EntityLivingBase entity, EnumHand hand) {
+	public ItemStack onUse(@Nonnull ItemStack item, EntityLivingBase entity, EnumHand hand) {
 		return item;
 	}
 }

@@ -1,40 +1,32 @@
 package powercrystals.minefactoryreloaded.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
-
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.WeightedRandom;
 
+import javax.annotation.Nonnull;
+import java.util.*;
+import java.util.Map.Entry;
+
 public class AutoEnchantmentHelper extends EnchantmentHelper
 {
-	public static ItemStack addRandomEnchantment(Random rand, ItemStack stack, int level)
+	public static @Nonnull ItemStack addRandomEnchantment(Random rand, @Nonnull ItemStack stack, int level)
 	{
 		return addRandomEnchantment(rand, stack, level, false);
 	}
 
-	public static ItemStack addRandomEnchantment(Random rand, ItemStack stack, int level, boolean invalid)
+	public static @Nonnull ItemStack addRandomEnchantment(Random rand, @Nonnull ItemStack stack, int level, boolean invalid)
 	{
-		if (stack == null)
+		if (stack.isEmpty())
 		{
-			return null;
+			return ItemStack.EMPTY;
 		}
-		ItemStack output = stack.splitStack(1);
+		@Nonnull ItemStack output = stack.splitStack(1);
 
 		List<EnchantmentData> enchantments = buildEnchantmentList(rand, output, level, !invalid);
 		if(enchantments == null)
@@ -80,7 +72,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper
 		return output;
 	}
 
-	private static void updateEnchantment(ItemStack stack, Enchantment enchantment, short newLevel)
+	private static void updateEnchantment(@Nonnull ItemStack stack, Enchantment enchantment, short newLevel)
 	{
 		NBTTagList tagList = stack.getTagCompound().getTagList("ench", 10);
 		for(int i = 0, e = tagList.tagCount(); i < e; ++i)
@@ -94,7 +86,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper
 		stack.getTagCompound().setTag("ench", tagList);
 	}
 
-	public static List<EnchantmentData> buildEnchantmentList(Random rand, ItemStack stack,
+	public static List<EnchantmentData> buildEnchantmentList(Random rand, @Nonnull ItemStack stack,
 			int level, boolean blockInvalid)
 	{
 		int itemEnchantability = stack.getItem().getItemEnchantability(stack);

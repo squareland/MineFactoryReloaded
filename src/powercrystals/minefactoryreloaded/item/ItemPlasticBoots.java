@@ -1,20 +1,21 @@
 package powercrystals.minefactoryreloaded.item;
 
-import static cofh.lib.util.helpers.ItemHelper.*;
-import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryArmor;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
+
+import javax.annotation.Nonnull;
+
+import static cofh.lib.util.helpers.ItemHelper.areItemsEqual;
+import static cofh.lib.util.helpers.ItemHelper.getItemFromStack;
+import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
 public class ItemPlasticBoots extends ItemFactoryArmor {
 
@@ -26,7 +27,7 @@ public class ItemPlasticBoots extends ItemFactoryArmor {
 	}
 
 	@Override
-	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
+	public void onArmorTick(World world, EntityPlayer player, @Nonnull ItemStack itemStack) {
 
 		l: if (areItemsEqual(this, plasticBootsItem)) {
 			if (!areItemsEqual(getItemFromStack(player.getItemStackFromSlot(EntityEquipmentSlot.HEAD)), plasticHelmetItem)) {

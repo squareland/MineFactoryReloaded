@@ -1,15 +1,8 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import cofh.core.util.CoreUtils;
 import cofh.core.fluid.FluidTankCore;
+import cofh.core.util.CoreUtils;
 import cofh.lib.util.helpers.ItemHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,7 +13,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.RemoteInventoryCrafting;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
@@ -28,6 +22,11 @@ import powercrystals.minefactoryreloaded.gui.client.GuiLiquiCrafter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerLiquiCrafter;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 // slots 0-8 craft grid, 9 craft grid template output, 10 output, 11-28 resources
 public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
@@ -129,7 +128,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		 * Checking
 		 */
 		for (int i = 11; i < 29; i++) {
-			ItemStack item = _inventory[i];
+			@Nonnull ItemStack item = _inventory[i];
 			if (item != null) {
 				int size = item.getCount();
 				for (ItemResourceTracker t : requiredItems) {
@@ -181,7 +180,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		// TODO: this stage needs broken apart; cloning into the <tt>craft</tt> object, then getCraftingResult, then call IRecipie.getRemainingItems
 		// afterwards we can then consume items and process the outputs correctly; extra outputs should be done after the main crafting output logic to ensure ordering consistency
 		for (int i = 11; i < 29; i++) {
-			ItemStack item = _inventory[i];
+			@Nonnull ItemStack item = _inventory[i];
 			if (item != null) {
 				for (ItemResourceTracker t : requiredItems) {
 					boolean fluid = t.fluid != null &&
@@ -194,11 +193,11 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 						if (item.getItem().hasContainerItem(item)) {
 							if (!fluid)
 								use = 1;
-							ItemStack container = item.getItem().getContainerItem(_inventory[i]);
+							@Nonnull ItemStack container = item.getItem().getContainerItem(_inventory[i]);
 							boolean nul = true;
 							l:
 							{
-								if (container == null)
+								if (container.isEmpty())
 									break l;
 								if (!container.isItemStackDamageable() ||
 										container.getItemDamage() <= container.getMaxDamage()) {
@@ -288,7 +287,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
+	public void setInventorySlotContents(int slot, @Nonnull ItemStack stack) {
 
 		_inventory[slot] = stack;
 		if (slot < 9)
@@ -296,10 +295,11 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		onFactoryInventoryChanged();
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack decrStackSize(int slot, int size) {
 
-		ItemStack result = super.decrStackSize(slot, size);
+		@Nonnull ItemStack result = super.decrStackSize(slot, size);
 		if (slot < 9)
 			calculateOutput();
 		onFactoryInventoryChanged();
@@ -331,7 +331,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
 		if (slot > 10)
 			return true;
@@ -339,7 +339,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		if (slot == 10)
 			return true;
@@ -373,13 +373,13 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
@@ -460,10 +460,11 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		return -1;
 	}
 
+	@Nonnull
 	private ItemStack findMatchingRecipe() {
 
 		for (int i = 0; i < 9; i++) {
-			craft.setInventorySlotContents(i, (_inventory[i] == null ? null : _inventory[i].copy()));
+			craft.setInventorySlotContents(i, (_inventory[i].isEmpty() ? ItemStack.EMPTY : _inventory[i].copy()));
 		}
 
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
@@ -477,7 +478,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		}
 
 		recipe = null;
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
@@ -498,7 +499,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 
 		if (outputs.size() != 0) {
 			NBTTagList dropItems = new NBTTagList();
-			for (ItemStack item : outputs) {
+			for (@Nonnull ItemStack item : outputs) {
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				item.writeToNBT(nbttagcompound1);
 				dropItems.appendTag(nbttagcompound1);
@@ -521,8 +522,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 			NBTTagList nbttaglist = tag.getTagList("OutItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0; ) {
 				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				ItemStack item = new ItemStack(nbttagcompound1);
-				if (item != null && item.getCount() > 0) {
+				@Nonnull ItemStack item = new ItemStack(nbttagcompound1);
+				if (!item.isEmpty() && item.getCount() > 0) {
 					drops.add(item);
 				}
 			}
@@ -532,7 +533,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 
 	private static class ItemResourceTracker {
 
-		public ItemResourceTracker(int s, ItemStack stack, int amt) {
+		public ItemResourceTracker(int s, @Nonnull ItemStack stack, int amt) {
 
 			slot = s;
 			item = stack;
@@ -547,7 +548,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
 		}
 
 		public FluidStack fluid;
-		public ItemStack item;
+		@Nonnull
+		public ItemStack item = ItemStack.EMPTY;
 		public int required;
 		public int found;
 		public int slot;

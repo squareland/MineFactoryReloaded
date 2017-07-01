@@ -27,30 +27,30 @@ public class ThermalExpansion extends Vanilla {
 
 	private static final String TE = "ThermalExpansion";
 	private static final String TF = "ThermalFoundation";
-	ItemStack conduitLiquid;
-	ItemStack tankBasic;
-	ItemStack tankReinforced;
-	ItemStack lamp;
-	ItemStack machineFrame;
-	ItemStack pneumaticServo;
-	ItemStack powerCoilElectrum;
-	ItemStack powerCoilGold;
-	ItemStack powerCoilSilver;
-	ItemStack tesseractFrameFull;
-	ItemStack strongBox;
-	ItemStack strongBoxBasic;
-	ItemStack sulfur;
-	ItemStack multimeter;
-	ItemStack invarAxe;
-	ItemStack invarSword;
-	ItemStack invarPickaxe;
-	ItemStack invarShovel;
-	ItemStack dynamoSteam;
-	ItemStack tesseract;
-	ItemStack tesseractFrameEmpty;
-	ItemStack cellResonant;
-	ItemStack cellRedstone;
-	ItemStack igniter;
+	@Nonnull ItemStack conduitLiquid;
+	@Nonnull ItemStack tankBasic;
+	@Nonnull ItemStack tankReinforced;
+	@Nonnull ItemStack lamp;
+	@Nonnull ItemStack machineFrame;
+	@Nonnull ItemStack pneumaticServo;
+	@Nonnull ItemStack powerCoilElectrum;
+	@Nonnull ItemStack powerCoilGold;
+	@Nonnull ItemStack powerCoilSilver;
+	@Nonnull ItemStack tesseractFrameFull;
+	@Nonnull ItemStack strongBox;
+	@Nonnull ItemStack strongBoxBasic;
+	@Nonnull ItemStack sulfur;
+	@Nonnull ItemStack multimeter;
+	@Nonnull ItemStack invarAxe;
+	@Nonnull ItemStack invarSword;
+	@Nonnull ItemStack invarPickaxe;
+	@Nonnull ItemStack invarShovel;
+	@Nonnull ItemStack dynamoSteam;
+	@Nonnull ItemStack tesseract;
+	@Nonnull ItemStack tesseractFrameEmpty;
+	@Nonnull ItemStack cellResonant;
+	@Nonnull ItemStack cellRedstone;
+	@Nonnull ItemStack igniter;
 
 	@Override
 	protected void gatherItems() {
@@ -719,7 +719,7 @@ public class ThermalExpansion extends Vanilla {
 		}));
 
 		{
-			ItemStack pipe = stack(plasticPipeBlock);
+			@Nonnull ItemStack pipe = stack(plasticPipeBlock);
 			addRecipe(ShapelessRecipe(stack(rednetCableBlock, 5), pipe, pipe, pipe, pipe, pipe, "dustRedstone", "dustRedstone"));
 		}
 

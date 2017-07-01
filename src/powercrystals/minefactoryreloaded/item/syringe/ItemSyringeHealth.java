@@ -10,6 +10,8 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
+
 public class ItemSyringeHealth extends ItemSyringe
 {
 
@@ -20,13 +22,13 @@ public class ItemSyringeHealth extends ItemSyringe
 		setRegistryName(MineFactoryReloadedCore.modId, "syringe_health");
 	}
 	@Override
-	public boolean canInject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		return entity.getHealth() < entity.getMaxHealth();
 	}
 	
 	@Override
-	public boolean inject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		entity.heal(5);
 		return true;

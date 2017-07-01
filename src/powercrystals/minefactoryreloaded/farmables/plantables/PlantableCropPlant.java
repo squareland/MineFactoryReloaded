@@ -8,6 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
 
+import javax.annotation.Nonnull;
+
 public class PlantableCropPlant extends PlantableStandard {
 
 	public PlantableCropPlant(Item seed, Block plant) {
@@ -20,7 +22,7 @@ public class PlantableCropPlant extends PlantableStandard {
 		super(seed, plant, meta, new ReplacementBlock(plant) {
 
 			@Override
-			public boolean replaceBlock(World world, BlockPos pos, ItemStack stack) {
+			public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
 				Block ground = world.getBlockState(pos.down()).getBlock();
 				if (ground.equals(Blocks.GRASS) || ground.equals(Blocks.DIRT)) {
@@ -33,7 +35,7 @@ public class PlantableCropPlant extends PlantableStandard {
 	}
 	
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack) {
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
 		if(!world.isAirBlock(pos))
 			return false;

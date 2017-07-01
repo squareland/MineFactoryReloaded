@@ -4,9 +4,6 @@ import cofh.api.block.IBlockConfigGui;
 import cofh.api.block.IBlockInfo;
 import cofh.api.tileentity.ITileInfo;
 import cofh.lib.util.helpers.ServerHelper;
-
-import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.state.IBlockState;
@@ -17,20 +14,22 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInfo;
 import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
 
 public class ItemRedNetMeter extends ItemMulti {
 
@@ -46,7 +45,7 @@ public class ItemRedNetMeter extends ItemMulti {
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+	public boolean itemInteractionForEntity(@Nonnull ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
 		if (stack.getItemDamage() != 2)
 			return false;
 		player.swingArm(hand);
@@ -66,7 +65,7 @@ public class ItemRedNetMeter extends ItemMulti {
 		return r ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
 
-	public boolean doItemThing(ItemStack stack, EntityPlayer player, World world,
+	public boolean doItemThing(@Nonnull ItemStack stack, EntityPlayer player, World world,
 			BlockPos pos, EnumFacing hitSide, float hitX, float hitY, float hitZ) {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();

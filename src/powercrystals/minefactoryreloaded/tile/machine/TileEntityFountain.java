@@ -26,6 +26,8 @@ import powercrystals.minefactoryreloaded.item.ItemUpgrade;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityFountain extends TileEntityFactoryPowered {
 
 	private IHarvestManager _fillingManager;
@@ -214,9 +216,9 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack != null) {
+		if (!stack.isEmpty()) {
 			if (slot == 0) {
 				return isUsableAugment(stack);
 			}
@@ -225,13 +227,13 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return !_reverse;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return _reverse;
 	}

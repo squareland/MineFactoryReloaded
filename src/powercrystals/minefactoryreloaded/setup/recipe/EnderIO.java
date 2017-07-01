@@ -1,10 +1,9 @@
 package powercrystals.minefactoryreloaded.setup.recipe;
 
-import static cofh.lib.util.helpers.ItemHelper.*;
-import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
-
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -14,18 +13,18 @@ import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
-
-import java.util.Collections;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
+import java.util.Collections;
+
+import static cofh.lib.util.helpers.ItemHelper.*;
+import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
 public class EnderIO extends Vanilla {
 
@@ -107,24 +106,28 @@ public class EnderIO extends Vanilla {
 		combustionGen = stackForBlock("blockCombustionGenerator");
 	}
 
+	@Nonnull
 	private ItemStack stackFor(String itemName) {
 
 		return stackFor(itemName, 0);
 	}
 
+	@Nonnull
 	private ItemStack stackFor(String itemName, int damage) {
 
 		return new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(EIO, itemName)), 1, damage);
 	}
 
+	@Nonnull
 	private ItemStack stackForBlock(String blockName) {
 
 		return stackForBlock(blockName, 0);
 	}
 
+	@Nonnull
 	private ItemStack stackForBlock(String blockName, int damage) {
 
-		return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation(EIO, blockName)), 1, damage);
+		return new ItemStack(MFRUtil.findBlock(EIO, blockName), 1, damage);
 	}
 
 	@Override
@@ -741,7 +744,7 @@ public class EnderIO extends Vanilla {
 		}));
 
 		{
-			ItemStack pipe = stack(plasticPipeBlock);
+			@Nonnull ItemStack pipe = stack(plasticPipeBlock);
 			addRecipe(ShapelessRecipe(stack(rednetCableBlock, 5), pipe, pipe, pipe, pipe, pipe, redstone, redstone));
 		}
 

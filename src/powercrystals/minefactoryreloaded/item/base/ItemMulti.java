@@ -1,12 +1,12 @@
 package powercrystals.minefactoryreloaded.item.base;
 
-import java.util.Arrays;
-import java.util.List;
-
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
+import javax.annotation.Nonnull;
 
 public class ItemMulti extends ItemFactory {
 
@@ -42,7 +42,7 @@ public class ItemMulti extends ItemFactory {
 		return _names.get(meta);
 	}
 
-	public void getSubItems(Item item, List<ItemStack> subTypes) {
+	public void getSubItems(Item item, NonNullList<ItemStack> subTypes) {
 
 		for (int i = 0, e = _indicies.size(); i < e; ++i) {
 			subTypes.add(new ItemStack(item, 1, _indicies.get(i)));
@@ -56,7 +56,7 @@ public class ItemMulti extends ItemFactory {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getUnlocalizedName(@Nonnull ItemStack stack) {
 
 		return getName(getUnlocalizedName(), _names.get(stack.getItemDamage()));
 	}

@@ -1,30 +1,28 @@
 package powercrystals.minefactoryreloaded.entity;
 
 import cofh.lib.util.helpers.MathHelper;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.MoverType;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraftforge.fml.relauncher.Side;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
+import javax.annotation.Nonnull;
 import java.util.Iterator;
 
 public class EntityFishingRod extends EntityThrowable {
@@ -109,9 +107,9 @@ public class EntityFishingRod extends EntityThrowable {
 									generateLootForPools(rand, builder.build()).iterator();
 
 							while (iterator.hasNext()) {
-								ItemStack stack = (ItemStack) iterator.next();
-								ItemStack smelted;
-								if (rand.nextInt(30) == 0 && ((smelted = FurnaceRecipes.instance().getSmeltingResult(stack)) != null)) {
+								@Nonnull ItemStack stack = (ItemStack) iterator.next();
+								@Nonnull ItemStack smelted;
+								if (rand.nextInt(30) == 0 && (!(smelted = FurnaceRecipes.instance().getSmeltingResult(stack)).isEmpty())) {
 									stack = smelted;
 								}
 								EntityItem e = new EntityItem(world, x, y, z, stack);

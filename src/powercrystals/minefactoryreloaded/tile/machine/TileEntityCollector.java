@@ -1,21 +1,21 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-
 import powercrystals.minefactoryreloaded.core.IEntityCollidable;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityCollector extends TileEntityFactoryInventory implements IEntityCollidable {
 
-	protected boolean canStuff;
+	private boolean canStuff;
 
 	public TileEntityCollector() {
 
@@ -31,26 +31,27 @@ public class TileEntityCollector extends TileEntityFactoryInventory implements I
 			addToChests((EntityItem) entity);
 	}
 
-	protected void addToChests(EntityItem i) {
+	private void addToChests(EntityItem i) {
 
 		if (i.isDead)
 			return;
 
-		ItemStack s = addToChests(i.getEntityItem());
-		if (s == null) {
+		@Nonnull ItemStack s = addToChests(i.getEntityItem());
+		if (s.isEmpty()) {
 			i.setDead();
 			return;
 		}
 		i.setEntityItemStack(s);
 	}
 
-	protected ItemStack addToChests(ItemStack s) {
+	@Nonnull
+	private ItemStack addToChests(@Nonnull ItemStack s) {
 
 		s = UtilInventory.dropStack(this, s,
 				MFRUtil.directionsWithoutConveyors(world, pos), null);
-		if (canStuff & failedDrops == null & s != null) {
+		if (canStuff & failedDrops == null & !s.isEmpty()) {
 			doDrop(s);
-			s = null;
+			s = ItemStack.EMPTY;
 		}
 		return s;
 	}

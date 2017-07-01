@@ -1,12 +1,12 @@
 package powercrystals.minefactoryreloaded.api;
 
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Defines a fruit entry for the Fruit Picker.
@@ -19,7 +19,7 @@ public interface IFactoryFruit {
 	/**
 	 * @return The block this fruit has in the world.
 	 */
-	public Block getPlant();
+	Block getPlant();
 
 	/**
 	 * Used to determine if this fruit can be picked (is it ripe yet, etc)
@@ -31,14 +31,14 @@ public interface IFactoryFruit {
 	 *
 	 * @return True if the fruit can be picked
 	 */
-	public boolean canBePicked(World world, BlockPos pos);
+	boolean canBePicked(World world, BlockPos pos);
 
 	/**
 	 * @deprecated This method is no longer called. ReplacementBlock now handles
 	 *             interaction.
 	 */
 	@Deprecated
-	public boolean breakBlock();
+	boolean breakBlock();
 
 	/**
 	 * Called by the Fruit Picker to determine what block to replace the picked
@@ -51,7 +51,7 @@ public interface IFactoryFruit {
 	 *
 	 * @return The block to replace the fruit block with, or null for air.
 	 */
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos);
+	ReplacementBlock getReplacementBlock(World world, BlockPos pos);
 
 	/**
 	 * Called by the Fruit Picker to determine what drops to generate. At the
@@ -62,6 +62,6 @@ public interface IFactoryFruit {
 	 * @param pos
 	 *            The position of the fruit
 	 */
-	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos);
+	List<ItemStack> getDrops(World world, Random rand, BlockPos pos);
 
 }

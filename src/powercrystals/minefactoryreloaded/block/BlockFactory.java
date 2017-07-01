@@ -3,10 +3,10 @@ package powercrystals.minefactoryreloaded.block;
 import codechicken.lib.raytracer.IndexedCuboid6;
 import codechicken.lib.raytracer.RayTracer;
 import cofh.api.block.IDismantleable;
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
 import cofh.core.render.hitbox.ICustomHitBox;
 import cofh.core.render.hitbox.RenderHitbox;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -32,7 +32,6 @@ import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -47,6 +46,7 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -99,7 +99,8 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack) {
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nonnull
+			ItemStack stack) {
 	}
 
 	@Override
@@ -123,7 +124,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack)
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, @Nonnull ItemStack stack)
 	{
 		TileEntity te = getTile(world, pos);
 
@@ -136,7 +137,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@Override
 	public final boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float xOffset, float yOffset, float zOffset)
 	{
-		ItemStack heldItem = player.getHeldItem(hand);
+		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
 		PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(xOffset, yOffset, zOffset));
 		if (MinecraftForge.EVENT_BUS.post(e) || e.getResult() == Result.DENY || e.getUseBlock() == Result.DENY)
 			return false;
@@ -147,14 +148,14 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 
 	protected void activationOffsets(float xOffset, float yOffset, float zOffset) {}
 
-	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem)
+	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem)
 	{
 		TileEntity te = world.getTileEntity(pos);
 		if (te == null)
 		{
 			return false;
 		}
-		if (heldItem != null && te instanceof ITankContainerBucketable)
+		if (!heldItem.isEmpty() && te instanceof ITankContainerBucketable)
 		{
 			if(heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
 			{
@@ -186,6 +187,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		return true;
 	}
 
+	@Nonnull
 	@Override
 	public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnBlock)
 	{
@@ -193,12 +195,13 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 
 		world.setBlockToAir(pos);
 		if (!returnBlock)
-			for (ItemStack item : list) {
+			for (@Nonnull ItemStack item : list) {
 				UtilInventory.dropStackInAir(world, pos, item);
 			}
 		return list;
 	}
 
+	@Nonnull
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
 	{
@@ -206,7 +209,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 
 		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
-		ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1,
+		@Nonnull ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1,
 				damageDropped(state));
 
 		TileEntity te = getTile(world, pos);

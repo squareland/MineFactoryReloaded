@@ -9,6 +9,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
+import javax.annotation.Nonnull;
+
 public class ItemNeedlegunAmmoFire extends ItemNeedlegunAmmoBlock {
 
 	public ItemNeedlegunAmmoFire() {
@@ -18,7 +20,7 @@ public class ItemNeedlegunAmmoFire extends ItemNeedlegunAmmoBlock {
 	}
 
 	@Override
-	public boolean onHitEntity(ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
+	public boolean onHitEntity(@Nonnull ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
 		hit.setFire(10);
 		super.onHitEntity(stack, owner, hit, distance);
 		return true;

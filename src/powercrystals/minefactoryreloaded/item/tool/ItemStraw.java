@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
-import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
@@ -31,6 +28,9 @@ import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
+import javax.annotation.Nonnull;
+import java.util.Map;
+
 public class ItemStraw extends ItemFactoryTool {
 
 	public ItemStraw() {
@@ -40,8 +40,9 @@ public class ItemStraw extends ItemFactoryTool {
 		setRegistryName(MineFactoryReloadedCore.modId, "straw");
 	}
 
+	@Nonnull
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
+	public ItemStack onItemUseFinish(@Nonnull ItemStack stack, World world, EntityLivingBase entity) {
 
 		if (!world.isRemote || !(entity instanceof EntityPlayer)) {
 			EntityPlayer player = (EntityPlayer) entity;
@@ -85,13 +86,13 @@ public class ItemStraw extends ItemFactoryTool {
 	}
 
 	@Override
-	public int getMaxItemUseDuration(ItemStack stack) {
+	public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
 
 		return 32;
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
+	public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
 
 		return EnumAction.DRINK;
 	}
@@ -99,7 +100,7 @@ public class ItemStraw extends ItemFactoryTool {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		ItemStack stack = player.getHeldItem(hand);
+		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		RayTraceResult result = rayTrace(world, player, true);
 		Map<String, ?> map = MFRRegistry.getLiquidDrinkHandlers();

@@ -4,11 +4,7 @@ import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
 import cofh.asm.relauncher.Implementable;
 import cofh.lib.util.helpers.BlockHelper;
-
-import java.util.Random;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFire;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -17,18 +13,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -37,6 +28,9 @@ import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 @Implementable("buildcraft.api.tools.IToolWrench")
 public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer {
@@ -53,7 +47,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world,
 			BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 
-		ItemStack stack = player.getHeldItem(hand);
+		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
@@ -93,24 +87,24 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
+	public boolean isUsable(@Nonnull ItemStack item, EntityLivingBase user, BlockPos pos) {
 
 		return true;
 	}
 
 	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
+	public void toolUsed(@Nonnull ItemStack item, EntityLivingBase user, BlockPos pos) {
 
 	}
 
 	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, Entity ent) {
+	public boolean isUsable(@Nonnull ItemStack item, EntityLivingBase user, Entity ent) {
 
 		return true;
 	}
 
 	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, Entity ent) {
+	public void toolUsed(@Nonnull ItemStack item, EntityLivingBase user, Entity ent) {
 
 	}
 
@@ -126,13 +120,13 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+	public boolean doesSneakBypassUse(@Nonnull ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 
 		return true;
 	}
 
 	@Override
-	public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
+	public boolean canHarvestBlock(IBlockState state, @Nonnull ItemStack stack) {
 
 		if (state == null)
 			return false;
@@ -153,7 +147,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	public float getStrVsBlock(ItemStack stack, IBlockState state) {
+	public float getStrVsBlock(@Nonnull ItemStack stack, IBlockState state) {
 
 		if (state == null)
 			return 0;
@@ -167,7 +161,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
+	public boolean onBlockStartBreak(@Nonnull ItemStack stack, BlockPos pos, EntityPlayer player) {
 
 		IBlockState state = player.world.getBlockState(pos);
 		if (state.getBlockHardness(player.world, pos) > 2.9f) {
@@ -191,7 +185,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	protected int getWeaponDamage(ItemStack stack) {
+	protected int getWeaponDamage(@Nonnull ItemStack stack) {
 
 		return 4;
 	}

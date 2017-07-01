@@ -1,21 +1,20 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Map;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.gui.client.GuiEnchantmentRouter;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerEnchantmentRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
+import java.util.Map;
 
 public class TileEntityEnchantmentRouter extends TileEntityItemRouter {
 
@@ -28,13 +27,13 @@ public class TileEntityEnchantmentRouter extends TileEntityItemRouter {
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected int[] getRoutesForItem(ItemStack stack) {
+	protected int[] getRoutesForItem(@Nonnull ItemStack stack) {
 
 		int[] routeWeights = new int[_outputDirections.length];
 
 		Map stackEnchants = EnchantmentHelper.getEnchantments(stack);
 		// return false if the item is unenchanted
-		if (stackEnchants == null || stackEnchants.isEmpty()) {
+		if (stackEnchants.isEmpty()) {
 			for (int i = 0; i < routeWeights.length; i++) {
 				routeWeights[i] = 0;
 			}

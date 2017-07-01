@@ -1,15 +1,13 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
@@ -19,6 +17,8 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerPlanter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerUpgradeable;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityPlanter extends TileEntityFactoryPowered {
 
@@ -55,10 +55,10 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		ItemStack match = _inventory[getPlanterSlotIdFromBp(bp)];
+		@Nonnull ItemStack match = _inventory[getPlanterSlotIdFromBp(bp)];
 
 		for (int stackIndex = 10; stackIndex <= 25; stackIndex++) {
-			ItemStack availableStack = getStackInSlot(stackIndex);
+			@Nonnull ItemStack availableStack = getStackInSlot(stackIndex);
 
 			// skip planting attempt if there's no stack in that slot,
 			// or if there's a template item that's not matched
@@ -116,9 +116,9 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 		keepLastItem = tag.getBoolean("keepLastItem");
 	}
 
-	protected boolean stacksEqual(ItemStack a, ItemStack b) {
+	protected boolean stacksEqual(@Nonnull ItemStack a, @Nonnull ItemStack b) {
 
-		if (a == null | b == null ||
+		if (a.isEmpty() || b.isEmpty() ||
 				(!a.getItem().equals(b.getItem())) ||
 				(a.getItemDamage() != b.getItemDamage()) ||
 				a.hasTagCompound() != b.hasTagCompound()) {
@@ -200,9 +200,9 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack != null) {
+		if (!stack.isEmpty()) {
 			if (slot > 9) {
 				IFactoryPlantable p = MFRRegistry.getPlantables().get(stack.getItem());
 				return p != null && p.canBePlanted(stack, false);
@@ -214,7 +214,7 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		if (slot >= 10) return true;
 		return false;

@@ -28,6 +28,7 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntitySewer extends TileEntityFactoryInventory {
@@ -168,19 +169,19 @@ public class TileEntitySewer extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return slot == 0 && isUsableAugment(itemstack);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

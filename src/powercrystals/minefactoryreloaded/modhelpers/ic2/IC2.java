@@ -1,34 +1,31 @@
 package powercrystals.minefactoryreloaded.modhelpers.ic2;
 
 import cofh.asm.relauncher.Strippable;
+import ic2.api.item.IC2Items;
 import ic2.api.recipe.IRecipeInput;
+import ic2.api.recipe.ISemiFluidFuelManager.BurnProperty;
+import ic2.api.recipe.Recipes;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import ic2.api.item.IC2Items;
-import ic2.api.recipe.ISemiFluidFuelManager.BurnProperty;
-import ic2.api.recipe.Recipes;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,7 +40,7 @@ public class IC2 {
 	public static void postLoad(FMLPostInitializationEvent evt) {
 
 		ItemArmor boots = net.minecraft.init.Items.LEATHER_BOOTS;
-		ItemStack booties = new ItemStack(boots, 64, 0);
+		@Nonnull ItemStack booties = new ItemStack(boots, 64, 0);
 		boots.setColor(booties, 0x3479F2);
 		OreDictionary.registerOre("greggy_greg_do_please_kindly_stuff_a_sock_in_it", booties);
 	}
@@ -53,13 +50,13 @@ public class IC2 {
 	public void load(FMLInitializationEvent evt) {
 
 		try {
-			ItemStack crop = IC2Items.getItem("crop");
-			ItemStack rubber = IC2Items.getItem("rubber").copy();
-			ItemStack rubberSapling = IC2Items.getItem("rubberSapling");
-			ItemStack rubberLeaves = IC2Items.getItem("rubberLeaves");
-			ItemStack rubberWood = IC2Items.getItem("rubberWood");
-			ItemStack stickyResin = IC2Items.getItem("resin");
-			ItemStack plantBall = IC2Items.getItem("plantBall");
+			@Nonnull ItemStack crop = IC2Items.getItem("crop");
+			@Nonnull ItemStack rubber = IC2Items.getItem("rubber").copy();
+			@Nonnull ItemStack rubberSapling = IC2Items.getItem("rubberSapling");
+			@Nonnull ItemStack rubberLeaves = IC2Items.getItem("rubberLeaves");
+			@Nonnull ItemStack rubberWood = IC2Items.getItem("rubberWood");
+			@Nonnull ItemStack stickyResin = IC2Items.getItem("resin");
+			@Nonnull ItemStack plantBall = IC2Items.getItem("plantBall");
 
 			if (rubberSapling != null) {
 				MFRRegistry.registerPlantable(new PlantableSapling(rubberSapling.getItem(),
@@ -78,7 +75,7 @@ public class IC2 {
 				MFRRegistry.registerFertilizable(resin);
 			}
 
-			ItemStack fertilizer = IC2Items.getItem("fertilizer");
+			@Nonnull ItemStack fertilizer = IC2Items.getItem("fertilizer");
 			if (fertilizer != null) {
 				MFRRegistry.registerFertilizer(new FertilizerStandard(fertilizer.getItem(), fertilizer.getItemDamage()));
 			}
@@ -97,12 +94,12 @@ public class IC2 {
 					Character.valueOf('L'), new ItemStack(MFRThings.rubberLeavesBlock)
 			});
 
-			ItemStack item = new ItemStack(MFRThings.rubberSaplingBlock);
+			@Nonnull ItemStack item = new ItemStack(MFRThings.rubberSaplingBlock);
 			rubber.setCount(1);
 			try {
 				Recipes.extractor.addRecipe(
 						new IRecipeInput() {
-							@Override public boolean matches(ItemStack itemStack) {
+							@Override public boolean matches(@Nonnull ItemStack itemStack) {
 								return itemStack.getItem() == Item.getItemFromBlock(MFRThings.rubberSaplingBlock);
 							}
 							@Override public int getAmount() { return 1; }

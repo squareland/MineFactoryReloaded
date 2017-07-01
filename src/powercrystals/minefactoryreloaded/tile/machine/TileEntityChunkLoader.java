@@ -26,6 +26,7 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.Set;
@@ -472,13 +473,13 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return !unableToRequestTicket;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

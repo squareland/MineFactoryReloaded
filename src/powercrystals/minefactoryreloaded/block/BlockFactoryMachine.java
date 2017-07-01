@@ -1,10 +1,6 @@
 package powercrystals.minefactoryreloaded.block;
 
 import cofh.core.init.CoreProps;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
@@ -20,14 +16,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -38,8 +33,8 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.core.IRotateableTile;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.MachineStateMapper;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.tileentity.LaserDrillPrechargerRenderer;
 import powercrystals.minefactoryreloaded.render.tileentity.LaserDrillRenderer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
@@ -49,6 +44,10 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrillPrecharger;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode {
 
@@ -136,10 +135,10 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 					if (!factoryInv.shouldDropSlotWhenBroken(i))
 						continue;
 
-				ItemStack itemstack = inventory.getStackInSlot(i);
-				if (itemstack == null)
+				@Nonnull ItemStack itemstack = inventory.getStackInSlot(i);
+				if (itemstack.isEmpty())
 					continue;
-				inventory.setInventorySlotContents(i, null);
+				inventory.setInventorySlotContents(i, ItemStack.EMPTY);
 				if (list != null) {
 					list.add(itemstack);
 				} else
@@ -148,7 +147,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		}
 	}
 
-	private void dropStack(World world, BlockPos pos, ItemStack itemstack) {
+	private void dropStack(World world, BlockPos pos, @Nonnull ItemStack itemstack) {
 
 		do {
 			if (itemstack.getCount() <= 0)
@@ -189,8 +188,8 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	@Override
 	public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnBlock) {
 
-		ArrayList<ItemStack> list = new ArrayList<ItemStack>(1);
-		ItemStack machine = new ItemStack(getItemDropped(state, world.rand, 0),	1, damageDropped(state));
+		ArrayList<ItemStack> list = new ArrayList<>(1);
+		@Nonnull ItemStack machine = new ItemStack(getItemDropped(state, world.rand, 0),	1, damageDropped(state));
 		list.add(machine);
 		TileEntity te = getTile(world, pos);
 		if (te instanceof TileEntityBase) {
@@ -206,7 +205,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		}
 		world.setBlockToAir(pos);
 		if (!returnBlock)
-			for (ItemStack stack : list)
+			for (@Nonnull ItemStack stack : list)
 				dropStack(world, pos, stack);
 		return list;
 	}
@@ -218,7 +217,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, @Nonnull ItemStack stack) {
 
 		super.onBlockPlacedBy(world, pos, state, entity, stack);
 		if (entity != null) {
@@ -276,7 +275,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer entityplayer, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	public boolean activated(World world, BlockPos pos, EntityPlayer entityplayer, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
 
 		if (super.activated(world, pos, entityplayer, side, hand, heldItem))
 			return true;
@@ -292,7 +291,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 				}
 				if (heldItem.getCount() <= 0) {
 					EntityEquipmentSlot slot = hand == EnumHand.OFF_HAND ? EntityEquipmentSlot.OFFHAND : EntityEquipmentSlot.MAINHAND;
-					entityplayer.setItemStackToSlot(slot, null);
+					entityplayer.setItemStackToSlot(slot, ItemStack.EMPTY);
 				}
 				return true;
 			}

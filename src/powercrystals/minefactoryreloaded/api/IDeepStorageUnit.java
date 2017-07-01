@@ -2,15 +2,17 @@ package powercrystals.minefactoryreloaded.api;
 
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public interface IDeepStorageUnit {
 
 	/**
-	 * @return A populated ItemStack with stackSize for the full amount of
+	 * @return A populated @Nonnull ItemStack with stackSize for the full amount of
 	 *         materials in the DSU. <br>
 	 *         May have a stackSize > getMaxStackSize(). May have a stackSize of
 	 *         0 (indicating locked contents).
 	 */
-	ItemStack getStoredItemType();
+	@Nonnull ItemStack getStoredItemType();
 
 	/**
 	 * Sets the total amount of the item currently being stored, or zero if all
@@ -24,7 +26,7 @@ public interface IDeepStorageUnit {
 	 * <p>
 	 * Will overwrite any existing stored items.
 	 */
-	void setStoredItemType(ItemStack type, int amount);
+	void setStoredItemType(@Nonnull ItemStack type, int amount);
 
 	/**
 	 * @return The maximum number of items the DSU can hold. <br>

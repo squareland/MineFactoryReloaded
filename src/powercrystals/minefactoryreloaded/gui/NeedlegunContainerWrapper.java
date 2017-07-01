@@ -6,19 +6,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 public class NeedlegunContainerWrapper implements IInventory
 {
+	@Nonnull
 	private ItemStack _stack;
 
-	public NeedlegunContainerWrapper(ItemStack stack)
+	public NeedlegunContainerWrapper(@Nonnull ItemStack stack)
 	{
 		_stack = stack;
 		if (stack.getTagCompound() == null)
 			stack.setTagCompound(new NBTTagCompound());
 	}
 
+	@Nonnull
 	public ItemStack getStack()
 	{
 		return _stack;
@@ -30,10 +32,11 @@ public class NeedlegunContainerWrapper implements IInventory
 		return 1;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getStackInSlot(int i)
 	{
-		if(_stack.getTagCompound().getCompoundTag("ammo") == null || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
+		if(!_stack.getTagCompound().hasKey("ammo") || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
 		{
 			return ItemStack.EMPTY;
 		}
@@ -43,15 +46,16 @@ public class NeedlegunContainerWrapper implements IInventory
 		}
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack decrStackSize(int i, int j)
 	{
-		if(_stack.getTagCompound().getCompoundTag("ammo") == null || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
+		if(!_stack.getTagCompound().hasKey("ammo") || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
 		{
 			return ItemStack.EMPTY;
 		}
-		ItemStack s = new ItemStack(_stack.getTagCompound().getCompoundTag("ammo"));
-		ItemStack r = s.splitStack(j);
+		@Nonnull ItemStack s = new ItemStack(_stack.getTagCompound().getCompoundTag("ammo"));
+		@Nonnull ItemStack r = s.splitStack(j);
 		if(s.getCount() <= 0)
 		{
 			_stack.getTagCompound().setTag("ammo", new NBTTagCompound());
@@ -65,7 +69,7 @@ public class NeedlegunContainerWrapper implements IInventory
 		return r;
 	}
 
-	@Nullable
+	@Nonnull
 	@Override
 	public ItemStack removeStackFromSlot(int index)
 	{
@@ -73,7 +77,7 @@ public class NeedlegunContainerWrapper implements IInventory
 	}
 
 	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack)
+	public void setInventorySlotContents(int i, @Nonnull ItemStack itemstack)
 	{
 		if(itemstack.isEmpty())
 		{
@@ -132,7 +136,7 @@ public class NeedlegunContainerWrapper implements IInventory
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack)
+	public boolean isItemValidForSlot(int i, @Nonnull ItemStack itemstack)
 	{
 		return true;
 	}

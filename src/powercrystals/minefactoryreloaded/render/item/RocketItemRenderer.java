@@ -15,6 +15,7 @@ import net.minecraftforge.common.model.TRSRTransformation;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.entity.EntityRocketRenderer;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 public class RocketItemRenderer extends BaseItemRenderer {
@@ -40,7 +41,7 @@ public class RocketItemRenderer extends BaseItemRenderer {
 	}
 
 	@Override
-	protected void drawModel(CCRenderState ccrs, ItemStack stack) {
+	protected void drawModel(CCRenderState ccrs, @Nonnull ItemStack stack) {
 
 		TextureUtils.changeTexture(EntityRocketRenderer.rocket);
 		ccrs.startDrawing(4, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);

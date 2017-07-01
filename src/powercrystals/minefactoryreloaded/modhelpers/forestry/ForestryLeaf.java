@@ -1,8 +1,5 @@
 package powercrystals.minefactoryreloaded.modhelpers.forestry;
 
-import cofh.asm.relauncher.Strippable;
-import cofh.asm.relauncher.Substitutable;
-
 import forestry.api.arboriculture.EnumGermlingType;
 import forestry.api.arboriculture.ITree;
 import forestry.api.arboriculture.ITreeRoot;
@@ -10,12 +7,6 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IFruitBearer;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.IPollinatable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,13 +14,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.FertilizerType;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
 import powercrystals.minefactoryreloaded.api.IFactoryFruit;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit, IFactoryFertilizable
 {
@@ -94,7 +90,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		float modifier = 1f;
 		if (settings.get("silkTouch") == Boolean.TRUE)
 		{
-			ItemStack item = new ItemStack(_item);
+			@Nonnull ItemStack item = new ItemStack(_item);
 			NBTTagCompound tag = new NBTTagCompound();
 			tree.writeToNBT(tag);
 			item.setTagCompound(tag);
@@ -154,8 +150,8 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 			if (fruit.hasFruit())
 			{
 				//int period = tree.getGenome().getFruitProvider().getRipeningPeriod();
-				//ItemStack[] o = tree.produceStacks(world, pos, (int)(fruit.getRipeness() * period + 0.1f));
-				prod.addAll(fruit.pickFruit(null));
+				//@Nonnull ItemStack[] o = tree.produceStacks(world, pos, (int)(fruit.getRipeness() * period + 0.1f));
+				prod.addAll(fruit.pickFruit(ItemStack.EMPTY));
 			}
 		}
 	}

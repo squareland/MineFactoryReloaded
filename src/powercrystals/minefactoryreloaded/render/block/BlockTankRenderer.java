@@ -21,6 +21,7 @@ import powercrystals.minefactoryreloaded.block.fluid.BlockTank;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.tank.TileEntityTank;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -136,7 +137,7 @@ public class BlockTankRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public List<BakedQuad> bakeItemQuads(EnumFacing face, ItemStack stack) {
+	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
 
 		if (face == null) {
 			List<BakedQuad> quads = new ArrayList<>();

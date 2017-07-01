@@ -1,10 +1,5 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
@@ -13,7 +8,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiLiquidRouter;
@@ -21,6 +19,7 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerLiquidRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
@@ -164,7 +163,7 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 		int[] routeWeights = new int[6];
 
 		for (int i = 0; i < 6; i++) {
-			ItemStack stack = _inventory[i];
+			@Nonnull ItemStack stack = _inventory[i];
 			Item item = stack != null ? stack.getItem() : null;
 			if (item != null &&
 					resource.isFluidEqual(MFRUtil.getFluidContents(_inventory[i]))) {
@@ -227,13 +226,13 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}

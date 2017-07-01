@@ -27,6 +27,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.world.GrindingWorldServer;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
@@ -131,7 +132,7 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 					IFactoryGrindable r = MFRRegistry.getGrindables().get(e.getClass());
 					List<MobDrop> drops = r.grind(e.world, e, getRandom());
 					if (drops != null && drops.size() > 0 && WeightedRandom.getTotalWeight(drops) > 0) {
-						ItemStack drop = WeightedRandom.getRandomItem(_rand, drops).getStack();
+						@Nonnull ItemStack drop = WeightedRandom.getRandomItem(_rand, drops).getStack();
 						doDrop(drop);
 					}
 					if (r.processEntity(e)) {
@@ -202,7 +203,7 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

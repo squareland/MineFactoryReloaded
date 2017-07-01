@@ -3,23 +3,17 @@ package powercrystals.minefactoryreloaded.tile.tank;
 import cofh.core.fluid.FluidTankCore;
 import cofh.lib.util.helpers.FluidHelper;
 import cofh.lib.util.helpers.StringHelper;
-
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
-
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import powercrystals.minefactoryreloaded.core.IDelayedValidate;
 import powercrystals.minefactoryreloaded.core.ITankContainerBucketable;
@@ -28,7 +22,10 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 
 public class TileEntityTank extends TileEntityFactory implements ITankContainerBucketable, IDelayedValidate {
 
@@ -208,13 +205,13 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return stack.getItem() != MFRThings.plasticTankItem;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

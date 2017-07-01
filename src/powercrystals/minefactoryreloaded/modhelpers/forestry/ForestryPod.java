@@ -1,26 +1,20 @@
 package powercrystals.minefactoryreloaded.modhelpers.forestry;
 
 import forestry.api.genetics.IFruitBearer;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.HarvestType;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.*;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStandard;
 import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class ForestryPod extends HarvestableStandard implements IFactoryFruit, IFactoryFertilizable
 {
@@ -95,7 +89,7 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof IFruitBearer)
 		{
-			List<ItemStack> prod = new ArrayList<ItemStack>();
+			NonNullList<ItemStack> prod = NonNullList.create();
 			prod.addAll(((IFruitBearer)te).pickFruit(new ItemStack(grafter)));
 			return prod;
 		}

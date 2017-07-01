@@ -7,12 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
 import net.minecraft.world.storage.loot.LootTableList;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EntityPinkSlime extends EntitySlime
@@ -50,7 +50,7 @@ public class EntityPinkSlime extends EntitySlime
 
 			if(!world.isRemote)
 			{
-				ItemStack meats = new ItemStack(MFRThings.meatNuggetRawItem, world.rand.nextInt(12) + size);
+				@Nonnull ItemStack meats = new ItemStack(MFRThings.meatNuggetRawItem, world.rand.nextInt(12) + size);
 				EntityItem e = new EntityItem(world, posX, posY, posZ, meats);
 				e.motionX = rand.nextDouble() - 0.5D;
 				e.motionY = rand.nextDouble() - 0.5D;

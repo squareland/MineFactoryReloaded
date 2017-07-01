@@ -10,6 +10,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 //TODO probably change to ReplacementBlockState
 public class ReplacementBlock
 {
@@ -22,10 +24,10 @@ public class ReplacementBlock
 	 * Called to replace a block in the world.
 	 * @param world The world object
 	 * @param pos Block position
-	 * @param stack The ItemStack being used to replace the block (may be null)
+	 * @param stack The @Nonnull ItemStack being used to replace the block
 	 * @return True if the block was set successfully
 	 */
-	public boolean replaceBlock(World world, BlockPos pos, ItemStack stack)
+	public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		int meta = getMeta(world, pos, stack);
 		IBlockState state = _block.getStateFromMeta(meta);
@@ -46,10 +48,10 @@ public class ReplacementBlock
 	 * Called to get the metadata of the replacement block in the world.
 	 * @param world The world object
 	 * @param pos Block position
-	 * @param stack The ItemStack being used to replace the block (may be null)
+	 * @param stack The @Nonnull ItemStack being used to replace the block
 	 * @return The metadata of the block
 	 */
-	protected int getMeta(World world, BlockPos pos, ItemStack stack)
+	protected int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		int m = 0;
 		if (_hasMeta > 0)
@@ -80,7 +82,7 @@ public class ReplacementBlock
 	}
 	
 	/**
-	 * Called to set the metdata of this ReplacementBlock to a value read from an ItemStack
+	 * Called to set the metdata of this ReplacementBlock to a value read from an @Nonnull ItemStack
 	 * @param hasMeta The metadata of the block
 	 * @return This instance
 	 */
@@ -94,20 +96,20 @@ public class ReplacementBlock
 	 * Called to get the NBTTagCompound a TileEntity will read its state from
 	 * @param world The world object
 	 * @param pos Block position
-	 * @param stack The ItemStack being used to replace the block (may be null)
+	 * @param stack The @Nonnull ItemStack being used to replace the block
 	 * @return The NBTTagCompound a TileEntity will read its state from
 	 */
-	protected NBTTagCompound getTag(World world, BlockPos pos, ItemStack stack)
+	protected NBTTagCompound getTag(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		return _tileTag;
 	}
 	
 	/**
 	 * Called to see if a TileEntity should have its state set
-	 * @param stack The ItemStack being used to replace the block (may be null)
+	 * @param stack The @Nonnull ItemStack being used to replace the block
 	 * @return True if the TileEntity should have its state set
 	 */
-	protected boolean hasTag(ItemStack stack)
+	protected boolean hasTag(@Nonnull ItemStack stack)
 	{
 		return _tileTag != null;
 	}

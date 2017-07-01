@@ -1,29 +1,27 @@
 package powercrystals.minefactoryreloaded.block;
 
-import static cofh.lib.util.helpers.StringHelper.*;
-
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidStack;
-
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.tank.TileEntityTank;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
+
+import static cofh.lib.util.helpers.StringHelper.*;
 
 public class ItemBlockTank extends ItemBlockFactory
 {
@@ -35,7 +33,7 @@ public class ItemBlockTank extends ItemBlockFactory
 	@SuppressWarnings("rawtypes")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean adv)
+	public void addInformation(@Nonnull ItemStack stack, EntityPlayer player, List info, boolean adv)
 	{
 		if (adv || isShiftKeyDown()) {
 			IFluidTankProperties[] tankProps = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).getTankProperties();
@@ -50,16 +48,17 @@ public class ItemBlockTank extends ItemBlockFactory
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, NBTTagCompound nbt) {
 
 		return new ItemTankFluidHandler(stack);
 	}
 
 	private class ItemTankFluidHandler implements ICapabilityProvider, IFluidHandler {
 
+		@Nonnull
 		private ItemStack stack;
 
-		public ItemTankFluidHandler(ItemStack stack) {
+		public ItemTankFluidHandler(@Nonnull ItemStack stack) {
 			this.stack = stack;
 		}
 

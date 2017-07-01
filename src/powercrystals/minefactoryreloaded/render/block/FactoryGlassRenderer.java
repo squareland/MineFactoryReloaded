@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -19,6 +18,7 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlass;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -124,7 +124,7 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public List<BakedQuad> bakeItemQuads(EnumFacing face, ItemStack stack) {
+	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
 		return null;
 	}
 }

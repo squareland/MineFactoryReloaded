@@ -4,10 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-import net.minecraft.util.EnumFacing;
+
+import javax.annotation.Nonnull;
 
 public class PlantableSapling extends PlantableStandard
 {
@@ -24,7 +26,7 @@ public class PlantableSapling extends PlantableStandard
 	}
 	
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack)
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		IBlockState stateDown = world.getBlockState(pos.down());
 		Block ground = stateDown.getBlock();

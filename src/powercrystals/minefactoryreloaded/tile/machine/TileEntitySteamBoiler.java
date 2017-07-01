@@ -23,13 +23,14 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 
 	public static final int maxTemp = 730;
 
-	public static final int getItemBurnTime(ItemStack stack) {
+	public static final int getItemBurnTime(@Nonnull ItemStack stack) {
 		// TODO: special-case some items (e.g., TE's dynamo)
 		return TileEntityFurnace.getItemBurnTime(stack) / 2;
 	}
@@ -215,16 +216,16 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack != null)
+		if (!stack.isEmpty())
 			return getItemBurnTime(stack) > 0;
 
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return getItemBurnTime(_inventory[slot]) <= 0;
 	}
@@ -299,13 +300,13 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

@@ -1,9 +1,10 @@
 package powercrystals.minefactoryreloaded.api;
 
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * Defines an object that can display information about a captured mob in a
@@ -30,6 +31,6 @@ public interface ISafariNetHandler {
 	 * @param advancedTooltips
 	 *            True if the advanced tooltips option is on.
 	 */
-	public void addInformation(ItemStack safariNetStack, EntityPlayer player, List<String> infoList, boolean advancedTooltips);
+	public void addInformation(@Nonnull ItemStack safariNetStack, EntityPlayer player, List<String> infoList, boolean advancedTooltips);
 
 }

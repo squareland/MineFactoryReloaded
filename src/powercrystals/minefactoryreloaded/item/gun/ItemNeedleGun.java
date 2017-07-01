@@ -2,7 +2,6 @@ package powercrystals.minefactoryreloaded.item.gun;
 
 import codechicken.lib.model.ModelRegistryHelper;
 import cofh.lib.util.helpers.ItemHelper;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -12,7 +11,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -27,6 +25,8 @@ import powercrystals.minefactoryreloaded.render.entity.EntityNeedleRenderer;
 import powercrystals.minefactoryreloaded.render.item.NeedleGunItemRenderer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
+
 public class ItemNeedleGun extends ItemFactoryGun {
 
 	public ItemNeedleGun() {
@@ -37,12 +37,12 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean hasGUI(ItemStack stack) {
+	protected boolean hasGUI(@Nonnull ItemStack stack) {
 		return true;
 	}
 
 	@Override
-	protected boolean openGUI(ItemStack stack, World world, EntityPlayer player) {
+	protected boolean openGUI(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 		NBTTagCompound tag = stack.getTagCompound().getCompoundTag("ammo");
 		boolean needsAmmo = tag == null || tag.hasNoTags() || player.isSneaking();
 		if (needsAmmo & !world.isRemote)
@@ -52,8 +52,8 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean fire(ItemStack stack, World world, EntityPlayer player) {
-		ItemStack ammo = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
+	protected boolean fire(@Nonnull ItemStack stack, World world, EntityPlayer player) {
+		@Nonnull ItemStack ammo = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
 		boolean reloaded = false, creative = player.capabilities.isCreativeMode;
 
 		if (!world.isRemote) {
@@ -75,8 +75,8 @@ public class ItemNeedleGun extends ItemFactoryGun {
 		} else {
 			NonNullList<ItemStack> inv = player.inventory.mainInventory;
 			for (int i = 0, e = inv.size(); i < e; ++i) {
-				ItemStack item = inv.get(i);
-				if (item != null && ammo.getItem().equals(item.getItem())) {
+				@Nonnull ItemStack item = inv.get(i);
+				if (!item.isEmpty() && ammo.getItem().equals(item.getItem())) {
 					ammo = ItemHelper.cloneStack(item, 1);
 					ammo.writeToNBT(t);
 					if (!creative) inv.set(i, ItemHelper.consumeItem(item));
@@ -94,12 +94,12 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	}
 
 	@Override
-	protected int getDelay(ItemStack stack, boolean fired) {
+	protected int getDelay(@Nonnull ItemStack stack, boolean fired) {
 		return 5 + (fired ? 20 : 0);
 	}
 
 	@Override
-	protected String getDelayTag(ItemStack stack) {
+	protected String getDelayTag(@Nonnull ItemStack stack) {
 		return "mfr:NeedleLaunched";
 	}
 

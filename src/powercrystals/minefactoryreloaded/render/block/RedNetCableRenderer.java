@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -29,6 +28,7 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetCable;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetEnergy;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -255,7 +255,7 @@ public class RedNetCableRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public List<BakedQuad> bakeItemQuads(EnumFacing face, ItemStack stack) {
+	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
 
 		BakingVertexBuffer buffer = BakingVertexBuffer.create();
 		buffer.begin(7, DefaultVertexFormats.ITEM);

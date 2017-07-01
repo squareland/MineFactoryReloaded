@@ -19,6 +19,7 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerUnifier;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 	private void unifyInventory() {
 
 		if (world != null && !world.isRemote) {
-			ItemStack output;
+			@Nonnull ItemStack output;
 			if (_inventory[0] != null) {
 				List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory[0]);
 				// tracker does *not* also check the wildcard meta,
@@ -90,9 +91,9 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 		}
 	}
 
-	private void moveItemStack(ItemStack source) {
+	private void moveItemStack(@Nonnull ItemStack source) {
 
-		if (source == null) {
+		if (source.isEmpty()) {
 			return;
 		}
 
@@ -125,12 +126,12 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
+	public void setInventorySlotContents(int slot, @Nonnull ItemStack stack) {
 
 		_inventory[slot] = stack;
 		if (slot > 1)
 			updatePreferredOutput();
-		if (stack != null && stack.getCount() <= 0)
+		if (!stack.isEmpty() && stack.getCount() <= 0)
 			_inventory[slot] = null;
 		unifyInventory();
 		ignoreChange = true;
@@ -138,7 +139,7 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 		ignoreChange = false;
 	}
 
-	protected void updatePreferredOutput() {
+	private void updatePreferredOutput() {
 
 		_preferredOutputs.clear();
 		for (int i = 2; i < 11; i++) {
@@ -200,13 +201,13 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
 		return slot == 0;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return slot == 1;
 	}
@@ -229,13 +230,13 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

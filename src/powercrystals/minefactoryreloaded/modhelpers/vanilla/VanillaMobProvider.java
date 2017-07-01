@@ -1,8 +1,5 @@
 package powercrystals.minefactoryreloaded.modhelpers.vanilla;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -21,16 +18,18 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
 import powercrystals.minefactoryreloaded.api.RandomMob;
 import powercrystals.minefactoryreloaded.core.AutoEnchantmentHelper;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableZombiePigman;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VanillaMobProvider implements IRandomMobProvider
 {
@@ -149,7 +148,7 @@ public class VanillaMobProvider implements IRandomMobProvider
 		derp.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
 		derp.stepHeight = 2;
 		{
-			ItemStack armor = new ItemStack(Items.LEATHER_LEGGINGS);
+			@Nonnull ItemStack armor = new ItemStack(Items.LEATHER_LEGGINGS);
 			EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armor);
 			armor.setStackDisplayName(new String(new char[]{77, 97, 110, 32, 80, 97, 110, 116, 115}));
 			if (world.rand.nextBoolean()) {
@@ -196,7 +195,7 @@ public class VanillaMobProvider implements IRandomMobProvider
 			direBane.setCustomNameTag("Bane of direwolf");
 			direBane.setAlwaysRenderNameTag(true);
 			direBane.enablePersistence();
-			ItemStack armor = new ItemStack(Items.GOLDEN_CHESTPLATE);
+			@Nonnull ItemStack armor = new ItemStack(Items.GOLDEN_CHESTPLATE);
 			armor = AutoEnchantmentHelper.addRandomEnchantment(direBane.getRNG(), armor, 60, true);
 			EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armor);
 			direBane.setItemStackToSlot(slot, armor);

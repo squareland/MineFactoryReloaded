@@ -7,7 +7,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import powercrystals.minefactoryreloaded.gui.client.GUIBag;
 import powercrystals.minefactoryreloaded.gui.client.GuiNeedlegun;
@@ -18,6 +17,8 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerRedNetLogic;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
+
+import javax.annotation.Nonnull;
 
 public class MFRGUIHandler implements IGuiHandler
 {
@@ -38,16 +39,16 @@ public class MFRGUIHandler implements IGuiHandler
 		}
 		else if(ID == 1)
 		{
-			ItemStack stack = getCorrectStackFromEitherHand(MFRThings.needlegunItem, player);
-			if(stack != null)
+			@Nonnull ItemStack stack = getCorrectStackFromEitherHand(MFRThings.needlegunItem, player);
+			if(!stack.isEmpty())
 			{
 				return new ContainerNeedlegun(new NeedlegunContainerWrapper(stack), player.inventory);
 			}
 		}
 		else if(ID == 2)
 		{
-			ItemStack stack = getCorrectStackFromEitherHand(MFRThings.plasticBagItem, player);
-			if(stack != null)
+			@Nonnull ItemStack stack = getCorrectStackFromEitherHand(MFRThings.plasticBagItem, player);
+			if(!stack.isEmpty())
 			{
 				return new ContainerBag(stack, player.inventory);
 			}
@@ -55,17 +56,18 @@ public class MFRGUIHandler implements IGuiHandler
 		return null;
 	}
 
+	@Nonnull
 	private ItemStack getCorrectStackFromEitherHand(Item item, EntityPlayer player) {
 		
 		for(EnumHand hand : EnumHand.values()) {
 			
-			ItemStack stack = player.getHeldItem(hand);
+			@Nonnull ItemStack stack = player.getHeldItem(hand);
 			
-			if (stack != null && stack.getItem() == item) {
+			if (!stack.isEmpty() && stack.getItem() == item) {
 				return stack;
 			}
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 	
 	@Override
@@ -85,16 +87,16 @@ public class MFRGUIHandler implements IGuiHandler
 		}
 		else if(ID == 1)
 		{
-			ItemStack stack = getCorrectStackFromEitherHand(MFRThings.needlegunItem, player);
-			if(stack != null)
+			@Nonnull ItemStack stack = getCorrectStackFromEitherHand(MFRThings.needlegunItem, player);
+			if(!stack.isEmpty())
 			{
 				return new GuiNeedlegun(new ContainerNeedlegun(new NeedlegunContainerWrapper(stack), player.inventory), stack);
 			}
 		}
 		else if(ID == 2)
 		{
-			ItemStack stack = getCorrectStackFromEitherHand(MFRThings.plasticBagItem, player);
-			if(stack != null)
+			@Nonnull ItemStack stack = getCorrectStackFromEitherHand(MFRThings.plasticBagItem, player);
+			if(!stack.isEmpty())
 			{
 				return new GUIBag(new ContainerBag(stack, player.inventory));
 			}

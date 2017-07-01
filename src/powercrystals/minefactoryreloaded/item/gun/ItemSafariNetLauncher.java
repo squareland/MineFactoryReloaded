@@ -1,9 +1,6 @@
 package powercrystals.minefactoryreloaded.item.gun;
 
 import cofh.lib.util.helpers.ItemHelper;
-
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -15,7 +12,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -28,6 +24,9 @@ import powercrystals.minefactoryreloaded.item.base.ItemFactoryGun;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.entity.RenderSafarinet;
 
+import javax.annotation.Nonnull;
+import java.util.List;
+
 public class ItemSafariNetLauncher extends ItemFactoryGun {
 
 	public ItemSafariNetLauncher() {
@@ -37,18 +36,18 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 		super.addInfo(stack, player, infoList, advancedTooltips);
 		infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.mode"));
 	}
 
 	@Override
-	protected boolean hasGUI(ItemStack stack) {
+	protected boolean hasGUI(@Nonnull ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	protected boolean fire(ItemStack stack, World world, EntityPlayer player) {
+	protected boolean fire(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 		if (player.isSneaking()) {
 			stack.setItemDamage(stack.getItemDamage() == 0 ? 1 : 0);
 			if (world.isRemote) {
@@ -62,7 +61,7 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 		}
 
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-			ItemStack ammo = player.inventory.getStackInSlot(i);
+			@Nonnull ItemStack ammo = player.inventory.getStackInSlot(i);
 			if (ItemSafariNet.isSafariNet(ammo)) {
 				if (ItemSafariNet.isEmpty(ammo) == isCaptureMode(stack)) {
 					player.inventory.setInventorySlotContents(i, ItemHelper.consumeItem(ammo));
@@ -84,17 +83,17 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 		return false;
 	}
 
-	protected boolean isCaptureMode(ItemStack stack) {
-		return stack != null && stack.getItemDamage() == 1;
+	protected boolean isCaptureMode(@Nonnull ItemStack stack) {
+		return !stack.isEmpty() && stack.getItemDamage() == 1;
 	}
 
 	@Override
-	protected int getDelay(ItemStack stack, boolean fired) {
+	protected int getDelay(@Nonnull ItemStack stack, boolean fired) {
 		return fired ? 10 : 3;
 	}
 
 	@Override
-	protected String getDelayTag(ItemStack stack) {
+	protected String getDelayTag(@Nonnull ItemStack stack) {
 		return "mfr:SafariLaunch";
 	}
 

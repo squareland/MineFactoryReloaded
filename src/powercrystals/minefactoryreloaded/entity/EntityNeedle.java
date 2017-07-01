@@ -1,32 +1,31 @@
 package powercrystals.minefactoryreloaded.entity;
 
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import io.netty.buffer.ByteBuf;
-
-import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class EntityNeedle extends Entity implements IProjectile, IEntityAdditionalSpawnData {
 
 	private String _owner;
 	private int ticksInAir = 0;
-	private ItemStack _ammoSource;
+	@Nonnull
+	private ItemStack _ammoSource = ItemStack.EMPTY;
 	private double distance;
 	private boolean _falling;
 
@@ -36,7 +35,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		setSize(0.5F, 0.5F);
 	}
 
-	public EntityNeedle(World world, EntityPlayer owner, ItemStack ammoSource, float spread) {
+	public EntityNeedle(World world, EntityPlayer owner, @Nonnull ItemStack ammoSource, float spread) {
 
 		this(world);
 

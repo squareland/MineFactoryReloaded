@@ -50,13 +50,13 @@ public class FMP {
 
 	private void addSubtypes(ItemBlockFactory item) {
 
-		List<ItemStack> items = new LinkedList<ItemStack>();
+		NonNullList<ItemStack> items = new LinkedList<@Nonnull ItemStack>();
 		item.getSubItems(item, items);
 		for (int i = items.size(); i-- > 0;)
 			sendComm(items.get(i));
 	}
 
-	private void sendComm(ItemStack data) {
+	private void sendComm(@Nonnull ItemStack data) {
 
 		FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", data);
 	}

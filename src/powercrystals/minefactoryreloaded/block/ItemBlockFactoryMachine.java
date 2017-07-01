@@ -2,18 +2,15 @@ package powercrystals.minefactoryreloaded.block;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.lib.util.helpers.StringHelper;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergyContainerItem {
 
@@ -35,7 +32,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getUnlocalizedName(@Nonnull ItemStack stack) {
 
 		return _names[Math.min(stack.getItemDamage(), _names.length - 1)];
 	}
@@ -43,7 +40,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 	@SuppressWarnings("rawtypes")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean adv) {
+	public void addInformation(@Nonnull ItemStack stack, EntityPlayer player, List info, boolean adv) {
 
 		Machine machine = getMachine(stack);
 		if (!machine.hasTooltip(stack))
@@ -55,21 +52,21 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 		}
 	}
 
-	private Machine getMachine(ItemStack stack) {
+	private Machine getMachine(@Nonnull ItemStack stack) {
 
 		return Machine.getMachineFromIndex(_machineBlockIndex, stack.getItemDamage());
 	}
 
 	// TE methods
 
-	private int getTransferRate(ItemStack container) {
+	private int getTransferRate(@Nonnull ItemStack container) {
 
 		if (container.getCount() != 1)
 			return 0;
 		return getMachine(container).getActivationEnergy();
 	}
 
-	private void setEnergy(ItemStack container, int newEnergy) {
+	private void setEnergy(@Nonnull ItemStack container, int newEnergy) {
 
 		NBTTagCompound tag = container.getTagCompound();
 		if (tag == null) container.setTagCompound(tag = new NBTTagCompound());
@@ -77,7 +74,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 	}
 
 	@Override
-	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
+	public int receiveEnergy(@Nonnull ItemStack container, int maxReceive, boolean simulate) {
 
 		maxReceive = Math.min(getTransferRate(container), maxReceive);
 		if (maxReceive <= 0)
@@ -92,7 +89,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 	}
 
 	@Override
-	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
+	public int extractEnergy(@Nonnull ItemStack container, int maxExtract, boolean simulate) {
 
 		maxExtract = Math.min(getTransferRate(container), maxExtract);
 		if (maxExtract <= 0)
@@ -106,7 +103,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 	}
 
 	@Override
-	public int getEnergyStored(ItemStack container) {
+	public int getEnergyStored(@Nonnull ItemStack container) {
 
 		if (container.hasTagCompound())
 			return container.getTagCompound().getInteger("energyStored");
@@ -114,7 +111,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 	}
 
 	@Override
-	public int getMaxEnergyStored(ItemStack container) {
+	public int getMaxEnergyStored(@Nonnull ItemStack container) {
 
 		return getMachine(container).getMaxEnergyStorage();
 	}

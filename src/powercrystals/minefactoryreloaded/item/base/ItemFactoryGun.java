@@ -9,24 +9,26 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public abstract class ItemFactoryGun extends ItemFactory {
 
-	protected abstract boolean hasGUI(ItemStack stack);
+	protected abstract boolean hasGUI(@Nonnull ItemStack stack);
 
-	protected boolean openGUI(ItemStack stack, World world, EntityPlayer player) {
+	protected boolean openGUI(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 		return false;
 	}
 
-	protected abstract boolean fire(ItemStack stack, World world, EntityPlayer player);
+	protected abstract boolean fire(@Nonnull ItemStack stack, World world, EntityPlayer player);
 
-	protected abstract int getDelay(ItemStack stack, boolean fired);
+	protected abstract int getDelay(@Nonnull ItemStack stack, boolean fired);
 
-	protected abstract String getDelayTag(ItemStack stack);
+	protected abstract String getDelayTag(@Nonnull ItemStack stack);
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		ItemStack stack = player.getHeldItem(hand);
+		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		if (stack.getTagCompound() == null)
 			stack.setTagCompound(new NBTTagCompound());

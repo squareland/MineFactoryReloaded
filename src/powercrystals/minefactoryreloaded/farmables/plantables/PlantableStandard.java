@@ -3,14 +3,15 @@ package powercrystals.minefactoryreloaded.farmables.plantables;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.oredict.OreDictionary;
-
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+
+import javax.annotation.Nonnull;
 
 /*
  * Used for directly placing blocks (ie saplings) and items (ie sugarcane). Pass in source ID to constructor,
@@ -75,13 +76,13 @@ public class PlantableStandard implements IFactoryPlantable
 	}
 
 	@Override
-	public boolean canBePlanted(ItemStack stack, boolean forFermenting)
+	public boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting)
 	{
 		return _validMeta == WILDCARD || stack.getItemDamage() == _validMeta;
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack)
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		if (!world.isAirBlock(pos))
 			return false;
@@ -93,7 +94,7 @@ public class PlantableStandard implements IFactoryPlantable
 	}
 
 	@Override
-	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, ItemStack stack)
+	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		return _plantedBlock;
 	}

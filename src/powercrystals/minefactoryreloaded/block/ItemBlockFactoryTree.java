@@ -2,6 +2,8 @@ package powercrystals.minefactoryreloaded.block;
 
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemBlockFactoryTree extends ItemBlockFactory
 {
 	public ItemBlockFactoryTree(net.minecraft.block.Block id)
@@ -11,7 +13,7 @@ public class ItemBlockFactoryTree extends ItemBlockFactory
 	}
 	
 	@Override
-	public boolean hasEffect(ItemStack stack)
+	public boolean hasEffect(@Nonnull ItemStack stack)
 	{
 		return stack.getItemDamage() == 3;
 	}

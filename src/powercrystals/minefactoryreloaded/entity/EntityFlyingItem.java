@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.entity;
 
-import com.google.common.base.Optional;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,6 +9,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
 
 public class EntityFlyingItem extends EntitySafariNet {
 
@@ -22,12 +23,12 @@ public class EntityFlyingItem extends EntitySafariNet {
 		super(world);
 	}
 
-	public EntityFlyingItem(World world, double x, double y, double z, ItemStack stack) {
+	public EntityFlyingItem(World world, double x, double y, double z, @Nonnull ItemStack stack) {
 
 		super(world, x, y, z, stack);
 	}
 
-	public EntityFlyingItem(World world, EntityLivingBase owner, ItemStack stack) {
+	public EntityFlyingItem(World world, EntityLivingBase owner, @Nonnull ItemStack stack) {
 
 		super(world, owner, stack);
 	}
@@ -54,7 +55,7 @@ public class EntityFlyingItem extends EntitySafariNet {
 	}
 
 	@Override
-	protected boolean onHitBlock(ItemStack storedEntity, RayTraceResult result) {
+	protected boolean onHitBlock(@Nonnull ItemStack storedEntity, RayTraceResult result) {
 
 		if (canBePickedUp == 0 && (pickupChance > 0 && (pickupChance == 1 || world.rand.nextInt(pickupChance) == 0))) {
 			dropAsStack(this.getStoredEntity());
@@ -64,7 +65,7 @@ public class EntityFlyingItem extends EntitySafariNet {
 	}
 
 	@Override
-	protected boolean onHitEntity(ItemStack storedEntity, RayTraceResult result) {
+	protected boolean onHitEntity(@Nonnull ItemStack storedEntity, RayTraceResult result) {
 
 		DamageSource d = DamageSource.causeThrownDamage(this, getThrower() == null ? this : getThrower());
 		if (result.entityHit.attackEntityFrom(d, damage)) {
@@ -82,7 +83,7 @@ public class EntityFlyingItem extends EntitySafariNet {
 
 	@Override
 	protected void impact(double x, double y, double z, EnumFacing side) {
-		ItemStack stack = dataManager.get(STORED_ENTITY);
+		@Nonnull ItemStack stack = dataManager.get(STORED_ENTITY);
 
 		float X = 0, Y = 0.14f, Z = 0;
 		if (side != null) {

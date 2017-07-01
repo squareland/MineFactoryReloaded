@@ -61,7 +61,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
+import static powercrystals.minefactoryreloaded.setup.MFRThings.factoryHammerItem;
 
 @SideOnly(Side.CLIENT)
 public class MineFactoryReloadedClient implements IResourceManagerReloadListener {
@@ -259,8 +259,8 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 	private boolean holdsRocketLauncher(EntityPlayer player) {
 
-		return player != null && ((player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == MFRThings.rocketLauncherItem) ||
-				(player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() == MFRThings.rocketLauncherItem));
+		return player != null && ((!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == MFRThings.rocketLauncherItem) ||
+				(!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() == MFRThings.rocketLauncherItem));
 	}
 
 	private void drawLockonPart(Point center, float distanceFromCenter, int rotation) {

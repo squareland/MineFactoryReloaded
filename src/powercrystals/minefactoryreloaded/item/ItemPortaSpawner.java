@@ -1,20 +1,9 @@
 package powercrystals.minefactoryreloaded.item;
 
 import cofh.lib.util.helpers.ItemHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,13 +11,22 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemPortaSpawner extends ItemFactory {
 
@@ -43,7 +41,7 @@ public class ItemPortaSpawner extends ItemFactory {
 		setRegistryName(MineFactoryReloadedCore.modId, "porta_spawner");
 	}
 
-	public static NBTTagCompound getSpawnerTag(ItemStack stack) {
+	public static NBTTagCompound getSpawnerTag(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null) {
@@ -53,7 +51,7 @@ public class ItemPortaSpawner extends ItemFactory {
 		return null;
 	}
 
-	private static String getEntityId(ItemStack stack) {
+	private static String getEntityId(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = getSpawnerTag(stack);
 		if (tag != null)
@@ -61,12 +59,12 @@ public class ItemPortaSpawner extends ItemFactory {
 		return null;
 	}
 
-	public static boolean hasData(ItemStack stack) {
+	public static boolean hasData(@Nonnull ItemStack stack) {
 
 		return getEntityId(stack) != null;
 	}
 
-	private static int getDelay(ItemStack stack) {
+	private static int getDelay(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null) {
@@ -76,7 +74,7 @@ public class ItemPortaSpawner extends ItemFactory {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 
 		super.addInfo(stack, player, infoList, advancedTooltips);
 		String id = getEntityId(stack);
@@ -91,7 +89,7 @@ public class ItemPortaSpawner extends ItemFactory {
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
+	public void onUpdate(@Nonnull ItemStack stack, World world, Entity entity, int par4, boolean par5) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && tag.hasKey(placeTag) && tag.getInteger(placeTag) > 0) {
@@ -100,7 +98,7 @@ public class ItemPortaSpawner extends ItemFactory {
 	}
 
 	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+	public boolean shouldCauseReequipAnimation(@Nonnull ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {
 		
 		return !ItemHelper.areItemStacksEqualIgnoreTags(oldStack, newStack, placeTag);
 	}
@@ -109,7 +107,7 @@ public class ItemPortaSpawner extends ItemFactory {
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
 
-		ItemStack itemstack = player.getHeldItem(hand);
+		@Nonnull ItemStack itemstack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.SUCCESS;
@@ -135,7 +133,7 @@ public class ItemPortaSpawner extends ItemFactory {
 		}
 	}
 
-	private boolean placeBlock(ItemStack itemstack, EntityPlayer player, EnumHand hand, World world, BlockPos pos, EnumFacing side,
+	private boolean placeBlock(@Nonnull ItemStack itemstack, EntityPlayer player, EnumHand hand, World world, BlockPos pos, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
 
 		IBlockState state = world.getBlockState(pos);
@@ -171,7 +169,7 @@ public class ItemPortaSpawner extends ItemFactory {
 		}
 	}
 
-	private boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState state) {
+	private boolean placeBlockAt(@Nonnull ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState state) {
 
 		// TODO: record and read the block that was consumed
 		if (!world.setBlockState(pos, state, 3)) {
@@ -197,14 +195,14 @@ public class ItemPortaSpawner extends ItemFactory {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean hasEffect(@Nonnull ItemStack stack) {
 
 		return hasData(stack);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public EnumRarity getRarity(ItemStack stack) {
+	public EnumRarity getRarity(@Nonnull ItemStack stack) {
 
 		return hasData(stack) ? EnumRarity.EPIC : EnumRarity.RARE;
 	}

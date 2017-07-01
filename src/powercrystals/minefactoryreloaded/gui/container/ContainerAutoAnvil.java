@@ -3,13 +3,13 @@ package powercrystals.minefactoryreloaded.gui.container;
 import cofh.lib.gui.slot.SlotAcceptInsertable;
 import cofh.lib.gui.slot.SlotLocked;
 import cofh.lib.gui.slot.SlotRemoveOnly;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoAnvil;
+
+import javax.annotation.Nonnull;
 
 public class ContainerAutoAnvil extends ContainerFactoryPowered
 {
@@ -30,6 +30,7 @@ public class ContainerAutoAnvil extends ContainerFactoryPowered
 		addSlotToContainer(new SlotAcceptInsertable(_te, 1, 26, 24));
 		addSlotToContainer(new SlotRemoveOnly(_te, 2, 8, 48));
 		addSlotToContainer(new SlotLocked(_te, 2, 45, 24) {
+			@Nonnull
 			@Override
 			public ItemStack getStack() {
 				return _anvil.getRepairOutput();

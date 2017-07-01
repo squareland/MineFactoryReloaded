@@ -12,6 +12,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 
+import javax.annotation.Nonnull;
+
 public class ItemMFRBucketMilk extends ItemBucketMilk {
 
 	private ItemBucket bucketDelegate;
@@ -31,7 +33,7 @@ public class ItemMFRBucketMilk extends ItemBucketMilk {
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, NBTTagCompound nbt) {
 
 		return bucketDelegate.initCapabilities(stack, nbt);
 	}

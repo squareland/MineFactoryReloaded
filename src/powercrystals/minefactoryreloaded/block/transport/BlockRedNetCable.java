@@ -55,6 +55,7 @@ import powercrystals.minefactoryreloaded.tile.rednet.RedstoneNetwork;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetCable;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetEnergy;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkContainer, IBlockInfo, IRedNetInfo, IBakeryProvider {
@@ -231,7 +232,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityRedNetCable) {
@@ -268,7 +269,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 						cable.setSideColor(EnumFacing.VALUES[subSide], nextColor);
 					}
 					return true;
-				} else if (heldItem != null && heldItem.getItem().equals(Items.DYE)) {
+				} else if (!heldItem.isEmpty() && heldItem.getItem().equals(Items.DYE)) {
 					if (!world.isRemote) {
 						cable.setSideColor(EnumFacing.VALUES[subSide], 15 - heldItem.getItemDamage());
 					}
@@ -334,7 +335,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 					}
 					MFRUtil.usedWrench(player, hand, pos, side);
 					return true;
-				} else if (heldItem != null && heldItem.getItem().equals(Items.DYE)) {
+				} else if (!heldItem.isEmpty() && heldItem.getItem().equals(Items.DYE)) {
 					if (!world.isRemote && subSide < 6) {
 						cable.setSideColor(EnumFacing.VALUES[subSide], 15 - heldItem.getItemDamage());
 						MFRUtil.notifyBlockUpdate(world, pos, state);
@@ -365,7 +366,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, @Nonnull ItemStack stack) {
 
 		if (MFRConfig.defaultRedNetCableOnly.getBoolean(false)) {
 			TileEntity te = world.getTileEntity(pos);

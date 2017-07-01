@@ -1,54 +1,26 @@
 package powercrystals.minefactoryreloaded;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
-
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizer;
-import powercrystals.minefactoryreloaded.api.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
-import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
-import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
-import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
-import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
-import powercrystals.minefactoryreloaded.api.IMobEggHandler;
-import powercrystals.minefactoryreloaded.api.IMobSpawnHandler;
-import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
-import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
-import powercrystals.minefactoryreloaded.api.ValuedItem;
+import powercrystals.minefactoryreloaded.api.*;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableCocoa;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableCropPlant;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableGrass;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStandard;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStemPlants;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableCropPlant;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableGourd;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableMushroom;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableShrub;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStandard;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStemPlant;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableVine;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.*;
+import powercrystals.minefactoryreloaded.farmables.harvestables.*;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCropPlant;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class IMCHandler {
 
@@ -271,7 +243,7 @@ public class IMCHandler {
 				 */
 				else if ("registerHarvestable_Crop".equals(k)) {
 					if (m.isItemStackMessage()) {
-						ItemStack item = m.getItemStackValue();
+						@Nonnull ItemStack item = m.getItemStackValue();
 						MFRRegistry.registerHarvestable(new HarvestableCropPlant(
 								Block.getBlockFromItem(item.getItem()), item.getItemDamage()));
 					} else {

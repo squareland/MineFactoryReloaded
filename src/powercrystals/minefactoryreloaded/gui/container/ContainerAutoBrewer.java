@@ -4,15 +4,14 @@ import cofh.lib.gui.slot.SlotAcceptInsertable;
 import cofh.lib.gui.slot.SlotPotion;
 import cofh.lib.gui.slot.SlotPotionIngredient;
 import cofh.lib.gui.slot.SlotRemoveOnly;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
-
-import net.minecraft.util.ResourceLocation;
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
 
 public class ContainerAutoBrewer extends ContainerFactoryPowered {
 
@@ -27,11 +26,11 @@ public class ContainerAutoBrewer extends ContainerFactoryPowered {
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack) {
+		public boolean isItemValid(@Nonnull ItemStack stack) {
 
 			if (super.isItemValid(stack)) {
-				ItemStack slot = getSlot(slotIndex).getStack();
-				return slot == null || PotionUtils.getEffectsFromStack(stack).equals(PotionUtils.getEffectsFromStack(slot));
+				@Nonnull ItemStack slot = getSlot(slotIndex).getStack();
+				return slot.isEmpty() || PotionUtils.getEffectsFromStack(stack).equals(PotionUtils.getEffectsFromStack(slot));
 			}
 			return false;
 		}
@@ -71,7 +70,7 @@ public class ContainerAutoBrewer extends ContainerFactoryPowered {
 	}
 
 	@Override
-	protected boolean performMerge(int slotIndex, ItemStack stack) {
+	protected boolean performMerge(int slotIndex, @Nonnull ItemStack stack) {
 
 		int invBase = getSizeInventory();
 		int invFull = inventorySlots.size();

@@ -28,6 +28,7 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
@@ -37,7 +38,8 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	protected boolean _spawnExact = false;
 	protected int _spawnCost = 0;
 	protected Entity _spawn = null;
-	protected ItemStack _lastSpawnStack = null;
+	@Nonnull
+	protected ItemStack _lastSpawnStack = ItemStack.EMPTY;
 
 	public TileEntityAutoSpawner() {
 
@@ -114,8 +116,8 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		ItemStack item = getStackInSlot(0);
-		if (item == null || !canInsertItem(0, item, null)) {
+		@Nonnull ItemStack item = getStackInSlot(0);
+		if (item.isEmpty() || !canInsertItem(0, item, null)) {
 			setWorkDone(0);
 			setIdleTicks(getIdleTicksMax());
 			return false;
@@ -267,7 +269,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return ItemSafariNet.isSafariNet(itemstack) &&
 				!ItemSafariNet.isSingleUse(itemstack) &&
@@ -302,7 +304,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

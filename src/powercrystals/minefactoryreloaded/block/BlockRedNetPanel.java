@@ -10,14 +10,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -31,6 +30,8 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.tileentity.RedNetHistorianRenderer;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetHistorian;
+
+import javax.annotation.Nonnull;
 
 public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 {
@@ -75,7 +76,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack)
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, @Nonnull ItemStack stack)
 	{
 		super.onBlockPlacedBy(world, pos, state, entity, stack);
 		if(entity == null)
@@ -107,7 +108,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem)
+	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem)
 	{
 		IBlockState state = world.getBlockState(pos);
 
@@ -124,7 +125,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 			player.openGui(MineFactoryReloadedCore.instance(), 0, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
-		else if(te instanceof TileEntityRedNetHistorian && heldItem != null && heldItem.getItem().equals(Items.DYE))
+		else if(te instanceof TileEntityRedNetHistorian && !heldItem.isEmpty() && heldItem.getItem().equals(Items.DYE))
 		{
 			((TileEntityRedNetHistorian)te).setSelectedSubnet(15 - heldItem.getItemDamage());
 			MFRUtil.notifyBlockUpdate(world, pos, state);

@@ -122,7 +122,7 @@ public class Thaumcraft {
 			MFRRegistry.registerPlantable(new PlantableStandard(tcBean, tcPod) {
 
 				@Override
-				public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack) {
+				public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
 					if (!world.isAirBlock(x, y, z))
 						return false;
@@ -146,7 +146,7 @@ public class Thaumcraft {
 				}
 
 				@Override
-				public void postPlant(World world, BlockPos pos, ItemStack stack) {
+				public void postPlant(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
 					NBTTagList aspects = stack.stackTagCompound.getTagList("Aspects", 10);
 					// System.out.println("Aspect_count:"+aspects.tagCount()); //should be one but who knows

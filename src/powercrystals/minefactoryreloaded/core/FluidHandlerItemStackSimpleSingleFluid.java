@@ -2,18 +2,18 @@ package powercrystals.minefactoryreloaded.core;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStackSimple;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class FluidHandlerItemStackSimpleSingleFluid extends FluidHandlerItemStackSimple.SwapEmpty {
 
-	private final ItemStack fullContainer;
+	private final @Nonnull ItemStack fullContainer;
 	private Fluid fluid;
 
-	public FluidHandlerItemStackSimpleSingleFluid(ItemStack container, ItemStack fullContainer, ItemStack emptyContainer, Fluid fluid, int capacity) {
+	public FluidHandlerItemStackSimpleSingleFluid(@Nonnull ItemStack container, @Nonnull ItemStack fullContainer, @Nonnull ItemStack emptyContainer, Fluid fluid, int capacity) {
 		super(container, emptyContainer, capacity);
 		this.fullContainer = fullContainer;
 		this.fluid = fluid;

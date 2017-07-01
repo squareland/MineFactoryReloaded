@@ -1,9 +1,11 @@
 package powercrystals.minefactoryreloaded.gui.slot;
 
-import powercrystals.minefactoryreloaded.api.INeedleAmmo;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import powercrystals.minefactoryreloaded.api.INeedleAmmo;
+
+import javax.annotation.Nonnull;
 
 public class SlotAcceptNeedlegunAmmo extends Slot
 {
@@ -13,8 +15,8 @@ public class SlotAcceptNeedlegunAmmo extends Slot
 	}
 	
 	@Override
-	public boolean isItemValid(ItemStack stack)
+	public boolean isItemValid(@Nonnull ItemStack stack)
 	{
-		return stack != null && stack.getItem() instanceof INeedleAmmo;
+		return !stack.isEmpty() && stack.getItem() instanceof INeedleAmmo;
 	}
 }

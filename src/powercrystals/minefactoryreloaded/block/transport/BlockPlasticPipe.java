@@ -44,6 +44,7 @@ import powercrystals.minefactoryreloaded.render.block.PlasticPipeRenderer;
 import powercrystals.minefactoryreloaded.tile.transport.PlasticPipeUpgrade;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -92,7 +93,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityPlasticPipe) {
@@ -127,7 +128,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 					break l2;
 				}
 
-				if (currentUpgrade.getDrop() != null){
+				if (!currentUpgrade.getDrop().isEmpty()){
 					UtilInventory.dropStackInAir(world, pos, currentUpgrade.getDrop());
 				}
 				if (!world.isRemote) {
@@ -151,13 +152,13 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 
 		Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
-		ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state));
+		@Nonnull ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state));
 		drops.add(machine);
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityPlasticPipe) {
 			PlasticPipeUpgrade upgrade = ((TileEntityPlasticPipe) te).getUpgrade();
-			if(upgrade.getDrop() != null) {
+			if(!upgrade.getDrop().isEmpty()) {
 				drops.add(upgrade.getDrop());
 			}
 		}

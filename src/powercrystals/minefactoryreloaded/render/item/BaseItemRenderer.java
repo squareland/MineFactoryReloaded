@@ -16,6 +16,7 @@ import net.minecraftforge.client.model.IPerspectiveAwareModel;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwa
 	ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformations;
 
 	@Override
-	public void renderItem(ItemStack stack, ItemCameraTransforms.TransformType transformType) {
+	public void renderItem(@Nonnull ItemStack stack, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 		CCRenderState ccrs = CCRenderState.instance();
@@ -43,7 +44,7 @@ public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwa
 		GlStateManager.popMatrix();
 	}
 
-	protected void drawModel(CCRenderState ccrs, ItemStack stack) {};
+	protected void drawModel(CCRenderState ccrs, @Nonnull ItemStack stack) {};
 
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {

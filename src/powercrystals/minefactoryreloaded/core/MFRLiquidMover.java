@@ -1,21 +1,24 @@
 package powercrystals.minefactoryreloaded.core;
 
 import cofh.core.fluid.FluidTankCore;
-import net.minecraft.util.math.BlockPos;
-
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.*;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
+
+import javax.annotation.Nonnull;
 
 public abstract class MFRLiquidMover {
 
@@ -26,9 +29,10 @@ public abstract class MFRLiquidMover {
 	 * @param    entityplayer    the player trying to fill the tank
 	 * @return True if liquid was transferred to the tank.
 	 */
-	public static boolean manuallyFillTank(ITankContainerBucketable itcb, EnumFacing facing, EntityPlayer entityplayer, ItemStack heldItem) {
+	public static boolean manuallyFillTank(ITankContainerBucketable itcb, EnumFacing facing, EntityPlayer entityplayer,
+			@Nonnull ItemStack heldItem) {
 
-		if (heldItem != null && heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)) {
+		if (!heldItem.isEmpty() && heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)) {
 			IFluidHandler fluidHandler = heldItem.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 			IFluidTankProperties[] itemTanks = fluidHandler.getTankProperties();
 			boolean tankFilled = false;
@@ -39,7 +43,7 @@ public abstract class MFRLiquidMover {
 				if (liquid != null && itcb.fill(facing, liquid, false) > 0) {
 					tankFilled = true;
 					liquid.amount = itcb.fill(facing, liquid, true);
-					ItemStack drop = heldItem.splitStack(1);
+					@Nonnull ItemStack drop = heldItem.splitStack(1);
 					heldItem.grow(1);
 					drop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).drain(liquid, true);
 					if (!entityplayer.capabilities.isCreativeMode) {
@@ -63,7 +67,7 @@ public abstract class MFRLiquidMover {
 	 * @param    entityplayer    the player trying to take liquid from the tank
 	 * @return True if liquid was transferred from the tank.
 	 */
-	public static boolean manuallyDrainTank(ITankContainerBucketable itcb, EnumFacing facing, EntityPlayer entityplayer, ItemStack heldItem) {
+	public static boolean manuallyDrainTank(ITankContainerBucketable itcb, EnumFacing facing, EntityPlayer entityplayer, @Nonnull ItemStack heldItem) {
 
 		if (heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)) {
 			IFluidHandler fluidHandler = heldItem.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
@@ -72,7 +76,7 @@ public abstract class MFRLiquidMover {
 				FluidStack tankLiquid = tank.getContents();
 				if (tankLiquid == null || tankLiquid.amount == 0)
 					continue;
-				ItemStack containerToDrop = null;
+				@Nonnull ItemStack containerToDrop = ItemStack.EMPTY;
 				FluidStack bucketLiquid;
 
 				if (heldItem.getCount() > 1) {
@@ -91,7 +95,7 @@ public abstract class MFRLiquidMover {
 				} else
 					continue;
 
-				if (containerToDrop == null || disposePlayerItem(heldItem, containerToDrop, entityplayer, MFRConfig.dropFilledContainers.getBoolean(true))) {
+				if (containerToDrop.isEmpty() || disposePlayerItem(heldItem, containerToDrop, entityplayer, MFRConfig.dropFilledContainers.getBoolean(true))) {
 					if (!entityplayer.world.isRemote) {
 						entityplayer.openContainer.detectAndSendChanges();
 						((EntityPlayerMP) entityplayer).updateCraftingInventory(entityplayer.openContainer, entityplayer.openContainer.getInventory());
@@ -104,12 +108,12 @@ public abstract class MFRLiquidMover {
 		return false;
 	}
 
-	private static boolean disposePlayerItem(ItemStack stack, ItemStack dropStack, EntityPlayer entityplayer, boolean allowDrop) {
+	private static boolean disposePlayerItem(@Nonnull ItemStack stack, @Nonnull ItemStack dropStack, EntityPlayer entityplayer, boolean allowDrop) {
 
 		return disposePlayerItem(stack, dropStack, entityplayer, allowDrop, true);
 	}
 
-	public static boolean disposePlayerItem(ItemStack stack, ItemStack dropStack,
+	public static boolean disposePlayerItem(@Nonnull ItemStack stack, @Nonnull ItemStack dropStack,
 			EntityPlayer entityplayer, boolean allowDrop, boolean allowReplace) {
 
 		if (entityplayer == null || entityplayer.capabilities.isCreativeMode)
@@ -119,7 +123,7 @@ public abstract class MFRLiquidMover {
 			return true;
 		} else if (allowDrop) {
 			stack.shrink(1);
-			if (dropStack != null && !entityplayer.inventory.addItemStackToInventory(dropStack)) {
+			if (!dropStack.isEmpty() && !entityplayer.inventory.addItemStackToInventory(dropStack)) {
 				entityplayer.dropItem(dropStack, false, true);
 			}
 			return true;

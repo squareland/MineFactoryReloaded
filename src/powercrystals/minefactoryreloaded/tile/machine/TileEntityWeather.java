@@ -20,6 +20,8 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
+
 import static net.minecraftforge.fluids.FluidRegistry.WATER;
 
 public class TileEntityWeather extends TileEntityFactoryPowered {
@@ -153,7 +155,7 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

@@ -34,6 +34,7 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.block.BlockTankRenderer;
 import powercrystals.minefactoryreloaded.tile.tank.TileEntityTank;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvider {
@@ -110,7 +111,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 	}
 
 	@Override
-	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
 
 		super.activated(world, pos, player, side, hand, heldItem);
 		return true; // don't allow accidentally placing fluids/tanks off us

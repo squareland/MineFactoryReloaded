@@ -2,13 +2,13 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import cofh.lib.gui.slot.SlotLocked;
 import cofh.lib.gui.slot.SlotRemoveOnly;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLiquiCrafter;
+
+import javax.annotation.Nonnull;
 
 public class ContainerLiquiCrafter extends ContainerFactoryInventory {
 
@@ -37,7 +37,7 @@ public class ContainerLiquiCrafter extends ContainerFactoryInventory {
 	}
 
 	@Override
-	protected boolean performMerge(int slot, ItemStack stackInSlot) {
+	protected boolean performMerge(int slot, @Nonnull ItemStack stackInSlot) {
 
 		if (slot == 9) {
 			return false;

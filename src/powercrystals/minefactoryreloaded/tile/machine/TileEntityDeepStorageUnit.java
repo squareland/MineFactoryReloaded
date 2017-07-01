@@ -1,15 +1,13 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import powercrystals.minefactoryreloaded.api.IDeepStorageUnit;
@@ -20,12 +18,15 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerDeepStorageUnit;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
+
 public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implements IDeepStorageUnit {
 
 	private boolean _ignoreChanges = true;
 	private boolean _passingItem = false;
 
 	private int _storedQuantity;
+	@Nonnull
 	private ItemStack _storedItem = ItemStack.EMPTY;
 
 	public TileEntityDeepStorageUnit() {
@@ -207,7 +208,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	}
 
 	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
+	public void setInventorySlotContents(int i, @Nonnull ItemStack itemstack) {
 
 		if (!itemstack.isEmpty()) {
 			if (itemstack.getCount() < 0)
@@ -221,26 +222,26 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	 * Should only allow matching items to be inserted in the "in" slots. Nothing goes in the "out" slot.
 	 */
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
 		if (_passingItem)
 			return false;
 		if (slot >= 2)
 			return false;
-		ItemStack stored = _storedItem;
+		@Nonnull ItemStack stored = _storedItem;
 		if (stored.isEmpty())
 			stored = _inventory[2];
 		return stored.isEmpty() || (UtilInventory.stacksEqual(stored, stack) && (getMaxStoredCount() - stored.getMaxStackSize()) > _storedQuantity);
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int slot, @Nonnull ItemStack itemstack) {
 
 		return canInsertItem(slot, itemstack, null);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return true;
 	}
@@ -249,7 +250,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	public void writeItemNBT(NBTTagCompound tag) {
 
 		int storedAdd = 0;
-		ItemStack o = _inventory[2];
+		@Nonnull ItemStack o = _inventory[2];
 		if (!o.isEmpty()) {
 			storedAdd = o.getCount();
 			_inventory[2] = ItemStack.EMPTY;
@@ -267,7 +268,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 
-		ItemStack o = _inventory[2];
+		@Nonnull ItemStack o = _inventory[2];
 		_inventory[2] = ItemStack.EMPTY;
 		tag = super.writeToNBT(tag);
 		_inventory[2] = o;
@@ -299,6 +300,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 		_ignoreChanges = false;
 	}
 
+	@Nonnull
 	public ItemStack getStoredItemRaw() {
 
 		if (!_storedItem.isEmpty()) {
@@ -308,13 +310,14 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void setStoredItemRaw(ItemStack type) {
+	public void setStoredItemRaw(@Nonnull ItemStack type) {
 
 		if (world.isRemote) {
 			_storedItem = type;
 		}
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getStoredItemType() {
 
@@ -347,7 +350,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 	}
 
 	@Override
-	public void setStoredItemType(ItemStack type, int amount) {
+	public void setStoredItemType(@Nonnull ItemStack type, int amount) {
 
 		if (!_storedItem.isEmpty() && isActive() && !UtilInventory.stacksEqual(type, _storedItem))
 			return;
@@ -379,6 +382,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implem
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(new InvWrapper(this) {
 
+				@Nonnull
 				@Override
 				public ItemStack getStackInSlot(int slot) {
 

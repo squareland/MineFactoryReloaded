@@ -1,21 +1,12 @@
 package powercrystals.minefactoryreloaded.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,10 +16,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
@@ -43,9 +35,13 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.IColorRegister;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.village.Zoologist;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
@@ -71,7 +67,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 
 		if (!isSingleUse(stack) || !isEmpty(stack))
 			return 1;
@@ -79,7 +75,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 
 		super.addInfo(stack, player, infoList, advancedTooltips);
 
@@ -117,7 +113,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
 
-		ItemStack itemstack = player.getHeldItem(hand);
+		@Nonnull ItemStack itemstack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.PASS;
@@ -137,7 +133,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 	}
 
-	public static Entity releaseEntity(ItemStack itemstack, World world, BlockPos pos, EnumFacing side) {
+	public static Entity releaseEntity(@Nonnull ItemStack itemstack, World world, BlockPos pos, EnumFacing side) {
 
 		if (world.isRemote) {
 			return null;
@@ -257,17 +253,17 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+	public boolean itemInteractionForEntity(@Nonnull ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
 
 		return captureEntity(itemstack, entity, player, hand);
 	}
 
-	public static boolean captureEntity(ItemStack itemstack, EntityLivingBase entity) {
+	public static boolean captureEntity(@Nonnull ItemStack itemstack, EntityLivingBase entity) {
 
 		return captureEntity(itemstack, entity, null, null);
 	}
 
-	public static boolean captureEntity(ItemStack itemstack, EntityLivingBase entity, EntityPlayer player, EnumHand hand) {
+	public static boolean captureEntity(@Nonnull ItemStack itemstack, EntityLivingBase entity, EntityPlayer player, EnumHand hand) {
 
 		if (entity.world.isRemote) {
 			return false;
@@ -319,22 +315,22 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		return true;
 	}
 
-	public static boolean isEmpty(ItemStack s) {
+	public static boolean isEmpty(@Nonnull ItemStack s) {
 
 		return !isSafariNet(s) || (s.getItemDamage() == 0 && (s.getTagCompound() == null || (!s.getTagCompound().hasKey("id") && !s.getTagCompound().getBoolean("hide"))));
 	}
 
-	public static boolean isSingleUse(ItemStack s) {
+	public static boolean isSingleUse(@Nonnull ItemStack s) {
 
 		return isSafariNet(s) && !((ItemSafariNet) s.getItem()).multiuse;
 	}
 
-	public static boolean isSafariNet(ItemStack s) {
+	public static boolean isSafariNet(@Nonnull ItemStack s) {
 
-		return s != null && (s.getItem() instanceof ItemSafariNet);
+		return !s.isEmpty() && (s.getItem() instanceof ItemSafariNet);
 	}
 
-	public static ItemStack makeMysteryNet(ItemStack s) {
+	public static @Nonnull ItemStack makeMysteryNet(@Nonnull ItemStack s) {
 
 		if (isSafariNet(s)) {
 			NBTTagCompound c = new NBTTagCompound();
@@ -344,7 +340,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		return s;
 	}
 
-	public static Class<?> getEntityClass(ItemStack s) {
+	public static Class<?> getEntityClass(@Nonnull ItemStack s) {
 
 		if (!isSafariNet(s) || isEmpty(s))
 			return null;
@@ -362,7 +358,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public void getSubItems(Item item, List<ItemStack> subTypes) {
+	public void getSubItems(Item item, NonNullList<ItemStack> subTypes) {
 
 		super.getSubItems(item, subTypes);
 		if (item.equals(MFRThings.safariNetSingleItem)) {
@@ -394,7 +390,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		final IItemColor colorHandler = new IItemColor() {
 			@Override
 			@SideOnly(Side.CLIENT)
-			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+			public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
 
 				if (stack.getItemDamage() == 0 && (stack.getTagCompound() == null)) {
 					return 16777215;
@@ -422,7 +418,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				}
 			}
 
-			private EntityList.EntityEggInfo getEgg(ItemStack safariStack) {
+			private EntityList.EntityEggInfo getEgg(@Nonnull ItemStack safariStack) {
 
 				if (safariStack.getTagCompound() == null) {
 					return null;

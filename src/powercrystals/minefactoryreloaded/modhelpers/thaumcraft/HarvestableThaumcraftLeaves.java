@@ -36,7 +36,7 @@ public class HarvestableThaumcraftLeaves extends HarvestableTreeLeaves
 		else
 		{
 			int leafMeta = world.getBlockMetadata(x, y, z) & 0x01;
-			List<ItemStack> drops = new LinkedList<ItemStack>();
+			NonNullList<ItemStack> drops = new LinkedList<@Nonnull ItemStack>();
 			if(rand.nextInt(leafMeta == 0 ? 300 : 500) == 0)
 			{
 				drops.add(new ItemStack(_plant, 1, leafMeta));

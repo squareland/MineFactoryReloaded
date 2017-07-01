@@ -14,14 +14,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -38,6 +37,7 @@ import powercrystals.minefactoryreloaded.render.tileentity.RedNetLogicRenderer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockRedNetLogic extends BlockFactory implements IRedNetOmniNode, IRedNetInfo {
@@ -147,7 +147,7 @@ public class BlockRedNetLogic extends BlockFactory implements IRedNetOmniNode, I
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
 
 		if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 			if (rotateBlock(world, pos, side)) {

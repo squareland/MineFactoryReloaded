@@ -4,18 +4,17 @@ import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import cofh.core.util.CoreUtils;
 import cofh.lib.util.helpers.EnergyHelper;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import powercrystals.minefactoryreloaded.core.ForgeEnergyHandler;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
 
 public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInventory
 										implements IEnergyProvider {
@@ -119,12 +118,12 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 		return EnergyHelper.isEnergyContainerItem(itemstack);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 		return _inventory[0] != null && EnergyHelper.insertEnergyIntoContainer(_inventory[0], 2, true) < 2;
 	}
 

@@ -3,15 +3,16 @@ package powercrystals.minefactoryreloaded.gui.container;
 import cofh.lib.gui.container.ContainerInventoryItem;
 import cofh.lib.gui.slot.SlotAcceptValid;
 import cofh.lib.gui.slot.SlotLocked;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ContainerBag extends ContainerInventoryItem
 {
 
-	public ContainerBag(ItemStack stack, InventoryPlayer inv) {
+	public ContainerBag(@Nonnull ItemStack stack, InventoryPlayer inv) {
 
 		super(stack, inv);
 
@@ -40,7 +41,7 @@ public class ContainerBag extends ContainerInventoryItem
 	}
 
 	@Override
-	protected boolean performMerge(int slotIndex, ItemStack stack) {
+	protected boolean performMerge(int slotIndex, @Nonnull ItemStack stack) {
 
 		int invFull = getSizeInventory();
 

@@ -1,10 +1,5 @@
 package powercrystals.minefactoryreloaded.farmables.harvestables;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -13,8 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-
 import powercrystals.minefactoryreloaded.api.HarvestType;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class HarvestableShearable extends HarvestableStandard
 {
@@ -37,7 +37,7 @@ public class HarvestableShearable extends HarvestableStandard
 		{
 			if (block instanceof IShearable)
 			{
-				ItemStack stack = new ItemStack(Items.SHEARS, 1, 0);
+				@Nonnull ItemStack stack = new ItemStack(Items.SHEARS, 1, 0);
 				if (((IShearable)block).isShearable(stack, world, pos))
 				{
 					return ((IShearable)block).onSheared(stack, world, pos, 0);

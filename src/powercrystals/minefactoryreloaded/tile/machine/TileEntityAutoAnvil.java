@@ -1,11 +1,6 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
 import cofh.core.fluid.FluidTankCore;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Map;
-
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,11 +9,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.gui.client.GuiAutoAnvil;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerAutoAnvil;
@@ -27,7 +23,9 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 
@@ -35,7 +33,8 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 	private int stackSizeToBeUsedInRepair;
 	private boolean repairOnly;
 
-	private ItemStack _output;
+	@Nonnull
+	private ItemStack _output = ItemStack.EMPTY;
 
 	public TileEntityAutoAnvil() {
 
@@ -51,9 +50,9 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack == null) return false;
+		if (stack.isEmpty()) return false;
 		Item item = stack.getItem();
 		if (repairOnly) {
 			if (slot == 0) return item.isRepairable();
@@ -73,7 +72,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		if (slot == 2) return true;
 		return false;
@@ -101,7 +100,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		if (_output == null || _inventory[2] != null) {
+		if (_output.isEmpty() || _inventory[2] != null) {
 			return false;
 		} else {
 			if (repairOnly) {
@@ -116,7 +115,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 						_inventory[2] = _output;
 
 						setWorkDone(0);
-						_output = null;
+						_output = ItemStack.EMPTY;
 					}
 					return true;
 				}
@@ -145,7 +144,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				}
 
 				setWorkDone(0);
-				_output = null;
+				_output = ItemStack.EMPTY;
 			}
 
 			return true;
@@ -158,31 +157,33 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 		super.onFactoryInventoryChanged();
 
 		_output = getAnvilOutput();
-		if (_output != null) {
+		if (!_output.isEmpty()) {
 			setIdleTicks(getIdleTicksMax());
 		}
 		setWorkDone(0);
 	}
 
+	@Nonnull
 	public ItemStack getRepairOutput() {
 
 		return _output;
 	}
 
+	@Nonnull
 	private ItemStack getAnvilOutput() {
 
-		ItemStack startingItem = _inventory[0];
+		@Nonnull ItemStack startingItem = _inventory[0];
 		this.maximumCost = 0;
 		int totalEnchCost = 0;
 
-		if (startingItem == null) {
-			return null;
+		if (startingItem.isEmpty()) {
+			return ItemStack.EMPTY;
 		} else if (repairOnly) {
 			this.stackSizeToBeUsedInRepair = 0;
-			ItemStack addedItem = _inventory[1];
+			@Nonnull ItemStack addedItem = _inventory[1];
 			Item item = startingItem.getItem();
 
-			if (addedItem != null && item.isRepairable() &&
+			if (!addedItem.isEmpty() && item.isRepairable() &&
 					startingItem.getItem() == addedItem.getItem()) {
 				int d = item.getMaxDamage();
 				int k = startingItem.getItemDamage();
@@ -194,10 +195,10 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 
 				return new ItemStack(startingItem.getItem(), 1, j1);
 			}
-			return null;
+			return ItemStack.EMPTY;
 		} else {
-			ItemStack outputItem = startingItem.copy();
-			ItemStack addedItem = _inventory[1];
+			@Nonnull ItemStack outputItem = startingItem.copy();
+			@Nonnull ItemStack addedItem = _inventory[1];
 
 			Map<Enchantment, Integer> existingEnchantments = EnchantmentHelper.getEnchantments(outputItem);
 
@@ -205,14 +206,14 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				outputItem = new ItemStack(Items.ENCHANTED_BOOK);
 
 			boolean enchantingWithBook = false;
-			int repairCost = outputItem.getRepairCost() + (addedItem == null ? 0 : addedItem.getRepairCost());
+			int repairCost = outputItem.getRepairCost() + (addedItem.isEmpty() ? 0 : addedItem.getRepairCost());
 			this.stackSizeToBeUsedInRepair = 0;
 
-			if (addedItem != null) {
+			if (!addedItem.isEmpty()) {
 				{ // anvil event (canceled: don't anvil; output != null: item & cost calculated by listener)
 					AnvilUpdateEvent e = new AnvilUpdateEvent(outputItem.copy(), addedItem.copy(), "", repairCost);
-					if (MinecraftForge.EVENT_BUS.post(e)) return null;
-					if (e.getOutput() != null) {
+					if (MinecraftForge.EVENT_BUS.post(e)) return ItemStack.EMPTY;
+					if (!e.getOutput().isEmpty()) {
 						maximumCost = e.getCost();
 						return e.getOutput();
 					}
@@ -228,7 +229,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 					int currentDamage = Math.min(outputItem.getItemDamage(), outputItem.getMaxDamage() / 4);
 
 					if (currentDamage <= 0) {
-						return null;
+						return ItemStack.EMPTY;
 					}
 
 					int repairStackSize = 0;
@@ -244,7 +245,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				} else {
 					if (!enchantingWithBook && (!outputItem.getItem().equals(addedItem.getItem()) ||
 							!outputItem.isItemStackDamageable())) {
-						return null;
+						return ItemStack.EMPTY;
 					}
 
 					if (outputItem.isItemStackDamageable() && !enchantingWithBook) {
@@ -468,7 +469,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

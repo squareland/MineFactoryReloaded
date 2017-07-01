@@ -1,39 +1,34 @@
 package powercrystals.minefactoryreloaded.item;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.FluidTankProperties;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.IAdvFluidContainerItem;
@@ -46,7 +41,10 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.model.MFRModelLoader;
 import powercrystals.minefactoryreloaded.render.model.PlasticCupModel;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ItemFactoryCup extends ItemFactory implements IUseable {
 
@@ -69,7 +67,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && tag.hasKey("fluid"))
 			return 1;
@@ -87,13 +85,13 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getUnlocalizedName(@Nonnull ItemStack stack) {
 		if (getFluid(stack) != null)
 			return getUnlocalizedName() + (_prefix ? ".prefix" : ".suffix");
 		return getUnlocalizedName();
 	}
 
-	private FluidStack getFluid(ItemStack stack) {
+	private FluidStack getFluid(@Nonnull ItemStack stack) {
 
 		IFluidTankProperties[] tankProps = getFluidHandler(stack).getTankProperties();
 		if (tankProps.length > 0) {
@@ -111,7 +109,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public String getItemStackDisplayName(ItemStack item) {
+	public String getItemStackDisplayName(@Nonnull ItemStack item) {
 		String ret = getFluidName(item), t = getLocalizedName(ret);
 		if (t != null && !t.isEmpty())
 			return TextFormatting.RESET + t + TextFormatting.RESET;
@@ -133,7 +131,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		return ret;
 	}
 
-	public String getFluidName(ItemStack stack) {
+	public String getFluidName(@Nonnull ItemStack stack) {
 		NBTTagCompound tag = stack.getTagCompound();
 		return tag == null || !tag.hasKey("fluid") ? null : tag.getCompoundTag("fluid").getString("FluidName");
 	}
@@ -143,11 +141,12 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		return this;
 	}
 
+	@Nonnull
 	@Override
-	public ItemStack getContainerItem(ItemStack stack) {
+	public ItemStack getContainerItem(@Nonnull ItemStack stack) {
 		if (stack.getCount() <= 0)
-			return null;
-		ItemStack r = stack.copy();
+			return ItemStack.EMPTY;
+		@Nonnull ItemStack r = stack.copy();
 		NBTTagCompound tag = r.getTagCompound();
 		if (tag != null) {
 			if (tag.hasKey("drained")) {
@@ -164,12 +163,12 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public boolean hasContainerItem(ItemStack stack) {
+	public boolean hasContainerItem(@Nonnull ItemStack stack) {
 		NBTTagCompound tag = stack.getTagCompound();
 		return tag != null && (tag.hasKey("fluid") || tag.hasKey("drained"));
 	}
 
-	public boolean hasDrinkableLiquid(ItemStack stack) {
+	public boolean hasDrinkableLiquid(@Nonnull ItemStack stack) {
 
 		IFluidTankProperties[] tankProps = getFluidHandler(stack).getTankProperties();
 		return stack.getCount() == 1 &&
@@ -177,9 +176,9 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 				getFluid(stack).amount == tankProps[0].getCapacity();
 	}
 
-	@Nullable
+	@Nonnull
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entity) {
+	public ItemStack onItemUseFinish(@Nonnull ItemStack stack, World worldIn, EntityLivingBase entity) {
 		for (IUseHandler handler : useHandlers)
 			if (handler.isUsable(stack))
 				return handler.onUse(stack, entity, entity.getActiveHand());
@@ -187,7 +186,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack item) {
+	public EnumAction getItemUseAction(@Nonnull ItemStack item) {
 		for (IUseHandler handler : useHandlers)
 			if (handler.isUsable(item))
 				return handler.useAction(item);
@@ -195,7 +194,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public int getMaxItemUseDuration(ItemStack item) {
+	public int getMaxItemUseDuration(@Nonnull ItemStack item) {
 		for (IUseHandler handler : useHandlers)
 			if (handler.isUsable(item))
 				return handler.getMaxUseDuration(item);
@@ -205,7 +204,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		ItemStack item = player.getHeldItem(hand);
+		@Nonnull ItemStack item = player.getHeldItem(hand);
 		for (IUseHandler handler : useHandlers)
 			if (handler.canUse(item, player, hand))
 				return new ActionResult<>(EnumActionResult.SUCCESS, handler.onTryUse(item, world, player, hand));
@@ -213,7 +212,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public boolean isValidArmor(ItemStack stack, EntityEquipmentSlot armorType, Entity entity) {
+	public boolean isValidArmor(@Nonnull ItemStack stack, EntityEquipmentSlot armorType, Entity entity) {
 		if (armorType == EntityEquipmentSlot.HEAD)
 			if (entity instanceof EntityPlayer &&
 					entity.getName().equalsIgnoreCase("Eyamaz"))
@@ -223,13 +222,13 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+	public String getArmorTexture(@Nonnull ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
 		return MineFactoryReloadedCore.textureFolder + "armor/plastic_layer_1.png";
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, @Nonnull ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
 		if (armorSlot == EntityEquipmentSlot.HEAD) {
 			return null; // TODO
 		}
@@ -268,22 +267,23 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		MFRModelLoader.registerModel(PlasticCupModel.MODEL_LOCATION, PlasticCupModel.MODEL);
 	}
 
-	private IAdvFluidContainerItem getFluidHandler(ItemStack stack) {
+	private IAdvFluidContainerItem getFluidHandler(@Nonnull ItemStack stack) {
 
 		return (IAdvFluidContainerItem) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, NBTTagCompound nbt) {
 
 		return new FactoryCupFluidHandler(stack);
 	}
 
 	private class FactoryCupFluidHandler implements ICapabilityProvider, IAdvFluidContainerItem {
 
+		@Nonnull
 		private ItemStack stack;
 
-		public FactoryCupFluidHandler(ItemStack stack) {
+		public FactoryCupFluidHandler(@Nonnull ItemStack stack) {
 			this.stack = stack;
 		}
 

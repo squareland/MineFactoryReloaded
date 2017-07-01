@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,17 +23,17 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.world.SmashingWorld;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 
 	public static final int MAX_FORTUNE = 3;
 	private int _fortune = 0;
 
-	private ItemStack _lastInput;
-	private List<ItemStack> _lastOutput;
+	@Nonnull
+	private ItemStack _lastInput = ItemStack.EMPTY;
+	private NonNullList<ItemStack> _lastOutput;
 
 	private SmashingWorld _smashingWorld;
 	private boolean _shouldWork = true;
@@ -77,7 +78,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 			setWorkDone(0);
 			return false;
 		}
-		if (_inventory[0] != null && (_lastInput == null || !UtilInventory.stacksEqual(_lastInput, _inventory[0]))) {
+		if (_inventory[0] != null && (_lastInput.isEmpty() || !UtilInventory.stacksEqual(_lastInput, _inventory[0]))) {
 			_lastInput = _inventory[0].copy(); // protect against amorphous itemstacks
 			_lastOutput = getOutput(_lastInput);
 		}
@@ -88,15 +89,15 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 		if (_shouldWork && _fortune > 0 && (drain(_fortune, false, _tanks[0]) != _fortune)) {
 			return false;
 		}
-		ItemStack outSlot = _inventory[1];
-		ItemStack output = getEqualStack(outSlot, _lastOutput);
+		@Nonnull ItemStack outSlot = _inventory[1];
+		@Nonnull ItemStack output = getEqualStack(outSlot, _lastOutput);
 		// TODO: ^ inefficient
-		if (output == null) {
+		if (output.isEmpty()) {
 			if (_shouldWork)
 				setWorkDone(0);
 			return false;
 		}
-		if (outSlot != null && outSlot.getMaxStackSize() - outSlot.getCount() < output.getCount()) {
+		if (!outSlot.isEmpty() && outSlot.getMaxStackSize() - outSlot.getCount() < output.getCount()) {
 			return false;
 		}
 
@@ -117,7 +118,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 			if (_lastOutput.size() == 0) {
 				setWorkDone(0);
 				_shouldWork = true;
-				_lastInput = null;
+				_lastInput = ItemStack.EMPTY;
 				_lastOutput = null;
 			}
 		} else {
@@ -127,15 +128,15 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 		return true;
 	}
 
-	private static ItemStack getEqualStack(ItemStack a, List<ItemStack> b) {
+	private static @Nonnull ItemStack getEqualStack(@Nonnull ItemStack a, NonNullList<ItemStack> b) {
 
-		if (a != null & b != null && a.getCount() > 0 && b.size() > 0)
-			for (ItemStack i : b)
+		if (!a.isEmpty() & b != null && a.getCount() > 0 && b.size() > 0)
+			for (@Nonnull ItemStack i : b)
 				if (UtilInventory.stacksEqual(a, i)) return i;
-		return a == null && b.size() > 0 ? b.get(0) : null;
+		return a.isEmpty() && b.size() > 0 ? b.get(0) : ItemStack.EMPTY;
 	}
 
-	private List<ItemStack> getOutput(ItemStack input) {
+	private NonNullList<ItemStack> getOutput(@Nonnull ItemStack input) {
 
 		if (!(input.getItem() instanceof ItemBlock)) {
 			return null;
@@ -146,7 +147,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 			return null;
 		}
 
-		List<ItemStack> drops = _smashingWorld.smashBlock(input, b, block.getMetadata(input.getItemDamage()), _fortune);
+		NonNullList<ItemStack> drops = _smashingWorld.smashBlock(input, b, block.getMetadata(input.getItemDamage()), _fortune);
 		if (drops != null && drops.size() > 0) {
 			return drops;
 		}
@@ -181,14 +182,14 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
 		if (slot == 0) return true;
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		if (slot == 1) return true;
 		return false;
@@ -225,12 +226,12 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 
 		tag = super.writeToNBT(tag);
 		tag.setBoolean("shouldWork", _shouldWork);
-		if (_lastInput != null)
+		if (!_lastInput.isEmpty())
 			tag.setTag("stack", _lastInput.writeToNBT(new NBTTagCompound()));
 
 		if (_lastOutput != null) {
 			NBTTagList nbttaglist = new NBTTagList();
-			for (ItemStack item : _lastOutput) {
+			for (@Nonnull ItemStack item : _lastOutput) {
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				item.writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
@@ -251,12 +252,12 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 			_lastInput = new ItemStack(tag.getCompoundTag("stack"));
 
 		if (tag.hasKey("SmashedItems")) {
-			List<ItemStack> drops = new ArrayList<ItemStack>();
+			NonNullList<ItemStack> drops = NonNullList.create();
 			NBTTagList nbttaglist = tag.getTagList("SmashedItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
 				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				ItemStack item = new ItemStack(nbttagcompound1);
-				if (item != null && item.getCount() > 0) {
+				@Nonnull ItemStack item = new ItemStack(nbttagcompound1);
+				if (!item.isEmpty() && item.getCount() > 0) {
 					drops.add(item);
 				}
 			}
@@ -267,7 +268,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

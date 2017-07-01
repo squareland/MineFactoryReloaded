@@ -7,13 +7,15 @@ import net.minecraft.dispenser.IPosition;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.entity.EntitySafariNet;
+
+import javax.annotation.Nonnull;
 
 public class BehaviorDispenseSafariNet extends BehaviorDefaultDispenseItem
 {
+	@Nonnull
 	@Override
-	public ItemStack dispenseStack(IBlockSource dispenser, ItemStack stack)
+	public ItemStack dispenseStack(IBlockSource dispenser, @Nonnull ItemStack stack)
 	{
 		World world = dispenser.getWorld();
 		IPosition dispenserPos = BlockDispenser.getDispensePosition(dispenser);

@@ -1,18 +1,16 @@
 package powercrystals.minefactoryreloaded.item.syringe;
 
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.text.TextFormatting;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -27,6 +25,7 @@ import powercrystals.minefactoryreloaded.render.model.MFRModelLoader;
 import powercrystals.minefactoryreloaded.render.model.SyringeModel;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ItemSyringeLiquid extends ItemSyringe
@@ -40,7 +39,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack)
+	public String getUnlocalizedName(@Nonnull ItemStack stack)
 	{
 		if (getFluidHandler(stack).getTankProperties()[0].getContents() != null)
 			return getUnlocalizedName() + (_prefix ? ".prefix" : ".suffix");
@@ -55,7 +54,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 		return null;
 	}
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && tag.hasKey("fluidName"))
 			return 1;
@@ -63,7 +62,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 	}
 
 	@Override
-	public String getItemStackDisplayName(ItemStack item)
+	public String getItemStackDisplayName(@Nonnull ItemStack item)
 	{
 		String ret = getFluidName(item), t = getLocalizedName(ret);
 		if (t != null && !t.isEmpty())
@@ -90,7 +89,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 
 	// TODO: subItems to provide a syringe for all fluids via creative under a config
 
-	public String getFluidName(ItemStack container)
+	public String getFluidName(@Nonnull ItemStack container)
 	{
 		NBTTagCompound tag = container.getTagCompound();
 		return tag == null || !tag.hasKey("fluidName") ? null :
@@ -98,7 +97,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 	}
 
 	@Override
-	public boolean canInject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		IFluidTankProperties[] tankProps = getFluidHandler(syringe).getTankProperties();
 		FluidStack fluid = tankProps[0].getContents();
@@ -106,7 +105,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 	}
 
 	@Override
-	public boolean inject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		ILiquidDrinkHandler handler = MFRRegistry.getLiquidDrinkHandlers().
 				get(getFluidName(syringe));
@@ -119,18 +118,19 @@ public class ItemSyringeLiquid extends ItemSyringe
 		return false;
 	}
 
-	private IFluidHandler getFluidHandler(ItemStack syringe) {
+	private IFluidHandler getFluidHandler(@Nonnull ItemStack syringe) {
 		return syringe.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 	}
 
 	@Override
-	public boolean isEmpty(ItemStack syringe)
+	public boolean isEmpty(@Nonnull ItemStack syringe)
 	{
 		return getFluidName(syringe) == null;
 	}
 
+	@Nonnull
 	@Override
-	public ItemStack getEmptySyringe(ItemStack syringe)
+	public ItemStack getEmptySyringe(@Nonnull ItemStack syringe)
 	{
 		return new ItemStack(MFRThings.syringeEmptyItem);
 	}
@@ -144,15 +144,16 @@ public class ItemSyringeLiquid extends ItemSyringe
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, NBTTagCompound nbt) {
 
 		return new SyringeFluidHandler(stack);
 	}
 
 	private class SyringeFluidHandler implements ICapabilityProvider, IFluidHandler {
 
+		@Nonnull
 		private ItemStack stack;
-		public SyringeFluidHandler(ItemStack stack) {
+		public SyringeFluidHandler(@Nonnull ItemStack stack) {
 
 			this.stack = stack;
 		}

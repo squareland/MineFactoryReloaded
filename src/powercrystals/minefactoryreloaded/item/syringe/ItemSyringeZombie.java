@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.ItemStack;
@@ -14,6 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
 
 public class ItemSyringeZombie extends ItemSyringe
 {
@@ -25,13 +26,13 @@ public class ItemSyringeZombie extends ItemSyringe
 	}
 
 	@Override
-	public boolean canInject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		return entity instanceof EntityAgeable && ((EntityAgeable)entity).getGrowingAge() < 0;
 	}
 	
 	@Override
-	public boolean inject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		((EntityAgeable)entity).setGrowingAge(0);
 		if(world.rand.nextInt(100) < 5)

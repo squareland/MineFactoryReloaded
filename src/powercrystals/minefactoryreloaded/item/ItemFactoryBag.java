@@ -1,14 +1,9 @@
 package powercrystals.minefactoryreloaded.item;
 
-import codechicken.lib.inventory.InventoryUtils;
 import cofh.api.item.IInventoryContainerItem;
 import cofh.lib.gui.container.InventoryContainerItemWrapper;
-import cofh.lib.util.helpers.InventoryHelper;
 import cofh.lib.util.helpers.ItemHelper;
 import cofh.lib.util.helpers.StringHelper;
-
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,11 +12,9 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -29,6 +22,9 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRLoot;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemFactoryBag extends ItemFactory implements IInventoryContainerItem {
 
@@ -40,7 +36,7 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && (tag.hasKey("inventory") || tag.hasKey("Inventory") || tag.hasKey("loot")))
@@ -49,7 +45,7 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 
 		super.addInfo(stack, player, infoList, advancedTooltips);
 
@@ -69,7 +65,7 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	}
 
 	@Override
-	public int getSizeInventory(ItemStack container) {
+	public int getSizeInventory(@Nonnull ItemStack container) {
 
 		return 5;
 	}
@@ -77,7 +73,7 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		ItemStack stack = player.getHeldItem(hand);
+		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		if (stack.getCount() != 1) {
 			if (!world.isRemote)
@@ -95,7 +91,8 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 	}
 
-	private ItemStack fillWithLoot(WorldServer world, EntityPlayer player, ItemStack stack) {
+	@Nonnull
+	private ItemStack fillWithLoot(WorldServer world, EntityPlayer player, @Nonnull ItemStack stack) {
 		
 		LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(MFRLoot.FACTORY_BAG);
 		InventoryContainerItemWrapper wrapper = new InventoryContainerItemWrapper(stack);

@@ -10,7 +10,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -30,6 +33,7 @@ import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorative { // TODO: convert to BlockFluidFinite
@@ -138,7 +142,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 					return;
 				break l;
 			}
-			ItemStack drop = null;
+			@Nonnull ItemStack drop = ItemStack.EMPTY;
 			Block block = Blocks.AIR;
 			if (this == MFRFluids.milkLiquid) {
 				if (rand.nextInt(50) == 0)
@@ -192,7 +196,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 					drop = new ItemStack(Blocks.RED_MUSHROOM, rand.nextInt(2));
 			}
 			if (world.setBlockState(pos, block.getDefaultState(), 3)) {
-				if (drop != null && drop.getCount() > 0) {
+				if (!drop.isEmpty() && drop.getCount() > 0) {
 					UtilInventory.dropStackInAir(world, pos, drop);
 				}
 

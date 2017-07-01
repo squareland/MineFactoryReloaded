@@ -39,13 +39,17 @@ import powercrystals.minefactoryreloaded.api.rednet.IRedNetInputNode;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.block.BlockFactory;
 import powercrystals.minefactoryreloaded.block.ItemBlockConveyor;
-import powercrystals.minefactoryreloaded.core.*;
+import powercrystals.minefactoryreloaded.core.IEntityCollidable;
+import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.MFRDyeColor;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.item.ItemPlasticBoots;
 import powercrystals.minefactoryreloaded.render.IColorRegister;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityConveyor;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class BlockConveyor extends BlockFactory implements IRedNetInputNode, IColorRegister {
@@ -138,7 +142,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, @Nonnull ItemStack stack) {
 
 		super.onBlockPlacedBy(world, pos, state, entity, stack);
 		if (entity == null) {
@@ -182,8 +186,8 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 		if(entity instanceof EntityLivingBase)
 			l:{
-				ItemStack item = ((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.FEET);
-				if(item == null)
+				@Nonnull ItemStack item = ((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.FEET);
+				if(item.isEmpty())
 					break l;
 				if(item.getItem() instanceof ItemPlasticBoots)
 					return;
@@ -381,7 +385,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
 
 		if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 			TileEntity te = world.getTileEntity(pos);
@@ -390,7 +394,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 			}
 			MFRUtil.usedWrench(player, hand, pos, side);
 			return true;
-		} else if (heldItem != null && heldItem.getItem().equals(Items.GLOWSTONE_DUST)) {
+		} else if (!heldItem.isEmpty() && heldItem.getItem().equals(Items.GLOWSTONE_DUST)) {
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof TileEntityConveyor && !((TileEntityConveyor) te).isFast()) {
 				((TileEntityConveyor) te).setFast(true);
@@ -430,12 +434,14 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 		return new TileEntityConveyor();
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 
 		return getItemFromBlock(world, pos);
 	}
 
+	@Nonnull
 	private ItemStack getItemFromBlock(IBlockAccess world, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		int meta = 16;
@@ -447,10 +453,11 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 		return new ItemStack(this, 1, meta);
 	}
 
+	@Nonnull
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> ret = new ArrayList<>();
 		if (world.getBlockState(pos).getBlock().equals(this)) {
 			ret.add(getItemFromBlock(world, pos));
 			if (((TileEntityConveyor) world.getTileEntity(pos)).isFast())
@@ -495,10 +502,10 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 			((IEntityCollidable) teBelow).onEntityCollided(entityitem);
 		} else if (teBelow instanceof TileEntityHopper) {
 			if (!((TileEntityHopper) teBelow).isOnTransferCooldown()) {
-				ItemStack toInsert = entityitem.getEntityItem().copy();
+				@Nonnull ItemStack toInsert = entityitem.getEntityItem().copy();
 				toInsert.setCount(1);
 				toInsert = TileEntityHopper.putStackInInventoryAllSlots(conveyor, (IInventory) teBelow, toInsert, EnumFacing.UP);
-				if (toInsert == null) {
+				if (!toInsert.isEmpty()) {
 					entityitem.getEntityItem().shrink(1);
 					((TileEntityHopper) teBelow).setTransferCooldown(8);
 				}

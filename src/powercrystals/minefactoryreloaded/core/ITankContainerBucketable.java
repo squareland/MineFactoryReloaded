@@ -3,9 +3,9 @@ package powercrystals.minefactoryreloaded.core;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -21,13 +21,13 @@ public interface ITankContainerBucketable
 	 * Called to determine if the IFluidHandler should be filled by buckets.
 	 * @return True if the IFluidHandler is allowed to be filled manually (with buckets)
 	 */
-	boolean allowBucketFill(EnumFacing facing, ItemStack stack);
+	boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack);
 
 	/**
 	 * Called to determine if the IFluidHandler should be drained by buckets.
 	 * @return True if the IFluidHandler is allowed to be drained manually (with buckets)
 	 */
-	boolean allowBucketDrain(EnumFacing facing, ItemStack stack);
+	boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack);
 
 	/**
 	 * Returns an array of objects which represent the internal tanks.

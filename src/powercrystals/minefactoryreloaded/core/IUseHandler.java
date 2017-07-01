@@ -6,11 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public interface IUseHandler {
-	public boolean canUse(ItemStack item, EntityLivingBase entity, EnumHand hand);
-	public ItemStack onTryUse(ItemStack item, World world, EntityLivingBase entity, EnumHand hand);
-	public int getMaxUseDuration(ItemStack item);
-	public boolean isUsable(ItemStack item);
-	public EnumAction useAction(ItemStack item);
-	public ItemStack onUse(ItemStack item, EntityLivingBase entity, EnumHand hand);
+	boolean canUse(@Nonnull ItemStack item, EntityLivingBase entity, EnumHand hand);
+	@Nonnull ItemStack onTryUse(@Nonnull ItemStack item, World world, EntityLivingBase entity, EnumHand hand);
+	int getMaxUseDuration(@Nonnull ItemStack item);
+	boolean isUsable(@Nonnull ItemStack item);
+	EnumAction useAction(@Nonnull ItemStack item);
+	@Nonnull ItemStack onUse(@Nonnull ItemStack item, EntityLivingBase entity, EnumHand hand);
 }

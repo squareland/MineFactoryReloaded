@@ -1,25 +1,24 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraft.item.ItemDoor;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import net.minecraft.entity.ai.EntityAIVillagerMate;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryPowered;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TileEntityBreeder extends TileEntityFactoryPowered {
 
@@ -69,7 +68,7 @@ public class TileEntityBreeder extends TileEntityFactoryPowered {
 		ArrayList<Integer> doors = new ArrayList<Integer>();
 
 		for (int i = getSizeInventory(); i-- > 0; ) {
-			ItemStack item = _inventory[i];
+			@Nonnull ItemStack item = _inventory[i];
 			if (item != null) {
 				if (item.getItem() instanceof ItemDoor) {
 					doors.add(i);
@@ -103,7 +102,7 @@ public class TileEntityBreeder extends TileEntityFactoryPowered {
 			}
 			if (villagers.size() != 0)
 				for (int i : doors) {
-					ItemStack item = _inventory[i];
+					@Nonnull ItemStack item = _inventory[i];
 					if (item != null) {
 						if (villagers.size() == 0)
 							break;

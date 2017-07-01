@@ -1,20 +1,21 @@
 package powercrystals.minefactoryreloaded.item.base;
 
 import com.google.common.collect.Multimap;
-
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ItemFactoryTool extends ItemFactory {
 
-	protected int getWeaponDamage(ItemStack stack) {
+	protected int getWeaponDamage(@Nonnull ItemStack stack) {
 		return 0;
 	}
 
 	@Override
-	public Multimap getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+	public Multimap getAttributeModifiers(EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
 		
 		if (slot != EntityEquipmentSlot.MAINHAND)

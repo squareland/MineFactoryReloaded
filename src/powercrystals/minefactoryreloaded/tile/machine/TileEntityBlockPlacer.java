@@ -1,28 +1,28 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.FakePlayerFactory;
-
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryPowered;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityBlockPlacer extends TileEntityFactoryPowered {
 
@@ -56,7 +56,7 @@ public class TileEntityBlockPlacer extends TileEntityFactoryPowered {
 	protected boolean activateMachine() {
 
 		for (int i = 0; i < getSizeInventory(); i++) {
-			ItemStack stack = _inventory[i];
+			@Nonnull ItemStack stack = _inventory[i];
 			if (stack == null || !(stack.getItem() instanceof ItemBlock))
 				continue;
 
@@ -98,9 +98,9 @@ public class TileEntityBlockPlacer extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
-		return itemstack != null && itemstack.getItem() instanceof ItemBlock;
+		return !itemstack.isEmpty() && itemstack.getItem() instanceof ItemBlock;
 	}
 
 }

@@ -1,23 +1,22 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
 import appeng.api.implementations.tiles.ICrankable;
-
 import cofh.api.energy.IEnergyReceiver;
 import cofh.api.item.IAugmentItem;
 import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
 import cofh.core.util.helpers.AugmentHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
 
 /*
  * There are three pieces of information tracked - energy, work, and idle ticks.
@@ -118,7 +117,7 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventor
 		if (i < 0) {
 			return;
 		}
-		ItemStack stack = getStackInSlot(i);
+		@Nonnull ItemStack stack = getStackInSlot(i);
 		if (AugmentHelper.isAugmentItem(stack)) {
 			IAugmentItem item = (IAugmentItem) stack.getItem();
 			if ("machineSpeed".equals(item.getAugmentIdentifier(stack))) {
@@ -136,7 +135,7 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventor
 	}
 
 	@Override
-	protected boolean canUseUpgrade(ItemStack stack, IAugmentItem item) {
+	protected boolean canUseUpgrade(@Nonnull ItemStack stack, IAugmentItem item) {
 
 		return super.canUseUpgrade(stack, item) || "machineSpeed".equals(item.getAugmentIdentifier(stack));
 	}

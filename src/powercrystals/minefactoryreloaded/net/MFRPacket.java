@@ -10,13 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.entity.EntityRocket;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.machine.*;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
+
+import javax.annotation.Nonnull;
 
 public class MFRPacket extends PacketCoFHBase {
 
@@ -208,16 +209,16 @@ public class MFRPacket extends PacketCoFHBase {
 					te = world.getTileEntity(pos);
 					player = (EntityPlayer) world.getEntityByID(getInt());
 
-					ItemStack playerStack = player.inventory.getItemStack();
+					@Nonnull ItemStack playerStack = player.inventory.getItemStack();
 					int slotNumber = getInt(),
 							click = getByte();
 					if (te instanceof IInventory) {
-						if (playerStack == null) {
+						if (playerStack.isEmpty()) {
 							((IInventory) te).setInventorySlotContents(slotNumber, null);
 						} else {
 							playerStack = playerStack.copy();
 							playerStack.setCount(click == 1 ? -1 : 1);
-							ItemStack s = ((IInventory) te).getStackInSlot(slotNumber);
+							@Nonnull ItemStack s = ((IInventory) te).getStackInSlot(slotNumber);
 							if (!UtilInventory.stacksEqual(s, playerStack))
 								playerStack.setCount(1);
 							else

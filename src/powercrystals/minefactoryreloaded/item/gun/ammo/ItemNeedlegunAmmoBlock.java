@@ -1,17 +1,18 @@
 package powercrystals.minefactoryreloaded.item.gun.ammo;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
+
+import javax.annotation.Nonnull;
 
 public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 
@@ -28,7 +29,7 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 	}
 
 	@Override
-	public void onHitBlock(ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance) {
+	public void onHitBlock(@Nonnull ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance) {
 		placeBlockAt(world, pos.offset(side), distance);
 	}
 
@@ -42,7 +43,7 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 	}
 
 	@Override
-	public boolean onHitEntity(ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
+	public boolean onHitEntity(@Nonnull ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
 		super.onHitEntity(stack, owner, hit, distance);
 		Vec3d placement = calculatePlacement(hit);
 		placeBlockAt(hit.world, new BlockPos((int)placement.xCoord, (int)placement.yCoord, (int)placement.zCoord),
@@ -51,7 +52,7 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 	}
 
 	@Override
-	public float getSpread(ItemStack stack) {
+	public float getSpread(@Nonnull ItemStack stack) {
 		return 1.5F;
 	}
 

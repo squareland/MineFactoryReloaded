@@ -1,15 +1,15 @@
 package powercrystals.minefactoryreloaded.farmables.grindables;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
 import powercrystals.minefactoryreloaded.api.MobDrop;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class GrindableStandard implements IFactoryGrindable
 {
@@ -33,7 +33,7 @@ public class GrindableStandard implements IFactoryGrindable
 		this(entityToGrind, dropStacks, true);
 	}
 
-	public GrindableStandard(Class<? extends EntityLivingBase> entityToGrind, ItemStack dropStack, boolean entityProcessed)
+	public GrindableStandard(Class<? extends EntityLivingBase> entityToGrind, @Nonnull ItemStack dropStack, boolean entityProcessed)
 	{
 		_grindableClass = entityToGrind;
 		_drops = new ArrayList<MobDrop>();
@@ -41,7 +41,7 @@ public class GrindableStandard implements IFactoryGrindable
 		_entityProcessed = entityProcessed;
 	}
 
-	public GrindableStandard(Class<? extends EntityLivingBase> entityToGrind, ItemStack dropStack)
+	public GrindableStandard(Class<? extends EntityLivingBase> entityToGrind, @Nonnull ItemStack dropStack)
 	{
 		this(entityToGrind, dropStack, true);
 	}

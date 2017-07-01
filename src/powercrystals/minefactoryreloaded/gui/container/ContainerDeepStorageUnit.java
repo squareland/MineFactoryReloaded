@@ -4,15 +4,15 @@ import cofh.lib.gui.slot.SlotAcceptValid;
 import cofh.lib.gui.slot.SlotInvisible;
 import cofh.lib.gui.slot.SlotLocked;
 import cofh.lib.gui.slot.SlotRemoveOnly;
-import net.minecraft.inventory.ClickType;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.item.ItemStack;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityDeepStorageUnit;
+
+import javax.annotation.Nonnull;
 
 public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 
@@ -32,6 +32,7 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 		addSlotToContainer(new SlotAcceptValid(_te, 1, 152, 16));
 		addSlotToContainer(new SlotRemoveOnly(_te, 2, 152, 49));
 		addSlotToContainer(new SlotLocked(_te, 3, 9, 63) {
+			@Nonnull
 			@Override
 			public ItemStack getStack() {
 
@@ -43,7 +44,7 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 	}
 
 	@Override
-	public void putStackInSlot(int slot, ItemStack stack) {
+	public void putStackInSlot(int slot, @Nonnull ItemStack stack) {
 
 		if (slot == 3) {
 			_dsu.setStoredItemRaw(stack);
@@ -53,7 +54,7 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 	}
 
 	@Override
-	protected boolean performMerge(int slot, ItemStack stackInSlot) {
+	protected boolean performMerge(int slot, @Nonnull ItemStack stackInSlot) {
 
 		if (slot < 38) {
 			if (mergeItemStack(stackInSlot, 38, inventorySlots.size(), true)) {
@@ -67,10 +68,11 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 		return false;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack slotClick(int slotId, int mouseButton, ClickType modifier, EntityPlayer player) {
 
-		ItemStack r = super.slotClick(slotId, mouseButton, modifier, player);
+		@Nonnull ItemStack r = super.slotClick(slotId, mouseButton, modifier, player);
 		if (slotId < 4) {
 			sendSlots(0, 4);
 		}

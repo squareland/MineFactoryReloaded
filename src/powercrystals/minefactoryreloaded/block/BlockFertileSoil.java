@@ -1,10 +1,7 @@
 package powercrystals.minefactoryreloaded.block;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -17,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -24,18 +22,18 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockFertileSoil extends Block implements IGrowable, IInitializer, IModelRegister
 {
@@ -117,7 +115,7 @@ public class BlockFertileSoil extends Block implements IGrowable, IInitializer, 
 			EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 
-		ItemStack heldItem = player.getHeldItem(hand);
+		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
 		if (!canGrow(world, pos, state, world.isRemote))
 			return false;
 

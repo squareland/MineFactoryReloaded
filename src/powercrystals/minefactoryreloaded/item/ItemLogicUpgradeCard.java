@@ -1,18 +1,18 @@
 package powercrystals.minefactoryreloaded.item;
 
-import java.util.List;
-
 import codechicken.lib.model.ModelRegistryHelper;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.item.RedNetCardItemRenderer;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemLogicUpgradeCard extends ItemMulti {
 
@@ -27,7 +27,7 @@ public class ItemLogicUpgradeCard extends ItemMulti {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 
 		super.addInfo(stack, player, infoList, advancedTooltips);
 		infoList.add("Circuits: " + getCircuitsForLevel(stack.getItemDamage() + 1));

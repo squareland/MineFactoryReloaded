@@ -17,6 +17,7 @@ import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 
+import javax.annotation.Nonnull;
 import javax.vecmath.Matrix4f;
 import java.util.Map;
 
@@ -67,7 +68,7 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 	}
 
 	@Override
-	protected void drawModel(CCRenderState ccrs, ItemStack stack) {
+	protected void drawModel(CCRenderState ccrs, @Nonnull ItemStack stack) {
 
 		TextureUtils.changeTexture(textureLocation);
 		ccrs.startDrawing(4, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);

@@ -1,20 +1,20 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.text.translation.I18n;
-import org.lwjgl.opengl.GL11;
-
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
+import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+
+import javax.annotation.Nonnull;
 
 public class GuiNeedlegun extends GuiContainer
 {
 	private static final ResourceLocation needleGunGUI = new ResourceLocation(MineFactoryReloadedCore.guiFolder + "needlegun.png");
 	private String name;
-	public GuiNeedlegun(Container container, ItemStack item)
+	public GuiNeedlegun(Container container, @Nonnull ItemStack item)
 	{
 		super(container);
 		name = item.getDisplayName();

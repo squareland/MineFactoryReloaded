@@ -4,16 +4,15 @@ import cofh.lib.util.ItemWrapper;
 import cofh.lib.util.helpers.ItemHelper;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-
 import gnu.trove.map.TMap;
 import gnu.trove.map.hash.THashMap;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 
 /**
  * This class exists to optimize OreDictionary functionality, as it is embarrassingly slow otherwise.
@@ -27,16 +26,16 @@ import net.minecraftforge.oredict.OreDictionary;
 public class OreDictionaryArbiter {
 
 	private static BiMap<String, Integer> oreIDs = HashBiMap.create();
-	private static TMap<Integer, ArrayList<ItemStack>> oreStacks = new THashMap<Integer, ArrayList<ItemStack>>();
+	private static TMap<Integer, ArrayList<ItemStack>> oreStacks = new THashMap<>();
 
-	private static TMap<ItemWrapper, ArrayList<Integer>> stackIDs = new THashMap<ItemWrapper, ArrayList<Integer>>();
-	private static TMap<ItemWrapper, ArrayList<String>> stackNames = new THashMap<ItemWrapper, ArrayList<String>>();
+	private static TMap<ItemWrapper, ArrayList<Integer>> stackIDs = new THashMap<>();
+	private static TMap<ItemWrapper, ArrayList<String>> stackNames = new THashMap<>();
 
 	private static String[] oreNames = new String[] {};
 
 	public static final String UNKNOWN = "Unknown";
-	public static final int UNKNOWN_ID = -1;
-	public static final int WILDCARD_VALUE = Short.MAX_VALUE;
+	private static final int UNKNOWN_ID = -1;
+	private static final int WILDCARD_VALUE = Short.MAX_VALUE;
 
 	/**
 	 * Initializes all of the entries. Called on server start to make sure everything is in sync.
@@ -44,15 +43,15 @@ public class OreDictionaryArbiter {
 	public static void initialize() {
 
 		oreIDs = HashBiMap.create();
-		oreStacks = new THashMap<Integer, ArrayList<ItemStack>>();
+		oreStacks = new THashMap<>();
 
-		stackIDs = new THashMap<ItemWrapper, ArrayList<Integer>>();
-		stackNames = new THashMap<ItemWrapper, ArrayList<String>>();
+		stackIDs = new THashMap<>();
+		stackNames = new THashMap<>();
 
 		oreNames = OreDictionary.getOreNames();
 
 		for (int i = 0; i < oreNames.length; i++) {
-			List<ItemStack> ores = OreDictionary.getOres(oreNames[i]);
+			NonNullList<ItemStack> ores = OreDictionary.getOres(oreNames[i]);
 
 			for (int j = 0; j < ores.size(); j++) {
 				registerOreDictionaryEntry(ores.get(j), oreNames[i]);
@@ -65,8 +64,8 @@ public class OreDictionaryArbiter {
 		TMap<ItemWrapper, ArrayList<Integer>> ids = stackIDs;
 		TMap<ItemWrapper, ArrayList<String>> names = stackNames;
 
-		stackIDs = new THashMap<ItemWrapper, ArrayList<Integer>>();
-		stackNames = new THashMap<ItemWrapper, ArrayList<String>>();
+		stackIDs = new THashMap<>();
+		stackNames = new THashMap<>();
 
 		for (Entry<ItemWrapper, ArrayList<Integer>> a : ids.entrySet())
 			stackIDs.put(a.getKey(), a.getValue());
@@ -78,7 +77,7 @@ public class OreDictionaryArbiter {
 	/**
 	 * Register an Ore Dictionary Entry.
 	 */
-	public static void registerOreDictionaryEntry(ItemStack stack, String name) {
+	public static void registerOreDictionaryEntry(@Nonnull ItemStack stack, String name) {
 
 		int id = OreDictionary.getOreID(name);
 
@@ -112,15 +111,15 @@ public class OreDictionaryArbiter {
 	}
 
 	/**
-	 * Retrieves the oreID, given an ItemStack.
+	 * Retrieves the oreID, given an @Nonnull ItemStack.
 	 * 
-	 * If an ItemStack has more than one oreID, this returns the first one - just like Forge's Ore Dictionary.
+	 * If an @Nonnull ItemStack has more than one oreID, this returns the first one - just like Forge's Ore Dictionary.
 	 * 
 	 * Returns -1 if there is no corresponding oreID.
 	 */
-	public static int getOreID(ItemStack stack) {
+	public static int getOreID(@Nonnull ItemStack stack) {
 
-		if (stack == null) {
+		if (stack.isEmpty()) {
 			return UNKNOWN_ID;
 		}
 		ArrayList<Integer> ids = stackIDs.get(new ItemWrapper(stack));
@@ -132,11 +131,11 @@ public class OreDictionaryArbiter {
 	}
 
 	/**
-	 * Returns a list containing ALL oreIDs for a given ItemStack. Returns NULL if there are none.
+	 * Returns a list containing ALL oreIDs for a given @Nonnull ItemStack. Returns NULL if there are none.
 	 * 
 	 * Input is not validated - don't be dumb!
 	 */
-	public static ArrayList<Integer> getAllOreIDs(ItemStack stack) {
+	public static ArrayList<Integer> getAllOreIDs(@Nonnull ItemStack stack) {
 
 		ArrayList<Integer> ids = stackIDs.get(new ItemWrapper(stack));
 
@@ -156,13 +155,13 @@ public class OreDictionaryArbiter {
 	}
 
 	/**
-	 * Retrieves the oreName, given an ItemStack.
+	 * Retrieves the oreName, given an @Nonnull ItemStack.
 	 * 
-	 * If an ItemStack has more than one oreName, this returns the first one = just like Forge's Ore Dictionary.
+	 * If an @Nonnull ItemStack has more than one oreName, this returns the first one = just like Forge's Ore Dictionary.
 	 * 
 	 * Returns "Unknown" if there is no corresponding oreName.
 	 */
-	public static String getOreName(ItemStack stack) {
+	public static String getOreName(@Nonnull ItemStack stack) {
 
 		int id = getOreID(stack);
 
@@ -170,11 +169,11 @@ public class OreDictionaryArbiter {
 	}
 
 	/**
-	 * Returns a list containing ALL oreNames for a given ItemStack. Returns NULL if there are none.
+	 * Returns a list containing ALL oreNames for a given @Nonnull ItemStack. Returns NULL if there are none.
 	 * 
 	 * Input is not validated - don't be dumb!
 	 */
-	public static ArrayList<String> getAllOreNames(ItemStack stack) {
+	public static ArrayList<String> getAllOreNames(@Nonnull ItemStack stack) {
 
 		return stackNames.get(new ItemWrapper(stack));
 	}
@@ -186,7 +185,7 @@ public class OreDictionaryArbiter {
 	 * 
 	 * DO NOT MODIFY THESE.
 	 */
-	public static ArrayList<ItemStack> getOres(ItemStack stack) {
+	public static ArrayList<ItemStack> getOres(@Nonnull ItemStack stack) {
 
 		return oreStacks.get(getOreID(stack));
 	}

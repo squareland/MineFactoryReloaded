@@ -1,24 +1,23 @@
 package powercrystals.minefactoryreloaded.item.base;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
+import cofh.core.util.core.IInitializer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemFactory extends Item implements IInitializer, IModelRegister{
 
@@ -32,12 +31,12 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister{
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 	}
 
-	public void getSubItems(Item item, List<ItemStack> subTypes) {
+	public void getSubItems(Item item, NonNullList<ItemStack> subTypes) {
 
 		subTypes.add(new ItemStack(item, 1, 0));
 	}
 
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 
 		String str = "tip.info" + getUnlocalizedName(stack).substring(4);
 		str = MFRUtil.localize(str, true, null);
@@ -48,7 +47,7 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, EntityPlayer player, List infoList, boolean advancedTooltips) {
 
 		super.addInformation(stack, player, infoList, advancedTooltips);
 		addInfo(stack, player, infoList, advancedTooltips);

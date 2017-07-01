@@ -6,6 +6,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Locale;
 
@@ -40,7 +41,7 @@ public class TileEntityAutoDisenchanterFluid extends TileEntityAutoDisenchanter 
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

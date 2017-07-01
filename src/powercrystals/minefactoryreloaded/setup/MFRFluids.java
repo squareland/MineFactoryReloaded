@@ -29,6 +29,7 @@ import powercrystals.minefactoryreloaded.core.FluidHandlerItemStackSimpleSingleF
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.item.ItemMFRBucketMilk;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Locale;
@@ -120,7 +121,7 @@ public class MFRFluids {
 		PINK_SLIME(true) {
 			@Override public boolean vaporize(@Nullable EntityPlayer player, World world, BlockPos pos, FluidStack fluidStack) {
 
-				ItemStack drop;
+				@Nonnull ItemStack drop;
 				if (world.rand.nextBoolean())
 					drop = new ItemStack(MFRThings.pinkSlimeItem, world.rand.nextInt(3));
 				else if (world.rand.nextInt(5) != 0)
@@ -134,7 +135,7 @@ public class MFRFluids {
 		MEAT {
 			@Override public boolean vaporize(@Nullable EntityPlayer player, World world, BlockPos pos, FluidStack fluidStack) {
 
-				ItemStack drop;
+				@Nonnull ItemStack drop;
 				if (world.rand.nextInt(5) != 0)
 					drop = new ItemStack(MFRThings.meatIngotRawItem, world.rand.nextInt(2));
 				else
@@ -180,7 +181,7 @@ public class MFRFluids {
 			name = name().toLowerCase(Locale.US);
 		}
 
-		protected void drop(World world, BlockPos pos, ItemStack stack) {
+		protected void drop(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
 			UtilInventory.dropStackInAir(world, pos, stack);
 		}
@@ -302,10 +303,10 @@ public class MFRFluids {
 		fluid.setRarity(rarity);
 	}
 
-	private static final ItemStack MILK_BOTTLE = new ItemStack(MFRThings.milkBottleItem);
-	private static final ItemStack GLASS_BOTTLE = new ItemStack(Items.GLASS_BOTTLE);
-	private static final ItemStack MUSHROOM_STEW = new ItemStack(Items.MUSHROOM_STEW);
-	private static final ItemStack BOWL = new ItemStack(Items.BOWL);
+	private static final @Nonnull ItemStack MILK_BOTTLE = new ItemStack(MFRThings.milkBottleItem);
+	private static final @Nonnull ItemStack GLASS_BOTTLE = new ItemStack(Items.GLASS_BOTTLE);
+	private static final @Nonnull ItemStack MUSHROOM_STEW = new ItemStack(Items.MUSHROOM_STEW);
+	private static final @Nonnull ItemStack BOWL = new ItemStack(Items.BOWL);
 
 	@SubscribeEvent
 	public void onItemStackConstruct(AttachCapabilitiesEvent.Item evt) {

@@ -1,8 +1,5 @@
 package powercrystals.minefactoryreloaded.block.decor;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.SoundType;
@@ -18,17 +15,19 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.BlockFactory;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactory;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockDecorativeStone extends BlockFactory {
 
@@ -81,7 +80,7 @@ public class BlockDecorativeStone extends BlockFactory {
 
 		world.setBlockToAir(pos);
 		if (!returnBlock)
-			for (ItemStack item : list) {
+			for (@Nonnull ItemStack item : list) {
 				UtilInventory.dropStackInAir(world, pos, item);	
 			}
 		return list;

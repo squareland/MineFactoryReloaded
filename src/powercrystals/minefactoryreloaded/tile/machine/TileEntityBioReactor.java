@@ -20,6 +20,7 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerBioReactor;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 public class TileEntityBioReactor extends TileEntityFactoryInventory {
@@ -78,7 +79,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 		if (!world.isRemote) {
 			Map<Item, IFactoryPlantable> plantables = MFRRegistry.getPlantables();
 			for (int i = 0; i < 9; i++) {
-				ItemStack item = _inventory[i];
+				@Nonnull ItemStack item = _inventory[i];
 				if (item == null)
 					continue;
 				if (plantables.containsKey(item.getItem()) &&
@@ -116,7 +117,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 		}
 	}
 
-	private int findMatchingSlot(ItemStack s) {
+	private int findMatchingSlot(@Nonnull ItemStack s) {
 
 		int emptySlot = -1;
 		for (int i = 9; i < 18; i++) {
@@ -162,9 +163,9 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack != null)
+		if (!stack.isEmpty())
 			if (slot < 9) {
 				IFactoryPlantable p = MFRRegistry.getPlantables().get(stack.getItem());
 				return p != null && p.canBePlanted(stack, true);
@@ -206,7 +207,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

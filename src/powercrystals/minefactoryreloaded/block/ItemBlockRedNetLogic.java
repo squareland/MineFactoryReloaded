@@ -1,12 +1,5 @@
 package powercrystals.minefactoryreloaded.block;
 
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -15,13 +8,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 
+import javax.annotation.Nonnull;
+import java.util.List;
+
 public class ItemBlockRedNetLogic extends ItemBlock {
 
-	public static ItemStack manual;
+	public static @Nonnull ItemStack manual;
 
 	static {
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -119,7 +118,7 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && tag.hasKey("circuits"))
@@ -130,7 +129,7 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, EntityPlayer player, List infoList, boolean advancedTooltips) {
 
 		infoList.add(I18n.translateToLocal("tip.info.mfr.prc"));
 		NBTTagCompound tag = stack.getTagCompound();

@@ -1,24 +1,25 @@
 package powercrystals.minefactoryreloaded.setup.recipe;
 
-import static cofh.lib.util.helpers.ItemHelper.*;
-import static net.minecraft.init.Blocks.*;
-import static net.minecraft.init.Items.*;
-import static net.minecraftforge.oredict.OreDictionary.*;
-import static powercrystals.minefactoryreloaded.setup.MFRConfig.*;
-import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
-import static powercrystals.minefactoryreloaded.setup.Machine.*;
-
-import java.util.Arrays;
-
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
 import powercrystals.minefactoryreloaded.block.ItemBlockRedNetLogic;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.setup.recipe.handler.ShapelessMachineTinker;
+
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+
+import static cofh.lib.util.helpers.ItemHelper.*;
+import static net.minecraft.init.Blocks.*;
+import static net.minecraft.init.Items.*;
+import static net.minecraftforge.oredict.OreDictionary.getOres;
+import static net.minecraftforge.oredict.OreDictionary.registerOre;
+import static powercrystals.minefactoryreloaded.setup.MFRConfig.*;
+import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
+import static powercrystals.minefactoryreloaded.setup.Machine.*;
 
 public class Vanilla {
 
@@ -109,13 +110,13 @@ public class Vanilla {
 
 		{ // GLASS:
 			String pane = "paneGlass", glass = "blockGlass";
-			ItemStack glassStack = stack2(factoryGlassBlock, 1);
-			ItemStack paneStack = stack2(factoryGlassPaneBlock, 1);
+			@Nonnull ItemStack glassStack = stack2(factoryGlassBlock, 1);
+			@Nonnull ItemStack paneStack = stack2(factoryGlassPaneBlock, 1);
 			registerOre(glass, glassStack.copy());
 			registerOre(pane, paneStack.copy());
 
 			for (int i = 0; i < 16; i++) {
-				ItemStack ceramicDye = stack(ceramicDyeItem, 1, i);
+				@Nonnull ItemStack ceramicDye = stack(ceramicDyeItem, 1, i);
 				glassStack = stack(factoryGlassBlock, 1, i);
 				paneStack = stack(factoryGlassPaneBlock, 1, i);
 				String dye = DYES[15 - i];
@@ -655,7 +656,7 @@ public class Vanilla {
 	protected void registerMachine(Machine machine, int amount, Object... recipe) {
 
 		if (machine.getIsRecipeEnabled()) {
-			ItemStack item = machine.getItemStack();
+			@Nonnull ItemStack item = machine.getItemStack();
 			item.setCount(amount);
 			for (int i = recipe.length; i-- > 0;)
 				if (recipe[i] instanceof Machine)
@@ -721,13 +722,14 @@ public class Vanilla {
 				stack(GOLD_NUGGET)) {
 
 			@Override
-			protected boolean isMachineTinkerable(ItemStack machine) {
+			protected boolean isMachineTinkerable(@Nonnull ItemStack machine) {
 
 				return !machine.hasTagCompound() || !machine.getTagCompound().hasKey("hasTinkerStuff");
 			}
 
+			@Nonnull
 			@Override
-			protected ItemStack getTinkeredMachine(ItemStack machine) {
+			protected ItemStack getTinkeredMachine(@Nonnull ItemStack machine) {
 
 				machine = machine.copy();
 				NBTTagCompound tag = machine.getTagCompound();
@@ -773,9 +775,9 @@ public class Vanilla {
 		{ // GLASS
 			String pane = "paneGlass", glass = "blockGlass";
 			for (int i = 0; i < 16; i++) {
-				ItemStack ceramicDye = stack(ceramicDyeItem, 1, i);
-				ItemStack glassStack = stack(factoryGlassBlock, 1, i);
-				ItemStack paneStack = stack(factoryGlassPaneBlock, 1, i);
+				@Nonnull ItemStack ceramicDye = stack(ceramicDyeItem, 1, i);
+				@Nonnull ItemStack glassStack = stack(factoryGlassBlock, 1, i);
+				@Nonnull ItemStack paneStack = stack(factoryGlassPaneBlock, 1, i);
 				String dye = DYES[15 - i];
 				String dye2 = "dyeCeramic" + dye;
 				String dye3 = "dye" + dye;
@@ -1169,11 +1171,11 @@ public class Vanilla {
 
 		addWeakSmelting(stack(rubberBarItem), stack(rawRubberItem));
 
-		for (ItemStack s : getOres("itemRubber"))
+		for (@Nonnull ItemStack s : getOres("itemRubber"))
 			addSmelting(stack(rawPlasticItem), s, 0.3f);
-		for (ItemStack s : getOres("blockPlastic"))
+		for (@Nonnull ItemStack s : getOres("blockPlastic"))
 			addSmelting(stack(rawPlasticItem, 4), s);
-		for (ItemStack s : getOres("sheetPlastic"))
+		for (@Nonnull ItemStack s : getOres("sheetPlastic"))
 			addSmelting(stack(rawPlasticItem), s);
 
 		addSmelting(stack(rawPlasticItem, 2), plasticBagItem);
@@ -1287,8 +1289,8 @@ public class Vanilla {
 				'S', "stickWood",
 		}));
 
-		for (ItemStack torchStone : getOres("torchStone")) {
-			if (torchStone == null)
+		for (@Nonnull ItemStack torchStone : getOres("torchStone")) {
+			if (torchStone.isEmpty())
 				continue;
 			addRecipe(ShapedRecipe(cloneStack(torchStone, 3), new Object[] {
 					"R",

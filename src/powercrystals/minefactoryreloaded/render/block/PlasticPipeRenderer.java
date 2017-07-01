@@ -25,6 +25,7 @@ import powercrystals.minefactoryreloaded.block.transport.BlockPlasticPipe;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe.ConnectionType;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -165,7 +166,7 @@ public class PlasticPipeRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public List<BakedQuad> bakeItemQuads(EnumFacing face, ItemStack stack) {
+	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
 
 		BakingVertexBuffer buffer = BakingVertexBuffer.create();
 		buffer.begin(7, DefaultVertexFormats.ITEM);

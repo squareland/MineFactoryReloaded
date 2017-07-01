@@ -1,32 +1,30 @@
 package powercrystals.minefactoryreloaded.tile.transport;
 
-import buildcraft.api.transport.pipe.IPipeConnection;
-
 import cofh.api.tileentity.IInventoryConnection;
 import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import powercrystals.minefactoryreloaded.block.transport.BlockConveyor;
-import static powercrystals.minefactoryreloaded.block.transport.BlockConveyor.ConveyorDirection.*;
-
-import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
+
+import javax.annotation.Nonnull;
+
+import static powercrystals.minefactoryreloaded.block.transport.BlockConveyor.ConveyorDirection.*;
 
 @Strippable("buildcraft.api.transport.IPipeConnection")
 public class TileEntityConveyor extends TileEntityBase
@@ -311,28 +309,31 @@ public class TileEntityConveyor extends TileEntityBase
 		return 7;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack decrStackSize(int slot, int count)
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack removeStackFromSlot(int slot)
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack)
+	public void setInventorySlotContents(int slot, @Nonnull ItemStack stack)
 	{
-		if (stack == null)
+		if (stack.isEmpty())
 		{
 			return;
 		}
@@ -422,7 +423,7 @@ public class TileEntityConveyor extends TileEntityBase
     }
 
     @Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack)
+	public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack)
     {
     	return _conveyorActive;
     }
@@ -469,7 +470,7 @@ public class TileEntityConveyor extends TileEntityBase
      * From below/unknown: returns true
      */
     @Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side)
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side)
     {
     	if (!_conveyorActive)
     		return false;
@@ -487,7 +488,7 @@ public class TileEntityConveyor extends TileEntityBase
     }
 
     @Override
-	public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side)
+	public boolean canExtractItem(int slot, @Nonnull ItemStack stack, EnumFacing side)
     {
     	return false;
     }

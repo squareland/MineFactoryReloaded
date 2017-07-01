@@ -26,6 +26,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import javax.vecmath.Matrix4f;
 import java.util.Collection;
 import java.util.List;
@@ -125,7 +126,7 @@ public abstract class BaseFluidItemModel implements IModel, IModelCustomData {
 		}
 
 		@Override
-		public IBakedModel handleItemState(IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
+		public IBakedModel handleItemState(IBakedModel originalModel, @Nonnull ItemStack stack, World world, EntityLivingBase entity) {
 
 			BakedFluidItem model = (BakedFluidItem) originalModel;
 
@@ -148,7 +149,7 @@ public abstract class BaseFluidItemModel implements IModel, IModelCustomData {
 			return model.cache.get(name);
 		}
 
-		protected abstract String getFluidNameFromStack(ItemStack stack);
+		protected abstract String getFluidNameFromStack(@Nonnull ItemStack stack);
 	}
 
 	protected static final class BakedFluidItem implements IPerspectiveAwareModel {

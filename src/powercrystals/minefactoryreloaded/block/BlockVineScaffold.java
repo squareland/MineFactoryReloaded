@@ -1,41 +1,38 @@
 package powercrystals.minefactoryreloaded.block;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.ColorizerFoliage;
-import net.minecraft.world.biome.BiomeColorHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Random;
-
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
+import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
+import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.render.IColorRegister;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
-import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockVineScaffold extends Block implements IRedNetDecorative, IInitializer, IModelRegister, IColorRegister{
 
@@ -125,9 +122,9 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float xOffset,
 			float yOffset, float zOffset) {
 
-		ItemStack heldItem = player.getHeldItem(hand);
+		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
 
-		if (heldItem != null && Block.getBlockFromItem(heldItem.getItem()).equals(this)) {
+		if (!heldItem.isEmpty() && Block.getBlockFromItem(heldItem.getItem()).equals(this)) {
 			for (int i = pos.getY() + 1, e = world.getActualHeight(); i < e; ++i) {
 				BlockPos placePos = new BlockPos(pos.getX(), i, pos.getZ());
 				Block block = world.getBlockState(placePos).getBlock();

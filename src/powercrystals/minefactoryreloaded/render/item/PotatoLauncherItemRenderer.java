@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.TRSRTransformation;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 public class PotatoLauncherItemRenderer extends BaseItemRenderer {
@@ -40,7 +41,7 @@ public class PotatoLauncherItemRenderer extends BaseItemRenderer {
 	}
 
 	@Override
-	protected void drawModel(CCRenderState ccrs, ItemStack stack) {
+	protected void drawModel(CCRenderState ccrs, @Nonnull ItemStack stack) {
 		
 		TextureUtils.changeTexture(textureLocation);
 		ccrs.startDrawing(4, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);

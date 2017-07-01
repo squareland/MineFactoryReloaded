@@ -8,6 +8,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class ItemNeedlegunAmmoStandard extends ItemNeedlegunAmmo {
 
 	protected int damage;
@@ -46,18 +48,18 @@ public class ItemNeedlegunAmmoStandard extends ItemNeedlegunAmmo {
 	}
 
 	@Override
-	public boolean onHitEntity(ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
+	public boolean onHitEntity(@Nonnull ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
 		// TODO: API needs to accept the needle entity
 		hit.attackEntityFrom(DamageSource.causePlayerDamage(owner).setProjectile(), damage);
 		return true;
 	}
 
 	@Override
-	public void onHitBlock(ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance) {
+	public void onHitBlock(@Nonnull ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance) {
 	}
 
 	@Override
-	public float getSpread(ItemStack stack) {
+	public float getSpread(@Nonnull ItemStack stack) {
 		return spread;
 	}
 

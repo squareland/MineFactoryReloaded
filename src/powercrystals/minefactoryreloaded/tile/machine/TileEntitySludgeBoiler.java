@@ -23,6 +23,7 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -84,7 +85,7 @@ public class TileEntitySludgeBoiler extends TileEntityFactoryPowered {
 			_tick++;
 
 			if (getWorkDone() >= getWorkMax()) {
-				ItemStack s = ((WeightedRandomItemStack) WeightedRandom.getRandomItem(_rand, MFRRegistry.getSludgeDrops())).getStack();
+				@Nonnull ItemStack s = ((WeightedRandomItemStack) WeightedRandom.getRandomItem(_rand, MFRRegistry.getSludgeDrops())).getStack();
 
 				doDrop(s);
 
@@ -146,7 +147,7 @@ public class TileEntitySludgeBoiler extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

@@ -1,10 +1,5 @@
 package powercrystals.minefactoryreloaded.farmables.safarinethandlers;
 
-import static net.minecraft.util.text.TextFormatting.*;
-
-import java.math.BigDecimal;
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,9 +7,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
+
+import javax.annotation.Nonnull;
+import java.math.BigDecimal;
+import java.util.List;
+
+import static net.minecraft.util.text.TextFormatting.*;
 
 public class EntityLivingBaseHandler implements ISafariNetHandler
 {
@@ -26,7 +26,7 @@ public class EntityLivingBaseHandler implements ISafariNetHandler
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void addInformation(ItemStack safariNetStack, EntityPlayer player, List infoList, boolean advancedTooltips)
+	public void addInformation(@Nonnull ItemStack safariNetStack, EntityPlayer player, List infoList, boolean advancedTooltips)
 	{
 		NBTTagCompound tag = safariNetStack.getTagCompound();
 		float abs = tag.getFloat("AbsorptionAmount");

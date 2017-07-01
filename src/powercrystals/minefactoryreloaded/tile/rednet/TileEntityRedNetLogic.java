@@ -1,24 +1,19 @@
 package powercrystals.minefactoryreloaded.tile.rednet;
 
 import cofh.api.core.IPortableData;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInputNode;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetNetworkContainer;
@@ -31,6 +26,9 @@ import powercrystals.minefactoryreloaded.item.ItemLogicUpgradeCard;
 import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
+
+import javax.annotation.Nonnull;
+import java.util.Arrays;
 
 public class TileEntityRedNetLogic extends TileEntityBase implements IRotateableTile, IPortableData {
 
@@ -193,7 +191,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 
 		for (int i = 0; i < _upgradeLevel.length; i++) {
 			if (_upgradeLevel[i] > 0) {
-				ItemStack card = new ItemStack(MFRThings.logicCardItem, 1, _upgradeLevel[i] - 1);
+				@Nonnull ItemStack card = new ItemStack(MFRThings.logicCardItem, 1, _upgradeLevel[i] - 1);
 				if (!player.inventory.addItemStackToInventory(card)) {
 					player.entityDropItem(card, 0.0F);
 				}

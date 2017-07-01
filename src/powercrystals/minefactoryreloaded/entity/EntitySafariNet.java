@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.entity;
 
-import com.google.common.base.Optional;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
@@ -16,7 +15,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.item.ItemSafariNet;
@@ -66,7 +64,7 @@ public class EntitySafariNet extends EntityThrowable {
 		dataManager.set(STORED_ENTITY, s);
 	}
 
-	protected boolean onHitBlock(ItemStack storedEntity, RayTraceResult result) {
+	protected boolean onHitBlock(@Nonnull ItemStack storedEntity, RayTraceResult result) {
 
 		if (ItemSafariNet.isEmpty(storedEntity)) {
 			dropAsStack(storedEntity);
@@ -81,7 +79,7 @@ public class EntitySafariNet extends EntityThrowable {
 		return true;
 	}
 
-	protected boolean onHitEntity(ItemStack storedEntity, RayTraceResult result) {
+	protected boolean onHitEntity(@Nonnull ItemStack storedEntity, RayTraceResult result) {
 
 		if (ItemSafariNet.isEmpty(storedEntity) && result.entityHit instanceof EntityLivingBase) {
 			ItemSafariNet.captureEntity(storedEntity, (EntityLivingBase) result.entityHit);
@@ -119,7 +117,7 @@ public class EntitySafariNet extends EntityThrowable {
 	@Override
 	protected void onImpact(RayTraceResult result) {
 
-		ItemStack storedEntity = dataManager.get(STORED_ENTITY);
+		@Nonnull ItemStack storedEntity = dataManager.get(STORED_ENTITY);
 
 		boolean r = false;
 		double x, y, z;
@@ -163,7 +161,7 @@ public class EntitySafariNet extends EntityThrowable {
 
 		super.writeEntityToNBT(nbttagcompound);
 		NBTTagCompound stackTag = new NBTTagCompound();
-		ItemStack entity = dataManager.get(STORED_ENTITY);
+		@Nonnull ItemStack entity = dataManager.get(STORED_ENTITY);
 		if (!entity.isEmpty()) {
 			entity.writeToNBT(stackTag);
 		}

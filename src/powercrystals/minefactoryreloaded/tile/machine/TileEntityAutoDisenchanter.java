@@ -1,8 +1,5 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -10,12 +7,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.gui.client.GuiAutoDisenchanter;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerAutoDisenchanter;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 
@@ -63,9 +63,9 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack == null)
+		if (stack.isEmpty())
 			return false;
 		if (slot == 0) {
 			return stack.getEnchantmentTagList() != null || stack.getItem().equals(Items.ENCHANTED_BOOK);
@@ -76,7 +76,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		if (slot == 2 || slot == 3) return true;
 		return false;
@@ -94,12 +94,12 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 			markChunkDirty();
 		}
 
-		ItemStack stack = _inventory[4];
+		@Nonnull ItemStack stack = _inventory[4];
 		boolean isBook = stack.getItem().equals(Items.ENCHANTED_BOOK);
 		NBTTagList list = isBook ? Items.ENCHANTED_BOOK.getEnchantments(stack) : stack.getEnchantmentTagList();
 		if ((list == null || list.tagCount() <= 0) && _inventory[2] == null) {
 			_inventory[2] = stack;
-			setInventorySlotContents(4, null);
+			setInventorySlotContents(4, ItemStack.EMPTY);
 		} else if ((list != null && list.tagCount() > 0) &&
 				(_inventory[1] != null && _inventory[1].getItem().equals(Items.BOOK)) &
 				_inventory[2] == null &

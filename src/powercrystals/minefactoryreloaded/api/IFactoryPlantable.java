@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 /**
  * Defines a plantable object for use in the Planter.
  *
@@ -26,7 +28,7 @@ public interface IFactoryPlantable {
 	 * @return True if this plantable can be planted (useful for metadata
 	 *         items).
 	 */
-	public boolean canBePlanted(ItemStack stack, boolean forFermenting);
+	public boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting);
 
 	/**
 	 * @param world
@@ -38,7 +40,7 @@ public interface IFactoryPlantable {
 	 *
 	 * @return The block that will be placed into the world.
 	 */
-	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, ItemStack stack);
+	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack);
 
 	/**
 	 * @param world
@@ -50,6 +52,6 @@ public interface IFactoryPlantable {
 	 *
 	 * @return True if this plantable can be placed at the provided coordinates.
 	 */
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack);
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack);
 
 }

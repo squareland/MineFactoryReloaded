@@ -9,14 +9,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 public class ItemMilkBottle extends ItemFactory {
 
@@ -28,9 +27,9 @@ public class ItemMilkBottle extends ItemFactory {
 		setRegistryName(MineFactoryReloadedCore.modId, "milk_bottle");
 	}
 
-	@Nullable
+	@Nonnull
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
+	public ItemStack onItemUseFinish(@Nonnull ItemStack stack, World world, EntityLivingBase entity) {
 
 		if (!(entity instanceof EntityPlayer))
 			return stack;
@@ -59,13 +58,13 @@ public class ItemMilkBottle extends ItemFactory {
 	}
 
 	@Override
-	public int getMaxItemUseDuration(ItemStack stack) {
+	public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
 
 		return 32;
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
+	public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
 
 		return EnumAction.DRINK;
 	}
@@ -74,7 +73,7 @@ public class ItemMilkBottle extends ItemFactory {
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
 		player.setActiveHand(hand);
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
 	@Override

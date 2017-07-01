@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.world;
 
-import java.util.List;
-
 import cofh.asmhooks.world.WorldProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -9,11 +7,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 // Nigel says: This is a
@@ -70,15 +69,15 @@ public class SmashingWorld extends WorldProxy
 		return null;
 	}
 
-	public List<ItemStack> smashBlock(ItemStack input, Block block, int meta, int fortune)
+	public NonNullList<ItemStack> smashBlock(@Nonnull ItemStack input, Block block, int meta, int fortune)
 	{
-		List<ItemStack> drops = null;
+		NonNullList<ItemStack> drops = NonNullList.create();
 		if (block != null)
 		{
 			this.block = block;
 			this.meta = meta;
 
-			drops = block.getDrops(this, pos, block.getStateFromMeta(meta), fortune);
+			drops.addAll(block.getDrops(this, pos, block.getStateFromMeta(meta), fortune));
 			if (drops.size() == 1)
 				if (UtilInventory.stacksEqual(drops.get(0), input, false))
 					return null;

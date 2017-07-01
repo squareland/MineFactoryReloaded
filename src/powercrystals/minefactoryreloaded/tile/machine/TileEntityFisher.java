@@ -1,8 +1,15 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
 import cofh.lib.util.helpers.ItemHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
@@ -10,19 +17,6 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.lang.reflect.Field;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-
 import powercrystals.minefactoryreloaded.block.BlockFactoryMachine;
 import powercrystals.minefactoryreloaded.core.Area;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
@@ -31,6 +25,11 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerFisher;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.Field;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class TileEntityFisher extends TileEntityFactoryPowered {
 
@@ -92,7 +91,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 			setInventorySlotContents(0, ItemHelper.damageItem(_inventory[0], 1, _rand));
 			LootContext.Builder context = new LootContext.Builder((WorldServer)this.world);
 			context.withLuck(_luck);
-			for (ItemStack stack : this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(_rand, context.build())) {
+			for (@Nonnull ItemStack stack : this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(_rand, context.build())) {
 				if (_inventory[0] == null && isItemValidForSlot(0, stack)) {
 					setInventorySlotContents(0, stack);
 				} else {
@@ -240,9 +239,9 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+	public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
 
-		return stack == null || (stack.isItemStackDamageable() && stack.getItem().isEnchantable(stack) && Enchantments.LURE.canApply(stack));
+		return stack.isEmpty() || (stack.isItemStackDamageable() && stack.getItem().isEnchantable(stack) && Enchantments.LURE.canApply(stack));
 	}
 
 	@Override

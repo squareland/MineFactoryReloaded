@@ -1,28 +1,26 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
 import cofh.api.core.IPortableData;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
+
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemRedNetMemoryCard extends ItemFactory {
 
@@ -34,7 +32,7 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
 
 		super.addInfo(stack, player, infoList, advancedTooltips);
 		NBTTagCompound tag = stack.getTagCompound();
@@ -63,7 +61,7 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
 
-		ItemStack stack = player.getHeldItem(hand);
+		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.SUCCESS;
@@ -109,7 +107,7 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean hasEffect(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		return tag != null && (tag.hasKey("Type") || tag.hasKey("circuits", 9));

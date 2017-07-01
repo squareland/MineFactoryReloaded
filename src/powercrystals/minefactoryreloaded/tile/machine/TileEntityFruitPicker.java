@@ -1,19 +1,13 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.IFactoryFruit;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
@@ -28,6 +22,11 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerUpgradeable;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 
@@ -100,7 +99,7 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 				world.playEvent(null, 2001, targetCoords, Block.getStateId(targetState));
 			}
 		} else {
-			if (!replacement.replaceBlock(world, targetCoords, null))
+			if (!replacement.replaceBlock(world, targetCoords, ItemStack.EMPTY))
 				return false;
 		}
 
@@ -172,13 +171,13 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return slot == 0 && isUsableAugment(itemstack);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}

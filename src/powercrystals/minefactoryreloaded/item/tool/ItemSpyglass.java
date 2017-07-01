@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -12,21 +10,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemSpyglass extends ItemFactoryTool {
 
@@ -52,10 +51,10 @@ public class ItemSpyglass extends ItemFactoryTool {
 			} else {
 				IBlockState state = world.getBlockState(result.getBlockPos());
 				Block block = state.getBlock();
-				ItemStack tempStack = null;
+				@Nonnull ItemStack tempStack = ItemStack.EMPTY;
 				if (block != null)
 					tempStack = block.getPickBlock(state, result, world, result.getBlockPos(), player);
-				if (tempStack == null)
+				if (tempStack.isEmpty())
 					tempStack = new ItemStack(block, 1, block.getMetaFromState(state));
 				if (tempStack.getItem() != null) {
 					player.sendMessage(new TextComponentString("")
@@ -138,7 +137,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 	}
 
 	@Override
-	protected int getWeaponDamage(ItemStack stack) {
+	protected int getWeaponDamage(@Nonnull ItemStack stack) {
 		return 2;
 	}
 

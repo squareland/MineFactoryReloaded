@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,6 +22,8 @@ import powercrystals.minefactoryreloaded.render.entity.EntityRocketRenderer;
 import powercrystals.minefactoryreloaded.render.item.RocketLauncherItemRenderer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
+
 public class ItemRocketLauncher extends ItemFactoryGun {
 
 	public ItemRocketLauncher() {
@@ -33,12 +34,12 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean hasGUI(ItemStack stack) {
+	protected boolean hasGUI(@Nonnull ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	protected boolean fire(ItemStack stack, World world, EntityPlayer player) {
+	protected boolean fire(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 		int slot = -1;
 		Item rocket = MFRThings.rocketItem;
 		NonNullList<ItemStack> mainInventory = player.inventory.mainInventory;
@@ -67,12 +68,12 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	protected int getDelay(ItemStack stack, boolean fired) {
+	protected int getDelay(@Nonnull ItemStack stack, boolean fired) {
 		return fired ? 100 : 40;
 	}
 
 	@Override
-	protected String getDelayTag(ItemStack stack) {
+	protected String getDelayTag(@Nonnull ItemStack stack) {
 		return "mfr:SPAMRLaunched";
 	}
 

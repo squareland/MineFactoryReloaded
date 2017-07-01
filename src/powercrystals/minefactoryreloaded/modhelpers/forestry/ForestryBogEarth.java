@@ -1,9 +1,5 @@
 package powercrystals.minefactoryreloaded.modhelpers.forestry;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import forestry.core.blocks.BlockBogEarth;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -12,14 +8,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.HarvestType;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
-import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.*;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSoil;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class ForestryBogEarth extends PlantableSoil implements IFactoryFertilizable, IFactoryHarvestable, IFactoryFruit
 {
@@ -95,7 +90,7 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	{
 		IBlockState state = world.getBlockState(pos);
 		List<ItemStack> list = state.getBlock().getDrops(world, pos, state, 0);
-		for (ItemStack a : list)
+		for (@Nonnull ItemStack a : list)
 			if (a.getItem() == dirt) {
 				list.remove(a);
 				break;

@@ -32,6 +32,7 @@ import powercrystals.minefactoryreloaded.render.item.RedNetCardItemRenderer;
 import powercrystals.minefactoryreloaded.render.model.RedNetCardsModel;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
@@ -170,7 +171,7 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 	}
 
 	@Override
-	public void renderItem(ItemStack item, ItemCameraTransforms.TransformType transformType) {
+	public void renderItem(@Nonnull ItemStack item, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();

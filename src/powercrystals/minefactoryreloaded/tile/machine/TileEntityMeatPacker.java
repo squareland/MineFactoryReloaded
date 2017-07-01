@@ -15,6 +15,7 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityMeatPacker extends TileEntityFactoryPowered {
@@ -52,7 +53,7 @@ public class TileEntityMeatPacker extends TileEntityFactoryPowered {
 				return false;
 
 			if (getWorkDone() >= getWorkMax()) {
-				ItemStack item;
+				@Nonnull ItemStack item;
 				// TODO: should track the weighted 'quantity' of meat consumed and output an appropriate amount of ingots/nuggets
 				if (_tanks[0].getFluid().equals(FluidRegistry.getFluidStack("meat", 1))) {
 					item = new ItemStack(MFRThings.meatIngotRawItem);
@@ -123,7 +124,7 @@ public class TileEntityMeatPacker extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
