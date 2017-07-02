@@ -39,6 +39,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetConnection;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
@@ -165,12 +167,23 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 					return true;
 
 				ITankContainerBucketable itcb = (ITankContainerBucketable) te;
-				if (itcb.allowBucketDrain(side, heldItem) || itcb.allowBucketFill(side, heldItem))
-				{
-					FluidActionResult result = FluidUtil
-							.interactWithFluidHandler(heldItem, new ITankContainerBucketable.FluidHandlerWrapper(itcb, side),
-									player);
+				IItemHandler playerInventory = new InvWrapper(player.inventory);
 
+
+				if (itcb.allowBucketDrain(side, heldItem)) {
+
+					FluidActionResult result = FluidUtil.tryFillContainerAndStow(heldItem,
+							new ITankContainerBucketable.FluidHandlerWrapper(itcb, side), playerInventory, Integer.MAX_VALUE, player);
+					if (result.isSuccess()) {
+						player.setHeldItem(hand, result.getResult());
+						return true;
+					}
+				}
+
+				if (itcb.allowBucketFill(side, heldItem)) {
+
+					FluidActionResult result = FluidUtil.tryEmptyContainerAndStow(heldItem,
+							new ITankContainerBucketable.FluidHandlerWrapper(itcb, side), playerInventory, Integer.MAX_VALUE, player);
 					if (result.isSuccess()) {
 						player.setHeldItem(hand, result.getResult());
 						return true;
