@@ -269,7 +269,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 
 	private IAdvFluidContainerItem getFluidHandler(@Nonnull ItemStack stack) {
 
-		return (IAdvFluidContainerItem) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+		return (IAdvFluidContainerItem) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 	}
 
 	@Override
@@ -290,15 +290,15 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		@Override
 		public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
 
-			return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+			return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 
-			if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+			if (capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
 			{
-				return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
+				return CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY.cast(this);
 			}
 			return null;
 		}
@@ -419,6 +419,13 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		public boolean shouldReplaceWhenFilled() {
 
 			return true;
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack getContainer() {
+
+			return stack;
 		}
 	}
 }

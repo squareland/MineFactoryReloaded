@@ -28,7 +28,7 @@ public class DefaultUseHandler implements IUseHandler {
 	@Override
 	public boolean canUse(@Nonnull ItemStack bucket, EntityLivingBase entity, EnumHand hand) {
 
-		IAdvFluidContainerItem fluidHandler = (IAdvFluidContainerItem) bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+		IAdvFluidContainerItem fluidHandler = (IAdvFluidContainerItem) bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 
 		FluidStack liquid = fluidHandler.getTankProperties().length > 0 ? fluidHandler.getTankProperties()[0].getContents() : null;
 		if (liquid == null || liquid.amount <= 0)
@@ -44,12 +44,12 @@ public class DefaultUseHandler implements IUseHandler {
 		Item item = bucket.getItem();
 
 		@Nonnull ItemStack q = new ItemStack(Items.BUCKET, 1, 0);
-		IAdvFluidContainerItem fluidHandler = (IAdvFluidContainerItem) bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+		IAdvFluidContainerItem fluidHandler = (IAdvFluidContainerItem) bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 		FluidStack liquid = fluidHandler.getTankProperties().length > 0 ? fluidHandler.getTankProperties()[0].getContents() : null;
 		if (liquid == null || liquid.amount <= 0) {
 			if (!fluidHandler.canBeFilledFromWorld()) return bucket;
 			@Nonnull ItemStack bucket2 = bucket.getCount() > 1 ? bucket.copy() : bucket;
-			IAdvFluidContainerItem fluidHandler2 = (IAdvFluidContainerItem) bucket2.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+			IAdvFluidContainerItem fluidHandler2 = (IAdvFluidContainerItem) bucket2.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			bucket2.setCount(1);
 			RayTraceResult objectPosition = ((IUseable)item).rayTrace(world, entity, false);
 			if (objectPosition != null && objectPosition.typeOfHit == Type.BLOCK) {
@@ -73,7 +73,7 @@ public class DefaultUseHandler implements IUseHandler {
 			}
 			if (player == null) return bucket;
 			q = q.getItem().onItemRightClick(world, player, hand).getResult();
-			IFluidTankProperties[] tankProps = q.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).getTankProperties();
+			IFluidTankProperties[] tankProps = q.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).getTankProperties();
 			FluidStack contents = tankProps.length > 0 ? tankProps[0].getContents() : null;
 			if (contents == null || contents.amount == 0) return bucket;
 			fluidHandler2.fill(contents, true);
@@ -94,7 +94,7 @@ public class DefaultUseHandler implements IUseHandler {
 					{
 						liquid = ((IFluidBlock)block).drain(world, pos, false);
 						@Nonnull ItemStack drop = bucket.splitStack(1);
-						drop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).drain(liquid.amount, true);
+						drop.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).drain(liquid.amount, true);
 						if (item.hasContainerItem(drop)) {
 							drop = item.getContainerItem(drop);
 							if (!drop.isEmpty() && drop.isItemStackDamageable() && drop.getItemDamage() > drop.getMaxDamage())

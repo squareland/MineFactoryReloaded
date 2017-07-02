@@ -11,10 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fluids.capability.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
@@ -119,7 +116,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 	}
 
 	private IFluidHandler getFluidHandler(@Nonnull ItemStack syringe) {
-		return syringe.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+		return syringe.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 	}
 
 	@Override
@@ -149,7 +146,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 		return new SyringeFluidHandler(stack);
 	}
 
-	private class SyringeFluidHandler implements ICapabilityProvider, IFluidHandler {
+	private class SyringeFluidHandler implements ICapabilityProvider, IFluidHandlerItem {
 
 		@Nonnull
 		private ItemStack stack;
@@ -161,15 +158,15 @@ public class ItemSyringeLiquid extends ItemSyringe
 		@Override
 		public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
 
-			return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+			return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 
-			if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+			if (capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
 			{
-				return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
+				return CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY.cast(this);
 			}
 			return null;
 		}
@@ -274,6 +271,13 @@ public class ItemSyringeLiquid extends ItemSyringe
 			}
 			fluid.amount = drainAmount;
 			return fluid;
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack getContainer() {
+
+			return stack;
 		}
 	}
 }

@@ -31,6 +31,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -157,22 +159,20 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		}
 		if (!heldItem.isEmpty() && te instanceof ITankContainerBucketable)
 		{
-			if(heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
+			if(heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null))
 			{
 				if (world.isRemote)
 					return true;
 
-				if (((ITankContainerBucketable)te).allowBucketDrain(side, heldItem))
+				ITankContainerBucketable itcb = (ITankContainerBucketable) te;
+				if (itcb.allowBucketDrain(side, heldItem) || itcb.allowBucketFill(side, heldItem))
 				{
-					if (MFRLiquidMover.manuallyDrainTank((ITankContainerBucketable)te, side, player, heldItem))
-					{
-						return true;
-					}
-				}
-				if (((ITankContainerBucketable)te).allowBucketFill(side, heldItem))
-				{
-					if (MFRLiquidMover.manuallyFillTank((ITankContainerBucketable)te, side, player, heldItem))
-					{
+					FluidActionResult result = FluidUtil
+							.interactWithFluidHandler(heldItem, new ITankContainerBucketable.FluidHandlerWrapper(itcb, side),
+									player);
+
+					if (result.isSuccess()) {
+						player.setHeldItem(hand, result.getResult());
 						return true;
 					}
 				}

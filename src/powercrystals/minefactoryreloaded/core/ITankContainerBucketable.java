@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.core;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import javax.annotation.Nonnull;
@@ -69,4 +70,43 @@ public interface ITankContainerBucketable
 	 */
 	@Nullable
 	FluidStack drain(EnumFacing facing, int maxDrain, boolean doDrain);
+
+	class FluidHandlerWrapper implements IFluidHandler {
+
+		private final ITankContainerBucketable itcb;
+		private final EnumFacing side;
+
+		public FluidHandlerWrapper(ITankContainerBucketable itcb, EnumFacing side) {
+
+			this.itcb = itcb;
+			this.side = side;
+		}
+
+		@Override
+		public IFluidTankProperties[] getTankProperties() {
+
+			return itcb.getTankProperties(side);
+		}
+
+		@Override
+		public int fill(FluidStack resource, boolean doFill) {
+
+			return itcb.fill(side, resource, doFill);
+		}
+
+		@Nullable
+		@Override
+		public FluidStack drain(FluidStack resource, boolean doDrain) {
+
+			return itcb.drain(side, resource, doDrain);
+		}
+
+		@Nullable
+		@Override
+		public FluidStack drain(int maxDrain, boolean doDrain) {
+
+			return itcb.drain(side, maxDrain, doDrain);
+		}
+	}
+
 }

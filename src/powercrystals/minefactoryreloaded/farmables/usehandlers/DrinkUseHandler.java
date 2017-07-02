@@ -78,8 +78,8 @@ public class DrinkUseHandler implements IUseHandler {
 
 	public String getFluidName(@Nonnull ItemStack item) {
 
-		if (item.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)) {
-			IFluidHandler fluidHandler = item.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+		if (item.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
+			IFluidHandler fluidHandler = item.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			if (fluidHandler.getTankProperties().length > 0) {
 				FluidStack liquid = fluidHandler.getTankProperties()[0].getContents();
 				if (liquid != null && liquid.amount >= Fluid.BUCKET_VOLUME)
