@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
@@ -181,6 +182,12 @@ public class RedNetHistorianRenderer extends TileEntitySpecialRenderer  implemen
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
 
 		return MapWrapper.handlePerspective(this, transformations, cameraTransformType);
+	}
+
+	@Override
+	public IModelState getTransforms() {
+
+		return null;
 	}
 
 	@Override

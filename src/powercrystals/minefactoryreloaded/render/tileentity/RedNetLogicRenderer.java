@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.common.model.IModelState;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -201,6 +202,12 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
 
 		return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, TransformUtils.DEFAULT_BLOCK.getTransforms(), cameraTransformType);
+	}
+
+	@Override
+	public IModelState getTransforms() {
+
+		return null;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -92,5 +93,11 @@ public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwa
 	public ItemOverrideList getOverrides() {
 
 		return ItemOverrideList.NONE;
+	}
+
+	@Override
+	public IModelState getTransforms() {
+
+		return null;
 	}
 }
