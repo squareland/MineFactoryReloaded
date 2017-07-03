@@ -66,13 +66,10 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	public static final PropertyEnum<Speed> SPEED = PropertyEnum.create("speed", Speed.class);
 	private static final AxisAlignedBB CONVEYOR_COLLISION_AABB = new AxisAlignedBB(0.125D, 0.0D, 0.125D, 0.875D, 0.01D, 0.875D);
 	private static final AxisAlignedBB CONVEYOR_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
-	private static final AxisAlignedBB HILL_CONVEYOR_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
+	private static final AxisAlignedBB HILL_CONVEYOR_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
 	private static final AxisAlignedBB CONVEYOR_SELECTION_AABB = new AxisAlignedBB(0.05D, 0.0D, 0.05D, 0.95D, 0.1D, 0.95D);
 	private static final AxisAlignedBB HILL_CONVEYOR_SELECTION_AABB = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.1D, 0.9D);
 
-	/**
-	 * TODO: conveyors facing north and west going uphill need fixed for how entities do collision
-	**/
 	public BlockConveyor() {
 
 		super(Material.CIRCUITS);
@@ -193,10 +190,11 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 					return;
 			}
 
-		if(entity.getEntityData().getLong("mfr:conveyor") == world.getTotalWorldTime()) {
+		ConveyorDirection direction = state.getValue(DIRECTION);
+		if(entity.getEntityData().getLong("mfr:conveyor") == world.getTotalWorldTime() + direction.getYOffset()) {
 			return;
 		}
-		entity.getEntityData().setLong("mfr:conveyor", world.getTotalWorldTime());
+		entity.getEntityData().setLong("mfr:conveyor", world.getTotalWorldTime() + direction.getYOffset());
 
 		double mult = ((TileEntityConveyor) conveyor).isFast() ? 2.1 : 1.05;
 		mult *= world.getBlockState(pos.down()).getBlock().slipperiness;
@@ -204,8 +202,6 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 		double xVelocity = 0;
 		double yVelocity = 0;
 		double zVelocity = 0;
-
-		ConveyorDirection direction = state.getValue(DIRECTION);
 
 		switch(direction.getFacing()) {
 			case EAST:
@@ -231,7 +227,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 						+ Math.abs(xVelocity) + yO, 0, 1);
 			} else {
 				yO = Math.abs(entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) / 2;
-				yO = MathHelper.clamp(Math.abs(entity.posZ - pos.getZ() + (direction.getFacing() == EnumFacing.NORTH ? 1 : 0))
+				yO = MathHelper.clamp(Math.abs(entity.posZ - (pos.getZ() + (direction.getFacing() == EnumFacing.NORTH ? 1 : 0)))
 						+ Math.abs(zVelocity) + yO, 0, 1);
 			}
 			setYPos(entity, pos.getY() + yO + .1);
