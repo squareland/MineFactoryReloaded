@@ -14,7 +14,7 @@ import net.minecraft.util.text.TextFormatting;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatTConstruct",
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compattconstruct",
 		name = "MFR Compat: Tinkers' Construct",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:TConstruct",

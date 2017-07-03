@@ -29,7 +29,7 @@ import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatTwilightForest",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compattwilightforest",
 		name = "MFR Compat: TwilightForest",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:TwilightForest",

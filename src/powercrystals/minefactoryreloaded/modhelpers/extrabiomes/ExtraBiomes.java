@@ -19,7 +19,7 @@ import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.HarvestType;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatExtraBiomes",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatextrabiomes",
 		name = "MFR Compat: ExtraBiomes",
 		version = MineFactoryReloadedCore.version, dependencies = "after:MineFactoryReloaded;after:ExtrabiomesXL",
 		customProperties = @CustomProperty(k = "cofhversion", v = "true")))

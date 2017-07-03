@@ -26,7 +26,7 @@ import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStand
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityUnifier;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatForestry",
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatforestry",
 		name = "MFR Compat: Forestry",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:Forestry",

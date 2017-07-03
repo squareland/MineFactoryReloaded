@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatBuildCraft",
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatbuildcraft",
 		name = "MFR Compat: BuildCraft",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:BuildCraftAPI|fuels",

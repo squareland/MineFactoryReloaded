@@ -42,7 +42,7 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 import javax.annotation.Nonnull;
 
-@Mod(modid = "MineFactoryReloaded|CompatVanilla", name = "MFR Compat: Vanilla", version = MineFactoryReloadedCore.version, dependencies = "after:MineFactoryReloaded",
+@Mod(modid = "minefactoryreloaded|compatvanilla", name = "MFR Compat: Vanilla", version = MineFactoryReloadedCore.version, dependencies = "after:MineFactoryReloaded",
 		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class Vanilla {
 

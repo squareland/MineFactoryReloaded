@@ -29,7 +29,7 @@ import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
 import powercrystals.minefactoryreloaded.modhelpers.FertilizableCropReflection;
 import powercrystals.minefactoryreloaded.modhelpers.FertilizableSaplingReflection;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatAtum",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatatum",
 		name = "MFR Compat: Atum",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:Atum",
