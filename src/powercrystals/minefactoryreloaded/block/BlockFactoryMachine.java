@@ -111,16 +111,6 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		return super.getLightOpacity(state, world, pos);
 	}
 
-	@Override
-	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighborPos) {
-
-		TileEntity te = world.getTileEntity(pos);
-
-		if (te instanceof TileEntityFactory) {
-			((TileEntityFactory) te).onNeighborTileChange(neighborPos);
-		}
-	}
-
 	private void dropContents(TileEntity te, ArrayList<ItemStack> list) {
 
 		if (te instanceof IInventory) {

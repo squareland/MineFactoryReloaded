@@ -115,6 +115,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 		if (world.isRemote)
 			return;
 		firstTick();
+		markDirty();
 	}
 
 	public void join(EnumFacing from) {
