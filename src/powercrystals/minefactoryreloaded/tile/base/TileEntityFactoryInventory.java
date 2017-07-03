@@ -33,6 +33,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class TileEntityFactoryInventory extends TileEntityFactory implements ISidedInventory, ITankContainerBucketable {
 
@@ -42,7 +43,6 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	protected final static int BUCKET_VOLUME = Fluid.BUCKET_VOLUME;
 
 	protected NonNullList<ItemStack> failedDrops = null;
-	private NonNullList<ItemStack> missedDrops = NonNullList.withSize(5, ItemStack.EMPTY);
 	private int _failedDropTicksMax = 20;
 	private int _failedDropTicks = 0;
 
@@ -279,8 +279,9 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		if (drops == null || drops.size() <= 0) {
 			return true;
 		}
-		NonNullList<ItemStack> missed = missedDrops;
-		missed.clear();
+
+		NonNullList<ItemStack> missed = NonNullList.create();
+
 		for (int i = drops.size(); i-- > 0;) {
 			@Nonnull ItemStack dropStack = drops.get(i);
 			dropStack = UtilInventory.dropStack(this, dropStack, this.getDropDirections(), this.getDropDirection());
@@ -289,7 +290,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			}
 		}
 
-		if (missed.size() != 0) {
+		if (!missed.isEmpty()) {
 			if (drops != failedDrops) {
 				if (failedDrops == null) {
 					failedDrops = NonNullList.create();
