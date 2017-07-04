@@ -137,8 +137,14 @@ public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 			}
 
 			if (_temp > 80) {
-				int i = drain(100, true, _tanks[1]);
-				_tanks[0].fill(new FluidStack(_liquid, i * 4), true);
+				int toDrain = Math.min(_tanks[0].getSpace(), 100);
+
+				if (toDrain > 0 && drain(toDrain, false, _tanks[1]) > 0) {
+					int waterDrained = drain(toDrain, true, _tanks[1]);
+					_tanks[0].fill(new FluidStack(_liquid, waterDrained * 4), true);
+				} else {
+					return;
+				}
 			}
 
 			if (skipConsumption || CoreUtils.isRedstonePowered(this))
