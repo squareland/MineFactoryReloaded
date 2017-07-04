@@ -9,19 +9,13 @@ import cofh.api.core.IPortableData;
 import cofh.api.tileentity.IInventoryConnection;
 import cofh.asm.relauncher.Strippable;
 import com.google.common.base.Strings;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Locale;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.world.World;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedClient;
 import powercrystals.minefactoryreloaded.core.HarvestAreaManager;
 import powercrystals.minefactoryreloaded.core.IHarvestAreaContainer;
@@ -30,8 +24,9 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import java.util.Locale;
 
 @Strippable("buildcraft.api.transport.IPipeConnection")
 public abstract class TileEntityFactory extends TileEntityBase
@@ -53,9 +48,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 	private boolean _manageFluids = false;
 	private boolean _manageSolids = false;
 
-	private boolean _isActive = false, _prevActive;
 	protected byte _activeSyncTimeout = 101;
-	private long _lastActive = -100;
 	private int _lastUpgrade = 0;
 
 	protected int _rednetState;
@@ -222,6 +215,10 @@ public abstract class TileEntityFactory extends TileEntityBase
 		}
 	}
 
+	public void markForUpdate() {
+
+	}
+
 	public EnumFacing getDropDirection() {
 
 		if (canRotate())
@@ -232,33 +229,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 	public EnumFacing[] getDropDirections() {
 
 		return EnumFacing.VALUES;
-	}
-
-	public boolean isActive() {
-
-		return _isActive;
-	}
-
-	public void setIsActive(boolean isActive) {
-
-		if (_isActive != isActive & world != null &&
-				!world.isRemote && _lastActive < world.getTotalWorldTime()) {
-			_lastActive = world.getTotalWorldTime() + _activeSyncTimeout;
-			_prevActive = _isActive;
-			MFRUtil.notifyBlockUpdate(world, pos);
-		}
-		_isActive = isActive;
-	}
-
-	@Override
-	public void update() {
-
-		super.update();
-
-		if (!world.isRemote && _prevActive != _isActive && _lastActive < world.getTotalWorldTime()) {
-			_prevActive = _isActive;
-			MFRUtil.notifyBlockUpdate(world, pos);
-		}
 	}
 
 	public void setOwner(String owner) {
@@ -300,32 +270,22 @@ public abstract class TileEntityFactory extends TileEntityBase
 		super.markDirty();
 	}
 
+	@Override
 	protected NBTTagCompound writePacketData(NBTTagCompound tag) {
 
 		tag = super.writePacketData(tag);
 
 		tag.setByte("r", (byte) _forwardDirection.ordinal());
-		tag.setBoolean("a", _isActive);
 
 		return tag;
 	}
 
+	@Override
 	protected void handlePacketData(NBTTagCompound tag) {
 
+		super.handlePacketData(tag);
+
 		rotateDirectlyTo(tag.getByte("r"));
-		_prevActive = _isActive;
-		_isActive = tag.getBoolean("a");
-		if (_prevActive != _isActive)
-			MFRUtil.notifyBlockUpdate(world, pos);
-		if (_lastActive < 0 && hasHAM()) {
-			MFRPacket.sendHAMUpdateToServer(this);
-		}
-		_lastActive = 5;
-	}
-
-	public void markForUpdate() {
-
-		_lastActive = 0;
 	}
 
 	@Override
@@ -352,7 +312,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 		tag.setInteger("rotation", getDirectionFacing().ordinal());
 		if (!Strings.isNullOrEmpty(_owner))
 			tag.setString("owner", _owner);
-		tag.setBoolean("a", _isActive);
 
 		return tag;
 	}
@@ -365,7 +324,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 			rotateDirectlyTo(tag.getInteger("rotation"));
 		if (tag.hasKey("owner"))
 			_owner = tag.getString("owner");
-		_isActive = tag.getBoolean("a");
 	}
 
 	public void onRedNetChanged(EnumFacing side, int value) {

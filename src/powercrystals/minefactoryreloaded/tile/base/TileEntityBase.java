@@ -1,21 +1,19 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity implements ITickable {
+public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity {
 
 	protected String _invName;
 	protected boolean inWorld;
@@ -36,13 +34,11 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 	public void invalidate() {
 
 		super.invalidate();
-		cofh_invalidate();
+		invalidateInternal();
 	}
 
-	//TODO ASM needed or forge fix
-	public void cofh_invalidate() {
+	private void invalidateInternal() {
 
-		//invalidate();
 		inWorld = false;
 		markChunkDirty();
 	}
@@ -50,24 +46,15 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 	@Override
 	public void onChunkUnload() {
 
-		cofh_invalidate();
+		invalidateInternal();
 	}
-
-	public void cofh_validate() {
-
-		inWorld = true;
-	}
-
-	protected boolean firstTick = true;
 
 	@Override
-	public void update() {
+	public void onLoad() {
 
-		if (firstTick) {
-			cofh_validate();
-			firstTick = false;
-		}
-		markChunkDirty();
+		super.onLoad();
+
+		inWorld = true;
 	}
 
 	protected final ITextComponent text(String str) {

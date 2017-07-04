@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,7 +31,7 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 
-public class TileEntityRedNetLogic extends TileEntityBase implements IRotateableTile, IPortableData {
+public class TileEntityRedNetLogic extends TileEntityBase implements IRotateableTile, IPortableData, ITickable {
 
 	public static class PinMapping {
 

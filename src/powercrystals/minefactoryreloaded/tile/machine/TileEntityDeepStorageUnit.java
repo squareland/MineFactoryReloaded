@@ -16,11 +16,11 @@ import powercrystals.minefactoryreloaded.gui.client.GuiDeepStorageUnit;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerDeepStorageUnit;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 
-public class TileEntityDeepStorageUnit extends TileEntityFactoryInventory implements IDeepStorageUnit {
+public class TileEntityDeepStorageUnit extends TileEntityFactoryTickable implements IDeepStorageUnit {
 
 	private boolean _ignoreChanges = true;
 	private boolean _passingItem = false;

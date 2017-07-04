@@ -2,20 +2,17 @@ package powercrystals.minefactoryreloaded.tile.rednet;
 
 //import buildcraft.api.transport.IPipeTile.PipeType;
 
-import cofh.asm.relauncher.Strippable;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.util.EnumFacing;
-
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.ITickable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.ArrayQueue;
 import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 
-public class TileEntityRedNetHistorian extends TileEntityFactory
+public class TileEntityRedNetHistorian extends TileEntityFactory implements ITickable
 {
 	@SideOnly(Side.CLIENT)
 	private ArrayQueue<Integer> _valuesClient;
@@ -77,10 +74,8 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void update()
 	{
-		super.update();
 		if (world.isRemote)
 		{
 			_valuesClient.pop();
@@ -93,12 +88,6 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	{
 		Integer[] values = new Integer[_valuesClient.size()];
 		return _valuesClient.toArray(values);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void setClientValue(int value)
-	{
-		_currentValueClient = value;
 	}
 
 	public void setSelectedSubnet(int newSubnet)
@@ -129,17 +118,12 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 		}
 	}
 
-	protected void sendValue(int value)
+	private void sendValue(int value)
 	{
 		NBTTagCompound data = new NBTTagCompound();
 		data.setInteger("value", value);
 		Packets.sendToAllPlayersInRange(world, pos, 50,
 				new SPacketUpdateTileEntity(pos, 1, data));
-	}
-
-	public int getSelectedSubnet()
-	{
-		return _currentSubnet;
 	}
 
 	@Override

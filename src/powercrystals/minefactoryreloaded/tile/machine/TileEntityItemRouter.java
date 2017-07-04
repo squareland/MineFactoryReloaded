@@ -17,11 +17,11 @@ import powercrystals.minefactoryreloaded.gui.client.GuiItemRouter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerItemRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 
-public class TileEntityItemRouter extends TileEntityFactoryInventory implements IEntityCollidable {
+public class TileEntityItemRouter extends TileEntityFactoryTickable implements IEntityCollidable {
 
 	private boolean _routing = false;
 

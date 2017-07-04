@@ -20,12 +20,6 @@ public class TileEntityRedNote extends TileEntityFactory
 	}
 
 	@Override
-	public void update()
-	{
-		//TODO this TE is not supposed to be tickable, implement non tickable base it can inherit
-	}
-
-	@Override
 	public void onRedNetChanged(EnumFacing side, int value)
 	{
 		if (value <= 0 || value > 120)

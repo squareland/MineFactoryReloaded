@@ -28,14 +28,14 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerLaserDrill;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityLaserDrill extends TileEntityFactoryInventory implements IFactoryLaserTarget {
+public class TileEntityLaserDrill extends TileEntityFactoryTickable implements IFactoryLaserTarget {
 
 	private static final int _energyPerWork = Machine.LaserDrillPrecharger.getActivationEnergy() * 4;
 	private static final int _energyStoredMax = 1000000;

@@ -17,12 +17,12 @@ import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiLiquidRouter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerLiquidRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
+public class TileEntityLiquidRouter extends TileEntityFactoryTickable {
 
 	//TODO this really needs a rewrite - very confusing that the order here doesn't match EnumFacing
 	private static final EnumFacing[] _outputDirections = new EnumFacing[]

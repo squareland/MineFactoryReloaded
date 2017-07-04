@@ -59,11 +59,6 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 		return new ContainerUnifier(this, inventoryPlayer);
 	}
 
-	@Override
-	public void update() {
-		//TODO again this TE isn't supposed to be tickable so needs a non tickable base to inherit from
-	}
-
 	private void unifyInventory() {
 
 		if (world != null && !world.isRemote) {

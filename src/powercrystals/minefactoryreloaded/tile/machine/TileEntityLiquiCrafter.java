@@ -21,7 +21,7 @@ import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiLiquiCrafter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerLiquiCrafter;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 // slots 0-8 craft grid, 9 craft grid template output, 10 output, 11-28 resources
-public class TileEntityLiquiCrafter extends TileEntityFactoryInventory {
+public class TileEntityLiquiCrafter extends TileEntityFactoryTickable {
 
 	private boolean _lastRedstoneState;
 	private boolean _resourcesChangedSinceLastFailedCraft = true;

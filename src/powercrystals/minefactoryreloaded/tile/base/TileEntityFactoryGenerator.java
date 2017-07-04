@@ -16,7 +16,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 
 import javax.annotation.Nonnull;
 
-public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInventory
+public abstract class TileEntityFactoryGenerator extends TileEntityFactoryTickable
 										implements IEnergyProvider {
 	private boolean deadCache;
 	private IEnergyReceiver[] receiverCache;

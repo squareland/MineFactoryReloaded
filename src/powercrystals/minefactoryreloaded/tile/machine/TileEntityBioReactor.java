@@ -18,12 +18,12 @@ import powercrystals.minefactoryreloaded.gui.client.GuiBioReactor;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerBioReactor;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class TileEntityBioReactor extends TileEntityFactoryInventory {
+public class TileEntityBioReactor extends TileEntityFactoryTickable {
 
 	private int _burnTime;
 	private static final int _burnTimeMax = 8000;

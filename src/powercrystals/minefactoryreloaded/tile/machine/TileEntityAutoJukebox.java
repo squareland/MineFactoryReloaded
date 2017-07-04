@@ -13,9 +13,9 @@ import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerAutoJukebox;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
-public class TileEntityAutoJukebox extends TileEntityFactoryInventory {
+public class TileEntityAutoJukebox extends TileEntityFactoryTickable {
 
 	private boolean _lastRedstoneState;
 	private boolean _canCopy;

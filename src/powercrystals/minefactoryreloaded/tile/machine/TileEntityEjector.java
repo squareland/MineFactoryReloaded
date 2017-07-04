@@ -22,14 +22,14 @@ import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerEjector;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class TileEntityEjector extends TileEntityFactoryInventory {
+public class TileEntityEjector extends TileEntityFactoryTickable {
 
 	protected boolean _lastRedstoneState;
 	protected boolean _whitelist = false;

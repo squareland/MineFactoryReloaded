@@ -42,6 +42,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrillPrecharger;
 
@@ -96,7 +97,15 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		
 		if (world.getTileEntity(pos) instanceof TileEntityFactory) {
 			TileEntityFactory te = (TileEntityFactory) world.getTileEntity(pos);
-			return state.withProperty(FACING, EnumFacing.getHorizontal(te.getDirectionFacing().getHorizontalIndex())).withProperty(ACTIVE, te.isActive()).withProperty(CB, CoreProps.enableColorBlindTextures);
+
+			state = state.withProperty(FACING, EnumFacing.getHorizontal(te.getDirectionFacing().getHorizontalIndex()))
+					.withProperty(CB, CoreProps.enableColorBlindTextures);
+
+			if (te instanceof TileEntityFactoryTickable) {
+				state = state.withProperty(ACTIVE, ((TileEntityFactoryTickable) te).isActive());
+			}
+
+			return state;
 		}
 		
 		return state;

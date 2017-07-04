@@ -33,11 +33,11 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class TileEntityFisher extends TileEntityFactoryPowered {
 
-	public static final int workBase = 1800;
+	private static final int WORK_BASE = 1800;
 
-	protected boolean _isJammed = true, _needItem = false;
-	protected byte _speed, _luck;
-	protected int _workNeeded = workBase, boost;
+	private boolean _isJammed = true, _needItem = false;
+	private byte _speed, _luck;
+	private int _workNeeded = WORK_BASE, boost;
 	protected Random _rand = null;
 
 	public TileEntityFisher() {
@@ -48,9 +48,10 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public void cofh_validate() {
+	public void onLoad() {
 
-		super.cofh_validate();
+		super.onLoad();
+
 		if (_rand == null) {
 			_rand = new Random(world.getSeed() ^ world.rand.nextLong());
 		}
@@ -134,7 +135,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 				++extraBlocks;
 			}
 		}
-		_workNeeded = workBase - extraBlocks * 50;
+		_workNeeded = WORK_BASE - extraBlocks * 50;
 		_isJammed = false;
 	}
 

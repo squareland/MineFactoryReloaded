@@ -26,12 +26,12 @@ import powercrystals.minefactoryreloaded.gui.client.GuiSewer;
 import powercrystals.minefactoryreloaded.gui.container.ContainerSewer;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class TileEntitySewer extends TileEntityFactoryInventory {
+public class TileEntitySewer extends TileEntityFactoryTickable {
 
 	private boolean _jammed;
 	private int _tick;

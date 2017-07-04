@@ -42,15 +42,6 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	}
 
 	@Override
-	public void update() {
-		if (firstTick) {
-			cofh_validate();
-			firstTick = false;
-		}
-		//TODO yet again one more that needs non tickable base as it's not supposed to tick
-	}
-
-	@Override
 	public void invalidate() {
 
 		removeTankFromGrid(false);
@@ -109,9 +100,10 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	}
 
 	@Override
-	public void cofh_validate() {
+	public void onLoad() {
 
-		super.cofh_validate();
+		super.onLoad();
+
 		if (world.isRemote)
 			return;
 		firstTick();

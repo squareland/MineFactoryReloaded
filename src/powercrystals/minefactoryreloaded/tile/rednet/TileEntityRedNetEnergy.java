@@ -4,7 +4,6 @@ import appeng.api.implementations.tiles.ICrankable;
 import codechicken.lib.raytracer.IndexedCuboid6;
 import codechicken.lib.vec.Vector3;
 import cofh.api.energy.*;
-import cofh.api.energy.EnergyStorage;
 import cofh.asm.relauncher.Strippable;
 import cofh.lib.util.helpers.EnergyHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,15 +16,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.*;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
+import powercrystals.minefactoryreloaded.core.ForgeEnergyHandler;
 import powercrystals.minefactoryreloaded.core.IGridController;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.core.ForgeEnergyHandler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,9 +63,9 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 	}
 
 	@Override
-	public void cofh_validate() {
+	public void onLoad() {
 
-		super.cofh_validate();
+		super.onLoad();
 
 		if (world.isRemote)
 			return;
@@ -78,18 +77,6 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 		}
 		readFromNBT = true;
 		reCache();
-		//Packets.sendToAllPlayersWatching(this); //TODO likely just remove
-	}
-
-	boolean firstTick = true;
-
-	@Override
-	public void update() {
-
-		if (firstTick) {
-			cofh_validate();
-			firstTick = false;
-		}
 	}
 
 	@Override

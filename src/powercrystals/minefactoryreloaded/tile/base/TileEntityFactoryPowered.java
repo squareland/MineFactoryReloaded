@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
  * progress bar correctly.
  */
 @Strippable("appeng.api.implementations.tiles.ICrankable")
-public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventory
+public abstract class TileEntityFactoryPowered extends TileEntityFactoryTickable
 																					implements IEnergyReceiver, ICrankable {
 
 	public static final int energyPerAE = 2;

@@ -94,9 +94,9 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	}
 
 	@Override
-	public void cofh_validate() {
+	public void onLoad() {
 
-		super.cofh_validate();
+		super.onLoad();
 		if (_network == null) {
 			incorporateTiles();
 			if (_network == null) {
@@ -150,19 +150,6 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	public final boolean isNotValid() {
 
 		return tileEntityInvalid;
-	}
-
-	boolean firstTick = true;
-
-	@Override
-	public void update() {
-
-		if (firstTick) {
-			cofh_validate(); //TODO this is here just for rendering test, remove !!!
-			firstTick = false;
-		}
-
-		//TODO again implement non tickable base this can inherit from
 	}
 
 	@Override

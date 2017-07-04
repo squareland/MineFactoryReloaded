@@ -38,9 +38,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe.ConnectionType.*;
 import static powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable.subSelection;
 import static powercrystals.minefactoryreloaded.tile.transport.FluidNetwork.TRANSFER_RATE;
+import static powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe.ConnectionType.*;
 
 public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITraceable, ICustomHitBox
 {
@@ -169,21 +169,9 @@ public class TileEntityPlasticPipe extends TileEntityBase implements INode, ITra
 	}
 
 	@Override
-	public void update() {
+	public void onLoad() {
 
-		//TODO remove in favor of ASM
-		if (firstTick) {
-			cofh_validate();
-			firstTick = false;
-		}
-
-		//TODO yet again needs a non tickable base TE
-	}
-
-	@Override
-	public void cofh_validate() {
-
-		super.cofh_validate();
+		super.onLoad();
 		deadCache = true;
 		handlerCache = null;
 		if (world.isRemote) return;

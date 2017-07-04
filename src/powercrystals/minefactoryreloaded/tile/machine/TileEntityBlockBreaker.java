@@ -35,9 +35,10 @@ public class TileEntityBlockBreaker extends TileEntityFactoryPowered
 	}
 
 	@Override
-	public void cofh_validate() {
+	public void onLoad() {
 
-		super.cofh_validate();
+		super.onLoad();
+
 		breakPos = pos.offset(getDirectionFacing());
 	}
 

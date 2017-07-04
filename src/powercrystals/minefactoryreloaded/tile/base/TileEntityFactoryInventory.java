@@ -25,7 +25,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import powercrystals.minefactoryreloaded.core.ITankContainerBucketable;
-import powercrystals.minefactoryreloaded.core.MFRLiquidMover;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.item.ItemUpgrade;
 import powercrystals.minefactoryreloaded.setup.Machine;
@@ -33,7 +32,6 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class TileEntityFactoryInventory extends TileEntityFactory implements ISidedInventory, ITankContainerBucketable {
 
@@ -43,15 +41,14 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	protected final static int BUCKET_VOLUME = Fluid.BUCKET_VOLUME;
 
 	protected NonNullList<ItemStack> failedDrops = null;
-	private int _failedDropTicksMax = 20;
-	private int _failedDropTicks = 0;
-
 	protected FluidTankCore[] _tanks;
 
 	@Nonnull
 	protected NonNullList<ItemStack> _inventory;
 
 	protected boolean internalChange = false;
+
+	private boolean isActive = false;
 
 	protected TileEntityFactoryInventory(Machine machine) {
 
@@ -234,31 +231,6 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return false;
-	}
-
-	@Override
-	public void update() {
-
-		super.update();
-
-		if (!world.isRemote && shouldPumpLiquid()) {
-			for (IFluidTank tank : getTanks())
-				if (shouldPumpTank(tank))
-					MFRLiquidMover.pumpLiquid(tank, this);
-		}
-
-		if (failedDrops != null) {
-			if (_failedDropTicks < _failedDropTicksMax) {
-				_failedDropTicks++;
-				return;
-			}
-			_failedDropTicks = 0;
-			if (!doDrop(failedDrops)) {
-				return;
-			}
-			failedDrops = null;
-			markDirty();
-		}
 	}
 
 	public boolean doDrop(@Nonnull ItemStack drop) {
@@ -494,6 +466,24 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	}
 
 	@Override
+	protected NBTTagCompound writePacketData(NBTTagCompound tag) {
+
+		tag = super.writePacketData(tag);
+
+		tag.setBoolean("a", isActive);
+
+		return tag;
+	}
+
+	@Override
+	protected void handlePacketData(NBTTagCompound tag) {
+
+		super.handlePacketData(tag);
+
+		isActive = tag.getBoolean("a");
+	}
+
+	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 
 		tag = super.writeToNBT(tag);
@@ -522,6 +512,8 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 				tag.setTag("DropItems", dropItems);
 		}
 
+		tag.setBoolean("a", isActive);
+
 		return tag;
 	}
 
@@ -546,6 +538,8 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			if (tanks.tagCount() > 0)
 				tag.setTag("Tanks", tanks);
 		}
+
+		isActive = tag.getBoolean("a");
 	}
 
 	@Nonnull
@@ -628,6 +622,17 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		float mult = hasTank & hasInventory ? (tankPercent + invPercent) / 2 : hasTank ? tankPercent : hasInventory ? invPercent : 0f;
 		return (int) Math.ceil(15 * mult);
 	}
+
+	public boolean isActive() {
+
+		return isActive;
+	}
+
+	public void setIsActive(boolean isActive) {
+
+		this.isActive = isActive;
+	}
+
 
 	@Override
 	public int getField(int id) {

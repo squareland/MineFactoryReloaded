@@ -21,12 +21,12 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerSteamBoiler;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
+public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 
 	public static final int maxTemp = 730;
 
