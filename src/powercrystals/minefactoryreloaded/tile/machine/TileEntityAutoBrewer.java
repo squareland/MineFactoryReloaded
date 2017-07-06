@@ -5,6 +5,7 @@ import cofh.lib.util.helpers.ItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionUtils;
@@ -92,12 +93,12 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				int processSlot = getProcessSlot(row), templateSlot = getTemplateSlot(row);
 				if (!_inventory.get(31).isEmpty() && _inventory.get(processSlot).isEmpty() && !_inventory.get(templateSlot).isEmpty()) {
 					if (row == 0 || _inventory.get(getTemplateSlot(row - 1)).isEmpty()) {
-						@Nonnull ItemStack waterBottle = new ItemStack(Items.POTIONITEM);
+						@Nonnull ItemStack waterBottle = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
 						if (getPotionResult(waterBottle, _inventory.get(templateSlot)) != waterBottle)
 							if (drain(waterCost, false, _tanks[0]) == waterCost) {
 								drain(waterCost, true, _tanks[0]);
 								_inventory.set(31, ItemHelper.consumeItem(_inventory.get(31)));
-								_inventory.set(processSlot, new ItemStack(Items.POTIONITEM));
+								_inventory.set(processSlot, waterBottle);
 								didWork = true;
 							}
 					}
@@ -140,12 +141,11 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				}
 				for (int i = 0; i < 3; i++) {
 					int slot = getResourceSlot(row, i);
-					if (ingredient.getCount() <= 0 && !UtilInventory.stacksEqual(_inventory.get(slot), ingredient)) {
+					if (_inventory.get(slot).isEmpty() || !UtilInventory.stacksEqual(_inventory.get(slot), ingredient)) {
 						continue;
 					}
 
-					@Nonnull ItemStack newPotion = this.getPotionResult(current, ingredient); // TODO: are there mods we need to be concerned about?
-					// if they modify the ingredient stack, we need either defensive copies, or to pass the storage slot stack
+					@Nonnull ItemStack newPotion = this.getPotionResult(current, ingredient.copy());
 
 					if (!newPotion.isEmpty() && current != newPotion) {
 						_inventory.set(getProcessSlot(row + 1), newPotion);
@@ -158,19 +158,15 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 					if (current == newPotion)
 						break;
 
-					if (ingredient.getCount() > 0) {
-						ingredient.shrink(1);
-						break;
-					}
 					_inventory.get(slot).shrink(1);
-					ingredient.grow(1);
+
 					if (ingredient.getItem().hasContainerItem(_inventory.get(slot))) {
 						@Nonnull ItemStack r = ingredient.getItem().getContainerItem(_inventory.get(slot));
 						if (!r.isEmpty() && r.isItemStackDamageable() && r.getItemDamage() > r.getMaxDamage())
 							r = ItemStack.EMPTY;
 						_inventory.set(slot, r);
 					}
-					if (!_inventory.get(slot).isEmpty() && _inventory.get(slot).getCount() <= 0)
+					if (_inventory.get(slot).isEmpty())
 						_inventory.set(slot, ItemStack.EMPTY);
 					break;
 				}
@@ -191,8 +187,8 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		boolean hasIngredients = ingredient.getCount() > 0;
-		if (!hasIngredients) for (int i = 0; i < 3; i++) {
+		boolean hasIngredients = false;
+		for (int i = 0; i < 3; i++) {
 			if (UtilInventory.stacksEqual(ingredient, _inventory.get(getResourceSlot(row, i)))) {
 				hasIngredients = true;
 				break;
@@ -275,7 +271,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 	public void setInventorySlotContents(int slot, @Nonnull ItemStack itemstack) {
 
 		if (!itemstack.isEmpty() && !shouldDropSlotWhenBroken(slot))
-			itemstack.setCount(0); // ghost item; stack size (0, 1) also used to reduce resource consumption
+			itemstack.setCount(1); // ghost item; stack size (0, 1) also used to reduce resource consumption
 		super.setInventorySlotContents(slot, itemstack);
 	}
 
