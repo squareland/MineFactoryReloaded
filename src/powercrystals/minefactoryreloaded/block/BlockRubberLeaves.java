@@ -159,14 +159,14 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 
 		if (world.isRemote)
 			return;
-		if (state.getValue(VARIANT) == Variant.NORMAL && !state.getValue(DECAYABLE)) {
+		if (state.getValue(VARIANT) == Variant.NORMAL && state.getValue(DECAYABLE)) {
 			boolean decay = state.getValue(CHECK_DECAY);
 			if (decay) {
 				updating.set(Boolean.TRUE);
 				super.updateTick(world, pos, state, rand);
 				updating.set(null);
 				if (!world.getBlockState(pos).getBlock().equals(this))
-					dropBlockAsItem(world, pos, world.getBlockState(pos), 0);
+					dropBlockAsItem(world, pos, state, 0);
 				return;
 			}
 			int chance = 15;
