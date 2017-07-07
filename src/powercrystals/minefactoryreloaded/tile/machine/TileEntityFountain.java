@@ -117,10 +117,10 @@ public class TileEntityFountain extends TileEntityFactoryPowered {
 							if (state.getValue(BlockLiquid.LEVEL) == 0)
 								break l;
 						}
-					if (_tanks[0].getFluid().getFluid().doesVaporize(_tanks[0].getFluid())) {
+					if (world.provider.doesWaterVaporize() && _tanks[0].getFluid().getFluid().doesVaporize(_tanks[0].getFluid())) {
 						FluidStack drained = _tanks[0].getFluid().copy();
 						drained.amount = drain(BUCKET_VOLUME, true, _tanks[0]);
-						_tanks[0].getFluid().getFluid().vaporize(null, world, fillPos, drained);
+						drained.getFluid().vaporize(null, world, fillPos, drained);
 						setIdleTicks(1);
 						return true;
 					}
