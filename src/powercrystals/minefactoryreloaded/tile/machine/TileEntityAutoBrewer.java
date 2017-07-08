@@ -30,10 +30,12 @@ import javax.annotation.Nullable;
 public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 
 	protected boolean _inventoryDirty;
+	protected byte[] spareResources;
 
 	public TileEntityAutoBrewer() {
 
 		super(Machine.AutoBrewer);
+		spareResources = new byte[getSizeInventory() / 5];
 		setManageSolids(true);
 		_tanks[0].setLock(FluidRegistry.WATER);
 	}
@@ -141,7 +143,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				}
 				for (int i = 0; i < 3; i++) {
 					int slot = getResourceSlot(row, i);
-					if (_inventory.get(slot).isEmpty() || !UtilInventory.stacksEqual(_inventory.get(slot), ingredient)) {
+					if (spareResources[row] <= 0 && !UtilInventory.stacksEqual(_inventory.get(slot), ingredient)) {
 						continue;
 					}
 
@@ -158,21 +160,33 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 					if (current == newPotion)
 						break;
 
-					_inventory.get(slot).shrink(1);
+					consumeIngredient(ingredient, row, slot);
 
-					if (ingredient.getItem().hasContainerItem(_inventory.get(slot))) {
-						@Nonnull ItemStack r = ingredient.getItem().getContainerItem(_inventory.get(slot));
-						if (!r.isEmpty() && r.isItemStackDamageable() && r.getItemDamage() > r.getMaxDamage())
-							r = ItemStack.EMPTY;
-						_inventory.set(slot, r);
-					}
-					if (_inventory.get(slot).isEmpty())
-						_inventory.set(slot, ItemStack.EMPTY);
 					break;
 				}
 			}
 		}
 		return true;
+	}
+
+	private void consumeIngredient(ItemStack ingredient, int row, int slot) {
+
+		if (spareResources[row] == 0) {
+			_inventory.get(slot).shrink(1);
+
+			if (ingredient.getItem().hasContainerItem(_inventory.get(slot))) {
+				@Nonnull ItemStack r = ingredient.getItem().getContainerItem(_inventory.get(slot));
+				if (!r.isEmpty() && r.isItemStackDamageable() && r.getItemDamage() > r.getMaxDamage())
+					r = ItemStack.EMPTY;
+				_inventory.set(slot, r);
+			}
+			if (_inventory.get(slot).isEmpty())
+				_inventory.set(slot, ItemStack.EMPTY);
+
+			spareResources[row]++;
+		} else {
+			spareResources[row]--;
+		}
 	}
 
 	private boolean canBrew(int row) {
@@ -187,13 +201,16 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		boolean hasIngredients = false;
-		for (int i = 0; i < 3; i++) {
-			if (UtilInventory.stacksEqual(ingredient, _inventory.get(getResourceSlot(row, i)))) {
-				hasIngredients = true;
-				break;
+		boolean hasIngredients = spareResources[row] > 0;
+		if (!hasIngredients) {
+			for (int i = 0; i < 3; i++) {
+				if (UtilInventory.stacksEqual(ingredient, _inventory.get(getResourceSlot(row, i)))) {
+					hasIngredients = true;
+					break;
+				}
 			}
 		}
+
 		if (!hasIngredients) {
 			return false;
 		}
@@ -264,14 +281,47 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 		if (template.isEmpty() || ingredient.isEmpty() || !BrewingRecipeRegistry.isValidIngredient(template)) {
 			return false;
 		}
-		return PotionUtils.getEffectsFromStack(template).equals(PotionUtils.getEffectsFromStack(ingredient));
+		return UtilInventory.stacksEqual(template, ingredient);
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+
+		tag = super.writeToNBT(tag);
+
+		tag.setByteArray("spareResources", spareResources);
+
+		return tag;
+	}
+
+	private byte booleanArrayToByte(boolean[] values) {
+
+		byte ret = 0;
+		for (int i=0; i < values.length; i++)
+			ret |= (values[i] ? 1 : 0) << i;
+		return ret;
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {
+
+		super.readFromNBT(tag);
+
+		if (tag.hasKey("spareResources")) {
+			spareResources = tag.getByteArray("spareResources");
+		}
 	}
 
 	@Override
 	public void setInventorySlotContents(int slot, @Nonnull ItemStack itemstack) {
 
-		if (!itemstack.isEmpty() && !shouldDropSlotWhenBroken(slot))
-			itemstack.setCount(1); // ghost item; stack size (0, 1) also used to reduce resource consumption
+		if (!itemstack.isEmpty() && !shouldDropSlotWhenBroken(slot)) {
+			itemstack.setCount(1);
+
+			if (!ingredientsEqual(_inventory.get(slot), itemstack)) {
+				spareResources[slot / 5] = 0;
+			}
+		}
 		super.setInventorySlotContents(slot, itemstack);
 	}
 
