@@ -53,9 +53,6 @@ public class BlockRailPassengerDropoff extends BlockFactoryRail {
 
 	private AxisAlignedBB findSpaceForEntity(Entity entity, BlockPos pos, World world) {
 
-		final int searchX = MFRConfig.passengerRailSearchMaxHorizontal.getInt() * 2;
-		final int searchY = MFRConfig.passengerRailSearchMaxVertical.getInt() * 2;
-
 		AxisAlignedBB bb = entity.getEntityBoundingBox();
 
 		final double halfX = (bb.maxX - bb.minX) / 2;
@@ -67,34 +64,78 @@ public class BlockRailPassengerDropoff extends BlockFactoryRail {
 				pos.getZ() - bb.minZ + .5 - halfZ
 		); // center on a block, raise by 3/32
 
-		bb = bb.offset(0, -(searchY >> 1), 0);
-		for (int offsetY = -searchY; offsetY <= searchY; offsetY++) {
-			bb = bb.offset(-(searchX >> 1), 0, 0);
-			for (int offsetX = -searchX; offsetX <= searchX; offsetX++) {
-				bb = bb.offset(0, 0, -(searchX >> 1));
-				for (int offsetZ = -searchX; offsetZ <= searchX; offsetZ++) {
+		for (double yLevel = 0; yLevel <= MFRConfig.passengerRailSearchMaxVertical.getInt(); yLevel += 0.5) {
 
-					if (!isBadBlockToStandIn(world, bb, entity) &&
-							world.getEntitiesWithinAABBExcludingEntity(entity, bb).isEmpty()) {
-						int targetX = MathHelper.floor(bb.minX + halfX);
-						int targetY = MathHelper.floor(bb.minY);
-						int targetZ = MathHelper.floor(bb.minZ + halfZ);
+			for (double horizontalRadius = 1;
+				 horizontalRadius <= MFRConfig.passengerRailSearchMaxHorizontal.getInt(); horizontalRadius += 0.5) {
 
-						if (!isBadBlockToStandOn(world, new BlockPos(targetX, targetY, targetZ))) // may be on top of a slab or other thin block
-							return bb.offset(halfX, 0, halfZ);
+				AxisAlignedBB result = searchHorizontalRectangle(world, horizontalRadius, entity, bb.offset(0, yLevel, 0), halfX,
+						halfZ);
+				if (result != null)
+					return result;
 
-						targetY = MathHelper.floor(bb.minY - 0.15625);
-						if (!isBadBlockToStandOn(world, new BlockPos(targetX, targetY, targetZ)))
-							return bb.offset(halfX, 0, halfZ);
-					}
-					bb = bb.offset(0, 0, 0.5);
+				if (yLevel > 0) {
+					result = searchHorizontalRectangle(world, horizontalRadius, entity, bb.offset(0, -yLevel, 0), halfX, halfZ);
+					if (result != null)
+						return result;
 				}
-				bb = bb.offset(0.5, 0, -(searchX >> 1) - 0.5);
 			}
-			bb = bb.offset(-(searchX >> 1) - 0.5, 0.5, 0);
 		}
 
 		return null;
+	}
+
+	private AxisAlignedBB searchHorizontalRectangle(World world, double radius, Entity entity, AxisAlignedBB bb, double halfX,
+			double halfZ) {
+
+		double xOffset = -radius;
+		double zOffset = -radius;
+
+		for (; xOffset < radius; xOffset += 0.5) {
+			if (isGoodBlockToStand(world, bb.offset(xOffset, 0, zOffset), entity, halfX, halfZ)) {
+				return bb.offset(xOffset + halfX, 0, zOffset + halfZ);
+			}
+		}
+
+		for (; zOffset < radius; zOffset += 0.5) {
+			if (isGoodBlockToStand(world, bb.offset(xOffset, 0, zOffset), entity, halfX, halfZ)) {
+				return bb.offset(xOffset + halfX, 0, zOffset + halfZ);
+			}
+		}
+
+		for (; xOffset > -radius; xOffset -= 0.5) {
+			if (isGoodBlockToStand(world, bb.offset(xOffset, 0, zOffset), entity, halfX, halfZ)) {
+				return bb.offset(xOffset + halfX, 0, zOffset + halfZ);
+			}
+		}
+
+		for (; zOffset > -radius; zOffset -= 0.5) {
+			if (isGoodBlockToStand(world, bb.offset(xOffset, 0, zOffset), entity, halfX, halfZ)) {
+				return bb.offset(xOffset + halfX, 0, zOffset + halfZ);
+			}
+		}
+
+		return null;
+	}
+
+	private boolean isGoodBlockToStand(World world, AxisAlignedBB bb, Entity entity, double halfX, double halfZ) {
+
+		if (!isBadBlockToStandIn(world, bb, entity) &&
+				world.getEntitiesWithinAABBExcludingEntity(entity, bb).isEmpty()) {
+			int targetX = MathHelper.floor(bb.minX + halfX);
+			int targetY = MathHelper.floor(bb.minY);
+			int targetZ = MathHelper.floor(bb.minZ + halfZ);
+
+			if (!isBadBlockToStandOn(world,
+					new BlockPos(targetX, targetY, targetZ))) // may be on top of a slab or other thin block
+				return true;
+
+			targetY = MathHelper.floor(bb.minY - 0.15625);
+			if (!isBadBlockToStandOn(world, new BlockPos(targetX, targetY, targetZ)))
+				return true;
+		}
+
+		return false;
 	}
 
 	private boolean isBadBlockToStandOn(World world, BlockPos pos) {
@@ -121,17 +162,6 @@ public class BlockRailPassengerDropoff extends BlockFactoryRail {
 		int i1 = MathHelper.floor(bb.minZ);
 		int j1 = MathHelper.floor(bb.maxZ) + 1;
 
-		if (bb.minX < 0.0D) {
-			--i;
-		}
-
-		if (bb.minY < 0.0D) {
-			--k;
-		}
-
-		if (bb.minZ < 0.0D) {
-			--i1;
-		}
 		BlockPos.PooledMutableBlockPos pos = BlockPos.PooledMutableBlockPos.retain();
 
 		for (int k1 = i; k1 < j; ++k1) {
