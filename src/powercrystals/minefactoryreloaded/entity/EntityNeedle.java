@@ -280,7 +280,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 	}
 
 	@Override
-	public boolean canTriggerWalking() {
+	protected boolean canTriggerWalking() {
 
 		return false;
 	}
