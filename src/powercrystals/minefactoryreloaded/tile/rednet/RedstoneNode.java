@@ -25,17 +25,23 @@ public class RedstoneNode {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object o) {
 
-		if(super.equals(obj))
+		if (this == o)
 			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
-		if(obj instanceof RedstoneNode) {
-			RedstoneNode other = (RedstoneNode) obj;
+		RedstoneNode that = (RedstoneNode) o;
 
-			return pos.equals(other.pos) && facing.equals(other.facing);
-		}
+		return (pos != null ? pos.equals(that.pos) : that.pos == null) && facing == that.facing;
+	}
 
-		return false;
+	@Override
+	public int hashCode() {
+
+		int result = pos != null ? pos.hashCode() : 0;
+		result = 31 * result + (facing != null ? facing.hashCode() : 0);
+		return result;
 	}
 }
