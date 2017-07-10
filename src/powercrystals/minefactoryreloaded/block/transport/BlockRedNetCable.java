@@ -258,7 +258,6 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 			} else if (subHit >= (2 + 6 * 2) && subHit < (2 + 6 * 3)) {
 				if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 					if (!world.isRemote) {
-						int currentColor = cable.getSideColor(EnumFacing.VALUES[subSide]);
 						int nextColor;
 						if (!player.isSneaking()) {
 							nextColor = cable.getSideColor(EnumFacing.VALUES[subSide]) + 1;
@@ -267,13 +266,12 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 							nextColor = cable.getSideColor(EnumFacing.VALUES[subSide]) - 1;
 							if (nextColor < 0) nextColor = 15;
 						}
-						cable.setSideColor(EnumFacing.VALUES[subSide], currentColor, nextColor);
+						cable.setSideColor(EnumFacing.VALUES[subSide], nextColor);
 					}
 					return true;
 				} else if (!heldItem.isEmpty() && heldItem.getItem().equals(Items.DYE)) {
 					if (!world.isRemote) {
-						int currentColor = cable.getSideColor(EnumFacing.VALUES[subSide]);
-						cable.setSideColor(EnumFacing.VALUES[subSide],  currentColor,15 - heldItem.getItemDamage());
+						cable.setSideColor(EnumFacing.VALUES[subSide], 15 - heldItem.getItemDamage());
 					}
 					return true;
 				}
@@ -339,8 +337,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 					return true;
 				} else if (!heldItem.isEmpty() && heldItem.getItem().equals(Items.DYE)) {
 					if (!world.isRemote && subSide < 6) {
-						int currentColor = cable.getSideColor(EnumFacing.VALUES[subSide]);
-						cable.setSideColor(EnumFacing.VALUES[subSide], currentColor, 15 - heldItem.getItemDamage());
+						cable.setSideColor(EnumFacing.VALUES[subSide], 15 - heldItem.getItemDamage());
 						MFRUtil.notifyBlockUpdate(world, pos, state);
 					}
 					return subSide < 6;

@@ -678,11 +678,12 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		readFromNBT = true;
 	}
 
-	public void setSideColor(EnumFacing side, int previousColor, int color) {
+	public void setSideColor(EnumFacing side, int color) {
 
 		if (side == null) {
 			return;
 		}
+		int previousColor = _sideColors[side.ordinal()];
 		_sideColors[side.ordinal()] = color;
 
 		updateNearbyNode(side);
