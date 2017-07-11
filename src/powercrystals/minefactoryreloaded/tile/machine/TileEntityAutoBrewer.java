@@ -144,8 +144,8 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				continue;
 			}
 
-			for (int i = 0; i < 3; i++) {
-				final int slot = getResourceSlot(row, i);
+			for (int col = 0; col < 3; col++) {
+				final int slot = getResourceSlot(row, col);
 				ItemStack ingredient = _inventory.get(slot);
 				if (spareResources[row] <= 0 && !UtilInventory.stacksEqual(_inventory.get(slot), ingredient)) {
 					continue;
@@ -164,7 +164,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				if (current == newPotion)
 					break;
 
-				consumeIngredient(ingredient, row, slot);
+				consumeIngredient(ingredient, row, col, slot);
 
 				break;
 			}
@@ -172,18 +172,33 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 		return true;
 	}
 
-	private void consumeIngredient(ItemStack template, int row, int slot) {
+	private void consumeIngredient(ItemStack template, int row, int column, int slot) {
 
+		@Nonnull ItemStack ingredient = _inventory.get(slot);
 		if (spareResources[row] == 0) {
-			_inventory.get(slot).shrink(1);
+			ingredient.shrink(1);
 
-			if (template.getItem().hasContainerItem(_inventory.get(slot))) {
-				@Nonnull ItemStack r = template.getItem().getContainerItem(_inventory.get(slot));
+			if (template.getItem().hasContainerItem(ingredient)) {
+				@Nonnull ItemStack r = template.getItem().getContainerItem(ingredient);
 				if (!r.isEmpty() && r.isItemStackDamageable() && r.getItemDamage() > r.getMaxDamage())
 					r = ItemStack.EMPTY;
-				_inventory.set(slot, r);
+				if (ingredient.getCount() <= 0) {
+					_inventory.set(slot, r);
+					ingredient = r;
+				}
+				else {
+					if (column < 2 && _inventory.get(slot + 1).isEmpty()) {
+						_inventory.set(slot + 1, r);
+					} else if (column < 1 && _inventory.get(slot + 2).isEmpty()) {
+						_inventory.set(slot + 2, r);
+					} else if (_inventory.get(getProcessSlot(6)).isEmpty()) {
+						_inventory.set(getProcessSlot(6), r);
+					} else {
+						UtilInventory.dropStack(this, r);
+					}
+				}
 			}
-			if (_inventory.get(slot).isEmpty())
+			if (ingredient.isEmpty())
 				_inventory.set(slot, ItemStack.EMPTY);
 
 			spareResources[row]++;
@@ -324,6 +339,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				spareResources[slot / 5] = 0;
 			}
 		}
+		super.setInventorySlotContents(slot, itemstack);
 	}
 
 	@Override
