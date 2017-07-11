@@ -687,7 +687,7 @@ public class Vanilla {
 		}
 
 		for (int i = 0, e = materials.length; i < e; ++i) {
-			addRecipe(ShapedRecipe(stack(upgradeItem, 1, i), new Object[] {
+			addRecipe(ShapedRecipe(stack(upgradeItem, 1, upgradeItem.getMetadataValues()[i]), new Object[] {
 					"III",
 					"PCP",
 					"RGR",
