@@ -479,7 +479,13 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 				return;
 
 			int subHit = part.subHit;
-			side = EnumFacing.VALUES[_subSideMappings[subHit]];
+			int mappedSide = _subSideMappings[subHit];
+			if (mappedSide >= 0 && mappedSide < 6) {
+				side = EnumFacing.VALUES[mappedSide];
+			} else {
+				side = null;
+			}
+
 			((TileEntityRedNetCable) tile).getTileInfo(info, side, player, debug);
 		}
 	}
@@ -494,7 +500,12 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 				return;
 
 			int subHit = part.subHit;
-			side = EnumFacing.VALUES[_subSideMappings[subHit]];
+			int mappedSide = _subSideMappings[subHit];
+			if (mappedSide >= 0 && mappedSide < 6) {
+				side = EnumFacing.VALUES[mappedSide];
+			} else {
+				side = null;
+			}
 			info.add(new TextComponentString(((TileEntityRedNetCable) tile).getRedNetInfo(side, player)));
 
 			int value;
