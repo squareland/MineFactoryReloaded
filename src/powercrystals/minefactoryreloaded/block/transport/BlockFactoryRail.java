@@ -98,7 +98,7 @@ public class BlockFactoryRail extends BlockRailBase implements IInitializer, IMo
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 
-		IBlockState r = getDefaultState().withProperty(shapeProperty, BlockRailBase.EnumRailDirection.byMetadata(getShapeMeta(meta, true)));
+		IBlockState r = getDefaultState().withProperty(shapeProperty, BlockRailBase.EnumRailDirection.byMetadata(getShapeMeta(meta & 7, true)));
 		if (isPowered) {
 			r = r.withProperty(POWERED, (meta & 8) > 0);
 		}
@@ -110,7 +110,7 @@ public class BlockFactoryRail extends BlockRailBase implements IInitializer, IMo
 
 		int meta = getShapeMeta(state.getValue(shapeProperty).getMetadata(), false);
 		if (isPowered) {
-			meta |= (state.getValue(POWERED) ? 0 : 8);
+			meta |= (state.getValue(POWERED) ? 8 : 0);
 		}
 		return meta;
 	}
