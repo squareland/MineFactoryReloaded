@@ -95,7 +95,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		if (stack.getTagCompound().getBoolean("hide")) {
 			infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.mystery"));
 		} else {
-			infoList.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("id")));
+			infoList.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("entityName")));
 			// See Entity.getEntityName()
 			Class<?> c = EntityList.getClass(new ResourceLocation(stack.getTagCompound().getString("id")));
 			if (c == null) {
@@ -280,7 +280,8 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			synchronized (entity) { //TODO why is this block synchronized? as far as I can see it runs in the main thread
 				entity.writeToNBT(c);
 
-				c.setString("id", EntityList.getEntityString(entity));
+				c.setString("id", EntityList.getKey(entity).toString());
+				c.setString("entityName", EntityList.getEntityString(entity));
 
 				if (entity.isDead)
 					return false;
