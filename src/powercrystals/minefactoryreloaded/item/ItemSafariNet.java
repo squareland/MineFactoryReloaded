@@ -160,8 +160,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				if (1 == (type & 1)) {
 					((EntityLiving) spawnedCreature).enablePersistence();
 				}
-				if (itemstack.hasDisplayName()) {
-					spawnedCreature.setCustomNameTag(itemstack.getDisplayName());
+				if (spawnedCreature.hasCustomName()) {
 					if (2 == (type & 2))
 						spawnedCreature.setAlwaysRenderNameTag(true);
 				}
