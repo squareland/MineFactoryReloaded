@@ -27,8 +27,7 @@ public class ItemXpExtractor extends ItemFactoryTool {
 	public static DamageSource damage = new DamageSource("mfr.xpsuck").setDamageBypassesArmor().setDamageIsAbsolute();
 
 	public ItemXpExtractor() {
-		// TODO: needle side should face the player in-hand
-		
+
 		this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter() {
 		
 			@SideOnly(Side.CLIENT)
