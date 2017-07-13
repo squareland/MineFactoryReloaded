@@ -5,6 +5,7 @@ import net.minecraft.entity.item.EntityMinecartMobSpawner;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.minecart.MinecartInteractEvent;
@@ -33,19 +34,23 @@ public class EntityHandler {
 			return;
 		if (!MFRConfig.enableSpawnerCarts.getBoolean(true))
 			return;
-		if (e.getMinecart() != null && !e.getMinecart().isDead) {
+
+		EntityMinecart minecart = e.getMinecart();
+		if (minecart != null && !minecart.isDead) {
 			@Nonnull ItemStack item = e.getPlayer().getHeldItem(e.getHand());
 			if (!item.isEmpty() && item.getItem().equals(portaSpawnerItem) &
-					e.getMinecart().getRidingEntity() == null &
-					!e.getMinecart().isBeingRidden()) {
-				if (e.getMinecart().getType() == EntityMinecart.Type.RIDEABLE) {
+					minecart.getRidingEntity() == null &
+					!minecart.isBeingRidden()) {
+				if (minecart.getType() == EntityMinecart.Type.RIDEABLE) {
 					if (ItemPortaSpawner.hasData(item)) {
 						e.setCanceled(true);
 						NBTTagCompound tag = ItemPortaSpawner.getSpawnerTag(item);
 						e.getPlayer().setHeldItem(e.getHand(), ItemStack.EMPTY);
-						e.getMinecart().writeToNBT(tag);
-						e.getMinecart().setDead();
-						EntityMinecartMobSpawner ent = new EntityMinecartMobSpawner(e.getMinecart().world);
+						minecart.writeToNBT(tag);
+						tag.removeTag("UUIDMost");
+						tag.removeTag("UUIDLeast");
+						minecart.setDead();
+						EntityMinecartMobSpawner ent = new EntityMinecartMobSpawner(minecart.world, minecart.getPosition().getX(), minecart.getPosition().getY(), minecart.getPosition().getZ());
 						ent.readFromNBT(tag);
 						ent.world.spawnEntity(ent);
 						ent.world.playEvent(null, 2004, ent.getPosition(), 0); // particles
