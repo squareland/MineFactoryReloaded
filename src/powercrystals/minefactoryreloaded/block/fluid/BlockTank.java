@@ -32,6 +32,7 @@ import powercrystals.minefactoryreloaded.block.ItemBlockTank;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.block.BlockTankRenderer;
+import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.tank.TileEntityTank;
 
 import javax.annotation.Nonnull;
@@ -112,6 +113,9 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 
 	@Override
 	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
+
+		if (heldItem.getItem() == MFRThings.strawItem)
+			return false;
 
 		super.activated(world, pos, player, side, hand, heldItem);
 		return true; // don't allow accidentally placing fluids/tanks off us

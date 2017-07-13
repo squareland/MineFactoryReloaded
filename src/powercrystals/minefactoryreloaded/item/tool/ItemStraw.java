@@ -44,7 +44,7 @@ public class ItemStraw extends ItemFactoryTool {
 	@Override
 	public ItemStack onItemUseFinish(@Nonnull ItemStack stack, World world, EntityLivingBase entity) {
 
-		if (!world.isRemote || !(entity instanceof EntityPlayer)) {
+		if (!world.isRemote && entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
 			RayTraceResult result = rayTrace(world, player, true);
 			Map<String, ILiquidDrinkHandler> map = MFRRegistry.getLiquidDrinkHandlers();
