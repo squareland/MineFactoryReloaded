@@ -51,7 +51,7 @@ public class ItemRedNetMeter extends ItemMulti {
 		player.swingArm(hand);
 		if (player.world.isRemote)
 			return true;
-		player.sendMessage(new TextComponentString("ID: " + EntityList.getEntityString(entity)));
+		player.sendMessage(new TextComponentString("ID: " + EntityList.getKey(entity).toString()));
 		return true;
 	}
 
