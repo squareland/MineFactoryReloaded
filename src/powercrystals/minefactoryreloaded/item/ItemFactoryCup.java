@@ -75,16 +75,6 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public boolean addUseHandler(IUseHandler handler) {
-		return useHandlers.add(handler);
-	}
-
-	@Override
-	public boolean removeUseHandler(IUseHandler handler) {
-		return useHandlers.remove(handler);
-	}
-
-	@Override
 	public String getUnlocalizedName(@Nonnull ItemStack stack) {
 		if (getFluid(stack) != null)
 			return getUnlocalizedName() + (_prefix ? ".prefix" : ".suffix");
@@ -236,27 +226,27 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 	}
 
 	@Override
-	public RayTraceResult rayTrace(World world, EntityLivingBase entity, boolean adjacent) {
-		float f1 = entity.rotationPitch;
-		float f2 = entity.rotationYaw;
-		double y = entity.posY + entity.getEyeHeight() - entity.getYOffset();
-		Vec3d vec3 = new Vec3d(entity.posX, y, entity.posZ);
-		float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
-		float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
-		float f5 = -MathHelper.cos(-f1 * 0.017453292F);
-		float f6 = MathHelper.sin(-f1 * 0.017453292F);
-		float f7 = f4 * f5;
-		float f8 = f3 * f5;
+	public RayTraceResult rayTrace(World world, EntityLivingBase entity, boolean useLiquids) {
+
+		float f = entity.rotationPitch;
+		float f1 = entity.rotationYaw;
+		double d0 = entity.posX;
+		double d1 = entity.posY + (double)entity.getEyeHeight();
+		double d2 = entity.posZ;
+		Vec3d vec3d = new Vec3d(d0, d1, d2);
+		float f2 = MathHelper.cos(-f1 * 0.017453292F - (float)Math.PI);
+		float f3 = MathHelper.sin(-f1 * 0.017453292F - (float)Math.PI);
+		float f4 = -MathHelper.cos(-f * 0.017453292F);
+		float f5 = MathHelper.sin(-f * 0.017453292F);
+		float f6 = f3 * f4;
+		float f7 = f2 * f4;
 		double d3 = 5.0D;
-		if (entity instanceof EntityPlayerMP) {
-			d3 = ((EntityPlayerMP)entity).interactionManager.getBlockReachDistance();
+		if (entity instanceof net.minecraft.entity.player.EntityPlayerMP)
+		{
+			d3 = ((net.minecraft.entity.player.EntityPlayerMP)entity).interactionManager.getBlockReachDistance();
 		}
-		Vec3d vec31 = vec3.addVector(f7 * d3, f6 * d3, f8 * d3);
-		RayTraceResult ret = world.rayTraceBlocks(vec3, vec31, adjacent, !adjacent, false);
-		if (ret != null && adjacent) {
-			ret = new RayTraceResult(ret.typeOfHit, ret.hitVec, ret.sideHit, ret.getBlockPos().offset(ret.sideHit));
-		}
-		return ret;
+		Vec3d vec3d1 = vec3d.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
+		return world.rayTraceBlocks(vec3d, vec3d1, useLiquids, !useLiquids, false);
 	}
 
 	@Override
