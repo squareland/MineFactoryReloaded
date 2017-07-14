@@ -67,6 +67,9 @@ public class EntityFlyingItem extends EntitySafariNet {
 	@Override
 	protected boolean onHitEntity(@Nonnull ItemStack storedEntity, RayTraceResult result) {
 
+		if (result.entityHit == getThrower())
+			return false;
+
 		DamageSource d = DamageSource.causeThrownDamage(this, getThrower() == null ? this : getThrower());
 		if (result.entityHit.attackEntityFrom(d, damage)) {
 			if (this.knockbackStrength > 0) {

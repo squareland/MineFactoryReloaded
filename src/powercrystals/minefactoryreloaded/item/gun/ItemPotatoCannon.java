@@ -80,7 +80,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 		boolean flag = player.capabilities.isCreativeMode, a = false;
 
 		int i = 0;
-		if (flag) {
+		if (!flag) {
 			flag |= EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 			for (; !a && i < ammo.length; ++i)
 				a = UtilInventory.playerHasItem(player, ammo[i]);
