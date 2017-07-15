@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import cofh.core.init.CoreProps;
-import cofh.lib.util.RegistryUtils;
 import cofh.lib.util.helpers.StringHelper;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -335,64 +333,6 @@ public class Machine {
 		}
 	}
 
-/* TODO remove when not needed
-	public IIcon getIcon(EnumFacing side, boolean isActive) {
-
-		return (isActive ? _iconsActive : _iconsIdle)[side];
-	}
-
-	public void loadIcons(IIconRegister ir) {
-
-		_iconsActive[0] = ir.registerIcon(loadIcon(bottom, true));
-		_iconsActive[1] = ir.registerIcon(loadIcon(top, true));
-		_iconsActive[2] = ir.registerIcon(loadIcon(front, true));
-		_iconsActive[3] = ir.registerIcon(loadIcon(back, true));
-		_iconsActive[4] = ir.registerIcon(loadIcon(left, true));
-		_iconsActive[5] = ir.registerIcon(loadIcon(right, true));
-		_iconsIdle[0] = ir.registerIcon(loadIcon(bottom, false));
-		_iconsIdle[1] = ir.registerIcon(loadIcon(top, false));
-		_iconsIdle[2] = ir.registerIcon(loadIcon(front, false));
-		_iconsIdle[3] = ir.registerIcon(loadIcon(back, false));
-		_iconsIdle[4] = ir.registerIcon(loadIcon(left, false));
-		_iconsIdle[5] = ir.registerIcon(loadIcon(right, false));
-	}
-*/
-
-	protected String loadIcon(Side side, boolean active) {
-
-		final String base = "minefactoryreloaded:machines/";
-		final String a = side.getMain(active);
-		final String name = getInternalName() + ".";
-		String t;
-		if (CoreProps.enableColorBlindTextures) {
-			final String cb = ".cb";
-			if (RegistryUtils.blockTextureExists(t = base + name + a + cb))
-				return t;
-			else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.getAlt(active) + cb))
-				return t;
-			else if (RegistryUtils.blockTextureExists(t = base + name + side.name + cb))
-				return t;
-			else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.alt + cb))
-				return t;
-		}
-		if (RegistryUtils.blockTextureExists(t = base + name + a))
-			return t;
-		else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.getAlt(active)))
-			return t;
-		else if (RegistryUtils.blockTextureExists(t = base + name + side.name))
-			return t;
-		else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.alt))
-			return t;
-		else if (RegistryUtils.blockTextureExists(t = base + "tile.mfr.machine.0." + a))
-			return t;
-		else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + "tile.mfr.machine.0." + side.getAlt(active)))
-			return t;
-		else if (RegistryUtils.blockTextureExists(t = base + "tile.mfr.machine.0." + side.name))
-			return t;
-		else
-			return base + "tile.mfr.machine.0." + side.alt;
-	}
-
 	public String getTileEntityName() {
 		
 		return _tileEntityName;
@@ -403,7 +343,7 @@ public class Machine {
 		return _tileEntityClass;
 	}
 
-	protected static enum Side {
+	protected enum Side {
 		bottom(null),
 		top(null),
 		front("side"),
