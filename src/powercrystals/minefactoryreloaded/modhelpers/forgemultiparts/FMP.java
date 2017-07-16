@@ -26,7 +26,7 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 @ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatforgemicroblock",
 		name = "MFR Compat: ForgeMicroblock",
 		version = MineFactoryReloadedCore.version,
-		dependencies = "after:MineFactoryReloaded",
+		dependencies = "after:minefactoryreloaded",
 		customProperties = @CustomProperty(k = "cofhversion", v = "true")))
 public class FMP {
 
