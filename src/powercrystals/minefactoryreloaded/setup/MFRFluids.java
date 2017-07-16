@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import cofh.lib.util.RegistryUtils;
 import cofh.lib.util.WeightedRandomItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +26,6 @@ import powercrystals.minefactoryreloaded.block.fluid.BlockFactoryFluid;
 import powercrystals.minefactoryreloaded.block.fluid.BlockPinkSlimeFluid;
 import powercrystals.minefactoryreloaded.core.FluidHandlerItemStackSimpleSingleFluid;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
-import powercrystals.minefactoryreloaded.item.ItemMFRBucketMilk;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -252,9 +250,11 @@ public class MFRFluids {
 		MFRRegistry.registerBlock(mushroomSoupLiquid, new ItemBlock(mushroomSoupLiquid));
 		MFRRegistry.registerBlock(steamFluid, new ItemBlock(steamFluid));
 
+/*
 		if (MFRConfig.vanillaOverrideMilkBucket.getBoolean(true)) {
 			RegistryUtils.overwriteEntry(Item.REGISTRY, "minecraft:milk_bucket", new ItemMFRBucketMilk(Items.MILK_BUCKET));
 		}
+*/
 	}
 
 	public static Fluid registerFluid(FluidData data, int density, EnumRarity rarity) {
