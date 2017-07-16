@@ -64,6 +64,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 				if (tempStack.isEmpty())
 					tempStack = new ItemStack(block, 1, block.getMetaFromState(state));
 				if (tempStack.getItem() != null) {
+					state = block.getActualState(state, world, result.getBlockPos());
 					List<ITextComponent> messages = new ArrayList<>();
 					messages.add(new TextComponentString("")
 							.appendText(I18n
