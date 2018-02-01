@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.core;
 
+import com.google.common.collect.Maps;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,16 +14,18 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
 public class GrindingDamage extends DamageSource {
 
 	private static final String FAKE_PLAYER_NAME = "MinefactoryReloadedGrindingPlayer";
-	private static WeakReference<FakePlayer> fakePlayerRef;
+	private static Map<Integer, WeakReference<FakePlayer>> fakePlayerRefs = Maps.newHashMap();
 
 	protected int _msgCount;
 	protected Random _rand;
+	private WeakReference<FakePlayer> fakePlayerRef;
 
 	public GrindingDamage() {
 
@@ -70,9 +73,12 @@ public class GrindingDamage extends DamageSource {
 
 	public void setupGrindingPlayer(WorldServer world) {
 
-		if (fakePlayerRef == null) {
-			fakePlayerRef = new WeakReference<FakePlayer>(FakePlayerFactory.get(
-					world, new GameProfile(UUID.nameUUIDFromBytes(FAKE_PLAYER_NAME.getBytes()), FAKE_PLAYER_NAME)));
+		int dimId = world.provider.getDimension();
+		if (!fakePlayerRefs.containsKey(dimId)) {
+			String name = FAKE_PLAYER_NAME + "_" + dimId;
+			fakePlayerRefs.put(dimId, new WeakReference<>(FakePlayerFactory.get(
+					world, new GameProfile(UUID.nameUUIDFromBytes(name.getBytes()), name))));
 		}
+		fakePlayerRef = fakePlayerRefs.get(dimId);
 	}
 }

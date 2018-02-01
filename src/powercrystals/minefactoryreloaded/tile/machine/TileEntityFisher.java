@@ -184,12 +184,9 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 
 		super.onFactoryInventoryChanged();
 
-		if (worldObj == null)
-			return;
-
 		boost = 0;
 		_needItem = false;
-		if (!worldObj.isRemote && _inventory[0] != null) {
+		if ((worldObj == null || !worldObj.isRemote) && _inventory[0] != null) {
 			_luck = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, _inventory[0]);
 			_speed = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LURE, _inventory[0]);
 			boost = 75 * _speed + 75;

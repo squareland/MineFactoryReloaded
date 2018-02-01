@@ -146,7 +146,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			for (int col = 3; col-- > 0; ) {
 				final int slot = getResourceSlot(row, col);
 				ItemStack ingredient = _inventory[slot];
-				if (spareResources[row] <= 0 && !UtilInventory.stacksEqual(template, ingredient)) {
+				if (spareResources[row] <= 0 && !ingredientsEqual(template, ingredient)) {
 					continue;
 				}
 
