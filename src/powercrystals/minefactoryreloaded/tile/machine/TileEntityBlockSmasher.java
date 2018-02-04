@@ -48,7 +48,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 	public void setWorldObj(World world) {
 
 		super.setWorldObj(world);
-		_smashingWorld = new SmashingWorld(this.worldObj);
+		_smashingWorld = new SmashingWorld();
 	}
 
 	@Override
