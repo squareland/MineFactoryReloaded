@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.api;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -25,13 +25,13 @@ public interface ISafariNetHandler {
 	 *
 	 * @param safariNetStack
 	 *            The Safari Net that is requesting information.
-	 * @param player
-	 *            The player holding the Safari Net.
+	 * @param world
+	 *            World reference.
 	 * @param infoList
 	 *            The current list of information strings. Add yours to this.
 	 * @param tooltipFlag
 	 *            Normal or Advanced tooltip.
 	 */
-	public void addInformation(@Nonnull ItemStack safariNetStack, EntityPlayer player, List<String> infoList, ITooltipFlag tooltipFlag);
+	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag);
 
 }

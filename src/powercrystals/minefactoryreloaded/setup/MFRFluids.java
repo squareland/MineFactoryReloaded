@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import cofh.core.util.WeightedRandomItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -26,6 +25,7 @@ import powercrystals.minefactoryreloaded.block.fluid.BlockFactoryFluid;
 import powercrystals.minefactoryreloaded.block.fluid.BlockPinkSlimeFluid;
 import powercrystals.minefactoryreloaded.core.FluidHandlerItemStackSimpleSingleFluid;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -309,17 +309,17 @@ public class MFRFluids {
 	private static final @Nonnull ItemStack BOWL = new ItemStack(Items.BOWL);
 
 	@SubscribeEvent
-	public void onItemStackConstruct(AttachCapabilitiesEvent.Item evt) {
+	public void onItemStackConstruct(AttachCapabilitiesEvent<ItemStack> evt) {
 
-		Item item = evt.getItem();
-		if ((item == Items.GLASS_BOTTLE && PotionUtils.getEffectsFromStack(evt.getItemStack()).isEmpty()) ||
+		Item item = evt.getObject().getItem();
+		if ((item == Items.GLASS_BOTTLE && PotionUtils.getEffectsFromStack(evt.getObject()).isEmpty()) ||
 				item == MFRThings.milkBottleItem) {
 			evt.addCapability(new ResourceLocation(MineFactoryReloadedCore.modId + ":milk_bottle_cap"),
-					new FluidHandlerItemStackSimpleSingleFluid(evt.getItemStack(), MILK_BOTTLE, GLASS_BOTTLE,
+					new FluidHandlerItemStackSimpleSingleFluid(evt.getObject(), MILK_BOTTLE, GLASS_BOTTLE,
 							MFRFluids.getFluid("milk"), Fluid.BUCKET_VOLUME));
 		} else if (item == Items.BOWL || item == Items.MUSHROOM_STEW) {
 			evt.addCapability(new ResourceLocation(MineFactoryReloadedCore.modId + ":mushroom_soup_cap"),
-					new FluidHandlerItemStackSimpleSingleFluid(evt.getItemStack(), MUSHROOM_STEW, BOWL,
+					new FluidHandlerItemStackSimpleSingleFluid(evt.getObject(), MUSHROOM_STEW, BOWL,
 							MFRFluids.getFluid("mushroom_soup"), Fluid.BUCKET_VOLUME));
 		}
 	}

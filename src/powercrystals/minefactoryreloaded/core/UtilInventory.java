@@ -7,6 +7,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -15,6 +17,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.EmptyHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
@@ -392,7 +397,7 @@ public abstract class UtilInventory {
 
 	public static boolean stacksEqual(@Nonnull ItemStack s1, @Nonnull ItemStack s2, boolean nbtSensitive) {
 
-		if (s1.isEmpty() | s2.isEmpty())
+		if (s1.isEmpty() || s2.isEmpty())
 			return false;
 		if (!s1.isItemEqual(s2))
 			return false;
@@ -448,5 +453,25 @@ public abstract class UtilInventory {
 
 			return ItemStack.EMPTY;
 		}
+	}
+
+	public static int findItemSlot(IItemHandler handler, ItemStack itemStack) {
+
+		for (int slot = 0; slot < handler.getSlots(); slot++) {
+			if (ItemHelper.itemsEqualWithMetadata(handler.getStackInSlot(slot), itemStack)) {
+				return slot;
+			}
+		}
+		return -1;
+	}
+
+	public static IItemHandler getItemHandlerCap(IInventory inventory, EnumFacing facing) {
+
+		if (inventory instanceof ISidedInventory) {
+			return new SidedInvWrapper((ISidedInventory) inventory, facing);
+		} else if (inventory != null) {
+			return new InvWrapper(inventory);
+		}
+		return EmptyHandler.INSTANCE;
 	}
 }

@@ -1,26 +1,26 @@
 package powercrystals.minefactoryreloaded.tile.rednet;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.core.util.LinkedHashList;
-import net.minecraft.util.math.BlockPos;
-
+import cofh.redstoneflux.impl.EnergyStorage;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.core.ArrayHashList;
 import powercrystals.minefactoryreloaded.core.IGrid;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
 public class RedstoneEnergyNetwork implements IGrid {
 
 	public static final int TRANSFER_RATE = 2560;
-	public static final int STORAGE = TRANSFER_RATE * 6;
+	public static final int STORAGE_CAPACITY = TRANSFER_RATE * 6;
 	static final GridTickHandler<RedstoneEnergyNetwork, TileEntityRedNetEnergy> HANDLER =
 			GridTickHandler.energy;
 
 	private ArrayHashList<TileEntityRedNetEnergy> nodeSet = new ArrayHashList<>();
-	private LinkedHashList<TileEntityRedNetEnergy> conduitSet;
+	private LinkedHashSet<TileEntityRedNetEnergy> conduitSet;
 	private TileEntityRedNetEnergy master;
 	private int overflowSelector;
 	private boolean regenerating = false;
@@ -30,12 +30,12 @@ public class RedstoneEnergyNetwork implements IGrid {
 	public int distributionSide;
 
 	protected RedstoneEnergyNetwork() {
-		storage.setCapacity(STORAGE);
+		storage.setCapacity(STORAGE_CAPACITY);
 		storage.setMaxTransfer(TRANSFER_RATE);
 	}
 
 	public RedstoneEnergyNetwork(TileEntityRedNetEnergy base) { this();
-		conduitSet = new LinkedHashList<>();
+		conduitSet = new LinkedHashSet<>();
 		regenerating = true;
 		addConduit(base);
 		regenerating = false;
@@ -93,23 +93,24 @@ public class RedstoneEnergyNetwork implements IGrid {
 		destroyGrid();
 		if (conduitSet.isEmpty())
 			return;
-		TileEntityRedNetEnergy main = conduitSet.poke();
-		LinkedHashList<TileEntityRedNetEnergy> oldSet = conduitSet;
+		TileEntityRedNetEnergy main = conduitSet.iterator().next();
+		LinkedHashSet<TileEntityRedNetEnergy> oldSet = conduitSet;
 		nodeSet.clear();
-		conduitSet = new LinkedHashList<>(Math.min(oldSet.size() / 6, 5));
+		conduitSet = new LinkedHashSet<>(Math.min(oldSet.size() / 6, 5));
 
-		LinkedHashList<TileEntityRedNetEnergy> toCheck = new LinkedHashList<TileEntityRedNetEnergy>();
-		LinkedHashList<TileEntityRedNetEnergy> checked = new LinkedHashList<TileEntityRedNetEnergy>();
-		BlockPos bp = new BlockPos(0,0,0);
+		LinkedHashSet<TileEntityRedNetEnergy> toCheck = new LinkedHashSet<>();
+		LinkedHashSet<TileEntityRedNetEnergy> checked = new LinkedHashSet<>();
 		EnumFacing[] dir = EnumFacing.VALUES;
 		toCheck.add(main);
 		checked.add(main);
-		while (!toCheck.isEmpty()) {
-			main = toCheck.shift();
+		Iterator<TileEntityRedNetEnergy> it = toCheck.iterator();
+		while (it.hasNext()) {
+			main = it.next();
+			it.remove();
 			addConduit(main);
 			World world = main.getWorld();
 			for (int i = 6; i --> 0; ) {
-				bp = main.getPos().offset(dir[i]);
+				BlockPos bp = main.getPos().offset(dir[i]);
 				if (world.isBlockLoaded(bp)) {
 					TileEntity te = world.getTileEntity(bp);
 					if (te instanceof TileEntityRedNetEnergy) {
@@ -227,7 +228,7 @@ public class RedstoneEnergyNetwork implements IGrid {
 		if (grid == this) return;
 		boolean r = regenerating || grid.regenerating;
 		grid.destroyGrid();
-		if (!regenerating & r)
+		if (!regenerating && r)
 			regenerate();
 
 		regenerating = true;
@@ -276,7 +277,7 @@ public class RedstoneEnergyNetwork implements IGrid {
 	}
 
 	public void rebalanceGrid() {
-		storage.setCapacity(nodeSet.size() * STORAGE);
+		storage.setCapacity(nodeSet.size() * STORAGE_CAPACITY);
 	}
 
 	public int getConduitCount() {

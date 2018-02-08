@@ -1,19 +1,20 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
 import appeng.api.implementations.tiles.ICrankable;
-import cofh.api.energy.IEnergyReceiver;
 import cofh.api.item.IAugmentItem;
-import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
 import cofh.core.util.helpers.AugmentHelper;
+import cofh.redstoneflux.api.IEnergyReceiver;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.modhelpers.Compats;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
 import javax.annotation.Nonnull;
@@ -26,9 +27,8 @@ import javax.annotation.Nonnull;
  * Idle ticks cause an artificial delay before activateMachine() is called again. Max should be the highest value the _machine will use, to draw the
  * progress bar correctly.
  */
-@Strippable("appeng.api.implementations.tiles.ICrankable")
-public abstract class TileEntityFactoryPowered extends TileEntityFactoryTickable
-																					implements IEnergyReceiver, ICrankable {
+@Optional.Interface(iface = "appeng.api.implementations.tiles.ICrankable", modid = Compats.ModIds.APP_ENG)
+public abstract class TileEntityFactoryPowered extends TileEntityFactoryTickable implements IEnergyReceiver, ICrankable {
 
 	public static final int energyPerAE = 2;
 	public static final int energyPerEU = 4;
@@ -318,18 +318,21 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryTickable
 
 	// AE methods
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public boolean canTurn() {
 
 		return getEnergyStored() < getEnergyStoredMax();
 	}
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public void applyTurn() {
 
 		storeEnergy(90, true);
 	}
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public boolean canCrankAttach(EnumFacing directionToCrank) {
 

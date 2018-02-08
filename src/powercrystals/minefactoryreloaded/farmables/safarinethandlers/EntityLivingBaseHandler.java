@@ -2,12 +2,12 @@ package powercrystals.minefactoryreloaded.farmables.safarinethandlers;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 
@@ -26,7 +26,7 @@ public class EntityLivingBaseHandler implements ISafariNetHandler {
 	}
 
 	@Override
-	public void addInformation(@Nonnull ItemStack safariNetStack, EntityPlayer player, List<String> infoList, ITooltipFlag tooltipFlag) {
+	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
 
 		NBTTagCompound tag = safariNetStack.getTagCompound();
 		float abs = tag.getFloat("AbsorptionAmount");

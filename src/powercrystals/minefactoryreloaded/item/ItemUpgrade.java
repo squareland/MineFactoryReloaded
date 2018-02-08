@@ -1,8 +1,9 @@
 package powercrystals.minefactoryreloaded.item;
 
 import cofh.api.item.IAugmentItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -11,6 +12,7 @@ import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemUpgrade extends ItemMulti implements IAugmentItem {
@@ -27,10 +29,10 @@ public class ItemUpgrade extends ItemMulti implements IAugmentItem {
 	}
 
 	@Override
-	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
-		infoList.add(String.format(MFRUtil.localize("tip.info.mfr.upgrade.radius", true), getAugmentLevel(stack, "radius")));
+		super.addInformation(stack, world, tooltip, tooltipFlag);
+		tooltip.add(String.format(MFRUtil.localize("tip.info.mfr.upgrade.radius", true), getAugmentLevel(stack, "radius")));
 	}
 
 	//TODO fix upgrades when it comes to former augment level implementation

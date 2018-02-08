@@ -4,6 +4,7 @@ import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,7 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.entity.RenderSafarinet;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemSafariNetLauncher extends ItemFactoryGun {
@@ -36,9 +38,9 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
-		super.addInfo(stack, player, infoList, advancedTooltips);
-		infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.mode"));
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
+		super.addInformation(stack, world, tooltip, tooltipFlag);
+		tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.mode"));
 	}
 
 	@Override

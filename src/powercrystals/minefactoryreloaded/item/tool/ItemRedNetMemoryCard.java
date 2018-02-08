@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
 import cofh.api.core.IPortableData;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,6 +20,7 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,9 +34,9 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 	}
 
 	@Override
-	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null) {
 			l: {
@@ -43,17 +45,17 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 					String entry = MFRUtil.localize("tip.info.mfr.memorycard.programmedFor", new Object[] {
 						MFRUtil.localize(type)
 					});
-					infoList.addAll(Arrays.asList(entry.split("\n", -1)));
+					tooltip.addAll(Arrays.asList(entry.split("\n", -1)));
 
 					if (!type.equals("tile.mfr.rednet.logic.name"))
 						break l;
 				}
 				if (tag.hasKey("circuits", 9)) {
 					int c = stack.getTagCompound().getTagList("circuits", 10).tagCount();
-					infoList.add(MFRUtil.localize("tip.info.mfr.memorycard.programmed", c));
+					tooltip.add(MFRUtil.localize("tip.info.mfr.memorycard.programmed", c));
 				}
 			}
-			infoList.add(MFRUtil.localize("tip.info.mfr.memorycard.wipe", true));
+			tooltip.add(MFRUtil.localize("tip.info.mfr.memorycard.wipe", true));
 		}
 	}
 

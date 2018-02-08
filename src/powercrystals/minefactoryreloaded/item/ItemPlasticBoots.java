@@ -13,8 +13,8 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 
 import javax.annotation.Nonnull;
 
-import static cofh.core.util.helpers.ItemHelper.areItemsEqual;
 import static cofh.core.util.helpers.ItemHelper.getItemFromStack;
+import static cofh.core.util.helpers.ItemHelper.itemsEqual;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
 public class ItemPlasticBoots extends ItemFactoryArmor {
@@ -29,14 +29,14 @@ public class ItemPlasticBoots extends ItemFactoryArmor {
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, @Nonnull ItemStack itemStack) {
 
-		l: if (areItemsEqual(this, plasticBootsItem)) {
-			if (!areItemsEqual(getItemFromStack(player.getItemStackFromSlot(EntityEquipmentSlot.HEAD)), plasticHelmetItem)) {
+		l: if (itemsEqual(this, plasticBootsItem)) {
+			if (!itemsEqual(getItemFromStack(player.getItemStackFromSlot(EntityEquipmentSlot.HEAD)), plasticHelmetItem)) {
 				break l;
 			}
-			if (!areItemsEqual(getItemFromStack(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST)), plasticChestplateItem)) {
+			if (!itemsEqual(getItemFromStack(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST)), plasticChestplateItem)) {
 				break l;
 			}
-			if (!areItemsEqual(getItemFromStack(player.getItemStackFromSlot(EntityEquipmentSlot.LEGS)), plasticLeggingsItem)) {
+			if (!itemsEqual(getItemFromStack(player.getItemStackFromSlot(EntityEquipmentSlot.LEGS)), plasticLeggingsItem)) {
 				break l;
 			}
 			player.removePotionEffect(MobEffects.POISON);

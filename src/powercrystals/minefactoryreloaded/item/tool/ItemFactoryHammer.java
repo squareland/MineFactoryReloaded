@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
+import buildcraft.api.tools.IToolWrench;
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
-import cofh.asm.relauncher.Implementable;
 import cofh.core.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,27 +13,34 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
+import powercrystals.minefactoryreloaded.modhelpers.Compats;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-@Implementable("buildcraft.api.tools.IToolWrench")
-public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer {
+@Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = Compats.ModIds.BUILDCRAFT)
+public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer, IToolWrench {
 
 	public ItemFactoryHammer() {
 
@@ -46,8 +53,6 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world,
 			BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-
-		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
@@ -108,14 +113,16 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 
 	}
 
-	//@Override
-	public boolean canWrench(EntityPlayer player, BlockPos pos) {
+	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
+	@Override
+	public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 		return true;
 	}
 
-	//@Override
-	public void wrenchUsed(EntityPlayer player, BlockPos pos) {
+	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
+	@Override
+	public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 	}
 
@@ -131,30 +138,31 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 		if (state == null)
 			return false;
 		Material mat = state.getMaterial();
-		return mat == Material.ICE |
-				mat == Material.CAKE |
-				mat == Material.IRON |
-				mat == Material.ROCK |
-				mat == Material.WOOD |
-				mat == Material.GOURD |
-				mat == Material.ANVIL |
-				mat == Material.GLASS |
-				mat == Material.PISTON |
-				mat == Material.PLANTS |
-				mat == Machine.MATERIAL |
-				mat == Material.CIRCUITS |
+		return mat == Material.ICE ||
+				mat == Material.CAKE ||
+				mat == Material.IRON ||
+				mat == Material.ROCK ||
+				mat == Material.WOOD ||
+				mat == Material.GOURD ||
+				mat == Material.ANVIL ||
+				mat == Material.GLASS ||
+				mat == Material.PISTON ||
+				mat == Material.PLANTS ||
+				mat == Machine.MATERIAL ||
+				mat == Material.CIRCUITS ||
 				mat == Material.PACKED_ICE;
 	}
 
+
 	@Override
-	public float getStrVsBlock(@Nonnull ItemStack stack, IBlockState state) {
+	public float getDestroySpeed(@Nonnull ItemStack stack, IBlockState state) {
 
 		if (state == null)
 			return 0;
 		Material mat = state.getMaterial();
-		if (mat == Material.ICE |
-				mat == Material.CAKE |
-				mat == Material.GOURD |
+		if (mat == Material.ICE ||
+				mat == Material.CAKE ||
+				mat == Material.GOURD ||
 				mat == Material.GLASS)
 			return 15f;
 		return canHarvestBlock(state, stack) ? 1.35f : 0.15f;

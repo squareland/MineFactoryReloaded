@@ -4,7 +4,6 @@ import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -34,13 +33,9 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister{
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 	}
 
-	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
-
-	}
-
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
 		super.addInformation(stack, world, tooltip, tooltipFlag);
 		String str = "tip.info" + getUnlocalizedName(stack).substring(4);

@@ -95,7 +95,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 							pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset,
 							new ItemStack(itemstack.getItem(), amountToDrop, itemstack.getItemDamage()));
 					if (itemstack.getTagCompound() != null) {
-						entityitem.getEntityItem().setTagCompound(itemstack.getTagCompound());
+						entityitem.getItem().setTagCompound(itemstack.getTagCompound());
 					}
 					float motionMultiplier = 0.05F;
 					entityitem.motionX = (float) world.rand.nextGaussian() * motionMultiplier;
@@ -305,7 +305,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public boolean acceptUpgrade(@Nonnull ItemStack stack) {
 
 		int slot = getUpgradeSlot();
-		if (slot < 0 | stack.isEmpty() || !isUsableAugment(stack))
+		if (slot < 0 || stack.isEmpty() || !isUsableAugment(stack))
 			return false;
 		if (!getStackInSlot(slot).isEmpty())
 			return false;
@@ -619,7 +619,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			}
 			invPercent = ret / len;
 		}
-		float mult = hasTank & hasInventory ? (tankPercent + invPercent) / 2 : hasTank ? tankPercent : hasInventory ? invPercent : 0f;
+		float mult = hasTank && hasInventory ? (tankPercent + invPercent) / 2 : hasTank ? tankPercent : hasInventory ? invPercent : 0f;
 		return (int) Math.ceil(15 * mult);
 	}
 

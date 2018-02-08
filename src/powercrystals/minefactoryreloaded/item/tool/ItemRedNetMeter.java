@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
-import cofh.api.block.IBlockConfigGui;
 import cofh.api.block.IBlockInfo;
+import cofh.api.block.IConfigGui;
 import cofh.api.tileentity.ITileInfo;
 import cofh.core.util.helpers.ServerHelper;
 import net.minecraft.block.Block;
@@ -98,14 +98,14 @@ public class ItemRedNetMeter extends ItemMulti {
 			return false;
 		case 1:
 			if (ServerHelper.isClientWorld(world)) {
-				if (block instanceof IBlockConfigGui || block instanceof IBlockInfo)
+				if (block instanceof IConfigGui || block instanceof IBlockInfo)
 					return true;
 				TileEntity theTile = world.getTileEntity(pos);
 				return theTile instanceof ITileInfo;
 			}
 			info = new ArrayList<>();
-			if (player.isSneaking() && block instanceof IBlockConfigGui) {
-				if (((IBlockConfigGui)block).openConfigGui(world, pos, hitSide, player))
+			if (player.isSneaking() && block instanceof IConfigGui) {
+				if (((IConfigGui)block).openConfigGui(world, pos, hitSide, player))
 					return true;
 			}
 			if (block instanceof IBlockInfo) {

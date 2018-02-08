@@ -1,9 +1,9 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import cofh.core.util.CoreUtils;
 import cofh.core.util.helpers.EnergyHelper;
+import cofh.redstoneflux.api.IEnergyProvider;
+import cofh.redstoneflux.api.IEnergyReceiver;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -17,7 +17,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import javax.annotation.Nonnull;
 
 public abstract class TileEntityFactoryGenerator extends TileEntityFactoryTickable
-										implements IEnergyProvider {
+		implements IEnergyProvider {
 	private boolean deadCache;
 	private IEnergyReceiver[] receiverCache;
 

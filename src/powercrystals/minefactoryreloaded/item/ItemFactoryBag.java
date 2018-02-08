@@ -1,9 +1,10 @@
 package powercrystals.minefactoryreloaded.item;
 
 import cofh.api.item.IInventoryContainerItem;
-import cofh.core.util.helpers.ItemHelper;
 import cofh.core.gui.container.InventoryContainerItemWrapper;
+import cofh.core.util.helpers.ItemHelper;
 import cofh.core.util.helpers.StringHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,7 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRLoot;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemFactoryBag extends ItemFactory implements IInventoryContainerItem {
@@ -45,22 +47,22 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	}
 
 	@Override
-	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 
 		if (getItemStackLimit(stack) == 1) {
 			if (stack.getTagCompound().hasKey("loot")) {
-				infoList.add(MFRUtil.localize("info.mfr.loot", true));
+				tooltip.add(MFRUtil.localize("info.mfr.loot", true));
 			} else if (stack.getTagCompound().hasKey("inventory")) {
-				infoList.add(MFRUtil.localize("info.mfr.legacy", true));
+				tooltip.add(MFRUtil.localize("info.mfr.legacy", true));
 			} else if (!StringHelper.displayShiftForDetail || MFRUtil.isShiftKeyDown()) {
-				ItemHelper.addInventoryInformation(stack, infoList);
+				ItemHelper.addInventoryInformation(stack, tooltip);
 			} else {
-				infoList.add(MFRUtil.shiftForInfo());
+				tooltip.add(MFRUtil.shiftForInfo());
 			}
 		} else {
-			infoList.add(MFRUtil.localize("info.mfr.folded", true));
+			tooltip.add(MFRUtil.localize("info.mfr.folded", true));
 		}
 	}
 

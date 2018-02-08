@@ -4,7 +4,6 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -141,7 +140,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		if (tag != null) {
 			if (tag.hasKey("drained")) {
 				r.setCount(1);
-				r.attemptDamageItem(1, itemRand);
+				r.attemptDamageItem(1, itemRand, null);
 			}
 			tag.removeTag("drained");
 			tag.removeTag("fluid");

@@ -37,6 +37,10 @@ repositories {
         url = "http://maven.ic2.player.to/"
     }
     maven { url "http://dvs1.progwml6.com/files/maven" }
+    maven {
+        name "BuildCraft"
+        url = "https://mod-buildcraft.com/maven"
+    }
 }
 
 dependencies {
@@ -45,6 +49,7 @@ dependencies {
     compile "cofh:RedstoneFlux:${rf_mc_version}-${rf_version}:deobf"
     compile "net.industrial-craft:industrialcraft-2:${ic2_version}"
     compile "net.sengir.forestry:forestry_${mc_version}:${forestry_version}"
+    deobfCompile "com.mod-buildcraft:buildcraft-api:${buildcraft_version}"
     //deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
 }
 

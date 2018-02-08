@@ -3,9 +3,11 @@ package powercrystals.minefactoryreloaded.tile.rednet;
 import appeng.api.implementations.tiles.ICrankable;
 import codechicken.lib.raytracer.IndexedCuboid6;
 import codechicken.lib.vec.Vector3;
-import cofh.api.energy.*;
-import cofh.asm.relauncher.Strippable;
 import cofh.core.util.helpers.EnergyHelper;
+import cofh.redstoneflux.api.IEnergyConnection;
+import cofh.redstoneflux.api.IEnergyProvider;
+import cofh.redstoneflux.api.IEnergyReceiver;
+import cofh.redstoneflux.impl.EnergyStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -18,12 +20,14 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.core.ForgeEnergyHandler;
 import powercrystals.minefactoryreloaded.core.IGridController;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
+import powercrystals.minefactoryreloaded.modhelpers.Compats;
 import powercrystals.minefactoryreloaded.net.Packets;
 
 import java.util.Arrays;
@@ -32,13 +36,12 @@ import java.util.List;
 import static powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable.subSelection;
 import static powercrystals.minefactoryreloaded.tile.rednet.RedstoneEnergyNetwork.TRANSFER_RATE;
 
-@Strippable({ "appeng.api.implementations.tiles.ICrankable" })
+@Optional.Interface(iface = "appeng.api.implementations.tiles.ICrankable", modid = Compats.ModIds.APP_ENG)
 public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
-																  IEnergyTransport, ICrankable//, IEnergyInfo
+																  IEnergyReceiver, IEnergyProvider, ICrankable//, IEnergyInfo
 {
 
 	private byte[] sideMode = { 1, 1, 1, 1, 1, 1, 0 };
-	private InterfaceType[] transportTypes = null;
 	private IEnergyReceiver[] receiverCache = null;
 	private IEnergyProvider[] providerCache = null;
 	private boolean deadCache = false;
@@ -193,20 +196,7 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 			}
 		} else if (tile instanceof IEnergyConnection) {
 			if (((IEnergyConnection) tile).canConnectEnergy(side)) {
-				if (tile instanceof IEnergyTransport) {
-					IEnergyTransport transport = (IEnergyTransport) tile;
-					InterfaceType type = transport.getTransportState(side).getOpposite();
-					if (type != InterfaceType.BALANCE) {
-						createTransportTypes();
-						transportTypes[side.ordinal()] = type;
-					}
-					sideMode[side.ordinal()] |= 2 << 1;
-				} else {
-					sideMode[side.ordinal()] |= 1 << 1;
-					if (transportTypes != null) {
-						transportTypes[side.ordinal()] = InterfaceType.BALANCE;
-					}
-				}
+				sideMode[side.ordinal()] |= 1 << 1;
 				if (tile instanceof IEnergyReceiver) {
 					if (receiverCache == null)
 						receiverCache = new IEnergyReceiver[6];
@@ -236,14 +226,6 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 				RedstoneEnergyNetwork.HANDLER.addConduitForUpdate(this);
 				MFRUtil.notifyBlockUpdate(world, pos);
 			}
-		}
-	}
-
-	private void createTransportTypes() {
-
-		transportTypes = new InterfaceType[6];
-		for (int i = transportTypes.length; i-- > 0; ) {
-			transportTypes[i] = InterfaceType.BALANCE;
 		}
 	}
 
@@ -334,42 +316,23 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 		return 0;
 	}
 
-	@Override
-	public InterfaceType getTransportState(EnumFacing from) {
-
-		if (transportTypes != null) {
-			return transportTypes[from.ordinal() ^ 1];
-		}
-		return InterfaceType.BALANCE;
-	}
-
-	@Override
-	public boolean setTransportState(InterfaceType state, EnumFacing from) {
-
-		if ((sideMode[from.ordinal() ^ 1] >> 1) == 1 || !isInterfacing(from)) {
-			return false;
-		}
-		if (transportTypes == null) {
-			createTransportTypes();
-		}
-		transportTypes[from.ordinal() ^ 1] = state;
-		return true;
-	}
-
 	// ICrankable
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public boolean canTurn() {
 
 		return _grid.storage.getEnergyStored() < _grid.storage.getMaxEnergyStored();
 	}
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public void applyTurn() {
 
 		_grid.storage.receiveEnergy(90, false);
 	}
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public boolean canCrankAttach(EnumFacing directionToCrank) {
 
@@ -437,18 +400,6 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 					}
 				}
 				break;
-			case 2: {// IEnergyTransport
-				InterfaceType state = getTransportState(side);
-				if (providerCache != null && state == InterfaceType.RECEIVE) {
-					IEnergyProvider handlerTile = providerCache[bSide];
-					if (handlerTile != null) {
-						int e = handlerTile.extractEnergy(side, TRANSFER_RATE, true);
-						if (e > 0)
-							handlerTile.extractEnergy(side, storage.receiveEnergy(e, false), false);
-					}
-				}
-				break;
-			}
 			case 3: // IEnergyTile
 				break;
 			case 4: // TileEntityRednetCable
@@ -473,16 +424,6 @@ public class TileEntityRedNetEnergy extends TileEntityRedNetCable implements
 						return handlerTile.receiveEnergy(side, energy, false);
 				}
 				break;
-			case 2: {// IEnergyTransport
-				InterfaceType state = getTransportState(side);
-				if (receiverCache != null && state != InterfaceType.RECEIVE) {
-					IEnergyReceiver handlerTile = receiverCache[bSide];
-					if (handlerTile != null &&
-							(state == InterfaceType.SEND || handlerTile.getEnergyStored(side) < _grid.storage.getEnergyStored()))
-						return handlerTile.receiveEnergy(side, energy, false);
-				}
-				break;
-			}
 			case 3: // IEnergyTile
 				break;
 			case 4: // TileEntityRednetCable

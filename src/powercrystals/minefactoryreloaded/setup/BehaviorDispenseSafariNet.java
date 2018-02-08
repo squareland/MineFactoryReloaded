@@ -11,24 +11,26 @@ import powercrystals.minefactoryreloaded.entity.EntitySafariNet;
 
 import javax.annotation.Nonnull;
 
-public class BehaviorDispenseSafariNet extends BehaviorDefaultDispenseItem
-{
+public class BehaviorDispenseSafariNet extends BehaviorDefaultDispenseItem {
+
 	@Nonnull
 	@Override
-	public ItemStack dispenseStack(IBlockSource dispenser, @Nonnull ItemStack stack)
-	{
+	public ItemStack dispenseStack(IBlockSource dispenser, @Nonnull ItemStack stack) {
+
 		World world = dispenser.getWorld();
 		IPosition dispenserPos = BlockDispenser.getDispensePosition(dispenser);
 		EnumFacing dispenserFacing = dispenser.getBlockState().getValue(BlockDispenser.FACING);
-		EntitySafariNet proj = new EntitySafariNet(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ(), stack.splitStack(1));
-		proj.setThrowableHeading(dispenserFacing.getFrontOffsetX(), dispenserFacing.getFrontOffsetY() + 0.1, dispenserFacing.getFrontOffsetZ(), 1.1F, 6.0F);
+		EntitySafariNet proj = new EntitySafariNet(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ(),
+				stack.splitStack(1));
+		proj.shoot(dispenserFacing.getFrontOffsetX(), dispenserFacing.getFrontOffsetY() + 0.1, dispenserFacing.getFrontOffsetZ(),
+				1.1F, 6.0F);
 		world.spawnEntity(proj);
 		return stack;
 	}
 
 	@Override
-	protected void playDispenseSound(IBlockSource dispenser)
-	{
+	protected void playDispenseSound(IBlockSource dispenser) {
+
 		dispenser.getWorld().playEvent(1002, dispenser.getBlockPos(), 0);
 	}
 }

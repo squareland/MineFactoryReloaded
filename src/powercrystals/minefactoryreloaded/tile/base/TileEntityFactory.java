@@ -1,13 +1,7 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
-/*
-import buildcraft.api.transport.IPipeConnection;
-import buildcraft.api.transport.IPipeTile.PipeType;
-*/
-
 import cofh.api.core.IPortableData;
 import cofh.api.tileentity.IInventoryConnection;
-import cofh.asm.relauncher.Strippable;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -28,7 +22,6 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 
 import java.util.Locale;
 
-@Strippable("buildcraft.api.transport.IPipeConnection")
 public abstract class TileEntityFactory extends TileEntityBase
 		implements IRotateableTile, IInventoryConnection, IPortableData,
 				   IHarvestAreaContainer/*, IPipeConnection*/ {

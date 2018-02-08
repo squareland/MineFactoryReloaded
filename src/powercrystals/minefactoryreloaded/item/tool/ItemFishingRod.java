@@ -7,7 +7,11 @@ import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -41,12 +45,12 @@ public class ItemFishingRod extends ItemFactoryTool {
 
 		if (!world.isRemote) {
 			EntityFishingRod entity = new EntityFishingRod(world, player);
-			entity.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 0.6F, 1.0F);
+			entity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 0.6F, 1.0F);
 			world.spawnEntity(entity);
 			
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 	}
 
 	@Override
@@ -56,9 +60,9 @@ public class ItemFishingRod extends ItemFactoryTool {
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
-		super.preInit();
+		super.initialize();
 		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "fishing_rod"), EntityFishingRod.class, "FishingRod", 4, MineFactoryReloadedCore.instance(), 80, 3, true);
 
 		return true;

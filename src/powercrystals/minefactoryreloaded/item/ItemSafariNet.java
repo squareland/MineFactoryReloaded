@@ -5,6 +5,7 @@ import net.minecraft.block.BlockFence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -12,12 +13,16 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
@@ -40,6 +45,7 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.village.Zoologist;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -76,17 +82,17 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 
 		int type = ((ItemSafariNet) stack.getItem()).type;
 		if (1 == (type & 1)) {
-			infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.persistent"));
+			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.persistent"));
 		}
 
 		if (2 == (type & 2)) {
-			infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.nametag"));
+			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.nametag"));
 		}
 
 		if (stack.getTagCompound() == null) {
@@ -94,9 +100,9 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 
 		if (stack.getTagCompound().getBoolean("hide")) {
-			infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.mystery"));
+			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.mystery"));
 		} else {
-			infoList.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("entityName")));
+			tooltip.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("entityName")));
 			// See Entity.getEntityName()
 			Class<?> c = EntityList.getClass(new ResourceLocation(stack.getTagCompound().getString("id")));
 			if (c == null) {
@@ -104,7 +110,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			}
 			for (ISafariNetHandler handler : MFRRegistry.getSafariNetHandlers()) {
 				if (handler.validFor().isAssignableFrom(c)) {
-					handler.addInformation(stack, player, infoList, advancedTooltips);
+					handler.addInformation(stack, world, tooltip, tooltipFlag);
 				}
 			}
 		}
@@ -288,7 +294,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 				if (!flag)
 					entity.setDead();
-				if (flag | entity.isDead) {
+				if (flag || entity.isDead) {
 					flag = false;
 					itemstack.shrink(1);
 					if (itemstack.getCount() > 0) { //TODO why is there this logic here and the one below to add to inventory when nets can't stack?
@@ -301,7 +307,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 						UtilInventory.dropStackInAir(entity.world, entity, itemstack);
 					else if (flag) {
 						player.openContainer.detectAndSendChanges();
-						((EntityPlayerMP) player).updateCraftingInventory(player.openContainer,
+						((EntityPlayerMP) player).sendAllContents(player.openContainer,
 							player.openContainer.getInventory());
 					} else if (player != null && hand != null){
 						player.setHeldItem(hand, itemstack);
@@ -394,7 +400,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		final IItemColor colorHandler = new IItemColor() {
 			@Override
 			@SideOnly(Side.CLIENT)
-			public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+			public int colorMultiplier(@Nonnull ItemStack stack, int tintIndex) {
 
 				if (stack.getItemDamage() == 0 && (stack.getTagCompound() == null)) {
 					return 16777215;

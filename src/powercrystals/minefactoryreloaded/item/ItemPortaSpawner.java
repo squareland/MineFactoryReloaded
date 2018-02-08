@@ -4,6 +4,7 @@ import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +16,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -27,6 +32,7 @@ import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,9 +75,9 @@ public class ItemPortaSpawner extends ItemFactory {
 	}
 
 	@Override
-	public void addInfo(@Nonnull ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 		if (hasData(stack)) {
 			String entities = "";
 			for (String entityUnlocalized : getEntityNames(stack)) {
@@ -79,12 +85,12 @@ public class ItemPortaSpawner extends ItemFactory {
 					entities += ", ";
 				entities += MFRUtil.localize("entity.", entityUnlocalized);
 			}
-			infoList.add(MFRUtil.localize("tile.mobSpawner") + ": " + entities);
+			tooltip.add(MFRUtil.localize("tile.mobSpawner") + ": " + entities);
 		}
 		int delay = getDelay(stack);
 		if (delay > 0) {
 			String s = MFRUtil.localize("tip.info.mfr.cannotplace", true, "%s");
-			infoList.add(String.format(s, Math.ceil(delay / 20f)));
+			tooltip.add(String.format(s, Math.ceil(delay / 20f)));
 		}
 	}
 
