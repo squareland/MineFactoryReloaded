@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.item.tool;
 import cofh.api.block.IBlockConfigGui;
 import cofh.api.block.IBlockInfo;
 import cofh.api.tileentity.ITileInfo;
-import cofh.lib.util.helpers.ServerHelper;
+import cofh.core.util.helpers.ServerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.state.IBlockState;

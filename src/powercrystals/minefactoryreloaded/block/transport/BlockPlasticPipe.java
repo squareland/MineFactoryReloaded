@@ -7,7 +7,7 @@ import codechicken.lib.model.bakery.ModelBakery;
 import codechicken.lib.model.bakery.generation.IBakery;
 import codechicken.lib.raytracer.RayTracer;
 import cofh.api.block.IBlockInfo;
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -197,7 +197,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this));
 		GameRegistry.registerTileEntity(TileEntityPlasticPipe.class, "factoryPlasticPipe");

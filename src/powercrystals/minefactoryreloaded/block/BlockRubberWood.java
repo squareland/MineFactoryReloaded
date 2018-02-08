@@ -119,13 +119,11 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 		return super.getFlammability(world, pos, face) * (world.getBlockState(pos).getValue(RUBBER_FILLED) ? 2 : 1);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void getSubBlocks(Item blockId, CreativeTabs tab, NonNullList<ItemStack> subBlocks)
-	{
-		subBlocks.add(new ItemStack(blockId, 1, 0));
-		subBlocks.add(new ItemStack(blockId, 1, 1));
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+
+		items.add(new ItemStack(this, 1, 0));
+		items.add(new ItemStack(this, 1, 1));
 	}
 
 	@Override
@@ -135,7 +133,7 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlock(this));
 		Blocks.FIRE.setFireInfo(this, 50, 15);
@@ -143,13 +141,7 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 	}
 
 	@Override
-	public boolean initialize() {
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
+	public boolean register() {
 
 		return true;
 	}

@@ -1,23 +1,22 @@
 package powercrystals.minefactoryreloaded.entity;
 
-import net.minecraft.util.EnumParticleTypes;
-import powercrystals.minefactoryreloaded.setup.MFRConfig;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.setup.MFRConfig;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 public class EntityRocket extends Entity
 {
@@ -105,12 +104,12 @@ public class EntityRocket extends Entity
 			
 			if(hit != null)
 			{
-				nextPos = new Vec3d(hit.hitVec.xCoord, hit.hitVec.yCoord,	hit.hitVec.zCoord);
+				nextPos = new Vec3d(hit.hitVec.x, hit.hitVec.y,	hit.hitVec.z);
 			}
 			
 			Entity entityHit = null;
 			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
-					this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+					this.getEntityBoundingBox().expand(this.motionX, this.motionY, this.motionZ).grow(1.0D, 1.0D, 1.0D));
 			double closestRange = 0.0D;
 			double collisionRange = 0.3D;
 			EntityPlayer owner = _owner == null ? null : this.world.getPlayerEntityByName(_owner);
@@ -121,7 +120,7 @@ public class EntityRocket extends Entity
 				
 				if((e != owner | _ticksAlive > 5) && e.canBeCollidedWith())
 				{
-					AxisAlignedBB entitybb = e.getEntityBoundingBox().expand(collisionRange, collisionRange, collisionRange);
+					AxisAlignedBB entitybb = e.getEntityBoundingBox().grow(collisionRange, collisionRange, collisionRange);
 					RayTraceResult entityHitPos = entitybb.calculateIntercept(pos, nextPos);
 					
 					if(entityHitPos != null)
@@ -172,8 +171,8 @@ public class EntityRocket extends Entity
 		{
 			// At this point, I suspect literally no one on this project actually understands what this does or how it works
 			
-			float targetYaw = clampAngle(360 - (float)(Math.atan2(targetVector.xCoord, targetVector.zCoord) * 180.0D / Math.PI), 360, false);
-			float targetPitch = clampAngle(-(float)(Math.atan2(targetVector.yCoord, Math.sqrt(targetVector.xCoord * targetVector.xCoord + targetVector.zCoord * targetVector.zCoord)) * 180.0D / Math.PI), 360, false);
+			float targetYaw = clampAngle(360 - (float)(Math.atan2(targetVector.x, targetVector.z) * 180.0D / Math.PI), 360, false);
+			float targetPitch = clampAngle(-(float)(Math.atan2(targetVector.y, Math.sqrt(targetVector.x * targetVector.x + targetVector.z * targetVector.z)) * 180.0D / Math.PI), 360, false);
 			
 			float yawDifference = clampAngle(targetYaw - rotationYaw, 3, true);
 			float pitchDifference = clampAngle(targetPitch - rotationPitch, 3, true);

@@ -34,8 +34,8 @@ public class GUIBag extends GuiContainer
     @Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
-        fontRendererObj.drawString(this.bag.getInventoryName(), 8, 6, 4210752);
-        fontRendererObj.drawString(I18n.translateToLocal("container.inventory"), 8, this.ySize - 96 + 3, 4210752);
+        fontRenderer.drawString(this.bag.getInventoryName(), 8, 6, 4210752);
+        fontRenderer.drawString(I18n.translateToLocal("container.inventory"), 8, this.ySize - 96 + 3, 4210752);
     }
 
     /**

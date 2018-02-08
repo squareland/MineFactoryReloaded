@@ -1,11 +1,14 @@
 package powercrystals.minefactoryreloaded.setup.recipe.handler;
 
+import cofh.core.util.helpers.RecipeHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -17,14 +20,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class ShapelessMachineTinker extends ShapelessRecipes
-{
+public abstract class ShapelessMachineTinker extends ShapelessRecipes {
+
 	protected List<List<ItemStack>> _tinkerItems;
 	@Nonnull
 	protected ItemStack _machine;
-	
-	private static @Nonnull ItemStack createMachineWithLore(Machine machine, String lore)
-	{
+
+	private static @Nonnull ItemStack createMachineWithLore(Machine machine, String lore) {
+
 		@Nonnull ItemStack o = machine.getItemStack();
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setTag("display", new NBTTagCompound());
@@ -34,77 +37,77 @@ public abstract class ShapelessMachineTinker extends ShapelessRecipes
 		o.setTagCompound(tag);
 		return o;
 	}
-	
-	private static List<ItemStack> createIngredientListforNEI(Machine machine, @Nonnull ItemStack... items)
-	{
-		List<ItemStack> r = new LinkedList<>();
-		r.addAll(Arrays.asList(items));
-		r.add(machine.getItemStack());
-		return r;
+
+	private static NonNullList<Ingredient> createIngredientListforNEI(Machine machine, @Nonnull ItemStack... items) {
+
+		NonNullList<Ingredient> ret = RecipeHelper.buildInput(items);
+		ret.add(Ingredient.fromStacks(machine.getItemStack()));
+		return ret;
 	}
 
-	public ShapelessMachineTinker(Machine machine, String lore, String... tinkerItems)
-	{
-		super(createMachineWithLore(machine, lore), null);
+	private ShapelessMachineTinker(Machine machine, ItemStack output, NonNullList<Ingredient> ingredients) {
+
+		super(RecipeHelper.getNameForRecipe(output).toString(), output, ingredients);
 		_machine = machine.getItemStack();
 		_tinkerItems = new LinkedList<>();
+
+		RecipeSorter.register("minefactoryreloaded:shapelessTinker", getClass(), RecipeSorter.Category.SHAPELESS,
+				"after:minecraft:shapeless");
+	}
+
+	public ShapelessMachineTinker(@Nonnull Machine machine, String lore, String... tinkerItems) {
+
+		this(machine, createMachineWithLore(machine, lore), NonNullList.create());
 		for (String s : tinkerItems)
 			_tinkerItems.add(OreDictionary.getOres(s));
-		RecipeSorter.register("minefactoryreloaded:shapelessTinker", getClass(), RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 	}
 
-	protected ShapelessMachineTinker(Machine machine, String lore, @Nonnull ItemStack... tinkerItems)
-	{
-		super(createMachineWithLore(machine, lore), createIngredientListforNEI(machine, tinkerItems));
-		_machine = machine.getItemStack();
-		_tinkerItems = new LinkedList<>();
-		for (@Nonnull ItemStack s : tinkerItems)
-		{
+	protected ShapelessMachineTinker(@Nonnull Machine machine, String lore, @Nonnull ItemStack... tinkerItems) {
+
+		this(machine, createMachineWithLore(machine, lore), createIngredientListforNEI(machine, tinkerItems));
+		for (@Nonnull ItemStack s : tinkerItems) {
 			List<ItemStack> l = new LinkedList<>();
 			l.add(s);
 			_tinkerItems.add(l);
 		}
-		RecipeSorter.register("minefactoryreloaded:shapelessTinker", getClass(), RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 	}
-	
+
 	protected abstract boolean isMachineTinkerable(@Nonnull ItemStack machine);
 
 	@Nonnull
 	protected abstract ItemStack getTinkeredMachine(@Nonnull ItemStack machine);
 
 	@Override
-	public boolean matches(InventoryCrafting grid, World world)
-	{
+	public boolean matches(InventoryCrafting grid, World world) {
+
 		int size = grid.getSizeInventory();
 		boolean foundMachine = false;
-		
+
 		List<List<ItemStack>> items = new LinkedList<>();
 		items.addAll(_tinkerItems);
-		
-		while (size --> 0)
-		{
+
+		while (size-- > 0) {
 			@Nonnull ItemStack gridItem = grid.getStackInSlot(size);
 			if (gridItem.isEmpty())
 				continue;
-			
+
 			if (UtilInventory.stacksEqual(_machine, gridItem, false))
 				if (foundMachine || !isMachineTinkerable(gridItem))
 					return false;
 				else
 					foundMachine = true;
 			else
-			lists: {
-				if (foundMachine && items.isEmpty())
-					return true;
-				for (List<ItemStack> l : items)
-					for (@Nonnull ItemStack i : l)
-						if (UtilInventory.stacksEqual(gridItem, i))
-						{
-							items.remove(l);
-							break lists;
-						}
-				return false;
-			}
+				lists:{
+					if (foundMachine && items.isEmpty())
+						return true;
+					for (List<ItemStack> l : items)
+						for (@Nonnull ItemStack i : l)
+							if (UtilInventory.stacksEqual(gridItem, i)) {
+								items.remove(l);
+								break lists;
+							}
+					return false;
+				}
 		}
 
 		return foundMachine && items.isEmpty();
@@ -112,18 +115,17 @@ public abstract class ShapelessMachineTinker extends ShapelessRecipes
 
 	@Nonnull
 	@Override
-	public ItemStack getCraftingResult(InventoryCrafting grid)
-	{
+	public ItemStack getCraftingResult(InventoryCrafting grid) {
+
 		int size = grid.getSizeInventory();
-		
-		while (size --> 0)
-		{
+
+		while (size-- > 0) {
 			@Nonnull ItemStack gridItem = grid.getStackInSlot(size);
 			if (UtilInventory.stacksEqual(_machine, gridItem, false))
 				if (isMachineTinkerable(gridItem))
 					return getTinkeredMachine(gridItem);
 		}
-		
+
 		return ItemStack.EMPTY;
 	}
 }

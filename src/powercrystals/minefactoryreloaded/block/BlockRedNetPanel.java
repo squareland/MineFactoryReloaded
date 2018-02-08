@@ -195,7 +195,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 	}
 
 	@Override
-	public boolean preInit() 
+	public boolean initialize()
 	{
 		MFRRegistry.registerBlock(this, new ItemBlockRedNetPanel(this));
 		GameRegistry.registerTileEntity(TileEntityRedNetHistorian.class, "factoryRednetHistorian");

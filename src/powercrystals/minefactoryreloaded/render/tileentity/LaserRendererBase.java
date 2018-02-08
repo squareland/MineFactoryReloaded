@@ -4,9 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class LaserRendererBase {
@@ -68,7 +67,7 @@ public class LaserRendererBase {
 		float ticks = (Minecraft.getMinecraft().ingameGUI.getUpdateCounter() + partialTicks);
 		float f3 = -ticks * 0.2F - MathHelper.floor(-ticks * 0.1F);
 		double d3 = ticks * 0.025D * (1.0D - 2.5D);
-		VertexBuffer buffer = tessellator.getBuffer();
+		BufferBuilder buffer = tessellator.getBuffer();
 		buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
 		double d4 = 0.2D;
 		double d5 = 0.5D + Math.cos(d3 + 2.356194490192345D) * d4;

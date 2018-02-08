@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.tile.rednet;
 
 import static powercrystals.minefactoryreloaded.setup.MFRThings.rednetCableBlock;
 
-import cofh.lib.util.LinkedHashList;
+import cofh.core.util.LinkedHashList;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Arrays;

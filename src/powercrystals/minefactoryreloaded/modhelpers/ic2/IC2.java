@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.modhelpers.ic2;
 
-import cofh.asm.relauncher.Strippable;
+import cofh.core.util.helpers.RecipeHelper;
 import ic2.api.item.IC2Items;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.ISemiFluidFuelManager.BurnProperty;
@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -46,7 +45,6 @@ public class IC2 {
 	}
 
 	@EventHandler
-	@Strippable("mod:IC2")
 	public void load(FMLInitializationEvent evt) {
 
 		try {
@@ -87,7 +85,7 @@ public class IC2 {
 				MFRRegistry.registerFruit(ic2crop);
 			}
 
-			GameRegistry.addShapedRecipe(plantBall, new Object[] {
+			RecipeHelper.addShapedRecipe(plantBall, new Object[] {
 					"LLL",
 					"L L",
 					"LLL",

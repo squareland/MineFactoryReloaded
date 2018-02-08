@@ -1,10 +1,5 @@
 package powercrystals.minefactoryreloaded.setup.village;
 
-import static powercrystals.minefactoryreloaded.MineFactoryReloadedCore.CHEST_GEN;
-
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockStairs;
@@ -20,13 +15,14 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.PieceWeight;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
-
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import powercrystals.minefactoryreloaded.block.BlockRubberWood;
-import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRLoot;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import java.util.List;
+import java.util.Random;
 
 public class ComponentZoologistHouse extends StructureVillagePieces.Village
 {
@@ -250,7 +246,7 @@ public class ComponentZoologistHouse extends StructureVillagePieces.Village
 			int j = this.getXWithOffset(1, 4);
 			k = this.getZWithOffset(1, 4);
 
-			if (sbb.isVecInside(new Vec3i(j, i, k)))
+			if (sbb.contains(new Vec3i(j, i, k)))
 			{
 				this.hasMadeChest = true;
 				generateChest(world, sbb, random, 1, 1, 4, MFRLoot.ZOOLOGIST_CHEST);

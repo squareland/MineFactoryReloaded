@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.tile.rednet;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.lib.util.LinkedHashList;
+import cofh.core.util.LinkedHashList;
 import net.minecraft.util.math.BlockPos;
 
 import net.minecraft.tileentity.TileEntity;

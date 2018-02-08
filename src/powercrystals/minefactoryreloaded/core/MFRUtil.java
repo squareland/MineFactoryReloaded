@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.core;
 
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -36,6 +36,7 @@ import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,8 +109,9 @@ public class MFRUtil {
 
 		return StringHelper.getFluidName(fluid);
 	}
-	
-	public static @Nonnull ItemStack getBucketFor(Fluid fluid){
+
+	@Nonnull
+	public static ItemStack getBucketFor(Fluid fluid){
 		
 		return UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid);
 	}
@@ -262,7 +264,7 @@ public class MFRUtil {
 		try {
 			Class.forName("buildcraft.api.tools.IToolWrench");
 			bcWrenchExists = true;
-		} catch (Throwable _) {
+		} catch (Throwable t) {
 		}
 	}
 

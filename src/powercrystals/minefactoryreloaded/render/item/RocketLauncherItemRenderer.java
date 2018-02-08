@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -45,15 +46,15 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 	}
 
 	private void setupTransformations() {
-		TRSRTransformation thirdPerson = TransformUtils.get(0, 0, 2, 0, 180, 0, 0.02f);
+		TRSRTransformation thirdPerson = TransformUtils.create(0, 0, 2, 0, 180, 0, 0.02f);
 		ImmutableMap.Builder<ItemCameraTransforms.TransformType, TRSRTransformation> builder = ImmutableMap.builder();
-		builder.put(ItemCameraTransforms.TransformType.GUI, TransformUtils.get(0, -1, 0, 30, 135, 0, 0.015f));
-		builder.put(ItemCameraTransforms.TransformType.GROUND, TransformUtils.get(0, 3, 0, 0, 0, 0, 0.01f));
-		builder.put(ItemCameraTransforms.TransformType.FIXED, TransformUtils.get(0, 0, 0, 0, 90, 0, 0.03f));
+		builder.put(ItemCameraTransforms.TransformType.GUI, TransformUtils.create(0, -1, 0, 30, 135, 0, 0.015f));
+		builder.put(ItemCameraTransforms.TransformType.GROUND, TransformUtils.create(0, 3, 0, 0, 0, 0, 0.01f));
+		builder.put(ItemCameraTransforms.TransformType.FIXED, TransformUtils.create(0, 0, 0, 0, 90, 0, 0.03f));
 		builder.put(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, thirdPerson);
-		builder.put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, TransformUtils.leftify(thirdPerson));
-		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, TransformUtils.get(0, 5, 4, 8, 180, 0, 0.025f));
-		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, TransformUtils.get(0, 5, 4, 8, 180, 0, 0.025f));
+		builder.put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, TransformUtils.flipLeft(thirdPerson));
+		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, TransformUtils.create(0, 5, 4, 8, 180, 0, 0.025f));
+		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, TransformUtils.create(0, 5, 4, 8, 180, 0, 0.025f));
 		transformations = builder.build();
 	}
 
@@ -62,9 +63,9 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 		if (cameraTransformType == ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND
 				|| cameraTransformType == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
-			return MapWrapper.handlePerspective(offHandRenderrer, transformations, cameraTransformType);
+			return PerspectiveMapWrapper.handlePerspective(offHandRenderrer, transformations, cameraTransformType);
 
-		return MapWrapper.handlePerspective(this, transformations, cameraTransformType);
+		return PerspectiveMapWrapper.handlePerspective(this, transformations, cameraTransformType);
 	}
 
 	@Override

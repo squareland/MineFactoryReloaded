@@ -47,7 +47,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		motionX = (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI));
 		motionZ = (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI));
 		motionY = (-MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI));
-		setThrowableHeading(motionX, motionY, motionZ, 3.25F, spread);
+		shoot(motionX, motionY, motionZ, 3.25F, spread);
 		distance = 0;
 		//world.spawnEntity(new DebugTracker(world, owner, this));
 	}
@@ -86,7 +86,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 	}
 
 	@Override
-	public void setThrowableHeading(double x, double y, double z, float speedMult, float spreadConst) {
+	public void shoot(double x, double y, double z, float speedMult, float spreadConst) {
 
 		double normal = MathHelper.sqrt(x * x + y * y + z * z);
 		x /= normal;
@@ -151,12 +151,12 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		nextPos = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
 
 		if (hit != null) {
-			nextPos = new Vec3d(hit.hitVec.xCoord, hit.hitVec.yCoord, hit.hitVec.zCoord);
+			nextPos = new Vec3d(hit.hitVec.x, hit.hitVec.y, hit.hitVec.z);
 		}
 
 		Entity entityHit = null;
 		List<?> list = world.getEntitiesWithinAABBExcludingEntity(this,
-			getEntityBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+			getEntityBoundingBox().expand(motionX, motionY, motionZ).grow(1.0D, 1.0D, 1.0D));
 		double closestRange = 0.0D;
 		double collisionRange = 0.3D;
 		EntityPlayer owner = _owner == null ? null : world.getPlayerEntityByName(_owner);
@@ -165,7 +165,7 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 			Entity e = (Entity) list.get(l);
 
 			if ((e != owner | ticksInAir >= 2) && e.canBeCollidedWith()) {
-				AxisAlignedBB entitybb = e.getEntityBoundingBox().expand(collisionRange, collisionRange, collisionRange);
+				AxisAlignedBB entitybb = e.getEntityBoundingBox().grow(collisionRange, collisionRange, collisionRange);
 				RayTraceResult entityHitPos = entitybb.calculateIntercept(pos, nextPos);
 
 				if (entityHitPos != null) {

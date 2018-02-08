@@ -1,17 +1,13 @@
 package powercrystals.minefactoryreloaded.block.fluid;
 
-import java.util.Random;
-
-import cofh.lib.world.biome.BiomeDictionaryArbiter;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import net.minecraftforge.common.BiomeDictionary;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
+
+import java.util.Random;
 
 public class BlockExplodingFluid extends BlockFactoryFluid {
 

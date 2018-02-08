@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.item.base;
 
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -42,13 +43,16 @@ public class ItemMulti extends ItemFactory {
 		return _names.get(meta);
 	}
 
-	public void getSubItems(Item item, NonNullList<ItemStack> subTypes) {
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-		for (int i = 0, e = _indicies.size(); i < e; ++i) {
-			subTypes.add(new ItemStack(item, 1, _indicies.get(i)));
+		if (isInCreativeTab(tab)) {
+			for (int i = 0, e = _indicies.size(); i < e; ++i) {
+				items.add(new ItemStack(this, 1, _indicies.get(i)));
+			}
 		}
 	}
-	
+
 	@Override
 	public int getMetadata(int meta) {
 

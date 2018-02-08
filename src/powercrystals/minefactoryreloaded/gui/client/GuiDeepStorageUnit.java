@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
-import cofh.lib.gui.element.ElementButtonManaged;
+import cofh.core.gui.element.ElementButtonManaged;
 
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
@@ -27,7 +27,7 @@ public class GuiDeepStorageUnit extends GuiFactoryInventory {
 
 		super.initGui();
 
-		maxWidth = fontRendererObj.getStringWidth(String.valueOf(_dsu.getMaxStoredCount()));
+		maxWidth = fontRenderer.getStringWidth(String.valueOf(_dsu.getMaxStoredCount()));
 
 		addElement(button = new ElementButtonManaged(this, 8, 16, 40, 16, "") {
 
@@ -50,8 +50,8 @@ public class GuiDeepStorageUnit extends GuiFactoryInventory {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-		fontRendererObj.drawString(MFRUtil.localize("info.cofh.stored") + ':', 8, 54, 4210752);
+		fontRenderer.drawString(MFRUtil.localize("info.cofh.stored") + ':', 8, 54, 4210752);
 		String v = String.valueOf(_dsu.getQuantity());
-		fontRendererObj.drawString(v, 8 + maxWidth - fontRendererObj.getStringWidth(v), 80, 4210752);
+		fontRenderer.drawString(v, 8 + maxWidth - fontRenderer.getStringWidth(v), 80, 4210752);
 	}
 }

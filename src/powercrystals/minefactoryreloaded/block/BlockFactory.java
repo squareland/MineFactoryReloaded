@@ -44,7 +44,12 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetConnection;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
-import powercrystals.minefactoryreloaded.core.*;
+import powercrystals.minefactoryreloaded.core.IEntityCollidable;
+import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.ITankContainerBucketable;
+import powercrystals.minefactoryreloaded.core.ITraceable;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
+import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.Machine;
@@ -320,7 +325,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 			for (IndexedCuboid6 c : cuboids)
 			{
 				AxisAlignedBB aabb = c.aabb();
-				if (collisionTest.intersectsWith(aabb))
+				if (collisionTest.intersects(aabb))
 					collisionBoxList.add(aabb);
 			}
 		}
@@ -434,20 +439,14 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public boolean preInit()
-	{
-		return true;
-	}
-
-	@Override
 	public boolean initialize()
 	{
 		return true;
 	}
 
 	@Override
-	public boolean postInit()
-	{
+	public boolean register() {
+
 		return true;
 	}
 

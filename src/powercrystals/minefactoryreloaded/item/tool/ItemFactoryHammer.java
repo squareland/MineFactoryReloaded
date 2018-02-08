@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.item.tool;
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
 import cofh.asm.relauncher.Implementable;
-import cofh.lib.util.helpers.BlockHelper;
+import cofh.core.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -176,8 +176,8 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 				vec31.rotatePitch(-player.rotationPitch * (float) Math.PI / 180.0F);
 				vec31.rotateYaw(-player.rotationYaw * (float) Math.PI / 180.0F);
 				vec31 = vec31.addVector(player.posX, player.posY + player.getEyeHeight(), player.posZ);
-				player.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord,
-					vec3.yCoord + 0.05D, vec3.zCoord, Block.getStateId(Blocks.FIRE.getDefaultState()));
+				player.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.x, vec31.y, vec31.z, vec3.x,
+					vec3.y + 0.05D, vec3.z, Block.getStateId(Blocks.FIRE.getDefaultState()));
 			}
 			return true;
 		}

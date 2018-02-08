@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded;
 
-import cofh.lib.util.WeightedRandomItemStack;
+import cofh.core.util.WeightedRandomItemStack;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -10,14 +10,30 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.WeightedRandom;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import powercrystals.minefactoryreloaded.api.*;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
+import powercrystals.minefactoryreloaded.api.IFactoryFertilizer;
+import powercrystals.minefactoryreloaded.api.IFactoryFruit;
+import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
+import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
+import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
+import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
+import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
+import powercrystals.minefactoryreloaded.api.IMobEggHandler;
+import powercrystals.minefactoryreloaded.api.IMobSpawnHandler;
+import powercrystals.minefactoryreloaded.api.INeedleAmmo;
+import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
+import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class MFRRegistry {
 
@@ -429,20 +445,22 @@ public abstract class MFRRegistry {
 
 	public static void registerBlock(Block block, ItemBlock itemBlock) {
 
+		//TODO this should get refactored into block registry event
 		String name = block.getRegistryName().getResourcePath();
 		blocks.put(name, block);
 
-		GameRegistry.register(block);
+		ForgeRegistries.BLOCKS.register(block);
 		if (itemBlock != null) {
-			GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName()));
+			ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(block.getRegistryName()));
 			items.put(name, Item.getItemFromBlock(block));
 		}
 	}
 	
 	public static void registerItem(Item item) {
 
+		//TODO this should get refactored into item registry event
 		items.put(item.getRegistryName().getResourcePath(), item);
 
-		GameRegistry.register(item);
+		ForgeRegistries.ITEMS.register(item);
 	}
 }

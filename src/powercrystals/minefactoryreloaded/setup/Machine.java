@@ -1,15 +1,16 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.StringHelper;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.FMLLog;
@@ -17,7 +18,52 @@ import powercrystals.minefactoryreloaded.block.BlockFactoryMachine;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryGenerator;
-import powercrystals.minefactoryreloaded.tile.machine.*;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoAnvil;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoBrewer;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoDisenchanter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoDisenchanterFluid;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoEnchanter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoJukebox;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoSpawner;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityBioFuelGenerator;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityBioReactor;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityBlockBreaker;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityBlockPlacer;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityBlockSmasher;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityBreeder;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityChronotyper;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityChunkLoader;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityCollector;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityComposter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityDeepStorageUnit;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityEjector;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityEnchantmentRouter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityFertilizer;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityFisher;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityFountain;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityFruitPicker;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityGrinder;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityHarvester;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityItemRouter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrillPrecharger;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityLavaFabricator;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityLiquiCrafter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityLiquidRouter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityMeatPacker;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityMobCounter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityMobRouter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityPlanter;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityRancher;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityRedNote;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntitySewer;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntitySlaughterhouse;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntitySludgeBoiler;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntitySteamBoiler;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntitySteamTurbine;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityUnifier;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityVet;
+import powercrystals.minefactoryreloaded.tile.machine.TileEntityWeather;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -63,7 +109,7 @@ public class Machine {
 		}
 
 		@Override
-		public void addInformation(@Nonnull ItemStack stack, EntityPlayer player, List<String> info, boolean adv) {
+		public void addInformation(@Nonnull ItemStack stack, World world, List<String> info, ITooltipFlag tooltipFlag) {
 
 			NBTTagCompound c = stack.getTagCompound();
 			if (c != null && c.hasKey("storedStack")) {
@@ -72,11 +118,11 @@ public class Machine {
 				if (!storedItem.isEmpty() & storedQuantity > 0) {
 					info.add(String.format(MFRUtil.localize("tip.info.mfr.dsu.contains", true),
 						storedQuantity + " " + storedItem.getDisplayName() +
-								(adv ? " (" + storedItem.getItem().getRegistryName() + ":" +
+								(tooltipFlag.isAdvanced() ? " (" + storedItem.getItem().getRegistryName() + ":" +
 										storedItem.getItemDamage() + ")" : "")));
 				}
 			}
-			super.addInformation(stack, player, info, adv);
+			super.addInformation(stack, world, info, tooltipFlag);
 		}
 	};
 	public static Machine LiquiCrafter = new Machine(1, 4, "LiquiCrafter", TileEntityLiquiCrafter.class);
@@ -225,7 +271,7 @@ public class Machine {
 		return _activationEnergy > 0 || I18n.canTranslate(getTooltipText());
 	}
 
-	public void addInformation(@Nonnull ItemStack stack, EntityPlayer player, List<String> info, boolean adv) {
+	public void addInformation(@Nonnull ItemStack stack, World world, List<String> info, ITooltipFlag tooltipFlag) {
 
 		if (stack.getTagCompound() != null) {
 			NBTTagCompound tag = stack.getTagCompound();

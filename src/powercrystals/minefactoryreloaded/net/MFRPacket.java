@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.net;
 
-import cofh.core.network.PacketCoFHBase;
+import cofh.core.network.PacketBase;
 import cofh.core.network.PacketHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,11 +19,11 @@ import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 
 import javax.annotation.Nonnull;
 
-public class MFRPacket extends PacketCoFHBase {
+public class MFRPacket extends PacketBase {
 
 	public static void initialize() {
 
-		PacketHandler.instance.registerPacket(MFRPacket.class);
+		PacketHandler.INSTANCE.registerPacket(MFRPacket.class);
 	}
 
 	public enum PacketType {
@@ -321,7 +321,7 @@ public class MFRPacket extends PacketCoFHBase {
 		PacketHandler.sendToServer(getPacket(PacketType.ROCKET_LAUNCH).addInt(ownerId).addInt(entityId));
 	}
 
-	public static PacketCoFHBase getPacket(PacketType type) {
+	public static PacketBase getPacket(PacketType type) {
 
 		return new MFRPacket().addByte(type.ordinal());
 	}

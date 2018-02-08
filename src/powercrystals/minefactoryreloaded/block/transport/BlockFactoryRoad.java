@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.CoreUtils;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -13,22 +13,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactoryRoad;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class BlockFactoryRoad extends Block implements IInitializer, IModelRegister {
 
@@ -152,20 +147,14 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactoryRoad(this));
 		return true;
 	}
 
 	@Override
-	public boolean initialize() {
-		
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
+	public boolean register() {
 		
 		return true;
 	}

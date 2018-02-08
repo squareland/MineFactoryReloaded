@@ -28,11 +28,11 @@ public class ContainerFactoryPowered extends ContainerFactoryInventory
 		super.detectAndSendChanges();
 		for(int i = 0; i < listeners.size(); i++)
 		{
-			listeners.get(i).sendProgressBarUpdate(this, 0, ((TileEntityFactoryPowered)_te).getWorkDone() & 65535);
-			listeners.get(i).sendProgressBarUpdate(this, 1, ((TileEntityFactoryPowered)_te).getEnergyStored() & 65535);
-			listeners.get(i).sendProgressBarUpdate(this, 2, ((TileEntityFactoryPowered)_te).getIdleTicks());
-			listeners.get(i).sendProgressBarUpdate(this, 3, (((TileEntityFactoryPowered)_te).getEnergyStored() >> 16) & 65535);
-			listeners.get(i).sendProgressBarUpdate(this, 4, ((TileEntityFactoryPowered)_te).getWorkDone() >> 16);
+			listeners.get(i).sendWindowProperty(this, 0, ((TileEntityFactoryPowered)_te).getWorkDone() & 65535);
+			listeners.get(i).sendWindowProperty(this, 1, ((TileEntityFactoryPowered)_te).getEnergyStored() & 65535);
+			listeners.get(i).sendWindowProperty(this, 2, ((TileEntityFactoryPowered)_te).getIdleTicks());
+			listeners.get(i).sendWindowProperty(this, 3, (((TileEntityFactoryPowered)_te).getEnergyStored() >> 16) & 65535);
+			listeners.get(i).sendWindowProperty(this, 4, ((TileEntityFactoryPowered)_te).getWorkDone() >> 16);
 		}
 	}
 	

@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
-import cofh.lib.util.helpers.BlockHelper;
+import cofh.core.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -498,16 +498,16 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 			((IEntityCollidable) teBelow).onEntityCollided(entityitem);
 		} else if (teBelow instanceof TileEntityHopper) {
 			if (!((TileEntityHopper) teBelow).isOnTransferCooldown()) {
-				@Nonnull ItemStack toInsert = entityitem.getEntityItem().copy();
+				@Nonnull ItemStack toInsert = entityitem.getItem().copy();
 				toInsert.setCount(1);
 				toInsert = TileEntityHopper.putStackInInventoryAllSlots(conveyor, (IInventory) teBelow, toInsert, EnumFacing.UP);
 				if (!toInsert.isEmpty()) {
-					entityitem.getEntityItem().shrink(1);
+					entityitem.getItem().shrink(1);
 					((TileEntityHopper) teBelow).setTransferCooldown(8);
 				}
 			}
 		}
-		if (entityitem.getEntityItem().getCount() <= 0) {
+		if (entityitem.getItem().getCount() <= 0) {
 			entityitem.setDead();
 		}
 	}
@@ -654,7 +654,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockConveyor(this, NAMES));
 		GameRegistry.registerTileEntity(TileEntityConveyor.class, "factoryConveyor");

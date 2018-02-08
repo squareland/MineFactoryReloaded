@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.render.entity;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -33,7 +33,7 @@ public class EntityNeedleRenderer extends Render {
 				.rotate(needle.prevRotationPitch + (needle.rotationPitch - needle.prevRotationPitch) * partialTicks, 0.0F, 0.0F,
 						1.0F);
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer buffer = tessellator.getBuffer();
+		BufferBuilder buffer = tessellator.getBuffer();
 		GlStateManager.enableRescaleNormal();
 
 		GlStateManager.rotate(45.0F, 1.0F, 0.0F, 0.0F);

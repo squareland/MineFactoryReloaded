@@ -23,9 +23,9 @@ public class ContainerChunkLoader extends ContainerFactoryPowered
 		short empty = _cl.getEmpty();
 		for(int i = 0; i < listeners.size(); i++)
 		{
-			listeners.get(i).sendProgressBarUpdate(this, 100, radius);
-			listeners.get(i).sendProgressBarUpdate(this, 101, empty);;
-			listeners.get(i).sendProgressBarUpdate(this, 102, _cl.useAltPower ? 1 : 0);
+			listeners.get(i).sendWindowProperty(this, 100, radius);
+			listeners.get(i).sendWindowProperty(this, 101, empty);;
+			listeners.get(i).sendWindowProperty(this, 102, _cl.useAltPower ? 1 : 0);
 		}
 	}
 

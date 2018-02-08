@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.container.ContainerInventoryItem;
-import cofh.lib.gui.slot.SlotAcceptValid;
-import cofh.lib.gui.slot.SlotLocked;
+import cofh.core.gui.container.ContainerInventoryItem;
+import cofh.core.gui.slot.SlotLocked;
+import cofh.core.gui.slot.SlotValidated;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -16,8 +16,10 @@ public class ContainerBag extends ContainerInventoryItem
 
 		super(stack, inv);
 
-		for (int i = 0; i < getSizeInventory(); ++i)
-			this.addSlotToContainer(new SlotAcceptValid(this.containerWrapper, i, 44 + i * 18, 26));
+		for (int i = 0; i < getSizeInventory(); ++i) {
+			int slot = i; //because lambda needs immutable vars
+			this.addSlotToContainer(new SlotValidated(s -> containerWrapper.isItemValidForSlot(slot, s), this.containerWrapper, i, 44 + i * 18, 26));
+		}
 
 		bindPlayerInventory(inv);
 	}

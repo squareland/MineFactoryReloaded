@@ -13,8 +13,8 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 
 import javax.annotation.Nonnull;
 
-import static cofh.lib.util.helpers.ItemHelper.areItemsEqual;
-import static cofh.lib.util.helpers.ItemHelper.getItemFromStack;
+import static cofh.core.util.helpers.ItemHelper.areItemsEqual;
+import static cofh.core.util.helpers.ItemHelper.getItemFromStack;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
 public class ItemPlasticBoots extends ItemFactoryArmor {

@@ -1,10 +1,12 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.slot.SlotAcceptInsertable;
-import cofh.lib.gui.slot.SlotRemoveOnly;
+import cofh.core.gui.slot.SlotRemoveOnly;
 
+import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoEnchanter;
 
 public class ContainerAutoEnchanter extends ContainerFactoryPowered {
@@ -21,7 +23,8 @@ public class ContainerAutoEnchanter extends ContainerFactoryPowered {
 	@Override
 	protected void addSlots() {
 
-		addSlotToContainer(new SlotAcceptInsertable(_te, 0, 8, 24));
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_enchanter, null);
+		addSlotToContainer(new SlotItemHandler(handler, 0, 8, 24));
 		addSlotToContainer(new SlotRemoveOnly(_te, 1, 8, 54));
 	}
 
@@ -30,7 +33,7 @@ public class ContainerAutoEnchanter extends ContainerFactoryPowered {
 
 		super.detectAndSendChanges();
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendProgressBarUpdate(this, 100, _enchanter.getTargetLevel());
+			listeners.get(i).sendWindowProperty(this, 100, _enchanter.getTargetLevel());
 		}
 	}
 

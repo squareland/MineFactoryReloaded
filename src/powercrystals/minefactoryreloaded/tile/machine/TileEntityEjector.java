@@ -5,8 +5,8 @@ import buildcraft.api.transport.IPipeTile.PipeType;
 */
 
 import cofh.core.util.CoreUtils;
-import cofh.lib.inventory.IInventoryManager;
-import cofh.lib.inventory.InventoryManager;
+import cofh.core.inventory.IInventoryManager;
+import cofh.core.inventory.InventoryManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;

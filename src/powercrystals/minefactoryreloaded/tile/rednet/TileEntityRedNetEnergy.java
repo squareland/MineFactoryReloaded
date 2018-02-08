@@ -5,7 +5,7 @@ import codechicken.lib.raytracer.IndexedCuboid6;
 import codechicken.lib.vec.Vector3;
 import cofh.api.energy.*;
 import cofh.asm.relauncher.Strippable;
-import cofh.lib.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.EnergyHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;

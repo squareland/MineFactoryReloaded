@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.gui.control;
 
-import cofh.lib.gui.element.ElementButtonOption;
+import cofh.core.gui.element.ElementButtonOption;
 import net.minecraft.util.EnumFacing;
 import powercrystals.minefactoryreloaded.gui.client.GuiRedNetLogic;
 

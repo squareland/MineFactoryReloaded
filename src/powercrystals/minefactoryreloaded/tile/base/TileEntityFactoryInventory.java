@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.tile.base;
 
 import cofh.api.item.IAugmentItem;
 import cofh.core.fluid.FluidTankCore;
-import cofh.lib.util.helpers.FluidHelper;
+import cofh.core.util.helpers.FluidHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -688,6 +688,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			return null; // no external overriding via events
 		} else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (manageSolids()) {
+				//TODO implement proper item handler and drop IInventory instead of using wrappers?
 				if (facing != null) {
 					return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(new SidedInvWrapper(this, facing));
 				} else {

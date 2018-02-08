@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.farmables.ranchables;
 
-import cofh.lib.inventory.IInventoryManager;
-import cofh.lib.inventory.InventoryManager;
+import cofh.core.inventory.IInventoryManager;
+import cofh.core.inventory.InventoryManager;
 
 import java.util.LinkedList;
 import java.util.List;

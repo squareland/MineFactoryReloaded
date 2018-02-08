@@ -144,7 +144,7 @@ public class BlockDecorativeStone extends BlockFactory {
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, Variant.UNLOC_NAMES));
 		return true;

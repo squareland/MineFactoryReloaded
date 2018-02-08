@@ -78,9 +78,9 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
-		super.preInit();
+		super.initialize();
 		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "rocket_launcher"), EntityRocket.class, "Rocket", 3, MineFactoryReloadedCore.instance(), 160, 1, true);
 
 		return true;

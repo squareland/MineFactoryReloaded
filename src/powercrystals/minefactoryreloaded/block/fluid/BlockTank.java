@@ -148,7 +148,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockTank(this));
 		GameRegistry.registerTileEntity(TileEntityTank.class, "factoryTank");

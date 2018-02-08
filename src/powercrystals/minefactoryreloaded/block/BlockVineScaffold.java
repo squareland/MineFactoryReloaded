@@ -65,7 +65,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 				entity.getEntityBoundingBox().maxY <= pos.getY() + shrinkAmount + oneTenComp)
 			return;
 		entity.fallDistance = 0;
-		if (entity.isCollidedHorizontally) {
+		if (entity.collidedHorizontally) {
 			entity.motionY = 0.2D;
 		} else if (entity.isSneaking()) {
 			double diff = entity.prevPosY - entity.posY;
@@ -218,20 +218,14 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockVineScaffold(this));
 		return true;
 	}
 
 	@Override
-	public boolean initialize() {
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
+	public boolean register() {
 
 		return true;
 	}

@@ -38,8 +38,8 @@ public class GuiLiquiCrafter extends GuiFactoryInventory {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-		fontRendererObj.drawString(I18n.translateToLocal("info.mfr.template"), 67 + 27, 27, 4210752);
-		fontRendererObj.drawString(I18n.translateToLocal("info.mfr.output"), 128 + 27, 26, 4210752);
+		fontRenderer.drawString(I18n.translateToLocal("info.mfr.template"), 67 + 27, 27, 4210752);
+		fontRenderer.drawString(I18n.translateToLocal("info.mfr.output"), 128 + 27, 26, 4210752);
 
 		FluidTankInfo[] tanks = _crafter.getTankInfo();
 

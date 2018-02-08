@@ -151,13 +151,13 @@ public class ItemSpyglass extends ItemFactoryTool {
 
 		Vec3d playerLook = renderViewEntity.getLook(1.0F);
 		Vec3d playerLookRel = playerPos
-				.addVector(playerLook.xCoord * range, playerLook.yCoord * range, playerLook.zCoord * range);
+				.addVector(playerLook.x * range, playerLook.y * range, playerLook.z * range);
 		List<?> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 				renderViewEntity,
 				renderViewEntity
 						.getEntityBoundingBox()
-						.addCoord(playerLook.xCoord * range, playerLook.yCoord * range, playerLook.zCoord * range)
-						.expand(1, 1, 1));
+						.expand(playerLook.x * range, playerLook.y * range, playerLook.z * range)
+						.grow(1, 1, 1));
 
 		double entityDistTotal = blockDist;
 		Entity pointedEntity = null;
@@ -166,10 +166,10 @@ public class ItemSpyglass extends ItemFactoryTool {
 
 			if (entity.canBeCollidedWith()) {
 				double entitySize = entity.getCollisionBorderSize();
-				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expand(entitySize, entitySize, entitySize);
+				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow(entitySize, entitySize, entitySize);
 				RayTraceResult movingobjectposition = axisalignedbb.calculateIntercept(playerPos, playerLookRel);
 
-				if (axisalignedbb.isVecInside(playerPos)) {
+				if (axisalignedbb.contains(playerPos)) {
 					if (0.0D < entityDistTotal || entityDistTotal == 0.0D) {
 						pointedEntity = entity;
 						entityDistTotal = 0.0D;

@@ -52,20 +52,14 @@ public class ItemFactoryFood extends ItemFood implements IInitializer, IModelReg
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerItem(this);
 		return true;
 	}
 
 	@Override
-	public boolean initialize() {
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
+	public boolean register() {
 
 		return true;
 	}

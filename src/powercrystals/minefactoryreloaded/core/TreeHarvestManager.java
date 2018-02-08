@@ -1,24 +1,17 @@
 package powercrystals.minefactoryreloaded.core;
 
-import cofh.core.network.PacketCoFHBase;
-import cofh.core.util.nbt.NBTTagSmartByteArray;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.Map;
-
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
-
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.HarvestType;
 import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
 import powercrystals.minefactoryreloaded.core.BlockPool.BlockNode;
+
+import java.util.Map;
 
 public class TreeHarvestManager implements IHarvestManager {
 
@@ -91,8 +84,7 @@ public class TreeHarvestManager implements IHarvestManager {
 					type == HarvestType.TreeLeaf) {
 				_blocks.unshift(node);
 				return;
-			}
-			else if (type == HarvestType.Tree ||
+			} else if (type == HarvestType.Tree ||
 					type == HarvestType.TreeFlipped) {
 				_blocks.push(node);
 				return;
@@ -190,28 +182,13 @@ public class TreeHarvestManager implements IHarvestManager {
 			return;
 		}
 		_area = new Area(new BlockPos(o[0], o[1], o[2]), area[0], area[1], area[2]);
+
 		NBTBase baseList = data.getTag("curPos");
-		if (baseList.getId() == Constants.NBT.TAG_BYTE_ARRAY) {
-			PacketCoFHBase tempPacket = new PacketCoFHBase(((NBTTagByteArray)baseList).getByteArray()){
-				@Override public void handlePacket(EntityPlayer player, boolean isServer) {}
-				};
-			for (int length = tempPacket.getVarInt(); length-- > 0;) {
-				_blocks.push(BlockPool.getNext(tempPacket.getVarInt(), tempPacket.getVarInt(), tempPacket.getVarInt()));
-			}
-		} else {
-			NBTTagList list = (NBTTagList) baseList;
-			if (list.getTagType() == Constants.NBT.TAG_INT_ARRAY) {
-				for (int i = 0, e = list.tagCount(); i < e; ++i) {
-					int[] p = list.getIntArrayAt(i);
-					_blocks.push(BlockPool.getNext(p[0], p[1], p[2]));
-				}
-			}
-			else
-				for (int i = 0, e = list.tagCount(); i < e; ++i) {
-					NBTTagCompound p = list.getCompoundTagAt(i);
-					_blocks.push(BlockPool.getNext(p.getInteger("x"), p.getInteger("y"), p.getInteger("z")));
-				}
+		byte[] blockCoords = ((NBTTagByteArray) baseList).getByteArray();
+		for (int i = 0; i + 2 < blockCoords.length; i += 3) {
+			_blocks.push(BlockPool.getNext(blockCoords[i], blockCoords[i + 1], blockCoords[i + 2]));
 		}
+
 		if (_blocks.size() == 0)
 			_isDone = true;
 	}
@@ -219,8 +196,9 @@ public class TreeHarvestManager implements IHarvestManager {
 	@Override
 	public void free() {
 
-		if (_blocks != null) while (_blocks.poke() != null)
-			_blocks.shift().free();
+		if (_blocks != null)
+			while (_blocks.poke() != null)
+				_blocks.shift().free();
 		_isDone = true;
 	}
 }

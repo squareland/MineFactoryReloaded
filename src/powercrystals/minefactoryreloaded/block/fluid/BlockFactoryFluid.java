@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.block.fluid;
 
 import cofh.core.fluid.BlockFluidCore;
-import cofh.lib.util.WeightedRandomItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -30,6 +29,7 @@ import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
@@ -45,7 +45,6 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 	public static final Material material = new MaterialLiquid(MapColor.WATER);
 
 	public int color;
-	protected String fluidName;
 
 	private static Fluid ensureFluid(String name) {
 
@@ -66,7 +65,6 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 		setHardness(100.0F);
 		setLightOpacity(3);
 		setDisplaceFluids(true);
-		fluidName = liquidName;
 		setRegistryName(MineFactoryReloadedCore.modId, liquidName + "_fluid");
 	}
 

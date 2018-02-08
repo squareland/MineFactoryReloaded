@@ -1,31 +1,21 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
-import cofh.lib.gui.GuiBase;
-import cofh.lib.gui.element.ElementButtonManaged;
-import cofh.lib.gui.element.ElementListBox;
-import cofh.lib.gui.element.ElementSlider;
-import cofh.lib.gui.element.listbox.IListBoxElement;
-import cofh.lib.gui.element.listbox.SliderHorizontal;
-import cofh.lib.gui.element.listbox.SliderVertical;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-
+import cofh.core.gui.GuiContainerCore;
+import cofh.core.gui.element.ElementButtonManaged;
+import cofh.core.gui.element.ElementListBox;
+import cofh.core.gui.element.ElementSlider;
+import cofh.core.gui.element.listbox.IListBoxElement;
+import cofh.core.gui.element.listbox.SliderHorizontal;
+import cofh.core.gui.element.listbox.SliderVertical;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.Container;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedClient;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -39,11 +29,15 @@ import powercrystals.minefactoryreloaded.gui.control.ButtonLogicPinSelect;
 import powercrystals.minefactoryreloaded.gui.control.ListBoxElementCircuit;
 import powercrystals.minefactoryreloaded.gui.control.LogicButtonType;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic.PinMapping;
 
-public class GuiRedNetLogic extends GuiBase {
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class GuiRedNetLogic extends GuiContainerCore {
 
 	private class CircuitComparator implements Comparator<IRedNetLogicCircuit> {
 
@@ -124,7 +118,7 @@ public class GuiRedNetLogic extends GuiBase {
 				break;
 			}
 		}
-		final FontRenderer font = unicode ? uFontRenderer : fontRendererObj;
+		final FontRenderer font = unicode ? uFontRenderer : fontRenderer;
 
 		_circuitList = new ElementListBox(this, 88, 17, 131, 196) {
 
@@ -338,12 +332,12 @@ public class GuiRedNetLogic extends GuiBase {
 		String name = this.name;
 		if (name == null)
 			name = MFRUtil.localize("tile.mfr.rednet.logic");
-		FontRenderer font = MFRUtil.containsForcedUnicode(name) ? uFontRenderer : fontRendererObj;
+		FontRenderer font = MFRUtil.containsForcedUnicode(name) ? uFontRenderer : fontRenderer;
 		font.drawString(name, 8, 5, 4210752);
 		String count = String.valueOf(_logic.getCircuitCount());
-		int countP = 370 - (count.length() == 1 ? fontRendererObj.getCharWidth('0') : 0);
+		int countP = 370 - (count.length() == 1 ? fontRenderer.getCharWidth('0') : 0);
 		count = (_selectedCircuit + 1) + "/" + count;
-		fontRendererObj.drawString(count, countP - fontRendererObj.getStringWidth(count), 58, 4210752);
+		fontRenderer.drawString(count, countP - fontRenderer.getStringWidth(count), 58, 4210752);
 
 		for (int i = 0; i < _inputIOPinButtons.length; i++) {
 			if (i < _logic.getCircuit(_selectedCircuit).getInputCount()) {
@@ -381,12 +375,12 @@ public class GuiRedNetLogic extends GuiBase {
 		float uScale = 1.0F / 384.0F;
 		float vScale = 1.0F / 256.0F;
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer vertexbuffer = tessellator.getBuffer();
-		vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-		vertexbuffer.pos(x + 0, y + ySize, this.zLevel).tex((u + 0) * uScale, (v + ySize) * vScale).endVertex();
-		vertexbuffer.pos(x + xSize, y + ySize, this.zLevel).tex((u + xSize) * uScale, (v + ySize) * vScale).endVertex();
-		vertexbuffer.pos(x + xSize, y + 0, this.zLevel).tex((u + xSize) * uScale, (v + 0) * vScale).endVertex();
-		vertexbuffer.pos(x + 0, y + 0, this.zLevel).tex((u + 0) * uScale, (v + 0) * vScale).endVertex();
+		BufferBuilder BufferBuilder = tessellator.getBuffer();
+		BufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		BufferBuilder.pos(x + 0, y + ySize, this.zLevel).tex((u + 0) * uScale, (v + ySize) * vScale).endVertex();
+		BufferBuilder.pos(x + xSize, y + ySize, this.zLevel).tex((u + xSize) * uScale, (v + ySize) * vScale).endVertex();
+		BufferBuilder.pos(x + xSize, y + 0, this.zLevel).tex((u + xSize) * uScale, (v + 0) * vScale).endVertex();
+		BufferBuilder.pos(x + 0, y + 0, this.zLevel).tex((u + 0) * uScale, (v + 0) * vScale).endVertex();
 		tessellator.draw();
 	}
 

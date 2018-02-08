@@ -2,7 +2,6 @@ package powercrystals.minefactoryreloaded.modhelpers.buildcraft;
 
 import buildcraft.api.fuels.BuildcraftFuelRegistry;
 
-import cofh.asm.relauncher.Strippable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.CustomProperty;
@@ -25,7 +24,6 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 public class Buildcraft {
 
 	@Mod.EventHandler
-	@Strippable("api:BuildCraftAPI|fuels")
 	private void postInit(FMLPostInitializationEvent evt) {
 
 		try {

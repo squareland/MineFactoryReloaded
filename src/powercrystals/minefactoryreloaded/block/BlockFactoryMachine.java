@@ -366,7 +366,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactoryMachine(this));
 		//TODO look into replacing the meta in here with state or at least enum

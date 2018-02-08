@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
@@ -23,7 +23,7 @@ import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwareModel {
+public abstract class BaseItemRenderer implements IItemRenderer, IBakedModel {
 
 	ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformations;
 
@@ -50,7 +50,7 @@ public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwa
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
 
-		return MapWrapper.handlePerspective(this, transformations, cameraTransformType);
+		return PerspectiveMapWrapper.handlePerspective(this, transformations, cameraTransformType);
 	}
 
 	@Override

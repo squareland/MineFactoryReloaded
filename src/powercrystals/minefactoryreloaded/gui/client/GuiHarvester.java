@@ -1,10 +1,8 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
-
 import powercrystals.minefactoryreloaded.gui.container.ContainerHarvester;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityHarvester;
 
 public class GuiHarvester extends GuiUpgradeable {
@@ -55,7 +53,7 @@ public class GuiHarvester extends GuiUpgradeable {
 			MFRPacket.sendHarvesterButtonToServer(_tileEntity, "harvestSmallMushrooms", getNewSettingValue("harvestSmallMushrooms"));
 		} else if (button.id == 3) {
 			//PacketDispatcher.sendPacketToServer(PacketWrapper.createPacket(MineFactoryReloadedCore.modNetworkChannel, Packets.HarvesterButton,
-			//		new Object[] { _harvester.xCoord, _harvester.yCoord, _harvester.zCoord, "", getNewSettingValue("") }));
+			//		new Object[] { _harvester.x, _harvester.y, _harvester.z, "", getNewSettingValue("") }));
 		}
 	}
 

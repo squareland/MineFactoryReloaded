@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.item.gun;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -104,9 +104,9 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
-		super.preInit();
+		super.initialize();
 		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "needle_gun"), EntityNeedle.class, "Needle", 2, MineFactoryReloadedCore.instance(), 160, 3, true);
 
 		return true;

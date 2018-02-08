@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.tile.base;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import cofh.core.util.CoreUtils;
-import cofh.lib.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.EnergyHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

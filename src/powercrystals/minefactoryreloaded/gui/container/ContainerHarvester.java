@@ -26,8 +26,8 @@ public class ContainerHarvester extends ContainerUpgradeable
 
 		for(int i = 0; i < listeners.size(); i++)
 		{
-			listeners.get(i).sendProgressBarUpdate(this, 100, getSetting("silkTouch"));
-			listeners.get(i).sendProgressBarUpdate(this, 101, getSetting("harvestSmallMushrooms"));
+			listeners.get(i).sendWindowProperty(this, 100, getSetting("silkTouch"));
+			listeners.get(i).sendWindowProperty(this, 101, getSetting("harvestSmallMushrooms"));
 		}
 	}
 

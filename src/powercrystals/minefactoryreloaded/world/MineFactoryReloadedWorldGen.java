@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.world;
 
-import cofh.lib.world.IFeatureGenerator;
+import cofh.core.world.IFeatureGenerator;
 import com.google.common.primitives.Ints;
 
 import java.util.Arrays;

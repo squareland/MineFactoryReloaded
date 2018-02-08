@@ -20,15 +20,15 @@ public class RedNetCardItemRenderer extends BaseItemRenderer {
 	
 	public RedNetCardItemRenderer() {
 
-		TRSRTransformation thirdPerson = TransformUtils.get(0, 5, 3, 90, 180, 0, 0.7f);
+		TRSRTransformation thirdPerson = TransformUtils.create(0, 5, 3, 90, 180, 0, 0.7f);
 		ImmutableMap.Builder<ItemCameraTransforms.TransformType, TRSRTransformation> builder = ImmutableMap.builder();
-		builder.put(ItemCameraTransforms.TransformType.GUI, TransformUtils.get(-3, 2, 0, 30, -45, 0, 1f));
-		builder.put(ItemCameraTransforms.TransformType.GROUND, TransformUtils.get(0, 3, 0, 0, 0, 0, 0.7f));
-		builder.put(ItemCameraTransforms.TransformType.FIXED, TransformUtils.get(1, 8, 10, 0, 0, 0, 1.3f));
+		builder.put(ItemCameraTransforms.TransformType.GUI, TransformUtils.create(-3, 2, 0, 30, -45, 0, 1f));
+		builder.put(ItemCameraTransforms.TransformType.GROUND, TransformUtils.create(0, 3, 0, 0, 0, 0, 0.7f));
+		builder.put(ItemCameraTransforms.TransformType.FIXED, TransformUtils.create(1, 8, 10, 0, 0, 0, 1.3f));
 		builder.put(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, thirdPerson);
-		builder.put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, TransformUtils.leftify(thirdPerson));
-		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, TransformUtils.get(3, 6, 0, -45, 0, 15, 0.7f));
-		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, TransformUtils.get(3, 6, 0, -45, 0, 15, 0.7f));
+		builder.put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, TransformUtils.flipLeft(thirdPerson));
+		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, TransformUtils.create(3, 6, 0, -45, 0, 15, 0.7f));
+		builder.put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, TransformUtils.create(3, 6, 0, -45, 0, 15, 0.7f));
 		transformations =  builder.build();
 	}
 

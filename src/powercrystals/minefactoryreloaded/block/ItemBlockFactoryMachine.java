@@ -1,15 +1,17 @@
 package powercrystals.minefactoryreloaded.block;
 
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.lib.util.helpers.StringHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import cofh.core.util.helpers.StringHelper;
+import cofh.redstoneflux.api.IEnergyContainerItem;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergyContainerItem {
@@ -37,18 +39,17 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 		return _names[Math.min(stack.getItemDamage(), _names.length - 1)];
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(@Nonnull ItemStack stack, EntityPlayer player, List info, boolean adv) {
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
 		Machine machine = getMachine(stack);
 		if (!machine.hasTooltip(stack))
 			return;
 		if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
-			info.add(StringHelper.shiftForDetails());
+			tooltip.add(StringHelper.shiftForDetails());
 		} else {
-			machine.addInformation(stack, player, info, adv);
+			machine.addInformation(stack, world, tooltip, tooltipFlag);
 		}
 	}
 

@@ -3,9 +3,9 @@ package powercrystals.minefactoryreloaded;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelSlime;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -372,12 +372,12 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 		Vec3d playerPos = Minecraft.getMinecraft().getRenderViewEntity().getPositionEyes(1);
 
 		Vec3d playerLook = Minecraft.getMinecraft().getRenderViewEntity().getLook(1);
-		Vec3d playerLookRel = playerPos.addVector(playerLook.xCoord * range, playerLook.yCoord * range, playerLook.zCoord * range);
+		Vec3d playerLookRel = playerPos.addVector(playerLook.x * range, playerLook.y * range, playerLook.z * range);
 		List<?> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 			Minecraft.getMinecraft().getRenderViewEntity(),
-			Minecraft.getMinecraft().getRenderViewEntity().getEntityBoundingBox().addCoord(playerLook.xCoord * range, playerLook.yCoord * range,
-				playerLook.zCoord * range)
-					.expand(1, 1, 1));
+			Minecraft.getMinecraft().getRenderViewEntity().getEntityBoundingBox().expand(playerLook.x * range, playerLook.y * range,
+				playerLook.z * range)
+					.grow(1, 1, 1));
 
 		double entityDistTotal = range;
 		Entity pointedEntity = null;
@@ -386,10 +386,10 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 			if (entity.canBeCollidedWith()) {
 				double entitySize = entity.getCollisionBorderSize();
-				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expand(entitySize, entitySize, entitySize);
+				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow(entitySize, entitySize, entitySize);
 				RayTraceResult movingobjectposition = axisalignedbb.calculateIntercept(playerPos, playerLookRel);
 
-				if (axisalignedbb.isVecInside(playerPos)) {
+				if (axisalignedbb.contains(playerPos)) {
 					if (0.0D < entityDistTotal || entityDistTotal == 0.0D) {
 						pointedEntity = entity;
 						entityDistTotal = 0.0D;
@@ -416,7 +416,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 		double eps = 0.006;
 
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer buffer = tessellator.getBuffer();
+		BufferBuilder buffer = tessellator.getBuffer();
 		buffer.begin(7, DefaultVertexFormats.POSITION);
 		buffer.pos(par0AxisAlignedBB.minX + eps, par0AxisAlignedBB.maxY - eps, par0AxisAlignedBB.minZ + eps).endVertex();
 		buffer.pos(par0AxisAlignedBB.maxX - eps, par0AxisAlignedBB.maxY - eps, par0AxisAlignedBB.minZ + eps).endVertex();

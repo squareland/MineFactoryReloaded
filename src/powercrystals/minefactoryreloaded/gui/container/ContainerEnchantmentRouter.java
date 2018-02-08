@@ -36,7 +36,7 @@ public class ContainerEnchantmentRouter extends ContainerFactoryInventory
 		{
 			int data = (_router.getRejectUnmapped() ? 1 : 0) |
 					(_router.getMatchLevels() ? 2 : 0);
-			listeners.get(i).sendProgressBarUpdate(this, 100, data);
+			listeners.get(i).sendWindowProperty(this, 100, data);
 		}
 	}
 	

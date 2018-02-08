@@ -1,15 +1,18 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.slot.SlotAcceptValid;
-import cofh.lib.gui.slot.SlotInvisible;
-import cofh.lib.gui.slot.SlotLocked;
-import cofh.lib.gui.slot.SlotRemoveOnly;
+import cofh.core.gui.slot.SlotHidden;
+import cofh.core.gui.slot.SlotLocked;
+import cofh.core.gui.slot.SlotRemoveOnly;
+import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
+import powercrystals.minefactoryreloaded.gui.slot.SlotInvisible;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityDeepStorageUnit;
 
 import javax.annotation.Nonnull;
@@ -28,8 +31,9 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 	@Override
 	protected void addSlots() {
 
-		addSlotToContainer(new SlotAcceptValid(_te, 0, 134, 16));
-		addSlotToContainer(new SlotAcceptValid(_te, 1, 152, 16));
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_dsu, null);
+		addSlotToContainer(new SlotItemHandler(handler, 0, 134, 16));
+		addSlotToContainer(new SlotItemHandler(handler, 1, 152, 16));
 		addSlotToContainer(new SlotRemoveOnly(_te, 2, 152, 49));
 		addSlotToContainer(new SlotLocked(_te, 3, 9, 63) {
 			@Nonnull
@@ -92,8 +96,8 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 
 		int v = _dsu.getQuantity();
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendProgressBarUpdate(this, 200, v);
-			listeners.get(i).sendProgressBarUpdate(this, 201, v >> 16);
+			listeners.get(i).sendWindowProperty(this, 200, v);
+			listeners.get(i).sendWindowProperty(this, 201, v >> 16);
 		}
 	}
 

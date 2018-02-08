@@ -1,9 +1,9 @@
 package powercrystals.minefactoryreloaded.item;
 
 import cofh.api.item.IInventoryContainerItem;
-import cofh.lib.gui.container.InventoryContainerItemWrapper;
-import cofh.lib.util.helpers.ItemHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.ItemHelper;
+import cofh.core.gui.container.InventoryContainerItemWrapper;
+import cofh.core.util.helpers.StringHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

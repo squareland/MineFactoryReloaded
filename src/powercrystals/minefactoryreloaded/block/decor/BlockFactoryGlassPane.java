@@ -219,20 +219,16 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, MFRDyeColor.UNLOC_NAMES));
 		return true;
 	}
 
 	@Override
-	public boolean initialize() {
-		return true;
-	}
+	public boolean register() {
 
-	@Override
-	public boolean postInit() {
-		return true;
+		return false;
 	}
 
 	@Override

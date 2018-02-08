@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.tile.tank;
 
 import cofh.core.fluid.FluidTankCore;
-import cofh.lib.util.helpers.FluidHelper;
-import cofh.lib.util.helpers.StringHelper;
+import cofh.core.util.helpers.FluidHelper;
+import cofh.core.util.helpers.StringHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

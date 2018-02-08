@@ -15,7 +15,7 @@ public class GuiUnifier extends GuiFactoryInventory {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		fontRendererObj.drawString(MFRUtil.localize("info.mfr.preferences"), 48, 14, 4210752);
+		fontRenderer.drawString(MFRUtil.localize("info.mfr.preferences"), 48, 14, 4210752);
 	}
 
 }

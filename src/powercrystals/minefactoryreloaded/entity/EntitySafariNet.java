@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 public class EntitySafariNet extends EntityThrowable {
 
-	protected static final DataParameter<ItemStack> STORED_ENTITY = EntityDataManager.createKey(EntitySafariNet.class, DataSerializers.OPTIONAL_ITEM_STACK);
+	protected static final DataParameter<ItemStack> STORED_ENTITY = EntityDataManager.createKey(EntitySafariNet.class, DataSerializers.ITEM_STACK);
 	public EntitySafariNet(World world) {
 
 		super(world);

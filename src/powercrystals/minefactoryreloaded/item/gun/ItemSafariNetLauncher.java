@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.item.gun;
 
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -71,7 +71,7 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 					ammo.setCount(1);
 					if (!world.isRemote) {
 						EntitySafariNet esn = new EntitySafariNet(world, player, ammo);
-						esn.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 2f, .5f);
+						esn.shoot(player, player.rotationPitch, player.rotationYaw, 0, 2f, .5f);
 						world.spawnEntity(esn);
 
 						world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS,  0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -98,9 +98,9 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
-		super.preInit();
+		super.initialize();
 		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "safari_net"), EntitySafariNet.class, "SafariNet", 0, MineFactoryReloadedCore.instance(), 160, 5, true);
 
 		return true;

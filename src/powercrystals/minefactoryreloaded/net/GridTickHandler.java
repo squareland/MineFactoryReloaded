@@ -139,11 +139,11 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 						cond.updateInternalTypes(this);
 				}
 				conduit.clear();
-			} catch (Throwable _) {
-				RuntimeException error = new RuntimeException("Crashing on conduit " + cond, _);
-				if (_ instanceof ReportedException) {
-					_.addSuppressed(error);
-					Throwables.propagate(_);
+			} catch (Throwable t) {
+				RuntimeException error = new RuntimeException("Crashing on conduit " + cond, t);
+				if (t instanceof ReportedException) {
+					t.addSuppressed(error);
+					Throwables.propagate(t);
 				}
 				throw error;
 			}
@@ -196,11 +196,11 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 						cond.firstTick(this);
 				}
 				conduit.clear();
-			} catch (Throwable _) {
-				RuntimeException error = new RuntimeException("Crashing on conduit " + cond, _);
-				if (_ instanceof ReportedException) {
-					_.addSuppressed(error);
-					Throwables.propagate(_);
+			} catch (Throwable t) {
+				RuntimeException error = new RuntimeException("Crashing on conduit " + cond, t);
+				if (t instanceof ReportedException) {
+					t.addSuppressed(error);
+					Throwables.propagate(t);
 				}
 				throw error;
 			}

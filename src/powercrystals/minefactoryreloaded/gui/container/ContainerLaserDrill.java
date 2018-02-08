@@ -29,10 +29,10 @@ public class ContainerLaserDrill extends ContainerFactoryInventory
 		super.detectAndSendChanges();
 		for(int i = 0; i < listeners.size(); i++)
 		{
-			listeners.get(i).sendProgressBarUpdate(this, 100, ((TileEntityLaserDrill)_te).getWorkDone());
-			listeners.get(i).sendProgressBarUpdate(this, 101, ((TileEntityLaserDrill)_te).getWorkDone() >> 16);
-			listeners.get(i).sendProgressBarUpdate(this, 102, ((TileEntityLaserDrill)_te).getEnergyStored());
-			listeners.get(i).sendProgressBarUpdate(this, 103, ((TileEntityLaserDrill)_te).getEnergyStored() >> 16);
+			listeners.get(i).sendWindowProperty(this, 100, ((TileEntityLaserDrill)_te).getWorkDone());
+			listeners.get(i).sendWindowProperty(this, 101, ((TileEntityLaserDrill)_te).getWorkDone() >> 16);
+			listeners.get(i).sendWindowProperty(this, 102, ((TileEntityLaserDrill)_te).getEnergyStored());
+			listeners.get(i).sendWindowProperty(this, 103, ((TileEntityLaserDrill)_te).getEnergyStored() >> 16);
 		}
 	}
 	

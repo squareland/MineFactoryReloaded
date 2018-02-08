@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.tile.transport;
 
 import cofh.core.fluid.FluidTankCore;
-import cofh.lib.util.LinkedHashList;
-import cofh.lib.util.helpers.FluidHelper;
+import cofh.core.util.LinkedHashList;
+import cofh.core.util.helpers.FluidHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;

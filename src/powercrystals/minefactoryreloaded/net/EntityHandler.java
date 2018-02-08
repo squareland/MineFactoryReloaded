@@ -5,7 +5,6 @@ import net.minecraft.entity.item.EntityMinecartMobSpawner;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.minecart.MinecartInteractEvent;
@@ -66,11 +65,11 @@ public class EntityHandler {
 	@SubscribeEvent
 	public void onItemExpire(ItemExpireEvent e) {
 
-		@Nonnull ItemStack stack = e.getEntityItem().getEntityItem();
+		@Nonnull ItemStack stack = e.getEntityItem().getItem();
 		if (stack.getItem().equals(rubberLeavesItem) && stack.getItemDamage() == 0) {
 			e.setCanceled(true);
 			e.setExtraLife(e.getEntityItem().lifespan);
-			e.getEntityItem().setEntityItemStack(new ItemStack(stack.getItem(), stack.getCount(), 1));
+			e.getEntityItem().setItem(new ItemStack(stack.getItem(), stack.getCount(), 1));
 		}
 	}
 

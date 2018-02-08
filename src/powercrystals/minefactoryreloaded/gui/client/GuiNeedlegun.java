@@ -23,8 +23,8 @@ public class GuiNeedlegun extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		fontRendererObj.drawString(name, 8, 6, 4210752);
-		fontRendererObj.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 4, 4210752);
+		fontRenderer.drawString(name, 8, 6, 4210752);
+		fontRenderer.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 4, 4210752);
 
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 	}

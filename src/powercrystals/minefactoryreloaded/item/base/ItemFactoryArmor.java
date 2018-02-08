@@ -62,20 +62,14 @@ public class ItemFactoryArmor extends ItemArmorCore implements IInitializer, IMo
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerItem(this);
 		return true;
 	}
 
 	@Override
-	public boolean initialize() {
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
+	public boolean register() {
 
 		return true;
 	}

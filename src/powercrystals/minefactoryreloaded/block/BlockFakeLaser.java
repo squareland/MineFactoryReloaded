@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.block;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.MapColor;
@@ -172,7 +172,7 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, null);
 		return true;
@@ -188,13 +188,7 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 	}
 
 	@Override
-	public boolean initialize() {
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
+	public boolean register() {
 
 		return true;
 	}

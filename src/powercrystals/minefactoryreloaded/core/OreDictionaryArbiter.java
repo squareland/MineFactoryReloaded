@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.core;
 
-import cofh.lib.util.ItemWrapper;
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.ItemHelper;
+import cofh.core.util.ItemWrapper;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import gnu.trove.map.TMap;

@@ -97,7 +97,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
             }
             fstack.setCount(1);
 			EntityFlyingItem item = new EntityFlyingItem(world, player, fstack);
-			item.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 1.5f, 0.5f);
+			item.shoot(player, player.rotationPitch, player.rotationYaw, 0, 1.5f, 0.5f);
 
             int k = Math.max(0, EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack));
 
@@ -140,9 +140,9 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
-		super.preInit();
+		super.initialize();
 		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "potato_cannon"), EntityFlyingItem.class, "PotatoCannon", 5, MineFactoryReloadedCore.instance(), 160, 7, true);
 
 		return true;

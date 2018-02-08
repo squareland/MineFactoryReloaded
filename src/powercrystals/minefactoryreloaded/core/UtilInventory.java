@@ -1,35 +1,28 @@
 package powercrystals.minefactoryreloaded.core;
 
-//import buildcraft.api.transport.IPipeTile;
-
-//import cofh.api.tileentity.IItemDuct;
-
-import cofh.lib.inventory.IInventoryManager;
-import cofh.lib.inventory.InventoryManager;
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.InventoryHelper;
+import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.LinkedList;
+import java.util.List;
 
-public abstract class UtilInventory
-{
+public abstract class UtilInventory {
+
+	//TODO probably just delete this code as item handlers should cover all of these cases
 	/**
 	 * Searches from position x, y, z, checking for TE-compatible pipes in all directions.
 	 *
@@ -62,7 +55,7 @@ public abstract class UtilInventory
 
 /*
 	*/
-/**
+	/**
 	 * Searches from position x, y, z, checking for BC-compatible pipes in all directions.
 	 *
 	 * @return Map<EnumFacing, IPipeTile> specifying all found pipes and their directions.
@@ -75,7 +68,7 @@ public abstract class UtilInventory
 	}
 
 	*/
-/**
+	/**
 	 * Searches from position x, y, z, checking for BC-compatible pipes in each directiontocheck.
 	 *
 	 * @return Map<EnumFacing, IPipeTile> specifying all found pipes and their directions.
@@ -101,41 +94,30 @@ public abstract class UtilInventory
 	/**
 	 * Searches from position x, y, z, checking for inventories in all directions.
 	 *
-	 * @return Map<EnumFacing, IInventory> specifying all found inventories and their directions.
+	 * @return Map<EnumFacing, IItemHandler> specifying all found inventories and their directions.
 	 */
-	public static Map<EnumFacing, IInventory> findChests(World world, BlockPos pos)
-	{
+	public static List<IItemHandler> findChests(World world, BlockPos pos) {
+
 		return findChests(world, pos, EnumFacing.VALUES);
 	}
 
 	/**
 	 * Searches from position x, y, z, checking for inventories in each directiontocheck.
 	 *
-	 * @return Map<EnumFacing, IInventory> specifying all found inventories and their directions.
+	 * @return Map<EnumFacing, IItemHandler> specifying all found inventories and their directions.
 	 */
-	public static Map<EnumFacing, IInventory> findChests(World world, BlockPos pos,
-			EnumFacing[] directionstocheck)
-	{
-		Map<EnumFacing, IInventory> chests = new LinkedHashMap<EnumFacing, IInventory>();
-		for (EnumFacing direction : directionstocheck)
-		{
+	public static List<IItemHandler> findChests(World world, BlockPos pos,
+			EnumFacing[] directionstocheck) {
+
+		List<IItemHandler> chests = new LinkedList<>();
+		for (EnumFacing direction : directionstocheck) {
 			BlockPos chestPos = pos.offset(direction);
 			TileEntity te = world.getTileEntity(chestPos);
-			if (te != null && te instanceof IInventory)
-			{
-				chests.put(direction, checkForDoubleChest(world, te, chestPos));
+			if (te != null) {
+				chests.add(InventoryHelper.getItemHandlerCap(te, direction.getOpposite()));
 			}
 		}
 		return chests;
-	}
-
-	private static IInventory checkForDoubleChest(World world, TileEntity te, BlockPos chestloc)
-	{
-		Block block = world.getBlockState(chestloc).getBlock();
-		if (block instanceof BlockChest && te instanceof TileEntityChest) {
-			return ((BlockChest) block).getContainer(world, chestloc, true);
-		}
-		return ((IInventory)te);
 	}
 
 	/**
@@ -144,8 +126,9 @@ public abstract class UtilInventory
 	 *
 	 * @return The remainder of the @Nonnull ItemStack. Whatever -wasn't- successfully dropped.
 	 */
-	public static @Nonnull ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack)
-	{
+	@Nonnull
+	public static ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack) {
+
 		return dropStack(from.getWorld(), from.getPos(),
 				stack, EnumFacing.VALUES, null);
 	}
@@ -154,12 +137,12 @@ public abstract class UtilInventory
 	 * Drops an @Nonnull ItemStack, checking all directions for pipes > chests. Drops items into the world.
 	 * Example of this behavior: Harvesters, sludge boilers, etc.
 	 *
-	 * @param airdropdirection
-	 *            the direction that the stack may be dropped into air.
+	 * @param airdropdirection the direction that the stack may be dropped into air.
 	 * @return The remainder of the @Nonnull ItemStack. Whatever -wasn't- successfully dropped.
 	 */
-	public static @Nonnull ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack, EnumFacing airdropdirection)
-	{
+	@Nonnull
+	public static ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack, EnumFacing airdropdirection) {
+
 		return dropStack(from.getWorld(), from.getPos(),
 				stack, EnumFacing.VALUES, airdropdirection);
 	}
@@ -168,15 +151,14 @@ public abstract class UtilInventory
 	 * Drops an @Nonnull ItemStack, into chests > pipes > the world, but only in a single direction.
 	 * Example of this behavior: Item Router, Ejector
 	 *
-	 * @param dropdirection
-	 *            a -single- direction in which to check for pipes/chests
-	 * @param airdropdirection
-	 *            the direction that the stack may be dropped into air.
+	 * @param dropdirection    a -single- direction in which to check for pipes/chests
+	 * @param airdropdirection the direction that the stack may be dropped into air.
 	 * @return The remainder of the @Nonnull ItemStack. Whatever -wasn't- successfully dropped.
 	 */
-	public static @Nonnull ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack, EnumFacing dropdirection,
-			EnumFacing airdropdirection)
-	{
+	@Nonnull
+	public static ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack, EnumFacing dropdirection,
+			EnumFacing airdropdirection) {
+
 		EnumFacing[] dropdirections = { dropdirection };
 		return dropStack(from.getWorld(), from.getPos(),
 				stack, dropdirections, airdropdirection);
@@ -185,21 +167,18 @@ public abstract class UtilInventory
 	/**
 	 * Drops an @Nonnull ItemStack, checks pipes > chests > world in that order.
 	 *
-	 * @param from
-	 *            the TileEntity doing the dropping
-	 * @param stack
-	 *            the @Nonnull ItemStack being dropped
-	 * @param dropdirections
-	 *            directions in which stack may be dropped into chests or pipes
-	 * @param airdropdirection
-	 *            the direction that the stack may be dropped into air.
-	 *            null or other invalid directions indicate that stack shouldn't be
-	 *            dropped into the world.
+	 * @param from             the TileEntity doing the dropping
+	 * @param stack            the @Nonnull ItemStack being dropped
+	 * @param dropdirections   directions in which stack may be dropped into chests or pipes
+	 * @param airdropdirection the direction that the stack may be dropped into air.
+	 *                         null or other invalid directions indicate that stack shouldn't be
+	 *                         dropped into the world.
 	 * @return The remainder of the @Nonnull ItemStack. Whatever -wasn't- successfully dropped.
 	 */
-	public static @Nonnull ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack, EnumFacing[] dropdirections,
-			EnumFacing airdropdirection)
-	{
+	@Nonnull
+	public static ItemStack dropStack(TileEntity from, @Nonnull ItemStack stack, EnumFacing[] dropdirections,
+			EnumFacing airdropdirection) {
+
 		return dropStack(from.getWorld(), from.getPos(),
 				stack, dropdirections, airdropdirection);
 	}
@@ -207,25 +186,20 @@ public abstract class UtilInventory
 	/**
 	 * Drops an @Nonnull ItemStack, checks pipes > chests > world in that order. It generally shouldn't be necessary to call this explicitly.
 	 *
-	 * @param world
-	 *            the world
-	 * @param pos
-	 *            the BlockPos to drop from
-	 * @param stack
-	 *            the @Nonnull ItemStack being dropped
-	 * @param dropdirections
-	 *            directions in which stack may be dropped into chests or pipes
-	 * @param airdropdirection
-	 *            the direction that the stack may be dropped into air.
-	 *             null or other invalid directions indicate that stack shouldn't be
-	 *            dropped into the world.
+	 * @param world            the world
+	 * @param pos              the BlockPos to drop from
+	 * @param stack            the @Nonnull ItemStack being dropped
+	 * @param dropdirections   directions in which stack may be dropped into chests or pipes
+	 * @param airdropdirection the direction that the stack may be dropped into air.
+	 *                         null or other invalid directions indicate that stack shouldn't be
+	 *                         dropped into the world.
 	 * @return The remainder of the @Nonnull ItemStack. Whatever -wasn't- successfully dropped.
 	 */
-	public static @Nonnull ItemStack dropStack(World world, BlockPos pos, @Nonnull ItemStack stack,
-			EnumFacing[] dropdirections, EnumFacing airdropdirection)
-	{
+	@Nonnull
+	public static ItemStack dropStack(World world, BlockPos pos, @Nonnull ItemStack stack,
+			EnumFacing[] dropdirections, EnumFacing airdropdirection) {
 		// (0) Sanity check. Don't bother dropping if there's nothing to drop, and never try to drop items on the client.
-		if (world.isRemote | stack.isEmpty() || stack.getCount() == 0 || stack.getItem() == null)
+		if (world.isRemote || stack.isEmpty())
 			return ItemStack.EMPTY;
 
 		stack = stack.copy();/*
@@ -250,18 +224,14 @@ public abstract class UtilInventory
 		}
 */
 		// (2) Try to put stack in chests that are in valid directions
-		for (Entry<EnumFacing, IInventory> chest : findChests(world, pos, dropdirections).entrySet())
-		{
-			IInventoryManager manager = InventoryManager.create(chest.getValue(), chest.getKey().getOpposite());
-			stack = manager.addItem(stack);
-			if (stack.isEmpty() || stack.getCount() <= 0)
-			{
+		for (IItemHandler chest : findChests(world, pos, dropdirections)) {
+			stack = InventoryHelper.insertStackIntoInventory(chest, stack, false);
+			if (stack.isEmpty()) {
 				return ItemStack.EMPTY;
 			}
 		}
 		// (3) Having failed to put it in a chest or a pipe, drop it in the air if airdropdirection is a valid direction.
-		if (MFRUtil.VALID_DIRECTIONS.contains(airdropdirection) && isAirDrop(world, pos.offset(airdropdirection)))
-		{
+		if (MFRUtil.VALID_DIRECTIONS.contains(airdropdirection) && isAirDrop(world, pos.offset(airdropdirection))) {
 			dropStackInAir(world, pos, stack, airdropdirection);
 			return ItemStack.EMPTY;
 		}
@@ -269,8 +239,8 @@ public abstract class UtilInventory
 		return stack;
 	}
 
-	public static boolean isAirDrop(World world, BlockPos pos)
-	{
+	public static boolean isAirDrop(World world, BlockPos pos) {
+
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (world.isAirBlock(pos))
@@ -303,37 +273,45 @@ public abstract class UtilInventory
 */
 
 	public static void dropStackInAir(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		dropStackInAir(world, pos, stack, null);
 	}
 
 	public static void dropStackInAir(World world, BlockPos pos, @Nonnull ItemStack stack, int delay) {
+
 		dropStackInAir(world, pos, stack, delay, null);
 	}
 
 	public static void dropStackInAir(World world, BlockPos pos, @Nonnull ItemStack stack, EnumFacing towards) {
+
 		dropStackInAir(world, pos, stack, 20, towards);
 	}
 
 	public static void dropStackInAir(World world, Entity entity, @Nonnull ItemStack stack) {
+
 		dropStackInAir(world, entity, stack, null);
 	}
 
 	public static void dropStackInAir(World world, Entity entity, @Nonnull ItemStack stack, int delay) {
+
 		dropStackInAir(world, entity, stack, delay, null);
 	}
 
 	public static void dropStackInAir(World world, Entity entity, @Nonnull ItemStack stack, EnumFacing towards) {
+
 		dropStackInAir(world, entity, stack, 20, towards);
 	}
 
 	public static void dropStackInAir(World world, Entity entity, @Nonnull ItemStack stack, int delay, EnumFacing towards) {
+
 		dropStackInAir(world, entity.getPosition(), stack, delay, towards);
 	}
 
 	public static void dropStackInAir(World world, BlockPos pos, @Nonnull ItemStack stack,
-			int delay, EnumFacing towards)
-	{
-		if (stack.isEmpty()) return;
+			int delay, EnumFacing towards) {
+
+		if (stack.isEmpty())
+			return;
 
 		double dropOffsetX = 0.0F;
 		double dropOffsetY = 0.0F;
@@ -345,43 +323,42 @@ public abstract class UtilInventory
 			dropOffsetY = world.rand.nextFloat() * f + (1.0D - f) * 0.5D;
 			dropOffsetZ = world.rand.nextFloat() * f + (1.0D - f) * 0.5D;
 		} else {
-			switch (towards)
-			{
-				case UP:
-					dropOffsetX = 0.5F;
-					dropOffsetY = 1.5F;
-					dropOffsetZ = 0.5F;
-					break;
-				case DOWN:
-					dropOffsetX = 0.5F;
-					dropOffsetY = -0.75F;
-					dropOffsetZ = 0.5F;
-					break;
-				case NORTH:
-					dropOffsetX = 0.5F;
-					dropOffsetY = 0.5F;
-					dropOffsetZ = -0.5F;
-					break;
-				case SOUTH:
-					dropOffsetX = 0.5F;
-					dropOffsetY = 0.5F;
-					dropOffsetZ = 1.5F;
-					break;
-				case EAST:
-					dropOffsetX = 1.5F;
-					dropOffsetY = 0.5F;
-					dropOffsetZ = 0.5F;
-					break;
-				case WEST:
-					dropOffsetX = -0.5F;
-					dropOffsetY = 0.5F;
-					dropOffsetZ = 0.5F;
-					break;
+			switch (towards) {
+			case UP:
+				dropOffsetX = 0.5F;
+				dropOffsetY = 1.5F;
+				dropOffsetZ = 0.5F;
+				break;
+			case DOWN:
+				dropOffsetX = 0.5F;
+				dropOffsetY = -0.75F;
+				dropOffsetZ = 0.5F;
+				break;
+			case NORTH:
+				dropOffsetX = 0.5F;
+				dropOffsetY = 0.5F;
+				dropOffsetZ = -0.5F;
+				break;
+			case SOUTH:
+				dropOffsetX = 0.5F;
+				dropOffsetY = 0.5F;
+				dropOffsetZ = 1.5F;
+				break;
+			case EAST:
+				dropOffsetX = 1.5F;
+				dropOffsetY = 0.5F;
+				dropOffsetZ = 0.5F;
+				break;
+			case WEST:
+				dropOffsetX = -0.5F;
+				dropOffsetY = 0.5F;
+				dropOffsetZ = 0.5F;
+				break;
 			}
 		}
 
-
-		EntityItem entityitem = new EntityItem(world, pos.getX() + dropOffsetX, pos.getY() + dropOffsetY, pos.getZ() + dropOffsetZ, stack.copy());
+		EntityItem entityitem = new EntityItem(world, pos.getX() + dropOffsetX, pos.getY() + dropOffsetY,
+				pos.getZ() + dropOffsetZ, stack.copy());
 		if (towards != null) {
 			entityitem.motionX = 0.0D;
 			if (towards != EnumFacing.DOWN)
@@ -392,13 +369,14 @@ public abstract class UtilInventory
 		world.spawnEntity(entityitem);
 	}
 
-	public static @Nonnull ItemStack consumeItem(@Nonnull ItemStack stack, EntityPlayer player)
-	{
+	@Nonnull
+	public static ItemStack consumeItem(@Nonnull ItemStack stack, EntityPlayer player) {
+
 		return ItemHelper.consumeItem(stack, player);
 	}
 
-	public static void mergeStacks(@Nonnull ItemStack to, @Nonnull ItemStack from)
-	{
+	public static void mergeStacks(@Nonnull ItemStack to, @Nonnull ItemStack from) {
+
 		if (!stacksEqual(to, from))
 			return;
 
@@ -407,19 +385,24 @@ public abstract class UtilInventory
 		from.shrink(amountToCopy);
 	}
 
-	public static boolean stacksEqual(@Nonnull ItemStack s1, @Nonnull ItemStack s2)
-	{
+	public static boolean stacksEqual(@Nonnull ItemStack s1, @Nonnull ItemStack s2) {
+
 		return stacksEqual(s1, s2, true);
 	}
 
-	public static boolean stacksEqual(@Nonnull ItemStack s1, @Nonnull ItemStack s2, boolean nbtSensitive)
-	{
-		if (s1.isEmpty() | s2.isEmpty()) return false;
-		if (!s1.isItemEqual(s2)) return false;
-		if (!nbtSensitive) return true;
+	public static boolean stacksEqual(@Nonnull ItemStack s1, @Nonnull ItemStack s2, boolean nbtSensitive) {
 
-		if (s1.getTagCompound() == s2.getTagCompound()) return true;
-		if (s1.getTagCompound() == null || s2.getTagCompound() == null) return false;
+		if (s1.isEmpty() | s2.isEmpty())
+			return false;
+		if (!s1.isItemEqual(s2))
+			return false;
+		if (!nbtSensitive)
+			return true;
+
+		if (s1.getTagCompound() == s2.getTagCompound())
+			return true;
+		if (s1.getTagCompound() == null || s2.getTagCompound() == null)
+			return false;
 		return s1.getTagCompound().equals(s2.getTagCompound());
 	}
 
@@ -430,40 +413,35 @@ public abstract class UtilInventory
 
 	private static boolean handlePipeTiles = false;
 	private static final String pipeClass = "buildcraft.api.transport.IPipeTile";
+
 	static {
 		try {
 			Class.forName(pipeClass);
 			handlePipeTiles = true;
-		} catch(Throwable _) {}
+		} catch (Throwable t) {}
 	}
 
 	public static boolean playerHasItem(EntityPlayer player, Item item) {
-		for (int i = 0; i < player.inventory.getSizeInventory(); ++i)
-		{
+
+		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 			if (stackIsItem(player.inventory.getStackInSlot(i), item))
 				return true;
 		}
 		return false;
 	}
 
-	public static @Nonnull ItemStack findItem(EntityPlayer player, Item item)
-	{
-		if (stackIsItem(player.getHeldItem(EnumHand.OFF_HAND), item))
-		{
+	@Nonnull
+	public static ItemStack findItem(EntityPlayer player, Item item) {
+
+		if (stackIsItem(player.getHeldItem(EnumHand.OFF_HAND), item)) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
-		}
-		else if (stackIsItem(player.getHeldItem(EnumHand.MAIN_HAND), item))
-		{
+		} else if (stackIsItem(player.getHeldItem(EnumHand.MAIN_HAND), item)) {
 			return player.getHeldItem(EnumHand.MAIN_HAND);
-		}
-		else
-		{
-			for (int i = 0; i < player.inventory.getSizeInventory(); ++i)
-			{
+		} else {
+			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 				@Nonnull ItemStack itemstack = player.inventory.getStackInSlot(i);
 
-				if (stackIsItem(itemstack, item))
-				{
+				if (stackIsItem(itemstack, item)) {
 					return itemstack;
 				}
 			}

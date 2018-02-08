@@ -348,12 +348,6 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	}
 
 	@Override
-	public boolean isFullyOpaque(IBlockState state) {
-
-		return true; // HACK: forge fucked up. lots of places where this shouldn't be called
-	}
-
-	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 
 		return false;
@@ -530,7 +524,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, BlockRedNetCable.NAMES));
 		GameRegistry.registerTileEntity(TileEntityRedNetCable.class, "factoryRedstoneCable");

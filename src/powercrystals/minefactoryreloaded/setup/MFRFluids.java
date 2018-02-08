@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import cofh.lib.util.WeightedRandomItemStack;
+import cofh.core.util.WeightedRandomItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

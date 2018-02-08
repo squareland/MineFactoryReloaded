@@ -172,7 +172,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 			int chance = 15;
 			Biome b = world.getBiome(pos);
 			if (b != null) {
-				float temp = b.getTemperature();
+				float temp = b.getTemperature(pos);
 				float rain = b.getRainfall();
 				boolean t;
 				decay |= (t = rain <= 0.05f);
@@ -201,7 +201,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 			int chance = 15;
 			Biome b = world.getBiome(pos);
 			if (b != null) {
-				float temp = b.getTemperature();
+				float temp = b.getTemperature(pos);
 				float rain = b.getRainfall();
 				boolean t;
 				decay |= (t = rain <= 0.05f);
@@ -233,12 +233,11 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 		return cube ? super.shouldSideBeRendered(state, world, pos, side) : true;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void getSubBlocks(Item blockId, CreativeTabs creativeTab, NonNullList<ItemStack> subTypes) {
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 
-		subTypes.add(new ItemStack(blockId, 1, 0));
-		subTypes.add(new ItemStack(blockId, 1, 1));
+		items.add(new ItemStack(this, 1, 0));
+		items.add(new ItemStack(this, 1, 1));
 	}
 
 	@Override
@@ -250,7 +249,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		Blocks.FIRE.setFireInfo(this, 80, 25);
 		MFRRegistry.registerBlock(this, new ItemBlockFactoryLeaves(this));
@@ -258,13 +257,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	}
 
 	@Override
-	public boolean initialize() {
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
+	public boolean register() {
 
 		return true;
 	}

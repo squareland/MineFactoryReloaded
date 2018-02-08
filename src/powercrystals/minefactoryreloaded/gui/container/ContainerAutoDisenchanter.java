@@ -1,11 +1,10 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.slot.SlotAcceptValid;
-import cofh.lib.gui.slot.SlotRemoveOnly;
-
+import cofh.core.gui.slot.SlotRemoveOnly;
+import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
-
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoDisenchanter;
 
 public class ContainerAutoDisenchanter extends ContainerFactoryPowered {
@@ -13,17 +12,18 @@ public class ContainerAutoDisenchanter extends ContainerFactoryPowered {
 	public static String background;
 	private TileEntityAutoDisenchanter _disenchanter;
 
-	public ContainerAutoDisenchanter(TileEntityAutoDisenchanter disenchanter, InventoryPlayer inv)
-	{
+	public ContainerAutoDisenchanter(TileEntityAutoDisenchanter disenchanter, InventoryPlayer inv) {
+
 		super(disenchanter, inv);
 		_disenchanter = disenchanter;
 	}
 
 	@Override
-	protected void addSlots()
-	{
-		addSlotToContainer(new SlotAcceptValid(_te, 0, 8, 18));
-		addSlotToContainer(new SlotAcceptValid(_te, 1, 26, 18));
+	protected void addSlots() {
+
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_disenchanter, null);
+		addSlotToContainer(new SlotItemHandler(handler, 0, 8, 18));
+		addSlotToContainer(new SlotItemHandler(handler, 1, 26, 18));
 
 		addSlotToContainer(new SlotRemoveOnly(_te, 4, 8, 37));
 
@@ -36,19 +36,19 @@ public class ContainerAutoDisenchanter extends ContainerFactoryPowered {
 	}
 
 	@Override
-	public void detectAndSendChanges()
-	{
+	public void detectAndSendChanges() {
+
 		super.detectAndSendChanges();
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendProgressBarUpdate(this, 100, _disenchanter.getRepeatDisenchant() ? 1 : 0);
+		for (int i = 0; i < listeners.size(); i++) {
+			listeners.get(i).sendWindowProperty(this, 100, _disenchanter.getRepeatDisenchant() ? 1 : 0);
 		}
 	}
 
 	@Override
-	public void updateProgressBar(int var, int value)
-	{
+	public void updateProgressBar(int var, int value) {
+
 		super.updateProgressBar(var, value);
-		if(var == 100) _disenchanter.setRepeatDisenchant(value == 1 ? true : false);
+		if (var == 100)
+			_disenchanter.setRepeatDisenchant(value == 1 ? true : false);
 	}
 }

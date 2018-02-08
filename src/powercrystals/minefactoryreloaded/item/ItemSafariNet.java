@@ -5,6 +5,7 @@ import net.minecraft.block.BlockFence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -330,7 +331,8 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		return !s.isEmpty() && (s.getItem() instanceof ItemSafariNet);
 	}
 
-	public static @Nonnull ItemStack makeMysteryNet(@Nonnull ItemStack s) {
+	@Nonnull
+	public static ItemStack makeMysteryNet(@Nonnull ItemStack s) {
 
 		if (isSafariNet(s)) {
 			NBTTagCompound c = new NBTTagCompound();
@@ -358,11 +360,13 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public void getSubItems(Item item, NonNullList<ItemStack> subTypes) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-		super.getSubItems(item, subTypes);
-		if (item.equals(MFRThings.safariNetSingleItem)) {
-			subTypes.add(Zoologist.getHiddenNetStack());
+		if (isInCreativeTab(tab)) {
+			super.getSubItems(tab, items);
+			if (this.equals(MFRThings.safariNetSingleItem)) {
+				items.add(Zoologist.getHiddenNetStack());
+			}
 		}
 	}
 
