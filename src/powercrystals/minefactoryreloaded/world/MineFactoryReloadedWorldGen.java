@@ -23,6 +23,10 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 	private static boolean _regenSewage, _regenSludge, _regenTrees;
 	private static int _sludgeLakeRarity, _sewageLakeRarity;
 
+	public static MineFactoryReloadedWorldGen INSTANCE = new MineFactoryReloadedWorldGen();
+
+	private MineFactoryReloadedWorldGen() {}
+
 	public static boolean generateMegaRubberTree(World world, Random random, BlockPos pos, boolean safe)
 	{
 		return new WorldGenMassiveTree(false).setTreeScale(4 + (random.nextInt(3)), 0.8f, 0.7f).

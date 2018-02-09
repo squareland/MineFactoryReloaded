@@ -4,7 +4,9 @@ package powercrystals.minefactoryreloaded;
 
 import codechicken.lib.CodeChickenLib;
 import cofh.CoFHCore;
+import cofh.cofhworld.CoFHWorld;
 import cofh.cofhworld.init.WorldHandler;
+import cofh.redstoneflux.RedstoneFlux;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
@@ -66,7 +68,8 @@ public class MineFactoryReloadedCore extends BaseMod {
 	public static final String modId = "minefactoryreloaded";
 	public static final String modName = "MineFactory Reloaded";
 	public static final String version = "2.9.0B1";
-	public static final String dependencies = CoFHCore.VERSION_GROUP + CodeChickenLib.MOD_VERSION_DEP;
+	public static final String dependencies = CoFHCore.VERSION_GROUP + CodeChickenLib.MOD_VERSION_DEP + RedstoneFlux.VERSION_GROUP +
+			CoFHWorld.VERSION_GROUP;
 	public static final String modNetworkChannel = "MFReloaded";
 
 	@SidedProxy(clientSide = "powercrystals.minefactoryreloaded.net.ClientProxy",
@@ -200,7 +203,9 @@ public class MineFactoryReloadedCore extends BaseMod {
 		//TODO likely remove, but added here at least for the test
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandler());
 
-		WorldHandler.INSTANCE.registerFeature(new MineFactoryReloadedWorldGen());
+		WorldHandler.registerReloadCallback(() -> {
+			WorldHandler.registerFeature(MineFactoryReloadedWorldGen.INSTANCE);
+		});
 
 		//UpdateManager.registerUpdater(new UpdateManager(this, null, CoFHProps.DOWNLOAD_URL));
 	}
