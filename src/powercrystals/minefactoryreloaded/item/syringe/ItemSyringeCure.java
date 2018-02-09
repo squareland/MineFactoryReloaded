@@ -12,8 +12,10 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.UUID;
 
 public class ItemSyringeCure extends ItemSyringe {
 
@@ -33,15 +35,16 @@ public class ItemSyringeCure extends ItemSyringe {
 	@Override
 	public boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe) {
 
-		startConverting((EntityZombieVillager) entity, 300);
+		startConverting((EntityZombieVillager) entity, null,  300);
 		return true;
 	}
 
-	private static final Method START_CONVERTING = ReflectionHelper.findMethod(EntityZombieVillager.class, "startConverting", "func_191991_a", Integer.class);
-	private void startConverting(EntityZombieVillager zombieVillager, int conversionTime) {
+	private static final Method START_CONVERTING = ReflectionHelper.findMethod(EntityZombieVillager.class,
+			"startConverting", "func_191991_a", UUID.class, int.class);
+	private void startConverting(EntityZombieVillager zombieVillager, @Nullable UUID conversionStarter, int conversionTime) {
 
 		try {
-			START_CONVERTING.invoke(zombieVillager, conversionTime);
+			START_CONVERTING.invoke(zombieVillager, conversionStarter, conversionTime);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			MineFactoryReloadedCore.log().error("Zombie villager conversion failed \n", e);
 		}

@@ -6,13 +6,13 @@ import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
@@ -25,6 +25,7 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -467,10 +468,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryTickable {
 			craft.setInventorySlotContents(i, (_inventory.get(i).isEmpty() ? ItemStack.EMPTY : _inventory.get(i).copy()));
 		}
 
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		for (int i = 0, e = recipes.size(); i < e; ++i) {
-			IRecipe irecipe = recipes.get(i);
-
+		Collection<IRecipe> recipes = ForgeRegistries.RECIPES.getValuesCollection();
+		for (IRecipe irecipe : recipes) {
 			if (irecipe.matches(craft, world)) {
 				recipe = irecipe;
 				return irecipe.getCraftingResult(craft);

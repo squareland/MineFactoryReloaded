@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -62,7 +63,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 		}
 		if (slot == 0) return (item.isEnchantable(stack) || item.equals(Items.ENCHANTED_BOOK)) || item.isRepairable();
 		if (slot == 1 && !_inventory.get(0).isEmpty()) {
-			if (item.equals(Items.ENCHANTED_BOOK) && !Items.ENCHANTED_BOOK.getEnchantments(stack).hasNoTags())
+			if (item.equals(Items.ENCHANTED_BOOK) && !ItemEnchantedBook.getEnchantments(stack).hasNoTags())
 				return true;
 			return (item.equals(_inventory.get(0).getItem()) &&
 					stack.isItemStackDamageable() && item.isRepairable()) ||
@@ -220,7 +221,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				}
 				{ // eclipse is indenting weird again
 					enchantingWithBook = addedItem.getItem().equals(Items.ENCHANTED_BOOK) &&
-							!Items.ENCHANTED_BOOK.getEnchantments(addedItem).hasNoTags();
+							!ItemEnchantedBook.getEnchantments(addedItem).hasNoTags();
 				}
 				int addedEnchants = 0;
 
@@ -291,7 +292,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 						}
 
 						for (Enchantment existingEnchant : existingEnchantments.keySet()) {
-							if (!existingEnchant.equals(addedEnchant) && !addedEnchant.func_191560_c(existingEnchant)) {
+							if (!existingEnchant.equals(addedEnchant) && !addedEnchant.isCompatibleWith(existingEnchant)) {
 								canEnchantmentBeAdded = false;
 								totalEnchCost += levelDifference;
 							}

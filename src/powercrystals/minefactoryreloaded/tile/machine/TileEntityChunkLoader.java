@@ -39,7 +39,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 			Field f = Ticket.class.getDeclaredField("maxDepth");
 			f.setAccessible(true);
 			f.setInt(tick, Short.MAX_VALUE);
-		} catch (Throwable _) {
+		} catch (Throwable t) {
 		}
 	}
 
@@ -114,7 +114,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 		int maxR = 38;
 		if (_ticket != null)
 			maxR = Math.min((int) Math.sqrt(_ticket.getChunkListDepth() / Math.PI), maxR);
-		if (r < 0 | r > maxR | r == _radius)
+		if (r < 0 || r > maxR || r == _radius)
 			return;
 		_radius = r;
 		markDirty();
@@ -192,7 +192,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 						ForgeChunkManager.unforceChunk(_ticket, c);
 				}
 			}
-		else if (activated & !isActive()) {
+		else if (activated && !isActive()) {
 			if (_ticket == null) {
 				_ticket = ForgeChunkManager.
 						requestPlayerTicket(MineFactoryReloadedCore.instance(),
@@ -238,8 +238,8 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 		int z = pos.getZ() >> 4;
 		int r = _radius * _radius;
 		for (ChunkPos c : chunks) {
-			int xS = c.chunkXPos - x;
-			int zS = c.chunkZPos - z;
+			int xS = c.x - x;
+			int zS = c.z - z;
 			if ((xS * xS + zS * zS) > r)
 				ForgeChunkManager.unforceChunk(_ticket, c);
 		}
@@ -439,7 +439,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 	@Override
 	public int fill(EnumFacing facing, FluidStack resource, boolean doFill) {
 
-		if (!unableToRequestTicket & resource != null && isFluidFuel(resource))
+		if (!unableToRequestTicket && resource != null && isFluidFuel(resource))
 			for (FluidTankCore _tank : getTanks())
 				if (_tank.getFluidAmount() == 0 || resource.isFluidEqual(_tank.getFluid()))
 					return _tank.fill(resource, doFill);

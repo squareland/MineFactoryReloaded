@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.setup.recipe;
 
-import cofh.core.util.helpers.RecipeHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -735,6 +734,7 @@ public class Vanilla {
 			protected ItemStack getTinkeredMachine(@Nonnull ItemStack machine) {
 
 				machine = machine.copy();
+				machine.setCount(1);
 				NBTTagCompound tag = machine.getTagCompound();
 				if (tag == null) machine.setTagCompound(tag = new NBTTagCompound());
 				tag.setBoolean("hasTinkerStuff", true);

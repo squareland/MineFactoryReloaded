@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
 import cofh.core.fluid.FluidTankCore;
-import cofh.core.util.WeightedRandomItemStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -16,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.core.Area;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryPowered;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;

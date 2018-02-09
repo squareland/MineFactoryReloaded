@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.tile.machine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -96,7 +97,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 
 		@Nonnull ItemStack stack = _inventory.get(4);
 		boolean isBook = stack.getItem().equals(Items.ENCHANTED_BOOK);
-		NBTTagList list = isBook ? Items.ENCHANTED_BOOK.getEnchantments(stack) : stack.getEnchantmentTagList();
+		NBTTagList list = isBook ? ItemEnchantedBook.getEnchantments(stack) : stack.getEnchantmentTagList();
 		if ((list == null || list.tagCount() <= 0) && _inventory.get(2).isEmpty()) {
 			_inventory.set(2, stack);
 			setInventorySlotContents(4, ItemStack.EMPTY);
@@ -130,7 +131,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 						int damage = world.rand.nextInt(1 + (stack.getMaxDamage() / 4));
 						int m = stack.getMaxDamage();
 						damage = Math.min(m, damage + 1 + (m / 10)) + (m == 1 ? 1 : 0);
-						if (stack.attemptDamageItem(damage, world.rand)) {
+						if (stack.attemptDamageItem(damage, world.rand, null)) {
 							_inventory.set(4, ItemStack.EMPTY);
 						}
 					}

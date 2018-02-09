@@ -1,11 +1,13 @@
 package powercrystals.minefactoryreloaded.entity;
 
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -15,20 +17,20 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EntityPinkSlime extends EntitySlime
-{
+public class EntityPinkSlime extends EntitySlime {
 
-	public static final ResourceLocation PINK_SLIME = new ResourceLocation(MineFactoryReloadedCore.modId + ":entities/pink_slime");
+	public static final ResourceLocation PINK_SLIME = new ResourceLocation(
+			MineFactoryReloadedCore.modId + ":entities/pink_slime");
 
-	public EntityPinkSlime(World world)
-	{
+	public EntityPinkSlime(World world) {
+
 		super(world);
 		setSlimeSize(1, true);
 	}
 
 	@Override
-	protected int getJumpDelay()
-	{
+	protected int getJumpDelay() {
+
 		return this.rand.nextInt(10) + 5;
 	}
 
@@ -41,15 +43,13 @@ public class EntityPinkSlime extends EntitySlime
 	}
 
 	@Override
-	public void setSlimeSize(int size, boolean refreshHealth)
-	{
-		if (size > 4)
-		{
+	protected void setSlimeSize(int size, boolean refreshHealth) {
+
+		if (size > 4) {
 			world.newExplosion(this, posX, posY, posZ, 0.1F, false, true);
 			this.attackEntityFrom(DamageSource.GENERIC, 50);
 
-			if(!world.isRemote)
-			{
+			if (!world.isRemote) {
 				@Nonnull ItemStack meats = new ItemStack(MFRThings.meatNuggetRawItem, world.rand.nextInt(12) + size);
 				EntityItem e = new EntityItem(world, posX, posY, posZ, meats);
 				e.motionX = rand.nextDouble() - 0.5D;
@@ -57,31 +57,51 @@ public class EntityPinkSlime extends EntitySlime
 				e.motionZ = rand.nextDouble() - 0.5D;
 				world.spawnEntity(e);
 			}
-		}
-		else
-		{
+		} else {
 			super.setSlimeSize(size, true);
 		}
 	}
 
 	@Override
 	protected boolean spawnCustomParticles() {
-		
+
 		return true;
 	}
 
 	@Override
-	protected EntityPinkSlime createInstance()
-	{
+	protected EntityPinkSlime createInstance() {
+
 		return new EntityPinkSlime(this.world);
 	}
 
 	@Override
-    public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
-    {
-        if (!this.world.isRemote)
-        {
-        	this.setSlimeSize(this.getSlimeSize() + 3, true);
-        }
-    }
+	public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt) {
+
+		if (!this.world.isRemote) {
+			this.setSlimeSize(this.getSlimeSize() + 3, true);
+		}
+	}
+
+	@Nullable
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+
+		IEntityLivingData ret = super.onInitialSpawn(difficulty, livingdata);
+
+		if (livingdata != null && livingdata instanceof GroupData && ((GroupData) livingdata).forceSmall) {
+			setSlimeSize(1, true);
+		}
+
+		return ret;
+	}
+
+	public static class GroupData implements IEntityLivingData {
+
+		public boolean forceSmall;
+
+		public GroupData(boolean forceSmall) {
+
+			this.forceSmall = forceSmall;
+		}
+	}
 }

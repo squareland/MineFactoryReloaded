@@ -47,6 +47,7 @@ dependencies {
     compile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:deobf"
     compile "cofh:CoFHCore:${mc_version}-${cofhcore_version}:deobf"
     compile "cofh:RedstoneFlux:${rf_mc_version}-${rf_version}:deobf"
+    compile "cofh:CoFHWorld:${mc_version}-${cofhworld_version}:deobf"
     compile "net.industrial-craft:industrialcraft-2:${ic2_version}"
     compile "net.sengir.forestry:forestry_${mc_version}:${forestry_version}"
     deobfCompile "com.mod-buildcraft:buildcraft-api:${buildcraft_version}"

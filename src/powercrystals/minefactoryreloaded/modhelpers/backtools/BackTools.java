@@ -19,7 +19,7 @@ import powercrystals.minefactoryreloaded.item.gun.ItemSafariNetLauncher;
 import powercrystals.minefactoryreloaded.item.tool.ItemFactoryHammer;
 import powercrystals.minefactoryreloaded.item.tool.ItemSpyglass;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatbacktools",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatbacktools",
 		name = "MFR Compat: BackTools",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:mod_BackTools",

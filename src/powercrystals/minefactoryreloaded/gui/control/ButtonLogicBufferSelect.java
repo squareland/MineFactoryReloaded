@@ -23,7 +23,7 @@ public class ButtonLogicBufferSelect extends ElementButtonOption
 		char[] dirMap = new char[4];
 		for (int i = 0; i < 4; ++i)
 			dirMap[ (i + rotation.getHorizontalIndex() + 1) & 3] = dir[i];
-		//TODO getHorizontalIndex() + 1 here is a hack to avoid having to go through a lot of changes
+		//TODO needs a lot of refactoring - getHorizontalIndex() + 1 here is a hack to avoid having to go through that now
 		//really the whole logic of assigning sides and rotating needs to be rewritten to be more readable
 		
 		_ignoreChanges = true;

@@ -246,7 +246,7 @@ public class ComponentZoologistHouse extends StructureVillagePieces.Village
 			int j = this.getXWithOffset(1, 4);
 			k = this.getZWithOffset(1, 4);
 
-			if (sbb.contains(new Vec3i(j, i, k)))
+			if (sbb.isVecInside(new Vec3i(j, i, k)))
 			{
 				this.hasMadeChest = true;
 				generateChest(world, sbb, random, 1, 1, 4, MFRLoot.ZOOLOGIST_CHEST);

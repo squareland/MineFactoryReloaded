@@ -1,19 +1,13 @@
 package powercrystals.minefactoryreloaded.modhelpers.ae;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
-
-import net.minecraft.item.ItemStack;
-
-import net.minecraftforge.fml.common.Mod;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatappliedenergistics",
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatappliedenergistics",
 		name = "MFR Compat: Applied Energistics",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:appliedenergistics2",

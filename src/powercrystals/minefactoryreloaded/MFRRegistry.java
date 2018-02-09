@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded;
 
-import cofh.core.util.WeightedRandomItemStack;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -27,6 +26,7 @@ import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

@@ -1,12 +1,12 @@
 package powercrystals.minefactoryreloaded.world;
 
-import cofh.asmhooks.world.WorldServerProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldServer;
+import powercrystals.minefactoryreloaded.asmhooks.WorldServerProxy;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityGrinder;
 
@@ -47,7 +47,7 @@ public class GrindingWorldServer extends WorldServerProxy {
 		if (grinder != null) {
 			if (entity instanceof EntityItem) {
 				if (grinder.manageSolids()) {
-					@Nonnull ItemStack drop = ((EntityItem) entity).getEntityItem();
+					@Nonnull ItemStack drop = ((EntityItem) entity).getItem();
 					if (!drop.isEmpty())
 						grinder.doDrop(drop);
 				}

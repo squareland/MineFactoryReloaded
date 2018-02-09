@@ -71,11 +71,11 @@ public class TileEntityItemRouter extends TileEntityFactoryTickable implements I
 	public void onEntityCollided(Entity entity) {
 
 		if (entity instanceof EntityItem && !entity.isDead) {
-			@Nonnull ItemStack s = routeItem(((EntityItem) entity).getEntityItem());
+			@Nonnull ItemStack s = routeItem(((EntityItem) entity).getItem());
 			if (s.isEmpty())
 				entity.setDead();
 			else
-				((EntityItem) entity).setEntityItemStack(s);
+				((EntityItem) entity).setItem(s);
 		}
 	}
 

@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatic2",
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatic2",
 		name = "MFR Compat: IC2",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:IC2",

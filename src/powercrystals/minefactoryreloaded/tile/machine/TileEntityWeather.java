@@ -79,7 +79,7 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 					return false;
 				}
 				_canWeather = true;
-				_willSnow = bgb.getFloatTemperature(pos) < 0.15F;
+				_willSnow = bgb.getTemperature(pos) < 0.15F;
 			}
 			if (!canSeeSky()) {
 				setIdleTicks(getIdleTicksMax());

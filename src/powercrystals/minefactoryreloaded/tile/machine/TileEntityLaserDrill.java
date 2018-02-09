@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import cofh.core.util.WeightedRandomItemStack;
 import cofh.core.util.helpers.MathHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -21,6 +20,7 @@ import powercrystals.minefactoryreloaded.api.IFactoryLaserTarget;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiLaserDrill;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;

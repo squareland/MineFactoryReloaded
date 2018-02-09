@@ -1,26 +1,20 @@
 package powercrystals.minefactoryreloaded.modhelpers.railcraft;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import java.lang.reflect.Method;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
-
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatrailcraft",
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatrailcraft",
 		name = "MFR Compat: Railcraft",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:Railcraft",

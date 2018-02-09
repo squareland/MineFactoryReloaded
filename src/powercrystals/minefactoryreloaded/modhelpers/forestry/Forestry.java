@@ -1,32 +1,26 @@
 package powercrystals.minefactoryreloaded.modhelpers.forestry;
 
-import static powercrystals.minefactoryreloaded.core.MFRUtil.*;
-
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerBiofuel;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityUnifier;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatforestry",
+import static powercrystals.minefactoryreloaded.core.MFRUtil.findBlock;
+import static powercrystals.minefactoryreloaded.core.MFRUtil.findItem;
+
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatforestry",
 		name = "MFR Compat: Forestry",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:Forestry",

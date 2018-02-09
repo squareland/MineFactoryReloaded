@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -83,13 +82,13 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 		if (_isJammed || world.getTotalWorldTime() % 137 == 0) {
 			validateLocation();
 		}
-		if (_isJammed | _needItem)
+		if (_isJammed || _needItem)
 			return false;
 
 		if (!incrementWorkDone()) return false;
 
 		if (getWorkDone() > getWorkMax()) {
-			setInventorySlotContents(0, ItemHelper.damageItem(_inventory.get(0), 1, _rand));
+			_inventory.get(0).attemptDamageItem(1, _rand, null);
 			LootContext.Builder context = new LootContext.Builder((WorldServer)this.world);
 			context.withLuck(_luck);
 			for (@Nonnull ItemStack stack : this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(_rand, context.build())) {
@@ -119,7 +118,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 			} else if (isValidBlock(x, y - 1, z)) {
 				++extraBlocks;
 			}
-			if ((x != xCoord) | z != zCoord) {
+			if ((x != xCoord) || z != zCoord) {
 				int xMod = x - (xCoord - x), zMod = z - (zCoord - z);
 
 				if (isValidBlock(xMod, y, zMod)) {
@@ -187,7 +186,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 		super.onFactoryInventoryChanged();
 		boost = 0;
 		_needItem = false;
-		if (world != null && !world.isRemote && !_inventory.get(0).isEmpty()) {
+		if ((world == null || !world.isRemote) && !_inventory.get(0).isEmpty()) {
 			_luck = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, _inventory.get(0));
 			_speed = (byte) EnchantmentHelper.getEnchantmentLevel(Enchantments.LURE, _inventory.get(0));
 			boost = 75 * _speed + 75;

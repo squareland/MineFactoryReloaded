@@ -103,8 +103,8 @@ public class RedstoneEnergyNetwork implements IGrid {
 		EnumFacing[] dir = EnumFacing.VALUES;
 		toCheck.add(main);
 		checked.add(main);
-		Iterator<TileEntityRedNetEnergy> it = toCheck.iterator();
-		while (it.hasNext()) {
+		while (!toCheck.isEmpty()) {
+			Iterator<TileEntityRedNetEnergy> it = toCheck.iterator();
 			main = it.next();
 			it.remove();
 			addConduit(main);

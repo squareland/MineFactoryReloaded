@@ -49,7 +49,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 	public void setWorld(World world) {
 
 		super.setWorld(world);
-		_smashingWorld = new SmashingWorld(this.world);
+		_smashingWorld = new SmashingWorld();
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 
 	private static @Nonnull ItemStack getEqualStack(@Nonnull ItemStack a, NonNullList<ItemStack> b) {
 
-		if (!a.isEmpty() & b != null && a.getCount() > 0 && b.size() > 0)
+		if (!a.isEmpty() && b != null && a.getCount() > 0 && b.size() > 0)
 			for (@Nonnull ItemStack i : b)
 				if (UtilInventory.stacksEqual(a, i)) return i;
 		return a.isEmpty() && b.size() > 0 ? b.get(0) : ItemStack.EMPTY;

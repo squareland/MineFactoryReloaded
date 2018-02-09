@@ -23,7 +23,7 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactory;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatforgemicroblock",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatforgemicroblock",
 		name = "MFR Compat: ForgeMicroblock",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:minefactoryreloaded",

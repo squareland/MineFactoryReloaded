@@ -36,12 +36,12 @@ public class TileEntityCollector extends TileEntityFactoryInventory implements I
 		if (i.isDead)
 			return;
 
-		@Nonnull ItemStack s = addToChests(i.getEntityItem());
+		@Nonnull ItemStack s = addToChests(i.getItem());
 		if (s.isEmpty()) {
 			i.setDead();
 			return;
 		}
-		i.setEntityItemStack(s);
+		i.setItem(s);
 	}
 
 	@Nonnull
@@ -49,7 +49,7 @@ public class TileEntityCollector extends TileEntityFactoryInventory implements I
 
 		s = UtilInventory.dropStack(this, s,
 				MFRUtil.directionsWithoutConveyors(world, pos), null);
-		if (canStuff & failedDrops == null & !s.isEmpty()) {
+		if (canStuff && failedDrops == null & !s.isEmpty()) {
 			doDrop(s);
 			s = ItemStack.EMPTY;
 		}

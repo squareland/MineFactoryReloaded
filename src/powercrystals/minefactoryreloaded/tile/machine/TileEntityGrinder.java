@@ -76,8 +76,10 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 			_grindingWorld.clearReferences();
 			_grindingWorld.setMachine(null);
 		}
-		if (this.world instanceof WorldServer)
+		if (this.world instanceof WorldServer) {
 			_grindingWorld = new GrindingWorldServer((WorldServer) this.world, this);
+			_damageSource.setupGrindingPlayer((WorldServer) this.world);
+		}
 	}
 
 	@Override

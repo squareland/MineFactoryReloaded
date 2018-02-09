@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.tile.transport;
 
 import cofh.core.fluid.FluidTankCore;
-import cofh.core.util.LinkedHashList;
 import cofh.core.util.helpers.FluidHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -14,15 +13,18 @@ import powercrystals.minefactoryreloaded.core.IGrid;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
 public class FluidNetwork implements IGrid {
 
 	public static final int TRANSFER_RATE = 80;
-	public static final int STORAGE = TRANSFER_RATE * 6;
+	public static final int STORAGE_CAPACITY = TRANSFER_RATE * 6;
 	FluidTankCore storage = new FluidTankCore(320);
 
 	private TileEntityPlasticPipe master;
 	private ArrayHashList<TileEntityPlasticPipe> nodeSet = new ArrayHashList<>();
-	private LinkedHashList<TileEntityPlasticPipe> conduitSet = new LinkedHashList<>();
+	private LinkedHashSet<TileEntityPlasticPipe> conduitSet = new LinkedHashSet<>();
 
 	private boolean regenerating = false;
 	private int overflowSelector;
@@ -185,7 +187,7 @@ public class FluidNetwork implements IGrid {
 	}
 
 	public void rebalanceGrid() {
-		storage.setCapacity(getNodeCount() * STORAGE);
+		storage.setCapacity(getNodeCount() * STORAGE_CAPACITY);
 	}
 
 	public void regenerate() {
@@ -235,19 +237,21 @@ public class FluidNetwork implements IGrid {
 		destroyGrid();
 		if (conduitSet.isEmpty())
 			return;
-		TileEntityPlasticPipe main = conduitSet.poke();
-		LinkedHashList<TileEntityPlasticPipe> oldSet = conduitSet;
+		TileEntityPlasticPipe main = conduitSet.iterator().next();
+		LinkedHashSet<TileEntityPlasticPipe> oldSet = conduitSet;
 		nodeSet.clear();
-		conduitSet = new LinkedHashList<>(Math.min(oldSet.size() / 6, 5));
+		conduitSet = new LinkedHashSet<>(Math.min(oldSet.size() / 6, 5));
 		rebalanceGrid();
 
-		LinkedHashList<TileEntityPlasticPipe> toCheck = new LinkedHashList<>();
-		LinkedHashList<TileEntityPlasticPipe> checked = new LinkedHashList<>();
+		LinkedHashSet<TileEntityPlasticPipe> toCheck = new LinkedHashSet<>();
+		LinkedHashSet<TileEntityPlasticPipe> checked = new LinkedHashSet<>();
 		EnumFacing[] dir = EnumFacing.VALUES;
 		toCheck.add(main);
 		checked.add(main);
 		while (!toCheck.isEmpty()) {
-			main = toCheck.shift();
+			Iterator<TileEntityPlasticPipe> it = toCheck.iterator();
+			main = it.next();
+			it.remove();
 			addPipe(main);
 			World world = main.getWorld();
 			for (int i = 6; i --> 0; ) {

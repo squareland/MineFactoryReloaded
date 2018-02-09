@@ -48,7 +48,7 @@ import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded|compatthaumcraft",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatthaumcraft",
 		name = "MFR Compat: Thaumcraft",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:Thaumcraft",

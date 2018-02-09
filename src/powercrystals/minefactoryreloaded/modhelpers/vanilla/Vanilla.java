@@ -26,23 +26,47 @@ import powercrystals.minefactoryreloaded.api.MobDrop;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerLava;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerWater;
 import powercrystals.minefactoryreloaded.farmables.egghandlers.VanillaEggHandler;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.*;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableCocoa;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableCropPlant;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableGrass;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableNetherWart;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStandard;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStemPlants;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.fruits.FruitChorus;
 import powercrystals.minefactoryreloaded.farmables.fruits.FruitCocoa;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableEnderman;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableSlime;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableStandard;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableZombiePigman;
-import powercrystals.minefactoryreloaded.farmables.harvestables.*;
-import powercrystals.minefactoryreloaded.farmables.plantables.*;
-import powercrystals.minefactoryreloaded.farmables.ranchables.*;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableCocoa;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableCropPlant;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableGourd;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableMushroom;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableShrub;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStandard;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStemPlant;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableVine;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableChorus;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCocoa;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCropPlant;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableNetherWart;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
+import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableChicken;
+import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableCow;
+import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableMooshroom;
+import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableSheep;
+import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableSquid;
 import powercrystals.minefactoryreloaded.farmables.spawnhandlers.SpawnableEnderman;
 import powercrystals.minefactoryreloaded.farmables.spawnhandlers.SpawnableHorse;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 import javax.annotation.Nonnull;
 
-@Mod(modid = "minefactoryreloaded|compatvanilla", name = "MFR Compat: Vanilla", version = MineFactoryReloadedCore.version, dependencies = "after:minefactoryreloaded",
+@Mod(modid = "minefactoryreloaded_compatvanilla", name = "MFR Compat: Vanilla", version = MineFactoryReloadedCore.version, dependencies = "after:minefactoryreloaded",
 		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class Vanilla {
 

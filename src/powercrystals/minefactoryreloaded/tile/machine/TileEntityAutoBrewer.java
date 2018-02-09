@@ -87,7 +87,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 
 		boolean hasWorkToDo = false, didWork = false;
 		boolean doingWork = getWorkDone() > 0;
-		if (doingWork & !_inventoryDirty)
+		if (doingWork && !_inventoryDirty)
 			hasWorkToDo = true;
 		else {
 			final int waterCost = MFRConfig.autobrewerFluidCost.getInt();
@@ -96,7 +96,8 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				if (!_inventory.get(31).isEmpty() && _inventory.get(processSlot).isEmpty() && !_inventory.get(templateSlot).isEmpty()) {
 
 					if (row == 0 || _inventory.get(getTemplateSlot(row - 1)).isEmpty()) {
-						@Nonnull ItemStack waterBottle = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
+						@Nonnull ItemStack waterBottle = PotionUtils
+								.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER);
 						if (BrewingRecipeRegistry.hasOutput(waterBottle, _inventory.get(templateSlot)))
 							if (drain(waterCost, false, _tanks[0]) == waterCost) {
 								drain(waterCost, true, _tanks[0]);
@@ -147,7 +148,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			for (int col = 0; col < 3; col++) {
 				final int slot = getResourceSlot(row, col);
 				ItemStack ingredient = _inventory.get(slot);
-				if (spareResources[row] <= 0 && !UtilInventory.stacksEqual(_inventory.get(slot), ingredient)) {
+				if (spareResources[row] <= 0 && !ingredientsEqual(_inventory.get(slot), ingredient)) {
 					continue;
 				}
 

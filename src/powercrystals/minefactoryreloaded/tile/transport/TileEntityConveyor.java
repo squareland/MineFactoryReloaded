@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.tile.transport;
 
 import cofh.api.tileentity.IInventoryConnection;
-import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -26,7 +25,6 @@ import javax.annotation.Nonnull;
 
 import static powercrystals.minefactoryreloaded.block.transport.BlockConveyor.ConveyorDirection.*;
 
-@Strippable("buildcraft.api.transport.IPipeConnection")
 public class TileEntityConveyor extends TileEntityBase
 		implements IRotateableTile, ISidedInventory, /*IPipeConnection,*/ IInventoryConnection
 {
@@ -501,13 +499,13 @@ public class TileEntityConveyor extends TileEntityBase
 			_redNetAllowsActive = value <= 0;
 			updateConveyorActive();
 		}
-		setReversed(_gateReversed | (_rednetReversed = value < 0));
+		setReversed(_gateReversed || (_rednetReversed = value < 0));
 		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public void updateConveyorActive()
 	{
-		setConveyorActive(_gateAllowsActive & _redNetAllowsActive && !CoreUtils.isRedstonePowered(this));
+		setConveyorActive(_gateAllowsActive && _redNetAllowsActive && !CoreUtils.isRedstonePowered(this));
 	}
 
 	public boolean getConveyorActive()
@@ -557,7 +555,7 @@ public class TileEntityConveyor extends TileEntityBase
 	@SuppressWarnings("unused")
 	private void reverseConveyor()
 	{
-		setReversed(_rednetReversed | (_gateReversed = !_isReversed));
+		setReversed(_rednetReversed || (_gateReversed = !_isReversed));
 	}
 
 	@Override

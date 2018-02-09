@@ -5,16 +5,14 @@ import buildcraft.api.transport.IPipeTile.PipeType;
 */
 
 import cofh.core.util.CoreUtils;
-import cofh.core.inventory.IInventoryManager;
-import cofh.core.inventory.InventoryManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiEjector;
@@ -26,8 +24,7 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
 
 public class TileEntityEjector extends TileEntityFactoryTickable {
 
@@ -65,24 +62,17 @@ public class TileEntityEjector extends TileEntityFactoryTickable {
 		}
 		boolean redstoneState = _rednetState != 0 || CoreUtils.isRedstonePowered(this);
 
-		if (redstoneState & !_lastRedstoneState & (!_whitelist | (_whitelist == _hasItems))) {
+		if (redstoneState && !_lastRedstoneState && (!_whitelist || (_whitelist == _hasItems))) {
 			final EnumFacing facing = getDirectionFacing();
-			Map<EnumFacing, IInventory> chests = UtilInventory.
+			List<IItemHandler> chests = UtilInventory.
 					findChests(world, pos, _pullDirections);
 			inv:
-			for (Entry<EnumFacing, IInventory> chest : chests.entrySet()) {
-				if (chest.getKey() == facing) {
-					continue;
-				}
-
-				IInventoryManager inventory = InventoryManager.create(chest.getValue(),
-						chest.getKey().getOpposite());
-				Map<Integer, ItemStack> contents = inventory.getContents();
+			for (IItemHandler chest : chests) {
 
 				set:
-				for (Entry<Integer, ItemStack> stack : contents.entrySet()) {
-					@Nonnull ItemStack itemstack = stack.getValue();
-					if (itemstack.isEmpty() || itemstack.getCount() < 1 || !inventory.canRemoveItem(itemstack, stack.getKey()))
+				for (int slot = 0; slot < chest.getSlots(); slot++) {
+					@Nonnull ItemStack itemstack = chest.getStackInSlot(slot);
+					if (itemstack.isEmpty() || itemstack.getCount() < 1 || chest.extractItem(slot, itemstack.getCount(), true).isEmpty())
 						continue;
 
 					boolean hasMatch = false;
@@ -106,7 +96,7 @@ public class TileEntityEjector extends TileEntityFactoryTickable {
 
 					// remaining == null if dropped successfully.
 					if (remaining.isEmpty() || remaining.getCount() < amt) {
-						inventory.removeItem(amt - (remaining.isEmpty() ? 0 : remaining.getCount()), stackToDrop);
+						chest.extractItem(slot, amt - remaining.getCount(), false);
 						break inv;
 					}
 				}

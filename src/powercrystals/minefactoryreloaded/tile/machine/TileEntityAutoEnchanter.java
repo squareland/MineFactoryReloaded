@@ -253,7 +253,8 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 	public void readFromNBT(NBTTagCompound tag) {
 
 		super.readFromNBT(tag);
-		_targetLevel = tag.getInteger("targetLevel");
+		if (tag.hasKey("targetLevel"))
+			_targetLevel = tag.getInteger("targetLevel");
 	}
 
 	@Override

@@ -214,7 +214,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 			int y = 0;
 
 			for (int var5 = y + leafDistanceLimit; y < var5; ++y) {
-				int size = (y != 0) & y != leafDistanceLimit - 1 ? 3 : 2;
+				int size = (y != 0) && y != leafDistanceLimit - 1 ? 3 : 2;
 				genLeafLayer(x, yO++, z, size);
 			}
 		}
@@ -582,7 +582,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 	public void setBlockAndNotifyAdequately(World world, int x, int y, int z, IBlockState state) {
 
-		if ((y < 0) | y > 255)
+		if ((y < 0) || y > 255)
 			return;
 		//++blocksAdded;
 		long pos = ((x & 0xFFFFFFF0L) << 32) | (z & 0xFFFFFFF0L);
@@ -597,7 +597,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		ExtendedBlockStorage[] storage = chunk.getBlockStorageArray();
 		ExtendedBlockStorage subChunk = storage[y >> 4];
 		if (subChunk == null)
-			storage[y >> 4] = subChunk = new ExtendedBlockStorage(y & ~15, !world.provider.hasNoSky());
+			storage[y >> 4] = subChunk = new ExtendedBlockStorage(y & ~15, !world.provider.isNether());
 
 		x &= 15;
 		z &= 15;
@@ -606,7 +606,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		y &= 15;
 
 		subChunk.set(x, y, z, state);
-		subChunk.setExtBlocklightValue(x, y, z, 0);
+		subChunk.setBlockLight(x, y, z, 0);
 	}
 
 	@Override
