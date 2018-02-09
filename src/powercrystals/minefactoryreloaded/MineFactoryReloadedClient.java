@@ -111,13 +111,14 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 				manager -> new EntityPinkSlimeRenderer(manager, new ModelSlime(16), 0.25F));
 		
 		ModelLoaderRegistry.registerLoader(MFRModelLoader.INSTANCE);
+
+		instance = new MineFactoryReloadedClient();
+
+		MinecraftForge.EVENT_BUS.register(instance);
 	}
 
 	public static void init() {
 
-		instance = new MineFactoryReloadedClient();
-		
-		MinecraftForge.EVENT_BUS.register(instance);
 		gl14 = GLContext.getCapabilities().OpenGL14; //TODO what is this used for? doesn't seem to have anything referring to it
 
 		IReloadableResourceManager manager = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
