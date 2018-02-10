@@ -7,7 +7,12 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -86,9 +91,7 @@ public class ItemXpExtractor extends ItemFactoryTool {
 			return;
 
 		if (target.experienceLevel > 0) {
-			@Nonnull ItemStack bucketStack = UtilInventory.findItem(player, Items.BUCKET);
-			if (!bucketStack.isEmpty()) {
-				UtilInventory.consumeItem(bucketStack, player);
+			if (!UtilInventory.extractItem(player, Items.BUCKET).isEmpty()) {
 				if (!target.capabilities.isCreativeMode) {
 					target.addExperienceLevel(-1);
 					target.attackEntityFrom(damage, 0.25f);

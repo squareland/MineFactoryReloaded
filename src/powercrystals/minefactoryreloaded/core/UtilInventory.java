@@ -13,9 +13,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.EmptyHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -435,36 +435,6 @@ public abstract class UtilInventory {
 		return false;
 	}
 
-	@Nonnull
-	public static ItemStack findItem(EntityPlayer player, Item item) {
-
-		if (stackIsItem(player.getHeldItem(EnumHand.OFF_HAND), item)) {
-			return player.getHeldItem(EnumHand.OFF_HAND);
-		} else if (stackIsItem(player.getHeldItem(EnumHand.MAIN_HAND), item)) {
-			return player.getHeldItem(EnumHand.MAIN_HAND);
-		} else {
-			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
-				@Nonnull ItemStack itemstack = player.inventory.getStackInSlot(i);
-
-				if (stackIsItem(itemstack, item)) {
-					return itemstack;
-				}
-			}
-
-			return ItemStack.EMPTY;
-		}
-	}
-
-	public static int findItemSlot(IItemHandler handler, ItemStack itemStack) {
-
-		for (int slot = 0; slot < handler.getSlots(); slot++) {
-			if (ItemHelper.itemsEqualWithMetadata(handler.getStackInSlot(slot), itemStack)) {
-				return slot;
-			}
-		}
-		return -1;
-	}
-
 	public static IItemHandler getItemHandlerCap(IInventory inventory, EnumFacing facing) {
 
 		if (inventory instanceof ISidedInventory) {
@@ -473,5 +443,46 @@ public abstract class UtilInventory {
 			return new InvWrapper(inventory);
 		}
 		return EmptyHandler.INSTANCE;
+	}
+
+	public static ItemStack extractItem(EntityPlayer player, Item item) {
+		return extractItem(player, new ItemStack(item));
+	}
+
+	public static ItemStack extractItem(EntityPlayer player, ItemStack stack) {
+		return extractItem(player, stack, false);
+	}
+
+	public static ItemStack extractItem(EntityPlayer player, ItemStack stack, boolean simulate) {
+
+		return extractItem(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), stack, simulate);
+	}
+
+	public static ItemStack extractItem(IItemHandler itemHandler, ItemStack stack, boolean simulate) {
+
+		int countToExtract = stack.getCount();
+		int countExtracted = 0;
+
+		for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+			if (areItemStacksEqualIgnoreCount(stack, itemHandler.getStackInSlot(slot))) {
+				countExtracted += itemHandler.extractItem(slot, countToExtract - countExtracted, simulate).getCount();
+
+				if (countToExtract - countExtracted <= 0)
+					break;
+			}
+		}
+		if (countExtracted == 0)
+			return ItemStack.EMPTY;
+
+		ItemStack copy = stack.copy();
+		copy.setCount(countExtracted);
+		return copy;
+	}
+
+	public static boolean areItemStacksEqualIgnoreCount(ItemStack a, ItemStack b) {
+
+		ItemStack copy = a.copy();
+		copy.setCount(b.getCount());
+		return ItemStack.areItemStacksEqual(copy, b);
 	}
 }

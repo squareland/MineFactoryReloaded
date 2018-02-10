@@ -110,13 +110,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 			if (flag) {
 				item.canBePickedUp = 2;
 			} else {
-				@Nonnull ItemStack ammoStack = UtilInventory.findItem(player, ammo[i]);
-				ammoStack.shrink(1);
-
-				if (ammoStack.getCount() == 0)
-				{
-					player.inventory.deleteStack(ammoStack);
-				}
+				UtilInventory.extractItem(player, ammo[i]);
 			}
 			if (!world.isRemote) {
 				world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1F, 0.5F / (itemRand.nextFloat() * 0.4F + 1.2F));

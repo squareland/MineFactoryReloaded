@@ -38,17 +38,13 @@ public class RanchableMooshroom implements IFactoryRanchable {
 
 		IItemHandler handler = UtilInventory.getItemHandlerCap(rancher, EnumFacing.UP);
 
-		int bowlIndex = UtilInventory.findItemSlot(handler, new ItemStack(Items.BOWL));
-		if (bowlIndex >= 0) {
+		if (!UtilInventory.extractItem(handler, new ItemStack(Items.BOWL), false).isEmpty()) {
 			drops.add(new RanchedItem(Items.MUSHROOM_STEW));
-			rancher.decrStackSize(bowlIndex, 1);
 		}
 
-		int bucketIndex = UtilInventory.findItemSlot(handler, new ItemStack(Items.BUCKET));
-		if (bucketIndex >= 0) {
+		if (!UtilInventory.extractItem(handler, new ItemStack(Items.BUCKET), false).isEmpty()) {
 			drops.add(new RanchedItem(Items.MILK_BUCKET));
-			rancher.decrStackSize(bucketIndex, 1);
-		} else if (bowlIndex < 0) {
+		} else {
 			FluidStack soup = FluidRegistry.getFluidStack("mushroom_soup", 1000);
 			drops.add(new RanchedItem(soup));
 		}
