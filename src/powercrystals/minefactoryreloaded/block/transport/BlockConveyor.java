@@ -181,14 +181,11 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 				return;
 		}
 
-		if(entity instanceof EntityLivingBase)
-			l:{
-				@Nonnull ItemStack item = ((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.FEET);
-				if(item.isEmpty())
-					break l;
-				if(item.getItem() instanceof ItemPlasticBoots)
-					return;
-			}
+		if(entity instanceof EntityLivingBase) {
+			@Nonnull ItemStack item = ((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.FEET);
+			if(item.getItem() instanceof ItemPlasticBoots)
+				return;
+		}
 
 		ConveyorDirection direction = state.getValue(DIRECTION);
 		if(entity.getEntityData().getLong("mfr:conveyor") == world.getTotalWorldTime() + direction.getYOffset()) {
@@ -222,13 +219,13 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 			yVelocity = 0.152D * mult;
 			double yO;
 			if(xVelocity != 0) {
-				yO = Math.abs(entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) / 2;
-				yO = MathHelper.clamp(Math.abs(entity.posX - pos.getX() + (direction.getFacing() == EnumFacing.WEST ? 1 : 0))
-						+ Math.abs(xVelocity) + yO, 0, 1);
+				double bbX = direction.getFacing() == EnumFacing.WEST ? entity.getEntityBoundingBox().minX : entity.getEntityBoundingBox().maxX;
+				int posX = pos.getX() + (direction.getFacing() == EnumFacing.WEST ? 1 : 0);
+				yO = MathHelper.clamp(Math.abs(bbX - posX + xVelocity), 0, 1);
 			} else {
-				yO = Math.abs(entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) / 2;
-				yO = MathHelper.clamp(Math.abs(entity.posZ - (pos.getZ() + (direction.getFacing() == EnumFacing.NORTH ? 1 : 0)))
-						+ Math.abs(zVelocity) + yO, 0, 1);
+				double bbZ = direction.getFacing() == EnumFacing.NORTH ? entity.getEntityBoundingBox().minZ : entity.getEntityBoundingBox().maxZ;
+				int posZ = pos.getZ() + (direction.getFacing() == EnumFacing.NORTH ? 1 : 0);
+				yO = MathHelper.clamp(Math.abs(bbZ - posZ + zVelocity), 0, 1);
 			}
 			setYPos(entity, pos.getY() + yO + .1);
 		} else if((entity.posY - pos.getY() < 0.1) && entity.posY - pos.getY() > -0.1) {
@@ -270,7 +267,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 						break;
 				}
 			if(!BlockHelper.getAdjacentBlock(world, pos, direction.getFacing()).getBlock().equals(this)) {
-				if(direction.isUphill() | direction.isDownhill()) {
+				if(direction.isUphill() || direction.isDownhill()) {
 					double d = .25;
 					if(!BlockHelper.getAdjacentBlock(world, pos.add(0, direction.getYOffset(), 0), direction.getFacing()).equals(this)) {
 						d = 1;
@@ -335,7 +332,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 	public static boolean isZero(double x) {
 
-		return -.025 <= x & x <= .025;
+		return -.025 <= x && x <= .025;
 	}
 
 	@Override
@@ -359,6 +356,12 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 	@Override
 	public boolean isNormalCube(IBlockState state) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 
 		return false;
 	}
@@ -688,6 +691,4 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 			return name;
 		}
 	}
-
-
 }
