@@ -1,10 +1,8 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import cofh.core.gui.slot.SlotRemoveOnly;
-
 import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
-
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoEnchanter;
@@ -23,7 +21,7 @@ public class ContainerAutoEnchanter extends ContainerFactoryPowered {
 	@Override
 	protected void addSlots() {
 
-		IItemHandler handler = InventoryHelper.getItemHandlerCap(_enchanter, null);
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_te, null);
 		addSlotToContainer(new SlotItemHandler(handler, 0, 8, 24));
 		addSlotToContainer(new SlotRemoveOnly(_te, 1, 8, 54));
 	}

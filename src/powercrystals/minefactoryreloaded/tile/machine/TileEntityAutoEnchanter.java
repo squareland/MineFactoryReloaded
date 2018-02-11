@@ -128,7 +128,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 		if ((input.getItem().getItemEnchantability(input) == 0 &&
 				!input.getItem().equals(Items.GLASS_BOTTLE)) ||
 				input.getItem().equals(Items.ENCHANTED_BOOK)) {
-			if (output == null) {
+			if (output.isEmpty()) {
 				_inventory.set(0, ItemStack.EMPTY);
 				setInventorySlotContents(1, input);
 			}
@@ -154,7 +154,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 		}
 		else if (getWorkDone() >= getWorkMax()) {
 			if (input.getItem().equals(Items.GLASS_BOTTLE)) {
-				if (output == null) {
+				if (output.isEmpty()) {
 					output = new ItemStack(Items.EXPERIENCE_BOTTLE, 0, 0);
 				}
 				if (!output.getItem().equals(Items.EXPERIENCE_BOTTLE)) {
@@ -169,7 +169,7 @@ public class TileEntityAutoEnchanter extends TileEntityFactoryPowered {
 				setInventorySlotContents(1, output);
 				setWorkDone(0);
 			}
-			else if (output == null) {
+			else if (output.isEmpty()) {
 				output = AutoEnchantmentHelper.addRandomEnchantment(this._rand, input, _targetLevel);
 				if (input.getCount() <= 0) {
 					_inventory.set(0, ItemStack.EMPTY);

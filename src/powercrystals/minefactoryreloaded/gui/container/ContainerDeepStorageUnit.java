@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.core.gui.slot.SlotHidden;
 import cofh.core.gui.slot.SlotLocked;
 import cofh.core.gui.slot.SlotRemoveOnly;
 import cofh.core.util.helpers.InventoryHelper;
@@ -31,7 +30,7 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 	@Override
 	protected void addSlots() {
 
-		IItemHandler handler = InventoryHelper.getItemHandlerCap(_dsu, null);
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_te, null);
 		addSlotToContainer(new SlotItemHandler(handler, 0, 134, 16));
 		addSlotToContainer(new SlotItemHandler(handler, 1, 152, 16));
 		addSlotToContainer(new SlotRemoveOnly(_te, 2, 152, 49));

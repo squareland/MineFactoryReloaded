@@ -21,7 +21,7 @@ public class ContainerAutoDisenchanter extends ContainerFactoryPowered {
 	@Override
 	protected void addSlots() {
 
-		IItemHandler handler = InventoryHelper.getItemHandlerCap(_disenchanter, null);
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_te, null);
 		addSlotToContainer(new SlotItemHandler(handler, 0, 8, 18));
 		addSlotToContainer(new SlotItemHandler(handler, 1, 26, 18));
 
