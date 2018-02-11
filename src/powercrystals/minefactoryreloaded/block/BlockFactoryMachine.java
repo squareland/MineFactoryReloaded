@@ -7,6 +7,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +43,6 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrillPrecharger;
 
@@ -56,7 +56,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool ACTIVE = PropertyBool.create("active");
 	public static final PropertyBool CB = PropertyBool.create("cb");
-	
+
 	private int _mfrMachineBlockIndex;
 
 	public BlockFactoryMachine(int index) {
@@ -76,38 +76,38 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		
+
 		return new BlockStateContainer(this, TYPE, FACING, ACTIVE, CB);
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		
+
 		return getDefaultState().withProperty(TYPE, Type.byMetadata(_mfrMachineBlockIndex, meta));
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		
+
 		return state.getValue(TYPE).getMeta();
 	}
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-		
+
 		if (world.getTileEntity(pos) instanceof TileEntityFactory) {
 			TileEntityFactory te = (TileEntityFactory) world.getTileEntity(pos);
 
 			state = state.withProperty(FACING, EnumFacing.getHorizontal(te.getDirectionFacing().getHorizontalIndex()))
 					.withProperty(CB, CoreProps.enableColorBlindTextures);
 
-			if (te instanceof TileEntityFactoryTickable) {
-				state = state.withProperty(ACTIVE, ((TileEntityFactoryTickable) te).isActive());
+			if (te instanceof TileEntityFactoryInventory) {
+				state = state.withProperty(ACTIVE, ((TileEntityFactoryInventory) te).isActive());
 			}
 
 			return state;
 		}
-		
+
 		return state;
 	}
 
@@ -129,7 +129,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 			if (te instanceof TileEntityFactoryInventory)
 				factoryInv = (TileEntityFactoryInventory) te;
 
-			for (int i = inventory.getSizeInventory(); i-- > 0;) {
+			for (int i = inventory.getSizeInventory(); i-- > 0; ) {
 				if (factoryInv != null)
 					if (!factoryInv.shouldDropSlotWhenBroken(i))
 						continue;
@@ -185,10 +185,11 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	}
 
 	@Override
-	public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnBlock) {
+	public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player,
+			boolean returnBlock) {
 
 		ArrayList<ItemStack> list = new ArrayList<>(1);
-		@Nonnull ItemStack machine = new ItemStack(getItemDropped(state, world.rand, 0),	1, damageDropped(state));
+		@Nonnull ItemStack machine = new ItemStack(getItemDropped(state, world.rand, 0), 1, damageDropped(state));
 		list.add(machine);
 		TileEntity te = getTile(world, pos);
 		if (te instanceof TileEntityBase) {
@@ -249,12 +250,13 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
+
 		return true;
 	}
 
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
-		
+
 		return Machine.getMachineFromIndex(_mfrMachineBlockIndex, state.getValue(TYPE).getMeta()).getNewTileEntity();
 	}
 
@@ -274,7 +276,8 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer entityplayer, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
+	public boolean activated(World world, BlockPos pos, EntityPlayer entityplayer, EnumFacing side, EnumHand hand,
+			@Nonnull ItemStack heldItem) {
 
 		if (super.activated(world, pos, entityplayer, side, hand, heldItem))
 			return true;
@@ -284,12 +287,13 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		}
 
 		if (te instanceof TileEntityFactoryInventory) {
-			if (((TileEntityFactoryInventory)te).acceptUpgrade(heldItem)) {
+			if (((TileEntityFactoryInventory) te).acceptUpgrade(heldItem)) {
 				if (entityplayer.capabilities.isCreativeMode) {
 					heldItem.grow(1);
 				}
 				if (heldItem.getCount() <= 0) {
-					EntityEquipmentSlot slot = hand == EnumHand.OFF_HAND ? EntityEquipmentSlot.OFFHAND : EntityEquipmentSlot.MAINHAND;
+					EntityEquipmentSlot slot =
+							hand == EnumHand.OFF_HAND ? EntityEquipmentSlot.OFFHAND : EntityEquipmentSlot.MAINHAND;
 					entityplayer.setItemStackToSlot(slot, ItemStack.EMPTY);
 				}
 				return true;
@@ -370,7 +374,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactoryMachine(this));
 		//TODO look into replacing the meta in here with state or at least enum
-		for(Type type : Type.GROUP_TYPES[_mfrMachineBlockIndex]) {
+		for (Type type : Type.GROUP_TYPES[_mfrMachineBlockIndex]) {
 			Machine machine = Machine.getMachineFromIndex(_mfrMachineBlockIndex, type.getMeta());
 			GameRegistry.registerTileEntity(machine.getTileEntityClass(), machine.getTileEntityName());
 		}
@@ -384,12 +388,21 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		ModelLoader.setCustomStateMapper(this, MachineStateMapper.getInstance());
 
 		Item item = Item.getItemFromBlock(this);
-		
+
 		for (Type type : Type.GROUP_TYPES[_mfrMachineBlockIndex]) {
-			ModelHelper.registerModel(item, type.getMeta(), MachineStateMapper.getModelName(type), "type=" + type.getName());
+			if (type == Type.ITEM_COLLECTOR) {
+				ModelResourceLocation regular = new ModelResourceLocation(
+						MineFactoryReloadedCore.modId + ":" + MachineStateMapper.getModelName(type), "type=" + type.getName());
+				ModelResourceLocation tinker = new ModelResourceLocation(regular.toString() + ",active=true");
+				ModelLoader.registerItemVariants(item, regular, tinker);
+				ModelLoader.setCustomMeshDefinition(item,
+						stack -> stack.hasTagCompound() && stack.getTagCompound().getBoolean("hasTinkerStuff") ? tinker : regular);
+			} else {
+				ModelHelper.registerModel(item, type.getMeta(), MachineStateMapper.getModelName(type), "type=" + type.getName());
+			}
 		}
-		
-		if(_mfrMachineBlockIndex == 2) {
+
+		if (_mfrMachineBlockIndex == 2) {
 			//slightly hacky but probably best way to handle just two TESRs needed to get registered
 			ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserDrill.class, new LaserDrillRenderer());
 			ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserDrillPrecharger.class,
@@ -445,12 +458,12 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		CHUNK_LOADER(2, 10, "chunk_loader"),
 		FOUNTAIN(2, 11, "fountain"),
 		MOB_ROUTER(2, 12, "mob_router");
-		
+
 		private final int groupIndex;
 		private final int meta;
 		private final String name;
-		
-		public static List<Type>[] GROUP_TYPES = new List[3]; 
+
+		public static List<Type>[] GROUP_TYPES = new List[3];
 
 		Type(int groupIndex, int meta, String name) {
 
@@ -460,29 +473,32 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		}
 
 		public int getGroupIndex() {
+
 			return groupIndex;
 		}
 
 		public int getMeta() {
+
 			return meta;
 		}
 
 		@Override
 		public String getName() {
+
 			return name;
 		}
-		
+
 		public static Type byMetadata(int groupIndex, int meta) {
-			
+
 			int index = groupIndex * 16 + meta;
 			return index >= values().length ? PLANTER : values()[index];
 		}
-		
+
 		static {
-			for(int i=0; i<3; i++)
+			for (int i = 0; i < 3; i++)
 				GROUP_TYPES[i] = new ArrayList<>();
 
-			for(Type type : Type.values()) {
+			for (Type type : Type.values()) {
 				GROUP_TYPES[type.getGroupIndex()].add(type);
 			}
 		}
