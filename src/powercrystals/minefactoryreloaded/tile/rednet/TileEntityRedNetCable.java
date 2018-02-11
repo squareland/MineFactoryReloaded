@@ -23,7 +23,11 @@ import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorati
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetNoConnection;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable;
-import powercrystals.minefactoryreloaded.core.*;
+import powercrystals.minefactoryreloaded.core.IGridController;
+import powercrystals.minefactoryreloaded.core.INode;
+import powercrystals.minefactoryreloaded.core.ITraceable;
+import powercrystals.minefactoryreloaded.core.MFRDyeColor;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.tool.ItemRedNetMeter;
 import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
@@ -133,6 +137,8 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		for (EnumFacing d : EnumFacing.VALUES)
 			_network.removeNode(new RedstoneNode(pos.offset(d), d), true);
 		_network.removeConduit(this);
+		if (!_network.isRegenerating())
+			_network.updatePowerLevels(); //need to update network power levels in case this node was providing power
 		_network = null;
 	}
 
