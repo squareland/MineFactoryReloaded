@@ -547,7 +547,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), variant.getMetadata(), location);
 		}
 
-		ModelRegistryHelper.register(RedNetCableRenderer.MODEL_LOCATION, new CCBakeryModel(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.cable.redstone") {
+		ModelRegistryHelper.register(RedNetCableRenderer.MODEL_LOCATION, new CCBakeryModel() {
 			@Override
 			public TextureAtlasSprite getParticleTexture() {
 				return RedNetCableRenderer.sprite;

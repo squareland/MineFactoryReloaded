@@ -241,7 +241,7 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 				return FactoryGlassPaneRenderer.MODEL_LOCATION;
 			}
 		});
-		ModelRegistryHelper.register(FactoryGlassPaneRenderer.MODEL_LOCATION, new CCBakeryModel(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.stainedglass") {
+		ModelRegistryHelper.register(FactoryGlassPaneRenderer.MODEL_LOCATION, new CCBakeryModel() {
 			@Override public TextureAtlasSprite getParticleTexture() {
 				return FactoryGlassRenderer.spriteSheet.getSprite(FactoryGlassRenderer.FULL_FRAME);
 			}
