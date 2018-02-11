@@ -32,7 +32,7 @@ public class ContainerAutoAnvil extends ContainerFactoryPowered {
 		addSlotToContainer(new SlotItemHandler(handler, 0, 8, 24));
 		addSlotToContainer(new SlotItemHandler(handler, 1, 26, 24));
 		addSlotToContainer(new SlotRemoveOnly(_te, 2, 8, 48));
-		addSlotToContainer(new SlotLocked(_te, 2, 45, 24) {
+		addSlotToContainer(new SlotLocked(_te, 3, 45, 24) {
 
 			@Nonnull
 			@Override
