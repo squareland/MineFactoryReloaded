@@ -7,6 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
@@ -250,11 +251,11 @@ public class MFRFluids {
 		MFRRegistry.registerBlock(mushroomSoupLiquid, new ItemBlock(mushroomSoupLiquid));
 		MFRRegistry.registerBlock(steamFluid, new ItemBlock(steamFluid));
 
-/*
+
 		if (MFRConfig.vanillaOverrideMilkBucket.getBoolean(true)) {
-			RegistryUtils.overwriteEntry(Item.REGISTRY, "minecraft:milk_bucket", new ItemMFRBucketMilk(Items.MILK_BUCKET));
+			//needs to be the vanilla milk bucket registry name to properly replace vanilla one
+			MFRRegistry.registerItem(new ItemBucket(milkLiquid).setUnlocalizedName("mfr.bucket.milk").setRegistryName("minecraft:milk_bucket"));
 		}
-*/
 	}
 
 	public static Fluid registerFluid(FluidData data, int density, EnumRarity rarity) {
