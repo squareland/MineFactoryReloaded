@@ -39,7 +39,7 @@ public class BlockRailCargoPickup extends BlockFactoryRail {
 					continue;
 				}
 
-				@Nonnull ItemStack remaining = InventoryHelper.insertStackIntoInventory(cartInventory, slotStack, false);
+				@Nonnull ItemStack remaining = InventoryHelper.insertStackIntoInventory(cartInventory, slotStack.copy(), false);
 
 				chest.extractItem(slot, slotStack.getCount() - remaining.getCount(), false);
 			}
