@@ -33,7 +33,7 @@ public class EnderIO extends Vanilla {
 
 	private String redstone = "dustRedstone";
 
-	/* Items *//*
+	// Items
 	private ItemStack capacitorBasic;
 	private ItemStack capacitorDouble;
 	private ItemStack capacitorOctadic;
@@ -50,7 +50,7 @@ public class EnderIO extends Vanilla {
 	private ItemStack soulVial;
 	private ItemStack fireWaterBucket;
 
-	/* Blocks *//*
+	// Blocks
 	private ItemStack light;
 	private ItemStack reservoir;
 	private ItemStack dimTrans;
@@ -61,7 +61,7 @@ public class EnderIO extends Vanilla {
 	private ItemStack capBank;
 	private ItemStack reinforcedObsidian;
 
-	/* Machines *//*
+	// Machines
 	private ItemStack crafter;
 	private ItemStack combustionGen;
 
@@ -73,7 +73,7 @@ public class EnderIO extends Vanilla {
 			throw new MissingModsException(Collections.singleton((ArtifactVersion) new DefaultArtifactVersion(EIO)), MineFactoryReloadedCore.modId, MineFactoryReloadedCore.modName);
 		}
 
-		/* Items *//*
+		// Items
 		capacitorBasic = stackFor("itemBasicCapacitor");
 		capacitorDouble = stackFor("itemBasicCapacitor", 1);
 		capacitorOctadic = stackFor("itemBasicCapacitor", 2);
@@ -90,7 +90,7 @@ public class EnderIO extends Vanilla {
 		soulVial = stackFor("itemSoulVessel");
 		fireWaterBucket = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, FluidRegistry.getFluid("rocket_fuel"));
 
-		/* Blocks *//*
+		// Blocks
 		light = stackForBlock("blockElectricLight", 2);
 		reservoir = stackForBlock("blockReservoir");
 		dimTrans = stackForBlock("blockTransceiver");
@@ -102,7 +102,7 @@ public class EnderIO extends Vanilla {
 		capBank = stackForBlock("blockCapBank", 2);
 		reinforcedObsidian = stackForBlock("blockReinforcedObsidian");
 
-		/* Machines *//*
+		// Machines
 		crafter = stackForBlock("blockCrafter");
 		combustionGen = stackForBlock("blockCombustionGenerator");
 	}
