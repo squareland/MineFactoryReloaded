@@ -1,12 +1,9 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
-import cofh.api.block.IBlockConfigGui;
 import cofh.api.block.IBlockInfo;
+import cofh.api.block.IConfigGui;
 import cofh.api.tileentity.ITileInfo;
-import cofh.lib.util.helpers.ServerHelper;
-
-import java.util.ArrayList;
-
+import cofh.core.util.helpers.ServerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.state.IBlockState;
@@ -17,20 +14,22 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInfo;
 import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
 
 public class ItemRedNetMeter extends ItemMulti {
 
@@ -46,26 +45,27 @@ public class ItemRedNetMeter extends ItemMulti {
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+	public boolean itemInteractionForEntity(@Nonnull ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
 		if (stack.getItemDamage() != 2)
 			return false;
 		player.swingArm(hand);
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			return true;
-		player.addChatMessage(new TextComponentString("ID: " + EntityList.getEntityString(entity)));
+		player.sendMessage(new TextComponentString("ID: " + EntityList.getKey(entity).toString()));
 		return true;
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
-			BlockPos pos, EnumFacing hitSide, float hitX, float hitY, float hitZ, EnumHand hand) {
-		boolean r = doItemThing(stack, player, world, pos, hitSide, hitX, hitY, hitZ);
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing hitSide,
+			float hitX, float hitY, float hitZ, EnumHand hand) {
+
+		boolean r = doItemThing(player.getHeldItem(hand), player, world, pos, hitSide, hitX, hitY, hitZ);
 		if (r) // HACK: forge is fucking stupid with this method
 			ServerHelper.sendItemUsePacket(world, pos, hitSide, hand, hitX, hitY, hitZ);
 		return r ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
 
-	public boolean doItemThing(ItemStack stack, EntityPlayer player, World world,
+	public boolean doItemThing(@Nonnull ItemStack stack, EntityPlayer player, World world,
 			BlockPos pos, EnumFacing hitSide, float hitX, float hitY, float hitZ) {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
@@ -80,7 +80,7 @@ public class ItemRedNetMeter extends ItemMulti {
 				}
 				((IBlockInfo) (block)).getBlockInfo(info, world, pos, hitSide, player, true);
 				for (int i = 0; i < info.size(); i++) {
-					player.addChatMessage(info.get(i));
+					player.sendMessage(info.get(i));
 				}
 				return true;
 			} else {
@@ -89,7 +89,7 @@ public class ItemRedNetMeter extends ItemMulti {
 					if (ServerHelper.isServerWorld(world)) {
 						((ITileInfo) theTile).getTileInfo(info, hitSide, player, player.isSneaking());
 						for (int i = 0; i < info.size(); i++) {
-							player.addChatMessage(info.get(i));
+							player.sendMessage(info.get(i));
 						}
 					}
 					return true;
@@ -98,20 +98,20 @@ public class ItemRedNetMeter extends ItemMulti {
 			return false;
 		case 1:
 			if (ServerHelper.isClientWorld(world)) {
-				if (block instanceof IBlockConfigGui || block instanceof IBlockInfo)
+				if (block instanceof IConfigGui || block instanceof IBlockInfo)
 					return true;
 				TileEntity theTile = world.getTileEntity(pos);
 				return theTile instanceof ITileInfo;
 			}
 			info = new ArrayList<>();
-			if (player.isSneaking() && block instanceof IBlockConfigGui) {
-				if (((IBlockConfigGui)block).openConfigGui(world, pos, hitSide, player))
+			if (player.isSneaking() && block instanceof IConfigGui) {
+				if (((IConfigGui)block).openConfigGui(world, pos, hitSide, player))
 					return true;
 			}
 			if (block instanceof IBlockInfo) {
 				((IBlockInfo) (block)).getBlockInfo(info, world, pos, hitSide, player, false);
 				for (int i = 0; i < info.size(); i++) {
-					player.addChatMessage(info.get(i));
+					player.sendMessage(info.get(i));
 				}
 				return true;
 			} else {
@@ -120,7 +120,7 @@ public class ItemRedNetMeter extends ItemMulti {
 					if (ServerHelper.isServerWorld(world)) {
 						((ITileInfo) theTile).getTileInfo(info, hitSide, player, false);
 						for (int i = 0; i < info.size(); i++) {
-							player.addChatMessage(info.get(i));
+							player.sendMessage(info.get(i));
 						}
 					}
 					return true;
@@ -133,13 +133,13 @@ public class ItemRedNetMeter extends ItemMulti {
 			}
 			info = new ArrayList<>();
 			if (block.equals(Blocks.REDSTONE_WIRE)) {
-				player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.meter.dustprefix")
+				player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.meter.dustprefix")
 						.appendText(": " + state.getValue(BlockRedstoneWire.POWER)));
 			}
 			else if (block instanceof IRedNetInfo) {
 				((IRedNetInfo) (block)).getRedNetInfo(world, pos, hitSide, player, info);
 				for (int i = 0; i < info.size(); i++) {
-					player.addChatMessage(info.get(i));
+					player.sendMessage(info.get(i));
 				}
 				return true;
 			}

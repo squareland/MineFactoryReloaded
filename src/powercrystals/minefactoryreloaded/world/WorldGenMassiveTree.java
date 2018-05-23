@@ -2,25 +2,23 @@ package powercrystals.minefactoryreloaded.world;
 
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.map.hash.TLongObjectHashMap;
-
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.util.EnumFacing;
-
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.BlockRubberWood;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import java.util.Random;
 
 public class WorldGenMassiveTree extends WorldGenerator {
 
@@ -34,7 +32,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 	private Random rand = new Random();
 
 	/** Running variables */
-	private World worldObj;
+	private World world;
 	private int[] basePos = new int[] { 0, 0, 0 };
 	private int heightLimit = 0;
 	private int minHeight = -1;
@@ -80,7 +78,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 	private void setup() {
 
-		leafBases = MathHelper.ceiling_float_int(heightLimit * heightAttenuation);
+		leafBases = MathHelper.ceil(heightLimit * heightAttenuation);
 		density = Math.max(1, (int) (1.382D + Math.pow(branchDensity * heightLimit / 13.0D, 2.0D)));
 		chunkMap = new TLongObjectHashMap<Chunk>((int) (scaleWidth * heightLimit));
 	}
@@ -134,8 +132,8 @@ public class WorldGenMassiveTree extends WorldGenerator {
 				for (float var9 = 0.5f; var7 < var1; ++var7) {
 					float var11 = scaleWidth * var8 * (rand.nextFloat() + 0.328f);
 					float var13 = rand.nextFloat() * 2.0f * PI;
-					int var15 = MathHelper.floor_double(var11 * Math.sin(var13) + basePos[0] + var9);
-					int var16 = MathHelper.floor_double(var11 * Math.cos(var13) + basePos[2] + var9);
+					int var15 = MathHelper.floor(var11 * Math.sin(var13) + basePos[0] + var9);
+					int var16 = MathHelper.floor(var11 * Math.cos(var13) + basePos[2] + var9);
 					int[] var17 = new int[] { var15, var3, var16 };
 					int[] var18 = new int[] { var15, var3 + leafDistanceLimit, var16 };
 
@@ -184,14 +182,14 @@ public class WorldGenMassiveTree extends WorldGenerator {
 					do {
 						z = Z + zMod * t;
 						BlockPos placementPos = placement.setPos(x, y, z);
-						IBlockState state = worldObj.getBlockState(placementPos);
+						IBlockState state = world.getBlockState(placementPos);
 						Block block = state.getBlock();
 
-						if (safeGrowth ? (block.isAir(state, worldObj, placementPos) ||
-								block.isLeaves(state, worldObj, placementPos) ||
-								block.canBeReplacedByLeaves(state, worldObj, placementPos)) :
+						if (safeGrowth ? (block.isAir(state, world, placementPos) ||
+								block.isLeaves(state, world, placementPos) ||
+								block.canBeReplacedByLeaves(state, world, placementPos)) :
 								block != Blocks.BEDROCK) {
-							this.setBlockAndNotifyAdequately(worldObj, x, y, z, leaves.getDefaultState());
+							this.setBlockAndNotifyAdequately(world, x, y, z, leaves.getDefaultState());
 						}
 
 						if (t == 1) break;
@@ -216,7 +214,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 			int y = 0;
 
 			for (int var5 = y + leafDistanceLimit; y < var5; ++y) {
-				int size = (y != 0) & y != leafDistanceLimit - 1 ? 3 : 2;
+				int size = (y != 0) && y != leafDistanceLimit - 1 ? 3 : 2;
 				genLeafLayer(x, yO++, z, size);
 			}
 		}
@@ -255,9 +253,9 @@ public class WorldGenMassiveTree extends WorldGenerator {
 			int[] var14 = var4;
 
 			for (int var15 = 0; var15 != var16; var15 += var9) {
-				var14[var6] = MathHelper.floor_float(par1[var6] + var15 + 0.5F);
-				var14[var7] = MathHelper.floor_float(par1[var7] + var15 * var10 + 0.5F);
-				var14[var8] = MathHelper.floor_float(par1[var8] + var15 * var12 + 0.5F);
+				var14[var6] = MathHelper.floor(par1[var6] + var15 + 0.5F);
+				var14[var7] = MathHelper.floor(par1[var7] + var15 * var10 + 0.5F);
+				var14[var8] = MathHelper.floor(par1[var8] + var15 * var12 + 0.5F);
 				BlockLog.EnumAxis axis = BlockLog.EnumAxis.Y;
 				int var18 = var14[0] - par1[0];
 				var18 = ((t = var18 >> 31) ^ var18) - t;
@@ -271,7 +269,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 					}
 				}
 
-				this.setBlockAndNotifyAdequately(worldObj, var14[0], var14[1], var14[2], state.withProperty(BlockRubberWood.LOG_AXIS, axis));
+				this.setBlockAndNotifyAdequately(world, var14[0], var14[1], var14[2], state.withProperty(BlockRubberWood.LOG_AXIS, axis));
 			}
 		}
 	}
@@ -305,11 +303,11 @@ public class WorldGenMassiveTree extends WorldGenerator {
 						topPoint[1] = y + sinc2(lim * i, lim * j, height) - (rand.nextInt(3) - 1);
 
 					this.placeBlockLine(bottomPoint, topPoint, log.getDefaultState());
-					this.setBlockAndNotifyAdequately(worldObj, topPoint[0], topPoint[1], topPoint[2],
+					this.setBlockAndNotifyAdequately(world, topPoint[0], topPoint[1], topPoint[2],
 							log.getDefaultState().withProperty(BlockRubberWood.LOG_AXIS, BlockLog.EnumAxis.NONE));
 					BlockPos placementPos = placement.setPos(bottomPoint[0], bottomPoint[1] - 1, bottomPoint[2]);
-					IBlockState state = worldObj.getBlockState(placementPos);
-					state.getBlock().onPlantGrow(state, worldObj, placementPos, base);
+					IBlockState state = world.getBlockState(placementPos);
+					state.getBlock().onPlantGrow(state, world, placementPos, base);
 				}
 			}
 		}
@@ -386,17 +384,17 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 			for (; var14 != var15; var14 += var8) {
 				var13[var5] = par1[var5] + var14;
-				var13[var6] = MathHelper.floor_float(par1[var6] + var14 * var9);
-				var13[var7] = MathHelper.floor_float(par1[var7] + var14 * var11);
+				var13[var6] = MathHelper.floor(par1[var6] + var14 * var9);
+				var13[var7] = MathHelper.floor(par1[var7] + var14 * var11);
 				BlockPos pos = placement.setPos(var13[0], var13[1], var13[2]);
-				IBlockState state = worldObj.getBlockState(pos);
+				IBlockState state = world.getBlockState(pos);
 				Block block = state.getBlock();
 
-				if (safeGrowth ? !(block.isAir(state, worldObj, pos) ||
-						block.isReplaceable(worldObj, pos) ||
-						block.canBeReplacedByLeaves(state, worldObj, pos) ||
-						block.isLeaves(state, worldObj, pos) ||
-						block.isWood(worldObj, pos) ||
+				if (safeGrowth ? !(block.isAir(state, world, pos) ||
+						block.isReplaceable(world, pos) ||
+						block.canBeReplacedByLeaves(state, world, pos) ||
+						block.isLeaves(state, world, pos) ||
+						block.isWood(world, pos) ||
 						block instanceof BlockSapling) :
 						block == Blocks.BEDROCK)
 					break;
@@ -418,10 +416,10 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		heightLimit = newHeight;
 
 		BlockPos pos = placement.setPos(basePos[0], basePos[1] - 1, basePos[2]);
-		IBlockState state = worldObj.getBlockState(pos);
+		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 
-		if (!block.canSustainPlant(state, worldObj, pos, EnumFacing.UP, MFRThings.rubberSaplingBlock))
+		if (!block.canSustainPlant(state, world, pos, EnumFacing.UP, MFRThings.rubberSaplingBlock))
 			return false;
 		else {
 			int[] var5 = new int[] { basePos[0], basePos[1], basePos[2] };
@@ -535,7 +533,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 	public boolean generate(World world, Random par2Random, BlockPos pos) {
 
 		//long time = System.nanoTime();
-		worldObj = world;
+		this.world = world;
 		long var6 = par2Random.nextLong();
 		rand.setSeed(var6);
 		basePos[0] = pos.getX();
@@ -584,7 +582,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 	public void setBlockAndNotifyAdequately(World world, int x, int y, int z, IBlockState state) {
 
-		if ((y < 0) | y > 255)
+		if ((y < 0) || y > 255)
 			return;
 		//++blocksAdded;
 		long pos = ((x & 0xFFFFFFF0L) << 32) | (z & 0xFFFFFFF0L);
@@ -599,7 +597,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		ExtendedBlockStorage[] storage = chunk.getBlockStorageArray();
 		ExtendedBlockStorage subChunk = storage[y >> 4];
 		if (subChunk == null)
-			storage[y >> 4] = subChunk = new ExtendedBlockStorage(y & ~15, !world.provider.getHasNoSky());
+			storage[y >> 4] = subChunk = new ExtendedBlockStorage(y & ~15, !world.provider.isNether());
 
 		x &= 15;
 		z &= 15;
@@ -608,7 +606,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 		y &= 15;
 
 		subChunk.set(x, y, z, state);
-		subChunk.setExtBlocklightValue(x, y, z, 0);
+		subChunk.setBlockLight(x, y, z, 0);
 	}
 
 	@Override

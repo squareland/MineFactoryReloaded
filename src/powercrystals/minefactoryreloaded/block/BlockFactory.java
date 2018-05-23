@@ -3,10 +3,10 @@ package powercrystals.minefactoryreloaded.block;
 import codechicken.lib.raytracer.IndexedCuboid6;
 import codechicken.lib.raytracer.RayTracer;
 import cofh.api.block.IDismantleable;
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
 import cofh.core.render.hitbox.ICustomHitBox;
 import cofh.core.render.hitbox.RenderHitbox;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -31,22 +31,31 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetConnection;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
-import powercrystals.minefactoryreloaded.core.*;
+import powercrystals.minefactoryreloaded.core.IEntityCollidable;
+import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.ITankContainerBucketable;
+import powercrystals.minefactoryreloaded.core.ITraceable;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
+import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -99,7 +108,8 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack) {
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nonnull
+			ItemStack stack) {
 	}
 
 	@Override
@@ -123,7 +133,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack)
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, @Nonnull ItemStack stack)
 	{
 		TileEntity te = getTile(world, pos);
 
@@ -134,9 +144,10 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public final boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float xOffset, float yOffset, float zOffset)
+	public final boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float xOffset, float yOffset, float zOffset)
 	{
-		PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, heldItem, pos, side, new Vec3d(xOffset, yOffset, zOffset));
+		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
+		PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(xOffset, yOffset, zOffset));
 		if (MinecraftForge.EVENT_BUS.post(e) || e.getResult() == Result.DENY || e.getUseBlock() == Result.DENY)
 			return false;
 
@@ -146,31 +157,40 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 
 	protected void activationOffsets(float xOffset, float yOffset, float zOffset) {}
 
-	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem)
+	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem)
 	{
 		TileEntity te = world.getTileEntity(pos);
 		if (te == null)
 		{
 			return false;
 		}
-		if (heldItem != null && te instanceof ITankContainerBucketable)
+		if (!heldItem.isEmpty() && te instanceof ITankContainerBucketable)
 		{
-			if(heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null))
+			if(heldItem.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null))
 			{
 				if (world.isRemote)
 					return true;
 
-				if (((ITankContainerBucketable)te).allowBucketDrain(side, heldItem))
-				{
-					if (MFRLiquidMover.manuallyDrainTank((ITankContainerBucketable)te, side, player, heldItem))
-					{
+				ITankContainerBucketable itcb = (ITankContainerBucketable) te;
+				IItemHandler playerInventory = new InvWrapper(player.inventory);
+
+
+				if (itcb.allowBucketDrain(side, heldItem)) {
+
+					FluidActionResult result = FluidUtil.tryFillContainerAndStow(heldItem,
+							new ITankContainerBucketable.FluidHandlerWrapper(itcb, side), playerInventory, Integer.MAX_VALUE, player);
+					if (result.isSuccess()) {
+						player.setHeldItem(hand, result.getResult());
 						return true;
 					}
 				}
-				if (((ITankContainerBucketable)te).allowBucketFill(side, heldItem))
-				{
-					if (MFRLiquidMover.manuallyFillTank((ITankContainerBucketable)te, side, player, heldItem))
-					{
+
+				if (itcb.allowBucketFill(side, heldItem)) {
+
+					FluidActionResult result = FluidUtil.tryEmptyContainerAndStow(heldItem,
+							new ITankContainerBucketable.FluidHandlerWrapper(itcb, side), playerInventory, Integer.MAX_VALUE, player);
+					if (result.isSuccess()) {
+						player.setHeldItem(hand, result.getResult());
 						return true;
 					}
 				}
@@ -192,7 +212,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 
 		world.setBlockToAir(pos);
 		if (!returnBlock)
-			for (ItemStack item : list) {
+			for (@Nonnull ItemStack item : list) {
 				UtilInventory.dropStackInAir(world, pos, item);
 			}
 		return list;
@@ -201,11 +221,11 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
 	{
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> drops = new ArrayList<>();
 
 		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
-		ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1,
+		@Nonnull ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1,
 				damageDropped(state));
 
 		TileEntity te = getTile(world, pos);
@@ -232,13 +252,13 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state)
 	{
-		neighborChanged(state, world, pos, this);
+		neighborChanged(state, world, pos, this, pos);
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block)
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos)
 	{
-		super.neighborChanged(state, world, pos, block);
+		super.neighborChanged(state, world, pos, block, fromPos);
 		if (world.isRemote)
 		{
 			return;
@@ -266,7 +286,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
 	{
 		TileEntity te = getTile(world, pos);
 		if (te instanceof IEntityCollidable)
@@ -295,7 +315,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB collisionTest, List collisionBoxList,
-			Entity entity)
+			Entity entity, boolean p_185477_7_)
 	{
 		TileEntity te = getTile(world, pos);
 		if (te instanceof ITraceable)
@@ -305,13 +325,13 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 			for (IndexedCuboid6 c : cuboids)
 			{
 				AxisAlignedBB aabb = c.aabb();
-				if (collisionTest.intersectsWith(aabb))
+				if (collisionTest.intersects(aabb))
 					collisionBoxList.add(aabb);
 			}
 		}
 		else
 		{
-			super.addCollisionBoxToList(state, world, pos, collisionTest, collisionBoxList, entity);
+			super.addCollisionBoxToList(state, world, pos, collisionTest, collisionBoxList, entity, p_185477_7_);
 		}
 	}
 
@@ -334,8 +354,8 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		if (te instanceof ITraceable)
 		{
 			List<IndexedCuboid6> cuboids = new LinkedList<IndexedCuboid6>();
-			((ITraceable)te).addTraceableCuboids(cuboids, true, MFRUtil.isHoldingUsableTool(harvesters.get(), pos), false);
-			return RayTracer.rayTraceCuboidsClosest(start, end, cuboids, pos);
+			((ITraceable)te).addTraceableCuboids(cuboids, true, MFRUtil.isHoldingUsableTool(harvesters.get(), EnumHand.MAIN_HAND, pos, EnumFacing.UP), false);
+			return RayTracer.rayTraceCuboidsClosest(start, end, pos, cuboids);
 		}
 		else if (world instanceof World)
 		{
@@ -348,7 +368,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	@SubscribeEvent(priority= EventPriority.HIGHEST)
 	public void onBlockHighlight(DrawBlockHighlightEvent event) {
 		EntityPlayer player = event.getPlayer();
-		World world = player.worldObj;
+		World world = player.world;
 		RayTraceResult mop = event.getTarget();
 		if (mop == null)
 			return;
@@ -418,20 +438,13 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 			return RedNetConnectionType.ForcedDecorativeSingle;
 	}
 
-	@Override
-	public boolean preInit()
-	{
-		return true;
+	@Override public boolean preInit() {
+
+		return false;
 	}
 
 	@Override
 	public boolean initialize()
-	{
-		return true;
-	}
-
-	@Override
-	public boolean postInit()
 	{
 		return true;
 	}

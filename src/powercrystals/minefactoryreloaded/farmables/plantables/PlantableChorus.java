@@ -7,6 +7,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class PlantableChorus extends PlantableStandard {
 
 	public PlantableChorus() {
@@ -15,7 +17,7 @@ public class PlantableChorus extends PlantableStandard {
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack) {
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
 		if (!world.isAirBlock(pos))
 			return false;

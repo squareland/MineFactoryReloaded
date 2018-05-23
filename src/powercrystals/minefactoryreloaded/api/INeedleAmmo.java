@@ -7,13 +7,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public interface INeedleAmmo {
 
-	public boolean onHitEntity(ItemStack stac, EntityPlayer owner, Entity hit, double distance);
+	public boolean onHitEntity(@Nonnull ItemStack stac, EntityPlayer owner, Entity hit, double distance);
 
-	public void onHitBlock(ItemStack stac, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance);
+	public void onHitBlock(@Nonnull ItemStack stac, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance);
 	// TODO: needle entity should be available
 
-	public float getSpread(ItemStack stack);
+	public float getSpread(@Nonnull ItemStack stack);
 
 }

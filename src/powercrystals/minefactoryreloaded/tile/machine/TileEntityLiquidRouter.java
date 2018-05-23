@@ -1,10 +1,5 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
@@ -13,17 +8,21 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiLiquidRouter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerLiquidRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
+public class TileEntityLiquidRouter extends TileEntityFactoryTickable {
 
 	//TODO this really needs a rewrite - very confusing that the order here doesn't match EnumFacing
 	private static final EnumFacing[] _outputDirections = new EnumFacing[]
@@ -103,7 +102,7 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 		if (amountRemaining >= totalWeight(routes)) {
 			int startingAmount = amountRemaining;
 			for (int i = 0; i < routes.length; i++) {
-				TileEntity te = MFRUtil.getTile(worldObj, pos.offset(_outputDirections[i]));
+				TileEntity te = MFRUtil.getTile(world, pos.offset(_outputDirections[i]));
 				int amountForThisRoute = startingAmount * routes[i] / totalWeight(routes);
 				if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[i].getOpposite()) && amountForThisRoute > 0) {
 					amountRemaining -= te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[i].getOpposite())
@@ -117,7 +116,7 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 
 		if (0 < amountRemaining && amountRemaining < totalWeight(routes)) {
 			int outdir = weightedRandomSide(routes);
-			TileEntity te = MFRUtil.getTile(worldObj, pos.offset(_outputDirections[outdir]));
+			TileEntity te = MFRUtil.getTile(world, pos.offset(_outputDirections[outdir]));
 			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outdir].getOpposite())) {
 				amountRemaining -= te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outdir].getOpposite())
 						.fill(new FluidStack(resource, amountRemaining), doFill);
@@ -129,7 +128,7 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 
 	private int weightedRandomSide(int[] routeWeights) {
 
-		int random = worldObj.rand.nextInt(totalWeight(routeWeights));
+		int random = world.rand.nextInt(totalWeight(routeWeights));
 		for (int i = 0; i < routeWeights.length; i++) {
 			random -= routeWeights[i];
 			if (random < 0) {
@@ -164,11 +163,11 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 		int[] routeWeights = new int[6];
 
 		for (int i = 0; i < 6; i++) {
-			ItemStack stack = _inventory[i];
+			@Nonnull ItemStack stack = _inventory.get(i);
 			Item item = stack != null ? stack.getItem() : null;
 			if (item != null &&
-					resource.isFluidEqual(MFRUtil.getFluidContents(_inventory[i]))) {
-				routeWeights[i] = _inventory[i].stackSize;
+					resource.isFluidEqual(MFRUtil.getFluidContents(_inventory.get(i)))) {
+				routeWeights[i] = _inventory.get(i).getCount();
 			} else {
 				routeWeights[i] = 0;
 			}
@@ -181,8 +180,8 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 		int[] routeWeights = new int[6];
 
 		for (int i = 0; i < 6; i++) {
-			if (_inventory[i] != null && MFRUtil.getFluidContents(_inventory[i]) == null) {
-				routeWeights[i] = _inventory[i].stackSize;
+			if (!_inventory.get(i).isEmpty() && MFRUtil.getFluidContents(_inventory.get(i)) == null) {
+				routeWeights[i] = _inventory.get(i).getCount();
 			} else {
 				routeWeights[i] = 0;
 			}
@@ -227,13 +226,13 @@ public class TileEntityLiquidRouter extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}

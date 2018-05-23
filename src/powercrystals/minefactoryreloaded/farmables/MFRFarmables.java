@@ -1,11 +1,6 @@
 package powercrystals.minefactoryreloaded.farmables;
 
-import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
-
 import cofh.core.util.oredict.OreDictionaryArbiter;
-
-import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.Entity;
@@ -15,86 +10,22 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-
 import net.minecraft.util.ResourceLocation;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.INeedleAmmo;
-import powercrystals.minefactoryreloaded.circuits.Fanout;
-import powercrystals.minefactoryreloaded.circuits.Noop;
-import powercrystals.minefactoryreloaded.circuits.Passthrough;
-import powercrystals.minefactoryreloaded.circuits.PassthroughGated;
-import powercrystals.minefactoryreloaded.circuits.PassthroughRoundRobin;
-import powercrystals.minefactoryreloaded.circuits.analog.AdderAnalog;
-import powercrystals.minefactoryreloaded.circuits.analog.DecomposeIntToDecimal;
-import powercrystals.minefactoryreloaded.circuits.analog.Max2;
-import powercrystals.minefactoryreloaded.circuits.analog.Max3;
-import powercrystals.minefactoryreloaded.circuits.analog.Max4;
-import powercrystals.minefactoryreloaded.circuits.analog.Min2;
-import powercrystals.minefactoryreloaded.circuits.analog.Min3;
-import powercrystals.minefactoryreloaded.circuits.analog.Min4;
-import powercrystals.minefactoryreloaded.circuits.analog.Multiplier;
-import powercrystals.minefactoryreloaded.circuits.analog.Negator;
-import powercrystals.minefactoryreloaded.circuits.analog.RandomizerAnalog;
-import powercrystals.minefactoryreloaded.circuits.analog.Scaler;
-import powercrystals.minefactoryreloaded.circuits.analog.SchmittTrigger;
-import powercrystals.minefactoryreloaded.circuits.analog.Subtractor;
-import powercrystals.minefactoryreloaded.circuits.digital.AdderDigitalFull;
-import powercrystals.minefactoryreloaded.circuits.digital.AdderDigitalHalf;
-import powercrystals.minefactoryreloaded.circuits.digital.Counter;
-import powercrystals.minefactoryreloaded.circuits.digital.DeMux16Analog;
-import powercrystals.minefactoryreloaded.circuits.digital.DeMux4;
-import powercrystals.minefactoryreloaded.circuits.digital.Inverter;
-import powercrystals.minefactoryreloaded.circuits.digital.Mux4;
-import powercrystals.minefactoryreloaded.circuits.digital.RandomizerDigital;
-import powercrystals.minefactoryreloaded.circuits.digital.SevenSegmentEncoder;
-import powercrystals.minefactoryreloaded.circuits.latch.FlipFlopJK;
-import powercrystals.minefactoryreloaded.circuits.latch.FlipFlopT;
-import powercrystals.minefactoryreloaded.circuits.latch.LatchDGated;
-import powercrystals.minefactoryreloaded.circuits.latch.LatchSR;
-import powercrystals.minefactoryreloaded.circuits.latch.LatchSRGated;
-import powercrystals.minefactoryreloaded.circuits.logic.And2;
-import powercrystals.minefactoryreloaded.circuits.logic.And3;
-import powercrystals.minefactoryreloaded.circuits.logic.And4;
-import powercrystals.minefactoryreloaded.circuits.logic.Nand2;
-import powercrystals.minefactoryreloaded.circuits.logic.Nand3;
-import powercrystals.minefactoryreloaded.circuits.logic.Nand4;
-import powercrystals.minefactoryreloaded.circuits.logic.Nor2;
-import powercrystals.minefactoryreloaded.circuits.logic.Nor3;
-import powercrystals.minefactoryreloaded.circuits.logic.Nor4;
-import powercrystals.minefactoryreloaded.circuits.logic.Or2;
-import powercrystals.minefactoryreloaded.circuits.logic.Or3;
-import powercrystals.minefactoryreloaded.circuits.logic.Or4;
-import powercrystals.minefactoryreloaded.circuits.logic.Xnor2;
-import powercrystals.minefactoryreloaded.circuits.logic.Xnor3;
-import powercrystals.minefactoryreloaded.circuits.logic.Xnor4;
-import powercrystals.minefactoryreloaded.circuits.logic.Xor2;
-import powercrystals.minefactoryreloaded.circuits.logic.Xor3;
-import powercrystals.minefactoryreloaded.circuits.logic.Xor4;
-import powercrystals.minefactoryreloaded.circuits.logicboolean.Equal;
-import powercrystals.minefactoryreloaded.circuits.logicboolean.Greater;
-import powercrystals.minefactoryreloaded.circuits.logicboolean.GreaterOrEqual;
-import powercrystals.minefactoryreloaded.circuits.logicboolean.Less;
-import powercrystals.minefactoryreloaded.circuits.logicboolean.LessOrEqual;
-import powercrystals.minefactoryreloaded.circuits.logicboolean.NotEqual;
+import powercrystals.minefactoryreloaded.circuits.*;
+import powercrystals.minefactoryreloaded.circuits.analog.*;
+import powercrystals.minefactoryreloaded.circuits.digital.*;
+import powercrystals.minefactoryreloaded.circuits.latch.*;
+import powercrystals.minefactoryreloaded.circuits.logic.*;
+import powercrystals.minefactoryreloaded.circuits.logicboolean.*;
 import powercrystals.minefactoryreloaded.circuits.timing.Delay;
 import powercrystals.minefactoryreloaded.circuits.timing.Multipulse;
 import powercrystals.minefactoryreloaded.circuits.timing.OneShot;
 import powercrystals.minefactoryreloaded.circuits.timing.PulseLengthener;
-import powercrystals.minefactoryreloaded.circuits.wave.SawtoothFalling;
-import powercrystals.minefactoryreloaded.circuits.wave.SawtoothRising;
-import powercrystals.minefactoryreloaded.circuits.wave.Sine;
-import powercrystals.minefactoryreloaded.circuits.wave.Square;
-import powercrystals.minefactoryreloaded.circuits.wave.Triangle;
+import powercrystals.minefactoryreloaded.circuits.wave.*;
 import powercrystals.minefactoryreloaded.entity.EntityPinkSlime;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerBiofuel;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerChocolateMilk;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerMeat;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerMilk;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerMobEssence;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerMushroomSoup;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerPinkSlime;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerSewage;
-import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerSludge;
+import powercrystals.minefactoryreloaded.farmables.drinkhandlers.*;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableIGrowable;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStandard;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
@@ -103,12 +34,13 @@ import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeL
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSoil;
-import powercrystals.minefactoryreloaded.farmables.safarinethandlers.EntityAgeableHandler;
-import powercrystals.minefactoryreloaded.farmables.safarinethandlers.EntityLivingBaseHandler;
-import powercrystals.minefactoryreloaded.farmables.safarinethandlers.EntityLivingHandler;
-import powercrystals.minefactoryreloaded.farmables.safarinethandlers.SheepHandler;
-import powercrystals.minefactoryreloaded.farmables.safarinethandlers.SlimeHandler;
+import powercrystals.minefactoryreloaded.farmables.safarinethandlers.*;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+
+import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
 public class MFRFarmables {
 
@@ -240,8 +172,8 @@ public class MFRFarmables {
 
 		if (MFRConfig.autoRegisterHarvestables.getBoolean(false)) {
 			ArrayList<ItemStack> list = OreDictionaryArbiter.getOres("logWood");
-			for (ItemStack stack : list) {
-				if (stack == null || stack.getItem() == null)
+			for (@Nonnull ItemStack stack : list) {
+				if (stack.isEmpty() || stack.getItem() == null)
 					continue;
 				Block block = Block.getBlockFromItem(stack.getItem());
 				if (block != Blocks.AIR && !MFRRegistry.getHarvestables().containsKey(block))
@@ -249,8 +181,8 @@ public class MFRFarmables {
 			}
 
 			list = OreDictionaryArbiter.getOres("treeLeaves");
-			for (ItemStack stack : list) {
-				if (stack == null || stack.getItem() == null)
+			for (@Nonnull ItemStack stack : list) {
+				if (stack.isEmpty() || stack.getItem() == null)
 					continue;
 				Block block = Block.getBlockFromItem(stack.getItem());
 				if (block != Blocks.AIR && !MFRRegistry.getHarvestables().containsKey(block))

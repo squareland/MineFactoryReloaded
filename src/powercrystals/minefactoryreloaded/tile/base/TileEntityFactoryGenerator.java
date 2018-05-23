@@ -1,24 +1,23 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import cofh.core.util.CoreUtils;
-import cofh.lib.util.helpers.EnergyHelper;
-
+import cofh.core.util.helpers.EnergyHelper;
+import cofh.redstoneflux.api.IEnergyProvider;
+import cofh.redstoneflux.api.IEnergyReceiver;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import powercrystals.minefactoryreloaded.core.ForgeEnergyHandler;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
-public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInventory
-										implements IEnergyProvider {
+import javax.annotation.Nonnull;
+
+public abstract class TileEntityFactoryGenerator extends TileEntityFactoryTickable
+		implements IEnergyProvider {
 	private boolean deadCache;
 	private IEnergyReceiver[] receiverCache;
 
@@ -48,7 +47,7 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	@Override
 	public void update() {
 		super.update();
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			if (deadCache) reCache();
 
 			boolean skipConsumption = ++_ticksSinceLastConsumption < _ticksBetweenConsumption;
@@ -79,8 +78,8 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	protected abstract int produceEnergy();
 
 	protected final int transmitEnergy(int energy) {
-		if (_inventory[0] != null)
-			energy -= EnergyHelper.insertEnergyIntoContainer(_inventory[0], energy, false);
+		if (!_inventory.get(0).isEmpty())
+			energy -= EnergyHelper.insertEnergyIntoContainer(_inventory.get(0), energy, false);
 		if (energy <= 0)
 			return 0;
 
@@ -119,13 +118,13 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 		return EnergyHelper.isEnergyContainerItem(itemstack);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
-		return _inventory[0] != null && EnergyHelper.insertEnergyIntoContainer(_inventory[0], 2, true) < 2;
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
+		return !_inventory.get(0).isEmpty() && EnergyHelper.insertEnergyIntoContainer(_inventory.get(0), 2, true) < 2;
 	}
 
 	private void reCache() {
@@ -139,7 +138,7 @@ public abstract class TileEntityFactoryGenerator extends TileEntityFactoryInvent
 	@Override
 	public void onNeighborTileChange(BlockPos pos) {
 
-		TileEntity tile = worldObj.getTileEntity(pos);
+		TileEntity tile = world.getTileEntity(pos);
 
 		int xCoord = this.pos.getX(), yCoord = this.pos.getY(), zCoord = this.pos.getZ();
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();

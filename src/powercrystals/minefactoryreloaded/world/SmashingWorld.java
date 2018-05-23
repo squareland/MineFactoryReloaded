@@ -7,27 +7,26 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 // Nigel says: This is a
 public class SmashingWorld implements IBlockAccess {
+
 	protected Block block;
 	protected int meta;
 	protected BlockPos pos = new BlockPos(0, 1, 0);
-	public SmashingWorld()
-	{
-	}
 
 	@Override
-	public IBlockState getBlockState(BlockPos pos)
-	{
+	public IBlockState getBlockState(BlockPos pos) {
+
 		return this.pos.equals(pos) ? block.getStateFromMeta(meta) : Blocks.AIR.getDefaultState();
 	}
 
@@ -63,8 +62,8 @@ public class SmashingWorld implements IBlockAccess {
 
 	@Nullable
 	@Override
-	public TileEntity getTileEntity(BlockPos pos)
-	{
+	public TileEntity getTileEntity(BlockPos pos) {
+
 		return null;
 	}
 
@@ -74,19 +73,19 @@ public class SmashingWorld implements IBlockAccess {
 		return 0;
 	}
 
-	public List<ItemStack> smashBlock(ItemStack input, Block block, int meta, int fortune)
-	{
-		List<ItemStack> drops = null;
-		if (block != null)
-		{
+	public NonNullList<ItemStack> smashBlock(@Nonnull ItemStack input, Block block, int meta, int fortune) {
+
+		NonNullList<ItemStack> drops = NonNullList.create();
+		if (block != null) {
 			this.block = block;
 			this.meta = meta;
 
-			drops = block.getDrops(this, pos, block.getStateFromMeta(meta), fortune);
+			drops.addAll(block.getDrops(this, pos, block.getStateFromMeta(meta), fortune));
 			if (drops.size() == 1)
 				if (UtilInventory.stacksEqual(drops.get(0), input, false))
 					return null;
 		}
 		return drops;
 	}
+
 }

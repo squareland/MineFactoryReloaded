@@ -27,6 +27,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.world.GrindingWorldServer;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
@@ -68,18 +69,17 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public void setWorldObj(World world) {
+	public void setWorld(World world) {
 
-		super.setWorldObj(world);
+		super.setWorld(world);
 		if (_grindingWorld != null) {
 			_grindingWorld.clearReferences();
 			_grindingWorld.setMachine(null);
 		}
-		if (this.worldObj instanceof WorldServer) {
-			_grindingWorld = new GrindingWorldServer((WorldServer) this.worldObj, this);
-			_damageSource.setupGrindingPlayer((WorldServer) this.worldObj);
+		if (this.world instanceof WorldServer) {
+			_grindingWorld = new GrindingWorldServer((WorldServer) this.world, this);
+			_damageSource.setupGrindingPlayer((WorldServer) this.world);
 		}
-
 	}
 
 	@Override
@@ -120,8 +120,7 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 	public boolean activateMachine() {
 
 		_grindingWorld.cleanReferences();
-		List<EntityLivingBase> entities = worldObj
-				.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
 
 		entityList:
 		for (EntityLivingBase e : entities) {
@@ -134,9 +133,9 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 			{
 				if (MFRRegistry.getGrindables().containsKey(e.getClass())) {
 					IFactoryGrindable r = MFRRegistry.getGrindables().get(e.getClass());
-					List<MobDrop> drops = r.grind(e.worldObj, e, getRandom());
+					List<MobDrop> drops = r.grind(e.world, e, getRandom());
 					if (drops != null && drops.size() > 0 && WeightedRandom.getTotalWeight(drops) > 0) {
-						ItemStack drop = WeightedRandom.getRandomItem(_rand, drops).getStack();
+						@Nonnull ItemStack drop = WeightedRandom.getRandomItem(_rand, drops).getStack();
 						doDrop(drop);
 					}
 					if (r.processEntity(e)) {
@@ -207,7 +206,7 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

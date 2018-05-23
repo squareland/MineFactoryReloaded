@@ -4,9 +4,7 @@ import cofh.core.fluid.FluidTankCore;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
@@ -14,6 +12,7 @@ import powercrystals.minefactoryreloaded.gui.client.GuiLiquidGenerator;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryGenerator;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Locale;
 
@@ -116,7 +115,7 @@ public abstract class TileEntityLiquidGenerator extends TileEntityFactoryGenerat
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

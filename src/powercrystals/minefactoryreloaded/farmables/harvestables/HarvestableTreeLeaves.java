@@ -30,6 +30,6 @@ public class HarvestableTreeLeaves extends HarvestableShearable
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (!block.isLeaves(state, world, pos))
-			world.notifyBlockOfStateChange(pos, id);
+			world.neighborChanged(pos, id, pos);
 	}
 }

@@ -18,7 +18,7 @@ public class GuiAutoBrewer extends GuiFactoryPowered {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		fontRendererObj.drawString(MFRUtil.localize("container.mfr.autobrewer.resources"), 79, 14, 0x808080);
+		fontRenderer.drawString(MFRUtil.localize("container.mfr.autobrewer.resources"), 79, 14, 0x808080);
 	}
 
 }

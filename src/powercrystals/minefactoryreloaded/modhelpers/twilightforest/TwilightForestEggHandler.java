@@ -15,7 +15,7 @@ public class TwilightForestEggHandler implements IMobEggHandler
 {
 	@SuppressWarnings("unchecked")
 	@Override
-	public EntityEggInfo getEgg(ItemStack safariNet)
+	public EntityEggInfo getEgg(@Nonnull ItemStack safariNet)
 	{
 		Class<? extends Entity> entityClass = (Class<? extends Entity>)EntityList.stringToClassMapping.get(safariNet.getTagCompound().getString("id"));
 		if(entityClass == null)

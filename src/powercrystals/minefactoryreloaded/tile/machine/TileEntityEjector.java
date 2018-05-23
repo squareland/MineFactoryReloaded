@@ -1,25 +1,18 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
+/*
 import buildcraft.api.transport.IPipeTile.PipeType;
+*/
 
-import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
-import cofh.lib.inventory.IInventoryManager;
-import cofh.lib.inventory.InventoryManager;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiEjector;
@@ -27,9 +20,13 @@ import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerEjector;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
-public class TileEntityEjector extends TileEntityFactoryInventory {
+import javax.annotation.Nonnull;
+import java.util.LinkedList;
+import java.util.List;
+
+public class TileEntityEjector extends TileEntityFactoryTickable {
 
 	protected boolean _lastRedstoneState;
 	protected boolean _whitelist = false;
@@ -60,53 +57,46 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 	public void update() {
 
 		super.update();
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return;
 		}
 		boolean redstoneState = _rednetState != 0 || CoreUtils.isRedstonePowered(this);
 
-		if (redstoneState & !_lastRedstoneState & (!_whitelist | (_whitelist == _hasItems))) {
+		if (redstoneState && !_lastRedstoneState && (!_whitelist || (_whitelist == _hasItems))) {
 			final EnumFacing facing = getDirectionFacing();
-			Map<EnumFacing, IInventory> chests = UtilInventory.
-					findChests(worldObj, pos, _pullDirections);
+			List<IItemHandler> chests = UtilInventory.
+					findChests(world, pos, _pullDirections);
 			inv:
-			for (Entry<EnumFacing, IInventory> chest : chests.entrySet()) {
-				if (chest.getKey() == facing) {
-					continue;
-				}
-
-				IInventoryManager inventory = InventoryManager.create(chest.getValue(),
-						chest.getKey().getOpposite());
-				Map<Integer, ItemStack> contents = inventory.getContents();
+			for (IItemHandler chest : chests) {
 
 				set:
-				for (Entry<Integer, ItemStack> stack : contents.entrySet()) {
-					ItemStack itemstack = stack.getValue();
-					if (itemstack == null || itemstack.stackSize < 1 || !inventory.canRemoveItem(itemstack, stack.getKey()))
+				for (int slot = 0; slot < chest.getSlots(); slot++) {
+					@Nonnull ItemStack itemstack = chest.getStackInSlot(slot);
+					if (itemstack.isEmpty() || itemstack.getCount() < 1 || chest.extractItem(slot, itemstack.getCount(), true).isEmpty())
 						continue;
 
 					boolean hasMatch = false;
 
 					int amt = 1;
 					for (int i = getSizeItemList(); i-- > 0; )
-						if (itemMatches(_inventory[i], itemstack)) {
+						if (itemMatches(_inventory.get(i), itemstack)) {
 							hasMatch = true;
-							amt = Math.max(1, _inventory[i].stackSize);
+							amt = Math.max(1, _inventory.get(i).getCount());
 							break;
 						}
 
 					if (_whitelist != hasMatch)
 						continue set;
 
-					ItemStack stackToDrop = itemstack.copy();
-					amt = Math.min(itemstack.stackSize, amt);
-					stackToDrop.stackSize = amt;
-					ItemStack remaining = UtilInventory.dropStack(this, stackToDrop,
+					@Nonnull ItemStack stackToDrop = itemstack.copy();
+					amt = Math.min(itemstack.getCount(), amt);
+					stackToDrop.setCount(amt);
+					@Nonnull ItemStack remaining = UtilInventory.dropStack(this, stackToDrop,
 							facing, facing);
 
 					// remaining == null if dropped successfully.
-					if (remaining == null || remaining.stackSize < amt) {
-						inventory.removeItem(amt - (remaining == null ? 0 : remaining.stackSize), stackToDrop);
+					if (remaining.isEmpty() || remaining.getCount() < amt) {
+						chest.extractItem(slot, amt - remaining.getCount(), false);
 						break inv;
 					}
 				}
@@ -115,9 +105,9 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 		_lastRedstoneState = redstoneState;
 	}
 
-	protected boolean itemMatches(ItemStack itemA, ItemStack itemB) {
+	private boolean itemMatches(@Nonnull ItemStack itemA, @Nonnull ItemStack itemB) {
 
-		if (itemA == null | itemB == null)
+		if (itemA.isEmpty() || itemB.isEmpty())
 			return false;
 
 		if (!itemA.getItem().equals(itemB.getItem()))
@@ -143,7 +133,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 
 		super.onFactoryInventoryChanged();
 		for (int i = getSizeItemList(); i-- > 0; )
-			if (_inventory[i] != null) {
+			if (!_inventory.get(i).isEmpty()) {
 				_hasItems = true;
 				return;
 			}
@@ -167,19 +157,19 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int i, @Nonnull ItemStack itemstack) {
 
 		return false;
 	}
@@ -281,6 +271,7 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 		return from == getDirectionFacing() ? ConnectionType.FORCE : ConnectionType.DENY;
 	}
 
+/*	TODO readd once BC team figure out what they want to do
 	@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
@@ -291,5 +282,6 @@ public class TileEntityEjector extends TileEntityFactoryInventory {
 			return super.overridePipeConnection(type, with);
 		return ConnectOverride.DISCONNECT;
 	}
+*/
 
 }

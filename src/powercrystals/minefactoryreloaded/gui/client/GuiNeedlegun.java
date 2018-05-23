@@ -1,20 +1,20 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.text.translation.I18n;
-import org.lwjgl.opengl.GL11;
-
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
+import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+
+import javax.annotation.Nonnull;
 
 public class GuiNeedlegun extends GuiContainer
 {
 	private static final ResourceLocation needleGunGUI = new ResourceLocation(MineFactoryReloadedCore.guiFolder + "needlegun.png");
 	private String name;
-	public GuiNeedlegun(Container container, ItemStack item)
+	public GuiNeedlegun(Container container, @Nonnull ItemStack item)
 	{
 		super(container);
 		name = item.getDisplayName();
@@ -23,8 +23,8 @@ public class GuiNeedlegun extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		fontRendererObj.drawString(name, 8, 6, 4210752);
-		fontRendererObj.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 4, 4210752);
+		fontRenderer.drawString(name, 8, 6, 4210752);
+		fontRenderer.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 4, 4210752);
 
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 	}

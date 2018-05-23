@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import powercrystals.minefactoryreloaded.api.FertilizerType;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizer;
 
+import javax.annotation.Nonnull;
+
 public class FertilizerStandard implements IFactoryFertilizer
 {
 	private Item _item;
@@ -30,7 +32,7 @@ public class FertilizerStandard implements IFactoryFertilizer
 	}
 	
 	@Override
-	public FertilizerType getFertilizerType(ItemStack stack)
+	public FertilizerType getFertilizerType(@Nonnull ItemStack stack)
 	{
 		if (stack.getItemDamage() == _meta)
 			return _type;
@@ -38,8 +40,8 @@ public class FertilizerStandard implements IFactoryFertilizer
 	}
 	
 	@Override
-	public void consume(ItemStack fertilizer)
+	public void consume(@Nonnull ItemStack fertilizer)
 	{
-		fertilizer.stackSize--;
+		fertilizer.shrink(1);
 	}
 }

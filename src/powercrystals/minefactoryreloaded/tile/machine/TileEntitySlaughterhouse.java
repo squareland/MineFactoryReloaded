@@ -26,9 +26,9 @@ public class TileEntitySlaughterhouse extends TileEntityGrinder
 	}
 
 	@Override
-	public void setWorldObj(World world)
+	public void setWorld(World world)
 	{
-		super.setWorldObj(world);
+		super.setWorld(world);
 		if (_grindingWorld != null)
 			this._grindingWorld.setAllowSpawns(true);
 	}
@@ -44,7 +44,7 @@ public class TileEntitySlaughterhouse extends TileEntityGrinder
 	public boolean activateMachine()
 	{
 		_grindingWorld.cleanReferences();
-		List<?> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
+		List<?> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
 
 		entityList: for(Object o : entities)
 		{

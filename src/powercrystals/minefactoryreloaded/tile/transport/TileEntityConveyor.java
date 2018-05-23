@@ -1,37 +1,32 @@
 package powercrystals.minefactoryreloaded.tile.transport;
 
-import buildcraft.api.transport.IPipeConnection;
-import buildcraft.api.transport.IPipeTile.PipeType;
-
 import cofh.api.tileentity.IInventoryConnection;
-import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import powercrystals.minefactoryreloaded.block.transport.BlockConveyor;
-import static powercrystals.minefactoryreloaded.block.transport.BlockConveyor.ConveyorDirection.*;
-
-import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 
-@Strippable("buildcraft.api.transport.IPipeConnection")
+import javax.annotation.Nonnull;
+
+import static powercrystals.minefactoryreloaded.block.transport.BlockConveyor.ConveyorDirection.*;
+
 public class TileEntityConveyor extends TileEntityBase
-		implements IRotateableTile, ISidedInventory, IPipeConnection, IInventoryConnection
+		implements IRotateableTile, ISidedInventory, /*IPipeConnection,*/ IInventoryConnection
 {
 	MFRDyeColor _dye = null;
 
@@ -52,9 +47,9 @@ public class TileEntityConveyor extends TileEntityBase
 
 	public void setDyeColor(MFRDyeColor dye)
 	{
-		if(worldObj != null && !worldObj.isRemote && _dye != dye)
+		if(world != null && !world.isRemote && _dye != dye)
 		{
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 		_dye = dye;
 	}
@@ -88,36 +83,36 @@ public class TileEntityConveyor extends TileEntityBase
 	@Override
 	public void rotate(EnumFacing axis)
 	{
-		BlockConveyor.ConveyorDirection dir = worldObj.getBlockState(pos).getValue(BlockConveyor.DIRECTION);
+		BlockConveyor.ConveyorDirection dir = world.getBlockState(pos).getValue(BlockConveyor.DIRECTION);
 		if (dir == EAST)
 		{
 			if (isSideSolid(EnumFacing.EAST, EnumFacing.WEST))
 			{
-				rotateTo(worldObj, pos, ASCENDING_EAST);
+				rotateTo(world, pos, ASCENDING_EAST);
 			}
 			else if (isSideSolid(EnumFacing.WEST, EnumFacing.EAST))
 			{
-				rotateTo(worldObj, pos, DESCENDING_EAST);
+				rotateTo(world, pos, DESCENDING_EAST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, SOUTH);
+				rotateTo(world, pos, SOUTH);
 			}
 		}
 		else if (dir == ASCENDING_EAST)
 		{
 			if (isSideSolid(EnumFacing.WEST, EnumFacing.EAST))
 			{
-				rotateTo(worldObj, pos, DESCENDING_EAST);
+				rotateTo(world, pos, DESCENDING_EAST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, SOUTH);
+				rotateTo(world, pos, SOUTH);
 			}
 		}
 		else if (dir == DESCENDING_EAST)
 		{
-			rotateTo(worldObj, pos, SOUTH);
+			rotateTo(world, pos, SOUTH);
 		}
 		else
 
@@ -125,31 +120,31 @@ public class TileEntityConveyor extends TileEntityBase
 		{
 			if (isSideSolid(EnumFacing.SOUTH, EnumFacing.NORTH))
 			{
-				rotateTo(worldObj, pos, ASCENDING_SOUTH);
+				rotateTo(world, pos, ASCENDING_SOUTH);
 			}
 			else if (isSideSolid(EnumFacing.NORTH, EnumFacing.SOUTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_SOUTH);
+				rotateTo(world, pos, DESCENDING_SOUTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, WEST);
+				rotateTo(world, pos, WEST);
 			}
 		}
 		else if (dir == ASCENDING_SOUTH)
 		{
 			if (isSideSolid(EnumFacing.NORTH, EnumFacing.SOUTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_SOUTH);
+				rotateTo(world, pos, DESCENDING_SOUTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, WEST);
+				rotateTo(world, pos, WEST);
 			}
 		}
 		else if (dir == DESCENDING_SOUTH)
 		{
-			rotateTo(worldObj, pos, WEST);
+			rotateTo(world, pos, WEST);
 		}
 		else
 
@@ -157,31 +152,31 @@ public class TileEntityConveyor extends TileEntityBase
 		{
 			if (isSideSolid(EnumFacing.WEST, EnumFacing.EAST))
 			{
-				rotateTo(worldObj, pos, ASCENDING_WEST);
+				rotateTo(world, pos, ASCENDING_WEST);
 			}
 			else if (isSideSolid(EnumFacing.EAST, EnumFacing.WEST) )
 			{
-				rotateTo(worldObj, pos, DESCENDING_WEST);
+				rotateTo(world, pos, DESCENDING_WEST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, NORTH);
+				rotateTo(world, pos, NORTH);
 			}
 		}
 		else if (dir == ASCENDING_WEST)
 		{
 			if (isSideSolid(EnumFacing.EAST, EnumFacing.WEST))
 			{
-				rotateTo(worldObj, pos, DESCENDING_WEST);
+				rotateTo(world, pos, DESCENDING_WEST);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, NORTH);
+				rotateTo(world, pos, NORTH);
 			}
 		}
 		else if (dir == DESCENDING_WEST)
 		{
-			rotateTo(worldObj, pos, NORTH);
+			rotateTo(world, pos, NORTH);
 		}
 		else
 
@@ -189,40 +184,40 @@ public class TileEntityConveyor extends TileEntityBase
 		{
 			if (isSideSolid(EnumFacing.NORTH, EnumFacing.SOUTH))
 			{
-				rotateTo(worldObj, pos, ASCENDING_NORTH);
+				rotateTo(world, pos, ASCENDING_NORTH);
 			}
 			else if (isSideSolid(EnumFacing.SOUTH, EnumFacing.NORTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_NORTH);
+				rotateTo(world, pos, DESCENDING_NORTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, EAST);
+				rotateTo(world, pos, EAST);
 			}
 		}
 		else if (dir == ASCENDING_NORTH)
 		{
 			if (isSideSolid(EnumFacing.SOUTH, EnumFacing.NORTH))
 			{
-				rotateTo(worldObj, pos, DESCENDING_NORTH);
+				rotateTo(world, pos, DESCENDING_NORTH);
 			}
 			else
 			{
-				rotateTo(worldObj, pos, EAST);
+				rotateTo(world, pos, EAST);
 			}
 		}
 		else if (dir == DESCENDING_NORTH)
 		{
-			rotateTo(worldObj, pos, EAST);
+			rotateTo(world, pos, EAST);
 		}
 	}
 
 	private boolean isSideSolid(EnumFacing offset, EnumFacing dir)
 	{
-		return worldObj.isSideSolid(pos.offset(offset), dir) &&
-				((!worldObj.isSideSolid(pos.offset(offset).up(), dir) ||
-						!worldObj.isAirBlock(pos.up())) ||
-							!worldObj.isSideSolid(pos.offset(offset.getOpposite()), EnumFacing.UP));
+		return world.isSideSolid(pos.offset(offset), dir) &&
+				((!world.isSideSolid(pos.offset(offset).up(), dir) ||
+						!world.isAirBlock(pos.up())) ||
+							!world.isSideSolid(pos.offset(offset.getOpposite()), EnumFacing.UP));
 	}
 
 	private void rotateTo(World world, BlockPos pos, BlockConveyor.ConveyorDirection newDir)
@@ -235,7 +230,7 @@ public class TileEntityConveyor extends TileEntityBase
 	{
 		//TODO rotateDirectlyTo in cofhcore needs to be changed to EnumFacing
 		if (facing >= 2 && facing <= 5)
-			rotateTo(worldObj, pos, byFacing(EnumFacing.VALUES[facing]));
+			rotateTo(world, pos, byFacing(EnumFacing.VALUES[facing]));
 	}
 
 	@Override
@@ -312,28 +307,31 @@ public class TileEntityConveyor extends TileEntityBase
 		return 7;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack decrStackSize(int slot, int count)
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack removeStackFromSlot(int slot)
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack)
+	public void setInventorySlotContents(int slot, @Nonnull ItemStack stack)
 	{
-		if (stack == null)
+		if (stack.isEmpty())
 		{
 			return;
 		}
@@ -375,12 +373,12 @@ public class TileEntityConveyor extends TileEntityBase
 			case 6: //UNKNOWN
 		}
 
-		EntityItem entityitem = new EntityItem(worldObj, pos.getX() + dropOffsetX, pos.getY() + dropOffsetY, pos.getZ() + dropOffsetZ, stack.copy());
+		EntityItem entityitem = new EntityItem(world, pos.getX() + dropOffsetX, pos.getY() + dropOffsetY, pos.getZ() + dropOffsetZ, stack.copy());
 		entityitem.motionX = motionX;
 		entityitem.motionY = motionY;
 		entityitem.motionZ = motionZ;
 		entityitem.setPickupDelay(20);
-		worldObj.spawnEntityInWorld(entityitem);
+		world.spawnEntity(entityitem);
 	}
 
 	@Override
@@ -407,7 +405,7 @@ public class TileEntityConveyor extends TileEntityBase
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player)
+	public boolean isUsableByPlayer(EntityPlayer player)
 	{
 		return false;
 	}
@@ -423,7 +421,7 @@ public class TileEntityConveyor extends TileEntityBase
     }
 
     @Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack)
+	public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack)
     {
     	return _conveyorActive;
     }
@@ -450,6 +448,12 @@ public class TileEntityConveyor extends TileEntityBase
 	{
 	}
 
+	@Override
+	public boolean isEmpty() {
+
+		return true;
+	}
+
 	//ISidedInventory
     @Override
 	public int[] getSlotsForFace(EnumFacing side)
@@ -464,12 +468,12 @@ public class TileEntityConveyor extends TileEntityBase
      * From below/unknown: returns true
      */
     @Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side)
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side)
     {
     	if (!_conveyorActive)
     		return false;
 
-    	IBlockState state = worldObj.getBlockState(pos);
+    	IBlockState state = world.getBlockState(pos);
 		BlockConveyor.ConveyorDirection dir = state.getValue(BlockConveyor.DIRECTION);
 
 		if (side == EnumFacing.UP)
@@ -482,7 +486,7 @@ public class TileEntityConveyor extends TileEntityBase
     }
 
     @Override
-	public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side)
+	public boolean canExtractItem(int slot, @Nonnull ItemStack stack, EnumFacing side)
     {
     	return false;
     }
@@ -495,13 +499,13 @@ public class TileEntityConveyor extends TileEntityBase
 			_redNetAllowsActive = value <= 0;
 			updateConveyorActive();
 		}
-		setReversed(_gateReversed | (_rednetReversed = value < 0));
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		setReversed(_gateReversed || (_rednetReversed = value < 0));
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public void updateConveyorActive()
 	{
-		setConveyorActive(_gateAllowsActive & _redNetAllowsActive && !CoreUtils.isRedstonePowered(this));
+		setConveyorActive(_gateAllowsActive && _redNetAllowsActive && !CoreUtils.isRedstonePowered(this));
 	}
 
 	public boolean getConveyorActive()
@@ -516,7 +520,7 @@ public class TileEntityConveyor extends TileEntityBase
 
 		if(wasActive ^ _conveyorActive)
 		{
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 	}
 
@@ -543,15 +547,15 @@ public class TileEntityConveyor extends TileEntityBase
 
 		if(wasReversed ^ _isReversed)
 		{
-			IBlockState state = worldObj.getBlockState(pos);
-			worldObj.setBlockState(pos, state.withProperty(BlockConveyor.DIRECTION, state.getValue(BlockConveyor.DIRECTION).getReverse()));
+			IBlockState state = world.getBlockState(pos);
+			world.setBlockState(pos, state.withProperty(BlockConveyor.DIRECTION, state.getValue(BlockConveyor.DIRECTION).getReverse()));
 		}
 	}
 
 	@SuppressWarnings("unused")
 	private void reverseConveyor()
 	{
-		setReversed(_rednetReversed | (_gateReversed = !_isReversed));
+		setReversed(_rednetReversed || (_gateReversed = !_isReversed));
 	}
 
 	@Override
@@ -560,15 +564,17 @@ public class TileEntityConveyor extends TileEntityBase
 		return ConnectionType.FORCE;
 	}
 
-	@Override
+/*	TODO: readd once BC team figure out what they want to do with this
+
+@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
-	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
+	public ConnectOverride overridePipeConnection(Object type, EnumFacing with) {
 		if (type == PipeType.ITEM)
 			return ConnectOverride.CONNECT;
 		if (with == EnumFacing.DOWN & type == PipeType.STRUCTURE)
 			return ConnectOverride.CONNECT;
 		return ConnectOverride.DISCONNECT;
-	}
+	}*/
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {

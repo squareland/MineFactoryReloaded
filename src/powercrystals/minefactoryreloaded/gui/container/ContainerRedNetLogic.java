@@ -5,6 +5,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 
+import javax.annotation.Nonnull;
+
 public class ContainerRedNetLogic extends Container
 {
 	private TileEntityRedNetLogic logic;
@@ -23,7 +25,7 @@ public class ContainerRedNetLogic extends Container
 	}
 	
 	@Override
-	public void putStackInSlot(int par1, ItemStack par2ItemStack)
+	public void putStackInSlot(int par1, @Nonnull ItemStack par2ItemStack)
 	{
 		return;
 	}

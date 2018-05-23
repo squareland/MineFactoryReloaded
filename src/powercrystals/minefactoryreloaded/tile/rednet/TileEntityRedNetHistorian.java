@@ -1,21 +1,18 @@
 package powercrystals.minefactoryreloaded.tile.rednet;
 
-import buildcraft.api.transport.IPipeTile.PipeType;
-
-import cofh.asm.relauncher.Strippable;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+//import buildcraft.api.transport.IPipeTile.PipeType;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.util.EnumFacing;
-
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.ITickable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.ArrayQueue;
 import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 
-public class TileEntityRedNetHistorian extends TileEntityFactory
+public class TileEntityRedNetHistorian extends TileEntityFactory implements ITickable
 {
 	@SideOnly(Side.CLIENT)
 	private ArrayQueue<Integer> _valuesClient;
@@ -65,7 +62,7 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	@Override
 	public void validate()
 	{
-		if (!worldObj.isRemote)
+		if (!world.isRemote)
 		{
 			setSelectedSubnet(_currentSubnet);
 		}
@@ -77,11 +74,9 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void update()
 	{
-		super.update();
-		if (worldObj.isRemote)
+		if (world.isRemote)
 		{
 			_valuesClient.pop();
 			_valuesClient.push(_currentValueClient);
@@ -95,16 +90,10 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 		return _valuesClient.toArray(values);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void setClientValue(int value)
-	{
-		_currentValueClient = value;
-	}
-
 	public void setSelectedSubnet(int newSubnet)
 	{
 		_currentSubnet = newSubnet;
-		if (worldObj.isRemote)
+		if (world.isRemote)
 		{
 			_valuesClient.fill(null);
 		}
@@ -129,17 +118,12 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 		}
 	}
 
-	protected void sendValue(int value)
+	private void sendValue(int value)
 	{
 		NBTTagCompound data = new NBTTagCompound();
 		data.setInteger("value", value);
-		Packets.sendToAllPlayersInRange(worldObj, pos, 50,
+		Packets.sendToAllPlayersInRange(world, pos, 50,
 				new SPacketUpdateTileEntity(pos, 1, data));
-	}
-
-	public int getSelectedSubnet()
-	{
-		return _currentSubnet;
 	}
 
 	@Override
@@ -169,11 +153,13 @@ public class TileEntityRedNetHistorian extends TileEntityFactory
 		return nbttagcompound;
 	}
 
+/*	TODO readd when BC team figure out what they want to do
 	@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
 		return ConnectOverride.DISCONNECT;
 	}
+*/
 
     @Override
 	@SideOnly(Side.CLIENT)

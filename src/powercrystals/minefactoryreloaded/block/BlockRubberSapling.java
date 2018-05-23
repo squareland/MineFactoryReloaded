@@ -1,12 +1,11 @@
 package powercrystals.minefactoryreloaded.block;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
-import net.minecraft.block.*;
+import cofh.core.util.core.IInitializer;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockSapling;
+import net.minecraft.block.IGrowable;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -17,6 +16,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -24,18 +24,20 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.terraingen.TerrainGen;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetNoConnection;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.world.MineFactoryReloadedWorldGen;
 import powercrystals.minefactoryreloaded.world.WorldGenMassiveTree;
 import powercrystals.minefactoryreloaded.world.WorldGenRubberTree;
+
+import java.util.Locale;
+import java.util.Random;
 
 public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection, IGrowable, IInitializer, IModelRegister {
 
@@ -55,10 +57,10 @@ public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection
 	}
 
 	@Override
-	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+
 		for (Type type : Type.values())	{
-			list.add(new ItemStack(item, 1, type.getMetadata()));
+			items.add(new ItemStack(this, 1, type.getMetadata()));
 		}
 	}
 
@@ -118,23 +120,16 @@ public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection
 		return new BlockStateContainer(this, TYPE, STAGE);
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		MFRRegistry.registerBlock(this, new ItemBlockFactoryTree(this));
-		Blocks.FIRE.setFireInfo(this, 30, 20);
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
 
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
+		MFRRegistry.registerBlock(this, new ItemBlockFactoryTree(this));
+		Blocks.FIRE.setFireInfo(this, 30, 20);
 		return true;
 	}
 

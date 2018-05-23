@@ -41,7 +41,7 @@ public class BlockFactoryDecoration extends BlockFactory
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, Variant.NAMES));
 		return true;

@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.render.block;
 
-import codechicken.lib.model.bakery.PlanarFaceBakery;
-import codechicken.lib.model.blockbakery.ISimpleBlockBakery;
+import codechicken.lib.model.PlanarFaceBakery;
+import codechicken.lib.model.bakery.generation.ISimpleBlockBakery;
 import codechicken.lib.texture.SpriteSheetManager;
 import codechicken.lib.texture.TextureUtils;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -9,14 +9,16 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlass;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -117,12 +119,12 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 	}
 	
 	@Override
-	public IExtendedBlockState handleState(IExtendedBlockState state, TileEntity tileEntity) {
+	public IExtendedBlockState handleState(IExtendedBlockState state, IBlockAccess access, BlockPos pos) {
 		return null;
 	}
 
 	@Override
-	public List<BakedQuad> bakeItemQuads(EnumFacing face, ItemStack stack) {
+	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
 		return null;
 	}
 }

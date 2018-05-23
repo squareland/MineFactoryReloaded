@@ -1,10 +1,10 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.slot.SlotAcceptValid;
-import cofh.lib.gui.slot.SlotRemoveOnly;
-
+import cofh.core.gui.slot.SlotRemoveOnly;
+import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
-
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityBlockSmasher;
 
 public class ContainerBlockSmasher extends ContainerFactoryPowered {
@@ -20,7 +20,8 @@ public class ContainerBlockSmasher extends ContainerFactoryPowered {
 	@Override
 	protected void addSlots() {
 
-		addSlotToContainer(new SlotAcceptValid(_te, 0, 8, 24));
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_te, null);
+		addSlotToContainer(new SlotItemHandler(handler, 0, 8, 24));
 		addSlotToContainer(new SlotRemoveOnly(_te, 1, 8, 54));
 	}
 
@@ -29,7 +30,7 @@ public class ContainerBlockSmasher extends ContainerFactoryPowered {
 
 		super.detectAndSendChanges();
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendProgressBarUpdate(this, 100, _smasher.getFortune());
+			listeners.get(i).sendWindowProperty(this, 100, _smasher.getFortune());
 		}
 	}
 
@@ -37,6 +38,7 @@ public class ContainerBlockSmasher extends ContainerFactoryPowered {
 	public void updateProgressBar(int var, int value) {
 
 		super.updateProgressBar(var, value);
-		if (var == 100) _smasher.setFortune(value);
+		if (var == 100)
+			_smasher.setFortune(value);
 	}
 }

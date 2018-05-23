@@ -33,7 +33,7 @@ public class ContainerItemRouter extends ContainerFactoryInventory {
 
 		super.detectAndSendChanges();
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendProgressBarUpdate(this, 100, _router.getRejectUnmapped() ? 1 : 0);
+			listeners.get(i).sendWindowProperty(this, 100, _router.getRejectUnmapped() ? 1 : 0);
 		}
 	}
 

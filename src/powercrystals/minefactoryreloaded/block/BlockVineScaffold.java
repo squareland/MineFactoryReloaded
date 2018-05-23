@@ -1,41 +1,38 @@
 package powercrystals.minefactoryreloaded.block;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.ColorizerFoliage;
-import net.minecraft.world.biome.BiomeColorHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Random;
-
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
+import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
+import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.render.IColorRegister;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
-import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockVineScaffold extends Block implements IRedNetDecorative, IInitializer, IModelRegister, IColorRegister{
 
@@ -68,7 +65,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 				entity.getEntityBoundingBox().maxY <= pos.getY() + shrinkAmount + oneTenComp)
 			return;
 		entity.fallDistance = 0;
-		if (entity.isCollidedHorizontally) {
+		if (entity.collidedHorizontally) {
 			entity.motionY = 0.2D;
 		} else if (entity.isSneaking()) {
 			double diff = entity.prevPosY - entity.posY;
@@ -92,7 +89,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 
 	@Nullable
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return COLLISION_AABB;
 	}
 
@@ -122,10 +119,12 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float xOffset,
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float xOffset,
 			float yOffset, float zOffset) {
 
-		if (heldItem != null && Block.getBlockFromItem(heldItem.getItem()).equals(this)) {
+		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
+
+		if (!heldItem.isEmpty() && Block.getBlockFromItem(heldItem.getItem()).equals(this)) {
 			for (int i = pos.getY() + 1, e = world.getActualHeight(); i < e; ++i) {
 				BlockPos placePos = new BlockPos(pos.getX(), i, pos.getZ());
 				Block block = world.getBlockState(placePos).getBlock();
@@ -133,9 +132,9 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 					if (!world.isRemote && world.setBlockState(placePos, getDefaultState())) {
 						world.playEvent(null, 2001, placePos, Block.getIdFromBlock(this));
 						if (!player.capabilities.isCreativeMode) {
-							heldItem.stackSize--;
-							if (heldItem.stackSize == 0) {
-								player.inventory.mainInventory[player.inventory.currentItem] = null;
+							heldItem.shrink(1);
+							if (heldItem.getCount() == 0) {
+								player.inventory.mainInventory.set(player.inventory.currentItem, ItemStack.EMPTY);
 							}
 						}
 					}
@@ -181,11 +180,11 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 
-		neighborChanged(state, world, pos, null);
+		neighborChanged(state, world, pos, null, pos);
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 
 		if (!canBlockStay(world, pos)) {
 			int height = world.getActualHeight();
@@ -218,22 +217,15 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 		return side == EnumFacing.UP || side == EnumFacing.DOWN;
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		MFRRegistry.registerBlock(this, new ItemBlockVineScaffold(this));
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
 
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
+		MFRRegistry.registerBlock(this, new ItemBlockVineScaffold(this));
 		return true;
 	}
 

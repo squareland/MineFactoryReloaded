@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -22,7 +23,11 @@ import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorati
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetNoConnection;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable;
-import powercrystals.minefactoryreloaded.core.*;
+import powercrystals.minefactoryreloaded.core.IGridController;
+import powercrystals.minefactoryreloaded.core.INode;
+import powercrystals.minefactoryreloaded.core.ITraceable;
+import powercrystals.minefactoryreloaded.core.MFRDyeColor;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.tool.ItemRedNetMeter;
 import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
@@ -86,16 +91,16 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	public void validate() {
 
 		super.validate();
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 
 		RedstoneNetwork.HANDLER.addConduitForTick(this);
 	}
 
 	@Override
-	public void cofh_validate() {
+	public void onLoad() {
 
-		super.cofh_validate();
+		super.onLoad();
 		if (_network == null) {
 			incorporateTiles();
 			if (_network == null) {
@@ -132,6 +137,8 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		for (EnumFacing d : EnumFacing.VALUES)
 			_network.removeNode(new RedstoneNode(pos.offset(d), d), true);
 		_network.removeConduit(this);
+		if (!_network.isRegenerating())
+			_network.updatePowerLevels(); //need to update network power levels in case this node was providing power
 		_network = null;
 	}
 
@@ -149,19 +156,6 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	public final boolean isNotValid() {
 
 		return tileEntityInvalid;
-	}
-
-	boolean firstTick = true;
-
-	@Override
-	public void update() {
-
-		if (firstTick) {
-			cofh_validate(); //TODO this is here just for rendering test, remove !!!
-			firstTick = false;
-		}
-
-		//TODO again implement non tickable base this can inherit from
 	}
 
 	@Override
@@ -182,8 +176,8 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 			for (EnumFacing dir : EnumFacing.VALUES) {
 				if (readFromNBT && (_cableMode[dir.ordinal()] & 1) == 0)
 					continue;
-				if (worldObj.isBlockLoaded(pos.offset(dir))) {
-					TileEntityRedNetCable pipe = MFRUtil.getTile(worldObj, pos.offset(dir), TileEntityRedNetCable.class);
+				if (world.isBlockLoaded(pos.offset(dir))) {
+					TileEntityRedNetCable pipe = MFRUtil.getTile(world, pos.offset(dir), TileEntityRedNetCable.class);
 					if (pipe != null) {
 						boolean canInterface = pipe.canInterface(this, dir.getOpposite());
 						if (canInterface && pipe._network != null) {
@@ -222,14 +216,14 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		for (int i = _connectionState.length; i-- > 0; ) {
 			EnumFacing d = dirs[i];
 			BlockPos offsetPos = pos.offset(d);
-			if (worldObj.isBlockLoaded(offsetPos) && !worldObj.getBlockState(offsetPos).getBlock().equals(rednetCableBlock))
+			if (world.isBlockLoaded(offsetPos) && !world.getBlockState(offsetPos).getBlock().equals(rednetCableBlock))
 				isRSNode |= _connectionState[i].isConnected;
 		}
 		if (lastNode != isRSNode)
 			_network.addConduit(this);
 		markChunkDirty();
 		if (dirty) {
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 	}
 
@@ -250,7 +244,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 			return;
 		RedNetConnectionType connectionType = getConnectionState(node.getFacing());
 
-		if (!connectionType.isDecorative & connectionType.isConnected && !worldObj.isAirBlock(node.getPos())) {
+		if (!connectionType.isDecorative & connectionType.isConnected && !world.isAirBlock(node.getPos())) {
 			if (connectionType.isAllSubnets) {
 				_network.addOrUpdateNode(node);
 			} else {
@@ -303,9 +297,9 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 			RedstoneNetwork.log("\t- power provider for network %s, power 0", _network.hashCode());
 			return 0;
 		}
-		IBlockState nodeState = worldObj.getBlockState(nodebp.getPos());
+		IBlockState nodeState = world.getBlockState(nodebp.getPos());
 		boolean checkWeak = nodeState.getBlock().
-				shouldCheckWeakPower(nodeState, worldObj, nodebp.getPos(), to.getOpposite());
+				shouldCheckWeakPower(nodeState, world, nodebp.getPos(), to.getOpposite());
 		if (checkWeak && _network.isWeakNode(nodebp)) {
 			RedstoneNetwork.log("\t- weak node for network %s, power 0", _network.hashCode());
 		} else if (state.isCable) {
@@ -317,7 +311,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	}
 
 	@Override
-	public boolean onPartHit(EntityPlayer player, int subSide, int subHit) {
+	public boolean onPartHit(EntityPlayer player, EnumHand hand, int subSide, int subHit) {
 
 		markChunkDirty();
 		return false;
@@ -373,7 +367,9 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	public CustomHitBox getCustomHitBox(int hit, EntityPlayer player) {
 
 		final List<IndexedCuboid6> list = new ArrayList<>(7);
-		addTraceableCuboids(list, true, MFRUtil.isHoldingUsableTool(player, pos), true);
+		addTraceableCuboids(list, true,
+				MFRUtil.isHoldingUsableTool(player, EnumHand.MAIN_HAND, pos, EnumFacing.UP) || MFRUtil.isHoldingUsableTool(player, EnumHand.OFF_HAND, pos, EnumFacing.UP),
+				true);
 		IndexedCuboid6 cube = list.get(0);
 		cube.expand(0.003);
 		Vector3 min = cube.min, max = cube.max.subtract(min);
@@ -508,8 +504,8 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 				setNetwork(new RedstoneNetwork(this));
 		}
 		updateNearbyNode(side);
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
-		MFRUtil.notifyNearbyBlocks(worldObj, pos, getBlockType());
+		MFRUtil.notifyBlockUpdate(world, pos);
+		MFRUtil.notifyNearbyBlocks(world, pos, getBlockType());
 		return oldMode;
 	}
 
@@ -534,7 +530,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 				updateNearbyNode(d);
 		}
 		if (mustUpdate)
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -566,15 +562,15 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 
 		BlockPos offsetPos = pos.offset(side);
 
-		if (!worldObj.isBlockLoaded(offsetPos))
+		if (!world.isBlockLoaded(offsetPos))
 			return RedNetConnectionType.None;
 
-		Block b = worldObj.getBlockState(offsetPos).getBlock();
+		Block b = world.getBlockState(offsetPos).getBlock();
 		boolean node = false;
 
 		// cables - always connect
 		if (b == rednetCableBlock) {
-			if (!decorative || ((TileEntityRedNetCable) worldObj.getTileEntity(offsetPos)).canInterface(this, side.getOpposite()))
+			if (!decorative || ((TileEntityRedNetCable) world.getTileEntity(offsetPos)).canInterface(this, side.getOpposite()))
 				return RedNetConnectionType.CableAll;
 			else
 				return RedNetConnectionType.None;
@@ -587,7 +583,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		short nodeFlags = -1;
 		if (b instanceof IRedNetConnection) { // API node - let them figure it out
 			RedNetConnectionType type = ((IRedNetConnection) b).
-					getConnectionType(worldObj, offsetPos, side.getOpposite());
+					getConnectionType(world, offsetPos, side.getOpposite());
 			if (_mode == 0 && type.isConnectionForced)
 				return RedNetConnectionType.None;
 			else if (!type.isDecorative)
@@ -597,7 +593,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		}
 		// IRedNetNoConnection or air - don't connect
 		// Placed here so subclasses that are API nodes can override
-		else if (b instanceof IRedNetNoConnection || worldObj.isAirBlock(offsetPos)) {
+		else if (b instanceof IRedNetNoConnection || world.isAirBlock(offsetPos)) {
 			return RedNetConnectionType.None;
 		}
 
@@ -608,11 +604,11 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		 */
 		RedNetConnectionType ret;
 
-		IBlockState state = worldObj.getBlockState(offsetPos);
+		IBlockState state = world.getBlockState(offsetPos);
 
 		// mode 2 forces cable mode for strong power
 		if (_mode == 2) {
-			if (b.isSideSolid(state, worldObj, offsetPos, side.getOpposite()))
+			if (b.isSideSolid(state, world, offsetPos, side.getOpposite()))
 				ret = RedNetConnectionType.ForcedCableSingle;
 			else
 				ret = RedNetConnectionType.ForcedPlateSingle;
@@ -626,7 +622,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		else if (!node && (_connectionBlackList.contains(b) ||
 				b instanceof IRedNetDecorative)) {
 			ret = RedNetConnectionType.None;
-		} else if (b.isSideSolid(state, worldObj, offsetPos, side.getOpposite())) {
+		} else if (b.isSideSolid(state, world, offsetPos, side.getOpposite())) {
 			ret = RedNetConnectionType.CableSingle;
 		} else {
 			ret = RedNetConnectionType.PlateSingle;
@@ -693,11 +689,12 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		if (side == null) {
 			return;
 		}
+		int previousColor = _sideColors[side.ordinal()];
 		_sideColors[side.ordinal()] = color;
-		{
-			updateNearbyNode(side);
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
-		}
+
+		updateNearbyNode(side);
+		_network.updatePowerLevels(previousColor);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public int getSideColor(EnumFacing side) {
@@ -739,7 +736,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 		//TODO remove if we only use TESR rendering
 		long[] a = __lastUpdates;
 		int i = a.length, e = i, p = __updatePos;
-		a[p] = worldObj.getTotalWorldTime();
+		a[p] = world.getTotalWorldTime();
 		__updatePos = (byte) ((p + 1) % e);
 		long gap = 0;
 		while (i-- > 1)

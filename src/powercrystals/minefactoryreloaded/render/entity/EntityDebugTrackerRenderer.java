@@ -6,11 +6,9 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
-
+import net.minecraft.util.math.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
-
 import powercrystals.minefactoryreloaded.entity.DebugTracker;
 
 public class EntityDebugTrackerRenderer extends Render {
@@ -22,7 +20,7 @@ public class EntityDebugTrackerRenderer extends Render {
 	@Override
 	public void doRender(Entity p_76986_1_, double x, double y, double z, float yaw, float partialTicks) {
 
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayer player = Minecraft.getMinecraft().player;
 
 		float playerOffsetX = -(float)(player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks);
 		float playerOffsetY = -(float)(player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks);
@@ -75,7 +73,7 @@ public class EntityDebugTrackerRenderer extends Render {
 			float e = ent.getDataManager().get(DebugTracker.ENTITY_EYE_HEIGHT);
 			double minY = bb.minY + e;
 			bb = new AxisAlignedBB(bb.minX, minY, bb.minZ, bb.maxX, minY + (1/8D), bb.maxZ);
-			renderOffsetAABB(bb.expand(0.006, 0, 0.006), 0, 0, 0);
+			renderOffsetAABB(bb.grow(0.006, 0, 0.006), 0, 0, 0);
 			GlStateManager.popMatrix();
 		}
 

@@ -1,28 +1,24 @@
 package powercrystals.minefactoryreloaded.render.block;
 
-import codechicken.lib.lighting.LightModel;
-import codechicken.lib.model.blockbakery.ISimpleBlockBakery;
+import codechicken.lib.model.bakery.generation.ISimpleBlockBakery;
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.render.buffer.BakingVertexBuffer;
-import codechicken.lib.util.TransformUtils;
 import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Scale;
 import codechicken.lib.vec.Translation;
 import codechicken.lib.vec.Vector3;
 import codechicken.lib.vec.uv.IconTransformation;
-import cofh.lib.util.helpers.RenderHelper;
-import com.google.common.collect.ImmutableMap;
+import cofh.core.util.helpers.RenderHelper;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
@@ -32,6 +28,7 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetCable;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetEnergy;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +56,7 @@ public class RedNetCableRenderer implements ISimpleBlockBakery {
 
 	static {
 		try {
-			Map<String, CCModel> cableModels = CCOBJParser.parseObjModels(MineFactoryReloadedCore.class.
+			Map<String, CCModel> cableModels = OBJParser.parseModels(MineFactoryReloadedCore.class.
 							getResourceAsStream("/powercrystals/minefactoryreloaded/models/RedNetCable.obj"),
 					7, new Scale(1/16f));
 			Vector3 p = new Vector3(0, 0, 0);
@@ -200,9 +197,9 @@ public class RedNetCableRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public IExtendedBlockState handleState(IExtendedBlockState blockState, TileEntity tileEntity) {
+	public IExtendedBlockState handleState(IExtendedBlockState blockState, IBlockAccess world, BlockPos pos) {
 
-		TileEntityRedNetCable cable = (TileEntityRedNetCable) tileEntity;
+		TileEntityRedNetCable cable = (TileEntityRedNetCable) world.getTileEntity(pos);
 		TileEntityRedNetEnergy energyCable = null;
 
 		if (cable instanceof TileEntityRedNetEnergy) {
@@ -258,7 +255,7 @@ public class RedNetCableRenderer implements ISimpleBlockBakery {
 	}
 
 	@Override
-	public List<BakedQuad> bakeItemQuads(EnumFacing face, ItemStack stack) {
+	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
 
 		BakingVertexBuffer buffer = BakingVertexBuffer.create();
 		buffer.begin(7, DefaultVertexFormats.ITEM);

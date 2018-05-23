@@ -1,33 +1,19 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import static net.minecraft.util.text.TextFormatting.*;
-import static powercrystals.minefactoryreloaded.setup.Machine.Side.*;
-
-import cofh.core.init.CoreProps;
-import cofh.lib.util.RegistryUtils;
-import cofh.lib.util.helpers.StringHelper;
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-
+import cofh.core.util.helpers.StringHelper;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-
+import net.minecraftforge.fml.common.FMLLog;
 import powercrystals.minefactoryreloaded.block.BlockFactoryMachine;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
@@ -79,6 +65,14 @@ import powercrystals.minefactoryreloaded.tile.machine.TileEntityUnifier;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityVet;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityWeather;
 
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+
+import static net.minecraft.util.text.TextFormatting.*;
+
 public class Machine {
 
 	public static final Material MATERIAL = new MachineMaterial(MapColor.IRON);
@@ -109,26 +103,26 @@ public class Machine {
 	public static Machine DeepStorageUnit = new Machine(1, 3, "DeepStorageUnit", TileEntityDeepStorageUnit.class) {
 
 		@Override
-		public boolean hasTooltip(ItemStack stack) {
+		public boolean hasTooltip(@Nonnull ItemStack stack) {
 
 			return stack.hasTagCompound() && stack.getTagCompound().hasKey("storedStack");
 		}
 
 		@Override
-		public void addInformation(ItemStack stack, EntityPlayer player, List<String> info, boolean adv) {
+		public void addInformation(@Nonnull ItemStack stack, World world, List<String> info, ITooltipFlag tooltipFlag) {
 
 			NBTTagCompound c = stack.getTagCompound();
 			if (c != null && c.hasKey("storedStack")) {
-				ItemStack storedItem = ItemStack.loadItemStackFromNBT(c.getCompoundTag("storedStack"));
+				@Nonnull ItemStack storedItem = new ItemStack(c.getCompoundTag("storedStack"));
 				int storedQuantity = c.getInteger("storedQuantity");
-				if (storedItem != null & storedQuantity > 0) {
+				if (!storedItem.isEmpty() & storedQuantity > 0) {
 					info.add(String.format(MFRUtil.localize("tip.info.mfr.dsu.contains", true),
 						storedQuantity + " " + storedItem.getDisplayName() +
-								(adv ? " (" + storedItem.getItem().getRegistryName() + ":" +
+								(tooltipFlag.isAdvanced() ? " (" + storedItem.getItem().getRegistryName() + ":" +
 										storedItem.getItemDamage() + ")" : "")));
 				}
 			}
-			super.addInformation(stack, player, info, adv);
+			super.addInformation(stack, world, info, tooltipFlag);
 		}
 	};
 	public static Machine LiquiCrafter = new Machine(1, 4, "LiquiCrafter", TileEntityLiquiCrafter.class);
@@ -269,7 +263,7 @@ public class Machine {
 		return "tip.info.mfr." + _name.toLowerCase(Locale.US);
 	}
 
-	public boolean hasTooltip(ItemStack stack) {
+	public boolean hasTooltip(@Nonnull ItemStack stack) {
 
 		if (stack.getTagCompound() != null)
 			if (_energyStoredMax > 0 && stack.getTagCompound().hasKey("energyStored"))
@@ -277,7 +271,7 @@ public class Machine {
 		return _activationEnergy > 0 || I18n.canTranslate(getTooltipText());
 	}
 
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> info, boolean adv) {
+	public void addInformation(@Nonnull ItemStack stack, World world, List<String> info, ITooltipFlag tooltipFlag) {
 
 		if (stack.getTagCompound() != null) {
 			NBTTagCompound tag = stack.getTagCompound();
@@ -319,6 +313,7 @@ public class Machine {
 		return MFRThings.machineBlocks.get(_blockIndex);
 	}
 
+	@Nonnull
 	public ItemStack getItemStack() {
 
 		return new ItemStack(MFRThings.machineBlocks.get(_blockIndex), 1, _meta);
@@ -384,64 +379,6 @@ public class Machine {
 		}
 	}
 
-/* TODO remove when not needed
-	public IIcon getIcon(EnumFacing side, boolean isActive) {
-
-		return (isActive ? _iconsActive : _iconsIdle)[side];
-	}
-
-	public void loadIcons(IIconRegister ir) {
-
-		_iconsActive[0] = ir.registerIcon(loadIcon(bottom, true));
-		_iconsActive[1] = ir.registerIcon(loadIcon(top, true));
-		_iconsActive[2] = ir.registerIcon(loadIcon(front, true));
-		_iconsActive[3] = ir.registerIcon(loadIcon(back, true));
-		_iconsActive[4] = ir.registerIcon(loadIcon(left, true));
-		_iconsActive[5] = ir.registerIcon(loadIcon(right, true));
-		_iconsIdle[0] = ir.registerIcon(loadIcon(bottom, false));
-		_iconsIdle[1] = ir.registerIcon(loadIcon(top, false));
-		_iconsIdle[2] = ir.registerIcon(loadIcon(front, false));
-		_iconsIdle[3] = ir.registerIcon(loadIcon(back, false));
-		_iconsIdle[4] = ir.registerIcon(loadIcon(left, false));
-		_iconsIdle[5] = ir.registerIcon(loadIcon(right, false));
-	}
-*/
-
-	protected String loadIcon(Side side, boolean active) {
-
-		final String base = "minefactoryreloaded:machines/";
-		final String a = side.getMain(active);
-		final String name = getInternalName() + ".";
-		String t;
-		if (CoreProps.enableColorBlindTextures) {
-			final String cb = ".cb";
-			if (RegistryUtils.blockTextureExists(t = base + name + a + cb))
-				return t;
-			else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.getAlt(active) + cb))
-				return t;
-			else if (RegistryUtils.blockTextureExists(t = base + name + side.name + cb))
-				return t;
-			else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.alt + cb))
-				return t;
-		}
-		if (RegistryUtils.blockTextureExists(t = base + name + a))
-			return t;
-		else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.getAlt(active)))
-			return t;
-		else if (RegistryUtils.blockTextureExists(t = base + name + side.name))
-			return t;
-		else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + name + side.alt))
-			return t;
-		else if (RegistryUtils.blockTextureExists(t = base + "tile.mfr.machine.0." + a))
-			return t;
-		else if (side.hasAlt && RegistryUtils.blockTextureExists(t = base + "tile.mfr.machine.0." + side.getAlt(active)))
-			return t;
-		else if (RegistryUtils.blockTextureExists(t = base + "tile.mfr.machine.0." + side.name))
-			return t;
-		else
-			return base + "tile.mfr.machine.0." + side.alt;
-	}
-
 	public String getTileEntityName() {
 		
 		return _tileEntityName;
@@ -452,7 +389,7 @@ public class Machine {
 		return _tileEntityClass;
 	}
 
-	protected static enum Side {
+	protected enum Side {
 		bottom(null),
 		top(null),
 		front("side"),

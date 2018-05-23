@@ -1,13 +1,12 @@
 package powercrystals.minefactoryreloaded.gui;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
 
 public class MFRCreativeTab extends CreativeTabs
 {
@@ -18,6 +17,7 @@ public class MFRCreativeTab extends CreativeTabs
 		super(label);
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getIconItemStack()
 	{
@@ -30,10 +30,11 @@ public class MFRCreativeTab extends CreativeTabs
 		return this.getTabLabel();
 	}
 
+	@Nonnull
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Item getTabIconItem()
+	public ItemStack getTabIconItem()
 	{
-		return null;
+		return ItemStack.EMPTY;
 	}
 }

@@ -23,10 +23,10 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactory;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatForgeMicroblock",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatforgemicroblock",
 		name = "MFR Compat: ForgeMicroblock",
 		version = MineFactoryReloadedCore.version,
-		dependencies = "after:MineFactoryReloaded",
+		dependencies = "after:minefactoryreloaded",
 		customProperties = @CustomProperty(k = "cofhversion", v = "true")))
 public class FMP {
 
@@ -50,13 +50,13 @@ public class FMP {
 
 	private void addSubtypes(ItemBlockFactory item) {
 
-		List<ItemStack> items = new LinkedList<ItemStack>();
+		NonNullList<ItemStack> items = new LinkedList<@Nonnull ItemStack>();
 		item.getSubItems(item, items);
 		for (int i = items.size(); i-- > 0;)
 			sendComm(items.get(i));
 	}
 
-	private void sendComm(ItemStack data) {
+	private void sendComm(@Nonnull ItemStack data) {
 
 		FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", data);
 	}

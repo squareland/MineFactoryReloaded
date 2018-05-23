@@ -1,24 +1,20 @@
 package powercrystals.minefactoryreloaded.tile.rednet;
 
 import cofh.api.core.IPortableData;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInputNode;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetNetworkContainer;
@@ -32,7 +28,10 @@ import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 
-public class TileEntityRedNetLogic extends TileEntityBase implements IRotateableTile, IPortableData {
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+
+public class TileEntityRedNetLogic extends TileEntityBase implements IRotateableTile, IPortableData, ITickable {
 
 	public static class PinMapping {
 
@@ -193,7 +192,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 
 		for (int i = 0; i < _upgradeLevel.length; i++) {
 			if (_upgradeLevel[i] > 0) {
-				ItemStack card = new ItemStack(MFRThings.logicCardItem, 1, _upgradeLevel[i] - 1);
+				@Nonnull ItemStack card = new ItemStack(MFRThings.logicCardItem, 1, _upgradeLevel[i] - 1);
 				if (!player.inventory.addItemStackToInventory(card)) {
 					player.entityDropItem(card, 0.0F);
 				}
@@ -222,7 +221,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 			initCircuit(i, new Noop());
 			sendCircuitDefinition(i);
 		}
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public void setCircuitFromPacket(NBTTagCompound packet) {
@@ -281,14 +280,14 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		}
 		data.setIntArray("outputs", l);
 
-		Packets.sendToAllPlayersInRange(worldObj, pos, 10,
+		Packets.sendToAllPlayersInRange(world, pos, 10,
 			new SPacketUpdateTileEntity(pos, 1, data));
 	}
 
 	@Override
 	public void update() {
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return;
 		}
 
@@ -311,7 +310,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 					input[pinNum] = mapping.buffer == 12 ? mapping.pin : _buffers[mapping.buffer][mapping.pin];
 				}
 
-				int[] output = circuit.recalculateOutputValues(worldObj.getTotalWorldTime(), input);
+				int[] output = circuit.recalculateOutputValues(world.getTotalWorldTime(), input);
 				mappings = _pinMappingOutputs[circuitNum];
 				for (int pinNum = 0, j = output.length; pinNum < j; ++pinNum) {
 					PinMapping mapping = mappings[pinNum];
@@ -324,17 +323,17 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			if (!areEqual(_backBuffer[facing.ordinal()], _buffers[facing.ordinal() + 6])) {
 				bp = pos.offset(facing);
-				Block b = worldObj.getBlockState(bp).getBlock();
+				Block b = world.getBlockState(bp).getBlock();
 				if (b instanceof IRedNetNetworkContainer) {
-					((IRedNetNetworkContainer) b).updateNetwork(worldObj, bp, facing.getOpposite());
+					((IRedNetNetworkContainer) b).updateNetwork(world, bp, facing.getOpposite());
 				} else if (b instanceof IRedNetInputNode) {
 					IRedNetInputNode n = ((IRedNetInputNode) b);
-					RedNetConnectionType type = n.getConnectionType(worldObj, bp, facing.getOpposite());
+					RedNetConnectionType type = n.getConnectionType(world, bp, facing.getOpposite());
 					if (type.isConnected) {
 						if (type.isAllSubnets)
-							n.onInputsChanged(worldObj, bp, facing.getOpposite(), _buffers[facing.ordinal() + 6]);
+							n.onInputsChanged(world, bp, facing.getOpposite(), _buffers[facing.ordinal() + 6]);
 						else if (type.isSingleSubnet)
-							n.onInputChanged(worldObj, bp, facing.getOpposite(), _buffers[facing.ordinal() + 6][0]);
+							n.onInputChanged(world, bp, facing.getOpposite(), _buffers[facing.ordinal() + 6][0]);
 					}
 				}
 			}
@@ -376,10 +375,10 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 
 		writeCricuitsOnly(tag, false);
 		if (tag.hasKey("circuits", 9)) {
-			tag.setByte("p_rot", (byte) worldObj.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal());
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.uploaded"));
+			tag.setByte("p_rot", (byte) world.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal());
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.uploaded"));
 		} else {
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.empty"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.empty"));
 		}
 	}
 
@@ -387,15 +386,15 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 	public void readPortableData(EntityPlayer player, NBTTagCompound tag) {
 
 		if (!canRotate()) {
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error2"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error2"));
 			return;
 		}
 		int circuitCount = tag.getTagList("circuits", 10).tagCount();
 		if (circuitCount > getCircuitCount()) {
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.error"));
 		} else {
 			readCircuitsOnly(tag);
-			player.addChatMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.downloaded"));
+			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.downloaded"));
 		}
 	}
 
@@ -405,7 +404,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		super.writeItemNBT(tag);
 		writeCricuitsOnly(tag, true);
 		if (tag.hasKey("circuits", 9))
-			tag.setByte("p_rot", (byte) worldObj.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal());
+			tag.setByte("p_rot", (byte) world.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal());
 		l: for (int v : _upgradeLevel)
 			if (v != 0) {
 				tag.setIntArray("upgrades", _upgradeLevel);
@@ -496,7 +495,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		int rot = tag.hasKey("p_rot") ? tag.getByte("p_rot") : -1, worldRot = 0;
 		int[] map = {0, 1, 2, 3};
 		if (rot != -1) {
-			worldRot = worldObj.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal();
+			worldRot = world.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal();
 			int[][] data = {{0,1,2,3},{3,2,0,1},{1,0,3,2},{2,3,1,0}};
 			int i = worldRot - rot;
 			if (i < 0) i += 4;
@@ -586,11 +585,11 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 
 		for (int i = 0; i < 6; i++) {
 			if (_upgradeLevel[i] == 0) {
-				if (!worldObj.isRemote) {
+				if (!world.isRemote) {
 					_upgradeLevel[i] = level;
 					updateUpgradeLevels();
 				}
-				MFRUtil.notifyBlockUpdate(worldObj, pos);
+				MFRUtil.notifyBlockUpdate(world, pos);
 				return true;
 			}
 		}
@@ -666,7 +665,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 	public void rotate(EnumFacing axis) {
 
 		if (canRotate(axis)) {
-			int currentMeta = worldObj.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal();
+			int currentMeta = world.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal();
 			int nextMeta = (currentMeta + 1) & 3; // % 4
 			int[] map = {0, 1, 2, 3};
 			{
@@ -682,7 +681,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 					}
 				}
 			}
-			worldObj.setBlockState(pos, MFRThings.rednetLogicBlock.getDefaultState().withProperty(BlockRedNetLogic.FACING, EnumFacing.VALUES[nextMeta]));
+			world.setBlockState(pos, MFRThings.rednetLogicBlock.getDefaultState().withProperty(BlockRedNetLogic.FACING, EnumFacing.VALUES[nextMeta]));
 		}
 	}
 
@@ -690,15 +689,15 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 	public void rotateDirectlyTo(int facing) {
 
 		if (canRotate() && facing >= 2 && facing < 6) {
-			IBlockState state = worldObj.getBlockState(pos);
-			worldObj.setBlockState(pos, state.withProperty(BlockRedNetLogic.FACING, EnumFacing.HORIZONTALS[facing - 2]), 3);
+			IBlockState state = world.getBlockState(pos);
+			world.setBlockState(pos, state.withProperty(BlockRedNetLogic.FACING, EnumFacing.HORIZONTALS[facing - 2]), 3);
 		}
 	}
 
 	@Override
 	public EnumFacing getDirectionFacing() {
 
-		return worldObj.getBlockState(pos).getValue(BlockRedNetLogic.FACING);
+		return world.getBlockState(pos).getValue(BlockRedNetLogic.FACING);
 	}
 
 	private static boolean areEqual(int[] a, int[] b) {

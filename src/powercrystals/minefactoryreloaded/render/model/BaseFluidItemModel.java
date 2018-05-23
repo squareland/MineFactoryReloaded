@@ -1,12 +1,9 @@
 package powercrystals.minefactoryreloaded.render.model;
 
 import codechicken.lib.util.TransformUtils;
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -24,14 +21,14 @@ import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import org.apache.commons.lang3.tuple.Pair;
 
-import javax.vecmath.Matrix4f;
+import javax.annotation.Nonnull;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 
-public abstract class BaseFluidItemModel implements IModel, IModelCustomData {
+public abstract class BaseFluidItemModel implements IModel {
 
 	// minimal Z offset to prevent depth-fighting
 	private static final float NORTH_Z_FLUID = 7.498f / 16f;
@@ -69,9 +66,9 @@ public abstract class BaseFluidItemModel implements IModel, IModelCustomData {
 	@Override
 	public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
 
-		ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformMap = IPerspectiveAwareModel.MapWrapper.getTransforms(state);
+		ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformMap = PerspectiveMapWrapper.getTransforms(state);
 
-		TRSRTransformation transform = state.apply(Optional.absent()).or(TRSRTransformation.identity());
+		TRSRTransformation transform = state.apply(Optional.empty()).orElse(TRSRTransformation.identity());
 		TextureAtlasSprite fluidSprite = null;
 		ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
@@ -118,14 +115,13 @@ public abstract class BaseFluidItemModel implements IModel, IModelCustomData {
 
 	protected abstract static class BakedFluidItemOverrideHandler extends ItemOverrideList {
 
-
 		protected BakedFluidItemOverrideHandler() {
 
 			super(ImmutableList.of());
 		}
 
 		@Override
-		public IBakedModel handleItemState(IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
+		public IBakedModel handleItemState(IBakedModel originalModel, @Nonnull ItemStack stack, World world, EntityLivingBase entity) {
 
 			BakedFluidItem model = (BakedFluidItem) originalModel;
 
@@ -140,7 +136,7 @@ public abstract class BaseFluidItemModel implements IModel, IModelCustomData {
 				Function<ResourceLocation, TextureAtlasSprite> textureGetter
 						= location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
 
-				IBakedModel bakedModel = parent.bake(new SimpleModelState(model.transforms), model.format, textureGetter);
+				IBakedModel bakedModel = parent.bake(new SimpleModelState(model.transformMap), model.format, textureGetter);
 				model.cache.put(name, bakedModel);
 				return bakedModel;
 			}
@@ -148,77 +144,29 @@ public abstract class BaseFluidItemModel implements IModel, IModelCustomData {
 			return model.cache.get(name);
 		}
 
-		protected abstract String getFluidNameFromStack(ItemStack stack);
+		protected abstract String getFluidNameFromStack(@Nonnull ItemStack stack);
 	}
 
-	protected static final class BakedFluidItem implements IPerspectiveAwareModel {
+	protected static final class BakedFluidItem extends BakedItemModel {
 
 		private final BaseFluidItemModel parent;
 		// FIXME: guava cache?
 		private final Map<String, IBakedModel> cache; // contains all the baked models since they'll never change
-		private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms;
-		private final ImmutableList<BakedQuad> quads;
-		private final TextureAtlasSprite particle;
 		private final VertexFormat format;
-		private final BakedFluidItemOverrideHandler overrideHandler;
-		
-		public BakedFluidItem(BaseFluidItemModel parent, ImmutableList<BakedQuad> quads, TextureAtlasSprite particle, VertexFormat format, 
-				ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms, Map<String, IBakedModel> cache, 
-				BakedFluidItemOverrideHandler overrideHandler) {
+		private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformMap;
 
-			this.quads = quads;
-			this.particle = particle;
+		public BakedFluidItem(BaseFluidItemModel parent,
+				ImmutableList<BakedQuad> quads,
+				TextureAtlasSprite particle,
+				VertexFormat format,
+				ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms,
+				Map<String, IBakedModel> cache,
+				BakedFluidItemOverrideHandler overrideHandler) {
+			super(quads, particle, transforms, overrideHandler);
 			this.format = format;
 			this.parent = parent;
-			this.transforms = transforms;
 			this.cache = cache;
-			this.overrideHandler = overrideHandler;
-		}
-
-		@Override
-		public ItemOverrideList getOverrides() {
-
-			return overrideHandler;
-		}
-
-		@Override
-		public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-
-			return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, transforms, cameraTransformType);
-		}
-
-		@Override
-		public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-
-			if (side == null) {
-				return quads;
-			}
-			return ImmutableList.of();
-		}
-
-		public boolean isAmbientOcclusion() {
-
-			return true;
-		}
-
-		public boolean isGui3d() {
-
-			return false;
-		}
-
-		public boolean isBuiltInRenderer() {
-
-			return false;
-		}
-
-		public TextureAtlasSprite getParticleTexture() {
-
-			return particle;
-		}
-
-		public ItemCameraTransforms getItemCameraTransforms() {
-
-			return ItemCameraTransforms.DEFAULT;
+			this.transformMap = transforms;
 		}
 	}
 }

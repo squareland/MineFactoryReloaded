@@ -12,6 +12,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,6 +28,7 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
@@ -36,7 +38,8 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	protected boolean _spawnExact = false;
 	protected int _spawnCost = 0;
 	protected Entity _spawn = null;
-	protected ItemStack _lastSpawnStack = null;
+	@Nonnull
+	protected ItemStack _lastSpawnStack = ItemStack.EMPTY;
 
 	public TileEntityAutoSpawner() {
 
@@ -77,12 +80,12 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 		return 1;
 	}
 
-	protected int getSpawnCost() {
+	private int getSpawnCost() {
 
 		return _spawnExact ? MFRConfig.autospawnerCostExact.getInt() : MFRConfig.autospawnerCostStandard.getInt();
 	}
 
-	protected int getSpawnCost(Entity e, String id) {
+	private int getSpawnCost(Entity e, String id) {
 
 		int r = MFRRegistry.getBaseSpawnCost(id);
 
@@ -92,14 +95,14 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 			int t = Math.abs(el.experienceValue) + 1;
 			r += t + t / 3;
 
-			for (int j = 0; j < el.inventoryArmor.length; ++j) {
-				if (el.inventoryArmor[j] != null && el.inventoryArmorDropChances[j] <= 1.0F) {
+			for (int j = 0; j < el.inventoryArmor.size(); ++j) {
+				if (!el.inventoryArmor.get(j).isEmpty() && el.inventoryArmorDropChances[j] <= 1.0F) {
 					r += 1 + 4;
 				}
 			}
 
-			for (int k = 0; k < el.inventoryHands.length; ++k) {
-				if (el.inventoryHands[k] != null && el.inventoryHandsDropChances[k] <= 1.0F) {
+			for (int k = 0; k < el.inventoryHands.size(); ++k) {
+				if (!el.inventoryHands.get(k).isEmpty() && el.inventoryHandsDropChances[k] <= 1.0F) {
 					r += 1 + 4;
 				}
 			}
@@ -113,8 +116,8 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		ItemStack item = getStackInSlot(0);
-		if (item == null || !canInsertItem(0, item, null)) {
+		@Nonnull ItemStack item = getStackInSlot(0);
+		if (item.isEmpty() || !canInsertItem(0, item, null)) {
 			setWorkDone(0);
 			setIdleTicks(getIdleTicksMax());
 			return false;
@@ -126,7 +129,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 			boolean isBlackListed = MFRRegistry.getAutoSpawnerBlacklist().contains(entityID);
 			blackList:
 			if (!isBlackListed) {
-				Class<?> e = (Class<?>) EntityList.NAME_TO_CLASS.get(entityID);
+				Class<?> e = EntityList.getClass(new ResourceLocation(entityID));
 				if (e == null) {
 					isBlackListed = true;
 					break blackList;
@@ -143,7 +146,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 				return false;
 			}
 
-			Entity spawnedEntity = _spawn = EntityList.createEntityByName(entityID, worldObj);
+			Entity spawnedEntity = _spawn = EntityList.createEntityByIDFromName(new ResourceLocation(entityID), world);
 
 			if (!(spawnedEntity instanceof EntityLivingBase)) {
 				_spawn = null;
@@ -165,7 +168,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 
 			if (!_spawnExact) {
 				if (spawnedLiving instanceof EntityLiving)
-					((EntityLiving) spawnedLiving).onInitialSpawn(worldObj.getDifficultyForLocation(pos), null);
+					((EntityLiving) spawnedLiving).onInitialSpawn(world.getDifficultyForLocation(pos), null);
 				if (handler != null)
 					handler.onMobSpawn(spawnedLiving);
 			} else {
@@ -194,22 +197,22 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 
 			EntityLivingBase spawnedLiving = (EntityLivingBase) spawnedEntity;
 
-			double x = pos.getX() + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * _spawnRange;
-			double y = pos.getY() + worldObj.rand.nextInt(3) - 1;
-			double z = pos.getZ() + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * _spawnRange;
+			double x = pos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * _spawnRange;
+			double y = pos.getY() + world.rand.nextInt(3) - 1;
+			double z = pos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * _spawnRange;
 
-			spawnedLiving.setLocationAndAngles(x, y, z, worldObj.rand.nextFloat() * 360.0F, 0.0F);
+			spawnedLiving.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
 
-			if (!worldObj.checkNoEntityCollision(spawnedLiving.getEntityBoundingBox()) ||
-					!worldObj.getCollisionBoxes(spawnedLiving, spawnedLiving.getEntityBoundingBox()).isEmpty() ||
-					(worldObj.containsAnyLiquid(spawnedLiving.getEntityBoundingBox()) != (spawnedLiving instanceof EntityWaterMob))) {
+			if (!world.checkNoEntityCollision(spawnedLiving.getEntityBoundingBox()) ||
+					!world.getCollisionBoxes(spawnedLiving, spawnedLiving.getEntityBoundingBox()).isEmpty() ||
+					(world.containsAnyLiquid(spawnedLiving.getEntityBoundingBox()) != (spawnedLiving instanceof EntityWaterMob))) {
 				// TODO: mob valid spawn location logic shifted to mob, but includes random shit too. need to review the logic
 				setIdleTicks(10);
 				return false;
 			}
 
-			worldObj.spawnEntityInWorld(spawnedLiving);
-			worldObj.playEvent(2004, pos, 0);
+			world.spawnEntity(spawnedLiving);
+			world.playEvent(2004, pos, 0);
 
 			if (spawnedLiving instanceof EntityLiving) {
 				((EntityLiving) spawnedLiving).spawnExplosionParticle();
@@ -224,11 +227,11 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	protected void onFactoryInventoryChanged() {
 
 		super.onFactoryInventoryChanged();
-		if (!internalChange && !UtilInventory.stacksEqual(_lastSpawnStack, _inventory[0])) {
+		if (!internalChange && !UtilInventory.stacksEqual(_lastSpawnStack, _inventory.get(0))) {
 			setWorkDone(0);
 			setIdleTicks(getIdleTicksMax());
 		}
-		_lastSpawnStack = _inventory[0];
+		_lastSpawnStack = _inventory.get(0);
 	}
 
 	@Override
@@ -266,7 +269,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return ItemSafariNet.isSafariNet(itemstack) &&
 				!ItemSafariNet.isSingleUse(itemstack) &&
@@ -301,7 +304,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

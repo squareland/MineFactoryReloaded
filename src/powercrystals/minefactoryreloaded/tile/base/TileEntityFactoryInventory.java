@@ -2,64 +2,58 @@ package powercrystals.minefactoryreloaded.tile.base;
 
 import cofh.api.item.IAugmentItem;
 import cofh.core.fluid.FluidTankCore;
-import cofh.lib.util.helpers.FluidHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import cofh.core.util.helpers.FluidHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidTank;
-
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import powercrystals.minefactoryreloaded.core.ITankContainerBucketable;
-import powercrystals.minefactoryreloaded.core.MFRLiquidMover;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.item.ItemUpgrade;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public abstract class TileEntityFactoryInventory extends TileEntityFactory implements ISidedInventory, ITankContainerBucketable {
 
-	public final static FluidTankCore[] emptyIFluidTank = new FluidTankCore[] { };
-	public final static FluidTankInfo[] emptyFluidTankInfo = FluidHelper.NULL_TANK_INFO;
+	private final static FluidTankCore[] emptyIFluidTank = new FluidTankCore[] { };
+	private final static FluidTankInfo[] emptyFluidTankInfo = FluidHelper.NULL_TANK_INFO;
 	public final static IFluidTankProperties[] emptyIFluidTankProperties = new IFluidTankProperties[] { };
 	protected final static int BUCKET_VOLUME = Fluid.BUCKET_VOLUME;
 
-	protected List<ItemStack> failedDrops = null;
-	private List<ItemStack> missedDrops = new ArrayList<ItemStack>(5);
-	protected int _failedDropTicksMax = 20;
-	private int _failedDropTicks = 0;
-
+	protected NonNullList<ItemStack> failedDrops = null;
 	protected FluidTankCore[] _tanks;
 
-	protected ItemStack[] _inventory;
+	@Nonnull
+	protected NonNullList<ItemStack> _inventory;
 
 	protected boolean internalChange = false;
+
+	private boolean isActive = false;
 
 	protected TileEntityFactoryInventory(Machine machine) {
 
 		super(machine);
-		_inventory = new ItemStack[getSizeInventory()];
+		_inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		_tanks = createTanks();
 		setManageFluids(_tanks != null);
 	}
@@ -81,33 +75,33 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 
 		if (failedDrops != null)
 			inv: while (failedDrops.size() > 0) {
-				ItemStack itemstack = failedDrops.remove(0);
-				if (itemstack == null || itemstack.getItem() == null) {
+				@Nonnull ItemStack itemstack = failedDrops.remove(0);
+				if (itemstack.isEmpty() || itemstack.getItem() == null) {
 					continue;
 				}
-				float xOffset = worldObj.rand.nextFloat() * 0.8F + 0.1F;
-				float yOffset = worldObj.rand.nextFloat() * 0.8F + 0.1F;
-				float zOffset = worldObj.rand.nextFloat() * 0.8F + 0.1F;
+				float xOffset = world.rand.nextFloat() * 0.8F + 0.1F;
+				float yOffset = world.rand.nextFloat() * 0.8F + 0.1F;
+				float zOffset = world.rand.nextFloat() * 0.8F + 0.1F;
 				do {
-					if (itemstack.stackSize <= 0) {
+					if (itemstack.getCount() <= 0) {
 						continue inv;
 					}
-					int amountToDrop = worldObj.rand.nextInt(21) + 10;
-					if (amountToDrop > itemstack.stackSize) {
-						amountToDrop = itemstack.stackSize;
+					int amountToDrop = world.rand.nextInt(21) + 10;
+					if (amountToDrop > itemstack.getCount()) {
+						amountToDrop = itemstack.getCount();
 					}
-					itemstack.stackSize -= amountToDrop;
-					EntityItem entityitem = new EntityItem(worldObj,
+					itemstack.shrink(amountToDrop);
+					EntityItem entityitem = new EntityItem(world,
 							pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset,
 							new ItemStack(itemstack.getItem(), amountToDrop, itemstack.getItemDamage()));
 					if (itemstack.getTagCompound() != null) {
-						entityitem.getEntityItem().setTagCompound(itemstack.getTagCompound());
+						entityitem.getItem().setTagCompound(itemstack.getTagCompound());
 					}
 					float motionMultiplier = 0.05F;
-					entityitem.motionX = (float) worldObj.rand.nextGaussian() * motionMultiplier;
-					entityitem.motionY = (float) worldObj.rand.nextGaussian() * motionMultiplier + 0.2F;
-					entityitem.motionZ = (float) worldObj.rand.nextGaussian() * motionMultiplier;
-					worldObj.spawnEntityInWorld(entityitem);
+					entityitem.motionX = (float) world.rand.nextGaussian() * motionMultiplier;
+					entityitem.motionY = (float) world.rand.nextGaussian() * motionMultiplier + 0.2F;
+					entityitem.motionZ = (float) world.rand.nextGaussian() * motionMultiplier;
+					world.spawnEntity(entityitem);
 				} while (true);
 			}
 	}
@@ -228,48 +222,23 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return false;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return false;
 	}
 
-	@Override
-	public void update() {
-
-		super.update();
-
-		if (!worldObj.isRemote && shouldPumpLiquid()) {
-			for (IFluidTank tank : getTanks())
-				if (shouldPumpTank(tank))
-					MFRLiquidMover.pumpLiquid(tank, this);
-		}
-
-		if (failedDrops != null) {
-			if (_failedDropTicks < _failedDropTicksMax) {
-				_failedDropTicks++;
-				return;
-			}
-			_failedDropTicks = 0;
-			if (!doDrop(failedDrops)) {
-				return;
-			}
-			failedDrops = null;
-			markDirty();
-		}
-	}
-
-	public boolean doDrop(ItemStack drop) {
+	public boolean doDrop(@Nonnull ItemStack drop) {
 
 		drop = UtilInventory.dropStack(this, drop, this.getDropDirections(), this.getDropDirection());
-		if (drop != null && drop.stackSize > 0) {
+		if (!drop.isEmpty() && drop.getCount() > 0) {
 			if (failedDrops == null) {
-				failedDrops = new ArrayList<ItemStack>();
+				failedDrops = NonNullList.create();
 			}
 			failedDrops.add(drop);
 			markDirty();
@@ -282,20 +251,21 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		if (drops == null || drops.size() <= 0) {
 			return true;
 		}
-		List<ItemStack> missed = missedDrops;
-		missed.clear();
+
+		NonNullList<ItemStack> missed = NonNullList.create();
+
 		for (int i = drops.size(); i-- > 0;) {
-			ItemStack dropStack = drops.get(i);
+			@Nonnull ItemStack dropStack = drops.get(i);
 			dropStack = UtilInventory.dropStack(this, dropStack, this.getDropDirections(), this.getDropDirection());
-			if (dropStack != null && dropStack.stackSize > 0) {
+			if (!dropStack.isEmpty() && dropStack.getCount() > 0) {
 				missed.add(dropStack);
 			}
 		}
 
-		if (missed.size() != 0) {
+		if (!missed.isEmpty()) {
 			if (drops != failedDrops) {
 				if (failedDrops == null) {
-					failedDrops = new ArrayList<ItemStack>(missed.size());
+					failedDrops = NonNullList.create();
 				}
 				failedDrops.addAll(missed);
 			}
@@ -320,34 +290,35 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		return -1;
 	}
 
-	protected boolean canUseUpgrade(ItemStack stack, IAugmentItem item) {
+	protected boolean canUseUpgrade(@Nonnull ItemStack stack, IAugmentItem item) {
 
 		return _areaManager != null && item instanceof ItemUpgrade && ((ItemUpgrade) item).getAugmentLevel(stack, "radius") != 0;
 	}
 
-	public boolean isUsableAugment(ItemStack stack) {
+	public boolean isUsableAugment(@Nonnull ItemStack stack) {
 
-		if (stack == null || !(stack.getItem() instanceof IAugmentItem))
+		if (stack.isEmpty() || !(stack.getItem() instanceof IAugmentItem))
 			return false;
 		return canUseUpgrade(stack, (IAugmentItem) stack.getItem());
 	}
 
-	public boolean acceptUpgrade(ItemStack stack) {
+	public boolean acceptUpgrade(@Nonnull ItemStack stack) {
 
 		int slot = getUpgradeSlot();
-		if (slot < 0 | stack == null || !isUsableAugment(stack))
+		if (slot < 0 || stack.isEmpty() || !isUsableAugment(stack))
 			return false;
-		if (getStackInSlot(slot) != null)
+		if (!getStackInSlot(slot).isEmpty())
 			return false;
 
 		setInventorySlotContents(slot, stack.splitStack(1));
 		return true;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getStackInSlot(int i) {
 
-		return _inventory[i];
+		return _inventory.get(i);
 	}
 
 	@Override
@@ -360,39 +331,40 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack decrStackSize(int slot, int size) {
 
-		if (_inventory[slot] != null) {
-			if (_inventory[slot].stackSize <= size) {
-				ItemStack itemstack = _inventory[slot];
-				_inventory[slot] = null;
+		if (!_inventory.get(slot).isEmpty()) {
+			if (_inventory.get(slot).getCount() <= size) {
+				@Nonnull ItemStack itemstack = _inventory.get(slot);
+				_inventory.set(slot, ItemStack.EMPTY);
 				markDirty();
 				return itemstack;
 			}
-			ItemStack itemstack1 = _inventory[slot].splitStack(size);
-			if (_inventory[slot].stackSize <= 0) {
-				_inventory[slot] = null;
+			@Nonnull ItemStack itemstack1 = _inventory.get(slot).splitStack(size);
+			if (_inventory.get(slot).getCount() <= 0) {
+				_inventory.set(slot, ItemStack.EMPTY);
 			}
 			markDirty();
 			return itemstack1;
 		}
 		else {
 			markDirty();
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
 	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
+	public void setInventorySlotContents(int i, @Nonnull ItemStack itemstack) {
 
-		if (itemstack != null) {
-			if (itemstack.stackSize > getInventoryStackLimit())
-				itemstack.stackSize = getInventoryStackLimit();
-			else if (itemstack.stackSize < 0)
-				itemstack = null;
+		if (!itemstack.isEmpty()) {
+			if (itemstack.getCount() > getInventoryStackLimit())
+				itemstack.setCount(getInventoryStackLimit());
+			else if (itemstack.getCount() < 0)
+				itemstack = ItemStack.EMPTY;
 		}
-		_inventory[i] = itemstack;
+		_inventory.set(i, itemstack);
 		markDirty();
 	}
 
@@ -418,24 +390,24 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, @Nullable ItemStack itemstack) {
+	public boolean isItemValidForSlot(int slot, @Nonnull ItemStack itemstack) {
 
 		int start = getStartInventorySide(null);
 		if (slot < start ||
 				slot > (start + getSizeInventorySide(null)))
 			return false;
-		if (itemstack == null)
+		if (itemstack.isEmpty())
 			return true;
-		if (itemstack.stackSize > Math.min(itemstack.getMaxStackSize(), getInventoryStackLimit()))
+		if (itemstack.getCount() > Math.min(itemstack.getMaxStackSize(), getInventoryStackLimit()))
 			return false;
-		ItemStack slotContent = this.getStackInSlot(slot);
-		return slotContent == null || UtilInventory.stacksEqual(itemstack, slotContent);
+		@Nonnull ItemStack slotContent = this.getStackInSlot(slot);
+		return slotContent.isEmpty() || UtilInventory.stacksEqual(itemstack, slotContent);
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+	public boolean isUsableByPlayer(EntityPlayer entityplayer) {
 
-		if (isInvalid() || worldObj.getTileEntity(pos) != this) {
+		if (isInvalid() || world.getTileEntity(pos) != this) {
 			return false;
 		}
 		return entityplayer.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64D;
@@ -445,17 +417,17 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public void readFromNBT(NBTTagCompound tag) {
 
 		super.readFromNBT(tag);
-		_inventory = new ItemStack[getSizeInventory()];
+		_inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		NBTTagList nbttaglist;
 		if (tag.hasKey("Items")) {
 			nbttaglist = tag.getTagList("Items", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
-				NBTTagCompound slot = nbttaglist.getCompoundTagAt(i);
-				int j = slot.getByte("Slot") & 0xff;
-				if (j < _inventory.length) {
-					_inventory[j] = ItemStack.loadItemStackFromNBT(slot);
-					if (_inventory[j].stackSize < 0)
-						_inventory[j] = null;
+				NBTTagCompound slotNBT = nbttaglist.getCompoundTagAt(i);
+				int j = slotNBT.getByte("Slot") & 0xff;
+				if (j < _inventory.size()) {
+					_inventory.set(j, new ItemStack(slotNBT));
+					if (_inventory.get(j).getCount() < 0)
+						_inventory.set(j, ItemStack.EMPTY);
 				}
 			}
 		}
@@ -478,12 +450,12 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		}
 
 		if (tag.hasKey("DropItems")) {
-			List<ItemStack> drops = new ArrayList<ItemStack>();
+			NonNullList<ItemStack> drops = NonNullList.create();
 			nbttaglist = tag.getTagList("DropItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
 				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				ItemStack item = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-				if (item != null && item.stackSize > 0) {
+				@Nonnull ItemStack item = new ItemStack(nbttagcompound1);
+				if (!item.isEmpty() && item.getCount() > 0) {
 					drops.add(item);
 				}
 			}
@@ -494,16 +466,34 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	}
 
 	@Override
+	protected NBTTagCompound writePacketData(NBTTagCompound tag) {
+
+		tag = super.writePacketData(tag);
+
+		tag.setBoolean("a", isActive);
+
+		return tag;
+	}
+
+	@Override
+	protected void handlePacketData(NBTTagCompound tag) {
+
+		super.handlePacketData(tag);
+
+		isActive = tag.getBoolean("a");
+	}
+
+	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 
 		tag = super.writeToNBT(tag);
-		if (_inventory.length > 0) {
+		if (_inventory.size() > 0) {
 			NBTTagList items = new NBTTagList();
-			for (int i = 0; i < _inventory.length; i++) {
-				if (_inventory[i] != null && _inventory[i].stackSize >= 0) {
+			for (int i = 0; i < _inventory.size(); i++) {
+				if (!_inventory.get(i).isEmpty() && _inventory.get(i).getCount() >= 0) {
 					NBTTagCompound slot = new NBTTagCompound();
 					slot.setByte("Slot", (byte) i);
-					_inventory[i].writeToNBT(slot);
+					_inventory.get(i).writeToNBT(slot);
 					items.appendTag(slot);
 				}
 			}
@@ -513,7 +503,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 
 		if (failedDrops != null) {
 			NBTTagList dropItems = new NBTTagList();
-			for (ItemStack item : failedDrops) {
+			for (@Nonnull ItemStack item : failedDrops) {
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				item.writeToNBT(nbttagcompound1);
 				dropItems.appendTag(nbttagcompound1);
@@ -521,6 +511,8 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			if (dropItems.tagCount() > 0)
 				tag.setTag("DropItems", dropItems);
 		}
+
+		tag.setBoolean("a", isActive);
 
 		return tag;
 	}
@@ -546,12 +538,15 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			if (tanks.tagCount() > 0)
 				tag.setTag("Tanks", tanks);
 		}
+
+		isActive = tag.getBoolean("a");
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack removeStackFromSlot(int slot) {
 
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	public boolean shouldDropSlotWhenBroken(int slot) {
@@ -583,13 +578,13 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, @Nullable ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
-		return itemstack == null || this.isItemValidForSlot(slot, itemstack);
+		return itemstack.isEmpty() || this.isItemValidForSlot(slot, itemstack);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, @Nullable ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return true;
 	}
@@ -608,25 +603,36 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 				tankPercent = ((float) tank.getFluid().amount) / tank.getCapacity();
 			}
 		}
-		if (_inventory.length > 0) {
+		if (_inventory.size() > 0) {
 			hasInventory = true;
 			int len = 0;
 			float ret = 0;
-			for (int slot = _inventory.length; slot-- > 0;) {
-				if (canInsertItem(slot, null, null)) {
-					ItemStack stack = getStackInSlot(slot);
-					if (stack != null) {
+			for (int slot = _inventory.size(); slot-- > 0;) {
+				if (canInsertItem(slot, ItemStack.EMPTY, null)) {
+					@Nonnull ItemStack stack = getStackInSlot(slot);
+					if (!stack.isEmpty()) {
 						float maxStack = Math.min(stack.getMaxStackSize(), getInventoryStackLimit());
-						ret += Math.max(Math.min(stack.stackSize / maxStack, 1), 0);
+						ret += Math.max(Math.min(stack.getCount() / maxStack, 1), 0);
 					}
 					++len;
 				}
 			}
 			invPercent = ret / len;
 		}
-		float mult = hasTank & hasInventory ? (tankPercent + invPercent) / 2 : hasTank ? tankPercent : hasInventory ? invPercent : 0f;
+		float mult = hasTank && hasInventory ? (tankPercent + invPercent) / 2 : hasTank ? tankPercent : hasInventory ? invPercent : 0f;
 		return (int) Math.ceil(15 * mult);
 	}
+
+	public boolean isActive() {
+
+		return isActive;
+	}
+
+	public void setIsActive(boolean isActive) {
+
+		this.isActive = isActive;
+	}
+
 
 	@Override
 	public int getField(int id) {
@@ -651,6 +657,17 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	}
 
 	@Override
+	public boolean isEmpty() {
+
+		for (int slot=0; slot < getSizeInventory(); slot++) {
+			if (!_inventory.get(slot).isEmpty())
+				return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 
 		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
@@ -671,6 +688,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			return null; // no external overriding via events
 		} else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (manageSolids()) {
+				//TODO implement proper item handler and drop IInventory instead of using wrappers?
 				if (facing != null) {
 					return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(new SidedInvWrapper(this, facing));
 				} else {

@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.block;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -22,12 +23,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IInitializer, IModelRegister
@@ -95,7 +95,7 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
 	{
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> drops = new ArrayList<>();
 
 		drops.add(new ItemStack(this, 1, 0));
 		if(state.getValue(RUBBER_FILLED)) {
@@ -119,13 +119,11 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 		return super.getFlammability(world, pos, face) * (world.getBlockState(pos).getValue(RUBBER_FILLED) ? 2 : 1);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void getSubBlocks(Item blockId, CreativeTabs tab, List subBlocks)
-	{
-		subBlocks.add(new ItemStack(blockId, 1, 0));
-		subBlocks.add(new ItemStack(blockId, 1, 1));
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+
+		items.add(new ItemStack(this, 1, 0));
+		items.add(new ItemStack(this, 1, 1));
 	}
 
 	@Override
@@ -134,23 +132,16 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 		return false;
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		MFRRegistry.registerBlock(this, new ItemBlock(this));
-		Blocks.FIRE.setFireInfo(this, 50, 15);
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
 
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
+		MFRRegistry.registerBlock(this, new ItemBlock(this));
+		Blocks.FIRE.setFireInfo(this, 50, 15);
 		return true;
 	}
 

@@ -1,18 +1,14 @@
 package powercrystals.minefactoryreloaded.core;
 
 import cofh.api.item.IAugmentItem;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import powercrystals.minefactoryreloaded.item.ItemUpgrade;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class HarvestAreaManager <T extends TileEntity & IRotateableTile>
 {
@@ -162,9 +158,9 @@ public class HarvestAreaManager <T extends TileEntity & IRotateableTile>
 		return _upgradeLevel;
 	}
 
-	public void updateUpgradeLevel(ItemStack stack)
+	public void updateUpgradeLevel(@Nonnull ItemStack stack)
 	{
-		if (stack == null)
+		if (stack.isEmpty())
 		{
 			if (_upgradeLevel != 0)
 				setUpgradeLevel(0);

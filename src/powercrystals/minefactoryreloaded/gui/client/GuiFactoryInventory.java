@@ -1,9 +1,8 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
 import cofh.core.fluid.FluidTankCore;
+import cofh.core.gui.GuiContainerCore;
 import cofh.core.init.CoreProps;
-import cofh.lib.gui.GuiBase;
-import cofh.lib.util.RegistryUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -11,6 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
@@ -23,7 +24,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiFactoryInventory extends GuiBase {
+public class GuiFactoryInventory extends GuiContainerCore {
 
 	protected static DecimalFormat decimal_format = new DecimalFormat();
 
@@ -52,8 +53,18 @@ public class GuiFactoryInventory extends GuiBase {
 		if (CoreProps.enableColorBlindTextures) {
 			ResourceLocation t = new ResourceLocation(
 					MineFactoryReloadedCore.guiFolder + _tileEntity.getGuiBackground() + "_cb.png");
-			if (RegistryUtils.textureExists(t))
+			if (textureExists(t))
 				texture = t;
+		}
+	}
+
+	private boolean textureExists(ResourceLocation texture) {
+
+		try {
+			Minecraft.getMinecraft().getResourceManager().getAllResources(texture);
+			return true;
+		} catch (Throwable t) { // pokemon!
+			return false;
 		}
 	}
 
@@ -70,9 +81,9 @@ public class GuiFactoryInventory extends GuiBase {
 				continue;
 			}
 			SlotFake s = (SlotFake) o;
-			if (x >= s.xDisplayPosition && x <= s.xDisplayPosition + 16 && y >= s.yDisplayPosition &&
-					y <= s.yDisplayPosition + 16) {
-				MFRPacket.sendFakeSlotToServer(_tileEntity, Minecraft.getMinecraft().thePlayer.getEntityId(),
+			if (x >= s.xPos && x <= s.xPos + 16 && y >= s.yPos &&
+					y <= s.yPos + 16) {
+				MFRPacket.sendFakeSlotToServer(_tileEntity, Minecraft.getMinecraft().player.getEntityId(),
 						s.slotNumber, (byte) button);
 			}
 		}
@@ -83,8 +94,8 @@ public class GuiFactoryInventory extends GuiBase {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		GlStateManager.color(1f, 1f, 1f, 1f);
-		fontRendererObj.drawString(_tileEntity.getName(), _xOffset, 6, 4210752);
-		fontRendererObj.drawString(I18n.translateToLocal("container.inventory"), _xOffset, ySize - 96 + 3, 4210752);
+		fontRenderer.drawString(_tileEntity.getName(), _xOffset, 6, 4210752);
+		fontRenderer.drawString(I18n.translateToLocal("container.inventory"), _xOffset, ySize - 96 + 3, 4210752);
 
 		if (_renderTanks) {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -206,7 +217,7 @@ public class GuiFactoryInventory extends GuiBase {
 		int yStart;
 
 		for (int i = 0; i < lines.size(); i++) {
-			tempWidth = this.fontRendererObj.getStringWidth(lines.get(i));
+			tempWidth = fontRenderer.getStringWidth(lines.get(i));
 
 			if (tempWidth > tooltipWidth) {
 				tooltipWidth = tempWidth;
@@ -258,7 +269,7 @@ public class GuiFactoryInventory extends GuiBase {
 				line = "\u00a77" + line;
 			}
 
-			this.fontRendererObj.drawStringWithShadow(line, xStart, yStart, -1);
+			fontRenderer.drawStringWithShadow(line, xStart, yStart, -1);
 
 			if (stringIndex == 0) {
 				yStart += 2;

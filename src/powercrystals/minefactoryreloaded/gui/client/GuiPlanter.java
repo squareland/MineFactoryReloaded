@@ -46,7 +46,7 @@ public class GuiPlanter extends GuiUpgradeable {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-		fontRendererObj.drawString(MFRUtil.localize("info.cofh.filter"), 8, 22, 4210752);
+		fontRenderer.drawString(MFRUtil.localize("info.cofh.filter"), 8, 22, 4210752);
 	}
 
 }

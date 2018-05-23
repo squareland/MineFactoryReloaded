@@ -1,23 +1,21 @@
 package powercrystals.minefactoryreloaded.item.base;
 
-import cofh.core.util.core.IInitializer;
-import cofh.core.render.IModelRegister;
 import cofh.core.item.ItemArmorCore;
+import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Locale;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.util.EnumHelper;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import java.util.Locale;
 
 public class ItemFactoryArmor extends ItemArmorCore implements IInitializer, IModelRegister {
 
@@ -61,22 +59,15 @@ public class ItemFactoryArmor extends ItemArmorCore implements IInitializer, IMo
 		return b.toString();
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		MFRRegistry.registerItem(this);
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
 
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
+		MFRRegistry.registerItem(this);
 		return true;
 	}
 

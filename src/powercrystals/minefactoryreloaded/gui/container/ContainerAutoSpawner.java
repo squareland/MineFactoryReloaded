@@ -25,9 +25,9 @@ public class ContainerAutoSpawner extends ContainerFactoryPowered
 		super.detectAndSendChanges();
 		for(int i = 0; i < listeners.size(); i++)
 		{
-			listeners.get(i).sendProgressBarUpdate(this, 100, ((TileEntityAutoSpawner)_te).getSpawnExact() ? 1 : 0);
-			listeners.get(i).sendProgressBarUpdate(this, 101, ((TileEntityFactoryPowered)_te).getWorkMax() & 65535);
-			listeners.get(i).sendProgressBarUpdate(this, 102, ((TileEntityFactoryPowered)_te).getWorkMax() >>> 16);
+			listeners.get(i).sendWindowProperty(this, 100, ((TileEntityAutoSpawner)_te).getSpawnExact() ? 1 : 0);
+			listeners.get(i).sendWindowProperty(this, 101, ((TileEntityFactoryPowered)_te).getWorkMax() & 65535);
+			listeners.get(i).sendWindowProperty(this, 102, ((TileEntityFactoryPowered)_te).getWorkMax() >>> 16);
 		}
 	}
 

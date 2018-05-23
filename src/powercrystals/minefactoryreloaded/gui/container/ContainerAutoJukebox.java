@@ -36,7 +36,7 @@ public class ContainerAutoJukebox extends ContainerFactoryInventory {
 		for (int i = 0; i < listeners.size(); i++) {
 			IContainerListener listener = listeners.get(i);
 			if (listener != null) {
-				listener.sendProgressBarUpdate(this, 100, (_jukebox.getCanCopy() ? 1 : 0) | (_jukebox.getCanPlay() ? 2 : 0));
+				listener.sendWindowProperty(this, 100, (_jukebox.getCanCopy() ? 1 : 0) | (_jukebox.getCanPlay() ? 2 : 0));
 			}
 		}
 	}

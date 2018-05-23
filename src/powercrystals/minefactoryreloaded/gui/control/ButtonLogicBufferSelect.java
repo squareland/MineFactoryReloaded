@@ -1,11 +1,11 @@
 package powercrystals.minefactoryreloaded.gui.control;
 
-import cofh.lib.gui.element.ElementButtonOption;
+import cofh.core.gui.element.ElementButtonOption;
 import net.minecraft.util.EnumFacing;
 import powercrystals.minefactoryreloaded.gui.client.GuiRedNetLogic;
 
-public class ButtonLogicBufferSelect extends ElementButtonOption
-{
+public class ButtonLogicBufferSelect extends ElementButtonOption {
+
 	private LogicButtonType _buttonType;
 	private GuiRedNetLogic _logicScreen;
 	private int _pinIndex;
@@ -24,6 +24,7 @@ public class ButtonLogicBufferSelect extends ElementButtonOption
 		for (int i = 0; i < 4; ++i)
 			dirMap[ (i + rotation.getHorizontalIndex() + 1) & 3] = dir[i];
 		//TODO needs a lot of refactoring - getHorizontalIndex() + 1 here is a hack to avoid having to go through that now
+		//really the whole logic of assigning sides and rotating needs to be rewritten to be more readable
 		
 		_ignoreChanges = true;
 		if(_buttonType == LogicButtonType.Input)

@@ -1,47 +1,47 @@
 package powercrystals.minefactoryreloaded.core;
 
-import static net.minecraft.util.text.TextFormatting.*;
-import static org.lwjgl.input.Keyboard.*;
-
-import buildcraft.api.tools.IToolWrench;
-
 import cofh.api.item.IToolHammer;
-import cofh.lib.util.helpers.StringHelper;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.UniversalBucket;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import cofh.core.util.helpers.StringHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static net.minecraft.util.text.TextFormatting.ITALIC;
+import static net.minecraft.util.text.TextFormatting.RESET;
+import static org.lwjgl.input.Keyboard.*;
 
 public class MFRUtil {
 
@@ -107,16 +107,17 @@ public class MFRUtil {
 
 		return StringHelper.getFluidName(fluid);
 	}
-	
+
+	@Nonnull
 	public static ItemStack getBucketFor(Fluid fluid){
 		
 		return UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid);
 	}
 
-	public static FluidStack getFluidContents(ItemStack stack) {
+	public static FluidStack getFluidContents(@Nonnull ItemStack stack) {
 
-		if (stack != null && stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)) {
-			IFluidTankProperties[] tankProps = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).getTankProperties();
+		if (!stack.isEmpty() && stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
+			IFluidTankProperties[] tankProps = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).getTankProperties();
 
 			if (tankProps.length > 0) {
 				return tankProps[0].getContents();
@@ -209,45 +210,50 @@ public class MFRUtil {
 
 	public static final List<EnumFacing> VALID_DIRECTIONS = Arrays.asList(EnumFacing.VALUES);
 
-	public static boolean isHoldingUsableTool(EntityPlayer player, BlockPos pos) {
+	public static boolean isHoldingUsableTool(EntityPlayer player, EnumHand hand, BlockPos pos, EnumFacing side) {
 
 		if (player == null) {
 			return false;
 		}
-		if (player.inventory.getCurrentItem() == null) {
+
+		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
+
+		if (heldItem.isEmpty()) {
 			return false;
 		}
-		Item currentItem = player.inventory.getCurrentItem().getItem();
-		if (currentItem instanceof IToolHammer) {
-			return ((IToolHammer) currentItem).isUsable(player.inventory.getCurrentItem(), player, pos);
+
+		if (heldItem.getItem() instanceof IToolHammer) {
+			return ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos);
 		}
-		else if (currentItem instanceof IMFRHammer) {
+		else if (heldItem.getItem() instanceof IMFRHammer) {
 			return true;
 		}
-		else if (bcWrenchExists && canHandleBCWrench(currentItem, player, pos)) {
+		else if (bcWrenchExists && canHandleBCWrench(player, hand, heldItem, new RayTraceResult(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), side, pos))) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public static void usedWrench(EntityPlayer player, BlockPos pos) {
+	public static void usedWrench(EntityPlayer player, EnumHand hand, BlockPos pos, EnumFacing side) {
 
 		if (player == null) {
 			return;
 		}
-		if (player.inventory.getCurrentItem() == null) {
+		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
+
+		if (heldItem.isEmpty()) {
 			return;
 		}
-		Item currentItem = player.inventory.getCurrentItem().getItem();
-		if (currentItem instanceof IToolHammer) {
-			((IToolHammer) currentItem).toolUsed(player.inventory.getCurrentItem(), player, pos);
+
+		if (heldItem.getItem() instanceof IToolHammer) {
+			((IToolHammer) heldItem.getItem()).toolUsed(player.inventory.getCurrentItem(), player, pos);
 		}
-		else if (currentItem instanceof IMFRHammer) {
+		else if (heldItem.getItem() instanceof IMFRHammer) {
 			;
 		}
 		else if (bcWrenchExists) {
-			bcWrenchUsed(currentItem, player, pos);
+			bcWrenchUsed(player, hand, heldItem, new RayTraceResult(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), side, pos));
 		}
 	}
 
@@ -256,34 +262,19 @@ public class MFRUtil {
 		try {
 			Class.forName("buildcraft.api.tools.IToolWrench");
 			bcWrenchExists = true;
-		} catch (Throwable _) {
+		} catch (Throwable t) {
 		}
 	}
 
-	private static boolean canHandleBCWrench(Item item, EntityPlayer p, BlockPos pos) {
+	private static boolean canHandleBCWrench(EntityPlayer p, EnumHand hand, @Nonnull ItemStack wrench, RayTraceResult rayTrace) {
 
-		return item instanceof IToolWrench && ((IToolWrench) item).canWrench(p, pos);
-	}
-
-	private static void bcWrenchUsed(Item item, EntityPlayer p, BlockPos pos) {
-
-		if (item instanceof IToolWrench) ((IToolWrench) item).wrenchUsed(p, pos);
-	}
-
-	public static boolean isHoldingHammer(EntityPlayer player) {
-
-		if (player == null) {
-			return false;
-		}
-		if (player.inventory.getCurrentItem() == null) {
-			return false;
-		}
-		Item currentItem = player.inventory.getCurrentItem().getItem();
-		if (currentItem instanceof IMFRHammer) {
-			return true;
-		}
-
+		//return wrench.getItem() instanceof IToolWrench && ((IToolWrench) wrench.getItem()).canWrench(p, hand, wrench, rayTrace);
 		return false;
+	}
+
+	private static void bcWrenchUsed(EntityPlayer p, EnumHand hand, @Nonnull ItemStack wrench, RayTraceResult rayTrace) {
+
+		//if (wrench.getItem() instanceof IToolWrench) ((IToolWrench) wrench.getItem()).wrenchUsed(p, hand, wrench, rayTrace);
 	}
 
 	public static boolean isHolding(EntityPlayer player, Item item, EnumHand hand) {
@@ -291,7 +282,7 @@ public class MFRUtil {
 		if (player == null) {
 			return false;
 		}
-		if (player.getHeldItem(hand) == null) {
+		if (player.getHeldItem(hand).isEmpty()) {
 			return false;
 		}
 		Item currentItem = player.getHeldItem(hand).getItem();
@@ -360,7 +351,7 @@ public class MFRUtil {
 		if (world.isBlockLoaded(pos)) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (world.isBlockLoaded(pos.offset(facing)))
-					world.notifyBlockOfStateChange(pos.offset(facing), block);
+					world.neighborChanged(pos.offset(facing), block, pos);
 			}
 		}
 	}
@@ -368,11 +359,11 @@ public class MFRUtil {
 	public static void notifyNearbyBlocksExcept(World world, BlockPos pos, Block block) {
 
 		if (world.isBlockLoaded(pos) && world.getBlockState(pos).getBlock() != block) {
-			world.notifyBlockOfStateChange(pos, block);
+			world.neighborChanged(pos, block, pos);
 			for (EnumFacing d2 : EnumFacing.VALUES) {
 				BlockPos neighborPos = pos.offset(d2);
 				if (world.isBlockLoaded(neighborPos) && world.getBlockState(neighborPos).getBlock() != block)
-					world.notifyBlockOfStateChange(neighborPos, block);
+					world.neighborChanged(neighborPos, block, pos);
 			}
 		}
 	}
@@ -382,13 +373,13 @@ public class MFRUtil {
 		for (EnumFacing d : EnumFacing.VALUES) {
 			BlockPos firstPos = pos.offset(d);
 			if (world.isBlockLoaded(firstPos) && world.getBlockState(firstPos).getBlock() != block) {
-				world.notifyNeighborsOfStateChange(firstPos, block);
+				world.notifyNeighborsOfStateChange(firstPos, block, false);
 				for (EnumFacing d2 : EnumFacing.VALUES) {
 					if (d2.getOpposite() == d)
 						continue;
 					BlockPos secondPos = firstPos.offset(d2);
 					if (world.isBlockLoaded(secondPos) && world.getBlockState(secondPos).getBlock() != block)
-						world.notifyNeighborsOfStateChange(secondPos, block);
+						world.notifyNeighborsOfStateChange(secondPos, block, false);
 				}
 			}
 		}
@@ -406,4 +397,13 @@ public class MFRUtil {
 		return tag;
 	}
 
+	public static Item findItem(String modId, String itemName) {
+
+		return Item.REGISTRY.getObject(new ResourceLocation(modId, itemName));
+	}
+
+	public static Block findBlock(String modId, String blockName) {
+
+		return Block.REGISTRY.getObject(new ResourceLocation(modId, blockName));
+	}
 }

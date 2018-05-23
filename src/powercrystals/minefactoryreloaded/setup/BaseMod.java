@@ -1,31 +1,27 @@
 package powercrystals.minefactoryreloaded.setup;
 
 import com.google.common.base.Strings;
-import net.minecraft.util.text.translation.LanguageMap;
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.ICrashCallable;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.network.NetworkCheckHandler;
-//import net.minecraftforge.fml.common.registry.LanguageRegistry;
 import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.resources.IResource;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.util.ResourceLocation;
-//import net.minecraft.util.StringTranslate;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.helpers.Loader;
-import org.apache.logging.log4j.spi.AbstractLogger;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Locale;
+import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
+
+//import net.minecraftforge.fml.common.registry.LanguageRegistry;
+//import net.minecraft.util.StringTranslate;
 
 public abstract class BaseMod {
 
@@ -57,8 +53,7 @@ public abstract class BaseMod {
 		if (container.getSource().isDirectory()) {
 			FMLCommonHandler.instance().registerCrashCallable(new CrashCallable("Loaded from a directory"));
 		} else {
-			try {
-				JarFile jar = new JarFile(container.getSource());
+			try (JarFile jar = new JarFile(container.getSource())) {
 				ZipEntry file = jar.getEntry("vers.prop");
 				if (file != null) {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(jar.getInputStream(file)));

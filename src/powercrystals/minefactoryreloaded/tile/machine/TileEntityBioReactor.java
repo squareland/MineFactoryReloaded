@@ -18,11 +18,12 @@ import powercrystals.minefactoryreloaded.gui.client.GuiBioReactor;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerBioReactor;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class TileEntityBioReactor extends TileEntityFactoryInventory {
+public class TileEntityBioReactor extends TileEntityFactoryTickable {
 
 	private int _burnTime;
 	private static final int _burnTimeMax = 8000;
@@ -57,7 +58,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 
 		int occupiedSlots = 0;
 		for (int i = 9; i < 18; i++) {
-			if (_inventory[i] != null) {
+			if (!_inventory.get(i).isEmpty()) {
 				occupiedSlots++;
 			}
 		}
@@ -75,25 +76,25 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 
 		super.update();
 
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			Map<Item, IFactoryPlantable> plantables = MFRRegistry.getPlantables();
 			for (int i = 0; i < 9; i++) {
-				ItemStack item = _inventory[i];
-				if (item == null)
+				@Nonnull ItemStack item = _inventory.get(i);
+				if (item.isEmpty())
 					continue;
 				if (plantables.containsKey(item.getItem()) &&
 						plantables.get(item.getItem()).canBePlanted(item, true)) {
-					int targetSlot = findMatchingSlot(_inventory[i]);
+					int targetSlot = findMatchingSlot(_inventory.get(i));
 					if (targetSlot < 0)
 						continue;
 
-					if (_inventory[targetSlot] == null) {
-						_inventory[targetSlot] = _inventory[i];
-						_inventory[i] = null;
+					if (_inventory.get(targetSlot).isEmpty()) {
+						_inventory.set(targetSlot, _inventory.get(i));
+						_inventory.set(i, ItemStack.EMPTY);
 					} else {
-						UtilInventory.mergeStacks(_inventory[targetSlot], _inventory[i]);
-						if (_inventory[i].stackSize <= 0)
-							_inventory[i] = null;
+						UtilInventory.mergeStacks(_inventory.get(targetSlot), _inventory.get(i));
+						if (_inventory.get(i).getCount() <= 0)
+							_inventory.set(i, ItemStack.EMPTY);
 					}
 				}
 			}
@@ -105,7 +106,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 			if (_burnTimeMax - _burnTime >= newBurn) {
 				_burnTime += newBurn;
 				for (int i = 9; i < 18; i++)
-					if (_inventory[i] != null)
+					if (!_inventory.get(i).isEmpty())
 						decrStackSize(i, 1);
 			}
 
@@ -116,14 +117,14 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 		}
 	}
 
-	private int findMatchingSlot(ItemStack s) {
+	private int findMatchingSlot(@Nonnull ItemStack s) {
 
 		int emptySlot = -1;
 		for (int i = 9; i < 18; i++) {
-			if (_inventory[i] == null) {
+			if (_inventory.get(i).isEmpty()) {
 				if (emptySlot == -1)
 					emptySlot = i;
-			} else if (_inventory[i].isItemEqual(s)) {
+			} else if (_inventory.get(i).isItemEqual(s)) {
 				return i;
 			}
 		}
@@ -162,9 +163,9 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack != null)
+		if (!stack.isEmpty())
 			if (slot < 9) {
 				IFactoryPlantable p = MFRRegistry.getPlantables().get(stack.getItem());
 				return p != null && p.canBePlanted(stack, true);
@@ -206,7 +207,7 @@ public class TileEntityBioReactor extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

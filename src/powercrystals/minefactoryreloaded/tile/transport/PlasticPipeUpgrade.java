@@ -3,13 +3,16 @@ package powercrystals.minefactoryreloaded.tile.transport;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public enum PlasticPipeUpgrade {
 
 	NONE(new ItemStack(Blocks.AIR), "none") {
+		@Nonnull
 		@Override
 		public ItemStack getDrop() {
 
-			return null;
+			return ItemStack.EMPTY;
 		}
 	},
 	REDSTONE_TORCH(new ItemStack(Blocks.REDSTONE_TORCH), "chat.info.mfr.fluid.install.torch") {
@@ -27,10 +30,11 @@ public enum PlasticPipeUpgrade {
 		}
 	};
 
+	@Nonnull
 	private final ItemStack stack;
 	private String chatMessageKey;
 
-	PlasticPipeUpgrade(ItemStack stack, String chatMessageKey) {
+	PlasticPipeUpgrade(@Nonnull ItemStack stack, String chatMessageKey) {
 
 		this.stack = stack;
 		this.chatMessageKey = chatMessageKey;
@@ -41,6 +45,7 @@ public enum PlasticPipeUpgrade {
 		return redstonePowered;
 	}
 
+	@Nonnull
 	public ItemStack getDrop() {
 
 		return stack.copy();
@@ -51,7 +56,7 @@ public enum PlasticPipeUpgrade {
 		return chatMessageKey;
 	}
 
-	public static boolean isUpgradeItem(ItemStack stack) {
+	public static boolean isUpgradeItem(@Nonnull ItemStack stack) {
 
 		for(PlasticPipeUpgrade plasticPipeUpgrade : values()) {
 			if (plasticPipeUpgrade.stack.isItemEqual(stack))
@@ -61,7 +66,7 @@ public enum PlasticPipeUpgrade {
 		return false;
 	}
 
-	public static PlasticPipeUpgrade getUpgrade(ItemStack stack) {
+	public static PlasticPipeUpgrade getUpgrade(@Nonnull ItemStack stack) {
 
 		for(PlasticPipeUpgrade plasticPipeUpgrade : values()) {
 			if (plasticPipeUpgrade.stack.isItemEqual(stack))

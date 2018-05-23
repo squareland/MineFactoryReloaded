@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.block;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.MapColor;
@@ -134,7 +134,7 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 
 		world.scheduleBlockUpdate(pos, this, 1, 1);
 	}
@@ -171,8 +171,13 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 		}
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, null);
 		return true;
@@ -185,17 +190,5 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 		final ModelResourceLocation fakeLaserLocation = new ModelResourceLocation(fakeLaserBlock.getRegistryName(), "normal");
 		ModelLoader.setCustomStateMapper(fakeLaserBlock, new StateMap.Builder().ignore(BlockFakeLaser.FACING).build());
 		ModelRegistryHelper.register(fakeLaserLocation, ModelHelper.DUMMY_MODEL);
-	}
-
-	@Override
-	public boolean initialize() {
-
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
-		return true;
 	}
 }

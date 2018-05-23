@@ -1,8 +1,5 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.IEntityCollidable;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
@@ -19,9 +17,11 @@ import powercrystals.minefactoryreloaded.gui.client.GuiItemRouter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerItemRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
-public class TileEntityItemRouter extends TileEntityFactoryInventory implements IEntityCollidable {
+import javax.annotation.Nonnull;
+
+public class TileEntityItemRouter extends TileEntityFactoryTickable implements IEntityCollidable {
 
 	private boolean _routing = false;
 
@@ -58,10 +58,10 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 	public void update() {
 
 		super.update();
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			for (int i = 45; i < getSizeInventory(); i++) {
-				if (_inventory[i] != null) {
-					_inventory[i] = routeItem(_inventory[i]);
+				if (!_inventory.get(i).isEmpty()) {
+					_inventory.set(i, routeItem(_inventory.get(i)));
 				}
 			}
 		}
@@ -71,57 +71,59 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 	public void onEntityCollided(Entity entity) {
 
 		if (entity instanceof EntityItem && !entity.isDead) {
-			ItemStack s = routeItem(((EntityItem) entity).getEntityItem());
-			if (s == null)
+			@Nonnull ItemStack s = routeItem(((EntityItem) entity).getItem());
+			if (s.isEmpty())
 				entity.setDead();
 			else
-				((EntityItem) entity).setEntityItemStack(s);
+				((EntityItem) entity).setItem(s);
 		}
 	}
 
-	public ItemStack routeItem(ItemStack stack) {
+	@Nonnull
+	private ItemStack routeItem(@Nonnull ItemStack stack) {
 
 		int[] filteredRoutes = getRoutesForItem(stack);
 
 		_routing = true;
 		if (hasRoutes(filteredRoutes)) {
 			stack = weightedRouteItem(stack, filteredRoutes);
-			stack = (stack == null || stack.stackSize <= 0) ? null : stack;
+			stack = (stack.isEmpty() || stack.getCount() <= 0) ? ItemStack.EMPTY : stack;
 		}
 		else if (!_rejectUnmapped && hasRoutes(_defaultRoutes)) {
 			stack = weightedRouteItem(stack, _defaultRoutes);
-			stack = (stack == null || stack.stackSize <= 0) ? null : stack;
+			stack = (stack.isEmpty() || stack.getCount() <= 0) ? ItemStack.EMPTY : stack;
 		}
 		_routing = false;
 		return stack;
 	}
 
-	private ItemStack weightedRouteItem(ItemStack stack, int[] routes) {
+	@Nonnull
+	private ItemStack weightedRouteItem(@Nonnull ItemStack stack, int[] routes) {
 
-		ItemStack remainingOverall = stack.copy();
+		@Nonnull ItemStack remainingOverall = stack.copy();
 		int weight = totalWeight(routes);
-		if (stack.stackSize >= weight) {
-			int startingAmount = stack.stackSize;
+		if (stack.getCount() >= weight) {
+			int startingAmount = stack.getCount();
 			for (int i = 0; i < routes.length; i++) {
-				ItemStack stackForThisRoute = stack.copy();
-				stackForThisRoute.stackSize = startingAmount * routes[i] / weight;
-				if (stackForThisRoute.stackSize > 0) {
-					ItemStack remainingFromThisRoute = UtilInventory.dropStack(this, stackForThisRoute, _outputDirections[i], _outputDirections[i]);
-					if (remainingFromThisRoute == null) {
-						remainingOverall.stackSize -= stackForThisRoute.stackSize;
+				@Nonnull ItemStack stackForThisRoute = stack.copy();
+				stackForThisRoute.setCount(startingAmount * routes[i] / weight);
+				if (stackForThisRoute.getCount() > 0) {
+					@Nonnull ItemStack remainingFromThisRoute = UtilInventory.dropStack(this, stackForThisRoute, _outputDirections[i], _outputDirections[i]);
+					if (remainingFromThisRoute.isEmpty()) {
+						remainingOverall.shrink(stackForThisRoute.getCount());
 					}
 					else {
-						remainingOverall.stackSize -= (stackForThisRoute.stackSize - remainingFromThisRoute.stackSize);
+						remainingOverall.shrink((stackForThisRoute.getCount() - remainingFromThisRoute.getCount()));
 					}
 
-					if (remainingOverall.stackSize <= 0) {
+					if (remainingOverall.getCount() <= 0) {
 						break;
 					}
 				}
 			}
 		}
 
-		if (0 < remainingOverall.stackSize && remainingOverall.stackSize < totalWeight(routes)) {
+		if (0 < remainingOverall.getCount() && remainingOverall.getCount() < totalWeight(routes)) {
 			int outdir = weightedRandomSide(routes);
 			remainingOverall = UtilInventory.dropStack(this, remainingOverall, _outputDirections[outdir], _outputDirections[outdir]);
 		}
@@ -130,7 +132,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 
 	private int weightedRandomSide(int[] routeWeights) {
 
-		int random = worldObj.rand.nextInt(totalWeight(routeWeights));
+		int random = world.rand.nextInt(totalWeight(routeWeights));
 		for (int i = 0; i < routeWeights.length; i++) {
 			random -= routeWeights[i];
 			if (random < 0)
@@ -157,7 +159,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 		return false;
 	}
 
-	protected int[] getRoutesForItem(ItemStack stack) {
+	protected int[] getRoutesForItem(@Nonnull ItemStack stack) {
 
 		int[] routeWeights = new int[_outputDirections.length];
 
@@ -167,11 +169,11 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 			int sideStart = _invOffsets[_outputDirections[i].ordinal()];
 			routeWeights[i] = 0;
 			for (int j = sideStart; j < sideStart + 9; j++) {
-				if (_inventory[j] != null) {
-					if (_inventory[j].getItem().equals(item) &&
+				if (!_inventory.get(j).isEmpty()) {
+					if (_inventory.get(j).getItem().equals(item) &&
 							(stack.isItemStackDamageable() ||
-							_inventory[j].getItemDamage() == stack.getItemDamage())) {
-						routeWeights[i] += _inventory[j].stackSize;
+							_inventory.get(j).getItemDamage() == stack.getItemDamage())) {
+						routeWeights[i] += _inventory.get(j).getCount();
 					}
 				}
 			}
@@ -185,7 +187,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 			_defaultRoutes[i] = isSideEmpty(_outputDirections[i]) ? 1 : 0;
 	}
 
-	public boolean hasRouteForItem(ItemStack stack) {
+	public boolean hasRouteForItem(@Nonnull ItemStack stack) {
 
 		return hasRoutes(getRoutesForItem(stack));
 	}
@@ -199,7 +201,7 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 		int sideStart = _invOffsets[side.ordinal()];
 
 		for (int i = sideStart; i < sideStart + 9; i++) {
-			if (_inventory[i] != null) {
+			if (!_inventory.get(i).isEmpty()) {
 				return false;
 			}
 		}
@@ -251,23 +253,23 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 	}
 
 	@Override
-	public void setInventorySlotContents(int i, ItemStack stack) {
+	public void setInventorySlotContents(int i, @Nonnull ItemStack stack) {
 
-		if (worldObj != null && !worldObj.isRemote) {
+		if (world != null && !world.isRemote) {
 			int start = getStartInventorySide(null);
 			if (i >= start && i <= (start + getSizeInventorySide(null))) {
-				l: if (stack != null) {
-					if (stack.stackSize <= 0) {
-						stack = null;
+				l: if (!stack.isEmpty()) {
+					if (stack.getCount() <= 0) {
+						stack = ItemStack.EMPTY;
 						break l;
 					}
 					stack = routeItem(stack);
-					if (stack != null)
-						if (stack.stackSize > getInventoryStackLimit()) {
-							stack.stackSize = getInventoryStackLimit();
+					if (!stack.isEmpty())
+						if (stack.getCount() > getInventoryStackLimit()) {
+							stack.setCount(getInventoryStackLimit());
 						}
 				}
-				_inventory[i] = stack;
+				_inventory.set(i, stack);
 				return;
 			}
 		}
@@ -275,19 +277,19 @@ public class TileEntityItemRouter extends TileEntityFactoryInventory implements 
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return !_routing;
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int slot, @Nonnull ItemStack itemstack) {
 
 		return !_routing;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}

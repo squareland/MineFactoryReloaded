@@ -421,7 +421,7 @@ chat.info.mfr.safarinet.release = Changed to release mode
 
 chat.info.mfr.spyglass.nosight = Nothing in sight
 chat.info.mfr.spyglass.hitentity = Found a %s at %.1f, %.1f, %.1f
-chat.info.mfr.spyglass.hitblock = Found %s [%s#%d] at %.0f, %.0f, %.0f
+chat.info.mfr.spyglass.hitblock = Found %s [%s] at %.0f, %.0f, %.0f
 chat.info.mfr.spyglass.hitunknown = Found UNKNOWN (bugged mod?) at %.1f, %.1f, %.1f
 
 chat.info.mfr.ruler.nosight = Nothing in sight

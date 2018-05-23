@@ -1,8 +1,5 @@
 package powercrystals.minefactoryreloaded.block.decor;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.SoundType;
@@ -18,17 +15,19 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.BlockFactory;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactory;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockDecorativeStone extends BlockFactory {
 
@@ -75,13 +74,13 @@ public class BlockDecorativeStone extends BlockFactory {
 	@Override
 	public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnBlock) {
 
-		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> list = new ArrayList<>();
 		int meta = getMetaFromState(state);
 		list.add(new ItemStack(getItemDropped(state, world.rand, 0), quantityDropped(world.rand), meta)); // persist metadata
 
 		world.setBlockToAir(pos);
 		if (!returnBlock)
-			for (ItemStack item : list) {
+			for (@Nonnull ItemStack item : list) {
 				UtilInventory.dropStackInAir(world, pos, item);	
 			}
 		return list;
@@ -120,7 +119,7 @@ public class BlockDecorativeStone extends BlockFactory {
 			if (!BlockSand.fallInstantly && world.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32))) {
 				if (!world.isRemote) {
 					EntityFallingBlock entityfallingsand = new EntityFallingBlock(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, state);
-					world.spawnEntityInWorld(entityfallingsand);
+					world.spawnEntity(entityfallingsand);
 				}
 			} else {
 				world.setBlockToAir(pos);
@@ -145,7 +144,7 @@ public class BlockDecorativeStone extends BlockFactory {
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, Variant.UNLOC_NAMES));
 		return true;

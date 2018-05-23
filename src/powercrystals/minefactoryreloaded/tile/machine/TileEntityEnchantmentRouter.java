@@ -1,21 +1,20 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Map;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.gui.client.GuiEnchantmentRouter;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerEnchantmentRouter;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
+import java.util.Map;
 
 public class TileEntityEnchantmentRouter extends TileEntityItemRouter {
 
@@ -28,13 +27,13 @@ public class TileEntityEnchantmentRouter extends TileEntityItemRouter {
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected int[] getRoutesForItem(ItemStack stack) {
+	protected int[] getRoutesForItem(@Nonnull ItemStack stack) {
 
 		int[] routeWeights = new int[_outputDirections.length];
 
 		Map stackEnchants = EnchantmentHelper.getEnchantments(stack);
 		// return false if the item is unenchanted
-		if (stackEnchants == null || stackEnchants.isEmpty()) {
+		if (stackEnchants.isEmpty()) {
 			for (int i = 0; i < routeWeights.length; i++) {
 				routeWeights[i] = 0;
 			}
@@ -46,22 +45,22 @@ public class TileEntityEnchantmentRouter extends TileEntityItemRouter {
 			routeWeights[i] = 0;
 
 			for (int j = sideStart; j < sideStart + 9; j++) {
-				if (_inventory[j] == null)
+				if (_inventory.get(j).isEmpty())
 					continue;
-				if (_inventory[j].hasTagCompound()) {
-					Map inventoryEnchants = EnchantmentHelper.getEnchantments(_inventory[j]);
+				if (_inventory.get(j).hasTagCompound()) {
+					Map inventoryEnchants = EnchantmentHelper.getEnchantments(_inventory.get(j));
 					if (inventoryEnchants.isEmpty()) {
 						continue;
 					}
 					for (Object stackEnchantId : stackEnchants.keySet()) {
 						if (inventoryEnchants.containsKey(stackEnchantId)) {
 							if (!_matchLevels || inventoryEnchants.get(stackEnchantId).equals(stackEnchants.get(stackEnchantId))) {
-								routeWeights[i] += _inventory[j].stackSize;
+								routeWeights[i] += _inventory.get(j).getCount();
 							}
 						}
 					}
-				} else if (_inventory[j].getItem().equals(Items.BOOK)) {
-					routeWeights[i] += (1 + _inventory[j].stackSize) / 2;
+				} else if (_inventory.get(j).getItem().equals(Items.BOOK)) {
+					routeWeights[i] += (1 + _inventory.get(j).getCount()) / 2;
 				}
 			}
 		}

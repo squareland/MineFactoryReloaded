@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.CoreUtils;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -13,22 +13,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactoryRoad;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
+import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class BlockFactoryRoad extends Block implements IInitializer, IModelRegister {
 
@@ -79,7 +74,7 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 
 		if (!world.isRemote) {
 			Variant variant = state.getValue(VARIANT);
@@ -138,7 +133,7 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 
-		neighborChanged(state, world, pos, this);
+		neighborChanged(state, world, pos, this, pos);
 	}
 
 	@Override
@@ -151,22 +146,15 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 		return true;
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		MFRRegistry.registerBlock(this, new ItemBlockFactoryRoad(this));
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
-		
-		return true;
-	}
 
-	@Override
-	public boolean postInit() {
-		
+		MFRRegistry.registerBlock(this, new ItemBlockFactoryRoad(this));
 		return true;
 	}
 

@@ -2,14 +2,16 @@ package powercrystals.minefactoryreloaded.api;
 
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ValuedItem
 {
 	public final int value;
-	public final ItemStack item;
+	public final @Nonnull ItemStack item;
 	public final String key;
 	public final Object object;
 	
-	public ValuedItem(int v, ItemStack i)
+	public ValuedItem(int v, @Nonnull ItemStack i)
 	{
 		value = v;
 		item = i;
@@ -20,7 +22,7 @@ public class ValuedItem
 	public ValuedItem(String v, Object i)
 	{
 		value = -1;
-		item = null;
+		item = ItemStack.EMPTY;
 		key = v;
 		object = i;
 	}
@@ -33,12 +35,12 @@ public class ValuedItem
 	public ValuedItem(int v, Object i)
 	{
 		value = v;
-		item = null;
+		item = ItemStack.EMPTY;
 		key = null;
 		object = i;
 	}
 	
-	public ValuedItem(String v, ItemStack i)
+	public ValuedItem(String v, @Nonnull ItemStack i)
 	{
 		value = -1;
 		item = i;
@@ -46,7 +48,7 @@ public class ValuedItem
 		object = null;
 	}
 	
-	public ValuedItem(int v, String k, ItemStack i)
+	public ValuedItem(int v, String k, @Nonnull ItemStack i)
 	{
 		value = v;
 		item = i;
@@ -57,12 +59,12 @@ public class ValuedItem
 	public ValuedItem(int v, String k, Object i)
 	{
 		value = v;
-		item = null;
+		item = ItemStack.EMPTY;
 		key = k;
 		object = i;
 	}
 	
-	public ValuedItem(int v, String k, ItemStack i, Object o)
+	public ValuedItem(int v, String k, @Nonnull ItemStack i, Object o)
 	{
 		value = v;
 		item = i;

@@ -1,17 +1,18 @@
 package powercrystals.minefactoryreloaded.item.gun.ammo;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
+
+import javax.annotation.Nonnull;
 
 public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 
@@ -28,30 +29,30 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 	}
 
 	@Override
-	public void onHitBlock(ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance) {
+	public void onHitBlock(@Nonnull ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance) {
 		placeBlockAt(world, pos.offset(side), distance);
 	}
 
 	protected Vec3d calculatePlacement(Entity hit) {
 		AxisAlignedBB bb = hit.getEntityBoundingBox();
-		int i = MathHelper.floor_double(bb.minX + 0.001D);
-		int k = MathHelper.floor_double(bb.minZ + 0.001D);
-		int l = MathHelper.floor_double(bb.maxX - 0.001D);
-		int j1 = MathHelper.floor_double(bb.maxZ - 0.001D);
+		int i = MathHelper.floor(bb.minX + 0.001D);
+		int k = MathHelper.floor(bb.minZ + 0.001D);
+		int l = MathHelper.floor(bb.maxX - 0.001D);
+		int j1 = MathHelper.floor(bb.maxZ - 0.001D);
 		return new Vec3d((i + l) / 2, bb.minY + 0.25, (k + j1) / 2);
 	}
 
 	@Override
-	public boolean onHitEntity(ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
+	public boolean onHitEntity(@Nonnull ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
 		super.onHitEntity(stack, owner, hit, distance);
 		Vec3d placement = calculatePlacement(hit);
-		placeBlockAt(hit.worldObj, new BlockPos((int)placement.xCoord, (int)placement.yCoord, (int)placement.zCoord),
+		placeBlockAt(hit.world, new BlockPos((int)placement.x, (int)placement.y, (int)placement.z),
 				distance);
 		return true;
 	}
 
 	@Override
-	public float getSpread(ItemStack stack) {
+	public float getSpread(@Nonnull ItemStack stack) {
 		return 1.5F;
 	}
 

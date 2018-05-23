@@ -1,28 +1,28 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
 import cofh.api.core.IPortableData;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
-import java.util.List;
-
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemRedNetMemoryCard extends ItemFactory {
 
@@ -34,9 +34,9 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null) {
 			l: {
@@ -45,23 +45,25 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 					String entry = MFRUtil.localize("tip.info.mfr.memorycard.programmedFor", new Object[] {
 						MFRUtil.localize(type)
 					});
-					infoList.addAll(Arrays.asList(entry.split("\n", -1)));
+					tooltip.addAll(Arrays.asList(entry.split("\n", -1)));
 
 					if (!type.equals("tile.mfr.rednet.logic.name"))
 						break l;
 				}
 				if (tag.hasKey("circuits", 9)) {
 					int c = stack.getTagCompound().getTagList("circuits", 10).tagCount();
-					infoList.add(MFRUtil.localize("tip.info.mfr.memorycard.programmed", c));
+					tooltip.add(MFRUtil.localize("tip.info.mfr.memorycard.programmed", c));
 				}
 			}
-			infoList.add(MFRUtil.localize("tip.info.mfr.memorycard.wipe", true));
+			tooltip.add(MFRUtil.localize("tip.info.mfr.memorycard.wipe", true));
 		}
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
+
+		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.SUCCESS;
@@ -107,7 +109,7 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean hasEffect(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		return tag != null && (tag.hasKey("Type") || tag.hasKey("circuits", 9));

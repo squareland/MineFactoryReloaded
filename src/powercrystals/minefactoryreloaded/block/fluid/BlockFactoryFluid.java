@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.block.fluid;
 
 import cofh.core.fluid.BlockFluidCore;
-import cofh.lib.util.WeightedRandomItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -10,7 +9,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -27,9 +29,11 @@ import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorative { // TODO: convert to BlockFluidFinite
@@ -41,7 +45,6 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 	public static final Material material = new MaterialLiquid(MapColor.WATER);
 
 	public int color;
-	protected String fluidName;
 
 	private static Fluid ensureFluid(String name) {
 
@@ -62,7 +65,6 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 		setHardness(100.0F);
 		setLightOpacity(3);
 		setDisplaceFluids(true);
-		fluidName = liquidName;
 		setRegistryName(MineFactoryReloadedCore.modId, liquidName + "_fluid");
 	}
 
@@ -138,7 +140,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 					return;
 				break l;
 			}
-			ItemStack drop = null;
+			@Nonnull ItemStack drop = ItemStack.EMPTY;
 			Block block = Blocks.AIR;
 			if (this == MFRFluids.milkLiquid) {
 				if (rand.nextInt(50) == 0)
@@ -157,7 +159,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 					while (i > 0) {
 						int j = EntityXPOrb.getXPSplit(i);
 						i -= j;
-						world.spawnEntityInWorld(new EntityXPOrb(world,
+						world.spawnEntity(new EntityXPOrb(world,
 								pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), j));
 					}
 					fizz(world, pos, rand);
@@ -192,7 +194,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 					drop = new ItemStack(Blocks.RED_MUSHROOM, rand.nextInt(2));
 			}
 			if (world.setBlockState(pos, block.getDefaultState(), 3)) {
-				if (drop != null && drop.stackSize > 0) {
+				if (!drop.isEmpty() && drop.getCount() > 0) {
 					UtilInventory.dropStackInAir(world, pos, drop);
 				}
 

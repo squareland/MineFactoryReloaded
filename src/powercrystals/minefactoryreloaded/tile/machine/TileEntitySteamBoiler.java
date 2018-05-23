@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.tile.machine;
 
 import cofh.core.fluid.FluidTankCore;
 import cofh.core.util.CoreUtils;
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,15 +21,16 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerSteamBoiler;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
+public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 
 	public static final int maxTemp = 730;
 
-	public static final int getItemBurnTime(ItemStack stack) {
+	public static final int getItemBurnTime(@Nonnull ItemStack stack) {
 		// TODO: special-case some items (e.g., TE's dynamo)
 		return TileEntityFurnace.getItemBurnTime(stack) / 2;
 	}
@@ -105,7 +106,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	public void update() {
 
 		super.update();
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			boolean active = _ticksSinceLastConsumption < _ticksUntilConsumption;
 			setIsActive(active);
 
@@ -122,8 +123,8 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 				_ticksUntilConsumption = 0;
 			}
 
-			if (_temp == 0 && _inventory[3] == null) {
-				if ((worldObj.getTotalWorldTime() & 0x6F) == 0 && !(_rednetState != 0 || CoreUtils.isRedstonePowered(this)))
+			if (_temp == 0 && _inventory.get(3).isEmpty()) {
+				if ((world.getTotalWorldTime() & 0x6F) == 0 && !(_rednetState != 0 || CoreUtils.isRedstonePowered(this)))
 					mergeFuel();
 				return; // we're not burning anything and not changing the temp
 			}
@@ -136,8 +137,14 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 			}
 
 			if (_temp > 80) {
-				int i = drain(100, true, _tanks[1]);
-				_tanks[0].fill(new FluidStack(_liquid, i * 4), true);
+				int toDrain = Math.min(_tanks[0].getSpace(), 100);
+
+				if (toDrain > 0 && drain(toDrain, false, _tanks[1]) > 0) {
+					int waterDrained = drain(toDrain, true, _tanks[1]);
+					_tanks[0].fill(new FluidStack(_liquid, waterDrained * 4), true);
+				} else {
+					return;
+				}
 			}
 
 			if (skipConsumption || CoreUtils.isRedstonePowered(this))
@@ -152,32 +159,32 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 
 	protected void mergeFuel() {
 
-		if (_inventory[3] != null)
-			for (int i = 0; _inventory[3].stackSize < _inventory[3].getMaxStackSize() && i < 3; ++i) {
-				UtilInventory.mergeStacks(_inventory[3], _inventory[i]);
-				if (_inventory[i] != null && _inventory[i].stackSize == 0)
-					_inventory[i] = null;
+		if (!_inventory.get(3).isEmpty())
+			for (int i = 0; _inventory.get(3).getCount() < _inventory.get(3).getMaxStackSize() && i < 3; ++i) {
+				UtilInventory.mergeStacks(_inventory.get(3), _inventory.get(i));
+				if (!_inventory.get(i).isEmpty() && _inventory.get(i).getCount() == 0)
+					_inventory.set(i, ItemStack.EMPTY);
 			}
 		else
 			for (int i = 0; i < 3; ++i)
-				if (_inventory[i] != null) {
-					_inventory[3] = _inventory[i];
-					_inventory[i] = null;
+				if (!_inventory.get(i).isEmpty()) {
+					_inventory.set(3, _inventory.get(i));
+					_inventory.set(i, ItemStack.EMPTY);
 					break;
 				}
 	}
 
 	protected boolean consumeFuel() {
 
-		if (_inventory[3] == null)
+		if (_inventory.get(3).isEmpty())
 			return false;
 
-		int burnTime = getItemBurnTime(_inventory[3]);
+		int burnTime = getItemBurnTime(_inventory.get(3));
 		if (burnTime <= 0)
 			return false;
 
 		_ticksUntilConsumption = burnTime;
-		_inventory[3] = ItemHelper.consumeItem(_inventory[3]);
+		_inventory.set(3, ItemHelper.consumeItem(_inventory.get(3)));
 		notifyNeighborTileChange();
 
 		return true;
@@ -215,18 +222,18 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack != null)
+		if (!stack.isEmpty())
 			return getItemBurnTime(stack) > 0;
 
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
-		return getItemBurnTime(_inventory[slot]) <= 0;
+		return getItemBurnTime(_inventory.get(slot)) <= 0;
 	}
 	//}
 
@@ -278,7 +285,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 		if (resource != null && resource.getFluid() == FluidRegistry.WATER) {
 			if (MFRConfig.steamBoilerExplodes.getBoolean(false)) {
 				if (_temp > 80 && _tanks[1].getFluidAmount() == 0) {
-					worldObj.createExplosion(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, 3, true);
+					world.createExplosion(null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, 3, true);
 				}
 			}
 			return _tanks[1].fill(resource, doFill);
@@ -299,13 +306,13 @@ public class TileEntitySteamBoiler extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

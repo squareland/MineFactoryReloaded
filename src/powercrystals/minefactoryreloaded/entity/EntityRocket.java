@@ -1,23 +1,22 @@
 package powercrystals.minefactoryreloaded.entity;
 
-import net.minecraft.util.EnumParticleTypes;
-import powercrystals.minefactoryreloaded.setup.MFRConfig;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.setup.MFRConfig;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 public class EntityRocket extends Entity
 {
@@ -81,39 +80,39 @@ public class EntityRocket extends Entity
 		{
 			if (MFRConfig.enableSPAMRExploding.getBoolean(true))
 			{
-				worldObj.newExplosion(this, posX, posY, posZ, 4.0F, true, true);
+				world.newExplosion(this, posX, posY, posZ, 4.0F, true, true);
 			}
 			setDead();
 		}
 		
-		if(worldObj.isRemote)
+		if(world.isRemote)
 		{
 			for(int i = 0; i < 4; i++)
 			{
-				worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + motionX * i / 4.0D, posY + motionY * i / 4.0D, posZ + motionZ * i / 4.0D,
+				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + motionX * i / 4.0D, posY + motionY * i / 4.0D, posZ + motionZ * i / 4.0D,
 						-motionX, -motionY + 0.2D, -motionZ);
 			}
 		}
 		
-		if(!worldObj.isRemote)
+		if(!world.isRemote)
 		{
 			Vec3d pos = new Vec3d(this.posX, this.posY, this.posZ);
 			Vec3d nextPos = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-			RayTraceResult hit = this.worldObj.rayTraceBlocks(pos, nextPos, false, true, false);
+			RayTraceResult hit = this.world.rayTraceBlocks(pos, nextPos, false, true, false);
 			pos = new Vec3d(this.posX, this.posY, this.posZ);
 			nextPos = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 			
 			if(hit != null)
 			{
-				nextPos = new Vec3d(hit.hitVec.xCoord, hit.hitVec.yCoord,	hit.hitVec.zCoord);
+				nextPos = new Vec3d(hit.hitVec.x, hit.hitVec.y,	hit.hitVec.z);
 			}
 			
 			Entity entityHit = null;
-			List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, 
-					this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+					this.getEntityBoundingBox().expand(this.motionX, this.motionY, this.motionZ).grow(1.0D, 1.0D, 1.0D));
 			double closestRange = 0.0D;
 			double collisionRange = 0.3D;
-			EntityPlayer owner = _owner == null ? null : this.worldObj.getPlayerEntityByName(_owner);
+			EntityPlayer owner = _owner == null ? null : this.world.getPlayerEntityByName(_owner);
 			
 			for(int i = 0, end = list.size(); i < end; ++i)
 			{
@@ -121,7 +120,7 @@ public class EntityRocket extends Entity
 				
 				if((e != owner | _ticksAlive > 5) && e.canBeCollidedWith())
 				{
-					AxisAlignedBB entitybb = e.getEntityBoundingBox().expand(collisionRange, collisionRange, collisionRange);
+					AxisAlignedBB entitybb = e.getEntityBoundingBox().grow(collisionRange, collisionRange, collisionRange);
 					RayTraceResult entityHitPos = entitybb.calculateIntercept(pos, nextPos);
 					
 					if(entityHitPos != null)
@@ -152,16 +151,16 @@ public class EntityRocket extends Entity
 				}
 			}
 			
-			if(hit != null && !worldObj.isRemote)
+			if(hit != null && !world.isRemote)
 			{
 				if(hit.entityHit != null)
 				{
-					worldObj.newExplosion(this, hit.entityHit.posX, hit.entityHit.posY,
+					world.newExplosion(this, hit.entityHit.posX, hit.entityHit.posY,
 							hit.entityHit.posZ, 4.0F, true, true);
 				}
 				else
 				{ // spawn explosion at nextPos x/y/z?
-					worldObj.newExplosion(this, hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ(), 4.0F, true, true);
+					world.newExplosion(this, hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ(), 4.0F, true, true);
 				}
 				setDead();
 			}
@@ -172,8 +171,8 @@ public class EntityRocket extends Entity
 		{
 			// At this point, I suspect literally no one on this project actually understands what this does or how it works
 			
-			float targetYaw = clampAngle(360 - (float)(Math.atan2(targetVector.xCoord, targetVector.zCoord) * 180.0D / Math.PI), 360, false);
-			float targetPitch = clampAngle(-(float)(Math.atan2(targetVector.yCoord, Math.sqrt(targetVector.xCoord * targetVector.xCoord + targetVector.zCoord * targetVector.zCoord)) * 180.0D / Math.PI), 360, false);
+			float targetYaw = clampAngle(360 - (float)(Math.atan2(targetVector.x, targetVector.z) * 180.0D / Math.PI), 360, false);
+			float targetPitch = clampAngle(-(float)(Math.atan2(targetVector.y, Math.sqrt(targetVector.x * targetVector.x + targetVector.z * targetVector.z)) * 180.0D / Math.PI), 360, false);
 			
 			float yawDifference = clampAngle(targetYaw - rotationYaw, 3, true);
 			float pitchDifference = clampAngle(targetPitch - rotationPitch, 3, true);
@@ -241,7 +240,7 @@ public class EntityRocket extends Entity
 		
 		if(prevRotationPitch == 0.0F && prevRotationYaw == 0.0F)
 		{
-			double f = MathHelper.sqrt_double(x * x + z * z);
+			double f = MathHelper.sqrt(x * x + z * z);
 			prevRotationYaw = rotationYaw = (float)(Math.atan2(x, z) * 180.0D / Math.PI);
 			prevRotationPitch = rotationPitch = (float)(Math.atan2(y, f) * 180.0D / Math.PI);
 			setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
@@ -257,7 +256,7 @@ public class EntityRocket extends Entity
             double x = _lostTarget.getDouble("xTarget");
             double y = _lostTarget.getDouble("yTarget");
             double z = _lostTarget.getDouble("zTarget");
-            List list = this.worldObj.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - 5, y - 5, z - 5, x + 5, y + 5, z + 5));
+            List list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - 5, y - 5, z - 5, x + 5, y + 5, z + 5));
             Iterator iterator = list.iterator();
 
             while (iterator.hasNext())

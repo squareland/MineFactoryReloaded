@@ -72,6 +72,6 @@ public class HarvestableStandard implements IFactoryHarvestable
 	@Override
 	public void postHarvest(World world, BlockPos pos)
 	{
-		world.notifyNeighborsOfStateChange(pos, getPlant());
+		world.notifyNeighborsOfStateChange(pos, getPlant(), false);
 	}
 }

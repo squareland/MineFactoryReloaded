@@ -30,7 +30,7 @@ public class ItemNeedlegunAmmoAnvil extends ItemNeedlegunAmmoBlock {
 	        EntityFallingBlock anvil = new EntityFallingBlock(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
 	        		_blockState);
 	        anvil.setHurtEntities(true);
-	        world.spawnEntityInWorld(anvil);
+	        world.spawnEntity(anvil);
 	        anvil.fallDistance = ((float)distance) + 1f;
 	        anvil.fallTime = 3;
 	        anvil.onUpdate();

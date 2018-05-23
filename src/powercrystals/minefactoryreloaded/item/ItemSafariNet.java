@@ -1,38 +1,34 @@
 package powercrystals.minefactoryreloaded.item;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
@@ -45,9 +41,14 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.IColorRegister;
-import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.setup.village.Zoologist;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
@@ -73,7 +74,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 
 		if (!isSingleUse(stack) || !isEmpty(stack))
 			return 1;
@@ -81,17 +82,17 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 
 		int type = ((ItemSafariNet) stack.getItem()).type;
 		if (1 == (type & 1)) {
-			infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.persistent"));
+			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.persistent"));
 		}
 
 		if (2 == (type & 2)) {
-			infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.nametag"));
+			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.nametag"));
 		}
 
 		if (stack.getTagCompound() == null) {
@@ -99,25 +100,27 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 
 		if (stack.getTagCompound().getBoolean("hide")) {
-			infoList.add(I18n.translateToLocal("tip.info.mfr.safarinet.mystery"));
+			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.mystery"));
 		} else {
-			infoList.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("id")));
+			tooltip.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("entityName")));
 			// See Entity.getEntityName()
-			Class<?> c = EntityList.NAME_TO_CLASS.get(stack.getTagCompound().getString("id"));
+			Class<?> c = EntityList.getClass(new ResourceLocation(stack.getTagCompound().getString("id")));
 			if (c == null) {
 				return;
 			}
 			for (ISafariNetHandler handler : MFRRegistry.getSafariNetHandlers()) {
 				if (handler.validFor().isAssignableFrom(c)) {
-					handler.addInformation(stack, player, infoList, advancedTooltips);
+					handler.addInformation(stack, world, tooltip, tooltipFlag);
 				}
 			}
 		}
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack itemstack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side,
 			float xOffset, float yOffset, float zOffset) {
+
+		@Nonnull ItemStack itemstack = player.getHeldItem(hand);
 
 		if (world.isRemote) {
 			return EnumActionResult.PASS;
@@ -137,7 +140,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 	}
 
-	public static Entity releaseEntity(ItemStack itemstack, World world, BlockPos pos, EnumFacing side) {
+	public static Entity releaseEntity(@Nonnull ItemStack itemstack, World world, BlockPos pos, EnumFacing side) {
 
 		if (world.isRemote) {
 			return null;
@@ -164,15 +167,14 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				if (1 == (type & 1)) {
 					((EntityLiving) spawnedCreature).enablePersistence();
 				}
-				if (itemstack.hasDisplayName()) {
-					spawnedCreature.setCustomNameTag(itemstack.getDisplayName());
+				if (spawnedCreature.hasCustomName()) {
 					if (2 == (type & 2))
 						spawnedCreature.setAlwaysRenderNameTag(true);
 				}
 			}
 
 			if (isSingleUse(itemstack)) {
-				itemstack.stackSize--;
+				itemstack.shrink(1);
 			} else if (itemstack.getItemDamage() != 0) {
 				itemstack.setItemDamage(0);
 			}
@@ -215,7 +217,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				z + (bb.maxZ - bb.minZ) * 0.5 * offsetZ,
 				world.rand.nextFloat() * 360.0F, 0.0F);
 
-			world.spawnEntityInWorld(e);
+			world.spawnEntity(e);
 			if (e instanceof EntityLiving) {
 				((EntityLiving) e).playLivingSound();
 			}
@@ -224,7 +226,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			while (riddenByEntity != null) {
 				riddenByEntity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
 
-				world.spawnEntityInWorld(riddenByEntity);
+				world.spawnEntity(riddenByEntity);
 				if (riddenByEntity instanceof EntityLiving) {
 					((EntityLiving) riddenByEntity).playLivingSound();
 				}
@@ -247,7 +249,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				e.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
 				if (e instanceof EntityLiving)
 					((EntityLiving) e).onInitialSpawn(world.getDifficultyForLocation(e.getPosition()), null);
-				world.spawnEntityInWorld(e);
+				world.spawnEntity(e);
 				if (e instanceof EntityLiving)
 					((EntityLiving) e).playLivingSound();
 			}
@@ -257,19 +259,19 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+	public boolean itemInteractionForEntity(@Nonnull ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
 
 		return captureEntity(itemstack, entity, player, hand);
 	}
 
-	public static boolean captureEntity(ItemStack itemstack, EntityLivingBase entity) {
+	public static boolean captureEntity(@Nonnull ItemStack itemstack, EntityLivingBase entity) {
 
 		return captureEntity(itemstack, entity, null, null);
 	}
 
-	public static boolean captureEntity(ItemStack itemstack, EntityLivingBase entity, EntityPlayer player, EnumHand hand) {
+	public static boolean captureEntity(@Nonnull ItemStack itemstack, EntityLivingBase entity, EntityPlayer player, EnumHand hand) {
 
-		if (entity.worldObj.isRemote) {
+		if (entity.world.isRemote) {
 			return false;
 		}
 		if (!isEmpty(itemstack)) {
@@ -284,26 +286,28 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			synchronized (entity) { //TODO why is this block synchronized? as far as I can see it runs in the main thread
 				entity.writeToNBT(c);
 
-				c.setString("id", EntityList.getEntityString(entity));
+				c.setString("id", EntityList.getKey(entity).toString());
+				c.setString("entityName", EntityList.getEntityString(entity));
 
 				if (entity.isDead)
 					return false;
 
 				if (!flag)
 					entity.setDead();
-				if (flag | entity.isDead) {
+				if (flag || entity.isDead) {
 					flag = false;
-					if (--itemstack.stackSize > 0) { //TODO why is there this logic here and the one below to add to inventory when nets can't stack?
+					itemstack.shrink(1);
+					if (itemstack.getCount() > 0) { //TODO why is there this logic here and the one below to add to inventory when nets can't stack?
 						flag = true;
 						itemstack = itemstack.copy();
 					}
-					itemstack.stackSize = 1;
+					itemstack.setCount(1);
 					itemstack.setTagCompound(c);
 					if (flag && (player == null || !player.inventory.addItemStackToInventory(itemstack)))
-						UtilInventory.dropStackInAir(entity.worldObj, entity, itemstack);
+						UtilInventory.dropStackInAir(entity.world, entity, itemstack);
 					else if (flag) {
 						player.openContainer.detectAndSendChanges();
-						((EntityPlayerMP) player).updateCraftingInventory(player.openContainer,
+						((EntityPlayerMP) player).sendAllContents(player.openContainer,
 							player.openContainer.getInventory());
 					} else if (player != null && hand != null){
 						player.setHeldItem(hand, itemstack);
@@ -318,22 +322,23 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		return true;
 	}
 
-	public static boolean isEmpty(ItemStack s) {
+	public static boolean isEmpty(@Nonnull ItemStack s) {
 
 		return !isSafariNet(s) || (s.getItemDamage() == 0 && (s.getTagCompound() == null || (!s.getTagCompound().hasKey("id") && !s.getTagCompound().getBoolean("hide"))));
 	}
 
-	public static boolean isSingleUse(ItemStack s) {
+	public static boolean isSingleUse(@Nonnull ItemStack s) {
 
 		return isSafariNet(s) && !((ItemSafariNet) s.getItem()).multiuse;
 	}
 
-	public static boolean isSafariNet(ItemStack s) {
+	public static boolean isSafariNet(@Nonnull ItemStack s) {
 
-		return s != null && (s.getItem() instanceof ItemSafariNet);
+		return !s.isEmpty() && (s.getItem() instanceof ItemSafariNet);
 	}
 
-	public static ItemStack makeMysteryNet(ItemStack s) {
+	@Nonnull
+	public static ItemStack makeMysteryNet(@Nonnull ItemStack s) {
 
 		if (isSafariNet(s)) {
 			NBTTagCompound c = new NBTTagCompound();
@@ -343,7 +348,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		return s;
 	}
 
-	public static Class<?> getEntityClass(ItemStack s) {
+	public static Class<?> getEntityClass(@Nonnull ItemStack s) {
 
 		if (!isSafariNet(s) || isEmpty(s))
 			return null;
@@ -351,21 +356,23 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			int mobId = s.getItemDamage();
 			if (!EntityList.ENTITY_EGGS.containsKey(Integer.valueOf(mobId)))
 				return null;
-			return (Class<?>) EntityList.ID_TO_CLASS.get(mobId);
+			return EntityList.getClassFromID(mobId);
 		} else {
 			String mobId = s.getTagCompound().getString("id");
-			if (!EntityList.NAME_TO_CLASS.containsKey(mobId))
+			if (!ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(mobId)))
 				return null;
-			return (Class<?>) EntityList.NAME_TO_CLASS.get(mobId);
+			return (Class<?>) EntityList.getClass(new ResourceLocation(mobId));
 		}
 	}
 
 	@Override
-	public void getSubItems(Item item, List<ItemStack> subTypes) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-		super.getSubItems(item, subTypes);
-		if (item.equals(MFRThings.safariNetSingleItem)) {
-			subTypes.add(Zoologist.getHiddenNetStack());
+		if (isInCreativeTab(tab)) {
+			super.getSubItems(tab, items);
+			if (this.equals(MFRThings.safariNetSingleItem)) {
+				items.add(Zoologist.getHiddenNetStack());
+			}
 		}
 	}
 
@@ -393,13 +400,13 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		final IItemColor colorHandler = new IItemColor() {
 			@Override
 			@SideOnly(Side.CLIENT)
-			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+			public int colorMultiplier(@Nonnull ItemStack stack, int tintIndex) {
 
 				if (stack.getItemDamage() == 0 && (stack.getTagCompound() == null)) {
 					return 16777215;
 				}
 				if (stack.getTagCompound() != null && stack.getTagCompound().getBoolean("hide")) {
-					World world = Minecraft.getMinecraft().theWorld;
+					World world = Minecraft.getMinecraft().world;
 					colorRand.setSeed(world.getSeed() ^ (world.getTotalWorldTime() / (7 * 20)) * tintIndex);
 					if (tintIndex == 2)
 						return colorRand.nextInt();
@@ -421,7 +428,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				}
 			}
 
-			private EntityList.EntityEggInfo getEgg(ItemStack safariStack) {
+			private EntityList.EntityEggInfo getEgg(@Nonnull ItemStack safariStack) {
 
 				if (safariStack.getTagCompound() == null) {
 					return null;

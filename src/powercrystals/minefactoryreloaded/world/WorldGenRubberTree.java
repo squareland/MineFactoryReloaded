@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.world;
 
-import cofh.lib.util.helpers.BlockHelper;
+import cofh.core.util.helpers.BlockHelper;
 
 import java.util.Random;
 

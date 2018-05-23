@@ -1,11 +1,7 @@
 package powercrystals.minefactoryreloaded.block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
+import cofh.core.util.core.IInitializer;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.PropertyBool;
@@ -20,13 +16,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.model.ModelLoader;
@@ -38,6 +34,11 @@ import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetNoConnec
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.render.IColorRegister;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnection, IInitializer, IModelRegister, IColorRegister {
 
@@ -135,7 +136,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> ret = new ArrayList<>();
 		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
 		if (!state.getValue(DECAYABLE)) // HACK: shears drop saplings AND the block because forge doesn't pay attention to the code they edit
@@ -158,20 +159,20 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 
 		if (world.isRemote)
 			return;
-		if (state.getValue(VARIANT) == Variant.NORMAL && !state.getValue(DECAYABLE)) {
+		if (state.getValue(VARIANT) == Variant.NORMAL && state.getValue(DECAYABLE)) {
 			boolean decay = state.getValue(CHECK_DECAY);
 			if (decay) {
 				updating.set(Boolean.TRUE);
 				super.updateTick(world, pos, state, rand);
 				updating.set(null);
 				if (!world.getBlockState(pos).getBlock().equals(this))
-					dropBlockAsItem(world, pos, world.getBlockState(pos), 0);
+					dropBlockAsItem(world, pos, state, 0);
 				return;
 			}
 			int chance = 15;
 			Biome b = world.getBiome(pos);
 			if (b != null) {
-				float temp = b.getTemperature();
+				float temp = b.getTemperature(pos);
 				float rain = b.getRainfall();
 				boolean t;
 				decay |= (t = rain <= 0.05f);
@@ -200,7 +201,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 			int chance = 15;
 			Biome b = world.getBiome(pos);
 			if (b != null) {
-				float temp = b.getTemperature();
+				float temp = b.getTemperature(pos);
 				float rain = b.getRainfall();
 				boolean t;
 				decay |= (t = rain <= 0.05f);
@@ -232,39 +233,31 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 		return cube ? super.shouldSideBeRendered(state, world, pos, side) : true;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void getSubBlocks(Item blockId, CreativeTabs creativeTab, List subTypes) {
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 
-		subTypes.add(new ItemStack(blockId, 1, 0));
-		subTypes.add(new ItemStack(blockId, 1, 1));
+		items.add(new ItemStack(this, 1, 0));
+		items.add(new ItemStack(this, 1, 1));
 	}
 
 	@Override
-	public List<ItemStack> onSheared(ItemStack itemStack, IBlockAccess iBlockAccess, BlockPos blockPos, int i) {
+	public List<ItemStack> onSheared(@Nonnull ItemStack itemStack, IBlockAccess iBlockAccess, BlockPos blockPos, int i) {
 
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> ret = new ArrayList<>();
 		ret.add(new ItemStack(this, 1, this.getMetaFromState(iBlockAccess.getBlockState(blockPos)) & 3));
 		return ret;
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		Blocks.FIRE.setFireInfo(this, 80, 25);
-		MFRRegistry.registerBlock(this, new ItemBlockFactoryLeaves(this));
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
 
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
+		Blocks.FIRE.setFireInfo(this, 80, 25);
+		MFRRegistry.registerBlock(this, new ItemBlockFactoryLeaves(this));
 		return true;
 	}
 

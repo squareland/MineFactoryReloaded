@@ -20,10 +20,9 @@ public class BlockPinkSlimeFluid extends BlockFactoryFluid
 			{
 				world.setBlockToAir(pos);
 				EntityPinkSlime s = new EntityPinkSlime(world);
-				s.onInitialSpawn(world.getDifficultyForLocation(pos), null);
-				s.setSlimeSize(1);
+				s.onInitialSpawn(world.getDifficultyForLocation(pos), new EntityPinkSlime.GroupData(true));
 				s.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-				world.spawnEntityInWorld(s);
+				world.spawnEntity(s);
 				return;
 			}
 			world.scheduleBlockUpdate(pos, this, tickRate, 1); // Does not run immediately if that flag is set. Can't stack overflow.

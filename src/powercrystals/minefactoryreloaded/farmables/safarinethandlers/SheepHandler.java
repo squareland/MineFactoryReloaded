@@ -1,27 +1,26 @@
 package powercrystals.minefactoryreloaded.farmables.safarinethandlers;
 
-import java.util.List;
-
-import net.minecraft.block.BlockColored;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 
-public class SheepHandler implements ISafariNetHandler
-{
+import javax.annotation.Nonnull;
+import java.util.List;
+
+public class SheepHandler implements ISafariNetHandler {
+
 	@Override
-	public Class<?> validFor()
-	{
+	public Class<?> validFor() {
+
 		return EntitySheep.class;
 	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+
 	@Override
-	public void addInformation(ItemStack safariNetStack, EntityPlayer player, List infoList, boolean advancedTooltips)
-	{
+	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
+
 		infoList.add("Wool: " + EnumDyeColor.byMetadata((safariNetStack.getTagCompound().getByte("Color") & 15)));
 	}
 }

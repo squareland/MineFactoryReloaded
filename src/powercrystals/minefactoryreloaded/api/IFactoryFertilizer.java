@@ -3,6 +3,8 @@ package powercrystals.minefactoryreloaded.api;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 /**
  * Defines a fertilizer item for use in the Fertilizer.
  *
@@ -18,15 +20,15 @@ public interface IFactoryFertilizer {
 	/**
 	 * @return The type of fertilizer this is.
 	 */
-	FertilizerType getFertilizerType(ItemStack stack);
+	FertilizerType getFertilizerType(@Nonnull ItemStack stack);
 
 	/**
-	 * Called when a fertilization is successful. If you set the ItemStack size
+	 * Called when a fertilization is successful. If you set the @Nonnull ItemStack size
 	 * to 0, it will be deleted by the fertilizer.
 	 *
 	 * @param fertilizer
-	 *            The ItemStack used to fertilize.
+	 *            The @Nonnull ItemStack used to fertilize.
 	 */
-	void consume(ItemStack fertilizer);
+	void consume(@Nonnull ItemStack fertilizer);
 
 }

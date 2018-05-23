@@ -1,25 +1,30 @@
 package powercrystals.minefactoryreloaded.block;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBlockRedNetLogic extends ItemBlock {
 
+	@Nonnull
 	public static ItemStack manual;
 
 	static {
@@ -148,7 +153,7 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 
 		ITextComponent itextcomponent = new TextComponentString(text);
 		text = ITextComponent.Serializer.componentToJson(itextcomponent);
-		return new NBTTagString(text);
+		 return new NBTTagString(text);
 	}
 
 	public ItemBlockRedNetLogic(net.minecraft.block.Block id) {
@@ -160,7 +165,7 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && tag.hasKey("circuits"))
@@ -168,28 +173,26 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 		return maxStackSize;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List infoList, boolean advancedTooltips) {
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		infoList.add(I18n.translateToLocal("tip.info.mfr.prc"));
+		tooltip.add(I18n.translateToLocal("tip.info.mfr.prc"));
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null) {
 			if (tag.hasKey("circuits", 9)) {
 				int c = stack.getTagCompound().getTagList("circuits", 10).tagCount();
-				infoList.add(MFRUtil.localize("tip.info.mfr.memorycard.programmed", c));
+				tooltip.add(MFRUtil.localize("tip.info.mfr.memorycard.programmed", c));
 			}
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(net.minecraft.item.Item itemId, CreativeTabs creativeTab, List subTypes) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-		subTypes.add(new ItemStack(itemId, 1, 0));
-		subTypes.add(manual);
+		if (isInCreativeTab(tab)) {
+			items.add(new ItemStack(this, 1, 0));
+			items.add(manual);
+		}
 	}
-
 }

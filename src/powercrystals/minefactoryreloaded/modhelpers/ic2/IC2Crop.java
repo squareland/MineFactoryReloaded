@@ -1,27 +1,19 @@
 package powercrystals.minefactoryreloaded.modhelpers.ic2;
 
 import ic2.api.crops.CropCard;
-import ic2.api.crops.Crops;
 import ic2.api.crops.ICropTile;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.HarvestType;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
-import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.*;
 import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFactoryFruit
 {
@@ -116,7 +108,7 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 	@Override
 	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, BlockPos pos)
 	{
-		List<ItemStack> drops = new ArrayList<ItemStack>();
+		NonNullList<ItemStack> drops = NonNullList.create();
 		getDrops(drops, world, rand, pos);
 		return drops;
 	}
@@ -124,12 +116,12 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 	@Override
 	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos)
 	{
-		List<ItemStack> drops = new ArrayList<ItemStack>();
+		NonNullList<ItemStack> drops = NonNullList.create();
 		getDrops(drops, world, rand, pos);
 		return drops;
 	}
 
-	private void getDrops(List<ItemStack> drops, World world, Random rand, BlockPos pos)
+	private void getDrops(NonNullList<ItemStack> drops, World world, Random rand, BlockPos pos)
 	{
 		ICropTile tec = (ICropTile)world.getTileEntity(pos);
 		CropCard crop;
@@ -150,23 +142,20 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 				numDrops++;
 				chance -= rand.nextFloat();
 			}
-			ItemStack[] cropDrops = new ItemStack[numDrops];
+			NonNullList<ItemStack> cropDrops = NonNullList.withSize(numDrops, ItemStack.EMPTY);
 			for (int i = 0; i < numDrops; i++)
 			{
-				cropDrops[i] = crop.getGain(tec);
-				if((cropDrops[i] != null) && (rand.nextInt(100) <= tec.getStatGain()))
+				cropDrops.set(i, crop.getGain(tec));
+				if((!cropDrops.get(i).isEmpty()) && (rand.nextInt(100) <= tec.getStatGain()))
 				{
-					cropDrops[i].stackSize += 1;
+					cropDrops.get(i).grow(1);
 				}
 			}
 
 			tec.setCurrentSize(crop.getSizeAfterHarvest(tec));
 			tec.updateState();
 
-			for(ItemStack s : cropDrops)
-			{
-				drops.add(s);
-			}
+			drops.addAll(cropDrops);
 		}
 		catch(Exception e)
 		{

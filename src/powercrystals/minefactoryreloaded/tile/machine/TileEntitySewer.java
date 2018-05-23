@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
 import cofh.core.fluid.FluidTankCore;
-import cofh.lib.util.helpers.MathHelper;
+import cofh.core.util.helpers.MathHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -26,11 +26,12 @@ import powercrystals.minefactoryreloaded.gui.client.GuiSewer;
 import powercrystals.minefactoryreloaded.gui.container.ContainerSewer;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.Machine;
-import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
+import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public class TileEntitySewer extends TileEntityFactoryInventory {
+public class TileEntitySewer extends TileEntityFactoryTickable {
 
 	private boolean _jammed;
 	private int _tick;
@@ -67,16 +68,16 @@ public class TileEntitySewer extends TileEntityFactoryInventory {
 	public void update() {
 
 		super.update();
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			return;
 		}
 		_tick++;
 
-		if (_nextSewerCheckTick <= worldObj.getTotalWorldTime()) {
+		if (_nextSewerCheckTick <= world.getTotalWorldTime()) {
 			Area a = new Area(pos, _areaManager.getRadius(), 2, 2);
 			_jammed = false;
 			for (BlockPos bp : a.getPositionsBottomFirst()) {
-				IBlockState state = worldObj.getBlockState(bp);
+				IBlockState state = world.getBlockState(bp);
 				if (state.getBlock().equals(_machine.getBlock()) &&
 						state.getValue(BlockFactoryMachine.TYPE).getMeta() == _machine.getMeta() &&
 						!(bp.equals(pos))) {
@@ -85,13 +86,13 @@ public class TileEntitySewer extends TileEntityFactoryInventory {
 				}
 			}
 
-			_nextSewerCheckTick = worldObj.getTotalWorldTime() + 800 + worldObj.rand.nextInt(800);
+			_nextSewerCheckTick = world.getTotalWorldTime() + 800 + world.rand.nextInt(800);
 		}
 
 		if (_tick >= 31 && !_jammed) {
 			_tick = 0;
 			double massFound = 0;
-			long worldTime = worldObj.getTotalWorldTime();
+			long worldTime = world.getTotalWorldTime();
 			AxisAlignedBB box = _areaManager.getHarvestArea().toAxisAlignedBB();
 			l:
 			{
@@ -100,7 +101,7 @@ public class TileEntitySewer extends TileEntityFactoryInventory {
 					break l;
 				}
 
-				List<EntityXPOrb> entities = worldObj.getEntitiesWithinAABB(EntityXPOrb.class, box);
+				List<EntityXPOrb> entities = world.getEntitiesWithinAABB(EntityXPOrb.class, box);
 				for (EntityXPOrb orb : entities) {
 					if (!orb.isDead) {
 						if (MFRLiquidMover.fillTankWithXP(_tanks[1], orb) == 0)
@@ -109,7 +110,7 @@ public class TileEntitySewer extends TileEntityFactoryInventory {
 				}
 			}
 
-			List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, box);
+			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, box);
 			for (EntityLivingBase o : entities) {
 				if (o instanceof EntityAnimal || o instanceof EntityVillager || (o.isSneaking() && o instanceof EntityPlayer)) {
 					if (o.getEntityData().getLong("mfr:sewerTime") > worldTime) {
@@ -168,19 +169,19 @@ public class TileEntitySewer extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return slot == 0 && isUsableAugment(itemstack);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return false;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

@@ -1,7 +1,6 @@
 package powercrystals.minefactoryreloaded.farmables.plantables;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
@@ -11,8 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+
+import javax.annotation.Nonnull;
 
 public class PlantableCocoa extends PlantableStandard
 {
@@ -27,7 +27,7 @@ public class PlantableCocoa extends PlantableStandard
 		super(source, plantedBlock, validMeta);
 		_plantedBlock = new ReplacementBlock(_block) {
 			@Override
-			public int getMeta(World world, BlockPos pos, ItemStack stack)
+			public int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack)
 			{
 				int meta = EnumFacing.EAST.getHorizontalIndex();
 				if (isGoodLog(world, pos.west()))
@@ -43,7 +43,7 @@ public class PlantableCocoa extends PlantableStandard
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack)
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		if (!world.isAirBlock(pos))
 			return false;

@@ -1,20 +1,19 @@
 package powercrystals.minefactoryreloaded.farmables.harvestables;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.HarvestType;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class HarvestableShrub extends HarvestableStandard {
 
@@ -26,7 +25,7 @@ public class HarvestableShrub extends HarvestableStandard {
 	@Override
 	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, BlockPos pos) {
 
-		List<ItemStack> drops = new ArrayList<ItemStack>();
+		NonNullList<ItemStack> drops = NonNullList.create();
 
 		boolean doublePlant = getPlant() == Blocks.DOUBLE_PLANT, top = false;
 

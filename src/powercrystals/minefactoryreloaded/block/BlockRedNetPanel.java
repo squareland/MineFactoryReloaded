@@ -10,14 +10,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -31,6 +30,8 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.tileentity.RedNetHistorianRenderer;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetHistorian;
+
+import javax.annotation.Nonnull;
 
 public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 {
@@ -75,7 +76,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack)
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, @Nonnull ItemStack stack)
 	{
 		super.onBlockPlacedBy(world, pos, state, entity, stack);
 		if(entity == null)
@@ -86,7 +87,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 		TileEntity te = getTile(world, pos);
 		if(te instanceof TileEntityFactory && ((TileEntityFactory)te).canRotate())
 		{
-			int facing = MathHelper.floor_double((entity.rotationYaw * 4F) / 360F + 0.5D) & 3;
+			int facing = MathHelper.floor((entity.rotationYaw * 4F) / 360F + 0.5D) & 3;
 			if(facing == 0)
 			{
 				((TileEntityFactory)te).rotateDirectlyTo(3);
@@ -107,16 +108,16 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem)
+	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem)
 	{
 		IBlockState state = world.getBlockState(pos);
 
 		TileEntity te = getTile(world, pos);
-		if (MFRUtil.isHoldingUsableTool(player, pos) && te instanceof TileEntityFactory && ((TileEntityFactory)te).canRotate())
+		if (MFRUtil.isHoldingUsableTool(player, hand, pos, side) && te instanceof TileEntityFactory && ((TileEntityFactory)te).canRotate())
 		{
 			((TileEntityFactory)te).rotate(side);
 			MFRUtil.notifyBlockUpdate(world, pos, state);
-			MFRUtil.usedWrench(player, pos);
+			MFRUtil.usedWrench(player, hand, pos, side);
 			return true;
 		}
 		else if(te instanceof TileEntityFactory && ((TileEntityFactory)te).getContainer(player.inventory) != null)
@@ -124,7 +125,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 			player.openGui(MineFactoryReloadedCore.instance(), 0, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
-		else if(te instanceof TileEntityRedNetHistorian && heldItem != null && heldItem.getItem().equals(Items.DYE))
+		else if(te instanceof TileEntityRedNetHistorian && !heldItem.isEmpty() && heldItem.getItem().equals(Items.DYE))
 		{
 			((TileEntityRedNetHistorian)te).setSelectedSubnet(15 - heldItem.getItemDamage());
 			MFRUtil.notifyBlockUpdate(world, pos, state);
@@ -194,7 +195,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode
 	}
 
 	@Override
-	public boolean preInit() 
+	public boolean initialize()
 	{
 		MFRRegistry.registerBlock(this, new ItemBlockRedNetPanel(this));
 		GameRegistry.registerTileEntity(TileEntityRedNetHistorian.class, "factoryRednetHistorian");

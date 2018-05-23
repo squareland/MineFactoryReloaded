@@ -1,9 +1,5 @@
 package powercrystals.minefactoryreloaded.modhelpers.ic2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import ic2.core.block.BlockRubWood;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -11,25 +7,30 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.FertilizerType;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
 import powercrystals.minefactoryreloaded.api.IFactoryFruit;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class FruitIC2Resin implements IFactoryFruit, IFactoryFertilizable
 {
 	private Block _rubberWood;
+	@Nonnull
 	private ItemStack _resin;
 	private ReplacementBlock _repl;
 
-	public FruitIC2Resin(ItemStack rubberWood, ItemStack resin)
+	public FruitIC2Resin(@Nonnull ItemStack rubberWood, @Nonnull ItemStack resin)
 	{
 		this._rubberWood = ((ItemBlock)rubberWood.getItem()).getBlock();
 		this._resin = resin;
 		_repl = new ReplacementBlock(_rubberWood) {
 			@Override
-			protected int getMeta(World world, BlockPos pos, ItemStack stack)
+			protected int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack)
 			{
 				return world.getBlockState(pos).getValue(BlockRubWood.stateProperty).getDry().ordinal();
 			}
@@ -84,8 +85,8 @@ public class FruitIC2Resin implements IFactoryFruit, IFactoryFertilizable
 	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos)
 	{
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-		ItemStack a = _resin.copy();
-		a.stackSize = 1 + rand.nextInt(3);
+		@Nonnull ItemStack a = _resin.copy();
+		a.setCount(1 + rand.nextInt(3));
 		list.add(a);
 		return list;
 	}

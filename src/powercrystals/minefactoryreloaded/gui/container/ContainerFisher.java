@@ -1,10 +1,9 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.slot.SlotAcceptValid;
-
+import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
-
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityFisher;
 
@@ -20,7 +19,8 @@ public class ContainerFisher extends ContainerFactoryPowered {
 	@Override
 	public void addSlots() {
 
-		addSlotToContainer(new SlotAcceptValid(_te, 0, 8, 24));
+		IItemHandler handler = InventoryHelper.getItemHandlerCap(_te, null);
+		addSlotToContainer(new SlotItemHandler(handler, 0, 8, 24));
 
 		getSlot(0).setBackgroundName(background);
 	}
@@ -30,8 +30,8 @@ public class ContainerFisher extends ContainerFactoryPowered {
 
 		super.detectAndSendChanges();
 		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendProgressBarUpdate(this, 100, ((TileEntityFactoryPowered) _te).getWorkMax() & 65535);
-			listeners.get(i).sendProgressBarUpdate(this, 101, ((TileEntityFactoryPowered) _te).getWorkMax() >>> 16);
+			listeners.get(i).sendWindowProperty(this, 100, ((TileEntityFactoryPowered) _te).getWorkMax() & 65535);
+			listeners.get(i).sendWindowProperty(this, 101, ((TileEntityFactoryPowered) _te).getWorkMax() >>> 16);
 		}
 	}
 
@@ -42,7 +42,8 @@ public class ContainerFisher extends ContainerFactoryPowered {
 
 		if (var == 100)
 			workTemp = (value & 65535);
-		else if (var == 101) ((TileEntityFisher) _te).setWorkMax(((value & 65535) << 16) | workTemp);
+		else if (var == 101)
+			((TileEntityFisher) _te).setWorkMax(((value & 65535) << 16) | workTemp);
 	}
 
 }

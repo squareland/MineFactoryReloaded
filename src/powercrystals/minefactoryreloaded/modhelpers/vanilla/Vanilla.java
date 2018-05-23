@@ -1,11 +1,5 @@
 package powercrystals.minefactoryreloaded.modhelpers.vanilla;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
@@ -18,8 +12,12 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.CustomProperty;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
-
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.FertilizerType;
@@ -51,7 +49,12 @@ import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStemP
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableVine;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
-import powercrystals.minefactoryreloaded.farmables.plantables.*;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableChorus;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCocoa;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCropPlant;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableNetherWart;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
+import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
 import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableChicken;
 import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableCow;
 import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableMooshroom;
@@ -61,7 +64,9 @@ import powercrystals.minefactoryreloaded.farmables.spawnhandlers.SpawnableEnderm
 import powercrystals.minefactoryreloaded.farmables.spawnhandlers.SpawnableHorse;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
-@Mod(modid = "MineFactoryReloaded|CompatVanilla", name = "MFR Compat: Vanilla", version = MineFactoryReloadedCore.version, dependencies = "after:MineFactoryReloaded",
+import javax.annotation.Nonnull;
+
+@Mod(modid = "minefactoryreloaded_compatvanilla", name = "MFR Compat: Vanilla", version = MineFactoryReloadedCore.version, dependencies = "after:minefactoryreloaded",
 		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class Vanilla {
 
@@ -138,7 +143,7 @@ public class Vanilla {
 		MFRRegistry.registerGrinderBlacklist(EntityVillager.class);
 
 		MFRRegistry.registerGrindable(new GrindableStandard(EntityChicken.class, new MobDrop[] {
-				new MobDrop(30, null),
+				new MobDrop(30, ItemStack.EMPTY),
 				new MobDrop(10, new ItemStack(Items.EGG))
 		}, false));
 		MFRRegistry.registerGrindable(new GrindableStandard(EntityOcelot.class, new MobDrop[] {
@@ -334,10 +339,10 @@ public class Vanilla {
 
 	private void registerOreDictLaserOre(int weight, String name, int focus, String netherName, int netherFocus) {
 
-		for (ItemStack ore : OreDictionary.getOres(name))
-			if (ore != null) {
+		for (@Nonnull ItemStack ore : OreDictionary.getOres(name))
+			if (!ore.isEmpty()) {
 				ore = ore.copy();
-				ore.stackSize = 1;
+				ore.setCount(1);
 				MFRRegistry.registerLaserOre(weight, ore);
 				if (focus >= 0)
 					MFRRegistry.addLaserPreferredOre(focus, ore);
@@ -347,8 +352,8 @@ public class Vanilla {
 				return;
 			}
 		if (netherName != null)
-			for (ItemStack ore : OreDictionary.getOres(netherName))
-				if (ore != null) {
+			for (@Nonnull ItemStack ore : OreDictionary.getOres(netherName))
+				if (!ore.isEmpty()) {
 					registerOreDictLaserOre(weight / 2, netherName, netherFocus, null);
 					return;
 				}

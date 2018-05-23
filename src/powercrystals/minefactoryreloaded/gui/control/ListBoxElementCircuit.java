@@ -1,8 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.control;
 
-import cofh.lib.gui.element.ElementListBox;
-import cofh.lib.gui.element.listbox.IListBoxElement;
-
+import cofh.core.gui.element.ElementListBox;
+import cofh.core.gui.element.listbox.IListBoxElement;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 

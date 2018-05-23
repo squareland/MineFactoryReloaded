@@ -1,17 +1,13 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
 import cofh.core.fluid.FluidTankCore;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
 import powercrystals.minefactoryreloaded.api.RanchedItem;
@@ -20,6 +16,9 @@ import powercrystals.minefactoryreloaded.gui.client.GuiFactoryPowered;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class TileEntityRancher extends TileEntityFactoryPowered {
 
@@ -67,13 +66,13 @@ public class TileEntityRancher extends TileEntityFactoryPowered {
 
 		boolean didDrop = false;
 
-		List<?> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
+		List<?> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB());
 
 		for (Object o : entities) {
 			EntityLivingBase e = (EntityLivingBase) o;
 			if (MFRRegistry.getRanchables().containsKey(e.getClass())) {
 				IFactoryRanchable r = MFRRegistry.getRanchables().get(e.getClass());
-				List<RanchedItem> drops = r.ranch(worldObj, e, this);
+				List<RanchedItem> drops = r.ranch(world, e, this);
 				if (drops != null) {
 					for (RanchedItem s : drops) {
 						if (s.hasFluid()) {
@@ -111,7 +110,7 @@ public class TileEntityRancher extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

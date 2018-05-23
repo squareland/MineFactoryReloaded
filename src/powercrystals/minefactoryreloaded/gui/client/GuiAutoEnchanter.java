@@ -36,7 +36,7 @@ public class GuiAutoEnchanter extends GuiFactoryPowered
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		fontRendererObj.drawString(new Integer(_enchanter.getTargetLevel()).toString(), 68, 44, 4210752);
+		fontRenderer.drawString(new Integer(_enchanter.getTargetLevel()).toString(), 68, 44, 4210752);
 	}
 	
 	@Override

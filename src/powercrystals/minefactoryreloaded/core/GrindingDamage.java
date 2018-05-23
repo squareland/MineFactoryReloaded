@@ -47,6 +47,17 @@ public class GrindingDamage extends DamageSource {
 		_rand = new Random();
 	}
 
+	public void setupGrindingPlayer(WorldServer world) {
+
+		int dimId = world.provider.getDimension();
+		if (!fakePlayerRefs.containsKey(dimId)) {
+			String name = FAKE_PLAYER_NAME + "_" + dimId;
+			fakePlayerRefs.put(dimId, new WeakReference<>(FakePlayerFactory.get(
+					world, new GameProfile(UUID.nameUUIDFromBytes(name.getBytes()), name))));
+		}
+		fakePlayerRef = fakePlayerRefs.get(dimId);
+	}
+
 	@Override
 	public ITextComponent getDeathMessage(EntityLivingBase entity) {
 
@@ -66,19 +77,8 @@ public class GrindingDamage extends DamageSource {
 
 	@Nullable
 	@Override
-	public Entity getEntity() {
+	public Entity getTrueSource() {
 
 		return fakePlayerRef != null ? fakePlayerRef.get() : null;
-	}
-
-	public void setupGrindingPlayer(WorldServer world) {
-
-		int dimId = world.provider.getDimension();
-		if (!fakePlayerRefs.containsKey(dimId)) {
-			String name = FAKE_PLAYER_NAME + "_" + dimId;
-			fakePlayerRefs.put(dimId, new WeakReference<>(FakePlayerFactory.get(
-					world, new GameProfile(UUID.nameUUIDFromBytes(name.getBytes()), name))));
-		}
-		fakePlayerRef = fakePlayerRefs.get(dimId);
 	}
 }

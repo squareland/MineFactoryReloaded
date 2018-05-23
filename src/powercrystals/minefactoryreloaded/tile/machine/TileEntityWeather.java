@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
 import cofh.core.fluid.FluidTankCore;
-import cofh.lib.util.helpers.BlockHelper;
-import cofh.lib.util.helpers.FluidHelper;
+import cofh.core.util.helpers.BlockHelper;
+import cofh.core.util.helpers.FluidHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,6 +19,8 @@ import powercrystals.minefactoryreloaded.gui.client.GuiFactoryPowered;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
 
 import static net.minecraftforge.fluids.FluidRegistry.WATER;
 
@@ -63,10 +65,10 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 	@Override
 	public boolean activateMachine() {
 
-		if (worldObj.getWorldInfo().isRaining()) {
+		if (world.getWorldInfo().isRaining()) {
 			l:
 			{
-				Biome bgb = worldObj.getBiome(pos);
+				Biome bgb = world.getBiome(pos);
 
 				if (_canWeather && _biome == bgb)
 					break l;
@@ -77,7 +79,7 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 					return false;
 				}
 				_canWeather = true;
-				_willSnow = bgb.getFloatTemperature(pos) < 0.15F;
+				_willSnow = bgb.getTemperature(pos) < 0.15F;
 			}
 			if (!canSeeSky()) {
 				setIdleTicks(getIdleTicksMax());
@@ -120,13 +122,13 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 		if (--_canSeeSky > 0)
 			return _openSky;
 		_canSeeSky = 70;
-		int h = BlockHelper.getHighestY(worldObj, pos.getX(), pos.getZ());
+		int h = BlockHelper.getHighestY(world, pos.getX(), pos.getZ());
 		_openSky = true;
 		for (int y = pos.getY() + 1; y < h; y++) {
 			BlockPos offsetPos = new BlockPos(pos.getX(), y, pos.getZ());
-			IBlockState state = worldObj.getBlockState(offsetPos);
+			IBlockState state = world.getBlockState(offsetPos);
 			Block block = state.getBlock();
-			if (block.getCollisionBoundingBox(state, worldObj, offsetPos) == null)
+			if (block.getCollisionBoundingBox(state, world, offsetPos) == null)
 				continue;
 			_openSky = false;
 			break;
@@ -153,7 +155,7 @@ public class TileEntityWeather extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

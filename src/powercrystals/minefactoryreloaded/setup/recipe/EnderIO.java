@@ -1,10 +1,10 @@
 package powercrystals.minefactoryreloaded.setup.recipe;
-
-import static cofh.lib.util.helpers.ItemHelper.*;
-import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
-
-import net.minecraft.block.Block;
+/*
+import cofh.core.util.helpers.RecipeHelper;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -14,18 +14,18 @@ import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
-
-import java.util.Collections;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
+import java.util.Collections;
+
+import static cofh.core.util.helpers.ItemHelper.stack;
+import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
 public class EnderIO extends Vanilla {
 
@@ -33,7 +33,7 @@ public class EnderIO extends Vanilla {
 
 	private String redstone = "dustRedstone";
 
-	/* Items */
+	/* Items *//*
 	private ItemStack capacitorBasic;
 	private ItemStack capacitorDouble;
 	private ItemStack capacitorOctadic;
@@ -50,7 +50,7 @@ public class EnderIO extends Vanilla {
 	private ItemStack soulVial;
 	private ItemStack fireWaterBucket;
 
-	/* Blocks */
+	/* Blocks *//*
 	private ItemStack light;
 	private ItemStack reservoir;
 	private ItemStack dimTrans;
@@ -61,7 +61,7 @@ public class EnderIO extends Vanilla {
 	private ItemStack capBank;
 	private ItemStack reinforcedObsidian;
 
-	/* Machines */
+	/* Machines *//*
 	private ItemStack crafter;
 	private ItemStack combustionGen;
 
@@ -73,7 +73,7 @@ public class EnderIO extends Vanilla {
 			throw new MissingModsException(Collections.singleton((ArtifactVersion) new DefaultArtifactVersion(EIO)), MineFactoryReloadedCore.modId, MineFactoryReloadedCore.modName);
 		}
 
-		/* Items */
+		/* Items *//*
 		capacitorBasic = stackFor("itemBasicCapacitor");
 		capacitorDouble = stackFor("itemBasicCapacitor", 1);
 		capacitorOctadic = stackFor("itemBasicCapacitor", 2);
@@ -90,7 +90,7 @@ public class EnderIO extends Vanilla {
 		soulVial = stackFor("itemSoulVessel");
 		fireWaterBucket = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, FluidRegistry.getFluid("rocket_fuel"));
 
-		/* Blocks */
+		/* Blocks *//*
 		light = stackForBlock("blockElectricLight", 2);
 		reservoir = stackForBlock("blockReservoir");
 		dimTrans = stackForBlock("blockTransceiver");
@@ -102,29 +102,33 @@ public class EnderIO extends Vanilla {
 		capBank = stackForBlock("blockCapBank", 2);
 		reinforcedObsidian = stackForBlock("blockReinforcedObsidian");
 
-		/* Machines */
+		/* Machines *//*
 		crafter = stackForBlock("blockCrafter");
 		combustionGen = stackForBlock("blockCombustionGenerator");
 	}
 
+	@Nonnull
 	private ItemStack stackFor(String itemName) {
 
 		return stackFor(itemName, 0);
 	}
 
+	@Nonnull
 	private ItemStack stackFor(String itemName, int damage) {
 
 		return new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(EIO, itemName)), 1, damage);
 	}
 
+	@Nonnull
 	private ItemStack stackForBlock(String blockName) {
 
 		return stackForBlock(blockName, 0);
 	}
 
+	@Nonnull
 	private ItemStack stackForBlock(String blockName, int damage) {
 
-		return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation(EIO, blockName)), 1, damage);
+		return new ItemStack(MFRUtil.findBlock(EIO, blockName), 1, damage);
 	}
 
 	@Override
@@ -666,13 +670,13 @@ public class EnderIO extends Vanilla {
 				'C', Machine.Chronotyper.getItemStack(),
 		});
 
-		addRecipe(ShapedRecipe(stack(plasticTank, 1), new Object[] {
+		RecipeHelper.addShapedRecipe(stack(plasticTank, 1), new Object[] {
 				"PPP",
 				"P P",
 				"PMP",
 				'P', "sheetPlastic",
 				'M', machineBaseItem,
-		}));
+		});
 	}
 
 	@Override
@@ -680,7 +684,7 @@ public class EnderIO extends Vanilla {
 
 		String prefix = "ingot";
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(fertilizerItem, 16), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(fertilizerItem, 16), new Object[] {
 				"WBW",
 				"STS",
 				"WBW",
@@ -688,9 +692,9 @@ public class EnderIO extends Vanilla {
 				'B', new ItemStack(Items.DYE, 1, 15),
 				'S', Items.STRING,
 				'T', "stickWood",
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(spyglassItem), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(spyglassItem), new Object[] {
 				"GLG",
 				"PLP",
 				" S ",
@@ -698,10 +702,10 @@ public class EnderIO extends Vanilla {
 				'L', "blockGlass",
 				'P', "sheetPlastic",
 				'S', "stickWood",
-		}));
+		});
 
 		if (MFRConfig.enablePortaSpawner.getBoolean(true))
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(portaSpawnerItem), new Object[] {
+			RecipeHelper.addShapedOreRecipe(new ItemStack(portaSpawnerItem), new Object[] {
 					"GLG",
 					"DND",
 					"GLG",
@@ -709,52 +713,50 @@ public class EnderIO extends Vanilla {
 					'L', "blockGlass",
 					'D', "ingotVibrantAlloy",
 					'N', Items.NETHER_STAR
-			}));
+			});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(detCordBlock, 12), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(detCordBlock, 12), new Object[] {
 				"PPP",
 				"PTP",
 				"PPP",
 				'P', "itemRubber",
 				'T', Blocks.TNT,
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(fishingRodItem, 1), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(fishingRodItem, 1), new Object[] {
 				"DD ",
 				"DFD",
 				"TDD",
 				'D', "wireExplosive",
 				'F', Items.FISHING_ROD,
 				'T', Blocks.REDSTONE_TORCH
-		}));
+		});
 	}
 
 	@Override
 	protected void registerRedNet() {
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(rednetCableBlock, 8), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetCableBlock, 8), new Object[] {
 				"PPP",
 				"RRR",
 				"PPP",
 				'R', redstone,
 				'P', "sheetPlastic",
-		}));
+		});
 
-		{
-			ItemStack pipe = stack(plasticPipeBlock);
-			addRecipe(ShapelessRecipe(stack(rednetCableBlock, 5), pipe, pipe, pipe, pipe, pipe, redstone, redstone));
-		}
+		@Nonnull ItemStack pipe = stack(plasticPipeBlock);
+		RecipeHelper.addShapelessRecipe(stack(rednetCableBlock, 5), pipe, pipe, pipe, pipe, pipe, redstone, redstone);
 
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(rednetCableBlock, 1, 2), new Object[] {
+		RecipeHelper.addShapelessOreRecipe(new ItemStack(rednetCableBlock, 1, 2), new Object[] {
 				"nuggetGold",
 				"nuggetGold",
 				"nuggetGold",
 				redstone,
 				redstone,
 				new ItemStack(rednetCableBlock),
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(rednetCableBlock, 6, 2), new Object[] {
+		RecipeHelper.addShapelessOreRecipe(new ItemStack(rednetCableBlock, 6, 2), new Object[] {
 				"ingotGold",
 				"ingotGold",
 				Blocks.REDSTONE_BLOCK,
@@ -764,9 +766,9 @@ public class EnderIO extends Vanilla {
 				new ItemStack(rednetCableBlock),
 				new ItemStack(rednetCableBlock),
 				new ItemStack(rednetCableBlock),
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machineBlock, 1, 1), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(machineBlock, 1, 1), new Object[] {
 				"PRP",
 				"RGR",
 				"PIP",
@@ -774,9 +776,9 @@ public class EnderIO extends Vanilla {
 				'P', "sheetPlastic",
 				'G', "blockGlass",
 				'I', "ingotIron",
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(rednetLogicBlock), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetLogicBlock), new Object[] {
 				"RDR",
 				"LGL",
 				"PHP",
@@ -786,18 +788,18 @@ public class EnderIO extends Vanilla {
 				'L', "gemLapis",
 				'D', "gemDiamond",
 				'R', redstone,
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(logicCardItem, 1, 0), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(logicCardItem, 1, 0), new Object[] {
 				"RPR",
 				"PGP",
 				"RPR",
 				'P', "sheetPlastic",
 				'G', "ingotGold",
 				'R', redstone,
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(logicCardItem, 1, 1), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(logicCardItem, 1, 1), new Object[] {
 				"GPG",
 				"PCP",
 				"RGR",
@@ -805,9 +807,9 @@ public class EnderIO extends Vanilla {
 				'P', "sheetPlastic",
 				'G', "ingotGold",
 				'R', redstone,
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(logicCardItem, 1, 2), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(logicCardItem, 1, 2), new Object[] {
 				"DPD",
 				"RCR",
 				"GDG",
@@ -816,18 +818,18 @@ public class EnderIO extends Vanilla {
 				'G', "ingotGold",
 				'D', "gemDiamond",
 				'R', redstone,
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(rednetMeterItem, 1, 0), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetMeterItem, 1, 0), new Object[] {
 				" G",
 				"PR",
 				"PP",
 				'P', "sheetPlastic",
 				'G', "nuggetGold",
 				'R', redstone,
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(rednetMeterItem, 1, 1), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetMeterItem, 1, 1), new Object[] {
 				"RGR",
 				"IMI",
 				"PPP",
@@ -836,18 +838,18 @@ public class EnderIO extends Vanilla {
 				'I', "ingotCopper",
 				'R', redstone,
 				'M', new ItemStack(rednetMeterItem, 1, 0)
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(rednetMemoryCardItem, 1, 0), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetMemoryCardItem, 1, 0), new Object[] {
 				"GGG",
 				"PRP",
 				"PPP",
 				'P', "sheetPlastic",
 				'G', "nuggetGold",
 				'R', redstone,
-		}));
+		});
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(rednetPanelBlock, 1, 0), new Object[] {
+		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetPanelBlock, 1, 0), new Object[] {
 				"PCP",
 				"PBP",
 				"KPK",
@@ -855,8 +857,9 @@ public class EnderIO extends Vanilla {
 				'C', rednetCableBlock,
 				'B', Blocks.BOOKSHELF,
 				'K', new ItemStack(Items.DYE, 1, 0)
-		}));
+		});
 
-		GameRegistry.addShapelessRecipe(new ItemStack(rednetMemoryCardItem, 1, 0), new ItemStack(rednetMemoryCardItem, 1, 0));
+		RecipeHelper.addShapelessRecipe(new ItemStack(rednetMemoryCardItem, 1, 0), new ItemStack(rednetMemoryCardItem, 1, 0));
 	}
 }
+		*/

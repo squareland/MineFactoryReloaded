@@ -2,14 +2,14 @@ package powercrystals.minefactoryreloaded.render.tileentity;
 
 import codechicken.lib.lighting.LightModel;
 import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCOBJParser;
 import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.OBJParser;
 import codechicken.lib.render.item.IItemRenderer;
 import codechicken.lib.texture.TextureUtils;
 import codechicken.lib.util.TransformUtils;
 import codechicken.lib.vec.Scale;
 import codechicken.lib.vec.uv.IconTransformation;
-import cofh.lib.util.helpers.RenderHelper;
+import cofh.core.util.helpers.RenderHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,7 +23,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
+import net.minecraftforge.common.model.IModelState;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -32,26 +33,28 @@ import powercrystals.minefactoryreloaded.render.item.RedNetCardItemRenderer;
 import powercrystals.minefactoryreloaded.render.model.RedNetCardsModel;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRedNetLogic> implements IItemRenderer, IPerspectiveAwareModel{
+public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRedNetLogic> implements IItemRenderer, IBakedModel {
 
 	protected static CCModel base;
 	protected static CCModel cards;
 	private RedNetCardsModel cardsModel = new RedNetCardsModel();
 
-	public static final ResourceLocation textureLocation = new ResourceLocation(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.rednet.logic");
+	public static final ResourceLocation textureLocation = new ResourceLocation(
+			MineFactoryReloadedCore.modId + ":blocks/tile.mfr.rednet.logic");
 	public static IconTransformation uvt;
 
 	static {
 		try {
-			Map<String, CCModel> cableModels = CCOBJParser.parseObjModels(MineFactoryReloadedCore.class.
+			Map<String, CCModel> cableModels = OBJParser.parseModels(MineFactoryReloadedCore.class.
 							getResourceAsStream("/powercrystals/minefactoryreloaded/models/RedComp.obj"),
-					7, new Scale(1/16f));
+					7, new Scale(1 / 16f));
 			base = cableModels.get("case").backfacedCopy();
 			compute(base);
 
@@ -61,16 +64,19 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 	}
 
 	private static void compute(CCModel m) {
+
 		m.computeNormals();
 		m.shrinkUVs(RenderHelper.RENDER_OFFSET);
 	}
 
 	public static void updateUVT(TextureAtlasSprite icon) {
+
 		uvt = new IconTransformation(icon);
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntityRedNetLogic te, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void render(TileEntityRedNetLogic te, double x, double y, double z, float partialTicks, int destroyStage,
+			float alpha) {
 
 		GlStateManager.pushMatrix();
 
@@ -82,18 +88,15 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 		GlStateManager.pushMatrix();
 		float rotation = getWorld().getBlockState(te.getPos()).getValue(BlockRedNetLogic.FACING).getHorizontalAngle();
 		GlStateManager.rotate(-rotation, 0, 1, 0);
-		
+
 		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GlStateManager.enableBlend();
 		GlStateManager.disableCull();
 
-		if (Minecraft.isAmbientOcclusionEnabled())
-		{
+		if (Minecraft.isAmbientOcclusionEnabled()) {
 			GlStateManager.shadeModel(GL11.GL_SMOOTH);
-		}
-		else
-		{
+		} else {
 			GlStateManager.shadeModel(GL11.GL_FLAT);
 		}
 		ccrs.startDrawing(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
@@ -103,12 +106,9 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 		GlStateManager.enableBlend();
 		GlStateManager.disableCull();
 
-		if (Minecraft.isAmbientOcclusionEnabled())
-		{
+		if (Minecraft.isAmbientOcclusionEnabled()) {
 			GlStateManager.shadeModel(GL11.GL_SMOOTH);
-		}
-		else
-		{
+		} else {
 			GlStateManager.shadeModel(GL11.GL_FLAT);
 		}
 		TextureUtils.bindBlockTexture();
@@ -147,34 +147,33 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 		net.minecraft.client.renderer.RenderHelper.enableStandardItemLighting();
 
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.popMatrix();
 	}
 
-	private void renderCard(int cardLevel)
-	{
-		switch(cardLevel)
-		{
-			case 1:
-				cardsModel.renderLevel1(0.0625f);
-				break;
-			case 2:
-				cardsModel.renderLevel2(0.0625f);
-				break;
-			case 3:
-				cardsModel.renderLevel3(0.0625f);
-				break;
-			default:
-				cardsModel.renderEmptySlot(0.0625f);
+	private void renderCard(int cardLevel) {
+
+		switch (cardLevel) {
+		case 1:
+			cardsModel.renderLevel1(0.0625f);
+			break;
+		case 2:
+			cardsModel.renderLevel2(0.0625f);
+			break;
+		case 3:
+			cardsModel.renderLevel3(0.0625f);
+			break;
+		default:
+			cardsModel.renderEmptySlot(0.0625f);
 		}
 	}
 
 	@Override
-	public void renderItem(ItemStack item) {
+	public void renderItem(@Nonnull ItemStack item, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		
+
 		GlStateManager.translate(0.5f, 0.5f, 0.5f);
 		GlStateManager.rotate(180, 0, 1, 0);
 
@@ -199,7 +198,13 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
 
-		return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, TransformUtils.DEFAULT_BLOCK.getTransforms(), cameraTransformType);
+		return PerspectiveMapWrapper.handlePerspective(this, TransformUtils.DEFAULT_BLOCK, cameraTransformType);
+	}
+
+	@Override
+	public IModelState getTransforms() {
+
+		return null;
 	}
 
 	@Override

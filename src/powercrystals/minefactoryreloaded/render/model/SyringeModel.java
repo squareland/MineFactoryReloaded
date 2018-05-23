@@ -16,6 +16,8 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fluids.Fluid;
 
+import javax.annotation.Nonnull;
+
 public class SyringeModel extends BaseFluidItemModel {
 
 	public static final ResourceLocation MODEL_LOCATION = new ModelResourceLocation("minefactoryreloaded:syringe", "variant=empty");
@@ -54,7 +56,7 @@ public class SyringeModel extends BaseFluidItemModel {
 		private BakedSyringeOverrideHandler() {}
 
 		@Override
-		protected String getFluidNameFromStack(ItemStack stack) {
+		protected String getFluidNameFromStack(@Nonnull ItemStack stack) {
 
 			NBTTagCompound tag = stack.getTagCompound();
 			return tag == null || !tag.hasKey("fluidName") ? null :	tag.getString("fluidName");

@@ -1,65 +1,67 @@
 package powercrystals.minefactoryreloaded.block;
 
-import static cofh.lib.util.helpers.StringHelper.*;
-
+import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidStack;
-
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.tank.TileEntityTank;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class ItemBlockTank extends ItemBlockFactory
-{
-	public ItemBlockTank(Block p_i45328_1_)
-	{
+import static cofh.core.util.helpers.StringHelper.*;
+import static powercrystals.minefactoryreloaded.core.MFRUtil.isShiftKeyDown;
+
+public class ItemBlockTank extends ItemBlockFactory {
+
+	public ItemBlockTank(Block p_i45328_1_) {
+
 		super(p_i45328_1_);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean adv)
-	{
-		if (adv || isShiftKeyDown()) {
-			IFluidTankProperties[] tankProps = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).getTankProperties();
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
+
+		if (tooltipFlag.isAdvanced() || isShiftKeyDown()) {
+			IFluidTankProperties[] tankProps = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)
+					.getTankProperties();
 			FluidStack fluid = tankProps[0].getContents();
-			info.add(localize("info.cofh.fluid") + ": " + getFluidName(fluid, MFRUtil.empty()) + END);
+			tooltip.add(localize("info.cofh.fluid") + ": " + getFluidName(fluid, MFRUtil.empty()) + END);
 			int amt = (fluid == null ? 0 : fluid.amount);
-			info.add(localize("info.cofh.amount") + ": " + amt + " / " + tankProps[0].getCapacity() + "mB" + END);
+			tooltip.add(localize("info.cofh.amount") + ": " + amt + " / " + tankProps[0].getCapacity() + "mB" + END);
 		} else {
-			info.add(shiftForDetails());
+			tooltip.add(shiftForDetails());
 		}
-		super.addInformation(stack, player, info, adv);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, NBTTagCompound nbt) {
 
 		return new ItemTankFluidHandler(stack);
 	}
 
 	private class ItemTankFluidHandler implements ICapabilityProvider, IFluidHandler {
 
+		@Nonnull
 		private ItemStack stack;
 
-		public ItemTankFluidHandler(ItemStack stack) {
+		public ItemTankFluidHandler(@Nonnull ItemStack stack) {
+
 			this.stack = stack;
 		}
 
@@ -72,8 +74,7 @@ public class ItemBlockTank extends ItemBlockFactory
 		@Override
 		public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 
-			if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-			{
+			if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
 				return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
 			}
 			return null;
@@ -86,13 +87,13 @@ public class ItemBlockTank extends ItemBlockFactory
 			if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("tank"))
 				fluid = FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag("tank"));
 
-			return new IFluidTankProperties[]{new FluidTankProperties(fluid, TileEntityTank.CAPACITY)};
+			return new IFluidTankProperties[] { new FluidTankProperties(fluid, TileEntityTank.CAPACITY) };
 		}
 
 		@Override
 		public int fill(FluidStack resource, boolean doFill) {
 
-			if (resource == null || stack.stackSize != 1)
+			if (resource == null || stack.getCount() != 1)
 				//|| resource.getFluid().getTemperature(resource) > MELTING_POINT)
 				return 0;
 			int fillAmount = 0, capacity = TileEntityTank.CAPACITY;
@@ -102,21 +103,17 @@ public class ItemBlockTank extends ItemBlockFactory
 					(fluidTag = tag.getCompoundTag("tank")) == null ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				fillAmount = Math.min(capacity, resource.amount);
-			if (fluid == null)
-			{
-				if (doFill)
-				{
+			if (fluid == null) {
+				if (doFill) {
 					fluid = resource.copy();
 					fluid.amount = 0;
 				}
-			}
-			else if (!fluid.isFluidEqual(resource))
+			} else if (!fluid.isFluidEqual(resource))
 				return 0;
 			else
 				fillAmount = Math.min(capacity - fluid.amount, resource.amount);
 			fillAmount = Math.max(fillAmount, 0);
-			if (doFill)
-			{
+			if (doFill) {
 				if (tag == null) {
 					stack.setTagCompound(new NBTTagCompound());
 					tag = stack.getTagCompound();
@@ -167,8 +164,7 @@ public class ItemBlockTank extends ItemBlockFactory
 		private FluidStack drain(int maxDrain, boolean doDrain, NBTTagCompound tag, FluidStack fluid) {
 
 			int drainAmount = Math.min(maxDrain, fluid.amount);
-			if (doDrain)
-			{
+			if (doDrain) {
 				tag.removeTag("tank");
 				fluid.amount -= drainAmount;
 				if (fluid.amount > 0)

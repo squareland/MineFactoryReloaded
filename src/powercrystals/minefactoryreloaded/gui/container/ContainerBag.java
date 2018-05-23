@@ -1,22 +1,25 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
-import cofh.lib.gui.container.ContainerInventoryItem;
-import cofh.lib.gui.slot.SlotAcceptValid;
-import cofh.lib.gui.slot.SlotViewOnly;
-
+import cofh.core.gui.container.ContainerInventoryItem;
+import cofh.core.gui.slot.SlotLocked;
+import cofh.core.gui.slot.SlotValidated;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class ContainerBag extends ContainerInventoryItem
 {
 
-	public ContainerBag(ItemStack stack, InventoryPlayer inv) {
+	public ContainerBag(@Nonnull ItemStack stack, InventoryPlayer inv) {
 
 		super(stack, inv);
 
-		for (int i = 0; i < getSizeInventory(); ++i)
-			this.addSlotToContainer(new SlotAcceptValid(this.containerWrapper, i, 44 + i * 18, 26));
+		for (int i = 0; i < getSizeInventory(); ++i) {
+			int slot = i; //because lambda needs immutable vars
+			this.addSlotToContainer(new SlotValidated(s -> containerWrapper.isItemValidForSlot(slot, s), this.containerWrapper, i, 44 + i * 18, 26));
+		}
 
 		bindPlayerInventory(inv);
 	}
@@ -32,7 +35,7 @@ public class ContainerBag extends ContainerInventoryItem
 
 		for (int i = 0; i < 9; i++) {
 			if (i == containerIndex) {
-				addSlotToContainer(new SlotViewOnly(inventoryPlayer, i, 8 + i * 18, 66 + 58));
+				addSlotToContainer(new SlotLocked(inventoryPlayer, i, 8 + i * 18, 66 + 58));
 			} else {
 				addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 66 + 58));
 			}
@@ -40,7 +43,7 @@ public class ContainerBag extends ContainerInventoryItem
 	}
 
 	@Override
-	protected boolean performMerge(int slotIndex, ItemStack stack) {
+	protected boolean performMerge(int slotIndex, @Nonnull ItemStack stack) {
 
 		int invFull = getSizeInventory();
 

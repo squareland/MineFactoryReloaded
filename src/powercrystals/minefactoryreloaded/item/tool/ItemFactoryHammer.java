@@ -2,13 +2,8 @@ package powercrystals.minefactoryreloaded.item.tool;
 
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
-import cofh.asm.relauncher.Implementable;
-import cofh.lib.util.helpers.BlockHelper;
-
-import java.util.Random;
-
+import cofh.core.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFire;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -17,29 +12,32 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
+import powercrystals.minefactoryreloaded.modhelpers.Compats;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
-@Implementable("buildcraft.api.tools.IToolWrench")
-public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer {
+import javax.annotation.Nonnull;
+import java.util.Random;
+
+@Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = Compats.ModIds.BUILDCRAFT)
+public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer
+//		, IToolWrench
+{
 
 	public ItemFactoryHammer() {
 
@@ -50,13 +48,13 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world,
 			BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (block != null) {
-			PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, stack, pos, side, new Vec3d(hitX, hitY, hitZ));
+			PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(hitX, hitY, hitZ));
 			if (MinecraftForge.EVENT_BUS.post(e) || e.getResult() == Result.DENY
 					|| e.getUseBlock() == Result.DENY || e.getUseItem() == Result.DENY) {
 				return EnumActionResult.PASS;
@@ -91,86 +89,89 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
+	public boolean isUsable(@Nonnull ItemStack item, EntityLivingBase user, BlockPos pos) {
 
 		return true;
 	}
 
 	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
+	public void toolUsed(@Nonnull ItemStack item, EntityLivingBase user, BlockPos pos) {
 
 	}
 
 	@Override
-	public boolean isUsable(ItemStack item, EntityLivingBase user, Entity ent) {
+	public boolean isUsable(@Nonnull ItemStack item, EntityLivingBase user, Entity ent) {
 
 		return true;
 	}
 
 	@Override
-	public void toolUsed(ItemStack item, EntityLivingBase user, Entity ent) {
+	public void toolUsed(@Nonnull ItemStack item, EntityLivingBase user, Entity ent) {
 
 	}
 
+	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
 	//@Override
-	public boolean canWrench(EntityPlayer player, BlockPos pos) {
+	public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 		return true;
 	}
 
+	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
 	//@Override
-	public void wrenchUsed(EntityPlayer player, BlockPos pos) {
+	public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 	}
 
 	@Override
-	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+	public boolean doesSneakBypassUse(@Nonnull ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 
 		return true;
 	}
 
 	@Override
-	public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
+	public boolean canHarvestBlock(IBlockState state, @Nonnull ItemStack stack) {
 
 		if (state == null)
 			return false;
 		Material mat = state.getMaterial();
-		return mat == Material.ICE |
-				mat == Material.CAKE |
-				mat == Material.IRON |
-				mat == Material.ROCK |
-				mat == Material.WOOD |
-				mat == Material.GOURD |
-				mat == Material.ANVIL |
-				mat == Material.GLASS |
-				mat == Material.PISTON |
-				mat == Material.PLANTS |
-				mat == Machine.MATERIAL |
-				mat == Material.CIRCUITS |
+		return mat == Material.ICE ||
+				mat == Material.CAKE ||
+				mat == Material.IRON ||
+				mat == Material.ROCK ||
+				mat == Material.WOOD ||
+				mat == Material.GOURD ||
+				mat == Material.ANVIL ||
+				mat == Material.GLASS ||
+				mat == Material.PISTON ||
+				mat == Material.PLANTS ||
+				mat == Machine.MATERIAL ||
+				mat == Material.CIRCUITS ||
 				mat == Material.PACKED_ICE;
 	}
 
+
 	@Override
-	public float getStrVsBlock(ItemStack stack, IBlockState state) {
+	public float getDestroySpeed(@Nonnull ItemStack stack, IBlockState state) {
 
 		if (state == null)
 			return 0;
 		Material mat = state.getMaterial();
-		if (mat == Material.ICE |
-				mat == Material.CAKE |
-				mat == Material.GOURD |
+		if (mat == Material.ICE ||
+				mat == Material.CAKE ||
+				mat == Material.GOURD ||
 				mat == Material.GLASS)
 			return 15f;
 		return canHarvestBlock(state, stack) ? 1.35f : 0.15f;
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
+	public boolean onBlockStartBreak(@Nonnull ItemStack stack, BlockPos pos, EntityPlayer player) {
 
-		IBlockState state = player.worldObj.getBlockState(pos);
-		if (state.getBlockHardness(player.worldObj, pos) > 2.9f) {
+		IBlockState state = player.world.getBlockState(pos);
+		if (state.getBlockHardness(player.world, pos) > 2.9f) {
 			Random rnd = player.getRNG();
-			player.worldObj.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 0.8F + rnd.nextFloat() * 0.4F, 0.4F);
+			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 0.8F + rnd.nextFloat() * 0.4F, 0.4F);
 
 			for (int i = 0, e = 10 + rnd.nextInt(5); i < e; ++i) {
 				Vec3d vec3 = new Vec3d((rnd.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
@@ -180,8 +181,8 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 				vec31.rotatePitch(-player.rotationPitch * (float) Math.PI / 180.0F);
 				vec31.rotateYaw(-player.rotationYaw * (float) Math.PI / 180.0F);
 				vec31 = vec31.addVector(player.posX, player.posY + player.getEyeHeight(), player.posZ);
-				player.worldObj.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord,
-					vec3.yCoord + 0.05D, vec3.zCoord, Block.getStateId(Blocks.FIRE.getDefaultState()));
+				player.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.x, vec31.y, vec31.z, vec3.x,
+					vec3.y + 0.05D, vec3.z, Block.getStateId(Blocks.FIRE.getDefaultState()));
 			}
 			return true;
 		}
@@ -189,7 +190,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Override
-	protected int getWeaponDamage(ItemStack stack) {
+	protected int getWeaponDamage(@Nonnull ItemStack stack) {
 
 		return 4;
 	}

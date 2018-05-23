@@ -11,6 +11,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
 
+import javax.annotation.Nonnull;
+
 /*
  * Used for directly placing blocks (ie saplings) and items (ie sugarcane). Pass in source ID to constructor,
  * so one instance per source ID.
@@ -74,25 +76,25 @@ public class PlantableStandard implements IFactoryPlantable
 	}
 
 	@Override
-	public boolean canBePlanted(ItemStack stack, boolean forFermenting)
+	public boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting)
 	{
 		return _validMeta == WILDCARD || stack.getItemDamage() == _validMeta;
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack)
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		if (!world.isAirBlock(pos))
 			return false;
 
 		Block groundId = world.getBlockState(pos.down()).getBlock();
-		return (_block.canPlaceBlockAt(world, pos) && _block.canReplace(world, pos, EnumFacing.DOWN, stack)) ||
+		return (_block.canPlaceBlockAt(world, pos) && _block.canPlaceBlockOnSide(world, pos, EnumFacing.DOWN)) ||
 				(_block instanceof IPlantable && groundId != null &&
 				groundId.canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, (IPlantable)_block));
 	}
 
 	@Override
-	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, ItemStack stack)
+	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		return _plantedBlock;
 	}

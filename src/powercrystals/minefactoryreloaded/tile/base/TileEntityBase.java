@@ -1,21 +1,19 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity implements ITickable {
+public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity {
 
 	protected String _invName;
 	protected boolean inWorld;
@@ -36,13 +34,11 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 	public void invalidate() {
 
 		super.invalidate();
-		cofh_invalidate();
+		invalidateInternal();
 	}
 
-	//TODO ASM needed or forge fix
-	public void cofh_invalidate() {
+	private void invalidateInternal() {
 
-		//invalidate();
 		inWorld = false;
 		markChunkDirty();
 	}
@@ -50,24 +46,15 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 	@Override
 	public void onChunkUnload() {
 
-		cofh_invalidate();
+		invalidateInternal();
 	}
-
-	public void cofh_validate() {
-
-		inWorld = true;
-	}
-
-	protected boolean firstTick = true;
 
 	@Override
-	public void update() {
+	public void onLoad() {
 
-		if (firstTick) {
-			cofh_validate();
-			firstTick = false;
-		}
-		markChunkDirty();
+		super.onLoad();
+
+		inWorld = true;
 	}
 
 	protected final ITextComponent text(String str) {
@@ -77,13 +64,13 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 
 	public void markChunkDirty() {
 
-		worldObj.markChunkDirty(this.pos, this);
+		world.markChunkDirty(this.pos, this);
 	}
 
 	public void notifyNeighborTileChange() {
 
 		if (getBlockType() != null) {
-			worldObj.updateComparatorOutputLevel(this.pos, this.getBlockType());
+			world.updateComparatorOutputLevel(this.pos, this.getBlockType());
 		}
 	}
 
@@ -107,7 +94,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
 
-		if (worldObj != null && !isInvalid()) {
+		if (world != null && !isInvalid()) {
 			return new SPacketUpdateTileEntity(pos, 0, writePacketData(new NBTTagCompound()));
 		}
 		return null;
@@ -125,7 +112,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 		super.handleUpdateTag(tag);
 		handlePacketData(tag);
 
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	@Override
@@ -138,7 +125,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 			break;
 		}
 
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	protected NBTTagCompound writePacketData(NBTTagCompound tag) {
@@ -200,7 +187,7 @@ public abstract class TileEntityBase extends net.minecraft.tileentity.TileEntity
 
 		if (obj instanceof TileEntityBase) {
 			TileEntityBase te = (TileEntityBase) obj;
-			return te.getPos().equals(this.getPos()) && worldObj == te.worldObj && te.isInvalid() == isInvalid();
+			return te.getPos().equals(this.getPos()) && world == te.world && te.isInvalid() == isInvalid();
 		}
 		return false;
 	}

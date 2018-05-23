@@ -4,8 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+
+import javax.annotation.Nonnull;
 
 public class EmptyReplacement extends ReplacementBlock
 {
@@ -17,7 +18,7 @@ public class EmptyReplacement extends ReplacementBlock
 	}
 
 	@Override
-	public boolean replaceBlock(World world, BlockPos pos, ItemStack stack) {
+	public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
 		return true;
 	}
 }

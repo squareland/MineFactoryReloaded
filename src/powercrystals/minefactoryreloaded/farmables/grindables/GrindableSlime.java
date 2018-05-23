@@ -1,17 +1,18 @@
 package powercrystals.minefactoryreloaded.farmables.grindables;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
+import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
+import powercrystals.minefactoryreloaded.api.MobDrop;
+
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
-import powercrystals.minefactoryreloaded.api.MobDrop;
 
 public class GrindableSlime implements IFactoryGrindable
 {
@@ -33,19 +34,19 @@ public class GrindableSlime implements IFactoryGrindable
 		this(slime, new MobDrop[]{drop}, dropSize);
 	}
 
-	public GrindableSlime(Class<? extends EntityLivingBase> slime, ItemStack[] drops, int dropSize)
+	public GrindableSlime(Class<? extends EntityLivingBase> slime, NonNullList<ItemStack> drops, int dropSize)
 	{
 		grindable = slime;
 		ArrayList<MobDrop> q = new ArrayList<MobDrop>();
-		for (ItemStack drop : drops)
+		for (@Nonnull ItemStack drop : drops)
 			q.add(new MobDrop(10, drop));
 		this.drops = q;
 		this.dropSize = dropSize;
 	}
 
-	public GrindableSlime(Class<? extends EntityLivingBase> slime, ItemStack drop, int dropSize)
+	public GrindableSlime(Class<? extends EntityLivingBase> slime, @Nonnull ItemStack drop, int dropSize)
 	{
-		this(slime, new MobDrop[]{new MobDrop(10, drop), new MobDrop(20, null)}, dropSize);
+		this(slime, new MobDrop[]{new MobDrop(10, drop), new MobDrop(20, ItemStack.EMPTY)}, dropSize);
 	}
 
 	@Override

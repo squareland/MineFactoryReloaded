@@ -15,9 +15,9 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -30,6 +30,8 @@ import powercrystals.minefactoryreloaded.item.base.ItemFactoryGun;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.entity.RenderSafarinet;
 import powercrystals.minefactoryreloaded.render.item.PotatoLauncherItemRenderer;
+
+import javax.annotation.Nonnull;
 
 public class ItemPotatoCannon extends ItemFactoryGun {
 
@@ -46,12 +48,12 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean hasGUI(ItemStack stack) {
+	protected boolean hasGUI(@Nonnull ItemStack stack) {
 
 		return false;
 	}
 
-	public int cofh_canEnchantApply(ItemStack stack, Enchantment ench) { //TODO implement (or change to an anvil event)
+	public int cofh_canEnchantApply(@Nonnull ItemStack stack, Enchantment ench) { //TODO implement (or change to an anvil event)
 
 		if (ench == Enchantments.LOOTING)
 			return 1;
@@ -61,7 +63,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	public boolean isItemTool(ItemStack stack) {
+	public boolean isEnchantable(@Nonnull ItemStack stack) {
 
 		return true;
 	}
@@ -73,12 +75,12 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean fire(ItemStack stack, World world, EntityPlayer player) {
+	protected boolean fire(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 
 		boolean flag = player.capabilities.isCreativeMode, a = false;
 
 		int i = 0;
-		if (flag) {
+		if (!flag) {
 			flag |= EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 			for (; !a && i < ammo.length; ++i)
 				a = UtilInventory.playerHasItem(player, ammo[i]);
@@ -87,15 +89,15 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 		}
 		if (flag || a) {
 
-			ItemStack fstack = new ItemStack(ammo[i]);
+			@Nonnull ItemStack fstack = new ItemStack(ammo[i]);
             if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-            	ItemStack sStack = FurnaceRecipes.instance().getSmeltingResult(fstack);
-            	if (sStack != null)
+            	@Nonnull ItemStack sStack = FurnaceRecipes.instance().getSmeltingResult(fstack);
+            	if (!sStack.isEmpty())
             		fstack = sStack;
             }
-            fstack.stackSize = 1;
+            fstack.setCount(1);
 			EntityFlyingItem item = new EntityFlyingItem(world, player, fstack);
-			item.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0, 1.5f, 0.5f);
+			item.shoot(player, player.rotationPitch, player.rotationYaw, 0, 1.5f, 0.5f);
 
             int k = Math.max(0, EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack));
 
@@ -108,17 +110,11 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 			if (flag) {
 				item.canBePickedUp = 2;
 			} else {
-				ItemStack ammoStack = UtilInventory.findItem(player, ammo[i]);
-				--ammoStack.stackSize;
-
-				if (ammoStack.stackSize == 0)
-				{
-					player.inventory.deleteStack(ammoStack);
-				}
+				UtilInventory.extractItem(player, ammo[i]);
 			}
 			if (!world.isRemote) {
 				world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1F, 0.5F / (itemRand.nextFloat() * 0.4F + 1.2F));
-				world.spawnEntityInWorld(item);
+				world.spawnEntity(item);
 			}
 			return true;
 		}
@@ -126,22 +122,22 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	}
 
 	@Override
-	protected int getDelay(ItemStack stack, boolean fired) {
+	protected int getDelay(@Nonnull ItemStack stack, boolean fired) {
 
 		return fired ? 10 : 20;
 	}
 
 	@Override
-	protected String getDelayTag(ItemStack stack) {
+	protected String getDelayTag(@Nonnull ItemStack stack) {
 
 		return "mfr:PotatoLaunched";
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
-		super.preInit();
-		EntityRegistry.registerModEntity(EntityFlyingItem.class, "Item", 5, MineFactoryReloadedCore.instance(), 160, 7, true);
+		super.initialize();
+		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "potato_cannon"), EntityFlyingItem.class, "PotatoCannon", 5, MineFactoryReloadedCore.instance(), 160, 7, true);
 
 		return true;
 	}

@@ -20,7 +20,7 @@ import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCropPlant;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatChococraft",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatchococraft",
 		name = "MFR Compat: Chococraft",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "required-after:MineFactoryReloaded;after:chococraft",

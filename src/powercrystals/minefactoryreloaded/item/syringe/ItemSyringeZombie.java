@@ -1,14 +1,11 @@
 package powercrystals.minefactoryreloaded.item.syringe;
 
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.HorseType;
+import net.minecraft.entity.passive.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,6 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import javax.annotation.Nonnull;
 
 public class ItemSyringeZombie extends ItemSyringe
 {
@@ -27,13 +26,13 @@ public class ItemSyringeZombie extends ItemSyringe
 	}
 
 	@Override
-	public boolean canInject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		return entity instanceof EntityAgeable && ((EntityAgeable)entity).getGrowingAge() < 0;
 	}
 	
 	@Override
-	public boolean inject(World world, EntityLivingBase entity, ItemStack syringe)
+	public boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)
 	{
 		((EntityAgeable)entity).setGrowingAge(0);
 		if(world.rand.nextInt(100) < 5)
@@ -43,17 +42,14 @@ public class ItemSyringeZombie extends ItemSyringe
 			{
 				e = new EntityPigZombie(world);
 			}
-			else if (entity instanceof EntityHorse)
+			else if (entity instanceof AbstractHorse)
 			{
-				EntityHorse ent = (EntityHorse)entity;
-				switch (ent.getType())
-				{
-				case HORSE:
-					ent.setType(HorseType.ZOMBIE);
-					break;
-				case ZOMBIE:
-					ent.setType(HorseType.SKELETON);
-					break;
+				if (entity instanceof EntityHorse) {
+					e = new EntityZombieHorse(world);
+					copyHorseAttributes((AbstractHorse) entity, (AbstractHorse) e);
+				} else if (entity instanceof EntityZombieHorse) {
+					e = new EntitySkeletonHorse(world);
+					copyHorseAttributes((AbstractHorse) entity, (AbstractHorse) e);
 				}
 			}
 			else
@@ -64,11 +60,19 @@ public class ItemSyringeZombie extends ItemSyringe
 			if (e != null)
 			{
 				e.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
-				world.spawnEntityInWorld(e);
+				world.spawnEntity(e);
 				entity.setDead();
 			}
 		}
 		return true;
+	}
+
+	private void copyHorseAttributes(AbstractHorse originalHorse, AbstractHorse newHorse) {
+
+		newHorse.copyLocationAndAnglesFrom(originalHorse);
+		newHorse.setHorseSaddled(originalHorse.isHorseSaddled());
+		newHorse.jumpPower = originalHorse.jumpPower;
+		newHorse.setTemper(originalHorse.getTemper());
 	}
 
 	@Override

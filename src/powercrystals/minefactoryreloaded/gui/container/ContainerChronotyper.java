@@ -19,7 +19,7 @@ public class ContainerChronotyper extends ContainerFactoryPowered
 		super.detectAndSendChanges();
 		for(int i = 0; i < listeners.size(); i++)
 		{
-			listeners.get(i).sendProgressBarUpdate(this, 100, _chronotyper.getMoveOld() ? 1 : 0);
+			listeners.get(i).sendWindowProperty(this, 100, _chronotyper.getMoveOld() ? 1 : 0);
 		}
 	}
 	

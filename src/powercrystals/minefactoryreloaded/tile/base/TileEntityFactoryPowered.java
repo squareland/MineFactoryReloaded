@@ -1,23 +1,23 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
 import appeng.api.implementations.tiles.ICrankable;
-
-import cofh.api.energy.IEnergyReceiver;
 import cofh.api.item.IAugmentItem;
-import cofh.asm.relauncher.Strippable;
 import cofh.core.util.CoreUtils;
 import cofh.core.util.helpers.AugmentHelper;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
+import cofh.redstoneflux.api.IEnergyReceiver;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.modhelpers.Compats;
 import powercrystals.minefactoryreloaded.setup.Machine;
+
+import javax.annotation.Nonnull;
 
 /*
  * There are three pieces of information tracked - energy, work, and idle ticks.
@@ -27,9 +27,8 @@ import powercrystals.minefactoryreloaded.setup.Machine;
  * Idle ticks cause an artificial delay before activateMachine() is called again. Max should be the highest value the _machine will use, to draw the
  * progress bar correctly.
  */
-@Strippable("appeng.api.implementations.tiles.ICrankable")
-public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventory
-																					implements IEnergyReceiver, ICrankable {
+@Optional.Interface(iface = "appeng.api.implementations.tiles.ICrankable", modid = Compats.ModIds.APP_ENG)
+public abstract class TileEntityFactoryPowered extends TileEntityFactoryTickable implements IEnergyReceiver, ICrankable {
 
 	public static final int energyPerAE = 2;
 	public static final int energyPerEU = 4;
@@ -79,7 +78,7 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventor
 
 		_energyStored = Math.min(_energyStored, getEnergyStoredMax());
 
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			machineDisplayTick();
 			return;
 		}
@@ -118,7 +117,7 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventor
 		if (i < 0) {
 			return;
 		}
-		ItemStack stack = getStackInSlot(i);
+		@Nonnull ItemStack stack = getStackInSlot(i);
 		if (AugmentHelper.isAugmentItem(stack)) {
 			IAugmentItem item = (IAugmentItem) stack.getItem();
 			if ("machineSpeed".equals(item.getAugmentIdentifier(stack))) {
@@ -136,7 +135,7 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventor
 	}
 
 	@Override
-	protected boolean canUseUpgrade(ItemStack stack, IAugmentItem item) {
+	protected boolean canUseUpgrade(@Nonnull ItemStack stack, IAugmentItem item) {
 
 		return super.canUseUpgrade(stack, item) || "machineSpeed".equals(item.getAugmentIdentifier(stack));
 	}
@@ -319,18 +318,21 @@ public abstract class TileEntityFactoryPowered extends TileEntityFactoryInventor
 
 	// AE methods
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public boolean canTurn() {
 
 		return getEnergyStored() < getEnergyStoredMax();
 	}
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public void applyTurn() {
 
 		storeEnergy(90, true);
 	}
 
+	@Optional.Method(modid = Compats.ModIds.APP_ENG)
 	@Override
 	public boolean canCrankAttach(EnumFacing directionToCrank) {
 

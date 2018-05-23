@@ -22,7 +22,7 @@ import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableSta
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatProjRed",
+@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatprojred",
 		name = "MFR Compat: ProjectRed",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:ProjRed|Core;after:ProjRed|Exploration",

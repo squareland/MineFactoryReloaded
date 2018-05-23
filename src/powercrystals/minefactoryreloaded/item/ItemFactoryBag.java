@@ -1,14 +1,10 @@
 package powercrystals.minefactoryreloaded.item;
 
-import codechicken.lib.inventory.InventoryUtils;
 import cofh.api.item.IInventoryContainerItem;
-import cofh.lib.gui.container.InventoryContainerItemWrapper;
-import cofh.lib.util.helpers.InventoryHelper;
-import cofh.lib.util.helpers.ItemHelper;
-import cofh.lib.util.helpers.StringHelper;
-
-import java.util.List;
-
+import cofh.core.gui.container.InventoryContainerItemWrapper;
+import cofh.core.util.helpers.ItemHelper;
+import cofh.core.util.helpers.StringHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,11 +13,9 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
@@ -29,6 +23,10 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRLoot;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemFactoryBag extends ItemFactory implements IInventoryContainerItem {
 
@@ -40,7 +38,7 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && (tag.hasKey("inventory") || tag.hasKey("Inventory") || tag.hasKey("loot")))
@@ -49,37 +47,39 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 
 		if (getItemStackLimit(stack) == 1) {
 			if (stack.getTagCompound().hasKey("loot")) {
-				infoList.add(MFRUtil.localize("info.mfr.loot", true));
+				tooltip.add(MFRUtil.localize("info.mfr.loot", true));
 			} else if (stack.getTagCompound().hasKey("inventory")) {
-				infoList.add(MFRUtil.localize("info.mfr.legacy", true));
+				tooltip.add(MFRUtil.localize("info.mfr.legacy", true));
 			} else if (!StringHelper.displayShiftForDetail || MFRUtil.isShiftKeyDown()) {
-				ItemHelper.addInventoryInformation(stack, infoList);
+				ItemHelper.addInventoryInformation(stack, tooltip);
 			} else {
-				infoList.add(MFRUtil.shiftForInfo());
+				tooltip.add(MFRUtil.shiftForInfo());
 			}
 		} else {
-			infoList.add(MFRUtil.localize("info.mfr.folded", true));
+			tooltip.add(MFRUtil.localize("info.mfr.folded", true));
 		}
 	}
 
 	@Override
-	public int getSizeInventory(ItemStack container) {
+	public int getSizeInventory(@Nonnull ItemStack container) {
 
 		return 5;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		if (stack.stackSize != 1) {
+		@Nonnull ItemStack stack = player.getHeldItem(hand);
+
+		if (stack.getCount() != 1) {
 			if (!world.isRemote)
-				player.addChatMessage(new TextComponentTranslation("chat.info.mfr.bag.stacksize"));
+				player.sendMessage(new TextComponentTranslation("chat.info.mfr.bag.stacksize"));
 			return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 		}
 
@@ -93,7 +93,8 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 	}
 
-	private ItemStack fillWithLoot(WorldServer world, EntityPlayer player, ItemStack stack) {
+	@Nonnull
+	private ItemStack fillWithLoot(WorldServer world, EntityPlayer player, @Nonnull ItemStack stack) {
 		
 		LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(MFRLoot.FACTORY_BAG);
 		InventoryContainerItemWrapper wrapper = new InventoryContainerItemWrapper(stack);

@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.gui.control;
 
+import cofh.core.gui.GuiColor;
+import cofh.core.gui.element.ElementButtonManaged;
 import cofh.core.init.CoreProps;
-import cofh.lib.gui.GuiColor;
-import cofh.lib.gui.element.ElementButtonManaged;
 
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.client.GuiRedNetLogic;

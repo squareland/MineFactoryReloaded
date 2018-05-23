@@ -1,17 +1,17 @@
 package powercrystals.minefactoryreloaded.world;
 
-import java.util.ArrayList;
-
-import cofh.asmhooks.world.WorldServerProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldServer;
-
+import powercrystals.minefactoryreloaded.asmhooks.WorldServerProxy;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityGrinder;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
 
 public class GrindingWorldServer extends WorldServerProxy {
 
@@ -42,13 +42,13 @@ public class GrindingWorldServer extends WorldServerProxy {
 	}
 
 	@Override
-	public boolean spawnEntityInWorld(Entity entity) {
+	public boolean spawnEntity(Entity entity) {
 
 		if (grinder != null) {
 			if (entity instanceof EntityItem) {
 				if (grinder.manageSolids()) {
-					ItemStack drop = ((EntityItem) entity).getEntityItem();
-					if (drop != null)
+					@Nonnull ItemStack drop = ((EntityItem) entity).getItem();
+					if (!drop.isEmpty())
 						grinder.doDrop(drop);
 				}
 				entity.setDead();
@@ -64,8 +64,8 @@ public class GrindingWorldServer extends WorldServerProxy {
 		}
 
 		if (allowSpawns) {
-			entity.worldObj = this.proxiedWorld;
-			return super.spawnEntityInWorld(entity);
+			entity.world = this.proxiedWorld;
+			return super.spawnEntity(entity);
 		}
 		entity.setDead();
 		return true;
@@ -79,10 +79,10 @@ public class GrindingWorldServer extends WorldServerProxy {
 	public boolean addEntityForGrinding(Entity entity) {
 
 		cofh_updateProps();
-		if (entity.worldObj == this)
+		if (entity.world == this)
 			return true;
-		if (entity.worldObj == this.proxiedWorld) {
-			entity.worldObj = this;
+		if (entity.world == this.proxiedWorld) {
+			entity.world = this;
 			entitiesToGrind.add(entity);
 			return true;
 		}
@@ -92,8 +92,8 @@ public class GrindingWorldServer extends WorldServerProxy {
 	public void clearReferences() {
 
 		for (Entity ent : entitiesToGrind) {
-			if (ent.worldObj == this)
-				ent.worldObj = this.proxiedWorld;
+			if (ent.world == this)
+				ent.world = this.proxiedWorld;
 		}
 		entitiesToGrind.clear();
 	}

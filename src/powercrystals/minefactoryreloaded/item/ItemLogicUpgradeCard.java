@@ -1,18 +1,20 @@
 package powercrystals.minefactoryreloaded.item;
 
-import java.util.List;
-
 import codechicken.lib.model.ModelRegistryHelper;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.item.RedNetCardItemRenderer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemLogicUpgradeCard extends ItemMulti {
 
@@ -27,11 +29,11 @@ public class ItemLogicUpgradeCard extends ItemMulti {
 	}
 
 	@Override
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		super.addInfo(stack, player, infoList, advancedTooltips);
-		infoList.add("Circuits: " + getCircuitsForLevel(stack.getItemDamage() + 1));
-		infoList.add("Variables: " + getVariablesForLevel(stack.getItemDamage() + 1));
+		super.addInformation(stack, world, tooltip, tooltipFlag);
+		tooltip.add("Circuits: " + getCircuitsForLevel(stack.getItemDamage() + 1));
+		tooltip.add("Variables: " + getVariablesForLevel(stack.getItemDamage() + 1));
 	}
 
 	public static int getCircuitsForLevel(int level) {

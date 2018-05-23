@@ -19,6 +19,7 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerUnifier;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,97 +59,92 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 		return new ContainerUnifier(this, inventoryPlayer);
 	}
 
-	@Override
-	public void update() {
-		//TODO again this TE isn't supposed to be tickable so needs a non tickable base to inherit from
-	}
-
 	private void unifyInventory() {
 
-		if (worldObj != null && !worldObj.isRemote) {
-			ItemStack output;
-			if (_inventory[0] != null) {
-				List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory[0]);
+		if (world != null && !world.isRemote) {
+			@Nonnull ItemStack output;
+			if (!_inventory.get(0).isEmpty()) {
+				List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory.get(0));
 				// tracker does *not* also check the wildcard meta,
 				// avoiding issues with saplings and logs, etc.
 
 				if (names == null || names.size() != 1 || MFRRegistry.getUnifierBlacklist().containsKey(names.get(0))) {
-					output = _inventory[0].copy();
+					output = _inventory.get(0).copy();
 				} else if (_preferredOutputs.containsKey(names.get(0))) {
 					output = _preferredOutputs.get(names.get(0)).copy();
-					output.stackSize = _inventory[0].stackSize;
+					output.setCount(_inventory.get(0).getCount());
 				} else {
 					output = OreDictionaryArbiter.getOres(names.get(0)).get(0).copy();
-					output.stackSize = _inventory[0].stackSize;
+					output.setCount(_inventory.get(0).getCount());
 				}
 
-				if (_inventory[0].getItem().equals(output.getItem()))
-					output = _inventory[0].copy();
+				if (_inventory.get(0).getItem().equals(output.getItem()))
+					output = _inventory.get(0).copy();
 
 				moveItemStack(output);
 			}
 		}
 	}
 
-	private void moveItemStack(ItemStack source) {
+	private void moveItemStack(@Nonnull ItemStack source) {
 
-		if (source == null) {
+		if (source.isEmpty()) {
 			return;
 		}
 
-		int amt = source.stackSize;
+		int amt = source.getCount();
 
-		if (_inventory[1] == null) {
+		if (_inventory.get(1).isEmpty()) {
 			amt = Math.min(Math.min(getInventoryStackLimit(), source.getMaxStackSize()),
-					source.stackSize);
-		} else if (!UtilInventory.stacksEqual(source, _inventory[1], false)) {
+					source.getCount());
+		} else if (!UtilInventory.stacksEqual(source, _inventory.get(1), false)) {
 			return;
-		} else if (source.getTagCompound() != null || _inventory[1].getTagCompound() != null) {
+		} else if (source.getTagCompound() != null || _inventory.get(1).getTagCompound() != null) {
 			return;
 		} else {
-			amt = Math.min(source.stackSize,
-					_inventory[1].getMaxStackSize() - _inventory[1].stackSize);
+			amt = Math.min(source.getCount(),
+					_inventory.get(1).getMaxStackSize() - _inventory.get(1).getCount());
 		}
 
-		if (_inventory[1] == null) {
-			_inventory[1] = source.copy();
-			_inventory[1].stackSize = amt;
-			_inventory[0].stackSize -= amt;
+		if (_inventory.get(1).isEmpty()) {
+			_inventory.set(1, source.copy());
+			_inventory.get(1).setCount(amt);
+			_inventory.get(0).shrink(amt);
 		} else {
-			_inventory[1].stackSize += amt;
-			_inventory[0].stackSize -= amt;
+			_inventory.get(1).grow(amt);
+			_inventory.get(0).shrink(amt);
 		}
 
-		if (_inventory[0].stackSize == 0) {
-			_inventory[0] = null;
+		if (_inventory.get(0).getCount() == 0) {
+			_inventory.set(0, ItemStack.EMPTY);
 		}
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
+	public void setInventorySlotContents(int slot, @Nonnull ItemStack stack) {
 
-		_inventory[slot] = stack;
+		_inventory.set(slot, stack);
 		if (slot > 1)
 			updatePreferredOutput();
-		if (stack != null && stack.stackSize <= 0)
-			_inventory[slot] = null;
+		if (!stack.isEmpty() && stack.getCount() <= 0)
+			_inventory.set(slot, ItemStack.EMPTY);
 		unifyInventory();
 		ignoreChange = true;
 		markDirty();
 		ignoreChange = false;
 	}
 
-	protected void updatePreferredOutput() {
+	private void updatePreferredOutput() {
 
 		_preferredOutputs.clear();
 		for (int i = 2; i < 11; i++) {
-			if (_inventory[i] == null) {
+			if (_inventory.get(i).isEmpty()) {
 				continue;
 			}
-			List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory[i]);
+			List<String> names = OreDictionaryArbiter.getAllOreNames(_inventory.get(i));
 			if (names != null) {
 				for (String name : names) {
-					_preferredOutputs.put(name, _inventory[i].copy());
+					_preferredOutputs.put(name, _inventory.get(i).copy());
 				}
 			}
 		}
@@ -200,13 +196,13 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
 		return slot == 0;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		return slot == 1;
 	}
@@ -229,13 +225,13 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

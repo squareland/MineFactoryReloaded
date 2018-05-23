@@ -5,13 +5,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author skyboy026
  *
- * Defines an ItemStack or a FluidStack that is the result of an entity being ranched
+ * Defines an @Nonnull ItemStack or a FluidStack that is the result of an entity being ranched
  */
 public final class RanchedItem {
-	private final ItemStack item;
+	private final @Nonnull ItemStack item;
 	private final FluidStack fluid;
 	
 	public RanchedItem(Block item, int amount, int meta)
@@ -44,7 +46,7 @@ public final class RanchedItem {
 		this(new ItemStack(item));
 	}
 	
-	public RanchedItem(ItemStack item)
+	public RanchedItem(@Nonnull ItemStack item)
 	{
 		this.item = item;
 		fluid = null;
@@ -53,16 +55,16 @@ public final class RanchedItem {
 	public RanchedItem(FluidStack fluid)
 	{
 		this.fluid = fluid;
-		item = null;
+		item = ItemStack.EMPTY;
 	}
 	
 	public boolean hasFluid()
 	{
-		return item == null & fluid != null;
+		return item.isEmpty() & fluid != null;
 	}
 	
 	public Object getResult()
 	{
-		return item == null ? fluid : item;
+		return item.isEmpty() ? fluid : item;
 	}
 }

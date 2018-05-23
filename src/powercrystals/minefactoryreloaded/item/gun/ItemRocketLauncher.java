@@ -5,8 +5,9 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,6 +22,8 @@ import powercrystals.minefactoryreloaded.render.entity.EntityRocketRenderer;
 import powercrystals.minefactoryreloaded.render.item.RocketLauncherItemRenderer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
+import javax.annotation.Nonnull;
+
 public class ItemRocketLauncher extends ItemFactoryGun {
 
 	public ItemRocketLauncher() {
@@ -31,32 +34,33 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	protected boolean hasGUI(ItemStack stack) {
+	protected boolean hasGUI(@Nonnull ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	protected boolean fire(ItemStack stack, World world, EntityPlayer player) {
+	protected boolean fire(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 		int slot = -1;
 		Item rocket = MFRThings.rocketItem;
-		ItemStack[] mainInventory = player.inventory.mainInventory;
-		for (int j = 0, e = mainInventory.length; j < e; ++j)
-			if (mainInventory[j] != null && mainInventory[j].getItem() == rocket) {
+		NonNullList<ItemStack> mainInventory = player.inventory.mainInventory;
+		for (int j = 0, e = mainInventory.size(); j < e; ++j)
+			if (!mainInventory.get(j).isEmpty() && mainInventory.get(j).getItem() == rocket) {
 				slot = j;
 				break;
 			}
 		if (slot > 0) {
-			int damage = mainInventory[slot].getItemDamage();
+			int damage = mainInventory.get(slot).getItemDamage();
 			if (!player.capabilities.isCreativeMode)
-				if (--mainInventory[slot].stackSize <= 0)
-					mainInventory[slot] = null;
+				mainInventory.get(slot).shrink(1);
+				if (mainInventory.get(slot).getCount() <= 0)
+					mainInventory.set(slot, ItemStack.EMPTY);
 
 			if (world.isRemote) {
 				MFRPacket.sendRocketLaunchToServer(player.getEntityId(), 
 						damage == 0 ? MineFactoryReloadedClient.instance.getLockedEntity() : Integer.MIN_VALUE);
 			} else if (!player.addedToChunk) {
 				EntityRocket r = new EntityRocket(world, player, null);
-				world.spawnEntityInWorld(r);
+				world.spawnEntity(r);
 			}
 			return true;
 		}
@@ -64,20 +68,20 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 	}
 
 	@Override
-	protected int getDelay(ItemStack stack, boolean fired) {
+	protected int getDelay(@Nonnull ItemStack stack, boolean fired) {
 		return fired ? 100 : 40;
 	}
 
 	@Override
-	protected String getDelayTag(ItemStack stack) {
+	protected String getDelayTag(@Nonnull ItemStack stack) {
 		return "mfr:SPAMRLaunched";
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
-		super.preInit();
-		EntityRegistry.registerModEntity(EntityRocket.class, "Rocket", 3, MineFactoryReloadedCore.instance(), 160, 1, true);
+		super.initialize();
+		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "rocket_launcher"), EntityRocket.class, "Rocket", 3, MineFactoryReloadedCore.instance(), 160, 1, true);
 
 		return true;
 	}

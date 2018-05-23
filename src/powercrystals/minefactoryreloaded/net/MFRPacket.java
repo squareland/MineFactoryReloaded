@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.net;
 
-import cofh.core.network.PacketCoFHBase;
+import cofh.core.network.PacketBase;
 import cofh.core.network.PacketHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.entity.EntityRocket;
@@ -18,11 +17,13 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.machine.*;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 
-public class MFRPacket extends PacketCoFHBase {
+import javax.annotation.Nonnull;
+
+public class MFRPacket extends PacketBase {
 
 	public static void initialize() {
 
-		PacketHandler.instance.registerPacket(MFRPacket.class);
+		PacketHandler.INSTANCE.registerPacket(MFRPacket.class);
 	}
 
 	public enum PacketType {
@@ -38,7 +39,7 @@ public class MFRPacket extends PacketCoFHBase {
 			int type = getByte();
 			BlockPos pos;
 			TileEntity te;
-			World world = player.worldObj;
+			World world = player.world;
 
 			switch(PacketType.values()[type]) {
 				case HAM_UPDATE:
@@ -208,20 +209,20 @@ public class MFRPacket extends PacketCoFHBase {
 					te = world.getTileEntity(pos);
 					player = (EntityPlayer) world.getEntityByID(getInt());
 
-					ItemStack playerStack = player.inventory.getItemStack();
+					@Nonnull ItemStack playerStack = player.inventory.getItemStack();
 					int slotNumber = getInt(),
 							click = getByte();
 					if (te instanceof IInventory) {
-						if (playerStack == null) {
-							((IInventory) te).setInventorySlotContents(slotNumber, null);
+						if (playerStack.isEmpty()) {
+							((IInventory) te).setInventorySlotContents(slotNumber, ItemStack.EMPTY);
 						} else {
 							playerStack = playerStack.copy();
-							playerStack.stackSize = click == 1 ? -1 : 1;
-							ItemStack s = ((IInventory) te).getStackInSlot(slotNumber);
+							playerStack.setCount(click == 1 ? -1 : 1);
+							@Nonnull ItemStack s = ((IInventory) te).getStackInSlot(slotNumber);
 							if (!UtilInventory.stacksEqual(s, playerStack))
-								playerStack.stackSize = 1;
+								playerStack.setCount(1);
 							else
-								playerStack.stackSize = Math.max(playerStack.stackSize + s.stackSize, 1);
+								playerStack.setCount(Math.max(playerStack.getCount() + s.getCount(), 1));
 							((IInventory) te).setInventorySlotContents(slotNumber, playerStack);
 						}
 					}
@@ -236,7 +237,7 @@ public class MFRPacket extends PacketCoFHBase {
 
 					if (owner instanceof EntityLivingBase) {
 						EntityRocket r = new EntityRocket(world, ((EntityLivingBase) owner), target);
-						world.spawnEntityInWorld(r);
+						world.spawnEntity(r);
 					}
 					break;
 			}
@@ -320,7 +321,7 @@ public class MFRPacket extends PacketCoFHBase {
 		PacketHandler.sendToServer(getPacket(PacketType.ROCKET_LAUNCH).addInt(ownerId).addInt(entityId));
 	}
 
-	public static PacketCoFHBase getPacket(PacketType type) {
+	public static PacketBase getPacket(PacketType type) {
 
 		return new MFRPacket().addByte(type.ordinal());
 	}

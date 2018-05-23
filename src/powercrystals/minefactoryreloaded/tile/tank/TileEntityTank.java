@@ -1,25 +1,19 @@
 package powercrystals.minefactoryreloaded.tile.tank;
 
 import cofh.core.fluid.FluidTankCore;
-import cofh.lib.util.helpers.FluidHelper;
-import cofh.lib.util.helpers.StringHelper;
-
-import java.util.Arrays;
-import java.util.List;
-
+import cofh.core.util.helpers.FluidHelper;
+import cofh.core.util.helpers.StringHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
-
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import powercrystals.minefactoryreloaded.core.IDelayedValidate;
 import powercrystals.minefactoryreloaded.core.ITankContainerBucketable;
@@ -28,7 +22,10 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 
 public class TileEntityTank extends TileEntityFactory implements ITankContainerBucketable, IDelayedValidate {
 
@@ -45,15 +42,6 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	}
 
 	@Override
-	public void update() {
-		if (firstTick) {
-			cofh_validate();
-			firstTick = false;
-		}
-		//TODO yet again one more that needs non tickable base as it's not supposed to tick
-	}
-
-	@Override
 	public void invalidate() {
 
 		removeTankFromGrid(false);
@@ -66,9 +54,9 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 		if (grid != null) {
 			for (EnumFacing to : EnumFacing.VALUES) {
 				BlockPos offsetPos = pos.offset(to);
-				if ((sides & (1 << to.ordinal())) == 0 || (chunkUnloaded && !worldObj.isBlockLoaded(offsetPos)))
+				if ((sides & (1 << to.ordinal())) == 0 || (chunkUnloaded && !world.isBlockLoaded(offsetPos)))
 					continue;
-				TileEntityTank tank = MFRUtil.getTile(worldObj, offsetPos, TileEntityTank.class);
+				TileEntityTank tank = MFRUtil.getTile(world, offsetPos, TileEntityTank.class);
 				if (tank != null)
 					tank.part(to.getOpposite());
 			}
@@ -96,9 +84,9 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 
 		if (!inWorld) return;
 		for (EnumFacing to : EnumFacing.VALUES) {
-			if (to.getFrontOffsetY() != 0 || !worldObj.isBlockLoaded(pos.offset(to)))
+			if (to.getFrontOffsetY() != 0 || !world.isBlockLoaded(pos.offset(to)))
 				continue;
-			TileEntityTank tank = MFRUtil.getTile(worldObj, pos.offset(to), TileEntityTank.class);
+			TileEntityTank tank = MFRUtil.getTile(world, pos.offset(to), TileEntityTank.class);
 			if (tank != null && tank.grid != null && FluidHelper.isFluidEqualOrNull(tank.grid.getStorage().getFluid(), _tank.getFluid())) {
 				if (tank.grid != null)
 					if (tank.grid == grid || tank.grid.addNode(this)) {
@@ -112,26 +100,28 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	}
 
 	@Override
-	public void cofh_validate() {
+	public void onLoad() {
 
-		super.cofh_validate();
-		if (worldObj.isRemote)
+		super.onLoad();
+
+		if (world.isRemote)
 			return;
 		firstTick();
+		markDirty();
 	}
 
 	public void join(EnumFacing from) {
 
 		sides |= (1 << from.ordinal());
 		markChunkDirty();
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public void part(EnumFacing from) {
 
 		sides &= ~(1 << from.ordinal());
 		markChunkDirty();
-		MFRUtil.notifyBlockUpdate(worldObj, pos);
+		MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
 	public boolean isInterfacing(EnumFacing to) {
@@ -167,7 +157,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 		_tank.setFluid(fluid);
 		sides = tag.getByte("sides");
 
-		worldObj.checkLight(pos);
+		world.checkLight(pos);
 	}
 
 	@Override
@@ -208,13 +198,13 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return stack.getItem() != MFRThings.plasticTankItem;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}
@@ -250,7 +240,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 	public FluidStack drain(EnumFacing facing, int maxDrain, boolean doDrain) {
 
 		if (grid == null)
-			return worldObj.isRemote ? _tank.drain(maxDrain, false) : null;
+			return world.isRemote ? _tank.drain(maxDrain, false) : null;
 		return grid.getStorage().drain(maxDrain, doDrain);
 	}
 

@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import cofh.lib.util.RegistryUtils;
-import cofh.lib.util.WeightedRandomItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -9,6 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
@@ -27,8 +26,9 @@ import powercrystals.minefactoryreloaded.block.fluid.BlockFactoryFluid;
 import powercrystals.minefactoryreloaded.block.fluid.BlockPinkSlimeFluid;
 import powercrystals.minefactoryreloaded.core.FluidHandlerItemStackSimpleSingleFluid;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
-import powercrystals.minefactoryreloaded.item.ItemMFRBucketMilk;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Locale;
@@ -111,7 +111,7 @@ public class MFRFluids {
 				while (i > 0) {
 					int j = EntityXPOrb.getXPSplit(i);
 					i -= j;
-					world.spawnEntityInWorld(new EntityXPOrb(world,
+					world.spawnEntity(new EntityXPOrb(world,
 							pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), j));
 				}
 				return true;
@@ -120,7 +120,7 @@ public class MFRFluids {
 		PINK_SLIME(true) {
 			@Override public boolean vaporize(@Nullable EntityPlayer player, World world, BlockPos pos, FluidStack fluidStack) {
 
-				ItemStack drop;
+				@Nonnull ItemStack drop;
 				if (world.rand.nextBoolean())
 					drop = new ItemStack(MFRThings.pinkSlimeItem, world.rand.nextInt(3));
 				else if (world.rand.nextInt(5) != 0)
@@ -134,7 +134,7 @@ public class MFRFluids {
 		MEAT {
 			@Override public boolean vaporize(@Nullable EntityPlayer player, World world, BlockPos pos, FluidStack fluidStack) {
 
-				ItemStack drop;
+				@Nonnull ItemStack drop;
 				if (world.rand.nextInt(5) != 0)
 					drop = new ItemStack(MFRThings.meatIngotRawItem, world.rand.nextInt(2));
 				else
@@ -180,7 +180,7 @@ public class MFRFluids {
 			name = name().toLowerCase(Locale.US);
 		}
 
-		protected void drop(World world, BlockPos pos, ItemStack stack) {
+		protected void drop(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
 			UtilInventory.dropStackInAir(world, pos, stack);
 		}
@@ -251,8 +251,10 @@ public class MFRFluids {
 		MFRRegistry.registerBlock(mushroomSoupLiquid, new ItemBlock(mushroomSoupLiquid));
 		MFRRegistry.registerBlock(steamFluid, new ItemBlock(steamFluid));
 
+
 		if (MFRConfig.vanillaOverrideMilkBucket.getBoolean(true)) {
-			RegistryUtils.overwriteEntry(Item.REGISTRY, "minecraft:milk_bucket", new ItemMFRBucketMilk(Items.MILK_BUCKET));
+			//needs to be the vanilla milk bucket registry name to properly replace vanilla one
+			MFRRegistry.registerItem(new ItemBucket(milkLiquid).setUnlocalizedName("mfr.bucket.milk").setRegistryName("minecraft:milk_bucket"));
 		}
 	}
 
@@ -302,23 +304,23 @@ public class MFRFluids {
 		fluid.setRarity(rarity);
 	}
 
-	private static final ItemStack MILK_BOTTLE = new ItemStack(MFRThings.milkBottleItem);
-	private static final ItemStack GLASS_BOTTLE = new ItemStack(Items.GLASS_BOTTLE);
-	private static final ItemStack MUSHROOM_STEW = new ItemStack(Items.MUSHROOM_STEW);
-	private static final ItemStack BOWL = new ItemStack(Items.BOWL);
+	private static final @Nonnull ItemStack MILK_BOTTLE = new ItemStack(MFRThings.milkBottleItem);
+	private static final @Nonnull ItemStack GLASS_BOTTLE = new ItemStack(Items.GLASS_BOTTLE);
+	private static final @Nonnull ItemStack MUSHROOM_STEW = new ItemStack(Items.MUSHROOM_STEW);
+	private static final @Nonnull ItemStack BOWL = new ItemStack(Items.BOWL);
 
 	@SubscribeEvent
-	public void onItemStackConstruct(AttachCapabilitiesEvent.Item evt) {
+	public void onItemStackConstruct(AttachCapabilitiesEvent<ItemStack> evt) {
 
-		Item item = evt.getItem();
-		if ((item == Items.GLASS_BOTTLE && PotionUtils.getEffectsFromStack(evt.getItemStack()).isEmpty()) ||
+		Item item = evt.getObject().getItem();
+		if ((item == Items.GLASS_BOTTLE && PotionUtils.getEffectsFromStack(evt.getObject()).isEmpty()) ||
 				item == MFRThings.milkBottleItem) {
 			evt.addCapability(new ResourceLocation(MineFactoryReloadedCore.modId + ":milk_bottle_cap"),
-					new FluidHandlerItemStackSimpleSingleFluid(evt.getItemStack(), MILK_BOTTLE, GLASS_BOTTLE,
+					new FluidHandlerItemStackSimpleSingleFluid(evt.getObject(), MILK_BOTTLE, GLASS_BOTTLE,
 							MFRFluids.getFluid("milk"), Fluid.BUCKET_VOLUME));
 		} else if (item == Items.BOWL || item == Items.MUSHROOM_STEW) {
 			evt.addCapability(new ResourceLocation(MineFactoryReloadedCore.modId + ":mushroom_soup_cap"),
-					new FluidHandlerItemStackSimpleSingleFluid(evt.getItemStack(), MUSHROOM_STEW, BOWL,
+					new FluidHandlerItemStackSimpleSingleFluid(evt.getObject(), MUSHROOM_STEW, BOWL,
 							MFRFluids.getFluid("mushroom_soup"), Fluid.BUCKET_VOLUME));
 		}
 	}

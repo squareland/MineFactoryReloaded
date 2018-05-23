@@ -1,22 +1,21 @@
 package powercrystals.minefactoryreloaded;
 
 //this import brought to you by the department of redundancies department, the department that brought you this import
+
 import codechicken.lib.CodeChickenLib;
 import cofh.CoFHCore;
-import cofh.core.world.WorldHandler;
+import cofh.cofhworld.CoFHWorld;
+import cofh.cofhworld.init.WorldHandler;
+import cofh.redstoneflux.RedstoneFlux;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.CustomProperty;
@@ -24,8 +23,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -38,7 +35,6 @@ import powercrystals.minefactoryreloaded.net.EntityHandler;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
 import powercrystals.minefactoryreloaded.setup.*;
-import powercrystals.minefactoryreloaded.setup.recipe.EnderIO;
 import powercrystals.minefactoryreloaded.setup.recipe.Vanilla;
 import powercrystals.minefactoryreloaded.setup.village.VillageCreationHandler;
 import powercrystals.minefactoryreloaded.setup.village.Zoologist;
@@ -47,7 +43,6 @@ import powercrystals.minefactoryreloaded.world.MineFactoryReloadedWorldGen;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
 import static powercrystals.minefactoryreloaded.MineFactoryReloadedCore.*;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
@@ -60,7 +55,8 @@ public class MineFactoryReloadedCore extends BaseMod {
 	public static final String modId = "minefactoryreloaded";
 	public static final String modName = "MineFactory Reloaded";
 	public static final String version = "2.9.0B1";
-	public static final String dependencies = CoFHCore.VERSION_GROUP + "required-after:CodeChickenLib@[" + CodeChickenLib.version + ",)";
+	public static final String dependencies = CoFHCore.VERSION_GROUP + CodeChickenLib.MOD_VERSION_DEP + RedstoneFlux.VERSION_GROUP +
+			CoFHWorld.VERSION_GROUP;
 	public static final String modNetworkChannel = "MFReloaded";
 
 	@SidedProxy(clientSide = "powercrystals.minefactoryreloaded.net.ClientProxy",
@@ -122,21 +118,12 @@ public class MineFactoryReloadedCore extends BaseMod {
 			recipeSets.add(new ThermalExpansion());
 */
 
-		if (MFRConfig.enderioRecipes.getBoolean(false))
-			recipeSets.add(new EnderIO());
+		//if (MFRConfig.enderioRecipes.getBoolean(false))
+		//	recipeSets.add(new EnderIO());
 
 		Vanilla.registerOredict();
 
 		Blocks.FIRE.setFireInfo(MFRFluids.biofuelLiquid, 300, 30);
-
-		//TODO remove once mods actually switch over to fluid caps instead of IFluidContainerItem
-		FluidContainerRegistry.registerFluidContainer(new FluidContainerRegistry.FluidContainerData(FluidRegistry.getFluidStack("milk",
-				FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(milkBottleItem), new ItemStack(Items.GLASS_BOTTLE)));
-
-		FluidContainerRegistry.registerFluidContainer(new FluidContainerRegistry.FluidContainerData(FluidRegistry.getFluidStack("milk",
-				FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.MILK_BUCKET), new ItemStack(Items.BUCKET)));
-		FluidContainerRegistry.registerFluidContainer(new FluidContainerRegistry.FluidContainerData(FluidRegistry.getFluidStack("mushroom_soup",
-				FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.MUSHROOM_STEW), new ItemStack(Items.BOWL)));
 
 		GameRegistry.registerFuelHandler(new MineFactoryReloadedFuelHandler());
 		
@@ -148,18 +135,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 		MFRRegistry.registerBlock(block, itemBlock);		
 	}
 
-	@Deprecated
-	private void registerBlock(Block block, Class<? extends ItemBlock> item, String[] args) {
-
-		MFRRegistry.registerBlock(block, item, new Object[] { args });
-	}
-
-	@Deprecated
-	private void registerBlock(Block block, Class<? extends ItemBlock> item, Object... args) {
-
-		MFRRegistry.registerBlock(block, item, args);
-	}
-
+/*	TODO is this remapping code even needed for anything?
 	@EventHandler
 	public void missingMappings(FMLMissingMappingsEvent e) {
 
@@ -189,6 +165,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 			}
 		}
 	}
+*/
 
 	@EventHandler
 	public void init(FMLInitializationEvent evt) {
@@ -213,7 +190,9 @@ public class MineFactoryReloadedCore extends BaseMod {
 		//TODO likely remove, but added here at least for the test
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandler());
 
-		WorldHandler.instance.registerFeature(new MineFactoryReloadedWorldGen());
+		WorldHandler.registerReloadCallback(() -> {
+			WorldHandler.registerFeature(MineFactoryReloadedWorldGen.INSTANCE);
+		});
 
 		//UpdateManager.registerUpdater(new UpdateManager(this, null, CoFHProps.DOWNLOAD_URL));
 	}
@@ -293,7 +272,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 		}
 		list = MFRConfig.safarinetBlacklist.getStringList();
 		for (String s : list) {
-			Class<?> cl = (Class<?>) EntityList.NAME_TO_CLASS.get(s);
+			Class<?> cl = EntityList.getClass(new ResourceLocation(s));
 			if (cl != null)
 				MFRRegistry.registerSafariNetBlacklist(cl);
 		}

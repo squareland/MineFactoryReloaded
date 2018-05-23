@@ -1,13 +1,13 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import codechicken.lib.model.blockbakery.BlockBakery;
-import codechicken.lib.model.blockbakery.CCBakeryModel;
-import codechicken.lib.model.blockbakery.IBakeryBlock;
-import codechicken.lib.model.blockbakery.ICustomBlockBakery;
+import codechicken.lib.model.bakery.CCBakeryModel;
+import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.ModelBakery;
+import codechicken.lib.model.bakery.generation.IBakery;
 import codechicken.lib.raytracer.RayTracer;
 import cofh.api.block.IBlockInfo;
-import cofh.lib.util.helpers.ItemHelper;
+import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -44,12 +44,13 @@ import powercrystals.minefactoryreloaded.render.block.PlasticPipeRenderer;
 import powercrystals.minefactoryreloaded.tile.transport.PlasticPipeUpgrade;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Random;
 
 import static powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable._subSideMappings;
 
-public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBakeryBlock {
+public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBakeryProvider {
 
 	public static final IUnlistedProperty<TileEntityPlasticPipe.ConnectionType>[] CONNECTION = new IUnlistedProperty[6];
 
@@ -82,7 +83,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
 
 		return PlasticPipeRenderer.INSTANCE
-				.handleState((IExtendedBlockState) super.getExtendedState(state, world, pos), world.getTileEntity(pos));
+				.handleState((IExtendedBlockState) super.getExtendedState(state, world, pos), world, pos);
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	}
 
 	@Override
-	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	public boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, @Nonnull ItemStack heldItem) {
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityPlasticPipe) {
@@ -114,9 +115,9 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 			int subSide = _subSideMappings[subHit];
 
 			l2:
-			if (cable.onPartHit(player, subSide, subHit)) {
-				if (MFRUtil.isHoldingUsableTool(player, pos)) {
-					MFRUtil.usedWrench(player, pos);
+			if (cable.onPartHit(player, hand, subSide, subHit)) {
+				if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
+					MFRUtil.usedWrench(player, hand, pos, side);
 					return true;
 				}
 			} else if (PlasticPipeUpgrade.isUpgradeItem(heldItem)) {
@@ -127,7 +128,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 					break l2;
 				}
 
-				if (currentUpgrade.getDrop() != null){
+				if (!currentUpgrade.getDrop().isEmpty()){
 					UtilInventory.dropStackInAir(world, pos, currentUpgrade.getDrop());
 				}
 				if (!world.isRemote) {
@@ -135,8 +136,8 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 						ItemHelper.consumeItem(heldItem);
 					}
 					cable.setUpgrade(newUpgrade);
-					neighborChanged(state, world, pos, Blocks.AIR);
-					player.addChatMessage(new TextComponentTranslation(newUpgrade.getChatMessageKey()));
+					neighborChanged(state, world, pos, Blocks.AIR, pos);
+					player.sendMessage(new TextComponentTranslation(newUpgrade.getChatMessageKey()));
 				}
 				return true;
 			}
@@ -147,17 +148,17 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> drops = new ArrayList<>();
 
 		Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
-		ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state));
+		@Nonnull ItemStack machine = new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state));
 		drops.add(machine);
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityPlasticPipe) {
 			PlasticPipeUpgrade upgrade = ((TileEntityPlasticPipe) te).getUpgrade();
-			if(upgrade.getDrop() != null) {
+			if(!upgrade.getDrop().isEmpty()) {
 				drops.add(upgrade.getDrop());
 			}
 		}
@@ -196,7 +197,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this));
 		GameRegistry.registerTileEntity(TileEntityPlasticPipe.class, "factoryPlasticPipe");
@@ -228,13 +229,13 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 						return PlasticPipeRenderer.sprite;
 					}
 				});
-		BlockBakery.registerBlockKeyGenerator(this,
+		ModelBakery.registerBlockKeyGenerator(this,
 				state -> state.getBlock().getRegistryName().toString() + "," + getConnectionTypesKey(state));
 
 	}
 
 	@Override
-	public ICustomBlockBakery getCustomBakery() {
+	public IBakery getBakery() {
 
 		return PlasticPipeRenderer.INSTANCE;
 	}

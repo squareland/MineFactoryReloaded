@@ -1,24 +1,14 @@
 package powercrystals.minefactoryreloaded.tile.rednet;
 
-import static powercrystals.minefactoryreloaded.setup.MFRThings.rednetCableBlock;
-
-import cofh.lib.util.LinkedHashList;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
-
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInputNode;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetOutputNode;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedstoneAlike;
@@ -28,6 +18,13 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static powercrystals.minefactoryreloaded.setup.MFRThings.rednetCableBlock;
 
 public class RedstoneNetwork implements IGrid {
 
@@ -48,7 +45,7 @@ public class RedstoneNetwork implements IGrid {
 
 	private boolean regenerating;
 	private ArrayHashList<TileEntityRedNetCable> nodeSet = new ArrayHashList<TileEntityRedNetCable>();
-	private LinkedHashList<TileEntityRedNetCable> conduitSet;
+	private LinkedHashSet<TileEntityRedNetCable> conduitSet;
 
 	private int[] _powerLevelOutput = new int[16];
 	private RedstoneNode[] _powerProviders = new RedstoneNode[16];
@@ -60,7 +57,7 @@ public class RedstoneNetwork implements IGrid {
 
 	public static void log(String format, Object... data) {
 
-		if (log & format != null) {
+		if (log && format != null) {
 			_log.debug(format, data);
 		}
 	}
@@ -77,7 +74,7 @@ public class RedstoneNetwork implements IGrid {
 	public RedstoneNetwork(TileEntityRedNetCable base) {
 
 		this(base.getWorld());
-		conduitSet = new LinkedHashList<TileEntityRedNetCable>();
+		conduitSet = new LinkedHashSet<TileEntityRedNetCable>();
 		regenerating = true;
 		addConduit(base);
 		regenerating = false;
@@ -144,21 +141,23 @@ public class RedstoneNetwork implements IGrid {
 		for (Set<RedstoneNode> a : _singleNodes)
 			a.clear();
 		//}
-		LinkedHashList<TileEntityRedNetCable> oldSet = conduitSet;
-		conduitSet = new LinkedHashList<TileEntityRedNetCable>(Math.min(oldSet.size() / 6, 5));
+		LinkedHashSet<TileEntityRedNetCable> oldSet = conduitSet;
+		conduitSet = new LinkedHashSet<>(Math.min(oldSet.size() / 6, 5));
 
-		LinkedHashList<TileEntityRedNetCable> toCheck = new LinkedHashList<TileEntityRedNetCable>();
-		LinkedHashList<TileEntityRedNetCable> checked = new LinkedHashList<TileEntityRedNetCable>();
-		BlockPos bp = new BlockPos(0, 0, 0);
+		LinkedHashSet<TileEntityRedNetCable> toCheck = new LinkedHashSet<TileEntityRedNetCable>();
+		LinkedHashSet<TileEntityRedNetCable> checked = new LinkedHashSet<TileEntityRedNetCable>();
 		EnumFacing[] dir = EnumFacing.VALUES;
 		toCheck.add(main);
 		checked.add(main);
+
 		while (!toCheck.isEmpty()) {
-			main = toCheck.shift();
+			Iterator<TileEntityRedNetCable> it = toCheck.iterator();
+			main = it.next();
+			it.remove();
 			addConduit(main);
 			World world = main.getWorld();
 			for (int i = 6; i-- > 0;) {
-				bp = main.getPos().offset(dir[i]);
+				BlockPos bp = main.getPos().offset(dir[i]);
 				if (world.isBlockLoaded(bp)) {
 					TileEntity te = world.getTileEntity(bp);
 					if (te instanceof TileEntityRedNetCable) {
@@ -248,7 +247,7 @@ public class RedstoneNetwork implements IGrid {
 		if (grid == this) return;
 		boolean r = regenerating || grid.regenerating;
 		grid.destroyGrid();
-		if (!regenerating & r)
+		if (!regenerating && r)
 			regenerate();
 
 		regenerating = true;
@@ -403,7 +402,7 @@ public class RedstoneNetwork implements IGrid {
 			}
 		}
 
-		if (notify & !unloading) {
+		if (notify && !unloading) {
 			Block block = _world.getBlockState(node.getPos()).getBlock();
 			if (block == rednetCableBlock) {
 				return;

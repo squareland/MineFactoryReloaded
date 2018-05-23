@@ -2,11 +2,11 @@ package powercrystals.minefactoryreloaded.tile.machine;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.util.ITickable;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 
-public class TileEntityMobCounter extends TileEntityFactory {
+public class TileEntityMobCounter extends TileEntityFactory implements ITickable {
 
 	private int _lastMobCount;
 
@@ -20,17 +20,15 @@ public class TileEntityMobCounter extends TileEntityFactory {
 	@Override
 	public void update() {
 
-		super.update();
-
-		if (worldObj == null) {
+		if (world == null) {
 			return;
 		}
 
-		int mobCount = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB()).size();
+		int mobCount = world.getEntitiesWithinAABB(EntityLivingBase.class, _areaManager.getHarvestArea().toAxisAlignedBB()).size();
 		if (mobCount != _lastMobCount) {
 			_lastMobCount = mobCount;
-			if (!worldObj.isRemote) {
-				worldObj.notifyNeighborsOfStateChange(pos, this._machine.getBlock());
+			if (!world.isRemote) {
+				world.notifyNeighborsOfStateChange(pos, this._machine.getBlock(), false);
 			}
 		}
 	}

@@ -1,34 +1,29 @@
 package powercrystals.minefactoryreloaded.modhelpers.thermalexpansion;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
 import powercrystals.minefactoryreloaded.api.RandomMob;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "MineFactoryReloaded|CompatThermalExpansion",
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatthermalexpansion",
 		name = "MFR Compat: ThermalExpansion",
 		version = MineFactoryReloadedCore.version,
 		dependencies = "after:MineFactoryReloaded;after:ThermalExpansion",
@@ -53,7 +48,7 @@ public class ThermalExpansion implements IRandomMobProvider {
 		}
 	}
 
-	private static void sendPulv(ItemStack input, ItemStack output) {
+	private static void sendPulv(@Nonnull ItemStack input, @Nonnull ItemStack output) {
 
 		NBTTagCompound toSend = new NBTTagCompound();
 		toSend.setInteger("energy", 3200);
@@ -76,7 +71,7 @@ public class ThermalExpansion implements IRandomMobProvider {
 		creeper.setCustomNameTag("Exploding Zeldo");
 		creeper.setAlwaysRenderNameTag(true);
 		creeper.enablePersistence();
-		ItemStack armor = new ItemStack(MFRThings.plasticBootsItem);
+		@Nonnull ItemStack armor = new ItemStack(MFRThings.plasticBootsItem);
 		armor.setStackDisplayName("Zeldo's Ruby Slippers");
 		EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armor);
 		creeper.setItemStackToSlot(slot, armor);

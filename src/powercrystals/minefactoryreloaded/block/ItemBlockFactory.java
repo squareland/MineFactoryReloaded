@@ -1,19 +1,19 @@
 package powercrystals.minefactoryreloaded.block;
 
-import static powercrystals.minefactoryreloaded.item.base.ItemMulti.getName;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
+import static powercrystals.minefactoryreloaded.item.base.ItemMulti.getName;
 
 public class ItemBlockFactory extends ItemBlock
 {
@@ -44,7 +44,7 @@ public class ItemBlockFactory extends ItemBlock
 		setHasSubtypes(true);
 	}
 
-	protected String name(ItemStack stack)
+	protected String name(@Nonnull ItemStack stack)
 	{
 		return _names[Math.min(stack.getItemDamage(), _names.length - 1)];
 	}
@@ -56,32 +56,29 @@ public class ItemBlockFactory extends ItemBlock
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack)
+	public String getUnlocalizedName(@Nonnull ItemStack stack)
 	{
 		return getName(getUnlocalizedName(), name(stack));
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> info, boolean adv)
-	{
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
+
 		String str = getName("tip.info" + getUnlocalizedName().substring(4), name(stack));
 		str = MFRUtil.localize(str, true, null);
 		if (str != null)
-			info.add(str);
-	}
-
-	public void getSubItems(Item itemId, List<ItemStack> subTypes)
-	{
-		for(int i = 0; i < _names.length; i++)
-		{
-			subTypes.add(new ItemStack(itemId, 1, i));
-		}
+			tooltip.add(str);
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs creativeTab, List<ItemStack> subTypes)
-	{
-		getSubItems(item, subTypes);
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+
+		if (isInCreativeTab(tab)) {
+			for(int i = 0; i < _names.length; i++)
+			{
+				items.add(new ItemStack(this, 1, i));
+			}
+		}
+		super.getSubItems(tab, items);
 	}
 }

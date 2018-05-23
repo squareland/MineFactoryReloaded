@@ -12,21 +12,23 @@ import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
+import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwareModel {
+public abstract class BaseItemRenderer implements IItemRenderer, IBakedModel {
 
 	ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformations;
 
 	@Override
-	public void renderItem(ItemStack stack) {
+	public void renderItem(@Nonnull ItemStack stack, ItemCameraTransforms.TransformType transformType) {
 
 		GlStateManager.pushMatrix();
 		CCRenderState ccrs = CCRenderState.instance();
@@ -43,12 +45,12 @@ public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwa
 		GlStateManager.popMatrix();
 	}
 
-	protected void drawModel(CCRenderState ccrs, ItemStack stack) {};
+	protected void drawModel(CCRenderState ccrs, @Nonnull ItemStack stack) {};
 
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
 
-		return MapWrapper.handlePerspective(this, transformations, cameraTransformType);
+		return PerspectiveMapWrapper.handlePerspective(this, transformations, cameraTransformType);
 	}
 
 	@Override
@@ -91,5 +93,11 @@ public abstract class BaseItemRenderer implements IItemRenderer, IPerspectiveAwa
 	public ItemOverrideList getOverrides() {
 
 		return ItemOverrideList.NONE;
+	}
+
+	@Override
+	public IModelState getTransforms() {
+
+		return null;
 	}
 }

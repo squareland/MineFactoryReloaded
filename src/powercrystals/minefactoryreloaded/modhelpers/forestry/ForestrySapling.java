@@ -2,19 +2,18 @@ package powercrystals.minefactoryreloaded.modhelpers.forestry;
 
 import forestry.api.arboriculture.ITreeRoot;
 import forestry.api.genetics.AlleleManager;
-
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.FertilizerType;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
+
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class ForestrySapling extends PlantableStandard implements IFactoryFertilizable
 {
@@ -26,7 +25,7 @@ public class ForestrySapling extends PlantableStandard implements IFactoryFertil
 		root = (ITreeRoot)AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
 		_plantedBlock = new ReplacementBlock((Block)null) {
 			@Override
-			public boolean replaceBlock(World world, BlockPos pos, ItemStack stack) {
+			public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
 				return root.plantSapling(world, root.getMember(stack), null, pos);
 			}
 		};
@@ -39,7 +38,7 @@ public class ForestrySapling extends PlantableStandard implements IFactoryFertil
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, ItemStack stack)
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		if (!world.isAirBlock(pos))
 			return false;

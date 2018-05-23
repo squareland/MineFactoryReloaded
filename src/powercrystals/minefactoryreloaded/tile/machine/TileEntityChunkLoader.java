@@ -26,6 +26,7 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 			Field f = Ticket.class.getDeclaredField("maxDepth");
 			f.setAccessible(true);
 			f.setInt(tick, Short.MAX_VALUE);
-		} catch (Throwable _) {
+		} catch (Throwable t) {
 		}
 	}
 
@@ -76,7 +77,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 
 		if (unableToRequestTicket &&
 				inventoryPlayer.player.getName().equals(_owner)) {
-			inventoryPlayer.player.addChatMessage(
+			inventoryPlayer.player.sendMessage(
 					new TextComponentTranslation("chat.info.mfr.chunkloader.noticket"));
 		}
 		return new ContainerChunkLoader(this, inventoryPlayer);
@@ -113,11 +114,11 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 		int maxR = 38;
 		if (_ticket != null)
 			maxR = Math.min((int) Math.sqrt(_ticket.getChunkListDepth() / Math.PI), maxR);
-		if (r < 0 | r > maxR | r == _radius)
+		if (r < 0 || r > maxR || r == _radius)
 			return;
 		_radius = r;
 		markDirty();
-		if (worldObj != null && !worldObj.isRemote)
+		if (world != null && !world.isRemote)
 			forceChunks();
 	}
 
@@ -150,12 +151,12 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 			return;
 		}
 		activated = false;
-		if (!worldObj.isRemote && MFRConfig.enableChunkLoaderRequiresOwner.getBoolean(false) &&
+		if (!world.isRemote && MFRConfig.enableChunkLoaderRequiresOwner.getBoolean(false) &&
 				!ConnectionHandler.onlinePlayerMap.containsKey(_owner)) {
 			setIdleTicks(getIdleTicksMax());
 		}
 		super.update();
-		if (worldObj.isRemote)
+		if (world.isRemote)
 			return;
 		if (getIdleTicks() > 0) {
 			if (_ticket != null)
@@ -191,11 +192,11 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 						ForgeChunkManager.unforceChunk(_ticket, c);
 				}
 			}
-		else if (activated & !isActive()) {
+		else if (activated && !isActive()) {
 			if (_ticket == null) {
 				_ticket = ForgeChunkManager.
 						requestPlayerTicket(MineFactoryReloadedCore.instance(),
-							_owner, worldObj, Type.NORMAL);
+							_owner, world, Type.NORMAL);
 				if (_ticket == null) {
 					unableToRequestTicket = true;
 					return;
@@ -237,8 +238,8 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 		int z = pos.getZ() >> 4;
 		int r = _radius * _radius;
 		for (ChunkPos c : chunks) {
-			int xS = c.chunkXPos - x;
-			int zS = c.chunkZPos - z;
+			int xS = c.x - x;
+			int zS = c.z - z;
 			if ((xS * xS + zS * zS) > r)
 				ForgeChunkManager.unforceChunk(_ticket, c);
 		}
@@ -303,7 +304,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 				ForgeChunkManager.releaseTicket(ticket);
 				_ticket = ForgeChunkManager.
 						requestPlayerTicket(MineFactoryReloadedCore.instance(),
-							_owner, worldObj, Type.NORMAL);
+							_owner, world, Type.NORMAL);
 				if (_ticket == null) {
 					unableToRequestTicket = true;
 					return true;
@@ -438,7 +439,7 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 	@Override
 	public int fill(EnumFacing facing, FluidStack resource, boolean doFill) {
 
-		if (!unableToRequestTicket & resource != null && isFluidFuel(resource))
+		if (!unableToRequestTicket && resource != null && isFluidFuel(resource))
 			for (FluidTankCore _tank : getTanks())
 				if (_tank.getFluidAmount() == 0 || resource.isFluidEqual(_tank.getFluid()))
 					return _tank.fill(resource, doFill);
@@ -472,13 +473,13 @@ public class TileEntityChunkLoader extends TileEntityFactoryPowered implements I
 	}
 
 	@Override
-	public boolean allowBucketFill(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return !unableToRequestTicket;
 	}
 
 	@Override
-	public boolean allowBucketDrain(EnumFacing facing, ItemStack stack) {
+	public boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack) {
 
 		return true;
 	}

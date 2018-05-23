@@ -1,11 +1,5 @@
 package powercrystals.minefactoryreloaded.farmables.grindables;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -15,16 +9,22 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
 import powercrystals.minefactoryreloaded.api.MobDrop;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class GrindableZombiePigman implements IFactoryGrindable
 {
 	private static final UUID signBoostModifierUUID = UUID.fromString("1CBBA087-C48F-4F33-8BD4-0E85FC2F6A0A");
 	private static final AttributeModifier modifier = (new AttributeModifier(signBoostModifierUUID,
 			"Battlesign boost", 10D, 0)).setSaved(false);
+	@Nonnull
 	public static final ItemStack sign;
 	static {
 		sign = new ItemStack(Items.SIGN);
@@ -33,7 +33,7 @@ public class GrindableZombiePigman implements IFactoryGrindable
 		sign.addEnchantment(Enchantments.FIRE_ASPECT, 1);
 		NBTTagList list = new NBTTagList();
 		list.appendTag(MFRUtil.writeModifierToNBT(
-				SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), modifier));
+				SharedMonsterAttributes.MAX_HEALTH.getName(), modifier));
 		sign.setTagInfo("AttributeModifiers", list);
 	}
 

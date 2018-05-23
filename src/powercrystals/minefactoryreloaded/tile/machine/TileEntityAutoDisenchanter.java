@@ -1,21 +1,22 @@
 package powercrystals.minefactoryreloaded.tile.machine;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.gui.client.GuiAutoDisenchanter;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerAutoDisenchanter;
 import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 
@@ -63,9 +64,9 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
-		if (stack == null)
+		if (stack.isEmpty())
 			return false;
 		if (slot == 0) {
 			return stack.getEnchantmentTagList() != null || stack.getItem().equals(Items.ENCHANTED_BOOK);
@@ -76,7 +77,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
 		if (slot == 2 || slot == 3) return true;
 		return false;
@@ -85,25 +86,25 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 	@Override
 	protected boolean activateMachine() {
 
-		if (_inventory[4] == null) {
-			if (_inventory[0] == null)
+		if (_inventory.get(4).isEmpty()) {
+			if (_inventory.get(0).isEmpty())
 				return false;
-			_inventory[4] = _inventory[0].splitStack(1);
-			if (_inventory[0].stackSize <= 0)
-				_inventory[0] = null;
+			_inventory.set(4, _inventory.get(0).splitStack(1));
+			if (_inventory.get(0).getCount() <= 0)
+				_inventory.set(0, ItemStack.EMPTY);
 			markChunkDirty();
 		}
 
-		ItemStack stack = _inventory[4];
+		@Nonnull ItemStack stack = _inventory.get(4);
 		boolean isBook = stack.getItem().equals(Items.ENCHANTED_BOOK);
-		NBTTagList list = isBook ? Items.ENCHANTED_BOOK.getEnchantments(stack) : stack.getEnchantmentTagList();
-		if ((list == null || list.tagCount() <= 0) && _inventory[2] == null) {
-			_inventory[2] = stack;
-			setInventorySlotContents(4, null);
+		NBTTagList list = isBook ? ItemEnchantedBook.getEnchantments(stack) : stack.getEnchantmentTagList();
+		if ((list == null || list.tagCount() <= 0) && _inventory.get(2).isEmpty()) {
+			_inventory.set(2, stack);
+			setInventorySlotContents(4, ItemStack.EMPTY);
 		} else if ((list != null && list.tagCount() > 0) &&
-				(_inventory[1] != null && _inventory[1].getItem().equals(Items.BOOK)) &
-				_inventory[2] == null &
-				_inventory[3] == null) {
+				(!_inventory.get(1).isEmpty() && _inventory.get(1).getItem().equals(Items.BOOK)) &
+				_inventory.get(2).isEmpty() &
+				_inventory.get(3).isEmpty()) {
 			if (getWorkDone() >= getWorkMax()) {
 				decrStackSize(1, 1);
 
@@ -112,10 +113,10 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 					enchTag = list.getCompoundTagAt(0);
 					list.removeTag(0);
 					if (list.tagCount() == 0) {
-						_inventory[4] = new ItemStack(Items.BOOK, 1);
+						_inventory.set(4, new ItemStack(Items.BOOK, 1));
 					}
 				} else {
-					int enchIndex = worldObj.rand.nextInt(list.tagCount());
+					int enchIndex = world.rand.nextInt(list.tagCount());
 					enchTag = list.getCompoundTagAt(enchIndex);
 
 					list.removeTag(enchIndex);
@@ -127,18 +128,18 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 					}
 
 					if (stack.isItemStackDamageable()) {
-						int damage = worldObj.rand.nextInt(1 + (stack.getMaxDamage() / 4));
+						int damage = world.rand.nextInt(1 + (stack.getMaxDamage() / 4));
 						int m = stack.getMaxDamage();
 						damage = Math.min(m, damage + 1 + (m / 10)) + (m == 1 ? 1 : 0);
-						if (stack.attemptDamageItem(damage, worldObj.rand)) {
-							_inventory[4] = null;
+						if (stack.attemptDamageItem(damage, world.rand, null)) {
+							_inventory.set(4, ItemStack.EMPTY);
 						}
 					}
 				}
 
-				if (!_repeatDisenchant || (_inventory[4] != null && _inventory[4].getEnchantmentTagList() == null)) {
-					_inventory[2] = _inventory[4];
-					_inventory[4] = null;
+				if (!_repeatDisenchant || (!_inventory.get(4).isEmpty() && _inventory.get(4).getEnchantmentTagList() == null)) {
+					_inventory.set(2, _inventory.get(4));
+					_inventory.set(4, ItemStack.EMPTY);
 				}
 
 				setInventorySlotContents(3, new ItemStack(Items.ENCHANTED_BOOK, 1));
@@ -147,7 +148,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 				NBTTagList enchList = new NBTTagList();
 				enchList.appendTag(enchTag);
 				baseTag.setTag("StoredEnchantments", enchList);
-				_inventory[3].setTagCompound(baseTag);
+				_inventory.get(3).setTagCompound(baseTag);
 
 				setWorkDone(0);
 			} else {

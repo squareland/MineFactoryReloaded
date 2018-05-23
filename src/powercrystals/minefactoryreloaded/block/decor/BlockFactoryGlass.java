@@ -1,11 +1,10 @@
 package powercrystals.minefactoryreloaded.block.decor;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import codechicken.lib.model.blockbakery.BlockBakery;
-import codechicken.lib.model.blockbakery.CCBakeryModel;
-import codechicken.lib.model.blockbakery.IBakeryBlock;
-import codechicken.lib.model.blockbakery.ICustomBlockBakery;
-import codechicken.lib.texture.SpriteSheetManager;
+import codechicken.lib.model.bakery.CCBakeryModel;
+import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.ModelBakery;
+import codechicken.lib.model.bakery.generation.IBakery;
 import cofh.core.render.IModelRegister;
 import cofh.core.util.core.IInitializer;
 import net.minecraft.block.BlockGlass;
@@ -23,7 +22,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
@@ -46,7 +44,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, IBakeryBlock, IInitializer, IModelRegister, IColorRegister
+public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, IBakeryProvider, IInitializer, IModelRegister, IColorRegister
 {
 	public static final PropertyEnum<MFRDyeColor> COLOR = PropertyEnum.create("color", MFRDyeColor.class); //TODO move properties to one place
 	public static final IUnlistedProperty<Integer>[] CTM_VALUE = new IUnlistedProperty[6];
@@ -217,27 +215,20 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	}
 
 	@Override
-	public ICustomBlockBakery getCustomBakery() {
+	public IBakery getBakery() {
 		
 		return FactoryGlassRenderer.INSTANCE;
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, MFRDyeColor.UNLOC_NAMES));
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
-		
-		return true;
-	}
 
-	@Override
-	public boolean postInit() {
-		
+		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, MFRDyeColor.UNLOC_NAMES));
 		return true;
 	}
 
@@ -254,12 +245,12 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 				return FactoryGlassRenderer.MODEL_LOCATION;
 			}
 		});
-		ModelRegistryHelper.register(FactoryGlassRenderer.MODEL_LOCATION, new CCBakeryModel(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.stainedglass") {
+		ModelRegistryHelper.register(FactoryGlassRenderer.MODEL_LOCATION, new CCBakeryModel() {
 			@Override public TextureAtlasSprite getParticleTexture() {
 				return FactoryGlassRenderer.spriteSheet.getSprite(FactoryGlassRenderer.FULL_FRAME);
 			}
 		});
-		BlockBakery.registerBlockKeyGenerator(this,
+		ModelBakery.registerBlockKeyGenerator(this,
 				state -> state.getBlock().getRegistryName().toString() + "," + state.getValue(BlockFactoryGlass.COLOR).getMetadata()
 						+ "," + state.getValue(BlockFactoryGlass.CTM_VALUE[0])
 						+ "," + state.getValue(BlockFactoryGlass.CTM_VALUE[1])

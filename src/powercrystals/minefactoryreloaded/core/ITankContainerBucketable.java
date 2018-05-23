@@ -6,6 +6,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -21,13 +22,13 @@ public interface ITankContainerBucketable
 	 * Called to determine if the IFluidHandler should be filled by buckets.
 	 * @return True if the IFluidHandler is allowed to be filled manually (with buckets)
 	 */
-	boolean allowBucketFill(EnumFacing facing, ItemStack stack);
+	boolean allowBucketFill(EnumFacing facing, @Nonnull ItemStack stack);
 
 	/**
 	 * Called to determine if the IFluidHandler should be drained by buckets.
 	 * @return True if the IFluidHandler is allowed to be drained manually (with buckets)
 	 */
-	boolean allowBucketDrain(EnumFacing facing, ItemStack stack);
+	boolean allowBucketDrain(EnumFacing facing, @Nonnull ItemStack stack);
 
 	/**
 	 * Returns an array of objects which represent the internal tanks.
@@ -69,4 +70,43 @@ public interface ITankContainerBucketable
 	 */
 	@Nullable
 	FluidStack drain(EnumFacing facing, int maxDrain, boolean doDrain);
+
+	class FluidHandlerWrapper implements IFluidHandler {
+
+		private final ITankContainerBucketable itcb;
+		private final EnumFacing side;
+
+		public FluidHandlerWrapper(ITankContainerBucketable itcb, EnumFacing side) {
+
+			this.itcb = itcb;
+			this.side = side;
+		}
+
+		@Override
+		public IFluidTankProperties[] getTankProperties() {
+
+			return itcb.getTankProperties(side);
+		}
+
+		@Override
+		public int fill(FluidStack resource, boolean doFill) {
+
+			return itcb.fill(side, resource, doFill);
+		}
+
+		@Nullable
+		@Override
+		public FluidStack drain(FluidStack resource, boolean doDrain) {
+
+			return itcb.drain(side, resource, doDrain);
+		}
+
+		@Nullable
+		@Override
+		public FluidStack drain(int maxDrain, boolean doDrain) {
+
+			return itcb.drain(side, maxDrain, doDrain);
+		}
+	}
+
 }

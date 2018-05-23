@@ -1,13 +1,15 @@
 package powercrystals.minefactoryreloaded.block.fluid;
 
 import codechicken.lib.model.ModelRegistryHelper;
-import codechicken.lib.model.blockbakery.BlockBakery;
-import codechicken.lib.model.blockbakery.CCBakeryModel;
-import codechicken.lib.model.blockbakery.IBakeryBlock;
-import codechicken.lib.model.blockbakery.ICustomBlockBakery;
+import codechicken.lib.model.bakery.CCBakeryModel;
+import codechicken.lib.model.bakery.IBakeryProvider;
+import codechicken.lib.model.bakery.ModelBakery;
+import codechicken.lib.model.bakery.generation.IBakery;
+import codechicken.lib.texture.TextureUtils;
 import cofh.api.block.IBlockInfo;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,26 +34,58 @@ import powercrystals.minefactoryreloaded.block.ItemBlockTank;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.block.BlockTankRenderer;
+import powercrystals.minefactoryreloaded.setup.MFRThings;
 import powercrystals.minefactoryreloaded.tile.tank.TileEntityTank;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock {
+public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvider {
 
 	public static final IUnlistedProperty<String> FLUID = new IUnlistedProperty<String>() {
 
-		@Override public String getName() {	return "fluid_rl"; }
-		@Override public boolean isValid(String value) { return true; }
-		@Override public Class<String> getType() { return String.class;	}
-		@Override public String valueToString(String value) { return value;	}
+		@Override public String getName() {
+
+			return "fluid_rl";
+		}
+
+		@Override public boolean isValid(String value) {
+
+			return true;
+		}
+
+		@Override public Class<String> getType() {
+
+			return String.class;
+		}
+
+		@Override public String valueToString(String value) {
+
+			return value;
+		}
 	};
 
 	public static final IUnlistedProperty<Byte> SIDES = new IUnlistedProperty<Byte>() {
 
-		@Override public String getName() {	return "sides"; }
-		@Override public boolean isValid(Byte value) { return value >= 0 && value <= 15; }
-		@Override public Class<Byte> getType() { return Byte.class; }
-		@Override public String valueToString(Byte value) {	return value.toString(); }
+		@Override public String getName() {
+
+			return "sides";
+		}
+
+		@Override public boolean isValid(Byte value) {
+
+			return value >= 0 && value <= 15;
+		}
+
+		@Override public Class<Byte> getType() {
+
+			return Byte.class;
+		}
+
+		@Override public String valueToString(Byte value) {
+
+			return value.toString();
+		}
 	};
 
 	public BlockTank() {
@@ -71,12 +105,12 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 	@Override
 	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
 
-		return BlockBakery.handleExtendedState((IExtendedBlockState) super.getExtendedState(state, world, pos), world.getTileEntity(pos));
+		return ModelBakery.handleExtendedState((IExtendedBlockState) super.getExtendedState(state, world, pos), world, pos);
 	}
 
 	@Override
 	public BlockRenderLayer getBlockLayer() {
-		
+
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 
@@ -110,7 +144,11 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 	}
 
 	@Override
-	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand, ItemStack heldItem) {
+	protected boolean activated(World world, BlockPos pos, EntityPlayer player, EnumFacing side, EnumHand hand,
+			@Nonnull ItemStack heldItem) {
+
+		if (heldItem.getItem() == MFRThings.strawItem)
+			return false;
 
 		super.activated(world, pos, player, side, hand, heldItem);
 		return true; // don't allow accidentally placing fluids/tanks off us
@@ -129,7 +167,8 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 	}
 
 	@Override
-	public void getBlockInfo(List<ITextComponent> info, IBlockAccess world, BlockPos pos, EnumFacing side, EntityPlayer player, boolean debug) {
+	public void getBlockInfo(List<ITextComponent> info, IBlockAccess world, BlockPos pos, EnumFacing side, EntityPlayer player,
+			boolean debug) {
 
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile instanceof TileEntityTank) {
@@ -138,12 +177,13 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 	}
 
 	@Override
-	public ICustomBlockBakery getCustomBakery() {
+	public IBakery getBakery() {
+
 		return BlockTankRenderer.INSTANCE;
 	}
 
 	@Override
-	public boolean preInit() {
+	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockTank(this));
 		GameRegistry.registerTileEntity(TileEntityTank.class, "factoryTank");
@@ -155,13 +195,20 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryBlock 
 	public void registerModels() {
 
 		ModelHelper.registerModel(this, BlockTankRenderer.MODEL_LOCATION);
-		
-		ModelRegistryHelper.register(BlockTankRenderer.MODEL_LOCATION, new CCBakeryModel(MineFactoryReloadedCore.modId + ":blocks/machines/tile.mfr.tank.bottom"));
-		
-		BlockBakery.registerBlockKeyGenerator(this,
-				state -> state.getBlock().getRegistryName().toString() + "," + state.getValue(FLUID) + "," + state.getValue(SIDES));
-		
-		BlockBakery.registerItemKeyGenerator(Item.getItemFromBlock(this), stack -> {
+
+		ModelRegistryHelper.register(BlockTankRenderer.MODEL_LOCATION, new CCBakeryModel() {
+			@Override
+			public TextureAtlasSprite getParticleTexture() {
+				return TextureUtils.getTexture(MineFactoryReloadedCore.modId + ":blocks/machines/tile.mfr.tank.bottom");
+			}
+
+		});
+
+		ModelBakery.registerBlockKeyGenerator(this,
+				state -> state.getBlock().getRegistryName().toString() + "," + state.getValue(FLUID) + "," +
+						state.getValue(SIDES));
+
+		ModelBakery.registerItemKeyGenerator(Item.getItemFromBlock(this), stack -> {
 			String key = stack.getItem().getRegistryName().toString();
 			if (stack.getItem() instanceof ItemBlockTank) {
 				FluidStack fluidStack = MFRUtil.getFluidContents(stack);

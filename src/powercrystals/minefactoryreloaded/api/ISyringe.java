@@ -4,6 +4,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 /**
  * Defines a syringe for use in the Vet machine.
  *
@@ -19,11 +21,11 @@ public interface ISyringe {
 	 * @param entity
 	 *            The entity being injected.
 	 * @param syringe
-	 *            The syringe ItemStack.
+	 *            The syringe @Nonnull ItemStack.
 	 *
 	 * @return True if the entity can be injected by this syringe.
 	 */
-	public boolean canInject(World world, EntityLivingBase entity, ItemStack syringe);
+	boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe);
 
 	/**
 	 * Called to perform an injection.
@@ -33,21 +35,21 @@ public interface ISyringe {
 	 * @param entity
 	 *            The entity being injected.
 	 * @param syringe
-	 *            The syringe ItemStack.
+	 *            The syringe @Nonnull ItemStack.
 	 *
 	 * @return True if injection was successful.
 	 */
-	public boolean inject(World world, EntityLivingBase entity, ItemStack syringe);
+	boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe);
 
 	/**
 	 * Called to check if a syringe is empty
 	 *
 	 * @param syringe
-	 *            The syringe ItemStack.
+	 *            The syringe @Nonnull ItemStack.
 	 *
 	 * @return True if the syringe is empty
 	 */
-	public boolean isEmpty(ItemStack syringe);
+	boolean isEmpty(@Nonnull ItemStack syringe);
 
 	/**
 	 * Called to get the empty syringe
@@ -55,10 +57,11 @@ public interface ISyringe {
 	 * <b>Note</b>: this will replace the syringe, max stacksize should be 1
 	 *
 	 * @param syringe
-	 *            The syringe ItemStack.
+	 *            The syringe @Nonnull ItemStack.
 	 *
-	 * @return An empty syringe ItemStack
+	 * @return An empty syringe @Nonnull ItemStack
 	 */
-	public ItemStack getEmptySyringe(ItemStack syringe);
+	@Nonnull
+	ItemStack getEmptySyringe(@Nonnull ItemStack syringe);
 
 }

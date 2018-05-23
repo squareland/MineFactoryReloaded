@@ -39,8 +39,8 @@ public class GuiBlockSmasher extends GuiFactoryPowered {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		fontRendererObj.drawString(new Integer(_smasher.getFortune()).toString(), 68, 44, 4210752);
-		fontRendererObj.drawString(MFRUtil.localize("enchantment.lootBonusDigger"), 64, 15, 4210752);
+		fontRenderer.drawString(new Integer(_smasher.getFortune()).toString(), 68, 44, 4210752);
+		fontRenderer.drawString(MFRUtil.localize("enchantment.lootBonusDigger"), 64, 15, 4210752);
 	}
 
 	@Override

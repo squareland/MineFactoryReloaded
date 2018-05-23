@@ -1,25 +1,15 @@
 package powercrystals.minefactoryreloaded.tile.base;
 
-import buildcraft.api.transport.IPipeConnection;
-import buildcraft.api.transport.IPipeTile.PipeType;
-
 import cofh.api.core.IPortableData;
 import cofh.api.tileentity.IInventoryConnection;
-import cofh.asm.relauncher.Strippable;
 import com.google.common.base.Strings;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Locale;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.world.World;
 import net.minecraft.util.EnumFacing;
-
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedClient;
 import powercrystals.minefactoryreloaded.core.HarvestAreaManager;
 import powercrystals.minefactoryreloaded.core.IHarvestAreaContainer;
@@ -28,13 +18,13 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
-@Strippable("buildcraft.api.transport.IPipeConnection")
+import java.util.Locale;
+
 public abstract class TileEntityFactory extends TileEntityBase
 		implements IRotateableTile, IInventoryConnection, IPortableData,
-				   IHarvestAreaContainer, IPipeConnection {
+				   IHarvestAreaContainer/*, IPipeConnection*/ {
 
 	protected static class FactoryAreaManager extends HarvestAreaManager<TileEntityFactory> {
 
@@ -51,9 +41,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 	private boolean _manageFluids = false;
 	private boolean _manageSolids = false;
 
-	private boolean _isActive = false, _prevActive;
 	protected byte _activeSyncTimeout = 101;
-	private long _lastActive = -100;
 	private int _lastUpgrade = 0;
 
 	protected int _rednetState;
@@ -73,7 +61,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 	public void validate() {
 
 		super.validate();
-		if (worldObj.isRemote && hasHAM()) {
+		if (world.isRemote && hasHAM()) {
 			MineFactoryReloadedClient.addTileToAreaList(this);
 		}
 	}
@@ -87,7 +75,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 	private void removeTileFromAreaList() {
 
-		if (worldObj != null && worldObj.isRemote && hasHAM()) {
+		if (world != null && world.isRemote && hasHAM()) {
 			MineFactoryReloadedClient.removeTileFromAreaList(this);
 		}
 	}
@@ -142,7 +130,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 	public World getWorld() {
 
-		return worldObj;
+		return world;
 	}
 
 	@Override
@@ -177,7 +165,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 	public void rotate(boolean reverse) {
 
-		if (worldObj != null && !worldObj.isRemote) {
+		if (world != null && !world.isRemote) {
 			switch ((reverse ? _forwardDirection.getOpposite() : _forwardDirection).ordinal()) {
 			case 2://NORTH:
 				_forwardDirection = EnumFacing.EAST;
@@ -206,18 +194,22 @@ public abstract class TileEntityFactory extends TileEntityBase
 		if (rotation < EnumFacing.VALUES.length)
 			_forwardDirection = EnumFacing.VALUES[rotation];
 
-		if (worldObj != null && p != _forwardDirection) {
+		if (world != null && p != _forwardDirection) {
 			onRotate();
 		}
 	}
 
 	protected void onRotate() {
 
-		if (!isInvalid() && worldObj.isBlockLoaded(pos)) {
+		if (!isInvalid() && world.isBlockLoaded(pos)) {
 			markForUpdate();
-			MFRUtil.notifyNearbyBlocks(worldObj, pos, getBlockType());
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
+			MFRUtil.notifyNearbyBlocks(world, pos, getBlockType());
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
+	}
+
+	public void markForUpdate() {
+
 	}
 
 	public EnumFacing getDropDirection() {
@@ -230,33 +222,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 	public EnumFacing[] getDropDirections() {
 
 		return EnumFacing.VALUES;
-	}
-
-	public boolean isActive() {
-
-		return _isActive;
-	}
-
-	public void setIsActive(boolean isActive) {
-
-		if (_isActive != isActive & worldObj != null &&
-				!worldObj.isRemote && _lastActive < worldObj.getTotalWorldTime()) {
-			_lastActive = worldObj.getTotalWorldTime() + _activeSyncTimeout;
-			_prevActive = _isActive;
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
-		}
-		_isActive = isActive;
-	}
-
-	@Override
-	public void update() {
-
-		super.update();
-
-		if (!worldObj.isRemote && _prevActive != _isActive && _lastActive < worldObj.getTotalWorldTime()) {
-			_prevActive = _isActive;
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
-		}
 	}
 
 	public void setOwner(String owner) {
@@ -288,7 +253,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 	@Override
 	public void markDirty() {
 
-		if (worldObj != null && !worldObj.isRemote && hasHAM()) {
+		if (world != null && !world.isRemote && hasHAM()) {
 			HarvestAreaManager<TileEntityFactory> ham = getHAM();
 			int u = ham.getUpgradeLevel();
 			if (_lastUpgrade != u)
@@ -298,32 +263,22 @@ public abstract class TileEntityFactory extends TileEntityBase
 		super.markDirty();
 	}
 
+	@Override
 	protected NBTTagCompound writePacketData(NBTTagCompound tag) {
 
 		tag = super.writePacketData(tag);
 
 		tag.setByte("r", (byte) _forwardDirection.ordinal());
-		tag.setBoolean("a", _isActive);
 
 		return tag;
 	}
 
+	@Override
 	protected void handlePacketData(NBTTagCompound tag) {
 
+		super.handlePacketData(tag);
+
 		rotateDirectlyTo(tag.getByte("r"));
-		_prevActive = _isActive;
-		_isActive = tag.getBoolean("a");
-		if (_prevActive != _isActive)
-			MFRUtil.notifyBlockUpdate(worldObj, pos);
-		if (_lastActive < 0 && hasHAM()) {
-			MFRPacket.sendHAMUpdateToServer(this);
-		}
-		_lastActive = 5;
-	}
-
-	public void markForUpdate() {
-
-		_lastActive = 0;
 	}
 
 	@Override
@@ -350,7 +305,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 		tag.setInteger("rotation", getDirectionFacing().ordinal());
 		if (!Strings.isNullOrEmpty(_owner))
 			tag.setString("owner", _owner);
-		tag.setBoolean("a", _isActive);
 
 		return tag;
 	}
@@ -363,7 +317,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 			rotateDirectlyTo(tag.getInteger("rotation"));
 		if (tag.hasKey("owner"))
 			_owner = tag.getString("owner");
-		_isActive = tag.getBoolean("a");
 	}
 
 	public void onRedNetChanged(EnumFacing side, int value) {
@@ -404,6 +357,7 @@ public abstract class TileEntityFactory extends TileEntityBase
 		return manageSolids() ? ConnectionType.FORCE : ConnectionType.DENY;
 	}
 
+/*	TODO: readd once BC team figure out what they want to do here
 	@Override
 	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
@@ -416,5 +370,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 			return ConnectOverride.CONNECT;
 		return ConnectOverride.DEFAULT;
 	}
+*/
 
 }

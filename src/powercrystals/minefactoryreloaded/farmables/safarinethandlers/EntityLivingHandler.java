@@ -1,38 +1,37 @@
 package powercrystals.minefactoryreloaded.farmables.safarinethandlers;
 
-import static net.minecraft.util.text.TextFormatting.*;
-
-import java.util.List;
-
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
+import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 
-public class EntityLivingHandler implements ISafariNetHandler
-{
+import javax.annotation.Nonnull;
+import java.util.List;
+
+import static net.minecraft.util.text.TextFormatting.DARK_GRAY;
+import static net.minecraft.util.text.TextFormatting.ITALIC;
+
+public class EntityLivingHandler implements ISafariNetHandler {
+
 	@Override
-	public Class<?> validFor()
-	{
+	public Class<?> validFor() {
+
 		return EntityLiving.class;
 	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+
 	@Override
-	public void addInformation(ItemStack safariNetStack, EntityPlayer player, List infoList, boolean advancedTooltips)
-	{
+	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
+
 		NBTTagCompound tag = safariNetStack.getTagCompound();
-		if (tag.hasKey("CustomName"))
-		{
+		if (tag.hasKey("CustomName")) {
 			String name = tag.getString("CustomName");
-			if (name != null && !name.isEmpty())
-			{
+			if (name != null && !name.isEmpty()) {
 				infoList.add("Name: " + name);
 			}
 		}
-		if (advancedTooltips && tag.getBoolean("PersistenceRequired"))
+		if (tooltipFlag.isAdvanced() && tag.getBoolean("PersistenceRequired"))
 			infoList.add(DARK_GRAY + (ITALIC + "Persistant"));
 	}
 }

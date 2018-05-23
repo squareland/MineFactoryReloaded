@@ -1,20 +1,18 @@
 package powercrystals.minefactoryreloaded.world;
 
-import cofh.lib.world.IFeatureGenerator;
+import cofh.cofhworld.world.IFeatureGenerator;
 import com.google.common.primitives.Ints;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import powercrystals.minefactoryreloaded.MFRRegistry;
+import powercrystals.minefactoryreloaded.setup.MFRConfig;
+import powercrystals.minefactoryreloaded.setup.MFRFluids;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-
-import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.setup.MFRConfig;
-import powercrystals.minefactoryreloaded.setup.MFRFluids;
 
 public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 {
@@ -24,6 +22,10 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 	private static boolean _lakesEnabled;
 	private static boolean _regenSewage, _regenSludge, _regenTrees;
 	private static int _sludgeLakeRarity, _sewageLakeRarity;
+
+	public static MineFactoryReloadedWorldGen INSTANCE = new MineFactoryReloadedWorldGen();
+
+	private MineFactoryReloadedWorldGen() {}
 
 	public static boolean generateMegaRubberTree(World world, Random random, BlockPos pos, boolean safe)
 	{
@@ -70,7 +72,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 
 		String biomeName = b.getBiomeName();
 
-		if (_rubberTreesEnabled & (newGen | _regenTrees))
+		if (_rubberTreesEnabled && (newGen || _regenTrees))
 		{
 			if (_rubberTreeBiomeList.contains(biomeName))
 			{
@@ -92,7 +94,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 		if (!hasVillage && _lakesEnabled && world.provider.canRespawnHere())
 		{
 			int rarity = _sludgeLakeRarity;
-			if (rarity > 0 & (newGen | _regenSludge) &&
+			if (rarity > 0 && (newGen || _regenSludge) &&
 					_sludgeBiomeList.contains(biomeName) == _sludgeLakeMode &&
 					random.nextInt(rarity) == 0)
 			{
@@ -103,7 +105,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 			}
 
 			rarity = _sewageLakeRarity;
-			if (rarity > 0 & (newGen | _regenSewage) &&
+			if (rarity > 0 && (newGen || _regenSewage) &&
 					_sewageBiomeList.contains(biomeName) == _sewageLakeMode &&
 					random.nextInt(rarity) == 0)
 			{

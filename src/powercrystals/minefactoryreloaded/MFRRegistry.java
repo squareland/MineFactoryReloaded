@@ -1,24 +1,15 @@
 package powercrystals.minefactoryreloaded;
 
-import cofh.lib.util.WeightedRandomItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-
 import gnu.trove.map.hash.TObjectIntHashMap;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.WeightedRandom;
-
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizer;
 import powercrystals.minefactoryreloaded.api.IFactoryFruit;
@@ -33,7 +24,16 @@ import powercrystals.minefactoryreloaded.api.INeedleAmmo;
 import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class MFRRegistry {
 
@@ -164,7 +164,7 @@ public abstract class MFRRegistry {
 		return _slaughterhouseBlacklist;
 	}
 
-	public static void registerSludgeDrop(int weight, ItemStack drop) {
+	public static void registerSludgeDrop(int weight, @Nonnull ItemStack drop) {
 
 		_sludgeDrops.add(new WeightedRandomItemStack(drop.copy(), weight));
 	}
@@ -246,7 +246,7 @@ public abstract class MFRRegistry {
 		return _redNetLogicCircuits;
 	}
 
-	public static void registerLaserOre(int weight, ItemStack ore) {
+	public static void registerLaserOre(int weight, @Nonnull ItemStack ore) {
 
 		for (WeightedRandom.Item item : _laserOres)
 			if (UtilInventory.stacksEqual(((WeightedRandomItemStack) item).getStack(), ore)) {
@@ -342,18 +342,18 @@ public abstract class MFRRegistry {
 		return _conveyerBlacklist;
 	}
 
-	public static void addLaserPreferredOre(int color, ItemStack ore) {
+	public static void addLaserPreferredOre(int color, @Nonnull ItemStack ore) {
 
 		if (color < 0 || 16 <= color) return;
 
 		List<ItemStack> oresForColor = _laserPreferredOres.get(color);
 
 		if (oresForColor == null) {
-			List<ItemStack> oresList = new ArrayList<ItemStack>();
+			NonNullList<ItemStack> oresList = NonNullList.create();
 			oresList.add(ore);
 			_laserPreferredOres.put(color, oresList);
 		} else {
-			for (ItemStack registeredOre : oresForColor) {
+			for (@Nonnull ItemStack registeredOre : oresForColor) {
 				if (UtilInventory.stacksEqual(registeredOre, ore)) {
 					return;
 				}
@@ -426,7 +426,7 @@ public abstract class MFRRegistry {
 		if (block == null) {
 			id = remapName(id);
 			if (id != null)
-				block = GameRegistry.findBlock("MineFactoryReloaded", id);
+				block = MFRUtil.findBlock(MineFactoryReloadedCore.modId, id);
 		}
 
 		return block;
@@ -438,41 +438,29 @@ public abstract class MFRRegistry {
 		if (item == null) {
 			id = remapName(id);
 			if (id != null)
-				item = GameRegistry.findItem("MineFactoryReloaded", id);
+				item = MFRUtil.findItem(MineFactoryReloadedCore.modId, id);
 		}
 		return item;
 	}
 
 	public static void registerBlock(Block block, ItemBlock itemBlock) {
 
+		//TODO this should get refactored into block registry event
 		String name = block.getRegistryName().getResourcePath();
 		blocks.put(name, block);
 
-		GameRegistry.register(block);
+		ForgeRegistries.BLOCKS.register(block);
 		if (itemBlock != null) {
-			GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName()));
+			ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(block.getRegistryName()));
 			items.put(name, Item.getItemFromBlock(block));
 		}
 	}
 	
-	@Deprecated
-	static void registerBlock(Block block, Class<? extends ItemBlock> item, Object... args) {
-
-		String name = block.getUnlocalizedName();
-		blocks.put(name, block);
-
-		name = remapName(name);
-
-		block.setRegistryName(MineFactoryReloadedCore.modId, name);
-		GameRegistry.registerBlock(block, item, MineFactoryReloadedCore.modId + ":" + name, args);
-		if (item != null)
-			items.put(block.getUnlocalizedName(), Item.getItemFromBlock(block));
-	}
-
 	public static void registerItem(Item item) {
 
+		//TODO this should get refactored into item registry event
 		items.put(item.getRegistryName().getResourcePath(), item);
 
-		GameRegistry.register(item);
+		ForgeRegistries.ITEMS.register(item);
 	}
 }

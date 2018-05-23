@@ -1,18 +1,19 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import net.minecraftforge.fluids.UniversalBucket;
-import net.minecraftforge.fml.common.IFuelHandler;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fml.common.IFuelHandler;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
+
+import javax.annotation.Nonnull;
 
 public class MineFactoryReloadedFuelHandler implements IFuelHandler
 {
 	@Override
-	public int getBurnTime(ItemStack fuel)
+	public int getBurnTime(@Nonnull ItemStack fuel)
 	{
-		if (fuel == null)
+		if (fuel.isEmpty())
 			return 0;
 		Item item = fuel.getItem();
 		if (item.equals(MFRThings.rubberWoodItem))

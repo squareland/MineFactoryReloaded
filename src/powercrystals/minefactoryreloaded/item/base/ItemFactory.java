@@ -1,17 +1,15 @@
 package powercrystals.minefactoryreloaded.item.base;
 
-import cofh.core.util.core.IInitializer;
 import cofh.core.render.IModelRegister;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-
+import cofh.core.util.core.IInitializer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
@@ -19,7 +17,11 @@ import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-public class ItemFactory extends Item implements IInitializer, IModelRegister{
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
+public class ItemFactory extends Item implements IInitializer, IModelRegister {
 
 	protected String modelName;
 	protected String variant;
@@ -31,33 +33,21 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister{
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 	}
 
-	public void getSubItems(Item item, List<ItemStack> subTypes) {
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		subTypes.add(new ItemStack(item, 1, 0));
-	}
-
-	public void addInfo(ItemStack stack, EntityPlayer player, List<String> infoList, boolean advancedTooltips) {
-
+		super.addInformation(stack, world, tooltip, tooltipFlag);
 		String str = "tip.info" + getUnlocalizedName(stack).substring(4);
 		str = MFRUtil.localize(str, true, null);
 		if (str != null)
-			infoList.add(str);
+			tooltip.add(str);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List infoList, boolean advancedTooltips) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-		super.addInformation(stack, player, infoList, advancedTooltips);
-		addInfo(stack, player, infoList, advancedTooltips);
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void getSubItems(Item item, CreativeTabs creativeTab, List subTypes) {
-
-		getSubItems(item, subTypes);
+		items.add(new ItemStack(this, 1, 0));
 	}
 
 	@Override
@@ -70,22 +60,15 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister{
 		return b.toString();
 	}
 
-	@Override
-	public boolean preInit() {
+	@Override public boolean preInit() {
 
-		MFRRegistry.registerItem(this);
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean initialize() {
 
-		return true;
-	}
-
-	@Override
-	public boolean postInit() {
-
+		MFRRegistry.registerItem(this);
 		return true;
 	}
 

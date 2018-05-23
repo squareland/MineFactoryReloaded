@@ -1,65 +1,47 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
-import cofh.lib.inventory.IInventoryManager;
-import cofh.lib.inventory.InventoryManager;
-
-import java.util.Map.Entry;
-
+import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 
-public class BlockRailCargoPickup extends BlockFactoryRail
-{
-	public BlockRailCargoPickup()
-	{
+import javax.annotation.Nonnull;
+
+public class BlockRailCargoPickup extends BlockFactoryRail {
+
+	public BlockRailCargoPickup() {
+
 		super(true, false);
 		setUnlocalizedName("mfr.rail.cargo.pickup");
 		setRegistryName(MineFactoryReloadedCore.modId, "rail_cargo_pickup");
 	}
 
 	@Override
-	public void onMinecartPass(World world, EntityMinecart entity, BlockPos pos)
-	{
+	public void onMinecartPass(World world, EntityMinecart entity, BlockPos pos) {
+
 		if (world.isRemote || !(entity instanceof IInventory))
 			return;
 
-		IInventoryManager minecart = InventoryManager.create(entity, null);
+		IItemHandler cartInventory = entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		for (Entry<EnumFacing, IInventory> inventory : UtilInventory.findChests(world, pos).entrySet())
-		{
-			IInventoryManager chest = InventoryManager.create(inventory.getValue(), inventory.getKey().getOpposite()); 
-			for (Entry<Integer, ItemStack> contents : chest.getContents().entrySet())
-			{
-				if (contents.getValue() == null || !chest.canRemoveItem(contents.getValue(), contents.getKey()))
-				{
+		for (IItemHandler chest : UtilInventory.findChests(world, pos)) {
+			for (int slot = 0; slot < chest.getSlots(); slot++) {
+				ItemStack slotStack = chest.getStackInSlot(slot);
+				if (chest.getStackInSlot(slot).isEmpty() || chest.extractItem(slot, slotStack.getCount(), true).isEmpty()) {
 					continue;
 				}
-				ItemStack stackToAdd = contents.getValue().copy();
 
-				ItemStack remaining = minecart.addItem(stackToAdd);
+				@Nonnull ItemStack remaining = InventoryHelper.insertStackIntoInventory(cartInventory, slotStack.copy(), false);
 
-				if (remaining != null)
-				{
-					stackToAdd.stackSize -= remaining.stackSize;
-					if (stackToAdd.stackSize > 0)
-					{
-						chest.removeItem(stackToAdd.stackSize, stackToAdd);
-					}
-				}
-				else
-				{
-					chest.removeItem(stackToAdd.stackSize, stackToAdd);
-					break;
-				}
+				chest.extractItem(slot, slotStack.getCount() - remaining.getCount(), false);
 			}
 		}
 	}

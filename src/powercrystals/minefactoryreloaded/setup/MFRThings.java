@@ -7,26 +7,76 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.common.registry.ExistingSubstitutionException;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.block.*;
-import powercrystals.minefactoryreloaded.block.decor.*;
+import powercrystals.minefactoryreloaded.block.BlockDetCord;
+import powercrystals.minefactoryreloaded.block.BlockFactoryMachine;
+import powercrystals.minefactoryreloaded.block.BlockFakeLaser;
+import powercrystals.minefactoryreloaded.block.BlockFertileSoil;
+import powercrystals.minefactoryreloaded.block.BlockRedNetLogic;
+import powercrystals.minefactoryreloaded.block.BlockRedNetPanel;
+import powercrystals.minefactoryreloaded.block.BlockRubberLeaves;
+import powercrystals.minefactoryreloaded.block.BlockRubberSapling;
+import powercrystals.minefactoryreloaded.block.BlockRubberWood;
+import powercrystals.minefactoryreloaded.block.BlockVineScaffold;
+import powercrystals.minefactoryreloaded.block.decor.BlockDecorativeBricks;
+import powercrystals.minefactoryreloaded.block.decor.BlockDecorativeStone;
+import powercrystals.minefactoryreloaded.block.decor.BlockFactoryDecoration;
+import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlass;
+import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlassPane;
+import powercrystals.minefactoryreloaded.block.decor.BlockFactoryPlastic;
+import powercrystals.minefactoryreloaded.block.decor.BlockPinkSlime;
 import powercrystals.minefactoryreloaded.block.fluid.BlockTank;
-import powercrystals.minefactoryreloaded.block.transport.*;
+import powercrystals.minefactoryreloaded.block.transport.BlockConveyor;
+import powercrystals.minefactoryreloaded.block.transport.BlockFactoryRoad;
+import powercrystals.minefactoryreloaded.block.transport.BlockPlasticPipe;
+import powercrystals.minefactoryreloaded.block.transport.BlockRailCargoDropoff;
+import powercrystals.minefactoryreloaded.block.transport.BlockRailCargoPickup;
+import powercrystals.minefactoryreloaded.block.transport.BlockRailPassengerDropoff;
+import powercrystals.minefactoryreloaded.block.transport.BlockRailPassengerPickup;
+import powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable;
 import powercrystals.minefactoryreloaded.entity.DebugTracker;
 import powercrystals.minefactoryreloaded.entity.EntityPinkSlime;
-import powercrystals.minefactoryreloaded.item.*;
-import powercrystals.minefactoryreloaded.item.base.*;
+import powercrystals.minefactoryreloaded.item.ItemCeramicDye;
+import powercrystals.minefactoryreloaded.item.ItemFactoryBag;
+import powercrystals.minefactoryreloaded.item.ItemFactoryCup;
+import powercrystals.minefactoryreloaded.item.ItemLogicUpgradeCard;
+import powercrystals.minefactoryreloaded.item.ItemMilkBottle;
+import powercrystals.minefactoryreloaded.item.ItemPinkSlime;
+import powercrystals.minefactoryreloaded.item.ItemPlasticBoots;
+import powercrystals.minefactoryreloaded.item.ItemPortaSpawner;
+import powercrystals.minefactoryreloaded.item.ItemSafariNet;
+import powercrystals.minefactoryreloaded.item.ItemUpgrade;
+import powercrystals.minefactoryreloaded.item.base.ItemFactory;
+import powercrystals.minefactoryreloaded.item.base.ItemFactoryArmor;
+import powercrystals.minefactoryreloaded.item.base.ItemFactoryColored;
+import powercrystals.minefactoryreloaded.item.base.ItemFactoryFood;
+import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.item.gun.ItemNeedleGun;
 import powercrystals.minefactoryreloaded.item.gun.ItemPotatoCannon;
 import powercrystals.minefactoryreloaded.item.gun.ItemRocketLauncher;
 import powercrystals.minefactoryreloaded.item.gun.ItemSafariNetLauncher;
-import powercrystals.minefactoryreloaded.item.gun.ammo.*;
-import powercrystals.minefactoryreloaded.item.syringe.*;
-import powercrystals.minefactoryreloaded.item.tool.*;
+import powercrystals.minefactoryreloaded.item.gun.ammo.ItemNeedlegunAmmoAnvil;
+import powercrystals.minefactoryreloaded.item.gun.ammo.ItemNeedlegunAmmoBlock;
+import powercrystals.minefactoryreloaded.item.gun.ammo.ItemNeedlegunAmmoFire;
+import powercrystals.minefactoryreloaded.item.gun.ammo.ItemNeedlegunAmmoStandard;
+import powercrystals.minefactoryreloaded.item.gun.ammo.ItemRocket;
+import powercrystals.minefactoryreloaded.item.syringe.ItemSyringeCure;
+import powercrystals.minefactoryreloaded.item.syringe.ItemSyringeGrowth;
+import powercrystals.minefactoryreloaded.item.syringe.ItemSyringeHealth;
+import powercrystals.minefactoryreloaded.item.syringe.ItemSyringeLiquid;
+import powercrystals.minefactoryreloaded.item.syringe.ItemSyringeSlime;
+import powercrystals.minefactoryreloaded.item.syringe.ItemSyringeZombie;
+import powercrystals.minefactoryreloaded.item.tool.ItemFactoryHammer;
+import powercrystals.minefactoryreloaded.item.tool.ItemFishingRod;
+import powercrystals.minefactoryreloaded.item.tool.ItemRedNetMemoryCard;
+import powercrystals.minefactoryreloaded.item.tool.ItemRedNetMeter;
+import powercrystals.minefactoryreloaded.item.tool.ItemRuler;
+import powercrystals.minefactoryreloaded.item.tool.ItemSpyglass;
+import powercrystals.minefactoryreloaded.item.tool.ItemStraw;
+import powercrystals.minefactoryreloaded.item.tool.ItemXpExtractor;
 
 import java.util.ArrayList;
 
@@ -322,15 +372,15 @@ public class MFRThings {
 		rocketItem = new ItemRocket();
 
 		EntityRegistry
-				.registerModEntity(EntityPinkSlime.class, "mfrEntityPinkSlime", 1, MineFactoryReloadedCore.instance(), 160, 5,
+				.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "pink_slime"), EntityPinkSlime.class, "mfrEntityPinkSlime", 1, MineFactoryReloadedCore.instance(), 160, 5,
 						true);
 		LootTableList.register(EntityPinkSlime.PINK_SLIME);
 
 		EntityRegistry
-				.registerModEntity(DebugTracker.class, "DebugTracker", 99, MineFactoryReloadedCore.instance(), 250, 10, true);
+				.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "debug_tracker"), DebugTracker.class, "DebugTracker", 99, MineFactoryReloadedCore.instance(), 250, 10, true);
 
 		for (IInitializer init : initList) {
-			init.preInit();
+			init.initialize();
 		}
 
 		machineBaseItem = Item.getItemFromBlock(machineBlock);
@@ -348,13 +398,6 @@ public class MFRThings {
 
 		for (IInitializer init : initList) {
 			init.initialize();
-		}
-	}
-
-	public static void postInit() {
-
-		for (IInitializer init : initList) {
-			init.postInit();
 		}
 	}
 }
