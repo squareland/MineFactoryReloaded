@@ -154,7 +154,6 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 		ITextComponent itextcomponent = new TextComponentString(text);
 		text = ITextComponent.Serializer.componentToJson(itextcomponent);
 		 return new NBTTagString(text);
-
 	}
 
 	public ItemBlockRedNetLogic(net.minecraft.block.Block id) {

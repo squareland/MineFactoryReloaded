@@ -90,7 +90,7 @@ public class PlantableStandard implements IFactoryPlantable
 		Block groundId = world.getBlockState(pos.down()).getBlock();
 		return (_block.canPlaceBlockAt(world, pos) && _block.canPlaceBlockOnSide(world, pos, EnumFacing.DOWN)) ||
 				(_block instanceof IPlantable && groundId != null &&
-				groundId.canSustainPlant(world.getBlockState(pos), world, pos, EnumFacing.UP, (IPlantable)_block));
+				groundId.canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, (IPlantable)_block));
 	}
 
 	@Override

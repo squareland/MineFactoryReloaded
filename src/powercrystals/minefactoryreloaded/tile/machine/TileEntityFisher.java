@@ -184,6 +184,7 @@ public class TileEntityFisher extends TileEntityFactoryPowered {
 	protected void onFactoryInventoryChanged() {
 
 		super.onFactoryInventoryChanged();
+
 		boost = 0;
 		_needItem = false;
 		if ((world == null || !world.isRemote) && !_inventory.get(0).isEmpty()) {

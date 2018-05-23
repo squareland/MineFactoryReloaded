@@ -1629,6 +1629,7 @@ public class Vanilla {
 	}
 
 	/* CREATING ItemStacks */
+
 	public static ItemStack stack(Item t) {
 
 		return new ItemStack(t);

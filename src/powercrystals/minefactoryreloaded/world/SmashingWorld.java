@@ -87,4 +87,5 @@ public class SmashingWorld implements IBlockAccess {
 		}
 		return drops;
 	}
+
 }

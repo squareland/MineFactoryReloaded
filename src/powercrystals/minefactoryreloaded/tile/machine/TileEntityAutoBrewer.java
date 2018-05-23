@@ -145,10 +145,10 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 				continue;
 			}
 
-			for (int col = 0; col < 3; col++) {
+			for (int col = 3; col-- > 0; ) {
 				final int slot = getResourceSlot(row, col);
 				ItemStack ingredient = _inventory.get(slot);
-				if (spareResources[row] <= 0 && !ingredientsEqual(_inventory.get(slot), ingredient)) {
+				if (spareResources[row] <= 0 && !ingredientsEqual(template, ingredient)) {
 					continue;
 				}
 
@@ -173,6 +173,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 		return true;
 	}
 
+	// FIXME: validate all of this logic against new stack logic
 	private void consumeIngredient(ItemStack template, int row, int column, int slot) {
 
 		@Nonnull ItemStack ingredient = _inventory.get(slot);
@@ -207,6 +208,39 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			spareResources[row]--;
 		}
 	}
+/*
+	private void consumeIngredient(ItemStack template, int row, int col, int slot) {
+
+		ItemStack ingredient = _inventory[slot];
+		if (spareResources[row] == 0) {
+			--ingredient.stackSize;
+
+			if (template.getItem().hasContainerItem(ingredient)) {
+				ItemStack r = template.getItem().getContainerItem(ingredient);
+				if (r != null && (r.stackSize <= 0 || (r.isItemStackDamageable() && r.getItemDamage() > r.getMaxDamage())))
+					r = null;
+				if (ingredient.stackSize <= 0)
+					_inventory[slot] = ingredient = r;
+				else {
+					if (col < 2 && _inventory[slot + 1] == null) {
+						_inventory[slot + 1] = r;
+					} else if (col < 1 && _inventory[slot + 2] == null) {
+						_inventory[slot + 2] = r;
+					} else if (_inventory[getProcessSlot(6)] == null) {
+						_inventory[getProcessSlot(6)] = r;
+					} else {
+						UtilInventory.dropStack(this, r);
+					}
+				}
+			}
+			if (ingredient != null && ingredient.stackSize <= 0)
+				_inventory[slot] = null;
+
+			spareResources[row]++;
+		} else {
+			spareResources[row]--;
+		}
+	}//*/
 
 	private boolean canBrew(int row) {
 

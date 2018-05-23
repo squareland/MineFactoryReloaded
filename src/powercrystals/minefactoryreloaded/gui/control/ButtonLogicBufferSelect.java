@@ -4,8 +4,8 @@ import cofh.core.gui.element.ElementButtonOption;
 import net.minecraft.util.EnumFacing;
 import powercrystals.minefactoryreloaded.gui.client.GuiRedNetLogic;
 
-public class ButtonLogicBufferSelect extends ElementButtonOption
-{
+public class ButtonLogicBufferSelect extends ElementButtonOption {
+
 	private LogicButtonType _buttonType;
 	private GuiRedNetLogic _logicScreen;
 	private int _pinIndex;

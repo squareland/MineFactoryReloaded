@@ -124,7 +124,8 @@ public class TileEntityGrinder extends TileEntityFactoryPowered {
 
 		entityList:
 		for (EntityLivingBase e : entities) {
-			if (e instanceof EntityAgeable && ((EntityAgeable) e).getGrowingAge() < 0 || e.isEntityInvulnerable(_damageSource) || e.getHealth() <= 0) {
+			if (e instanceof EntityAgeable && ((EntityAgeable) e).getGrowingAge() < 0 || e.isEntityInvulnerable(_damageSource) ||
+					e.getHealth() <= 0) {
 				continue;
 			}
 

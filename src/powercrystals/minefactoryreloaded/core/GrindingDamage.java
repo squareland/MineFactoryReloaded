@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.core;
 
 import com.google.common.collect.Maps;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
@@ -11,6 +12,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
+import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.Random;
@@ -71,5 +73,12 @@ public class GrindingDamage extends DamageSource {
 		if (entityliving1 != null && I18n.canTranslate(s1))
 			return new TextComponentTranslation(s1, entity.getName(), entityliving1.getName());
 		return new TextComponentTranslation(s, entity.getName());
+	}
+
+	@Nullable
+	@Override
+	public Entity getTrueSource() {
+
+		return fakePlayerRef != null ? fakePlayerRef.get() : null;
 	}
 }
