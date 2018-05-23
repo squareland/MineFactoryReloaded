@@ -438,15 +438,14 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 			return RedNetConnectionType.ForcedDecorativeSingle;
 	}
 
-	@Override
-	public boolean initialize()
-	{
-		return true;
+	@Override public boolean preInit() {
+
+		return false;
 	}
 
 	@Override
-	public boolean register() {
-
+	public boolean initialize()
+	{
 		return true;
 	}
 

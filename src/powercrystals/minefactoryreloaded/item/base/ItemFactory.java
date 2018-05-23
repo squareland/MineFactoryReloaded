@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemFactory extends Item implements IInitializer, IModelRegister{
+public class ItemFactory extends Item implements IInitializer, IModelRegister {
 
 	protected String modelName;
 	protected String variant;
@@ -60,16 +60,15 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister{
 		return b.toString();
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerItem(this);
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
 		return true;
 	}
 

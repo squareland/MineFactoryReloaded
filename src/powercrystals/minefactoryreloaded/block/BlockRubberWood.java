@@ -132,17 +132,16 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 		return false;
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlock(this));
 		Blocks.FIRE.setFireInfo(this, 50, 15);
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
 		return true;
 	}
 

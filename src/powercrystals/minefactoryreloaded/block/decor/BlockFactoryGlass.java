@@ -220,16 +220,15 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 		return FactoryGlassRenderer.INSTANCE;
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, MFRDyeColor.UNLOC_NAMES));
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
 		return true;
 	}
 

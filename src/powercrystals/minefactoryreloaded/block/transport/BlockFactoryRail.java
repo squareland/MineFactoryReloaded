@@ -146,16 +146,15 @@ public class BlockFactoryRail extends BlockRailBase implements IInitializer, IMo
 		return shapeProperty;
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlock(this));
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-		
 		return true;
 	}
 

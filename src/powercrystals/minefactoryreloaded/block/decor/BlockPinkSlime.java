@@ -84,16 +84,15 @@ public class BlockPinkSlime extends BlockBreakable implements IInitializer, IMod
 		super.onEntityWalk(worldIn, pos, entityIn);
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this));
-		return true;
-	}
-	
-	@Override
-	public boolean register() {
-		
 		return true;
 	}
 

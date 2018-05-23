@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.core;
 
-import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
 import cofh.core.util.helpers.StringHelper;
 import net.minecraft.block.Block;
@@ -36,7 +35,6 @@ import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -270,12 +268,13 @@ public class MFRUtil {
 
 	private static boolean canHandleBCWrench(EntityPlayer p, EnumHand hand, @Nonnull ItemStack wrench, RayTraceResult rayTrace) {
 
-		return wrench.getItem() instanceof IToolWrench && ((IToolWrench) wrench.getItem()).canWrench(p, hand, wrench, rayTrace);
+		//return wrench.getItem() instanceof IToolWrench && ((IToolWrench) wrench.getItem()).canWrench(p, hand, wrench, rayTrace);
+		return false;
 	}
 
 	private static void bcWrenchUsed(EntityPlayer p, EnumHand hand, @Nonnull ItemStack wrench, RayTraceResult rayTrace) {
 
-		if (wrench.getItem() instanceof IToolWrench) ((IToolWrench) wrench.getItem()).wrenchUsed(p, hand, wrench, rayTrace);
+		//if (wrench.getItem() instanceof IToolWrench) ((IToolWrench) wrench.getItem()).wrenchUsed(p, hand, wrench, rayTrace);
 	}
 
 	public static boolean isHolding(EntityPlayer player, Item item, EnumHand hand) {

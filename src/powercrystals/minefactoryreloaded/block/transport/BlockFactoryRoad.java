@@ -146,16 +146,15 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 		return true;
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactoryRoad(this));
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-		
 		return true;
 	}
 

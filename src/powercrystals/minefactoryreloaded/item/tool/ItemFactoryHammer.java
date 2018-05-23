@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
-import buildcraft.api.tools.IToolWrench;
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
 import cofh.core.util.helpers.BlockHelper;
@@ -13,11 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -40,7 +35,9 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = Compats.ModIds.BUILDCRAFT)
-public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer, IToolWrench {
+public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer
+//		, IToolWrench
+{
 
 	public ItemFactoryHammer() {
 
@@ -114,14 +111,14 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	}
 
 	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
-	@Override
+	//@Override
 	public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 		return true;
 	}
 
 	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
-	@Override
+	//@Override
 	public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 	}

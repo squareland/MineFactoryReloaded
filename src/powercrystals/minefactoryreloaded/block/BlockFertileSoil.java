@@ -246,16 +246,15 @@ public class BlockFertileSoil extends Block implements IGrowable, IInitializer, 
 		changeMoisture(world, pos, state, 1 + (int) (rand.nextFloat() * 1.5f));
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, 3));
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
 		return true;
 	}
 

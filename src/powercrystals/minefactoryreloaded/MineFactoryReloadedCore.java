@@ -21,14 +21,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.common.event.FMLModIdMappingEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -40,14 +34,7 @@ import powercrystals.minefactoryreloaded.net.CommonProxy;
 import powercrystals.minefactoryreloaded.net.EntityHandler;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.setup.BaseMod;
-import powercrystals.minefactoryreloaded.setup.BehaviorDispenseSafariNet;
-import powercrystals.minefactoryreloaded.setup.MFRConfig;
-import powercrystals.minefactoryreloaded.setup.MFRFluids;
-import powercrystals.minefactoryreloaded.setup.MFRLoot;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
-import powercrystals.minefactoryreloaded.setup.MineFactoryReloadedFuelHandler;
-import powercrystals.minefactoryreloaded.setup.recipe.EnderIO;
+import powercrystals.minefactoryreloaded.setup.*;
 import powercrystals.minefactoryreloaded.setup.recipe.Vanilla;
 import powercrystals.minefactoryreloaded.setup.village.VillageCreationHandler;
 import powercrystals.minefactoryreloaded.setup.village.Zoologist;
@@ -131,8 +118,8 @@ public class MineFactoryReloadedCore extends BaseMod {
 			recipeSets.add(new ThermalExpansion());
 */
 
-		if (MFRConfig.enderioRecipes.getBoolean(false))
-			recipeSets.add(new EnderIO());
+		//if (MFRConfig.enderioRecipes.getBoolean(false))
+		//	recipeSets.add(new EnderIO());
 
 		Vanilla.registerOredict();
 

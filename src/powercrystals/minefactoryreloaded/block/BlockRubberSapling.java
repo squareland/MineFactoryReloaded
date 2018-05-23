@@ -120,17 +120,16 @@ public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection
 		return new BlockStateContainer(this, TYPE, STAGE);
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactoryTree(this));
 		Blocks.FIRE.setFireInfo(this, 30, 20);
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
 		return true;
 	}
 

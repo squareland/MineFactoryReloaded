@@ -171,6 +171,11 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 		}
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
@@ -185,11 +190,5 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 		final ModelResourceLocation fakeLaserLocation = new ModelResourceLocation(fakeLaserBlock.getRegistryName(), "normal");
 		ModelLoader.setCustomStateMapper(fakeLaserBlock, new StateMap.Builder().ignore(BlockFakeLaser.FACING).build());
 		ModelRegistryHelper.register(fakeLaserLocation, ModelHelper.DUMMY_MODEL);
-	}
-
-	@Override
-	public boolean register() {
-
-		return true;
 	}
 }

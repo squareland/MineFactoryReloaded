@@ -248,17 +248,16 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 		return ret;
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		Blocks.FIRE.setFireInfo(this, 80, 25);
 		MFRRegistry.registerBlock(this, new ItemBlockFactoryLeaves(this));
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
 		return true;
 	}
 

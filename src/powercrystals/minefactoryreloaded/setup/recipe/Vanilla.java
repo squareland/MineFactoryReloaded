@@ -1,6 +1,8 @@
 package powercrystals.minefactoryreloaded.setup.recipe;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import powercrystals.minefactoryreloaded.block.ItemBlockRedNetLogic;
@@ -16,8 +18,7 @@ import static cofh.core.util.helpers.ItemHelper.*;
 import static cofh.core.util.helpers.RecipeHelper.*;
 import static net.minecraft.init.Blocks.*;
 import static net.minecraft.init.Items.*;
-import static net.minecraftforge.oredict.OreDictionary.getOres;
-import static net.minecraftforge.oredict.OreDictionary.registerOre;
+import static net.minecraftforge.oredict.OreDictionary.*;
 import static powercrystals.minefactoryreloaded.core.UtilRecipe.*;
 import static powercrystals.minefactoryreloaded.setup.MFRConfig.*;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
@@ -1626,4 +1627,56 @@ public class Vanilla {
 
 		addShapelessRecipe(ItemBlockRedNetLogic.manual, plasticSheetItem, "dustRedstone", BOOK);
 	}
+
+	/* CREATING ItemStacks */
+	public static ItemStack stack(Item t) {
+
+		return new ItemStack(t);
+	}
+
+	public static ItemStack stack(Item t, int s) {
+
+		return new ItemStack(t, s);
+	}
+
+	public static ItemStack stack(Item t, int s, int m) {
+
+		return new ItemStack(t, s, m);
+	}
+
+	public static ItemStack stack(Block t) {
+
+		return new ItemStack(t);
+	}
+
+	public static ItemStack stack(Block t, int s) {
+
+		return new ItemStack(t, s);
+	}
+
+	public static ItemStack stack(Block t, int s, int m) {
+
+		return new ItemStack(t, s, m);
+	}
+
+	public static ItemStack stack2(Item t) {
+
+		return new ItemStack(t, 1, WILDCARD_VALUE);
+	}
+
+	public static ItemStack stack2(Item t, int s) {
+
+		return new ItemStack(t, s, WILDCARD_VALUE);
+	}
+
+	public static ItemStack stack2(Block t) {
+
+		return new ItemStack(t, 1, WILDCARD_VALUE);
+	}
+
+	public static ItemStack stack2(Block t, int s) {
+
+		return new ItemStack(t, s, WILDCARD_VALUE);
+	}
+
 }

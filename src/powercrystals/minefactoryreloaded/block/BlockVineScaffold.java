@@ -217,16 +217,15 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 		return side == EnumFacing.UP || side == EnumFacing.DOWN;
 	}
 
+	@Override public boolean preInit() {
+
+		return false;
+	}
+
 	@Override
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockVineScaffold(this));
-		return true;
-	}
-
-	@Override
-	public boolean register() {
-
 		return true;
 	}
 
