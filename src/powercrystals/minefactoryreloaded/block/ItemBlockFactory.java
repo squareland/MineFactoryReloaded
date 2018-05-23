@@ -79,6 +79,5 @@ public class ItemBlockFactory extends ItemBlock
 				items.add(new ItemStack(this, 1, i));
 			}
 		}
-		super.getSubItems(tab, items);
 	}
 }
