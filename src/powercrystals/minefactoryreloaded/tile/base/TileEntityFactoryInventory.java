@@ -417,6 +417,9 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 	public void readFromNBT(NBTTagCompound tag) {
 
 		super.readFromNBT(tag);
+
+		isActive = tag.getBoolean("a");
+
 		_inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
 		NBTTagList nbttaglist;
 		if (tag.hasKey("Items")) {
@@ -538,8 +541,6 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			if (tanks.tagCount() > 0)
 				tag.setTag("Tanks", tanks);
 		}
-
-		isActive = tag.getBoolean("a");
 	}
 
 	@Nonnull

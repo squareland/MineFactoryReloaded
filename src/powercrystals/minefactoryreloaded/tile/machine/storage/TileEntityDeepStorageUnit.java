@@ -19,6 +19,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryTickable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileEntityDeepStorageUnit extends TileEntityFactoryTickable implements IDeepStorageUnit {
 
@@ -213,7 +214,7 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryTickable impleme
 	 * Should only allow matching items to be inserted in the "in" slots. Nothing goes in the "out" slot.
 	 */
 	@Override
-	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
+	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nullable EnumFacing side) {
 
 		if (_passingItem)
 			return false;
@@ -250,9 +251,9 @@ public class TileEntityDeepStorageUnit extends TileEntityFactoryTickable impleme
 		_inventory.set(2, o);
 
 		if (!_storedItem.isEmpty()) {
+			tag.setBoolean("locked", isActive());
 			tag.setTag("storedStack", _storedItem.writeToNBT(new NBTTagCompound()));
 			tag.setInteger("storedQuantity", _storedQuantity + storedAdd);
-			tag.setBoolean("locked", isActive());
 		}
 	}
 

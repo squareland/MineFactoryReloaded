@@ -55,7 +55,7 @@ public abstract class TileEntityFactoryTickable extends TileEntityFactoryInvento
 				!world.isRemote && lastActive < world.getTotalWorldTime()) {
 			lastActive = world.getTotalWorldTime() + _activeSyncTimeout;
 			prevActive = this.isActive();
-			//MFRUtil.notifyBlockUpdate(world, pos);
+			MFRUtil.notifyBlockUpdate(world, pos);
 		}
 
 		super.setIsActive(isActive);
