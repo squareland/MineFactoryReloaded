@@ -47,7 +47,9 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister {
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-		items.add(new ItemStack(this, 1, 0));
+		if (this.isInCreativeTab(tab)) {
+			items.add(new ItemStack(this, 1, 0));
+		}
 	}
 
 	@Override
