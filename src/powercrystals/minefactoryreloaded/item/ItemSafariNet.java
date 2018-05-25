@@ -17,12 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
@@ -145,6 +140,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		if (world.isRemote) {
 			return null;
 		}
+		final int type = ((ItemSafariNet) itemstack.getItem()).type;
 
 		Entity spawnedCreature;
 		Block block = world.getBlockState(pos).getBlock();
@@ -162,14 +158,18 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 
 		if (spawnedCreature != null) {
+			if (itemstack.hasDisplayName()) {
+				spawnedCreature.setCustomNameTag(itemstack.getDisplayName());
+			}
+
+			if (spawnedCreature.hasCustomName()) {
+				if (2 == (type & 2))
+					spawnedCreature.setAlwaysRenderNameTag(true);
+			}
+
 			if ((spawnedCreature instanceof EntityLiving)) {
-				int type = ((ItemSafariNet) itemstack.getItem()).type;
 				if (1 == (type & 1)) {
 					((EntityLiving) spawnedCreature).enablePersistence();
-				}
-				if (spawnedCreature.hasCustomName()) {
-					if (2 == (type & 2))
-						spawnedCreature.setAlwaysRenderNameTag(true);
 				}
 			}
 
@@ -297,12 +297,16 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				if (flag || entity.isDead) {
 					flag = false;
 					itemstack.shrink(1);
-					if (itemstack.getCount() > 0) { //TODO why is there this logic here and the one below to add to inventory when nets can't stack?
+					if (itemstack.getCount() > 0) {
 						flag = true;
 						itemstack = itemstack.copy();
 					}
 					itemstack.setCount(1);
-					itemstack.setTagCompound(c);
+					if (itemstack.hasTagCompound()) {
+						itemstack.getTagCompound().merge(c);
+					} else {
+						itemstack.setTagCompound(c);
+					}
 					if (flag && (player == null || !player.inventory.addItemStackToInventory(itemstack)))
 						UtilInventory.dropStackInAir(entity.world, entity, itemstack);
 					else if (flag) {
