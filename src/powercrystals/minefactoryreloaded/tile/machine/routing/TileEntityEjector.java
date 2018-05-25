@@ -200,7 +200,7 @@ public class TileEntityEjector extends TileEntityFactoryTickable {
 
 		_whitelist = tag.getBoolean("whitelist");
 		_matchNBT = !tag.hasKey("matchNBT") || tag.getBoolean("matchNBT");
-		_ignoreDamage = tag.getBoolean("ignoreDamage");
+		_ignoreDamage = !tag.hasKey("ignoreDamage") || tag.getBoolean("ignoreDamage");
 	}
 
 	@Override

@@ -191,17 +191,20 @@ public abstract class TileEntityFactory extends TileEntityBase
 	public void rotateDirectlyTo(int rotation) {
 
 		EnumFacing p = _forwardDirection;
-		if (rotation < EnumFacing.VALUES.length)
+		if (rotation > 0 && rotation < EnumFacing.VALUES.length) {
 			_forwardDirection = EnumFacing.VALUES[rotation];
+		} else {
+			_forwardDirection = EnumFacing.NORTH;
+		}
 
-		if (world != null && p != _forwardDirection) {
+		if (p != _forwardDirection) {
 			onRotate();
 		}
 	}
 
 	protected void onRotate() {
 
-		if (!isInvalid() && world.isBlockLoaded(pos)) {
+		if (world != null && !isInvalid() && world.isBlockLoaded(pos)) {
 			markForUpdate();
 			MFRUtil.notifyNearbyBlocks(world, pos, getBlockType());
 			MFRUtil.notifyBlockUpdate(world, pos);
@@ -313,8 +316,10 @@ public abstract class TileEntityFactory extends TileEntityBase
 	public void readFromNBT(NBTTagCompound tag) {
 
 		super.readFromNBT(tag);
-		if (tag.hasKey("rotation"))
+		if (tag.hasKey("rotation")) {
+			_forwardDirection = null;
 			rotateDirectlyTo(tag.getInteger("rotation"));
+		}
 		if (tag.hasKey("owner"))
 			_owner = tag.getString("owner");
 	}
