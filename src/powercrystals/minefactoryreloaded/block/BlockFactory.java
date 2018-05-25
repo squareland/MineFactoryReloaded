@@ -454,4 +454,5 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	public void registerModels() {
 
 	}
+
 }

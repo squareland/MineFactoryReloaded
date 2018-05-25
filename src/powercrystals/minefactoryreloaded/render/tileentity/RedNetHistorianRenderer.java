@@ -33,7 +33,7 @@ import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RedNetHistorianRenderer extends TileEntitySpecialRenderer<TileEntityRedNetHistorian>
+public class RedNetHistorianRenderer extends TileEntitySpecialRenderer<TileEntityRedNetHistorian.Client>
 		implements IItemRenderer, IBakedModel {
 
 	private static final ResourceLocation historianTex = new ResourceLocation(
@@ -62,7 +62,7 @@ public class RedNetHistorianRenderer extends TileEntitySpecialRenderer<TileEntit
 	}
 
 	@Override
-	public void render(TileEntityRedNetHistorian historian, double x, double y, double z, float partialTicks, int destroyStage,
+	public void render(TileEntityRedNetHistorian.Client historian, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 
 		TextureManager renderengine = Minecraft.getMinecraft().renderEngine;

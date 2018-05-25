@@ -21,7 +21,7 @@ public class RedNetHistorianModel extends ModelBase
 		setRotation(_main, 0F, 0F, 0F);
 	}
 	
-	public void render(TileEntityRedNetHistorian historian)
+	public void render(TileEntityRedNetHistorian.Client historian)
 	{
 		_main.render(0.0625F);
 	}
