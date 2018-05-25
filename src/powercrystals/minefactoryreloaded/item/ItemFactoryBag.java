@@ -57,7 +57,7 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 			} else if (stack.getTagCompound().hasKey("inventory")) {
 				tooltip.add(MFRUtil.localize("info.mfr.legacy", true));
 			} else if (!StringHelper.displayShiftForDetail || MFRUtil.isShiftKeyDown()) {
-				ItemHelper.addInventoryInformation(stack, tooltip);
+				ItemHelper.addAccessibleInventoryInformation(stack, tooltip, 0, Integer.MAX_VALUE);
 			} else {
 				tooltip.add(MFRUtil.shiftForInfo());
 			}
@@ -109,4 +109,5 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 
 		ModelHelper.registerModel(this, "plastic_bag");
 	}
+
 }
