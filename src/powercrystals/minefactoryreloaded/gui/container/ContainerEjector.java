@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.InventoryPlayer;
 
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityEjector;
+import powercrystals.minefactoryreloaded.tile.machine.routing.TileEntityEjector;
 
 public class ContainerEjector extends ContainerFactoryInventory
 {

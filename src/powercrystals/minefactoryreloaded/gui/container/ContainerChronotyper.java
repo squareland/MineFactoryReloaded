@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityChronotyper;
+import powercrystals.minefactoryreloaded.tile.machine.animals.TileEntityChronotyper;
 
 public class ContainerChronotyper extends ContainerFactoryPowered
 {

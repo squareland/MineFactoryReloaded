@@ -1,14 +1,13 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
-import static powercrystals.minefactoryreloaded.tile.machine.TileEntityBlockSmasher.MAX_FORTUNE;
+import static powercrystals.minefactoryreloaded.tile.machine.blocks.TileEntityBlockSmasher.MAX_FORTUNE;
 
 import net.minecraft.client.gui.GuiButton;
 
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.container.ContainerBlockSmasher;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityBlockSmasher;
+import powercrystals.minefactoryreloaded.tile.machine.blocks.TileEntityBlockSmasher;
 
 public class GuiBlockSmasher extends GuiFactoryPowered {
 

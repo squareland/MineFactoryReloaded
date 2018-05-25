@@ -5,7 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityFisher;
+import powercrystals.minefactoryreloaded.tile.machine.animals.TileEntityFisher;
 
 public class ContainerFisher extends ContainerFactoryPowered {
 

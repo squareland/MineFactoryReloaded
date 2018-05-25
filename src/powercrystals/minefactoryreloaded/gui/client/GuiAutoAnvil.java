@@ -4,8 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoAnvil;
+import powercrystals.minefactoryreloaded.tile.machine.enchantment.TileEntityAutoAnvil;
 
 public class GuiAutoAnvil extends GuiFactoryPowered
 {

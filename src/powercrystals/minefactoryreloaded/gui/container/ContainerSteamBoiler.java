@@ -4,7 +4,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntitySteamBoiler;
+import powercrystals.minefactoryreloaded.tile.machine.power.TileEntitySteamBoiler;
 
 public class ContainerSteamBoiler extends ContainerFactoryInventory
 {

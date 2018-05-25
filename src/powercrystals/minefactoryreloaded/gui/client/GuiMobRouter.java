@@ -4,8 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerMobRouter;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityMobRouter;
+import powercrystals.minefactoryreloaded.tile.machine.mobs.TileEntityMobRouter;
 
 public class GuiMobRouter extends GuiFactoryPowered
 {

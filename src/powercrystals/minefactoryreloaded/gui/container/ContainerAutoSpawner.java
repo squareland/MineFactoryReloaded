@@ -4,7 +4,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptReusableSafariNet;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoSpawner;
+import powercrystals.minefactoryreloaded.tile.machine.mobs.TileEntityAutoSpawner;
 
 public class ContainerAutoSpawner extends ContainerFactoryPowered
 {

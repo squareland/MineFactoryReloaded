@@ -8,8 +8,7 @@ import net.minecraft.inventory.Slot;
 
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptUpgrade;
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
-import powercrystals.minefactoryreloaded.item.ItemUpgrade;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityPlanter;
+import powercrystals.minefactoryreloaded.tile.machine.plants.TileEntityPlanter;
 
 public class ContainerPlanter extends ContainerUpgradeable
 {

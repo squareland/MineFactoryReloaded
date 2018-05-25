@@ -4,8 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityItemRouter;
+import powercrystals.minefactoryreloaded.tile.machine.routing.TileEntityItemRouter;
 
 public class GuiItemRouter extends GuiFactoryInventory
 {

@@ -38,7 +38,7 @@ import powercrystals.minefactoryreloaded.setup.*;
 import powercrystals.minefactoryreloaded.setup.recipe.Vanilla;
 import powercrystals.minefactoryreloaded.setup.village.VillageCreationHandler;
 import powercrystals.minefactoryreloaded.setup.village.Zoologist;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityUnifier;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityUnifier;
 import powercrystals.minefactoryreloaded.world.MineFactoryReloadedWorldGen;
 
 import java.io.IOException;

@@ -43,8 +43,8 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrillPrecharger;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityLaserDrill;
+import powercrystals.minefactoryreloaded.tile.machine.power.TileEntityLaserDrillPrecharger;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 import net.minecraft.entity.player.InventoryPlayer;
 
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptReusableSafariNet;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityMobRouter;
+import powercrystals.minefactoryreloaded.tile.machine.mobs.TileEntityMobRouter;
 
 
 public class ContainerMobRouter extends ContainerFactoryPowered

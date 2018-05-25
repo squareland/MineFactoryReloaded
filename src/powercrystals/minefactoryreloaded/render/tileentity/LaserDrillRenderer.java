@@ -4,11 +4,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.EnumFacing;
 
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityLaserDrill;
 
 @SideOnly(Side.CLIENT)
 public class LaserDrillRenderer extends TileEntitySpecialRenderer<TileEntityLaserDrill> {

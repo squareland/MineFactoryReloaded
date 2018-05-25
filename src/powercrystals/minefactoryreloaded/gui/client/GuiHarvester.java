@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.gui.client;
 import net.minecraft.client.gui.GuiButton;
 import powercrystals.minefactoryreloaded.gui.container.ContainerHarvester;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityHarvester;
+import powercrystals.minefactoryreloaded.tile.machine.plants.TileEntityHarvester;
 
 public class GuiHarvester extends GuiUpgradeable {
 

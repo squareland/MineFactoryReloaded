@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptLaserFocus;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityLaserDrill;
 
 public class ContainerLaserDrill extends ContainerFactoryInventory
 {

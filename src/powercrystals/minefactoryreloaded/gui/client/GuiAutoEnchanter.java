@@ -4,8 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerAutoEnchanter;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoEnchanter;
+import powercrystals.minefactoryreloaded.tile.machine.enchantment.TileEntityAutoEnchanter;
 
 public class GuiAutoEnchanter extends GuiFactoryPowered
 {

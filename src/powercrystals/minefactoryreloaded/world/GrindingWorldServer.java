@@ -8,7 +8,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldServer;
 import powercrystals.minefactoryreloaded.asmhooks.WorldServerProxy;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityGrinder;
+import powercrystals.minefactoryreloaded.tile.machine.mobs.TileEntityGrinder;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

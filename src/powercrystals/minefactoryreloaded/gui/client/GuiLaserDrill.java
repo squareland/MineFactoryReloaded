@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.gui.client;
 import static powercrystals.minefactoryreloaded.core.MFRUtil.*;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityLaserDrill;
 
 public class GuiLaserDrill extends GuiFactoryInventory {
 

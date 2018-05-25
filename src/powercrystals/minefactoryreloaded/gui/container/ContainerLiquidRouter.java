@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 import net.minecraft.entity.player.InventoryPlayer;
 
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityLiquidRouter;
+import powercrystals.minefactoryreloaded.tile.machine.routing.TileEntityLiquidRouter;
 
 public class ContainerLiquidRouter extends ContainerFactoryInventory {
 

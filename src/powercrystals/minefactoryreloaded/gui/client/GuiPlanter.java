@@ -5,8 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.container.ContainerUpgradeable;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityPlanter;
+import powercrystals.minefactoryreloaded.tile.machine.plants.TileEntityPlanter;
 
 public class GuiPlanter extends GuiUpgradeable {
 

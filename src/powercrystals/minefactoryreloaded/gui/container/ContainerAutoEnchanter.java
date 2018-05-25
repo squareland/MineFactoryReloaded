@@ -5,7 +5,7 @@ import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoEnchanter;
+import powercrystals.minefactoryreloaded.tile.machine.enchantment.TileEntityAutoEnchanter;
 
 public class ContainerAutoEnchanter extends ContainerFactoryPowered {
 

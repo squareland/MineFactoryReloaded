@@ -4,8 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryPowered;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
-import powercrystals.minefactoryreloaded.net.Packets;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityChronotyper;
+import powercrystals.minefactoryreloaded.tile.machine.animals.TileEntityChronotyper;
 
 public class GuiChronotyper extends GuiFactoryPowered
 {

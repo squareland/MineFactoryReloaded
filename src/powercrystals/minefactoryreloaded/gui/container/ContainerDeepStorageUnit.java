@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.gui.slot.SlotInvisible;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityDeepStorageUnit;
+import powercrystals.minefactoryreloaded.tile.machine.storage.TileEntityDeepStorageUnit;
 
 import javax.annotation.Nonnull;
 

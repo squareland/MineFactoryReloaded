@@ -31,7 +31,7 @@ import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetNoConnec
 import powercrystals.minefactoryreloaded.core.GrindingDamage;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityLaserDrill;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityLaserDrill;
 
 import java.util.Random;
 

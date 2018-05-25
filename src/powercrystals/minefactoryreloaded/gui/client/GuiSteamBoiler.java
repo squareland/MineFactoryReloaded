@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.gui.client;
 import static powercrystals.minefactoryreloaded.core.MFRUtil.work;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntitySteamBoiler;
+import powercrystals.minefactoryreloaded.tile.machine.power.TileEntitySteamBoiler;
 
 public class GuiSteamBoiler extends GuiFactoryInventory {
 

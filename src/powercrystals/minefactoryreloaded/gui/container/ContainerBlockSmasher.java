@@ -5,7 +5,7 @@ import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityBlockSmasher;
+import powercrystals.minefactoryreloaded.tile.machine.blocks.TileEntityBlockSmasher;
 
 public class ContainerBlockSmasher extends ContainerFactoryPowered {
 

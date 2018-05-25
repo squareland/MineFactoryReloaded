@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityEnchantmentRouter;
+import powercrystals.minefactoryreloaded.tile.machine.routing.TileEntityEnchantmentRouter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

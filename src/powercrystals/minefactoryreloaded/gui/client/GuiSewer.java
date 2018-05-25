@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
 import powercrystals.minefactoryreloaded.gui.container.ContainerSewer;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntitySewer;
+import powercrystals.minefactoryreloaded.tile.machine.animals.TileEntitySewer;
 
 public class GuiSewer extends GuiFactoryInventory
 {

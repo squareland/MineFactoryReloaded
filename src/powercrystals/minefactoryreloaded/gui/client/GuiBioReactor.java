@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.gui.client;
 
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.container.ContainerBioReactor;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityBioReactor;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityBioReactor;
 
 public class GuiBioReactor extends GuiFactoryInventory {
 

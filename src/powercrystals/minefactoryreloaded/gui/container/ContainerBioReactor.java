@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import net.minecraft.entity.player.InventoryPlayer;
 
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityBioReactor;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityBioReactor;
 
 public class ContainerBioReactor extends ContainerFactoryInventory {
 
