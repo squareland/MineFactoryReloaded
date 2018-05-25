@@ -59,7 +59,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 		this.multiuse = multiuse;
 		this.type = type;
-		setMaxStackSize(multiuse ? 12 : 1);
+		setMaxStackSize(!multiuse && (type & 1) == 0 ? 12 : 1);
 		MineFactoryReloadedCore.proxy.addColorRegister(this);
 	}
 
