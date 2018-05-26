@@ -118,7 +118,7 @@ public class VanillaMobProvider implements IRandomMobProvider
 			EntityBat tntMount = MFRUtil.spawnMob(EntityBat.class, world, pos);
 			tntJockey.setFuse(120);
 			tntJockey.startRiding(tntMount);
-			return tntJockey;
+			return tntMount;
 		}));
 		mobs.add(new RandomMobProvider(2, (world, pos) -> {
 			EntitySkeleton skeleton1 = MFRUtil.spawnMob(EntitySkeleton.class, world, pos);
@@ -134,20 +134,20 @@ public class VanillaMobProvider implements IRandomMobProvider
 			EntityBlaze blazeJockey = MFRUtil.spawnMob(EntityBlaze.class, world, pos);
 			EntityGhast blazeMount = MFRUtil.spawnMob(EntityGhast.class, world, pos);
 			blazeJockey.startRiding(blazeMount);
-			return blazeJockey;
+			return blazeMount;
 		}));
 		mobs.add(new RandomMobProvider(2, (world, pos) -> {
 			EntityCreeper creeperJockey = MFRUtil.spawnMob(EntityCreeper.class, world, pos);
 			EntityCaveSpider creeperMount = MFRUtil.spawnMob(EntityCaveSpider.class, world, pos);
 			creeperJockey.startRiding(creeperMount);
-			return creeperJockey;
+			return creeperMount;
 		}));
 		mobs.add(new RandomMobProvider(2, (world, pos) -> {
 			EntityTNTPrimed tntJockey = MFRUtil.spawnMob(EntityTNTPrimed.class, world, pos);
 			EntityXPOrb tntMount = prepareXPOrb(world, pos);
 			tntJockey.setFuse(120);
 			tntJockey.startRiding(tntMount);
-			return tntJockey;
+			return tntMount;
 		}));
 		mobs.add(new RandomMobProvider(1, (world, pos) -> {
 			EntityPigZombie derp = MFRUtil.spawnMob(EntityPigZombie.class, world, pos);
@@ -187,11 +187,11 @@ public class VanillaMobProvider implements IRandomMobProvider
 		}));
 		mobs.add(new RandomMobProvider(1, (world, pos) -> {
 			EntityCreeper creeperJockey = MFRUtil.spawnMob(EntityCreeper.class, world, pos);
-			EntityXPOrb creeperMount2 = prepareXPOrb(world, pos);
+			EntityXPOrb creeperMount = prepareXPOrb(world, pos);
 			creeperJockey.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20));
 			creeperJockey.onStruckByLightning(null);
-			creeperJockey.startRiding(creeperMount2);
-			return creeperJockey;
+			creeperJockey.startRiding(creeperMount);
+			return creeperMount;
 		}));
 		mobs.add(new RandomMobProvider(1, (world, pos) -> {
 			EntityEnderman direBane = MFRUtil.spawnMob(EntityEnderman.class, world, pos);
