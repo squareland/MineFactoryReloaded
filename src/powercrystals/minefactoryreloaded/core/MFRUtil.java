@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -38,6 +39,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 
 import static net.minecraft.util.text.TextFormatting.ITALIC;
 import static net.minecraft.util.text.TextFormatting.RESET;
@@ -292,16 +294,27 @@ public class MFRUtil {
 		return false;
 	}
 
-	public static <V extends Entity, T extends Class<V>> V prepareMob(T entity, World world) {
+	public static <V extends Entity, T extends Class<V>> V spawnMob(T entity, World world, Vec3d pos) {
 
 		try {
 			V e = entity.getConstructor(World.class).newInstance(world);
+			e.setPosition(pos.x, pos.y, pos.z);
+			if (e instanceof EntityLiving) {
+				((EntityLiving) e).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(pos)), null);
+			}
 			return e;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return null;
+	}
+
+	public static <V extends Entity, T extends Class<V>> BiFunction<World, Vec3d, Entity> prepareMob(T entity) {
+
+		return (world, pos) -> {
+			return spawnMob(entity, world, pos);
+		};
 	}
 
 	public static TileEntity getTile(IBlockAccess world, BlockPos pos) {

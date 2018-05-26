@@ -20,6 +20,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -31,7 +32,7 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.IMobEggHandler;
 import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
-import powercrystals.minefactoryreloaded.api.RandomMob;
+import powercrystals.minefactoryreloaded.api.RandomMobProvider;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
@@ -186,17 +187,18 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 	private static Entity spawnCreature(World world, NBTTagCompound mobTag, double x, double y, double z, EnumFacing side) {
 
+		int offsetX = side.getFrontOffsetX();
+		int offsetY = side == EnumFacing.DOWN ? -1 : 0;
+		int offsetZ = side.getFrontOffsetZ();
+
 		Entity e;
 		if (mobTag.getBoolean("hide")) {
-			List<RandomMob> mobs = new ArrayList<RandomMob>();
+			List<RandomMobProvider> mobs = new ArrayList<RandomMobProvider>();
 
 			for (IRandomMobProvider p : MFRRegistry.getRandomMobProviders()) {
 				mobs.addAll(p.getRandomMobs(world));
 			}
-			RandomMob mob = WeightedRandom.getRandomItem(world.rand, mobs);
-			e = mob.getMob();
-			if (e instanceof EntityLiving && mob.shouldInit)
-				((EntityLiving) e).onInitialSpawn(world.getDifficultyForLocation(e.getPosition()), null);
+			e = WeightedRandom.getRandomItem(world.rand, mobs).getMob(world, new Vec3d(x + offsetX, y + offsetY, z + offsetZ));
 		} else {
 			NBTTagList pos = mobTag.getTagList("Pos", 6);
 			pos.set(0, new NBTTagDouble(x));
@@ -207,9 +209,6 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 
 		if (e != null) {
-			int offsetX = side.getFrontOffsetX();
-			int offsetY = side == EnumFacing.DOWN ? -1 : 0;
-			int offsetZ = side.getFrontOffsetZ();
 			AxisAlignedBB bb = e.getEntityBoundingBox();
 
 			e.setLocationAndAngles(x + (bb.maxX - bb.minX) * 0.5 * offsetX,

@@ -1,8 +1,8 @@
 package powercrystals.minefactoryreloaded.api;
 
-import java.util.List;
-
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public interface IRandomMobProvider {
 
@@ -14,7 +14,7 @@ public interface IRandomMobProvider {
 	 * @return A list of RandomMob instances of entities that are all ready to
 	 *         be spawned in the world with no additional method calls.
 	 */
-	public List<RandomMob> getRandomMobs(World world);
+	public List<RandomMobProvider> getRandomMobs(World world);
 	// TODO: Predicate? Function? need to delay creation of entities
 
 }
