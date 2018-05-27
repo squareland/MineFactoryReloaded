@@ -1,18 +1,17 @@
 package powercrystals.minefactoryreloaded.modhelpers.vanilla;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
-import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.entity.item.EntityMinecartHopper;
-import net.minecraft.entity.item.EntityTNTPrimed;
-import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.item.*;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityEvokerFangs;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -32,32 +31,55 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VanillaMobProvider implements IRandomMobProvider
-{
+public class VanillaMobProvider implements IRandomMobProvider {
+
+	private static Class<? extends Entity>[] PACK_ANIMALS = new Class[] {
+			EntityHorse.class,
+			EntityLlama.class,
+			EntityDonkey.class,
+			EntitySkeletonHorse.class,
+			EntityMule.class,
+			EntityHorse.class,
+			EntityLlama.class,
+			EntityZombieHorse.class,
+			EntityDonkey.class,
+			EntityHorse.class,
+			EntityLlama.class
+	};
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<RandomMobProvider> getRandomMobs(World theWorld)
-	{
+	public List<RandomMobProvider> getRandomMobs(World theWorld) {
+
 		List<RandomMobProvider> mobs = new ArrayList<RandomMobProvider>();
-		
-		mobs.add(new RandomMobProvider(130, MFRUtil.prepareMob(EntityChicken.class)));
+
 		mobs.add(new RandomMobProvider(100, MFRUtil.prepareMob(EntitySheep.class)));
-		mobs.add(new RandomMobProvider(100, MFRUtil.prepareMob(EntityCow.class)));
 		mobs.add(new RandomMobProvider(100, MFRUtil.prepareMob(EntityPig.class)));
+		mobs.add(new RandomMobProvider(100, MFRUtil.prepareMob(EntityCow.class)));
+		mobs.add(new RandomMobProvider(60, (world, pos) -> {
+			Entity e = MFRUtil.spawnMob(PACK_ANIMALS[world.rand.nextInt(PACK_ANIMALS.length)], world, pos);
+			return e;
+		}));
 		mobs.add(new RandomMobProvider(50, MFRUtil.prepareMob(EntityRabbit.class)));
+		mobs.add(new RandomMobProvider(50, MFRUtil.prepareMob(EntityParrot.class)));
+		mobs.add(new RandomMobProvider(40, MFRUtil.prepareMob(EntityVex.class)));
 		mobs.add(new RandomMobProvider(35, MFRUtil.prepareMob(EntityBat.class)));
 		mobs.add(new RandomMobProvider(35, MFRUtil.prepareMob(EntityEndermite.class)));
 		mobs.add(new RandomMobProvider(30, MFRUtil.prepareMob(EntitySquid.class)));
-		mobs.add(new RandomMobProvider(30, MFRUtil.prepareMob(EntityGuardian.class)));
+		mobs.add(new RandomMobProvider(25, MFRUtil.prepareMob(EntityGuardian.class)));
 		mobs.add(new RandomMobProvider(25, MFRUtil.prepareMob(EntityCreeper.class)));
 		mobs.add(new RandomMobProvider(20, MFRUtil.prepareMob(EntityMooshroom.class)));
 		mobs.add(new RandomMobProvider(20, MFRUtil.prepareMob(EntitySlime.class)));
 		mobs.add(new RandomMobProvider(20, MFRUtil.prepareMob(EntityOcelot.class)));
 		mobs.add(new RandomMobProvider(20, MFRUtil.prepareMob(EntityWolf.class)));
-		mobs.add(new RandomMobProvider(20, MFRUtil.prepareMob(EntityHorse.class)));
+		mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(EntityMinecartHopper.class)));
+		mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(EntityArmorStand.class)));
 		mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(EntityPolarBear.class)));
 		mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(EntityGhast.class)));
 		mobs.add(new RandomMobProvider(10, MFRUtil.prepareMob(EntityWitch.class)));
+		mobs.add(new RandomMobProvider(10, MFRUtil.prepareMob(EntityZombieVillager.class)));
+		mobs.add(new RandomMobProvider(5, MFRUtil.prepareMob(EntityWitherSkeleton.class)));
+		mobs.add(new RandomMobProvider(5, MFRUtil.prepareMob(EntityEvokerFangs.class)));
 		mobs.add(new RandomMobProvider(55, (world, pos) -> {
 			EntityXPOrb batJockey = prepareXPOrb(world, pos);
 			EntityBat invisibat = MFRUtil.spawnMob(EntityBat.class, world, pos);
@@ -65,13 +87,10 @@ public class VanillaMobProvider implements IRandomMobProvider
 			batJockey.startRiding(invisibat);
 			return invisibat;
 		}));
-		mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(EntityMinecartHopper.class)));
-		mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(EntityArmorStand.class)));
 		mobs.add(new RandomMobProvider(10, (world, pos) -> {
 			EntityPig sheep = MFRUtil.spawnMob(EntityPig.class, world, pos);
 			for (EntityAITaskEntry a : sheep.tasks.taskEntries)
-				if (a.action instanceof EntityAIPanic)
-				{
+				if (a.action instanceof EntityAIPanic) {
 					sheep.tasks.removeTask(a.action);
 					break;
 				}
@@ -88,7 +107,7 @@ public class VanillaMobProvider implements IRandomMobProvider
 			NBTTagCompound creeperNBT = new NBTTagCompound();
 			chargedCreeper.writeToNBT(creeperNBT);
 			creeperNBT.setBoolean("powered", true);
-			creeperNBT.setShort("Fuse", (short)120);
+			creeperNBT.setShort("Fuse", (short) 120);
 			chargedCreeper.readFromNBT(creeperNBT);
 			return chargedCreeper;
 		}));
@@ -98,7 +117,8 @@ public class VanillaMobProvider implements IRandomMobProvider
 			return armedTNT;
 		}));
 		mobs.add(new RandomMobProvider(5, (world, pos) -> {
-			EntitySlime invisislime = MFRUtil.spawnMob(EntitySlime.class, world, pos);
+			Class<? extends EntitySlime> clazz = world.rand.nextBoolean() ? EntitySlime.class : EntityMagmaCube.class;
+			EntitySlime invisislime = MFRUtil.spawnMob(clazz, world, pos);
 			invisislime.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 120 * 20));
 			return invisislime;
 		}));
@@ -150,6 +170,13 @@ public class VanillaMobProvider implements IRandomMobProvider
 			return tntMount;
 		}));
 		mobs.add(new RandomMobProvider(1, (world, pos) -> {
+			EntityItem e = new EntityItem(world, pos.x, pos.y, pos.z);
+			e.setItem(new ItemStack(Items.DIAMOND, 1));
+			e.setAgeToCreativeDespawnTime();
+			e.setInfinitePickupDelay();
+			return e;
+		}));
+		mobs.add(new RandomMobProvider(1, (world, pos) -> {
 			EntityPigZombie derp = MFRUtil.spawnMob(EntityPigZombie.class, world, pos);
 			derp.onInitialSpawn(world.getDifficultyForLocation(derp.getPosition()), null);
 			derp.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 120 * 20));
@@ -162,9 +189,9 @@ public class VanillaMobProvider implements IRandomMobProvider
 			{
 				@Nonnull ItemStack armor = new ItemStack(Items.LEATHER_LEGGINGS);
 				EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armor);
-				armor.setStackDisplayName(new String(new char[]{77, 97, 110, 32, 80, 97, 110, 116, 115}));
+				armor.setStackDisplayName(new String(new char[] { 77, 97, 110, 32, 80, 97, 110, 116, 115 }));
 				if (world.rand.nextBoolean()) {
-					derp.setCustomNameTag("Super " + new String(new char[]{90, 105, 115, 116, 101, 97, 117}));
+					derp.setCustomNameTag("Super " + new String(new char[] { 90, 105, 115, 116, 101, 97, 117 }));
 					armor = AutoEnchantmentHelper.addRandomEnchantment(derp.getRNG(), armor, 60000, true);
 					derp.setItemStackToSlot(slot, armor);
 					derp.setDropChance(slot, 0.01F);
@@ -172,7 +199,7 @@ public class VanillaMobProvider implements IRandomMobProvider
 					derp.setHeldItem(EnumHand.MAIN_HAND, armor);
 					derp.setDropChance(EntityEquipmentSlot.MAINHAND, 2.0F);
 				} else {
-					derp.setCustomNameTag(new String(new char[]{80, 105, 103, 68, 101, 114, 112}));
+					derp.setCustomNameTag(new String(new char[] { 80, 105, 103, 68, 101, 114, 112 }));
 					armor = AutoEnchantmentHelper.addRandomEnchantment(derp.getRNG(), armor, 90, true);
 					derp.setItemStackToSlot(slot, armor);
 					derp.setDropChance(slot, 0.05F);
@@ -204,8 +231,7 @@ public class VanillaMobProvider implements IRandomMobProvider
 			direBane.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
 			direBane.stepHeight = 2;
 			EntityPlayer player = world.getPlayerEntityByName("direwolf20");
-			if (player != null)
-			{
+			if (player != null) {
 				direBane.setCustomNameTag("Bane of direwolf");
 				direBane.setAlwaysRenderNameTag(true);
 				direBane.enablePersistence();
@@ -217,12 +243,14 @@ public class VanillaMobProvider implements IRandomMobProvider
 			}
 			return direBane;
 		}));
-		
+		// adding high-weight at the end, hoping to increase the likely hood we select the extremely low-weight entries
+		mobs.add(new RandomMobProvider(130, MFRUtil.prepareMob(EntityChicken.class)));
+
 		return mobs;
 	}
-	
-	private EntityXPOrb prepareXPOrb(World world, Vec3d pos)
-	{
+
+	private EntityXPOrb prepareXPOrb(World world, Vec3d pos) {
+
 		EntityXPOrb orb = MFRUtil.spawnMob(EntityXPOrb.class, world, pos);
 		orb.xpValue = 1;
 		orb.xpOrbAge = Short.MIN_VALUE + 6001;
