@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded;
 
+import cofh.core.render.IModelRegister;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelSlime;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -46,6 +48,7 @@ import powercrystals.minefactoryreloaded.gui.container.ContainerFisher;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptLaserFocus;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptReusableSafariNet;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptUpgrade;
+import powercrystals.minefactoryreloaded.render.IColorRegister;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.block.BlockTankRenderer;
 import powercrystals.minefactoryreloaded.render.block.PlasticPipeRenderer;
@@ -56,10 +59,7 @@ import powercrystals.minefactoryreloaded.render.tileentity.RedNetLogicRenderer;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static powercrystals.minefactoryreloaded.setup.MFRThings.factoryHammerItem;
 
@@ -84,9 +84,47 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 	public static Set<IHarvestAreaContainer> _areaTileEntities = new LinkedHashSet<>();
 
+	private static List<IModelRegister> modelRegistry = new ArrayList<>();
+	private static List<IColorRegister> colorRegistry = new ArrayList<>();
+
+	public static void addModelRegister(IModelRegister register) {
+
+		modelRegistry.add(register);
+	}
+
+	public static void addColorRegister(IColorRegister register) {
+
+		colorRegistry.add(register);
+	}
+
 
 	public static void preInit() {
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityPinkSlime.class,
+				manager -> new EntityPinkSlimeRenderer(manager, new ModelSlime(16), 0.25F));
 		
+		ModelLoaderRegistry.registerLoader(MFRModelLoader.INSTANCE);
+
+		instance = new MineFactoryReloadedClient();
+
+		MinecraftForge.EVENT_BUS.register(instance);
+	}
+
+	public static void init() {
+
+		for(IColorRegister register : colorRegistry) {
+			register.registerColorHandlers();
+		}
+
+		gl14 = GLContext.getCapabilities().OpenGL14; //TODO what is this used for? doesn't seem to have anything referring to it
+
+		IReloadableResourceManager manager = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
+		manager.registerReloadListener(instance);
+	}
+
+	@SubscribeEvent
+	public void registerModels(ModelRegistryEvent e) {
+
 		//fluids
 		ModelHelper.registerModel(MFRFluids.milkLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "milk"));
 		ModelHelper.registerModel(
@@ -107,22 +145,10 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 		ModelHelper.registerModel(
 				MFRFluids.steamFluid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "steam"));
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityPinkSlime.class,
-				manager -> new EntityPinkSlimeRenderer(manager, new ModelSlime(16), 0.25F));
-		
-		ModelLoaderRegistry.registerLoader(MFRModelLoader.INSTANCE);
-
-		instance = new MineFactoryReloadedClient();
-
-		MinecraftForge.EVENT_BUS.register(instance);
-	}
-
-	public static void init() {
-
-		gl14 = GLContext.getCapabilities().OpenGL14; //TODO what is this used for? doesn't seem to have anything referring to it
-
-		IReloadableResourceManager manager = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
-		manager.registerReloadListener(instance);
+		// not fluids
+		for(IModelRegister register : modelRegistry) {
+			register.registerModels();
+		}
 	}
 
 	@Override

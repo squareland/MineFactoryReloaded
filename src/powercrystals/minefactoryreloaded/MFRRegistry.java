@@ -471,10 +471,8 @@ public abstract class MFRRegistry {
 
 		String name = remapName(block.getUnlocalizedName());
 		blocks.put(name, block.setRegistryName(MineFactoryReloadedCore.modId, name));
-		ForgeRegistries.BLOCKS.register(block);
 		if (itemBlock != null) {
 			items.put(name, itemBlock.setRegistryName(MineFactoryReloadedCore.modId, name));
-			ForgeRegistries.ITEMS.register(itemBlock);
 		}
 	}
 	
@@ -482,7 +480,6 @@ public abstract class MFRRegistry {
 
 		String name = remapName(item.getUnlocalizedName());
 		items.put(name, item.setRegistryName(MineFactoryReloadedCore.modId, name));
-		ForgeRegistries.ITEMS.register(item);
 	}
 
 	public static Item getItemBlock(Block block) {
@@ -492,8 +489,7 @@ public abstract class MFRRegistry {
 
 	static class RegistryHandler {
 
-		//@SubscribeEvent
-		// we can't actually use this because it fires too late to register models and models can't be registered if the items/blocks aren't registered
+		@SubscribeEvent
 		public void registerStuff(RegistryEvent.Register e) {
 
 			if (e.getRegistry() == ForgeRegistries.BLOCKS) {

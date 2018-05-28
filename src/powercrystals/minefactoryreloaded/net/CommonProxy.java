@@ -1,21 +1,14 @@
 package powercrystals.minefactoryreloaded.net;
 
 import cofh.core.render.IModelRegister;
-import net.minecraft.block.Block;
-import net.minecraft.network.play.server.SPacketChunkData;
-import net.minecraft.server.management.PlayerChunkMap;
-import net.minecraft.server.management.PlayerChunkMapEntry;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketChunkData;
+import net.minecraft.server.management.PlayerChunkMap;
+import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
@@ -24,11 +17,14 @@ import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.LoadingCallback;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
-
-import powercrystals.minefactoryreloaded.MineFactoryReloadedClient;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.IColorRegister;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityChunkLoader;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CommonProxy implements LoadingCallback {
 
@@ -123,4 +119,5 @@ public class CommonProxy implements LoadingCallback {
 			}
 		}
 	}
+
 }

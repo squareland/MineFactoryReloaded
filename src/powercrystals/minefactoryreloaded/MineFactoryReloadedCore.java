@@ -122,8 +122,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 		//if (MFRConfig.enderioRecipes.getBoolean(false))
 		//	recipeSets.add(new EnderIO());
 
-		Vanilla.registerOredict();
-
 		Blocks.FIRE.setFireInfo(MFRFluids.biofuelLiquid, 300, 30);
 
 		GameRegistry.registerFuelHandler(new MineFactoryReloadedFuelHandler());
