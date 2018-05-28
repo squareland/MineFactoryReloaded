@@ -50,7 +50,7 @@ dependencies {
     compile "cofh:CoFHWorld:${mc_version}-${cofhworld_version}:deobf"
     compile "net.industrial-craft:industrialcraft-2:${ic2_version}"
     compile "net.sengir.forestry:forestry_${mc_version}:${forestry_version}"
-    deobfCompile "com.mod-buildcraft:buildcraft-api:${buildcraft_version}"
+    //deobfCompile "com.mod-buildcraft:buildcraft-api:${buildcraft_version}"
     //deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
 }
 
