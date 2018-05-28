@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
-import powercrystals.minefactoryreloaded.api.RandomMob;
+import powercrystals.minefactoryreloaded.api.RandomMobProvider;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
@@ -63,20 +63,22 @@ public class ThermalExpansion implements IRandomMobProvider {
 	}
 
 	@Override
-	public List<RandomMob> getRandomMobs(World world) {
+	public List<RandomMobProvider> getRandomMobs(World w) {
 
-		ArrayList<RandomMob> mobs = new ArrayList<RandomMob>();
+		ArrayList<RandomMobProvider> mobs = new ArrayList<RandomMobProvider>();
 
-		EntityCreeper creeper = MFRUtil.prepareMob(EntityCreeper.class, world);
-		creeper.setCustomNameTag("Exploding Zeldo");
-		creeper.setAlwaysRenderNameTag(true);
-		creeper.enablePersistence();
-		@Nonnull ItemStack armor = new ItemStack(MFRThings.plasticBootsItem);
-		armor.setStackDisplayName("Zeldo's Ruby Slippers");
-		EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armor);
-		creeper.setItemStackToSlot(slot, armor);
-		creeper.setDropChance(slot, 2);
-		mobs.add(new RandomMob(creeper, 20));
+		mobs.add(new RandomMobProvider(20, (world, pos) -> {
+			EntityCreeper creeper = MFRUtil.spawnMob(EntityCreeper.class, world, pos);
+			creeper.setCustomNameTag("Exploding Zeldo");
+			creeper.setAlwaysRenderNameTag(true);
+			creeper.enablePersistence();
+			@Nonnull ItemStack armor = new ItemStack(MFRThings.plasticBootsItem);
+			armor.setStackDisplayName("Zeldo's Ruby Slippers");
+			EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armor);
+			creeper.setItemStackToSlot(slot, armor);
+			creeper.setDropChance(slot, 2);
+			return creeper;
+		}));
 
 		return mobs;
 	}

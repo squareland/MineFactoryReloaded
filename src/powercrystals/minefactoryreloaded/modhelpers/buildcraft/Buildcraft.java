@@ -1,6 +1,6 @@
 package powercrystals.minefactoryreloaded.modhelpers.buildcraft;
 
-import buildcraft.api.fuels.BuildcraftFuelRegistry;
+//import buildcraft.api.fuels.BuildcraftFuelRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
@@ -20,8 +20,8 @@ public class Buildcraft {
 	private void postInit(FMLPostInitializationEvent evt) {
 
 		try {
-			if (BuildcraftFuelRegistry.fuel != null)
-				BuildcraftFuelRegistry.fuel.addFuel(MFRFluids.getFluid("biofuel"), 40, 15000);
+			//if (BuildcraftFuelRegistry.fuel != null)
+				//BuildcraftFuelRegistry.fuel.addFuel(MFRFluids.getFluid("biofuel"), 40, 15000);
 		} catch (Throwable $) {
 			ModContainer This = FMLCommonHandler.instance().findContainerFor(this);
 			LogManager.getLogger(This.getModId()).log(Level.ERROR, "There was a problem loading " + This.getName(), $);

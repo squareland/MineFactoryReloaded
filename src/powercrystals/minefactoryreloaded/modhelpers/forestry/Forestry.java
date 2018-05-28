@@ -15,7 +15,7 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerBiofuel;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
-import powercrystals.minefactoryreloaded.tile.machine.TileEntityUnifier;
+import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityUnifier;
 
 import static powercrystals.minefactoryreloaded.core.MFRUtil.findBlock;
 import static powercrystals.minefactoryreloaded.core.MFRUtil.findItem;

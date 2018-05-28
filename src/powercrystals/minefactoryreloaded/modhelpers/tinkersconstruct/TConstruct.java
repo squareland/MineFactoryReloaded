@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-import static cofh.core.util.helpers.ItemHelper.stack;
+import static powercrystals.minefactoryreloaded.setup.recipe.Vanilla.stack;
 
 /*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compattconstruct",
 		name = "MFR Compat: Tinkers' Construct",
