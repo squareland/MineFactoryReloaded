@@ -161,7 +161,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'P', PISTON,
 				'C', Items.FLOWER_POT,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Fisher, new Object[] {
@@ -171,7 +171,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'R', FISHING_ROD,
 				'B', BUCKET,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Harvester, new Object[] {
@@ -181,7 +181,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'X', GOLDEN_AXE,
 				'S', SHEARS,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Rancher, new Object[] {
@@ -192,7 +192,7 @@ public class Vanilla {
 				'B', BUCKET,
 				'S', SHEARS,
 				'P', plasticPipeBlock,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Fertilizer, new Object[] {
@@ -202,7 +202,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'L',LEATHER,
 				'B',GLASS_BOTTLE,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Vet, new Object[] {
@@ -212,7 +212,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'E',SPIDER_EYE,
 				'S', syringeEmptyItem,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(ItemCollector, 8, new Object[] {
@@ -221,7 +221,7 @@ public class Vanilla {
 				" M ",
 				'G', "sheetPlastic",
 				'C',CHEST,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(BlockBreaker, new Object[] {
@@ -232,7 +232,7 @@ public class Vanilla {
 				'P',GOLDEN_PICKAXE,
 				'H', factoryHammerItem,
 				'S', GOLDEN_SHOVEL,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(WeatherCollector, new Object[] {
@@ -242,7 +242,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'B', IRON_BARS,
 				'U', BUCKET,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(SludgeBoiler, new Object[] {
@@ -251,7 +251,7 @@ public class Vanilla {
 				" M ",
 				'G', "sheetPlastic",
 				'F', FURNACE,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Sewer, 4, new Object[] {
@@ -261,7 +261,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'B', BRICK,
 				'U', BUCKET,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Composter, new Object[] {
@@ -271,7 +271,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'P', PISTON,
 				'F', FURNACE,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Breeder, new Object[] {
@@ -282,7 +282,7 @@ public class Vanilla {
 				'P', "dyePurple",
 				'C', GOLDEN_CARROT,
 				'A', GOLDEN_APPLE,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Grinder, new Object[] {
@@ -293,7 +293,7 @@ public class Vanilla {
 				'P', PISTON,
 				'B', BOOK,
 				'S', GOLDEN_SWORD,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(AutoEnchanter, new Object[] {
@@ -303,7 +303,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'B', BOOK,
 				'D', DIAMOND,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Chronotyper, new Object[] {
@@ -313,7 +313,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'E', EMERALD,
 				'P', "dyePurple",
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Ejector, 8, new Object[] {
@@ -323,7 +323,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'D', DROPPER,
 				'R', "dustRedstone",
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(ItemRouter, 8, new Object[] {
@@ -333,7 +333,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'C', CHEST,
 				'R', REPEATER,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(LiquidRouter, 8, new Object[] {
@@ -344,7 +344,7 @@ public class Vanilla {
 				'R', REPEATER,
 				'B', BUCKET,
 				'P', plasticPipeBlock,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		int dsuCount = craftSingleDSU.getBoolean(false) ? 1 : 4;
@@ -355,7 +355,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'P', ENDER_PEARL,
 				'E', ENDER_EYE,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		if (enableCheapDSU.getBoolean(false)) {
@@ -365,7 +365,7 @@ public class Vanilla {
 					"CMC",
 					'G', "sheetPlastic",
 					'C', CHEST,
-					'M', machineBaseItem,
+					'M', stack(machineBaseItem),
 			});
 		}
 
@@ -377,7 +377,7 @@ public class Vanilla {
 				'B', BUCKET,
 				'W', CRAFTING_TABLE,
 				'F', ITEM_FRAME,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(LavaFabricator, new Object[] {
@@ -388,7 +388,7 @@ public class Vanilla {
 				'O', OBSIDIAN,
 				'B', BLAZE_ROD,
 				'C', MAGMA_CREAM,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(SteamBoiler, new Object[] {
@@ -408,7 +408,7 @@ public class Vanilla {
 				" M ",
 				'G', "sheetPlastic",
 				'J', JUKEBOX,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Unifier, new Object[] {
@@ -418,7 +418,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'B', BOOK,
 				'C', COMPARATOR,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(AutoSpawner, new Object[] {
@@ -430,7 +430,7 @@ public class Vanilla {
 				'N', Items.NETHER_WART,
 				'S', SUGAR,
 				'E', "gemEmerald",
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(BioReactor, new Object[] {
@@ -441,7 +441,7 @@ public class Vanilla {
 				'U', SUGAR,
 				'E', FERMENTED_SPIDER_EYE,
 				'S', "slimeball",
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(BioFuelGenerator, new Object[] {
@@ -452,7 +452,7 @@ public class Vanilla {
 				'F', FURNACE,
 				'P', PISTON,
 				'R', BLAZE_ROD,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(AutoDisenchanter, new Object[] {
@@ -463,7 +463,7 @@ public class Vanilla {
 				'B', BOOK,
 				'D', DIAMOND,
 				'R', NETHER_BRICK,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(Slaughterhouse, new Object[] {
@@ -473,7 +473,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'S', GOLDEN_SWORD,
 				'X', GOLDEN_AXE,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(MeatPacker, new Object[] {
@@ -483,7 +483,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'B', BRICK_BLOCK,
 				'F', FLINT_AND_STEEL,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(EnchantmentRouter, new Object[] {
@@ -493,7 +493,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'B', BOOK,
 				'R', REPEATER,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(LaserDrill, new Object[] {
@@ -503,7 +503,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'L', GLOWSTONE,
 				'D', "gemDiamond",
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(LaserDrillPrecharger, new Object[] {
@@ -514,7 +514,7 @@ public class Vanilla {
 				'L', GLOWSTONE,
 				'D', "gemDiamond",
 				'S', stack(pinkSlimeItem, 1, 1),
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(AutoAnvil, new Object[] {
@@ -523,7 +523,7 @@ public class Vanilla {
 				" M ",
 				'G', "sheetPlastic",
 				'A', ANVIL,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(BlockSmasher, new Object[] {
@@ -533,7 +533,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'H', factoryHammerItem,
 				'B', BOOK,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(RedNote, new Object[] {
@@ -543,7 +543,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'C', "cableRedNet",
 				'N', NOTEBLOCK,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(AutoBrewer, new Object[] {
@@ -554,7 +554,7 @@ public class Vanilla {
 				'C', plasticPipeBlock,
 				'B', Items.BREWING_STAND,
 				'R', COMPARATOR,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(FruitPicker, new Object[] {
@@ -564,7 +564,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'S', SHEARS,
 				'X', GOLDEN_AXE,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(BlockPlacer, new Object[] {
@@ -573,7 +573,7 @@ public class Vanilla {
 				" M ",
 				'G', "sheetPlastic",
 				'D', DISPENSER,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(MobCounter, new Object[] {
@@ -584,7 +584,7 @@ public class Vanilla {
 				'R', REPEATER,
 				'C', COMPARATOR,
 				'S', spyglassItem,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(SteamTurbine, new Object[] {
@@ -595,7 +595,7 @@ public class Vanilla {
 				'F', FURNACE,
 				'P', PISTON,
 				'R', NETHERBRICK,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(ChunkLoader, new Object[] {
@@ -606,7 +606,7 @@ public class Vanilla {
 				'F', NETHER_STAR,
 				'P', DeepStorageUnit,
 				'R', "blockRedstone",
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 		if (enableCheapCL.getBoolean(false)) {
 			registerMachine(ChunkLoader, new Object[] {
@@ -617,7 +617,7 @@ public class Vanilla {
 					'F', "blockGold",
 					'P', ENDER_EYE,
 					'R', "blockRedstone",
-					'M', machineBaseItem,
+					'M', stack(machineBaseItem),
 			});
 		}
 
@@ -628,7 +628,7 @@ public class Vanilla {
 				'G', "sheetPlastic",
 				'B', IRON_BARS,
 				'U', BUCKET,
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 
 		registerMachine(MobRouter, new Object[] {
@@ -647,7 +647,7 @@ public class Vanilla {
 				"P P",
 				"PMP",
 				'P', "sheetPlastic",
-				'M', machineBaseItem,
+				'M', stack(machineBaseItem),
 		});
 	}
 
