@@ -53,7 +53,6 @@ public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection
 		this.setDefaultState(blockState.getBaseState().withProperty(TYPE, Type.NORMAL).withProperty(STAGE, 0));
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
-		setRegistryName(MineFactoryReloadedCore.modId, "rubberwood_sapling");
 	}
 
 	@Override
@@ -138,7 +137,7 @@ public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection
 	public void registerModels() {
 
 		ModelLoader.setCustomStateMapper(this, new StateMap.Builder().ignore(TYPE, STAGE).build());
-		Item item = Item.getItemFromBlock(this);
+		Item item = MFRRegistry.getItemBlock(this);
 		for (int i=0; i<4; i++) {
 			ModelHelper.registerModel(item, i, "rubberwood_sapling");
 		}

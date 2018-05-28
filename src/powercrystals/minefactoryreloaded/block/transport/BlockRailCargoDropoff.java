@@ -10,7 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 
 import javax.annotation.Nonnull;
@@ -21,7 +20,6 @@ public class BlockRailCargoDropoff extends BlockFactoryRail {
 
 		super(true, false);
 		setUnlocalizedName("mfr.rail.cargo.dropoff");
-		setRegistryName(MineFactoryReloadedCore.modId, "rail_cargo_dropoff");
 	}
 
 	@Override

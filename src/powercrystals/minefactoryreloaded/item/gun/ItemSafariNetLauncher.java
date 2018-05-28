@@ -34,7 +34,6 @@ public class ItemSafariNetLauncher extends ItemFactoryGun {
 	public ItemSafariNetLauncher() {
 		setUnlocalizedName("mfr.safarinet.launcher");
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "safari_net_launcher");
 	}
 
 	@Override

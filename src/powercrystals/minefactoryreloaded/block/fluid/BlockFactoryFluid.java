@@ -26,7 +26,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
@@ -65,7 +64,6 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 		setHardness(100.0F);
 		setLightOpacity(3);
 		setDisplaceFluids(true);
-		setRegistryName(MineFactoryReloadedCore.modId, liquidName + "_fluid");
 	}
 
 	@Override

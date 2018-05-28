@@ -19,6 +19,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.fluid.BlockExplodingFluid;
@@ -254,7 +255,7 @@ public class MFRFluids {
 
 		if (MFRConfig.vanillaOverrideMilkBucket.getBoolean(true)) {
 			//needs to be the vanilla milk bucket registry name to properly replace vanilla one
-			MFRRegistry.registerItem(new ItemBucket(milkLiquid).setUnlocalizedName("mfr.bucket.milk").setRegistryName("minecraft:milk_bucket"));
+			ForgeRegistries.ITEMS.register(new ItemBucket(milkLiquid).setUnlocalizedName("mfr.bucket.milk").setRegistryName("minecraft:milk_bucket"));
 		}
 	}
 

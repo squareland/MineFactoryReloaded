@@ -62,7 +62,6 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		useHandlers.add(defaultUseAction);
 		useHandlers.add(drinkUseAction);
 		setUnlocalizedName("mfr.plastic.cup");
-		setRegistryName(MineFactoryReloadedCore.modId, "plastic_cup");
 	}
 
 	@Override

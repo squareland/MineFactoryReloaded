@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
@@ -30,7 +29,6 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 
 		setUnlocalizedName("mfr.rednet.memorycard");
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "rednet_memory_card");
 	}
 
 	@Override

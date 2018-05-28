@@ -77,7 +77,6 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 		setUnlocalizedName("mfr.conveyor");
 		setCreativeTab(MFRCreativeTab.tab);
 		MineFactoryReloadedCore.proxy.addColorRegister(this);
-		setRegistryName(MineFactoryReloadedCore.modId, "conveyor");
 	}
 
 	@Override
@@ -668,7 +667,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	@SideOnly(Side.CLIENT)
 	public void registerModels() {
 
-		Item item = Item.getItemFromBlock(this);
+		Item item = MFRRegistry.getItemBlock(this);
 		for (int i=0; i < 17; i++)
 			ModelHelper.registerModel(item, i, "conveyor", "inventory");
 	}

@@ -175,7 +175,7 @@ public class BlockFactoryRail extends BlockRailBase implements IInitializer, IMo
 			}
 		});
 
-		Item item = Item.getItemFromBlock(railBlock);
+		Item item = MFRRegistry.getItemBlock(railBlock);
 		if (item != null)
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rail_" + typeVariant, "inventory"));
 	}

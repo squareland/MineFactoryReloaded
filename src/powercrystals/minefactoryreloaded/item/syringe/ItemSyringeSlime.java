@@ -21,7 +21,6 @@ public class ItemSyringeSlime extends ItemSyringe {
 
 		setUnlocalizedName("mfr.syringe.slime");
 		setContainerItem(MFRThings.syringeEmptyItem);
-		setRegistryName(MineFactoryReloadedCore.modId, "syringe_slime");
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -44,7 +43,6 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode {
 
 		super(0.8F);
 		setUnlocalizedName("mfr.rednet.panel");
-		setRegistryName(MineFactoryReloadedCore.modId, "rednet_panel");
 	}
 
 	@Override
@@ -198,7 +196,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode {
 	public void registerModels() {
 
 		RedNetHistorianRenderer historianRenderer = new RedNetHistorianRenderer();
-		ModelHelper.registerModel(Item.getItemFromBlock(this), "rednet_historian");
+		ModelHelper.registerModel(MFRRegistry.getItemBlock(this), "rednet_historian");
 		ModelRegistryHelper.register(new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rednet_historian", "inventory"), historianRenderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRedNetHistorian.Client.class, historianRenderer);
 	}

@@ -21,7 +21,6 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
@@ -39,7 +38,6 @@ public class ItemSpyglass extends ItemFactoryTool {
 
 		setUnlocalizedName("mfr.spyglass");
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "spyglass");
 	}
 
 	@Override

@@ -31,9 +31,8 @@ public class ItemNeedleGun extends ItemFactoryGun {
 
 	public ItemNeedleGun() {
 
-		setUnlocalizedName("mfr.needlegun");
+		setUnlocalizedName("mfr.needlegun"); // FIXME: relocalize to needle_gun
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "needle_gun");
 	}
 
 	@Override

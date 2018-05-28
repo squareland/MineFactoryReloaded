@@ -9,26 +9,26 @@
             "entries": [
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_single_use",
-                    "name": "minefactoryreloaded:safari_net_single_use",
+                    "entryName": "minefactoryreloaded:safarinet_single_use",
+                    "name": "minefactoryreloaded:safarinet_single_use",
                     "weight": 35
                 },                
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_jailer",
-                    "name": "minefactoryreloaded:safari_net_jailer",
+                    "entryName": "minefactoryreloaded:safarinet_jailer",
+                    "name": "minefactoryreloaded:safarinet_jailer",
                     "weight": 20
                 },                    
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_reusable",
-                    "name": "minefactoryreloaded:safari_net_reusable",
+                    "entryName": "minefactoryreloaded:safarinet_reusable",
+                    "name": "minefactoryreloaded:safarinet_reusable",
                     "weight": 5
                 },
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_single_use_mysterious",
-                    "name": "minefactoryreloaded:safari_net_single_use",
+                    "entryName": "minefactoryreloaded:safarinet_single_use_mysterious",
+                    "name": "minefactoryreloaded:safarinet_single_use",
                     "weight": 17,
                     "functions": [
                         {
@@ -39,8 +39,8 @@
                 },
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_jailer_mysterious",
-                    "name": "minefactoryreloaded:safari_net_jailer",
+                    "entryName": "minefactoryreloaded:safarinet_jailer_mysterious",
+                    "name": "minefactoryreloaded:safarinet_jailer",
                     "weight": 10,
                     "functions": [
                         {
@@ -51,8 +51,8 @@
                 },
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_reusable_mysterious",
-                    "name": "minefactoryreloaded:safari_net_reusable",
+                    "entryName": "minefactoryreloaded:safarinet_reusable_mysterious",
+                    "name": "minefactoryreloaded:safarinet_reusable",
                     "weight": 2,
                     "functions": [
                         {
@@ -93,8 +93,8 @@
                 },
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_launcher",
-                    "name": "minefactoryreloaded:safari_net_launcher",
+                    "entryName": "minefactoryreloaded:safarinet_launcher",
+                    "name": "minefactoryreloaded:safarinet_launcher",
                     "weight": 8
                 },
                 {
@@ -135,7 +135,7 @@
                 {
                     "type": "item",
                     "entryName": "minefactoryreloaded:blank_record",
-                    "name": "minefactoryreloaded:blank_record",
+                    "name": "minefactoryreloaded:record_blank",
                     "weight": 14
                 },
                 {

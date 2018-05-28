@@ -11,7 +11,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
@@ -22,9 +21,8 @@ public class ItemMilkBottle extends ItemFactory {
 	public ItemMilkBottle() {
 
 		setContainerItem(Items.GLASS_BOTTLE);
-		setUnlocalizedName("mfr.milkbottle");
+		setUnlocalizedName("mfr.milkbottle"); // FIXME: relocalize to milk_bottle
 		setMaxStackSize(16);
-		setRegistryName(MineFactoryReloadedCore.modId, "milk_bottle");
 	}
 
 	@Nonnull

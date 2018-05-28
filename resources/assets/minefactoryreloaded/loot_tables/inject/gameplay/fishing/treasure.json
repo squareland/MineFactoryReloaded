@@ -6,8 +6,8 @@
             "entries": [
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_single_use",
-                    "name": "minefactoryreloaded:safari_net_single_use",
+                    "entryName": "minefactoryreloaded:safarinet_single_use",
+                    "name": "minefactoryreloaded:safarinet_single_use",
                     "weight": 1,
                     "functions": [
                         {

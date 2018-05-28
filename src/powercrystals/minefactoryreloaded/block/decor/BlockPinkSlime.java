@@ -26,14 +26,13 @@ public class BlockPinkSlime extends BlockBreakable implements IInitializer, IMod
 
 		super(Material.CLAY, false, MapColor.PINK);
 		setCreativeTab(MFRCreativeTab.tab);
-		setUnlocalizedName("mfr.pinkslime.block");
+		setUnlocalizedName("mfr.pinkslime.block"); // FIXME: relocalize to pink_slime.block
 		slipperiness = 0.8f;
 		setHardness(0.5f);
 		setHarvestLevel("shovel", 0);
 		setSoundType(SoundType.SLIME);
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
-		setRegistryName(MineFactoryReloadedCore.modId, "pink_slime_block");
 	}
 
 	@Override

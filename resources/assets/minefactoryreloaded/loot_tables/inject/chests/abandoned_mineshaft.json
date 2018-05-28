@@ -6,14 +6,14 @@
             "entries": [
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_single_use",
-                    "name": "minefactoryreloaded:safari_net_single_use",
+                    "entryName": "minefactoryreloaded:safarinet_single_use",
+                    "name": "minefactoryreloaded:safarinet_single_use",
                     "weight": 25
                 },
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:safari_net_jailer",
-                    "name": "minefactoryreloaded:safari_net_jailer",
+                    "entryName": "minefactoryreloaded:safarinet_jailer",
+                    "name": "minefactoryreloaded:safarinet_jailer",
                     "weight": 15
                 },
                 {

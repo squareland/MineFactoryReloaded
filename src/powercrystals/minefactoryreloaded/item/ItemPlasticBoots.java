@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryArmor;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
@@ -23,7 +22,6 @@ public class ItemPlasticBoots extends ItemFactoryArmor {
 
 		super(ItemFactoryArmor.PLASTIC_ARMOR, EntityEquipmentSlot.FEET);
 		setUnlocalizedName("mfr.plastic.armor.boots");
-		setRegistryName(MineFactoryReloadedCore.modId, "plastic_boots");
 	}
 
 	@Override

@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -182,9 +181,8 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	public BlockRedNetCable() {
 
 		super(0.8F);
-		setUnlocalizedName("mfr.cable.redstone");
+		setUnlocalizedName("mfr.cable.redstone"); // FIXME: relocalize to rednet_cable
 		providesPower = true;
-		setRegistryName(MineFactoryReloadedCore.modId, "rednet_cable");
 	}
 
 	@Override
@@ -544,7 +542,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 
 		ModelResourceLocation location = new ModelResourceLocation(getRegistryName(), "normal");
 		for (Variant variant : Variant.values()) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), variant.getMetadata(), location);
+			ModelLoader.setCustomModelResourceLocation(MFRRegistry.getItemBlock(this), variant.getMetadata(), location);
 		}
 
 		ModelRegistryHelper.register(RedNetCableRenderer.MODEL_LOCATION, new CCBakeryModel() {

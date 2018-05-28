@@ -23,7 +23,6 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
@@ -37,7 +36,6 @@ public class ItemStraw extends ItemFactoryTool {
 
 		setUnlocalizedName("mfr.straw");
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "straw");
 	}
 
 	@Nonnull

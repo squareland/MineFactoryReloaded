@@ -55,7 +55,6 @@ public class BlockFertileSoil extends Block implements IGrowable, IInitializer, 
 		setDefaultState(blockState.getBaseState().withProperty(MOISTURE, 0));
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
-		setRegistryName(MineFactoryReloadedCore.modId, "fertile_soil");
 	}
 
 	@Override

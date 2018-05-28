@@ -15,7 +15,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ public class BlockRailPassengerDropoff extends BlockFactoryRail {
 
 		super(true, false);
 		setUnlocalizedName("mfr.rail.passenger.dropoff");
-		setRegistryName(MineFactoryReloadedCore.modId, "rail_passenger_dropoff");
 	}
 
 	@Override

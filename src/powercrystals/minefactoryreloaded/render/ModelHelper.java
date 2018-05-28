@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 
@@ -41,7 +42,7 @@ public class ModelHelper {
 		if (propertiesToIgnore.length > 0)
 			ModelLoader.setCustomStateMapper(block, new StateMap.Builder().ignore(propertiesToIgnore).build());
 
-		Item item = Item.getItemFromBlock(block);
+		Item item = MFRRegistry.getItemBlock(block);
 		if (item != null) {
 			for (int i = 0; i < values.length; i++) {
 				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(block.getRegistryName(), propertyName + "=" + values[i]));
@@ -57,7 +58,7 @@ public class ModelHelper {
 				return modelLocation;
 			}
 		});
-		Item item = Item.getItemFromBlock(block);
+		Item item = MFRRegistry.getItemBlock(block);
 		if (item != null)
 			ModelLoader.setCustomModelResourceLocation(item, 0,  modelLocation);
 	}
@@ -66,8 +67,8 @@ public class ModelHelper {
 
 		if (propertiesToIgnore.length > 0)
 			ModelLoader.setCustomStateMapper(block, new StateMap.Builder().ignore(propertiesToIgnore).build());
-	
-		Item item = Item.getItemFromBlock(block);
+
+		Item item = MFRRegistry.getItemBlock(block);
 		if (item != null)
 			ModelLoader.setCustomModelResourceLocation(item, 0,  new ModelResourceLocation(block.getRegistryName(), "normal"));
 	}

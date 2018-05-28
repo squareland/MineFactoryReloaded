@@ -7,16 +7,10 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
@@ -51,9 +45,8 @@ public class ItemXpExtractor extends ItemFactoryTool {
 			}
 		});
 
-		setUnlocalizedName("mfr.xpextractor");
+		setUnlocalizedName("mfr.xpextractor"); // FIXME: relocalize to xp_extractor
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "xp_extractor");
 	}
 	
 	@Override

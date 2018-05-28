@@ -11,7 +11,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -93,7 +92,6 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 		super(0.5f);
 		setUnlocalizedName("mfr.tank");
 		setLightOpacity(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "tank");
 	}
 
 	@Override
@@ -208,7 +206,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 				state -> state.getBlock().getRegistryName().toString() + "," + state.getValue(FLUID) + "," +
 						state.getValue(SIDES));
 
-		ModelBakery.registerItemKeyGenerator(Item.getItemFromBlock(this), stack -> {
+		ModelBakery.registerItemKeyGenerator(MFRRegistry.getItemBlock(this), stack -> {
 			String key = stack.getItem().getRegistryName().toString();
 			if (stack.getItem() instanceof ItemBlockTank) {
 				FluidStack fluidStack = MFRUtil.getFluidContents(stack);

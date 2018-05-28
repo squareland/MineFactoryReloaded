@@ -28,9 +28,8 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 
 	public ItemRocketLauncher() {
 
-		setUnlocalizedName("mfr.rocketlauncher");
+		setUnlocalizedName("mfr.rocketlauncher"); // FIXME: relocalize to rocket_launcher
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "rocket_launcher");
 	}
 
 	@Override

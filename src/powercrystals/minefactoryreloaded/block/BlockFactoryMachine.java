@@ -66,7 +66,6 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		_mfrMachineBlockIndex = index;
 		providesPower = true;
 		setHarvestLevel("wrench", 0);
-		setRegistryName(MineFactoryReloadedCore.modId, "machine_" + index);
 	}
 
 	public int getBlockIndex() {
@@ -387,7 +386,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 
 		ModelLoader.setCustomStateMapper(this, MachineStateMapper.getInstance());
 
-		Item item = Item.getItemFromBlock(this);
+		Item item = MFRRegistry.getItemBlock(this);
 
 		for (Type type : Type.GROUP_TYPES[_mfrMachineBlockIndex]) {
 			if (type == Type.ITEM_COLLECTOR) {

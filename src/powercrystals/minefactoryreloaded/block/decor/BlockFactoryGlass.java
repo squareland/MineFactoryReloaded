@@ -58,14 +58,13 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	{
 		super(Material.GLASS, false);
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
-		setUnlocalizedName("mfr.stainedglass.block");
+		setUnlocalizedName("mfr.stainedglass.block"); // FIXME: relocalize to stained_glass.block
 		setHardness(0.3F);
 		setSoundType(SoundType.GLASS);
 		setCreativeTab(MFRCreativeTab.tab);
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 		MineFactoryReloadedCore.proxy.addColorRegister(this);
-		setRegistryName(MineFactoryReloadedCore.modId, "stained_glass");
 	}
 
 	@Override
@@ -237,7 +236,7 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	public void registerModels() {
 
 		ModelResourceLocation glassItemModel = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":stained_glass", "inventory");
-		Item item = Item.getItemFromBlock(this);
+		Item item = MFRRegistry.getItemBlock(this);
 		ModelLoader.setCustomMeshDefinition(item, stack -> glassItemModel);
 		ModelLoader.registerItemVariants(item, glassItemModel);
 		ModelLoader.setCustomStateMapper(this, new StateMapperBase() {

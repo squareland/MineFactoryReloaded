@@ -28,9 +28,8 @@ import javax.annotation.Nonnull;
 public class ItemFishingRod extends ItemFactoryTool {
 
 	public ItemFishingRod() {
-		setUnlocalizedName("mfr.fishingrod");
+		setUnlocalizedName("mfr.fishingrod"); // FIXME: relocalize to fishing_rod
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "fishing_rod");
 	}
 
 	@Override

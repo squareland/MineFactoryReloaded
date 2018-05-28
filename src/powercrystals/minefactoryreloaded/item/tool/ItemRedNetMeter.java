@@ -23,7 +23,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInfo;
 import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
@@ -41,7 +40,6 @@ public class ItemRedNetMeter extends ItemMulti {
 		setNames(null, "info", "debug");
 		setUnlocalizedName("mfr.rednet.meter");
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "rednet_meter");
 	}
 
 	@Override

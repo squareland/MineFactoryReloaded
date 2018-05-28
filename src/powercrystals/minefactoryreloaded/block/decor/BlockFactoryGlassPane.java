@@ -69,7 +69,7 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 		if (mfr)
 		{
 			setCreativeTab(MFRCreativeTab.tab);
-			setUnlocalizedName("mfr.stainedglass.pane");
+			setUnlocalizedName("mfr.stainedglass.pane"); // FIXME: relocalize to stained_glass.pane
 		}
 		else
 			setCreativeTab(CreativeTabs.DECORATIONS);
@@ -77,7 +77,6 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 		MineFactoryReloadedCore.proxy.addColorRegister(this);
-		setRegistryName(MineFactoryReloadedCore.modId, "stained_glass_pane");
 	}
 
 	@Override
@@ -258,7 +257,7 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 						+ "," + (state.getValue(BlockPane.EAST) ? 1 : 0)
 		);
 		ModelResourceLocation glassPaneItemModel = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":stained_glass_pane", "inventory");
-		Item item = Item.getItemFromBlock(this);
+		Item item = MFRRegistry.getItemBlock(this);
 		ModelLoader.setCustomMeshDefinition(item, stack -> glassPaneItemModel);
 		ModelLoader.registerItemVariants(item, glassPaneItemModel);
 

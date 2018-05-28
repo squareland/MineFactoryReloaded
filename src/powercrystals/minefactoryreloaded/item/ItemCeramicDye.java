@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryColored;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
@@ -23,8 +22,7 @@ public class ItemCeramicDye extends ItemFactoryColored {
 
 	public ItemCeramicDye() {
 
-		setUnlocalizedName("mfr.ceramicdye");
-		setRegistryName(MineFactoryReloadedCore.modId, "ceramic_dye");
+		setUnlocalizedName("mfr.ceramicdye"); // FIXME: relocalize to ceramic.dye
 	}
 
 	@Override

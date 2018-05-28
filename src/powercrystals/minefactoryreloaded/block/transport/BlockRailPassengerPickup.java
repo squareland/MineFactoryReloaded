@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.block.transport;
 
-import java.util.List;
-
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecart;
@@ -9,11 +7,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
+
+import java.util.List;
 
 public class BlockRailPassengerPickup extends BlockFactoryRail {
 
@@ -21,7 +19,6 @@ public class BlockRailPassengerPickup extends BlockFactoryRail {
 
 		super(true, false);
 		setUnlocalizedName("mfr.rail.passenger.pickup");
-		setRegistryName(MineFactoryReloadedCore.modId, "rail_passenger_pickup");
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
@@ -19,7 +18,6 @@ public class ItemSyringeHealth extends ItemSyringe
 
 		setUnlocalizedName("mfr.syringe.health");
 		setContainerItem(MFRThings.syringeEmptyItem);
-		setRegistryName(MineFactoryReloadedCore.modId, "syringe_health");
 	}
 	@Override
 	public boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe)

@@ -23,7 +23,6 @@ public class ItemSyringeCure extends ItemSyringe {
 
 		setUnlocalizedName("mfr.syringe.cure");
 		setContainerItem(MFRThings.syringeEmptyItem);
-		setRegistryName(MineFactoryReloadedCore.modId, "syringe_cure");
 	}
 
 	@Override

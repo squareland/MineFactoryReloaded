@@ -103,6 +103,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 
 		instance = this;
 		setConfigFolderBase(evt.getModConfigurationDirectory());
+		MinecraftForge.EVENT_BUS.register(new MFRRegistry.RegistryHandler());
 
 		MFRConfig.loadClientConfig(getClientConfig());
 		MFRConfig.loadCommonConfig(getCommonConfig());
@@ -132,40 +133,9 @@ public class MineFactoryReloadedCore extends BaseMod {
 
 	private static void registerBlock(Block block, ItemBlock itemBlock) {
 		
-		MFRRegistry.registerBlock(block, itemBlock);		
-	}
+		MFRRegistry.registerBlock(block, itemBlock);
 
-/*	TODO is this remapping code even needed for anything?
-	@EventHandler
-	public void missingMappings(FMLMissingMappingsEvent e) {
-
-		List<MissingMapping> list = e.get();
-		if (list.size() > 0) for (MissingMapping mapping : list) {
-			String name = mapping.name;
-			if (name.indexOf(':') >= 0)
-				name = name.substring(name.indexOf(':') + 1);
-			l: switch (mapping.type) {
-			case BLOCK:
-				Block block = MFRRegistry.remapBlock(name);
-				if (block != null)
-					mapping.remap(block);
-				else if ("tile.null".equals(name))
-					mapping.remap(fakeLaserBlock);
-				else
-					mapping.warn();
-				break l;
-			case ITEM:
-				Item item = MFRRegistry.remapItem(name);
-				if (item != null)
-					mapping.remap(item);
-				else
-					mapping.warn();
-				break l;
-			default:
-			}
-		}
 	}
-*/
 
 	@EventHandler
 	public void init(FMLInitializationEvent evt) {
@@ -207,8 +177,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 
 	private void addChestGenItems() {
 
-/*  TODO add dim doors loot tables if needed
-
+		/*
 		//{ DimensionalDoors chestgen compat
 		// reference weights[iron: 160; coal: 120; gold: 80; golden apple: 10]
 		ChestGenHooks.getInfo("dimensionalDungeonChest").addItem(
@@ -221,8 +190,13 @@ public class MineFactoryReloadedCore extends BaseMod {
 		// maybe as a custom dungeon for integration
 		///}
 
-		//}
-*/
+		//}*/
+	}
+
+	@EventHandler
+	public void handleIMC(IMCEvent e) {
+
+		IMCHandler.processIMC(e.getMessages());
 	}
 
 	@EventHandler
@@ -249,12 +223,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 			e.registerRecipes();
 
 		MFRFarmables.post();
-	}
-
-	@EventHandler
-	public void handleIMC(IMCEvent e) {
-
-		IMCHandler.processIMC(e.getMessages());
 	}
 
 	@EventHandler

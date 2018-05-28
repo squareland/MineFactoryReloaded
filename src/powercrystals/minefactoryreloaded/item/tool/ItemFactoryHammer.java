@@ -24,7 +24,6 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import powercrystals.minefactoryreloaded.item.base.ItemFactoryTool;
 import powercrystals.minefactoryreloaded.modhelpers.Compats;
@@ -44,7 +43,6 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 		setHarvestLevel("wrench", 1);
 		setUnlocalizedName("mfr.hammer");
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "hammer");
 	}
 
 	@Override

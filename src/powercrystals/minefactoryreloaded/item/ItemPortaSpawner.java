@@ -16,16 +16,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.net.Packets;
@@ -45,9 +40,8 @@ public class ItemPortaSpawner extends ItemFactory {
 
 	public ItemPortaSpawner() {
 
-		setUnlocalizedName("mfr.portaspawner");
+		setUnlocalizedName("mfr.portaspawner"); // FIXME: relocalize to porta_spawner
 		setMaxStackSize(1);
-		setRegistryName(MineFactoryReloadedCore.modId, "porta_spawner");
 	}
 
 	public static NBTTagCompound getSpawnerTag(@Nonnull ItemStack stack) {

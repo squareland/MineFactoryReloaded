@@ -9,31 +9,20 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.WeightedRandom;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizer;
-import powercrystals.minefactoryreloaded.api.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
-import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
-import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
-import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
-import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
-import powercrystals.minefactoryreloaded.api.IMobEggHandler;
-import powercrystals.minefactoryreloaded.api.IMobSpawnHandler;
-import powercrystals.minefactoryreloaded.api.INeedleAmmo;
-import powercrystals.minefactoryreloaded.api.IRandomMobProvider;
-import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
+import net.minecraftforge.registries.RegistryManager;
+import powercrystals.minefactoryreloaded.api.*;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
-import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
+import powercrystals.minefactoryreloaded.setup.recipe.Vanilla;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+
+import static powercrystals.minefactoryreloaded.setup.MFRThings.fakeLaserBlock;
 
 public abstract class MFRRegistry {
 
@@ -383,8 +372,43 @@ public abstract class MFRRegistry {
 	private static Map<String, Block> blocks = new HashMap<String, Block>();
 	private static Map<String, Item> items = new HashMap<String, Item>();
 	static {
-		//This is where remaps should go if needed in the future
-		//remaps.put("tile.mfr.decorativebrick", "brick");
+		remaps.put("liquid", null);
+		remaps.put("armor", null);
+		remaps.put("decorative", null);
+
+		remaps.put("still", "fluid");
+		remaps.put("laserair", "fake_laser");
+		remaps.put("vinescaffold", "vine_scaffold");
+		remaps.put("machineblock", "machine_block");
+		remaps.put("stainedglass", "stained_glass");
+		remaps.put("pinkslime", "pink_slime");
+		remaps.put("needlegun", "needle_gun");
+		remaps.put("potatolauncher", "potato_launcher");
+		remaps.put("rocketlauncher", "rocket_launcher");
+		remaps.put("ceramicdye", "ceramic_dye");
+		remaps.put("portaspawner", "porta_spawner");
+		remaps.put("fishingrod", "fishing_rod");
+		remaps.put("xpextractor", "xp_extractor");
+		remaps.put("milkbottle", "milk_bottle");
+		remaps.put("laserfocus", "laser_focus");
+		remaps.put("chocolatemilk", "chocolate_milk");
+		remaps.put("sugarcharcoal", "sugar_charcoal");
+		remaps.put("mushroomsoup", "mushroom_soup");
+		remaps.put("singleuse", "single_use");
+
+		remaps.put("tile.mfr.decorativebrick", "brick");
+		remaps.put("tile.mfr.decorativestone", "stone");
+		remaps.put("item.mfr.bucket.plasticcup", "plastic_cup");
+		remaps.put("item.mfr.armor.boots.plastic", "plastic_boots");
+		remaps.put("item.mfr.pinkslimeball", "pinkslime");
+		remaps.put("tile.mfr.cable.redstone", "rednet_cable");
+		remaps.put("cable.redstone", "rednet_cable");
+		remaps.put("tile.mfr.cable.plastic", "plastic_pipe");
+		remaps.put("cable.plastic", "plastic_pipe");
+
+		// FIXME: TEMPORARY for dev worlds
+		remaps.put("stained_glass", "stained_glass_block");
+		remaps.put("fertile_soil", "farmland");
 	}
 
 	private static String remapPhrase(String s) {
@@ -406,13 +430,13 @@ public abstract class MFRRegistry {
 			if (name == null)
 				name = "";
 			else
-				name = "." + name;
+				name = '_' + name;
 
 			for (int i = 3, e = v.length; i < e; ++i)
 				v[i - 2] = remapPhrase(v[i]);
 			for (int i = 1, e = v.length - 2; i < e; ++i)
 				if (v[i] != null)
-					name += '.' + v[i];
+					name += '_' + v[i];
 
 			name = name.substring(1);
 		}
@@ -420,47 +444,102 @@ public abstract class MFRRegistry {
 		return name;
 	}
 
-	static Block remapBlock(String id) {
+	private static Block remapBlock(String id) {
 
 		Block block = blocks.get(id);
 		if (block == null) {
 			id = remapName(id);
 			if (id != null)
-				block = MFRUtil.findBlock(MineFactoryReloadedCore.modId, id);
+				block = blocks.get(id);
 		}
 
 		return block;
 	}
 
-	static Item remapItem(String id) {
+	private static Item remapItem(String id) {
 
 		Item item = items.get(id);
 		if (item == null) {
 			id = remapName(id);
 			if (id != null)
-				item = MFRUtil.findItem(MineFactoryReloadedCore.modId, id);
+				item = items.get(id);
 		}
 		return item;
 	}
 
 	public static void registerBlock(Block block, ItemBlock itemBlock) {
 
-		//TODO this should get refactored into block registry event
-		String name = block.getRegistryName().getResourcePath();
-		blocks.put(name, block);
-
+		String name = remapName(block.getUnlocalizedName());
+		blocks.put(name, block.setRegistryName(MineFactoryReloadedCore.modId, name));
 		ForgeRegistries.BLOCKS.register(block);
 		if (itemBlock != null) {
-			ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(block.getRegistryName()));
-			items.put(name, Item.getItemFromBlock(block));
+			items.put(name, itemBlock.setRegistryName(MineFactoryReloadedCore.modId, name));
+			ForgeRegistries.ITEMS.register(itemBlock);
 		}
 	}
 	
 	public static void registerItem(Item item) {
 
-		//TODO this should get refactored into item registry event
-		items.put(item.getRegistryName().getResourcePath(), item);
-
+		String name = remapName(item.getUnlocalizedName());
+		items.put(name, item.setRegistryName(MineFactoryReloadedCore.modId, name));
 		ForgeRegistries.ITEMS.register(item);
 	}
+
+	public static Item getItemBlock(Block block) {
+
+		return items.get(block.getRegistryName().getResourcePath());
+	}
+
+	static class RegistryHandler {
+
+		//@SubscribeEvent
+		// we can't actually use this because it fires too late to register models and models can't be registered if the items/blocks aren't registered
+		public void registerStuff(RegistryEvent.Register e) {
+
+			if (e.getRegistry() == ForgeRegistries.BLOCKS) {
+				RegistryEvent.Register<Block> evt = e;
+				for (Block item : blocks.values()) {
+					evt.getRegistry().register(item);
+				}
+			} else if (e.getRegistry() == ForgeRegistries.ITEMS) {
+				RegistryEvent.Register<Item> evt = e;
+				for (Item item : items.values()) {
+					evt.getRegistry().register(item);
+				}
+
+				Vanilla.registerOredict();
+			}
+		}
+
+		@SubscribeEvent
+		public void missingMappings(RegistryEvent.MissingMappings e) {
+
+			if (e.getName().equals(RegistryManager.ACTIVE.getName(ForgeRegistries.BLOCKS))) {
+				RegistryEvent.MissingMappings<Block> evt = e;
+				for (RegistryEvent.MissingMappings.Mapping<Block> mapping : evt.getMappings()) {
+					String name = mapping.key.getResourcePath();
+					Block block = MFRRegistry.remapBlock(name);
+					if (block != null)
+						mapping.remap(block);
+					else if ("tile.null".equals(name))
+						mapping.remap(fakeLaserBlock);
+					else
+						mapping.warn();
+				}
+			} else if (e.getName().equals(RegistryManager.ACTIVE.getName(ForgeRegistries.ITEMS))) {
+				RegistryEvent.MissingMappings<Item> evt = e;
+				for (RegistryEvent.MissingMappings.Mapping<Item> mapping : evt.getMappings()) {
+					String name = mapping.key.getResourcePath();
+					Item item = MFRRegistry.remapItem(name);
+					if (item != null)
+						mapping.remap(item);
+					else
+						mapping.warn();
+				}
+
+			}
+		}
+
+	}
+
 }

@@ -7,7 +7,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.BlockFactory;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
@@ -23,7 +22,6 @@ public class BlockFactoryPlastic extends BlockFactory {
 		setUnlocalizedName("mfr.plastic");
 		setHarvestLevel("axe", 0);
 		providesPower = false;
-		setRegistryName(MineFactoryReloadedCore.modId, "plastic");
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	public BlockVineScaffold() {
 
 		super(Material.LEAVES);
-		setUnlocalizedName("mfr.vinescaffold");
+		setUnlocalizedName("mfr.vinescaffold"); // FIXME: relocalize to vine.scaffold
 		setSoundType(SoundType.PLANT);
 		setHardness(0.1F);
 		setTickRandomly(true);
@@ -53,7 +53,6 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 		MineFactoryReloadedCore.proxy.addColorRegister(this);
-		setRegistryName(MineFactoryReloadedCore.modId, "vine_scaffold");
 	}
 
 	@Override

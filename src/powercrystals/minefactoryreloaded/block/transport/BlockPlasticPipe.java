@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -63,9 +62,8 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	public BlockPlasticPipe() {
 
 		super(0.8F);
-		setUnlocalizedName("mfr.cable.plastic");
+		setUnlocalizedName("mfr.cable.plastic"); // FIXME: relocalize to plastic_pipe
 		providesPower = true;
-		setRegistryName(MineFactoryReloadedCore.modId, "plastic_pipe");
 	}
 
 	@Override
@@ -218,7 +216,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 		});
 
 		ModelResourceLocation location = new ModelResourceLocation(getRegistryName(), "normal");
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, location);
+		ModelLoader.setCustomModelResourceLocation(MFRRegistry.getItemBlock(this), 0, location);
 
 		ModelRegistryHelper.register(PlasticPipeRenderer.MODEL_LOCATION,
 				new CCBakeryModel(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.cable.plastic") {
