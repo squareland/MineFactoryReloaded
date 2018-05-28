@@ -5,10 +5,7 @@ import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -26,40 +23,16 @@ import powercrystals.minefactoryreloaded.api.MobDrop;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerLava;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerWater;
 import powercrystals.minefactoryreloaded.farmables.egghandlers.VanillaEggHandler;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableCocoa;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableCropPlant;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableGrass;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableNetherWart;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStandard;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStemPlants;
-import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
+import powercrystals.minefactoryreloaded.farmables.fertilizables.*;
 import powercrystals.minefactoryreloaded.farmables.fruits.FruitChorus;
 import powercrystals.minefactoryreloaded.farmables.fruits.FruitCocoa;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableEnderman;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableSlime;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableStandard;
 import powercrystals.minefactoryreloaded.farmables.grindables.GrindableZombiePigman;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableCocoa;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableCropPlant;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableGourd;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableMushroom;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableShrub;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStandard;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStemPlant;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableVine;
-import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
-import powercrystals.minefactoryreloaded.farmables.plantables.PlantableChorus;
-import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCocoa;
-import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCropPlant;
-import powercrystals.minefactoryreloaded.farmables.plantables.PlantableNetherWart;
-import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
-import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
-import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableChicken;
-import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableCow;
-import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableMooshroom;
-import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableSheep;
-import powercrystals.minefactoryreloaded.farmables.ranchables.RanchableSquid;
+import powercrystals.minefactoryreloaded.farmables.harvestables.*;
+import powercrystals.minefactoryreloaded.farmables.plantables.*;
+import powercrystals.minefactoryreloaded.farmables.ranchables.*;
 import powercrystals.minefactoryreloaded.farmables.spawnhandlers.SpawnableEnderman;
 import powercrystals.minefactoryreloaded.farmables.spawnhandlers.SpawnableHorse;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
@@ -137,6 +110,7 @@ public class Vanilla {
 		MFRRegistry.registerRanchable(new RanchableSheep());
 		MFRRegistry.registerRanchable(new RanchableSquid());
 		MFRRegistry.registerRanchable(new RanchableChicken());
+		MFRRegistry.registerRanchable(new RanchableParrot());
 
 		MFRRegistry.registerGrinderBlacklist(EntityDragon.class);
 		MFRRegistry.registerGrinderBlacklist(EntityWither.class);
@@ -218,13 +192,23 @@ public class Vanilla {
 		MFRRegistry.registerFruit(new FruitChorus(Blocks.CHORUS_FLOWER));
 		MFRRegistry.registerFruit(new FruitChorus(Blocks.CHORUS_PLANT));
 
-		MFRRegistry.registerSpawnHandler(new SpawnableHorse());
 		MFRRegistry.registerSpawnHandler(new SpawnableEnderman());
+		for (Class<? extends AbstractHorse> clazz : new Class[] {
+				EntitySkeletonHorse.class,
+				EntityZombieHorse.class,
+				EntityDonkey.class,
+				EntityLlama.class,
+				EntityHorse.class,
+				EntityMule.class
+		}) {
+			MFRRegistry.registerSpawnHandler(new SpawnableHorse(clazz));
+		}
 	}
 
 	@EventHandler
 	public void postLoad(FMLPostInitializationEvent event) {
 
+		//@formatter:off
 		registerOreDictLaserOre(175, "Coal",               black, false);
 		registerOreDictLaserOre(150, "Iron",               brown, false);
 		registerOreDictLaserOre(100, "Redstone",             red, false);
@@ -325,6 +309,7 @@ public class Vanilla {
 		registerOreDictLaserOre( 20, "orePotash", pink, null);
 		registerOreDictLaserOre( 20, "oreBitumen", pink, null);
 		registerOreDictLaserOre( 20, "orePhosphorite", pink, null);
+		//@formatter:on
 	}
 
 	private void registerOreDictLaserOre(int weight, String suffix, int focus, boolean isGem) {

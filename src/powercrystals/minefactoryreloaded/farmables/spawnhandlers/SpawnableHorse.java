@@ -1,22 +1,25 @@
 package powercrystals.minefactoryreloaded.farmables.spawnhandlers;
 
-import java.lang.reflect.Method;
-
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.AbstractChestHorse;
 import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.passive.EntityHorse;
-
-import net.minecraft.entity.passive.HorseArmorType;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import powercrystals.minefactoryreloaded.api.IMobSpawnHandler;
 
 public class SpawnableHorse implements IMobSpawnHandler {
 
+	private final Class<? extends AbstractHorse> clazz;
+
+	public SpawnableHorse(Class<? extends AbstractHorse> clazz) {
+
+		this.clazz = clazz;
+	}
+
 	@Override
 	public Class<? extends EntityLivingBase> getMobClass() {
 
-		return AbstractHorse.class;
+		return clazz;
 	}
 
 	@Override
@@ -30,16 +33,13 @@ public class SpawnableHorse implements IMobSpawnHandler {
 		AbstractHorse ent = (AbstractHorse) entity;
 
 		try {
-			ObfuscationReflectionHelper.setPrivateValue(AbstractHorse.class, ent, null, "horseChest", "field_110296_bG");
-			Method m = EntityHorse.class.getDeclaredMethod("func_110226_cD");
-			m.setAccessible(true);
-			m.invoke(entity);
+			IItemHandlerModifiable inv = (IItemHandlerModifiable) ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			for (int i = 0, e = inv.getSlots(); i < e; ++i) {
+				inv.setStackInSlot(i, ItemStack.EMPTY);
+			}
 		} catch (Throwable e) {
 			e.printStackTrace();
-			if ((ent instanceof AbstractChestHorse && ((AbstractChestHorse)ent).hasChest())
-					|| ent.isHorseSaddled()
-					|| (ent instanceof EntityHorse && ((EntityHorse) ent).getHorseArmorType() != HorseArmorType.NONE))
-				entity.setDead();
+			entity.setDead();
 		}
 	}
 
