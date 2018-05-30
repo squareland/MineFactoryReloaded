@@ -32,11 +32,11 @@ public class Zoologist {
 		ForgeRegistries.VILLAGER_PROFESSIONS.register(zoologistProfession);
 
 		VillagerCareer zoologist = new VillagerCareer(zoologistProfession, MineFactoryReloadedCore.modId + ":zoologist");
-		zoologist.addTrade(1, new ListItemForEmeralds(MFRThings.safariNetSingleItem, new PriceInfo(1, 1)));
-		zoologist.addTrade(1, new ListItemForEmeralds(MFRThings.safariNetItem, new PriceInfo(3, 1)));
-		zoologist.addTrade(2, new ListItemForEmeraldAndItem(getHiddenNetStack(), MFRThings.safariNetSingleItem));
-		zoologist.addTrade(2, new ListItemForEmeraldAndItem(new ItemStack(MFRThings.rubberSaplingBlock, 8, 0),
+		zoologist.addTrade(1, new ListItemForEmeraldAndItem(new ItemStack(MFRThings.rubberSaplingBlock, 8, 0),
 				ItemBlock.getItemFromBlock(Blocks.SAPLING), 8, 6));
+		zoologist.addTrade(1, new ListItemForEmeralds(MFRThings.safariNetSingleItem, new PriceInfo(1, 1)));
+		zoologist.addTrade(2, new ListItemForEmeraldAndItem(getHiddenNetStack(), MFRThings.safariNetSingleItem));
+		zoologist.addTrade(3, new ListItemForEmeralds(MFRThings.safariNetItem, new PriceInfo(3, 1)));
 	}
 
 	@Nonnull
