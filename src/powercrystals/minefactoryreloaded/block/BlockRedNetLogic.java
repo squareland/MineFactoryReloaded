@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -217,7 +218,7 @@ public class BlockRedNetLogic extends BlockFactory implements IRedNetOmniNode, I
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockRedNetLogic(this));
-		GameRegistry.registerTileEntity(TileEntityRedNetLogic.class, "factoryRednetLogic");
+		GameRegistry.registerTileEntity(TileEntityRedNetLogic.class, new ResourceLocation(MFRProps.MOD_ID, "rednet_logic"));
 		return true;
 	}
 

@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockAccess;
@@ -184,7 +185,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockTank(this));
-		GameRegistry.registerTileEntity(TileEntityTank.class, "factoryTank");
+		GameRegistry.registerTileEntity(TileEntityTank.class, new ResourceLocation(MFRProps.MOD_ID, "tank"));
 		return true;
 	}
 

@@ -76,6 +76,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 	public void preInit(FMLPreInitializationEvent evt) throws IOException {
 
 		instance = this;
+		DataFixer.init();
 		setConfigFolderBase(evt.getModConfigurationDirectory());
 		MinecraftForge.EVENT_BUS.register(new MFRRegistry.RegistryHandler());
 
@@ -88,10 +89,8 @@ public class MineFactoryReloadedCore extends BaseMod {
 		if (MFRConfig.vanillaRecipes.getBoolean(true))
 			recipeSets.add(new Vanilla());
 
-/* TODO readd when there's TE
-		if (MFRConfig.thermalExpansionRecipes.getBoolean(false))
-			recipeSets.add(new ThermalExpansion());
-*/
+		//if (MFRConfig.thermalExpansionRecipes.getBoolean(false))
+		//	recipeSets.add(new ThermalExpansion());
 
 		//if (MFRConfig.enderioRecipes.getBoolean(false))
 		//	recipeSets.add(new EnderIO());

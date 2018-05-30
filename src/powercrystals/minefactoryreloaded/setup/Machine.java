@@ -9,11 +9,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.FMLLog;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.block.BlockFactoryMachine;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
@@ -219,7 +221,7 @@ public class Machine {
 
 		_name = name;
 		_internalName = "tile.mfr.machine." + name.toLowerCase(Locale.US);
-		_tileEntityName = "factory" + name;
+		_tileEntityName = MFRProps.PREFIX + name;
 		_tileEntityClass = tileEntityClass;
 
 		_activationEnergy = activationEnergy;
@@ -378,9 +380,9 @@ public class Machine {
 		}
 	}
 
-	public String getTileEntityName() {
+	public ResourceLocation getTileEntityName() {
 		
-		return _tileEntityName;
+		return new ResourceLocation(_tileEntityName);
 	}
 
 	public Class<? extends TileEntityFactory> getTileEntityClass() {

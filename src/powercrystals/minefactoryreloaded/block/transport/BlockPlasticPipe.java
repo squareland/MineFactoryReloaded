@@ -21,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -199,7 +200,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockFactory(this));
-		GameRegistry.registerTileEntity(TileEntityPlasticPipe.class, "factoryPlasticPipe");
+		GameRegistry.registerTileEntity(TileEntityPlasticPipe.class, new ResourceLocation(MFRProps.MOD_ID, "plastic_pipe"));
 		return true;
 	}
 

@@ -20,10 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -33,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInputNode;
@@ -659,7 +657,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockConveyor(this, NAMES));
-		GameRegistry.registerTileEntity(TileEntityConveyor.class, "factoryConveyor");
+		GameRegistry.registerTileEntity(TileEntityConveyor.class, new ResourceLocation(MFRProps.MOD_ID, "conveyor"));
 		return true;
 	}
 

@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -188,7 +189,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode {
 	public boolean initialize() {
 
 		MFRRegistry.registerBlock(this, new ItemBlockRedNetPanel(this));
-		GameRegistry.registerTileEntity(TileEntityRedNetHistorian.class, "factoryRednetHistorian");
+		GameRegistry.registerTileEntity(TileEntityRedNetHistorian.class, new ResourceLocation(MFRProps.MOD_ID, "rednet_panel"));
 		return true;
 	}
 
