@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.entity.EntityRocket;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityRocketRenderer extends Render
 {
 	public static final ResourceLocation rocket =
-			new ResourceLocation(MineFactoryReloadedCore.modelTextureFolder + "rocket.png");
+			new ResourceLocation(MFRProps.MODEL_TEXTURE_FOLDER + "rocket.png");
 	private CCModel model;
 
 	public EntityRocketRenderer(RenderManager renderManager)
@@ -28,7 +28,7 @@ public class EntityRocketRenderer extends Render
 		try
 		{
 			model = OBJParser.parseModels(new ResourceLocation(
-					MineFactoryReloadedCore.modelFolder + "rocket.obj")).get("Tube");
+					MFRProps.MODEL_FOLDER + "rocket.obj")).get("Tube");
 		}
 		catch(Exception e)
 		{

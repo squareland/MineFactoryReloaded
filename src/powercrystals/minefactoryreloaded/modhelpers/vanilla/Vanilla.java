@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.FertilizerType;
 import powercrystals.minefactoryreloaded.api.HarvestType;
 import powercrystals.minefactoryreloaded.api.MobDrop;
@@ -39,7 +39,7 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 import javax.annotation.Nonnull;
 
-@Mod(modid = "minefactoryreloaded_compatvanilla", name = "MFR Compat: Vanilla", version = MineFactoryReloadedCore.version, dependencies = "after:minefactoryreloaded",
+@Mod(modid = "minefactoryreloaded_compatvanilla", name = "MFR Compat: Vanilla", version = MFRProps.VERSION, dependencies = "after:minefactoryreloaded",
 		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class Vanilla {
 

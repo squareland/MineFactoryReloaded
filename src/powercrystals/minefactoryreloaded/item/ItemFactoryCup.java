@@ -28,8 +28,8 @@ import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.IAdvFluidContainerItem;
 import powercrystals.minefactoryreloaded.core.IUseHandler;
 import powercrystals.minefactoryreloaded.core.IUseable;
@@ -211,7 +211,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 
 	@Override
 	public String getArmorTexture(@Nonnull ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return MineFactoryReloadedCore.textureFolder + "armor/plastic_layer_1.png";
+		return MFRProps.TEXTURE_FOLDER + "armor/plastic_layer_1.png";
 	}
 
 	@Override

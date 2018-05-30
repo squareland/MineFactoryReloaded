@@ -12,6 +12,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedClient;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.entity.EntityRocket;
@@ -80,7 +81,7 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 	public boolean initialize() {
 
 		super.initialize();
-		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "rocket_launcher"), EntityRocket.class, "Rocket", 3, MineFactoryReloadedCore.instance(), 160, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(MFRProps.MOD_ID, "rocket_launcher"), EntityRocket.class, "Rocket", 3, MineFactoryReloadedCore.instance(), 160, 1, true);
 
 		return true;
 	}
@@ -90,7 +91,7 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 	public void registerModels() {
 
 		ModelHelper.registerModel(this, "rocket_launcher");
-		ModelRegistryHelper.register(new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rocket_launcher", "inventory"), new RocketLauncherItemRenderer());
+		ModelRegistryHelper.register(new ModelResourceLocation(MFRProps.PREFIX + "rocket_launcher", "inventory"), new RocketLauncherItemRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityRocket.class, EntityRocketRenderer::new);
 	}
 }

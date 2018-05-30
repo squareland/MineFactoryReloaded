@@ -12,14 +12,14 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
 
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 
 @SideOnly(Side.CLIENT)
 public class PrcFontRenderer extends FontRenderer {
 
 	protected static final ResourceLocation[] unicodePageLocations = new ResourceLocation[256];
 
-	private static final String fontTexture = MineFactoryReloadedCore.textureFolder + "font/";
+	private static final String fontTexture = MFRProps.TEXTURE_FOLDER + "font/";
 
 	public PrcFontRenderer(GameSettings settings, TextureManager resourceManager, boolean unicode) {
 

@@ -6,13 +6,13 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 
 import javax.annotation.Nonnull;
 
 public class GuiNeedlegun extends GuiContainer
 {
-	private static final ResourceLocation needleGunGUI = new ResourceLocation(MineFactoryReloadedCore.guiFolder + "needlegun.png");
+	private static final ResourceLocation needleGunGUI = new ResourceLocation(MFRProps.GUI_FOLDER + "needlegun.png");
 	private String name;
 	public GuiNeedlegun(Container container, @Nonnull ItemStack item)
 	{

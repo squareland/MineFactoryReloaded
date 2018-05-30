@@ -4,7 +4,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.block.BlockFactoryMachine;
 
 public class MachineStateMapper extends StateMapperBase {
@@ -72,7 +72,7 @@ public class MachineStateMapper extends StateMapperBase {
 				break;
 		}
 
-		return new ModelResourceLocation(MineFactoryReloadedCore.modId + ":" + getModelName(type), builder.build());
+		return new ModelResourceLocation(MFRProps.PREFIX + getModelName(type), builder.build());
 	}
 
 	public static String getModelName(BlockFactoryMachine.Type type) {

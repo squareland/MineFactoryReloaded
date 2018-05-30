@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fluids.FluidStack;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.block.ItemBlockTank;
 import powercrystals.minefactoryreloaded.block.fluid.BlockTank;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
@@ -28,10 +28,10 @@ import java.util.List;
 
 public class BlockTankRenderer implements ISimpleBlockBakery {
 
-	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":plastic_tank", "normal");
-	public static final ResourceLocation BOTTOM_TEXTURE_LOCATION = new ResourceLocation(MineFactoryReloadedCore.modId + ":blocks/machines/tile.mfr.tank.bottom");
-	public static final ResourceLocation TOP_TEXTURE_LOCATION = new ResourceLocation(MineFactoryReloadedCore.textureFolder + "blocks/machines/tile.mfr.tank.top.png");
-	public static final ResourceLocation SIDE_TEXTURE_LOCATION = new ResourceLocation(MineFactoryReloadedCore.textureFolder + "blocks/machines/tile.mfr.tank.side.png");
+	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MFRProps.PREFIX + "plastic_tank", "normal");
+	public static final ResourceLocation BOTTOM_TEXTURE_LOCATION = new ResourceLocation(MFRProps.PREFIX + "blocks/machines/tile.mfr.tank.bottom");
+	public static final ResourceLocation TOP_TEXTURE_LOCATION = new ResourceLocation(MFRProps.TEXTURE_FOLDER + "blocks/machines/tile.mfr.tank.top.png");
+	public static final ResourceLocation SIDE_TEXTURE_LOCATION = new ResourceLocation(MFRProps.TEXTURE_FOLDER + "blocks/machines/tile.mfr.tank.side.png");
 
 	private static SpriteSheetManager.SpriteSheet spriteSheetTop = SpriteSheetManager.getSheet(2, 2, TOP_TEXTURE_LOCATION);
 	private static SpriteSheetManager.SpriteSheet spriteSheetSide = SpriteSheetManager.getSheet(3, 3, SIDE_TEXTURE_LOCATION);

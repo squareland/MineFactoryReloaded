@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 public class EntityPinkSlime extends EntitySlime {
 
 	public static final ResourceLocation PINK_SLIME = new ResourceLocation(
-			MineFactoryReloadedCore.modId + ":entities/pink_slime");
+			MFRProps.PREFIX + "entities/pink_slime");
 
 	public EntityPinkSlime(World world) {
 

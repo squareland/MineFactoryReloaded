@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.TRSRTransformation;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.render.entity.EntityRocketRenderer;
 
 import javax.annotation.Nonnull;
@@ -25,7 +25,7 @@ public class RocketItemRenderer extends BaseItemRenderer {
 	public RocketItemRenderer() {
 
 		Map<String, CCModel> models = OBJParser
-				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket.obj"), new SwapYZ());
+				.parseModels(new ResourceLocation(MFRProps.MODEL_FOLDER + "rocket.obj"), new SwapYZ());
 		launcherModel = models.get("Tube");
 
 		TRSRTransformation thirdPerson = TransformUtils.create(0, 0, 1, 90, 180, 0, 0.015f);

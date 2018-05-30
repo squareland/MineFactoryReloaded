@@ -10,9 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
@@ -46,13 +44,13 @@ public class GuiFactoryInventory extends GuiContainerCore {
 
 	public GuiFactoryInventory(ContainerFactoryInventory container, TileEntityFactoryInventory tileEntity) {
 
-		super(container, new ResourceLocation(MineFactoryReloadedCore.guiFolder + tileEntity.getGuiBackground() + ".png"));
+		super(container, new ResourceLocation(MFRProps.GUI_FOLDER + tileEntity.getGuiBackground() + ".png"));
 		_container = container;
 		drawInventory = drawTitle = false;
 		_tileEntity = tileEntity;
 		if (CoreProps.enableColorBlindTextures) {
 			ResourceLocation t = new ResourceLocation(
-					MineFactoryReloadedCore.guiFolder + _tileEntity.getGuiBackground() + "_cb.png");
+					MFRProps.GUI_FOLDER + _tileEntity.getGuiBackground() + "_cb.png");
 			if (textureExists(t))
 				texture = t;
 		}

@@ -16,9 +16,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedClient;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 import powercrystals.minefactoryreloaded.block.BlockRedNetLogic;
 import powercrystals.minefactoryreloaded.circuits.Noop;
@@ -81,7 +81,7 @@ public class GuiRedNetLogic extends GuiContainerCore {
 
 	public GuiRedNetLogic(Container container, TileEntityRedNetLogic logic) {
 
-		super(container, new ResourceLocation(MineFactoryReloadedCore.guiFolder + "rednetlogic.png"));
+		super(container, new ResourceLocation(MFRProps.GUI_FOLDER + "rednetlogic.png"));
 		xSize = 384;
 		ySize = 231;
 		drawInventory = false;

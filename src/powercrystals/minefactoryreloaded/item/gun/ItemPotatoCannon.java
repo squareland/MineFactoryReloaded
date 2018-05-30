@@ -23,6 +23,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.entity.EntityFlyingItem;
@@ -136,7 +137,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	public boolean initialize() {
 
 		super.initialize();
-		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "potato_cannon"), EntityFlyingItem.class, "PotatoCannon", 5, MineFactoryReloadedCore.instance(), 160, 7, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(MFRProps.MOD_ID, "potato_cannon"), EntityFlyingItem.class, "PotatoCannon", 5, MineFactoryReloadedCore.instance(), 160, 7, true);
 
 		return true;
 	}
@@ -146,7 +147,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 	public void registerModels() {
 
 		ModelHelper.registerModel(this, "potato_launcher");
-		ModelRegistryHelper.register(new ModelResourceLocation(MineFactoryReloadedCore.modId + ":potato_launcher", "inventory"), new PotatoLauncherItemRenderer());
+		ModelRegistryHelper.register(new ModelResourceLocation(MFRProps.PREFIX + "potato_launcher", "inventory"), new PotatoLauncherItemRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlyingItem.class,
 				new IRenderFactory<EntityFlyingItem>() {
 

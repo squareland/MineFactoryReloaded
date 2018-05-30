@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.TRSRTransformation;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -20,12 +20,12 @@ import java.util.Map;
 public class PotatoLauncherItemRenderer extends BaseItemRenderer {
 
 	private static CCModel launcherModel;
-	private static ResourceLocation textureLocation = new ResourceLocation(MineFactoryReloadedCore.modelTextureFolder + "potato_launcher.png");
+	private static ResourceLocation textureLocation = new ResourceLocation(MFRProps.MODEL_TEXTURE_FOLDER + "potato_launcher.png");
 	
 	public PotatoLauncherItemRenderer() {
 
 		Map<String, CCModel> models = OBJParser
-				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "potato_launcher.obj"), new SwapYZ());
+				.parseModels(new ResourceLocation(MFRProps.MODEL_FOLDER + "potato_launcher.obj"), new SwapYZ());
 		launcherModel = models.get("Box009");
 
 		TRSRTransformation thirdPerson = TransformUtils.create(0, 3, 0, 90, 180, 0, 0.015f);

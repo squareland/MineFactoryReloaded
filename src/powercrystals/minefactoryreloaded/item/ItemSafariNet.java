@@ -27,6 +27,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.IMobEggHandler;
@@ -383,8 +384,8 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 	@SideOnly(Side.CLIENT)
 	public void registerModels() {
 
-		ModelResourceLocation empty = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":safari_net", "variant=" + variant + "_empty");
-		ModelResourceLocation full = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":safari_net", "variant=" + variant);
+		ModelResourceLocation empty = new ModelResourceLocation(MFRProps.PREFIX + "safari_net", "variant=" + variant + "_empty");
+		ModelResourceLocation full = new ModelResourceLocation(MFRProps.PREFIX + "safari_net", "variant=" + variant);
 
 		ModelLoader.setCustomMeshDefinition(this, stack -> {
 

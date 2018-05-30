@@ -69,9 +69,9 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 	public static MineFactoryReloadedClient instance;
 
 	private static final ResourceLocation targetingBlue =
-			new ResourceLocation(MineFactoryReloadedCore.hudFolder + "lockon_blue.png");
+			new ResourceLocation(MFRProps.HUD_FOLDER + "lockon_blue.png");
 	private static final ResourceLocation targetingRed =
-			new ResourceLocation(MineFactoryReloadedCore.hudFolder + "lockon_red.png");
+			new ResourceLocation(MFRProps.HUD_FOLDER + "lockon_red.png");
 	private static final int _lockonMax = 30;
 	private static final int _lockonLostMax = 60;
 	private int _lockonTicks = 0;
@@ -126,24 +126,26 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 	public void registerModels(ModelRegistryEvent e) {
 
 		//fluids
-		ModelHelper.registerModel(MFRFluids.milkLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "milk"));
 		ModelHelper.registerModel(
-				MFRFluids.sludgeLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "sludge"));
+				MFRFluids.milkLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "milk"));
 		ModelHelper.registerModel(
-				MFRFluids.sewageLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "sewage"));
+				MFRFluids.sludgeLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "sludge"));
 		ModelHelper.registerModel(
-				MFRFluids.essenceLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "mob_essence"));
+				MFRFluids.sewageLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "sewage"));
 		ModelHelper.registerModel(
-				MFRFluids.biofuelLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "biofuel"));
-		ModelHelper.registerModel(MFRFluids.meatLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "meat"));
+				MFRFluids.essenceLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "mob_essence"));
 		ModelHelper.registerModel(
-				MFRFluids.pinkSlimeLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "pink_slime"));
+				MFRFluids.biofuelLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "biofuel"));
 		ModelHelper.registerModel(
-				MFRFluids.chocolateMilkLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "chocolate_milk"));
+				MFRFluids.meatLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "meat"));
 		ModelHelper.registerModel(
-				MFRFluids.mushroomSoupLiquid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "mushroom_soup"));
+				MFRFluids.pinkSlimeLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "pink_slime"));
 		ModelHelper.registerModel(
-				MFRFluids.steamFluid, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":fluid", "steam"));
+				MFRFluids.chocolateMilkLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "chocolate_milk"));
+		ModelHelper.registerModel(
+				MFRFluids.mushroomSoupLiquid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "mushroom_soup"));
+		ModelHelper.registerModel(
+				MFRFluids.steamFluid, new ModelResourceLocation(MFRProps.PREFIX + "fluid", "steam"));
 
 		// not fluids
 		for(IModelRegister register : modelRegistry) {
@@ -172,17 +174,17 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 		evt.getMap().registerSprite(BlockTankRenderer.BOTTOM_TEXTURE_LOCATION);
 
-		SlotAcceptReusableSafariNet.background = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/reusablenet"));
-		ContainerAutoDisenchanter.background = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/book")).getIconName();
-		ContainerAutoJukebox.background = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/record")).getIconName();
-		SlotAcceptLaserFocus.background = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/laserfocus"));
-		ContainerAutoBrewer.ingredient = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/netherwart")).getIconName();
-		ContainerAutoBrewer.bottle = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/bottle")).getIconName();
-		ContainerFisher.background = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/fishingrod")).getIconName();
-		SlotAcceptUpgrade.background = evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":items/gui/upgrade"));
+		SlotAcceptReusableSafariNet.background = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/reusablenet"));
+		ContainerAutoDisenchanter.background = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/book")).getIconName();
+		ContainerAutoJukebox.background = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/record")).getIconName();
+		SlotAcceptLaserFocus.background = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/laserfocus"));
+		ContainerAutoBrewer.ingredient = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/netherwart")).getIconName();
+		ContainerAutoBrewer.bottle = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/bottle")).getIconName();
+		ContainerFisher.background = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/fishingrod")).getIconName();
+		SlotAcceptUpgrade.background = evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "items/gui/upgrade"));
 
-		PlasticPipeRenderer.setSprite(evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.cable.plastic")));
-		RedNetCableRenderer.setSprite(evt.getMap().registerSprite(new ResourceLocation(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.cable.redstone")));
+		PlasticPipeRenderer.setSprite(evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "blocks/tile.mfr.cable.plastic")));
+		RedNetCableRenderer.setSprite(evt.getMap().registerSprite(new ResourceLocation(MFRProps.PREFIX + "blocks/tile.mfr.cable.redstone")));
 	}
 
 	@SubscribeEvent

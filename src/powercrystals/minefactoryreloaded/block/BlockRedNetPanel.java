@@ -20,6 +20,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetInputNode;
@@ -197,7 +198,7 @@ public class BlockRedNetPanel extends BlockFactory implements IRedNetInputNode {
 
 		RedNetHistorianRenderer historianRenderer = new RedNetHistorianRenderer();
 		ModelHelper.registerModel(MFRRegistry.getItemBlock(this), "rednet_historian");
-		ModelRegistryHelper.register(new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rednet_historian", "inventory"), historianRenderer);
+		ModelRegistryHelper.register(new ModelResourceLocation(MFRProps.PREFIX + "rednet_historian", "inventory"), historianRenderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRedNetHistorian.Client.class, historianRenderer);
 	}
 

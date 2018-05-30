@@ -20,6 +20,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.transport.BlockPlasticPipe;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe;
@@ -35,7 +36,7 @@ import static powercrystals.minefactoryreloaded.tile.transport.TileEntityPlastic
 public class PlasticPipeRenderer implements ISimpleBlockBakery {
 
 	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(
-			MineFactoryReloadedCore.modId + ":plastic_pipe", "normal");
+			MFRProps.PREFIX + "plastic_pipe", "normal");
 	public static final PlasticPipeRenderer INSTANCE = new PlasticPipeRenderer();
 
 	protected static CCModel base;

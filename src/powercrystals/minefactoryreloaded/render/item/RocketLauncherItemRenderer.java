@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 
 import javax.annotation.Nonnull;
 import javax.vecmath.Matrix4f;
@@ -26,12 +26,12 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 	CCModel launcherModel;
 	RocketLauncherItemRenderer offHandRenderrer;
-	private static ResourceLocation textureLocation = new ResourceLocation(MineFactoryReloadedCore.modelTextureFolder + "rocket_launcher.png");
+	private static ResourceLocation textureLocation = new ResourceLocation(MFRProps.MODEL_TEXTURE_FOLDER + "rocket_launcher.png");
 
 	private RocketLauncherItemRenderer(boolean offHand) {
 
 		Map<String, CCModel> models = OBJParser
-				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket_launcher.obj"), new SwapYZ());
+				.parseModels(new ResourceLocation(MFRProps.MODEL_FOLDER + "rocket_launcher.obj"), new SwapYZ());
 		launcherModel = models.get("Box009");
 	}
 
@@ -39,7 +39,7 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 		offHandRenderrer = new RocketLauncherItemRenderer(true);
 
-		Map<String, CCModel> models = OBJParser.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "rocket_launcher.obj"), new SwapYZ());
+		Map<String, CCModel> models = OBJParser.parseModels(new ResourceLocation(MFRProps.MODEL_FOLDER + "rocket_launcher.obj"), new SwapYZ());
 		launcherModel = models.get("Box009").copy().apply(new Scale(-1, 1, 1)).backfacedCopy();
 
 		setupTransformations();

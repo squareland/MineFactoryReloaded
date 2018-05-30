@@ -20,6 +20,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.block.transport.BlockRedNetCable;
@@ -35,7 +36,7 @@ import java.util.Map;
 
 public class RedNetCableRenderer implements ISimpleBlockBakery {
 
-	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rednet_cable", "normal");
+	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MFRProps.PREFIX + "rednet_cable", "normal");
 
 	public static final RedNetCableRenderer INSTANCE = new RedNetCableRenderer();
 	protected static CCModel base;

@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
@@ -170,13 +171,13 @@ public class BlockFactoryRail extends BlockRailBase implements IInitializer, IMo
 		ModelLoader.setCustomStateMapper(railBlock, new StateMapperBase() {
 			@Override
 			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-				return new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rail",
+				return new ModelResourceLocation(MFRProps.PREFIX + "rail",
 						"shape=" + state.getValue(railBlock.getShapeProperty()) + ",type=" + typeVariant);
 			}
 		});
 
 		Item item = MFRRegistry.getItemBlock(railBlock);
 		if (item != null)
-			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rail_" + typeVariant, "inventory"));
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(MFRProps.PREFIX + "rail_" + typeVariant, "inventory"));
 	}
 }

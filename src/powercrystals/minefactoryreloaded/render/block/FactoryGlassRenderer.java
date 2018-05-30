@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlass;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 
@@ -25,8 +25,8 @@ import java.util.List;
 
 public class FactoryGlassRenderer implements ISimpleBlockBakery {
 
-	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":stained_glass", "normal");
-	private static final ResourceLocation SPRITE_LOCATION = new ResourceLocation(MineFactoryReloadedCore.textureFolder + "blocks/tile.mfr.stainedglass.png");
+	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MFRProps.PREFIX + "stained_glass", "normal");
+	private static final ResourceLocation SPRITE_LOCATION = new ResourceLocation(MFRProps.TEXTURE_FOLDER + "blocks/tile.mfr.stainedglass.png");
 	public static final int FULL_FRAME = 0;
 	public static SpriteSheetManager.SpriteSheet spriteSheet = SpriteSheetManager.getSheet(8, 8, SPRITE_LOCATION);;
 

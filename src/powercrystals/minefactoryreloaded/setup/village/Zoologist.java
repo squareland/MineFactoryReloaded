@@ -14,7 +14,7 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.item.ItemSafariNet;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
@@ -24,14 +24,14 @@ import java.util.Random;
 public class Zoologist {
 
 	public static final VillagerProfession zoologistProfession = new VillagerProfession(
-			MineFactoryReloadedCore.modId + ":zoologist", MineFactoryReloadedCore.modId + ":textures/villager/zoologist.png",
+			MFRProps.PREFIX + "zoologist", MFRProps.VILLAGER_FOLDER + "zoologist.png",
 			"minecraft:/textures/entity/zombie_villager/zombie_villager.png");
 
 	public static void init() {
 
 		ForgeRegistries.VILLAGER_PROFESSIONS.register(zoologistProfession);
 
-		VillagerCareer zoologist = new VillagerCareer(zoologistProfession, MineFactoryReloadedCore.modId + ":zoologist");
+		VillagerCareer zoologist = new VillagerCareer(zoologistProfession, MFRProps.PREFIX + "zoologist");
 		zoologist.addTrade(1, new ListItemForEmeraldAndItem(new ItemStack(MFRThings.rubberSaplingBlock, 8, 0),
 				ItemBlock.getItemFromBlock(Blocks.SAPLING), 8, 6));
 		zoologist.addTrade(1, new ListItemForEmeralds(MFRThings.safariNetSingleItem, new PriceInfo(1, 1)));

@@ -27,6 +27,7 @@ import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.IModelState;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.BlockRedNetLogic;
 import powercrystals.minefactoryreloaded.render.item.RedNetCardItemRenderer;
@@ -47,7 +48,7 @@ public class RedNetLogicRenderer extends TileEntitySpecialRenderer<TileEntityRed
 	private RedNetCardsModel cardsModel = new RedNetCardsModel();
 
 	public static final ResourceLocation textureLocation = new ResourceLocation(
-			MineFactoryReloadedCore.modId + ":blocks/tile.mfr.rednet.logic");
+			MFRProps.PREFIX + "blocks/tile.mfr.rednet.logic");
 	public static IconTransformation uvt;
 
 	static {

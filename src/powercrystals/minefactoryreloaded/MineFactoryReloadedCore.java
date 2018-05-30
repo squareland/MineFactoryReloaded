@@ -2,11 +2,7 @@ package powercrystals.minefactoryreloaded;
 
 //this import brought to you by the department of redundancies department, the department that brought you this import
 
-import codechicken.lib.CodeChickenLib;
-import cofh.CoFHCore;
-import cofh.cofhworld.CoFHWorld;
 import cofh.cofhworld.init.WorldHandler;
-import cofh.redstoneflux.RedstoneFlux;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
@@ -44,20 +40,11 @@ import powercrystals.minefactoryreloaded.world.MineFactoryReloadedWorldGen;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import static powercrystals.minefactoryreloaded.MineFactoryReloadedCore.*;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
-@Mod(modid = modId, name = modName, version = version, dependencies = dependencies,
+@Mod(modid = MFRProps.MOD_ID, name = MFRProps.MOD_NAME, version = MFRProps.VERSION, dependencies = MFRProps.DEPENDENCIES,
 		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
 public class MineFactoryReloadedCore extends BaseMod {
-
-	static{FluidRegistry.enableUniversalBucket();}
-	public static final String modId = "minefactoryreloaded";
-	public static final String modName = "MineFactory Reloaded";
-	public static final String version = "2.9.0B1";
-	public static final String dependencies = CoFHCore.VERSION_GROUP + CodeChickenLib.MOD_VERSION_DEP + RedstoneFlux.VERSION_GROUP +
-			CoFHWorld.VERSION_GROUP;
-	public static final String modNetworkChannel = "MFReloaded";
 
 	@SidedProxy(clientSide = "powercrystals.minefactoryreloaded.net.ClientProxy",
 			serverSide = "powercrystals.minefactoryreloaded.net.ServerProxy")
@@ -66,27 +53,9 @@ public class MineFactoryReloadedCore extends BaseMod {
 	public static SimpleNetworkWrapper networkWrapper = null;
 
 	public static Object balance = "balance";
-
-	public static final String prefix = "minefactoryreloaded:";
-	public static final String textureFolder = prefix + "textures/";
-	public static final String guiFolder = textureFolder + "gui/";
-	public static final String hudFolder = textureFolder + "hud/";
-	public static final String villagerFolder = textureFolder + "villager/";
-	public static final String tileEntityFolder = textureFolder + "tileentity/";
-	public static final String mobTextureFolder = textureFolder + "mob/";
-	public static final String modelTextureFolder = textureFolder + "itemmodels/";
-	public static final String armorTextureFolder = textureFolder + "armor/";
-	public static final String modelFolder = prefix + "models/";
-
-	public static final ResourceLocation CHEST_GEN = new ResourceLocation("mfr:villageZoolologist");
+	private LinkedList<Vanilla> recipeSets = new LinkedList<Vanilla>();
 
 	private static MineFactoryReloadedCore instance;
-	private LinkedList<Vanilla> recipeSets = new LinkedList<Vanilla>();
-	
-	static {
-
-		FluidRegistry.enableUniversalBucket();
-	}
 
 	public static MineFactoryReloadedCore instance() {
 
@@ -96,6 +65,11 @@ public class MineFactoryReloadedCore extends BaseMod {
 	public static Logger log() {
 
 		return instance.getLogger();
+	}
+
+	public MineFactoryReloadedCore() {
+
+		FluidRegistry.enableUniversalBucket();
 	}
 
 	@EventHandler
@@ -155,7 +129,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 
 		Zoologist.init();
 
-		//TODO likely remove, but added here at least for the test
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandler());
 
 		WorldHandler.registerReloadCallback(() -> {
@@ -244,7 +217,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 		}
 
 		powercrystals.minefactoryreloaded.core.OreDictionaryArbiter.initialize();
-		_log.info("Load Complete.");
 	}
 
 	@EventHandler
@@ -264,6 +236,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 	@Override
 	public String getModId() {
 
-		return modId;
+		return MFRProps.MOD_ID;
 	}
+
 }

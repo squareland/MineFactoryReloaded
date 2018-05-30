@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 
 public class ModelHelper {
@@ -34,7 +34,7 @@ public class ModelHelper {
 
 	public static void registerModel(Item item, int meta, String modelName, String variant) {
 
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MineFactoryReloadedCore.modId + ":" + modelName, variant));
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MFRProps.PREFIX + modelName, variant));
 	}
 
 	public static void registerModel(Block block, String propertyName, String[] values, IProperty<?>... propertiesToIgnore) {
@@ -76,7 +76,7 @@ public class ModelHelper {
 	public static void registerColoredItemModels(Item item, String modelName) {
 
 		for (MFRDyeColor color : MFRDyeColor.values()) {
-			ModelLoader.setCustomModelResourceLocation(item, color.ordinal(), new ModelResourceLocation(MineFactoryReloadedCore.modId + ":" + modelName, "color=" + color.getName()));
+			ModelLoader.setCustomModelResourceLocation(item, color.ordinal(), new ModelResourceLocation(MFRProps.PREFIX + modelName, "color=" + color.getName()));
 		}
 	}
 }

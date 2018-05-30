@@ -29,6 +29,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode;
@@ -391,7 +392,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		for (Type type : Type.GROUP_TYPES[_mfrMachineBlockIndex]) {
 			if (type == Type.ITEM_COLLECTOR) {
 				ModelResourceLocation regular = new ModelResourceLocation(
-						MineFactoryReloadedCore.modId + ":" + MachineStateMapper.getModelName(type), "type=" + type.getName());
+						MFRProps.PREFIX + MachineStateMapper.getModelName(type), "type=" + type.getName());
 				ModelResourceLocation tinker = new ModelResourceLocation(regular.toString() + ",active=true");
 				ModelLoader.registerItemVariants(item, regular, tinker);
 				ModelLoader.setCustomMeshDefinition(item,

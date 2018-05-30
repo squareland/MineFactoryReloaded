@@ -470,16 +470,16 @@ public abstract class MFRRegistry {
 	public static void registerBlock(Block block, ItemBlock itemBlock) {
 
 		String name = remapName(block.getUnlocalizedName());
-		blocks.put(name, block.setRegistryName(MineFactoryReloadedCore.modId, name));
+		blocks.put(name, block.setRegistryName(MFRProps.MOD_ID, name));
 		if (itemBlock != null) {
-			items.put(name, itemBlock.setRegistryName(MineFactoryReloadedCore.modId, name));
+			items.put(name, itemBlock.setRegistryName(MFRProps.MOD_ID, name));
 		}
 	}
 	
 	public static void registerItem(Item item) {
 
 		String name = remapName(item.getUnlocalizedName());
-		items.put(name, item.setRegistryName(MineFactoryReloadedCore.modId, name));
+		items.put(name, item.setRegistryName(MFRProps.MOD_ID, name));
 	}
 
 	public static Item getItemBlock(Block block) {

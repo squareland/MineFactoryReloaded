@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.item.base.ItemMulti;
 import powercrystals.minefactoryreloaded.render.item.RedNetCardItemRenderer;
 
@@ -49,7 +49,7 @@ public class ItemLogicUpgradeCard extends ItemMulti {
 	@SideOnly(Side.CLIENT)
 	public void registerModels() {
 
-		ModelResourceLocation rednetCard = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":rednet_card", "inventory");
+		ModelResourceLocation rednetCard = new ModelResourceLocation(MFRProps.PREFIX + "rednet_card", "inventory");
 		ModelLoader.setCustomMeshDefinition(this, stack -> rednetCard);
 		ModelLoader.registerItemVariants(this, rednetCard);
 		ModelRegistryHelper.register(rednetCard, new RedNetCardItemRenderer());

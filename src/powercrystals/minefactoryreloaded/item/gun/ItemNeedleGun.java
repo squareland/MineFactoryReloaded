@@ -15,6 +15,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
@@ -106,7 +107,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	public boolean initialize() {
 
 		super.initialize();
-		EntityRegistry.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "needle_gun"), EntityNeedle.class, "Needle", 2, MineFactoryReloadedCore.instance(), 160, 3, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(MFRProps.MOD_ID, "needle_gun"), EntityNeedle.class, "Needle", 2, MineFactoryReloadedCore.instance(), 160, 3, true);
 
 		return true;
 	}
@@ -116,7 +117,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	public void registerModels() {
 
 		ModelHelper.registerModel(this, "needle_gun");
-		ModelRegistryHelper.register(new ModelResourceLocation(MineFactoryReloadedCore.modId + ":needle_gun", "inventory"), new NeedleGunItemRenderer());
+		ModelRegistryHelper.register(new ModelResourceLocation(MFRProps.PREFIX + "needle_gun", "inventory"), new NeedleGunItemRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityNeedle.class, EntityNeedleRenderer::new);
 
 	}

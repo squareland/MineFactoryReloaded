@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.TRSRTransformation;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.render.model.RedNetCardsModel;
 
 import javax.annotation.Nonnull;
@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 public class RedNetCardItemRenderer extends BaseItemRenderer {
 
 	private static RedNetCardsModel cardsModel = new RedNetCardsModel();
-	public static ResourceLocation textureLocation = new ResourceLocation(MineFactoryReloadedCore.tileEntityFolder + "cards.png");
+	public static ResourceLocation textureLocation = new ResourceLocation(MFRProps.TILE_ENTITY_FOLDER + "cards.png");
 	
 	public RedNetCardItemRenderer() {
 

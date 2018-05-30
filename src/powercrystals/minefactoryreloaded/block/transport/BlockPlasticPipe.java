@@ -33,6 +33,7 @@ import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.BlockFactory;
@@ -219,7 +220,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 		ModelLoader.setCustomModelResourceLocation(MFRRegistry.getItemBlock(this), 0, location);
 
 		ModelRegistryHelper.register(PlasticPipeRenderer.MODEL_LOCATION,
-				new CCBakeryModel(MineFactoryReloadedCore.modId + ":blocks/tile.mfr.cable.plastic") {
+				new CCBakeryModel(MFRProps.PREFIX + "blocks/tile.mfr.cable.plastic") {
 
 					@Override
 					public TextureAtlasSprite getParticleTexture() {

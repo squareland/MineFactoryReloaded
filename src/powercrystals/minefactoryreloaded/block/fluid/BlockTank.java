@@ -26,8 +26,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.BlockFactory;
 import powercrystals.minefactoryreloaded.block.ItemBlockTank;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
@@ -197,7 +197,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 		ModelRegistryHelper.register(BlockTankRenderer.MODEL_LOCATION, new CCBakeryModel() {
 			@Override
 			public TextureAtlasSprite getParticleTexture() {
-				return TextureUtils.getTexture(MineFactoryReloadedCore.modId + ":blocks/machines/tile.mfr.tank.bottom");
+				return TextureUtils.getTexture(MFRProps.PREFIX + "blocks/machines/tile.mfr.tank.bottom");
 			}
 
 		});

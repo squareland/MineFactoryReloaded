@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 
 import javax.annotation.Nonnull;
 import javax.vecmath.Matrix4f;
@@ -25,12 +25,12 @@ public class NeedleGunItemRenderer extends BaseItemRenderer {
 
 	private static CCModel gunModel;
 	private static CCModel magazineModel;
-	private static ResourceLocation textureLocation = new ResourceLocation(MineFactoryReloadedCore.modelTextureFolder + "needle_gun.png");
+	private static ResourceLocation textureLocation = new ResourceLocation(MFRProps.MODEL_TEXTURE_FOLDER + "needle_gun.png");
 
 	public NeedleGunItemRenderer() {
 
 		Map<String, CCModel> models = OBJParser
-				.parseModels(new ResourceLocation(MineFactoryReloadedCore.modelFolder + "needle_gun.obj"), new SwapYZ());
+				.parseModels(new ResourceLocation(MFRProps.MODEL_FOLDER + "needle_gun.obj"), new SwapYZ());
 		gunModel = models.get("gun");
 		magazineModel = models.get("magazine");
 

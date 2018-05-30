@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.*;
@@ -225,7 +226,7 @@ public class MFRThings {
 			syringeEmptyItem = new ItemSyringeLiquid();
 		else
 			syringeEmptyItem = (new ItemFactory()).setModelLocation("syringe", "variant=empty")
-					.setUnlocalizedName("mfr.syringe.empty").setRegistryName(MineFactoryReloadedCore.modId, "syringe_empty");
+					.setUnlocalizedName("mfr.syringe.empty").setRegistryName(MFRProps.MOD_ID, "syringe_empty");
 		syringeHealthItem = new ItemSyringeHealth();
 		syringeGrowthItem = new ItemSyringeGrowth();
 		syringeZombieItem = new ItemSyringeZombie();
@@ -294,12 +295,12 @@ public class MFRThings {
 		rocketItem = new ItemRocket();
 
 		EntityRegistry
-				.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "pink_slime"), EntityPinkSlime.class, "mfrEntityPinkSlime", 1, MineFactoryReloadedCore.instance(), 160, 5,
+				.registerModEntity(new ResourceLocation(MFRProps.MOD_ID, "pink_slime"), EntityPinkSlime.class, "mfrEntityPinkSlime", 1, MineFactoryReloadedCore.instance(), 160, 5,
 						true);
 		LootTableList.register(EntityPinkSlime.PINK_SLIME);
 
 		EntityRegistry
-				.registerModEntity(new ResourceLocation(MineFactoryReloadedCore.modId, "debug_tracker"), DebugTracker.class, "DebugTracker", 99, MineFactoryReloadedCore.instance(), 250, 10, true);
+				.registerModEntity(new ResourceLocation(MFRProps.MOD_ID, "debug_tracker"), DebugTracker.class, "DebugTracker", 99, MineFactoryReloadedCore.instance(), 250, 10, true);
 
 
 		for (IInitializer init : initList) {

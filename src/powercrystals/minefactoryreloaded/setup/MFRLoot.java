@@ -11,9 +11,8 @@ import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 
-import java.util.Collections;
 import java.util.List;
 
 public class MFRLoot {
@@ -33,8 +32,8 @@ public class MFRLoot {
 	
 	private	static final String CHESTS_PREFIX = "minecraft:chests/";
 	private	static final String FISHING_PREFIX = "minecraft:gameplay/fishing/";
-	public static final ResourceLocation ZOOLOGIST_CHEST = new ResourceLocation(MineFactoryReloadedCore.modId + ":chests/zoologist");
-	public static final ResourceLocation FACTORY_BAG = new ResourceLocation(MineFactoryReloadedCore.modId + ":factory_bag");
+	public static final ResourceLocation ZOOLOGIST_CHEST = new ResourceLocation(MFRProps.PREFIX + "chests/zoologist");
+	public static final ResourceLocation FACTORY_BAG = new ResourceLocation(MFRProps.PREFIX + "factory_bag");
 	
 	private static final MFRLoot INSTANCE = new MFRLoot();
 	private MFRLoot() {}
@@ -52,7 +51,7 @@ public class MFRLoot {
 	private static void registerLootTables(List<String> list, String prefix) {
 		
 		for(String s : list) {
-			LootTableList.register(new ResourceLocation(MineFactoryReloadedCore.modId, prefix + s));
+			LootTableList.register(new ResourceLocation(MFRProps.MOD_ID, prefix + s));
 		}
 	}
 
@@ -79,6 +78,6 @@ public class MFRLoot {
 	}
 
 	private LootEntryTable getInjectEntry(String name, int weight) {
-		return new LootEntryTable(new ResourceLocation(MineFactoryReloadedCore.modId, "inject/" + name), weight, 0, new LootCondition[0], "mfr_inject_entry");
+		return new LootEntryTable(new ResourceLocation(MFRProps.MOD_ID, "inject/" + name), weight, 0, new LootCondition[0], "mfr_inject_entry");
 	}
 }

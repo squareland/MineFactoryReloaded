@@ -17,7 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.block.decor.BlockFactoryGlassPane;
 
 import javax.annotation.Nonnull;
@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 
-	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":stained_glass_pane", "normal");
+	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MFRProps.PREFIX + "stained_glass_pane", "normal");
 	public static final FactoryGlassPaneRenderer INSTANCE = new FactoryGlassPaneRenderer();
 	private CCModel post;
 	private Map<EnumFacing, CCModel> sideModels = new HashMap<>();

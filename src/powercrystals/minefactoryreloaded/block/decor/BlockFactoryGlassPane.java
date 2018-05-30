@@ -31,6 +31,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
@@ -256,7 +257,7 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 						+ "," + (state.getValue(BlockPane.WEST) ? 1 : 0)
 						+ "," + (state.getValue(BlockPane.EAST) ? 1 : 0)
 		);
-		ModelResourceLocation glassPaneItemModel = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":stained_glass_pane", "inventory");
+		ModelResourceLocation glassPaneItemModel = new ModelResourceLocation(MFRProps.PREFIX + "stained_glass_pane", "inventory");
 		Item item = MFRRegistry.getItemBlock(this);
 		ModelLoader.setCustomMeshDefinition(item, stack -> glassPaneItemModel);
 		ModelLoader.registerItemVariants(item, glassPaneItemModel);

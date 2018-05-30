@@ -20,8 +20,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.block.fluid.BlockExplodingFluid;
 import powercrystals.minefactoryreloaded.block.fluid.BlockFactoryFluid;
 import powercrystals.minefactoryreloaded.block.fluid.BlockPinkSlimeFluid;
@@ -316,11 +316,11 @@ public class MFRFluids {
 		Item item = evt.getObject().getItem();
 		if ((item == Items.GLASS_BOTTLE && PotionUtils.getEffectsFromStack(evt.getObject()).isEmpty()) ||
 				item == MFRThings.milkBottleItem) {
-			evt.addCapability(new ResourceLocation(MineFactoryReloadedCore.modId + ":milk_bottle_cap"),
+			evt.addCapability(new ResourceLocation(MFRProps.PREFIX + "milk_bottle_cap"),
 					new FluidHandlerItemStackSimpleSingleFluid(evt.getObject(), MILK_BOTTLE, GLASS_BOTTLE,
 							MFRFluids.getFluid("milk"), Fluid.BUCKET_VOLUME));
 		} else if (item == Items.BOWL || item == Items.MUSHROOM_STEW) {
-			evt.addCapability(new ResourceLocation(MineFactoryReloadedCore.modId + ":mushroom_soup_cap"),
+			evt.addCapability(new ResourceLocation(MFRProps.PREFIX + "mushroom_soup_cap"),
 					new FluidHandlerItemStackSimpleSingleFluid(evt.getObject(), MUSHROOM_STEW, BOWL,
 							MFRFluids.getFluid("mushroom_soup"), Fluid.BUCKET_VOLUME));
 		}

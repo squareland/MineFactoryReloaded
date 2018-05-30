@@ -5,12 +5,12 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSlime;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.util.ResourceLocation;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 
 public class EntityPinkSlimeRenderer extends RenderSlime {
 
 	private static final ResourceLocation pinkSlimeTexture = new ResourceLocation(
-			MineFactoryReloadedCore.mobTextureFolder + "pinkslime.png");
+			MFRProps.MOB_TEXTURE_FOLDER + "pinkslime.png");
 
 	public EntityPinkSlimeRenderer(RenderManager renderManager, ModelBase modelBase, float shadowSize) {
 

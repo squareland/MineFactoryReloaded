@@ -23,7 +23,7 @@ import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.render.model.RedNetHistorianModel;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetHistorian;
 
@@ -37,7 +37,7 @@ public class RedNetHistorianRenderer extends TileEntitySpecialRenderer<TileEntit
 		implements IItemRenderer, IBakedModel {
 
 	private static final ResourceLocation historianTex = new ResourceLocation(
-			MineFactoryReloadedCore.tileEntityFolder + "historian.png");
+			MFRProps.TILE_ENTITY_FOLDER + "historian.png");
 	private static ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformations;
 
 	private RedNetHistorianModel model;

@@ -30,6 +30,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetDecorative;
@@ -235,7 +236,7 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	@SideOnly(Side.CLIENT)
 	public void registerModels() {
 
-		ModelResourceLocation glassItemModel = new ModelResourceLocation(MineFactoryReloadedCore.modId + ":stained_glass", "inventory");
+		ModelResourceLocation glassItemModel = new ModelResourceLocation(MFRProps.PREFIX + "stained_glass", "inventory");
 		Item item = MFRRegistry.getItemBlock(this);
 		ModelLoader.setCustomMeshDefinition(item, stack -> glassItemModel);
 		ModelLoader.registerItemVariants(item, glassItemModel);

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
@@ -36,7 +37,7 @@ public class ItemFactoryArmor extends ItemArmorCore implements IInitializer, IMo
 
 		super(mat, type);
 		setMaxStackSize(1);
-		String prefix = MineFactoryReloadedCore.armorTextureFolder + getName(mat);
+		String prefix = MFRProps.ARMOR_TEXTURE_FOLDER + getName(mat);
 		setArmorTextures(new String[] { prefix + "_layer_1.png", prefix + "_layer_2.png" });
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
