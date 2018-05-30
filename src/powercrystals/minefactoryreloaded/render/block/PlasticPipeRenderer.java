@@ -153,6 +153,10 @@ public class PlasticPipeRenderer implements ISimpleBlockBakery {
 
 		TileEntityPlasticPipe pipe = (TileEntityPlasticPipe) world.getTileEntity(pos);
 
+		if (pipe == null) {
+			pipe = new TileEntityPlasticPipe();
+		}
+
 		for (EnumFacing side : EnumFacing.VALUES) {
 			ConnectionType connType = pipe.getSideConnection(side.ordinal());
 			if((connType == OUTPUT || connType == EXTRACT || connType == EXTRACT_POWERED) && pipe.isCableOnly())

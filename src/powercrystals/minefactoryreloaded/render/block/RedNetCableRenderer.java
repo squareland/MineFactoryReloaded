@@ -205,6 +205,8 @@ public class RedNetCableRenderer implements ISimpleBlockBakery {
 
 		if (cable instanceof TileEntityRedNetEnergy) {
 			energyCable = (TileEntityRedNetEnergy)cable;
+		} else if (cable == null) {
+			cable = new TileEntityRedNetCable();
 		}
 
 		EnumFacing[] dirs = EnumFacing.VALUES;
