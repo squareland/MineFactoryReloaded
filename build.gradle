@@ -1,3 +1,5 @@
+import java.util.regex.Pattern
+
 // This simple grabs the latest 'forge' plugin, or ForgeGradle, from Forge's servers.
 buildscript {
     repositories {
@@ -22,6 +24,11 @@ apply plugin: 'maven'
 
 group = 'powercrystals' // Your main package.
 archivesBaseName = 'MineFactoryReloaded'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def mod_version = pullVersion()
 
 repositories {
     maven {
@@ -53,9 +60,6 @@ dependencies {
     //deobfCompile "com.mod-buildcraft:buildcraft-api:${buildcraft_version}"
     //deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 version = "${mod_version}." + (System.getenv("BUILD_NUMBER") ?: "1")
 
 minecraft {
@@ -64,17 +68,6 @@ minecraft {
     runDir = "run"
     replace '${mod_version}', mod_version
     makeObfSourceJar = false
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
-        resources {
-            srcDir 'resources'
-        }
-    }
 }
 
 processResources {
@@ -115,6 +108,20 @@ task srcJar(type: Jar) {
 artifacts {
     archives deobfJar
     archives srcJar
+}
+
+def pullVersion() {
+    def file = file("src/main/java/powercrystals/minefactoryreloaded/MFRProps.java")
+    def version = ""
+    def pattern = Pattern.compile("VERSION = \"([^\"]*)\";")
+    file.eachLine { String s ->
+        def matcher = pattern.matcher(s)
+        if (matcher.find()) {
+            version = matcher.group(1)
+            return
+        }
+    }
+    return version
 }
 
 // Configure an upload task.
