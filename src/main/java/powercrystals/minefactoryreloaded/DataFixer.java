@@ -11,6 +11,7 @@ public class DataFixer {
 	private static final IFixType TYPE = null;
 
 	static void init() {
+
 		ModFixs fixer = FMLCommonHandler.instance().getDataFixer().init(MFRProps.MOD_ID, MFRProps.DATA_VERSION);
 		fixer.registerFix(FixTypes.BLOCK_ENTITY, new TileIdFix());
 	}
