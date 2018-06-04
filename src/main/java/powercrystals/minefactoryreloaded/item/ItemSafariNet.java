@@ -278,7 +278,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				if (entity.isRiding() || entity.isBeingRidden()) {
 					return false;
 				}
-				
+
 				entity.writeToNBT(entityTagCompound);
 
 				entityTagCompound.setString("id", EntityList.getKey(entity).toString());
