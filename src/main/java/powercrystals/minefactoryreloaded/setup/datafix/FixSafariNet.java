@@ -128,6 +128,7 @@ public class FixSafariNet implements IDataWalker, IFixableData {
 					itemData.setTag("EntityData", mystery);
 				}
 				tag.setTag("tag", itemData);
+				tag.setShort("Damage", (short) 0);
 			}
 		}
 		return tag;
