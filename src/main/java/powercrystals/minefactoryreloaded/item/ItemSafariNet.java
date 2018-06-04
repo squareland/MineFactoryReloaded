@@ -45,6 +45,7 @@ import powercrystals.minefactoryreloaded.setup.village.Zoologist;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -223,8 +224,10 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 				((EntityLiving) e).playLivingSound();
 			}
 
-			Entity riddenByEntity = e.isBeingRidden() ? e.getPassengers().get(0) : null;
-			while (riddenByEntity != null) {
+			LinkedList<Entity> ridingEntities = new LinkedList<>();
+			ridingEntities.addAll(e.getPassengers());
+			while (ridingEntities.size() > 0) {
+				Entity riddenByEntity = ridingEntities.removeFirst();
 				riddenByEntity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
 
 				world.spawnEntity(riddenByEntity);
@@ -232,7 +235,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 					((EntityLiving) riddenByEntity).playLivingSound();
 				}
 
-				riddenByEntity = riddenByEntity.isBeingRidden() ? riddenByEntity.getPassengers().get(0) : null;
+				ridingEntities.addAll(riddenByEntity.getPassengers());
 			}
 		}
 
@@ -265,7 +268,17 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			NBTTagCompound entityTagCompound = new NBTTagCompound();
 
 			{
-				// TODO: unmount passengers?
+				if (entity.isRiding()) {
+					entity.dismountRidingEntity();
+				}
+				if (entity.isBeingRidden()) {
+					for (Entity e : entity.getPassengers())
+						e.dismountRidingEntity();
+				}
+				if (entity.isRiding() || entity.isBeingRidden()) {
+					return false;
+				}
+				
 				entity.writeToNBT(entityTagCompound);
 
 				entityTagCompound.setString("id", EntityList.getKey(entity).toString());
