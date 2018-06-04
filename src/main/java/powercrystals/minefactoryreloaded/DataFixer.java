@@ -6,6 +6,7 @@ import net.minecraftforge.common.util.CompoundDataFixer;
 import net.minecraftforge.common.util.ModFixs;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import powercrystals.minefactoryreloaded.setup.datafix.FixMFRInventories;
+import powercrystals.minefactoryreloaded.setup.datafix.FixSafariNet;
 import powercrystals.minefactoryreloaded.setup.datafix.TileIdFix;
 
 public class DataFixer {
@@ -18,8 +19,11 @@ public class DataFixer {
 		CompoundDataFixer datafixer = FMLCommonHandler.instance().getDataFixer();
 		ModFixs fixer = datafixer.init(MFRProps.MOD_ID, MFRProps.DATA_VERSION);
 		fixer.registerFix(FixTypes.BLOCK_ENTITY, new TileIdFix());
-		// "deprecated" then provide me an alternative, i *need* a walker, forge.
-		datafixer.registerWalker(FixTypes.BLOCK_ENTITY, new FixMFRInventories());
+		fixer.registerFix(FixTypes.ITEM_INSTANCE, new FixSafariNet());
+
+		// this method name implies something else
+		datafixer.registerVanillaWalker(FixTypes.BLOCK_ENTITY, new FixMFRInventories());
+		datafixer.registerVanillaWalker(FixTypes.ITEM_INSTANCE, new FixSafariNet());
 	}
 
 }

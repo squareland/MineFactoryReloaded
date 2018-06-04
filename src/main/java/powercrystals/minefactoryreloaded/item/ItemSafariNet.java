@@ -24,6 +24,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -67,6 +68,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 	@Override
 	public String getUnlocalizedName() {
+
 		return super.getUnlocalizedName();
 	}
 
@@ -92,22 +94,23 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.nametag"));
 		}
 
-		if (stack.getTagCompound() == null) {
+		if (getEntityData(stack) == null) {
 			return;
 		}
 
-		if (stack.getTagCompound().getBoolean("hide")) {
+		if (getEntityData(stack).getBoolean("mfr:hide")) {
 			tooltip.add(I18n.translateToLocal("tip.info.mfr.safarinet.mystery"));
 		} else {
-			tooltip.add(MFRUtil.localize("entity.", stack.getTagCompound().getString("entityName")));
-			// See Entity.getEntityName()
-			Class<?> c = EntityList.getClass(new ResourceLocation(stack.getTagCompound().getString("id")));
+			ResourceLocation entityId = new ResourceLocation(getEntityData(stack).getString("id"));
+			tooltip.add(MFRUtil.localize("entity.", EntityList.getTranslationName(entityId)));
+			// See Entity.getName()
+			Class<?> c = EntityList.getClass(entityId);
 			if (c == null) {
 				return;
 			}
 			for (ISafariNetHandler handler : MFRRegistry.getSafariNetHandlers()) {
 				if (handler.validFor().isAssignableFrom(c)) {
-					handler.addInformation(stack, world, tooltip, tooltipFlag);
+					handler.addInformation(getEntityData(stack), world, tooltip, tooltipFlag);
 				}
 			}
 		}
@@ -124,9 +127,9 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		} else if (isEmpty(itemstack)) {
 			return EnumActionResult.SUCCESS;
 		} else {
-			if (player != null && player.capabilities.isCreativeMode) {
+			if (player.capabilities.isCreativeMode) {
 				itemstack = itemstack.copy();
-				NBTTagCompound tag = itemstack.getTagCompound();
+				NBTTagCompound tag = getEntityData(itemstack);
 				if (tag != null) {
 					tag.removeTag("UUID");
 					tag.removeTag("UUIDMost");
@@ -153,11 +156,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			spawnOffsetY = 0.5D;
 		}
 
-		if (itemstack.getItemDamage() != 0) {
-			spawnedCreature = spawnCreature(world, itemstack.getItemDamage(), pos.getX() + 0.5D, pos.getY() + spawnOffsetY, pos.getZ() + 0.5D);
-		} else {
-			spawnedCreature = spawnCreature(world, itemstack.getTagCompound(), pos.getX() + 0.5D, pos.getY() + spawnOffsetY, pos.getZ() + 0.5D, side);
-		}
+		spawnedCreature = spawnCreature(world, getEntityData(itemstack), pos.getX() + 0.5D, pos.getY() + spawnOffsetY, pos.getZ() + 0.5D, side);
 
 		if (spawnedCreature != null) {
 			if (itemstack.hasDisplayName()) {
@@ -193,7 +192,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		int offsetZ = side.getFrontOffsetZ();
 
 		Entity e;
-		if (mobTag.getBoolean("hide")) {
+		if (mobTag.getBoolean("mfr:hide") && !mobTag.hasKey("id", Constants.NBT.TAG_STRING)) {
 			List<RandomMobProvider> mobs = new ArrayList<RandomMobProvider>();
 
 			for (IRandomMobProvider p : MFRRegistry.getRandomMobProviders()) {
@@ -205,6 +204,8 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			pos.set(0, new NBTTagDouble(x));
 			pos.set(1, new NBTTagDouble(y));
 			pos.set(2, new NBTTagDouble(z));
+			mobTag.setTag("Pos", pos);
+			mobTag.removeTag("Dimension");
 
 			e = EntityList.createEntityFromNBT(mobTag, world);
 		}
@@ -213,9 +214,9 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 			AxisAlignedBB bb = e.getEntityBoundingBox();
 
 			e.setLocationAndAngles(x + (bb.maxX - bb.minX) * 0.5 * offsetX,
-				y + (bb.maxY - bb.minY) * 0.5 * offsetY,
-				z + (bb.maxZ - bb.minZ) * 0.5 * offsetZ,
-				world.rand.nextFloat() * 360.0F, 0.0F);
+					y + (bb.maxY - bb.minY) * 0.5 * offsetY,
+					z + (bb.maxZ - bb.minZ) * 0.5 * offsetZ,
+					world.rand.nextFloat() * 360.0F, 0.0F);
 
 			world.spawnEntity(e);
 			if (e instanceof EntityLiving) {
@@ -236,26 +237,6 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 
 		return e;
-	}
-
-	private static Entity spawnCreature(World world, int mobId, double x, double y, double z) {
-
-		if (!EntityList.ENTITY_EGGS.containsKey(Integer.valueOf(mobId))) {
-			return null;
-		} else {
-			Entity e = EntityList.createEntityByID(mobId, world);
-
-			if (e != null) {
-				e.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
-				if (e instanceof EntityLiving)
-					((EntityLiving) e).onInitialSpawn(world.getDifficultyForLocation(e.getPosition()), null);
-				world.spawnEntity(e);
-				if (e instanceof EntityLiving)
-					((EntityLiving) e).playLivingSound();
-			}
-
-			return e;
-		}
 	}
 
 	@Override
@@ -281,19 +262,19 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		}
 		else if (!(entity instanceof EntityPlayer)) {
 			boolean flag = player != null && player.capabilities.isCreativeMode;
-			NBTTagCompound c = new NBTTagCompound();
+			NBTTagCompound entityTagCompound = new NBTTagCompound();
 
-			synchronized (entity) { //TODO why is this block synchronized? as far as I can see it runs in the main thread
-				entity.writeToNBT(c);
+			{
+				// TODO: unmount passengers?
+				entity.writeToNBT(entityTagCompound);
 
-				c.setString("id", EntityList.getKey(entity).toString());
-				c.setString("entityName", EntityList.getEntityString(entity));
+				entityTagCompound.setString("id", EntityList.getKey(entity).toString());
 
 				if (entity.isDead)
 					return false;
-
 				if (!flag)
 					entity.setDead();
+
 				if (flag || entity.isDead) {
 					flag = false;
 					itemstack.shrink(1);
@@ -302,18 +283,14 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 						itemstack = itemstack.copy();
 					}
 					itemstack.setCount(1);
-					if (itemstack.hasTagCompound()) {
-						itemstack.getTagCompound().merge(c);
-					} else {
-						itemstack.setTagCompound(c);
-					}
+					itemstack.setTagInfo("EntityData", entityTagCompound);
 					if (flag && (player == null || !player.inventory.addItemStackToInventory(itemstack)))
 						UtilInventory.dropStackInAir(entity.world, entity, itemstack);
 					else if (flag) {
 						player.openContainer.detectAndSendChanges();
 						((EntityPlayerMP) player).sendAllContents(player.openContainer,
-							player.openContainer.getInventory());
-					} else if (player != null && hand != null){
+								player.openContainer.getInventory());
+					} else if (player != null && hand != null) {
 						player.setHeldItem(hand, itemstack);
 					}
 
@@ -328,7 +305,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 	public static boolean isEmpty(@Nonnull ItemStack s) {
 
-		return !isSafariNet(s) || (s.getItemDamage() == 0 && (s.getTagCompound() == null || (!s.getTagCompound().hasKey("id") && !s.getTagCompound().getBoolean("hide"))));
+		return !isSafariNet(s) || (getEntityData(s) == null);
 	}
 
 	public static boolean isSingleUse(@Nonnull ItemStack s) {
@@ -346,27 +323,25 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 		if (isSafariNet(s)) {
 			NBTTagCompound c = new NBTTagCompound();
-			c.setBoolean("hide", true);
-			s.setTagCompound(c);
+			c.setBoolean("mfr:hide", true);
+			s.setTagInfo("EntityData", c);
 		}
 		return s;
+	}
+
+	public static NBTTagCompound getEntityData(@Nonnull ItemStack s) {
+
+		return s.hasTagCompound() && s.getTagCompound().hasKey("EntityData", Constants.NBT.TAG_COMPOUND) ? s.getTagCompound().getCompoundTag("EntityData") : null;
 	}
 
 	public static Class<?> getEntityClass(@Nonnull ItemStack s) {
 
 		if (!isSafariNet(s) || isEmpty(s))
 			return null;
-		if (s.getItemDamage() != 0) {
-			int mobId = s.getItemDamage();
-			if (!EntityList.ENTITY_EGGS.containsKey(Integer.valueOf(mobId)))
-				return null;
-			return EntityList.getClassFromID(mobId);
-		} else {
-			String mobId = s.getTagCompound().getString("id");
-			if (!ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(mobId)))
-				return null;
-			return (Class<?>) EntityList.getClass(new ResourceLocation(mobId));
-		}
+		String mobId = getEntityData(s).getString("id");
+		if (!ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(mobId)))
+			return null;
+		return (Class<?>) EntityList.getClass(new ResourceLocation(mobId));
 	}
 
 	@Override
@@ -402,23 +377,27 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 		final Random colorRand = new Random();
 		final IItemColor colorHandler = new IItemColor() {
+
 			@Override
 			@SideOnly(Side.CLIENT)
 			public int colorMultiplier(@Nonnull ItemStack stack, int tintIndex) {
 
-				if (stack.getItemDamage() == 0 && (stack.getTagCompound() == null)) {
+				if (getEntityData(stack) == null) {
 					return 16777215;
 				}
-				if (stack.getTagCompound() != null && stack.getTagCompound().getBoolean("hide")) {
+
+				if (getEntityData(stack).getBoolean("mfr:hide")) {
 					World world = Minecraft.getMinecraft().world;
-					colorRand.setSeed(world.getSeed() ^ (world.getTotalWorldTime() / (7 * 20)) * tintIndex);
-					if (tintIndex == 2)
+					colorRand.setSeed(world.getSeed() ^ (world.getTotalWorldTime() / (7 * 20)));
+					if (tintIndex == 2) {
+						colorRand.nextDouble(); // skip some data
 						return colorRand.nextInt();
-					else if (tintIndex == 1)
+					} else if (tintIndex == 1)
 						return colorRand.nextInt();
 					else
 						return 16777215;
 				}
+
 				EntityList.EntityEggInfo egg = getEgg(stack);
 
 				if (egg == null) {
@@ -434,12 +413,12 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 			private EntityList.EntityEggInfo getEgg(@Nonnull ItemStack safariStack) {
 
-				if (safariStack.getTagCompound() == null) {
+				if (getEntityData(safariStack) == null) {
 					return null;
 				}
 
 				for (IMobEggHandler handler : MFRRegistry.getModMobEggHandlers()) {
-					EntityList.EntityEggInfo egg = handler.getEgg(safariStack);
+					EntityList.EntityEggInfo egg = handler.getEgg(getEntityData(safariStack));
 					if (egg != null) {
 						return egg;
 					}

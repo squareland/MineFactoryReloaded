@@ -122,10 +122,10 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 			setIdleTicks(getIdleTicksMax());
 			return false;
 		}
-		NBTTagCompound itemTag = item.getTagCompound();
+		NBTTagCompound entityData = ItemSafariNet.getEntityData(item);
 
 		if (_spawn == null) {
-			String entityID = itemTag.getString("id");
+			String entityID = entityData.getString("id");
 			boolean isBlackListed = MFRRegistry.getAutoSpawnerBlacklist().contains(entityID);
 			blackList:
 			if (!isBlackListed) {
@@ -156,7 +156,7 @@ public class TileEntityAutoSpawner extends TileEntityFactoryPowered {
 			EntityLivingBase spawnedLiving = (EntityLivingBase) spawnedEntity;
 
 			if (_spawnExact) {
-				NBTTagCompound tag = itemTag.copy();
+				NBTTagCompound tag = entityData.copy();
 				spawnedLiving.readEntityFromNBT(tag);
 				for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
 					if (spawnedLiving instanceof EntityLiving)

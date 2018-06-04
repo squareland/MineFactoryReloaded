@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.api;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -23,8 +23,8 @@ public interface ISafariNetHandler {
 	/**
 	 * Called to add information regarding a mob contained in a SafariNet.
 	 *
-	 * @param safariNetStack
-	 *            The Safari Net that is requesting information.
+	 * @param safariNetEntity
+	 *            The Entity a Safari Net is requesting information for.
 	 * @param world
 	 *            World reference.
 	 * @param infoList
@@ -32,6 +32,6 @@ public interface ISafariNetHandler {
 	 * @param tooltipFlag
 	 *            Normal or Advanced tooltip.
 	 */
-	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag);
+	public void addInformation(@Nonnull NBTTagCompound safariNetEntity, World world, List<String> infoList, ITooltipFlag tooltipFlag);
 
 }

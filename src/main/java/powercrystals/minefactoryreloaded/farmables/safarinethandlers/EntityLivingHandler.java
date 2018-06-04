@@ -2,7 +2,6 @@ package powercrystals.minefactoryreloaded.farmables.safarinethandlers;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
@@ -11,6 +10,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.minecraft.util.text.TextFormatting.DARK_GRAY;
+import static net.minecraft.util.text.TextFormatting.GRAY;
 import static net.minecraft.util.text.TextFormatting.ITALIC;
 
 public class EntityLivingHandler implements ISafariNetHandler {
@@ -22,16 +22,16 @@ public class EntityLivingHandler implements ISafariNetHandler {
 	}
 
 	@Override
-	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
+	public void addInformation(@Nonnull NBTTagCompound tag, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
 
-		NBTTagCompound tag = safariNetStack.getTagCompound();
-		if (tag.hasKey("CustomName")) {
-			String name = tag.getString("CustomName");
-			if (name != null && !name.isEmpty()) {
-				infoList.add("Name: " + name);
-			}
-		}
+		if (tag.getBoolean("LeftHanded"))
+			infoList.add(GRAY + "Southpaw");
+
+		if (tooltipFlag.isAdvanced() && tag.getBoolean("NoAI"))
+			infoList.add(DARK_GRAY + (ITALIC + "Brain Dead"));
+
 		if (tooltipFlag.isAdvanced() && tag.getBoolean("PersistenceRequired"))
-			infoList.add(DARK_GRAY + (ITALIC + "Persistant"));
+			infoList.add(DARK_GRAY + (ITALIC + "Persistent"));
 	}
+
 }

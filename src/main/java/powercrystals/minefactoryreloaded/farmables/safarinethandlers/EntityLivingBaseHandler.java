@@ -2,7 +2,6 @@ package powercrystals.minefactoryreloaded.farmables.safarinethandlers;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
@@ -26,17 +25,23 @@ public class EntityLivingBaseHandler implements ISafariNetHandler {
 	}
 
 	@Override
-	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
+	public void addInformation(@Nonnull NBTTagCompound tag, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
 
-		NBTTagCompound tag = safariNetStack.getTagCompound();
+		if (tag.hasKey("CustomName")) {
+			String name = tag.getString("CustomName");
+			if (!name.isEmpty()) {
+				infoList.add("Name: " + name);
+			}
+		}
+
+		if (tag.getBoolean("Silent"))
+			infoList.add(GOLD + (ITALIC + "Silent"));
+
 		float abs = tag.getFloat("AbsorptionAmount");
 		if (abs > 0)
 			infoList.add("Absorption: " + abs);
 
-		if (tag.hasKey("HealF"))
-			infoList.add("Health: " + new BigDecimal(tag.getFloat("HealF")).toPlainString());
-		else
-			infoList.add("Health: " + (tag.getShort("Health")));
+		infoList.add("Health: " + new BigDecimal(tag.getFloat("Health")).toPlainString());
 
 		if (tooltipFlag.isAdvanced()) {
 			if (tag.hasKey("ActiveEffects")) {
@@ -61,5 +66,9 @@ public class EntityLivingBaseHandler implements ISafariNetHandler {
 					infoList.add(MFRUtil.shiftForInfo());
 			}
 		}
+
+		if (tooltipFlag.isAdvanced() && tag.getBoolean("Glowing"))
+			infoList.add(YELLOW + (UNDERLINE + "Glowing"));
 	}
+
 }

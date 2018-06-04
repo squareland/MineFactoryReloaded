@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.farmables.safarinethandlers;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
 
@@ -18,10 +18,11 @@ public class EntityAgeableHandler implements ISafariNetHandler {
 	}
 
 	@Override
-	public void addInformation(@Nonnull ItemStack safariNetStack, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
+	public void addInformation(@Nonnull NBTTagCompound safariNetEntity, World world, List<String> infoList, ITooltipFlag tooltipFlag) {
 
-		if (safariNetStack.getTagCompound().getInteger("Age") < 0) {
+		if (safariNetEntity.getInteger("Age") < 0) {
 			infoList.add("Baby");
 		}
 	}
+
 }

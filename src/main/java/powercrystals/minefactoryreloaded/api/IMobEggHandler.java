@@ -1,7 +1,7 @@
 package powercrystals.minefactoryreloaded.api;
 
 import net.minecraft.entity.EntityList.EntityEggInfo;
-import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nonnull;
 
@@ -14,12 +14,12 @@ import javax.annotation.Nonnull;
 public interface IMobEggHandler {
 
 	/**
-	 * @param safariNet
-	 *            The Safari Net that is looking for egg info.
+	 * @param safariNetEntity
+	 *            The Entity NBT the Safari Net is looking for egg info.
 	 *
 	 * @return An EntityEggInfo, or null if this instance cannot handle this
 	 *         mob.
 	 */
-	public EntityEggInfo getEgg(@Nonnull ItemStack safariNet);
+	public EntityEggInfo getEgg(@Nonnull NBTTagCompound safariNetEntity);
 
 }
