@@ -220,11 +220,11 @@ public class ItemPortaSpawner extends ItemFactory {
 		Block block = world.getBlockState(pos).getBlock();
 		if (block.equals(_block)) {
 			block.onBlockPlacedBy(world, pos, state, player, stack);
-			block.onBlockPlacedBy(world, pos, state, player, stack);
 			TileEntity te = world.getTileEntity(pos);
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag.hasKey(spawnerTag))
-				tag = tag.getCompoundTag(spawnerTag);
+			NBTTagCompound source = te.writeToNBT(new NBTTagCompound());
+			NBTTagCompound tag = stack.getSubCompound(spawnerTag);
+			source.merge(tag);
+			tag = source;
 			tag.setInteger("x", pos.getX());
 			tag.setInteger("y", pos.getY());
 			tag.setInteger("z", pos.getZ());

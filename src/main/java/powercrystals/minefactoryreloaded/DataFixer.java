@@ -6,6 +6,7 @@ import net.minecraftforge.common.util.CompoundDataFixer;
 import net.minecraftforge.common.util.ModFixs;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import powercrystals.minefactoryreloaded.setup.datafix.FixMFRInventories;
+import powercrystals.minefactoryreloaded.setup.datafix.FixPortaSpawner;
 import powercrystals.minefactoryreloaded.setup.datafix.FixSafariNet;
 import powercrystals.minefactoryreloaded.setup.datafix.TileIdFix;
 
@@ -24,6 +25,7 @@ public class DataFixer {
 		// this method name implies something else
 		datafixer.registerVanillaWalker(FixTypes.BLOCK_ENTITY, new FixMFRInventories());
 		datafixer.registerVanillaWalker(FixTypes.ITEM_INSTANCE, new FixSafariNet());
+		datafixer.registerVanillaWalker(FixTypes.ITEM_INSTANCE, new FixPortaSpawner());
 	}
 
 }
