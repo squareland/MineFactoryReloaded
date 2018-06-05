@@ -6,8 +6,8 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 @IFMLLoadingPlugin.TransformerExclusions({ "powercrystals.minefactoryreloaded.asm." })
-@IFMLLoadingPlugin.SortingIndex(1001)
-@IFMLLoadingPlugin.Name("MineFactoryReloadedCore")
+@IFMLLoadingPlugin.SortingIndex(Integer.MAX_VALUE >>> 1)
+@IFMLLoadingPlugin.Name("MineFactoryReloaded Core")
 public class LoadingPlugin implements IFMLLoadingPlugin {
 
 	@Override
