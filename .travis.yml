@@ -3,5 +3,7 @@ jdk: oraclejdk8
 
 install: gradle build
 
+script: true
+
 notifications:
 email: false
