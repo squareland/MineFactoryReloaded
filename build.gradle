@@ -103,32 +103,48 @@ minecraft {
     makeObfSourceJar = false
 }
 
+version = "${project.minecraft.version}-${project.version}"
+
+processResources {
+    filesMatching(['mcmod.info', '**/*.MF'], {
+        it.expand 'core_version': "${mfr_core_version}", 'version': "${mod_version}", 'mc_version': "${mc_version}"
+    })
+    filesMatching('META-INF/libraries/*.MF', {
+        // cannot do `rename` on the base closure: that renames *all* .MF files, even though we're filtered
+        it.setName(it.getName().replaceAll('^(.+).MF$', '$1.meta'))
+    })
+}
+
+processCoreResources {
+    // hey, you know what's *NOT* possible? code re-use! just copy-paste everything!
+    filesMatching(['mcmod.info', '**/*.MF'], {
+        it.expand 'core_version': "${mfr_core_version}", 'version': "${mod_version}", 'mc_version': "${mc_version}"
+    })
+    filesMatching('META-INF/libraries/*.MF', {
+        // cannot do `rename` on the base closure: that renames *all* .MF files, even though we're filtered
+        it.setName(it.getName().replaceAll('^(.+).MF$', '$1.meta'))
+    })
+}
+
 task coreJar(type: Jar) {
     from sourceSets.core.output
     appendix = 'core'
     version = "${mfr_core_version}"
+    manifest { from sourceSets.core.output.resourcesDir.toString() + '/META-INF/MANIFEST.MF' }
 }
 
-processResources {
+task moveCore {
     dependsOn 'coreJar'
-    inputs.property "version", version
-    inputs.property "mc_version", mc_version
-
-    filesMatching('mcmod.info') {
-        expand 'version': project.mod_version, 'mc_version': mc_version
-    }
-    filesMatching('META-INF/MANIFEST.MF') {
-            expand 'core_version': project.mfr_core_version, 'version': project.mod_version
-    }
-    rename '(.+)\\{core_version\\}.meta', '$1' + "${mfr_core_version}" + '.meta'
-    from(coreJar.archivePath) {
-        into 'META-INF/libraries'
+    doLast {
+        // ??? really? "We don't support this, but we integrate with our competitor so you can do it with them through us!"
+        // seriously, i just want rid of this shit and to use ant for everything again.
+        ant.move file: coreJar.archivePath,
+                todir: sourceSets.main.output.resourcesDir.toString() + '/META-INF/libraries'
     }
 }
-
-version = "${project.minecraft.version}-${project.version}"
 
 jar {
+    dependsOn 'moveCore'
     classifier = 'universal'
     manifest { from sourceSets.main.output.resourcesDir.toString() + '/META-INF/MANIFEST.MF' }
 }
