@@ -158,7 +158,7 @@ public class WorldTransformer implements IClassTransformer {
 		addUpdate:
 		{
 			for (MethodNode method : cn.methods) {
-				if ("cofh_updatePropsInternal".equals(method.name) && worldSig.equals(method.desc))
+				if ("cofh_updatePropsInternal".equals(method.name) && serverSig.equals(method.desc))
 					break addUpdate; // someone has created it for us
 			}
 
