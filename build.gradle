@@ -62,6 +62,33 @@ dependencies {
 }
 version = "${mod_version}." + (System.getenv("BUILD_NUMBER") ?: "1")
 
+sourceSets {
+    api {
+        java {
+            srcDir 'src/api/java'
+        }
+    }
+    core {
+        java {
+            srcDir 'src/core/java'
+        }
+        resources {
+            srcDir 'src/core/resources'
+        }
+        compileClasspath += sourceSets.api.compileClasspath
+    }
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+        compileClasspath += sourceSets.api.output
+        compileClasspath += sourceSets.core.output
+    }
+}
+
 minecraft {
     version = mc_version + "-" + forge_version
     mappings = mcp_mappings
