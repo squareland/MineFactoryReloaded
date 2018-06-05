@@ -28,7 +28,7 @@ archivesBaseName = 'MineFactoryReloaded'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-def mod_version = pullVersion()
+ext.mod_version = pullVersion()
 
 repositories {
     maven {
@@ -68,6 +68,12 @@ sourceSets {
             srcDir 'src/api/java'
         }
     }
+    main_api {
+        java {
+            srcDir 'src/main/java/powercrystals/minefactoryreloaded/api'
+        }
+        compileClasspath += sourceSets.api.compileClasspath
+    }
     core {
         java {
             srcDir 'src/core/java'
@@ -97,38 +103,45 @@ minecraft {
     makeObfSourceJar = false
 }
 
+task coreJar(type: Jar) {
+    from sourceSets.core.output
+    appendix = 'core'
+    version = "${mfr_core_version}"
+}
+
 processResources {
+    dependsOn 'coreJar'
     inputs.property "version", version
     inputs.property "mc_version", mc_version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version': project.version, 'mc_version': mc_version
+    filesMatching('mcmod.info') {
+        expand 'version': project.mod_version, 'mc_version': mc_version
     }
-    rename '(.+_at.cfg)', 'META-INF/$1'
+    filesMatching('META-INF/MANIFEST.MF') {
+            expand 'core_version': project.mfr_core_version, 'version': project.mod_version
+    }
+    rename '(.+)\\{core_version\\}.meta', '$1' + "${mfr_core_version}" + '.meta'
+    from(coreJar.archivePath) {
+        into 'META-INF/libraries'
+    }
 }
 
 version = "${project.minecraft.version}-${project.version}"
 
-def commonManifest = {
-    attributes 'FMLAT': 'MFR_at.cfg'
-}
-
 jar {
     classifier = 'universal'
-    manifest commonManifest
+    manifest { from sourceSets.main.output.resourcesDir.toString() + '/META-INF/MANIFEST.MF' }
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
-    manifest commonManifest
+    manifest = jar.manifest
 }
 
 task srcJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier = 'sources'
-    manifest commonManifest
+    from sourceSets.main_api.allSource
+    classifier = 'api'
 }
 
 // Tell the artifact system about our extra jars
