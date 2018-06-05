@@ -31,6 +31,11 @@ public class GrindingWorldServer extends WorldServerProxy {
 		this.allowSpawns = allowSpawns;
 	}
 
+	protected void cofh_updateProps() {
+
+		cofh_updatePropsInternal(this.proxiedWorld);
+	}
+
 	public void setAllowSpawns(boolean allow) {
 
 		this.allowSpawns = allow;

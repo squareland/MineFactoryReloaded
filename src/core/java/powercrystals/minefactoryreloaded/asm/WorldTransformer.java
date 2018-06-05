@@ -166,7 +166,7 @@ public class WorldTransformer implements IClassTransformer {
 			mv.visitCode();
 			mv.visitVarInsn(ALOAD, 0);
 			mv.visitVarInsn(ALOAD, 1);
-			mv.visitMethodInsn(INVOKESPECIAL, world, "cofh_updatePropsInternal", worldSig, false);
+			mv.visitMethodInsn(INVOKESPECIAL, world, "cofh_updatePropsInternal", worldSig, false); // not virtual
 			for (FieldNode field : cn.fields) {
 				if (isInstance(field.access)) {
 					mv.visitVarInsn(ALOAD, 0);
@@ -192,18 +192,16 @@ public class WorldTransformer implements IClassTransformer {
 		ClassNode cn = new ClassNode();
 		cr.accept(cn, ClassReader.EXPAND_FRAMES);
 
+		String oldSuper = cn.superName;
 		cn.superName = worldServer;
 		for (MethodNode m : cn.methods) {
-			if ("<init>".equals(m.name)) {
-				InsnList l = m.instructions;
-				for (int i = 0, e = l.size(); i < e; i++) {
-					AbstractInsnNode n = l.get(i);
-					if (n instanceof MethodInsnNode) {
-						MethodInsnNode mn = (MethodInsnNode) n;
-						if (mn.getOpcode() == INVOKESPECIAL) {
-							mn.owner = cn.superName;
-							break;
-						}
+			InsnList l = m.instructions;
+			for (int i = 0, e = l.size(); i < e; i++) {
+				AbstractInsnNode n = l.get(i);
+				if (n instanceof MethodInsnNode) {
+					MethodInsnNode mn = (MethodInsnNode) n;
+					if (mn.getOpcode() == INVOKESPECIAL && mn.owner.equals(oldSuper)) {
+						mn.owner = cn.superName;
 					}
 				}
 			}
@@ -222,11 +220,34 @@ public class WorldTransformer implements IClassTransformer {
 			Throwables.propagate(e);
 		}
 
+		for (Method m : worldServerMethods) {
+			if (!Modifier.isStatic(m.getModifiers())) {
+				String desc = Type.getMethodDescriptor(m);
+				boolean skip = false;
+				if (cn.methods.stream().anyMatch(m2 -> m2.name.equals(m.getName()) && m2.desc.equals(desc))) {
+					continue;
+				}
+				MethodVisitor mv = cn.visitMethod(getAccess(m), m.getName(), desc, null, getExceptions(m));
+				mv.visitCode();
+				mv.visitVarInsn(ALOAD, 0);
+				mv.visitFieldInsn(GETFIELD, cn.name, "proxiedWorld", "L" + worldServer + ";");
+				Type[] types = Type.getArgumentTypes(m);
+				for (int i = 0, w = 1, e = types.length; i < e; i++) {
+					mv.visitVarInsn(types[i].getOpcode(ILOAD), w);
+					w += types[i].getSize();
+				}
+				mv.visitMethodInsn(INVOKEVIRTUAL, worldServer, m.getName(), desc, false);
+				mv.visitInsn(Type.getReturnType(m).getOpcode(IRETURN));
+				mv.visitMaxs(types.length + 1, types.length + 1);
+				mv.visitEnd();
+			}
+		}
+
 		for (Method m : worldMethods) {
 			if (!Modifier.isStatic(m.getModifiers())) {
 				String desc = Type.getMethodDescriptor(m);
-				{
-					cn.methods.removeIf(m2 -> m2.name.equals(m.getName()) && m2.desc.equals(desc));
+				if (cn.methods.stream().anyMatch(m2 -> m2.name.equals(m.getName()) && m2.desc.equals(desc))) {
+					continue;
 				}
 				MethodVisitor mv = cn.visitMethod(getAccess(m), m.getName(), desc, null, getExceptions(m));
 				mv.visitCode();
@@ -244,27 +265,7 @@ public class WorldTransformer implements IClassTransformer {
 			}
 		}
 
-		for (Method m : worldServerMethods) {
-			if (!Modifier.isStatic(m.getModifiers())) {
-				String desc = Type.getMethodDescriptor(m);
-				{
-					cn.methods.removeIf(m2 -> m2.name.equals(m.getName()) && m2.desc.equals(desc));
-				}
-				MethodVisitor mv = cn.visitMethod(getAccess(m), m.getName(), desc, null, getExceptions(m));
-				mv.visitCode();
-				mv.visitVarInsn(ALOAD, 0);
-				mv.visitFieldInsn(GETFIELD, cn.name, "proxiedWorld", "L" + worldServer + ";");
-				Type[] types = Type.getArgumentTypes(m);
-				for (int i = 0, w = 1, e = types.length; i < e; i++) {
-					mv.visitVarInsn(types[i].getOpcode(ILOAD), w);
-					w += types[i].getSize();
-				}
-				mv.visitMethodInsn(INVOKEVIRTUAL, worldServer, m.getName(), desc, false);
-				mv.visitInsn(Type.getReturnType(m).getOpcode(IRETURN));
-				mv.visitMaxs(types.length + 1, types.length + 1);
-				mv.visitEnd();
-			}
-		}
+		makeAllPublic(cn);
 
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 		cn.accept(cw);
