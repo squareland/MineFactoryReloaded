@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.asm;
 
-import codechicken.lib.reflect.ObfMapping;
 import com.google.common.base.Throwables;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -26,8 +25,8 @@ public class WorldTransformer implements IClassTransformer {
 	static {
 		final String sigBody = "Lnet/minecraft/world/storage/ISaveHandler;" + "Lnet/minecraft/world/storage/WorldInfo;" +
 				"Lnet/minecraft/world/WorldProvider;" + "Lnet/minecraft/profiler/Profiler;" + "Z";
-		serverSig = "(Lnet/minecraft/server/MinecraftServer;" + sigBody + ")V";
-		worldSig = "(" + sigBody + ")V";
+		serverSig = "(L" + worldServer + ";)V";
+		worldSig = "(L" + world + ";)V";
 	}
 
 	private final static Object2IntOpenHashMap<String> transformerMap = new Object2IntOpenHashMap<>();
@@ -35,10 +34,6 @@ public class WorldTransformer implements IClassTransformer {
 		transformerMap.put(worldServer.replace('/', '.'), 1);
 		transformerMap.put(world.replace('/', '.'), 2);
 		transformerMap.put(worldServerProxy.replace('/', '.'), 3);
-	}
-
-	{
-		ObfMapping.init();
 	}
 
 	@Override
@@ -75,6 +70,52 @@ public class WorldTransformer implements IClassTransformer {
 
 		makeAllPublic(cn);
 
+		addConstructor:
+		{
+			for (MethodNode method : cn.methods) {
+				if ("<init>".equals(method.name) && worldSig.equals(method.desc))
+					break addConstructor; // someone has created it for us
+			}
+
+			MethodVisitor mv = cn.visitMethod(ACC_PUBLIC | ACC_SYNTHETIC, "<init>", worldSig, null, null);
+			mv.visitCode();
+			mv.visitVarInsn(ALOAD, 0);
+			// [Object] super();
+			mv.visitMethodInsn(INVOKESPECIAL, cn.superName, "<init>", "()V", false);
+			for (FieldNode field : cn.fields) {
+				if (isFinal(field.access)) {
+					mv.visitVarInsn(ALOAD, 0);
+					mv.visitVarInsn(ALOAD, 1);
+					mv.visitFieldInsn(GETFIELD, world, field.name, field.desc);
+					mv.visitFieldInsn(PUTFIELD, world, field.name, field.desc);
+				}
+			}
+			mv.visitInsn(RETURN);
+			mv.visitMaxs(4, 4);
+			mv.visitEnd();
+		}
+		addUpdate:
+		{
+			for (MethodNode method : cn.methods) {
+				if ("cofh_updatePropsInternal".equals(method.name) && worldSig.equals(method.desc))
+					break addUpdate; // someone has created it for us
+			}
+
+			MethodVisitor mv = cn.visitMethod(ACC_PUBLIC | ACC_SYNTHETIC, "cofh_updatePropsInternal", worldSig, null, null);
+			mv.visitCode();
+			for (FieldNode field : cn.fields) {
+				if (isInstance(field.access)) {
+					mv.visitVarInsn(ALOAD, 0);
+					mv.visitVarInsn(ALOAD, 1);
+					mv.visitFieldInsn(GETFIELD, world, field.name, field.desc);
+					mv.visitFieldInsn(PUTFIELD, world, field.name, field.desc);
+				}
+			}
+			mv.visitInsn(RETURN);
+			mv.visitMaxs(4, 4);
+			mv.visitEnd();
+		}
+
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 		cn.accept(cw);
 		bytes = cw.toByteArray();
@@ -89,68 +130,53 @@ public class WorldTransformer implements IClassTransformer {
 
 		makeAllPublic(cn);
 
-		addConstructor: {
+		addConstructor:
+		{
 			for (MethodNode method : cn.methods) {
 				if ("<init>".equals(method.name) && serverSig.equals(method.desc))
 					break addConstructor; // someone has created it for us
 			}
 
-			ObfMapping mcServer = new ObfMapping(worldServer, "field_73061_a", "Lnet/minecraft/server/MinecraftServer;").toRuntime();
-
 			MethodVisitor mv = cn.visitMethod(ACC_PUBLIC | ACC_SYNTHETIC, "<init>", serverSig, null, null);
 			mv.visitCode();
 			mv.visitVarInsn(ALOAD, 0);
-			mv.visitVarInsn(ALOAD, 2);
-			mv.visitVarInsn(ALOAD, 3);
-			mv.visitVarInsn(ALOAD, 4);
-			mv.visitVarInsn(ALOAD, 5);
-			mv.visitVarInsn(ILOAD, 6);
-			// [World] super(saveHandler, worldInfo, provider, theProfiler, isRemote);
-			mv.visitMethodInsn(INVOKESPECIAL, world, "<init>", worldSig, false);
-			mv.visitVarInsn(ALOAD, 0);
 			mv.visitVarInsn(ALOAD, 1);
-			mv.visitFieldInsn(PUTFIELD, mcServer.s_owner, mcServer.s_name, mcServer.s_desc);
+			// [World] super(world);
+			mv.visitMethodInsn(INVOKESPECIAL, world, "<init>", worldSig, false);
 			for (FieldNode field : cn.fields) {
-				if (isFinal(field.access) && !field.name.equals(mcServer.s_name)) {
+				if (isFinal(field.access)) {
 					mv.visitVarInsn(ALOAD, 0);
-					Type fType = Type.getType(field.desc);
-					switch (fType.getSort()) {
-						case Type.METHOD:
-						case Type.ARRAY:
-						case Type.OBJECT:
-							mv.visitInsn(ACONST_NULL);
-							break;
-						case Type.FLOAT:
-							mv.visitInsn(FCONST_0);
-							break;
-						case Type.DOUBLE:
-							mv.visitInsn(DCONST_0);
-							break;
-						case Type.LONG:
-							mv.visitInsn(LCONST_0);
-							break;
-						default:
-							mv.visitInsn(ICONST_0);
-							switch (fType.getSort()) {
-								case Type.SHORT:
-									mv.visitInsn(I2S);
-									break;
-								case Type.CHAR:
-									mv.visitInsn(I2C);
-									break;
-								case Type.BYTE:
-									mv.visitInsn(I2B);
-									break;
-							}
-							break;
-						case Type.VOID: // void fields, mmm
-							break;
-					}
+					mv.visitVarInsn(ALOAD, 1);
+					mv.visitFieldInsn(GETFIELD, worldServer, field.name, field.desc);
 					mv.visitFieldInsn(PUTFIELD, worldServer, field.name, field.desc);
 				}
 			}
 			mv.visitInsn(RETURN);
-			mv.visitMaxs(7, 7);
+			mv.visitMaxs(4, 4);
+			mv.visitEnd();
+		}
+		addUpdate:
+		{
+			for (MethodNode method : cn.methods) {
+				if ("cofh_updatePropsInternal".equals(method.name) && worldSig.equals(method.desc))
+					break addUpdate; // someone has created it for us
+			}
+
+			MethodVisitor mv = cn.visitMethod(ACC_PUBLIC | ACC_SYNTHETIC, "cofh_updatePropsInternal", serverSig, null, null);
+			mv.visitCode();
+			mv.visitVarInsn(ALOAD, 0);
+			mv.visitVarInsn(ALOAD, 1);
+			mv.visitMethodInsn(INVOKESPECIAL, world, "cofh_updatePropsInternal", worldSig, false);
+			for (FieldNode field : cn.fields) {
+				if (isInstance(field.access)) {
+					mv.visitVarInsn(ALOAD, 0);
+					mv.visitVarInsn(ALOAD, 1);
+					mv.visitFieldInsn(GETFIELD, worldServer, field.name, field.desc);
+					mv.visitFieldInsn(PUTFIELD, worldServer, field.name, field.desc);
+				}
+			}
+			mv.visitInsn(RETURN);
+			mv.visitMaxs(4, 4);
 			mv.visitEnd();
 		}
 
@@ -249,6 +275,11 @@ public class WorldTransformer implements IClassTransformer {
 	private static boolean isFinal(int access) {
 
 		return 0 != (access & ACC_FINAL) && 0 == (access & ACC_STATIC);
+	}
+
+	private static boolean isInstance(int access) {
+
+		return 0 == (access & ACC_FINAL) && 0 == (access & ACC_STATIC);
 	}
 
 	private static int getAccess(Method m) {

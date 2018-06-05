@@ -1,11 +1,7 @@
 package powercrystals.minefactoryreloaded.asmhooks;
 
-import net.minecraft.profiler.Profiler;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.ISaveHandler;
-import net.minecraft.world.storage.WorldInfo;
+import net.minecraft.world.chunk.IChunkProvider;
 
 /**
  * Do not extend this class directly, extend WorldServerProxy instead. <br>
@@ -13,10 +9,21 @@ import net.minecraft.world.storage.WorldInfo;
  */
 public abstract class WorldServerShim extends WorldServer {
 
-	public WorldServerShim(MinecraftServer server, ISaveHandler saveHandler, WorldInfo info, WorldProvider provider, Profiler profiler, boolean isRemote) {
+	public WorldServerShim(WorldServer server) {
 
-		super(server, saveHandler, info, provider.getDimension(), profiler);
+		super(server.getMinecraftServer(), server.getSaveHandler(), server.getWorldInfo(), server.provider.getDimension(), server.profiler);
 		throw new IllegalAccessError("WorldServerShim cannot be extended. Extend WorldServerProxy instead.");
+	}
+
+	protected void cofh_updatePropsInternal(WorldServer server) {
+
+		// no-op: handled via ASM
+	}
+
+	@Override
+	public IChunkProvider createChunkProvider() {
+
+		return null;
 	}
 
 }
