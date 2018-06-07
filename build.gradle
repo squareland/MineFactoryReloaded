@@ -72,7 +72,6 @@ sourceSets {
         java {
             srcDir 'src/main/java/powercrystals/minefactoryreloaded/api'
         }
-        compileClasspath += sourceSets.api.compileClasspath
     }
     core {
         java {
@@ -92,6 +91,15 @@ sourceSets {
         }
         compileClasspath += sourceSets.api.output
         compileClasspath += sourceSets.core.output
+    }
+    doLast {
+
+        // hey, guess what: forgegradle is broken and evaluates a fixed sourceSet name (`main`: no matter what) at `apply plugin:`
+        // this *could* be solved by defining it before then, but we need things they set to actually work, and they crash if we define `api` before they force-define it
+        // so now we have to use their magic names and hope they don't change to add our stuff to their sets!
+        // i want ant back
+        reobfJar.classpath += sourceSets.core.output
+        reobfJar.classpath += sourceSets.api.output
     }
 }
 
