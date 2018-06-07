@@ -11,13 +11,13 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.tile.machine.mobs.TileEntityGrinder;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GrindingWorldServer extends WorldServerProxy {
 
 	protected TileEntityFactoryPowered grinder;
 	protected boolean allowSpawns;
-	protected ArrayList<Entity> entitiesToGrind = new ArrayList<Entity>();
+	protected LinkedList<Entity> entitiesToGrind = new LinkedList<Entity>();
 
 	public GrindingWorldServer(WorldServer world, TileEntityFactoryPowered grinder) {
 
@@ -70,6 +70,7 @@ public class GrindingWorldServer extends WorldServerProxy {
 
 		if (allowSpawns) {
 			entity.world = this.proxiedWorld;
+			cofh_updateProps();
 			return super.spawnEntity(entity);
 		}
 		entity.setDead();
@@ -105,11 +106,7 @@ public class GrindingWorldServer extends WorldServerProxy {
 
 	public void cleanReferences() {
 
-		for (int i = entitiesToGrind.size(); i-- > 0; ) {
-			Entity ent = entitiesToGrind.get(i);
-			if (ent.isDead)
-				entitiesToGrind.remove(ent);
-		}
+		entitiesToGrind.removeIf(e -> e.isDead);
 	}
 
 }
