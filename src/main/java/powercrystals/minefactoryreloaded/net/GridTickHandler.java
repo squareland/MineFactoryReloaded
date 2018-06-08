@@ -1,15 +1,10 @@
 package powercrystals.minefactoryreloaded.net;
 
 import com.google.common.base.Throwables;
+import net.minecraft.util.ReportedException;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
-
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-
-import net.minecraft.util.ReportedException;
-
 import powercrystals.minefactoryreloaded.core.IGrid;
 import powercrystals.minefactoryreloaded.core.IGridController;
 import powercrystals.minefactoryreloaded.core.INode;
@@ -20,6 +15,9 @@ import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetEnergy;
 import powercrystals.minefactoryreloaded.tile.transport.FluidNetwork;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
 public class GridTickHandler<G extends IGrid, N extends INode> implements IGridController {
 
 	public static final GridTickHandler<RedstoneEnergyNetwork, TileEntityRedNetEnergy> energy =
@@ -29,14 +27,16 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 	public static final GridTickHandler<FluidNetwork, TileEntityPlasticPipe> fluid =
 			new GridTickHandler<FluidNetwork, TileEntityPlasticPipe>("Fluid");
 
-	private LinkedHashSet<G> tickingGridsToRegenerate = new LinkedHashSet<G>();
-	private LinkedHashSet<G> tickingGridsToAdd = new LinkedHashSet<G>();
-	private LinkedHashSet<G> tickingGrids = new LinkedHashSet<G>();
-	private LinkedHashSet<G> tickingGridsToRemove = new LinkedHashSet<G>();
+	private final Object addRemoveLock = new Object();
 
-	private LinkedHashSet<N> conduit = new LinkedHashSet<N>();
-	private LinkedHashSet<N> conduitToAdd = new LinkedHashSet<N>();
-	private LinkedHashSet<N> conduitToUpd = new LinkedHashSet<N>();
+	private final LinkedHashSet<G> tickingGridsToRegenerate = new LinkedHashSet<G>();
+	private final LinkedHashSet<G> tickingGridsToAdd = new LinkedHashSet<G>();
+	private final LinkedHashSet<G> tickingGridsToRemove = new LinkedHashSet<G>();
+	private final LinkedHashSet<G> tickingGrids = new LinkedHashSet<G>();
+
+	private final LinkedHashSet<N> conduitToAdd = new LinkedHashSet<N>();
+	private final LinkedHashSet<N> conduitToUpd = new LinkedHashSet<N>();
+	private final LinkedHashSet<N> conduit = new LinkedHashSet<N>();
 
 	private final String label;
 
@@ -49,19 +49,25 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 
 	public void addGrid(G grid) {
 
-		tickingGridsToAdd.add(grid);
-		tickingGridsToRemove.remove(grid);
+		synchronized (addRemoveLock) {
+			tickingGridsToAdd.add(grid);
+			tickingGridsToRemove.remove(grid);
+		}
 	}
 
 	public void removeGrid(G grid) {
 
-		tickingGridsToRemove.add(grid);
-		tickingGridsToAdd.remove(grid);
+		synchronized (addRemoveLock) {
+			tickingGridsToRemove.add(grid);
+			tickingGridsToAdd.remove(grid);
+		}
 	}
 
 	public void regenerateGrid(G grid) {
 
-		tickingGridsToRegenerate.add(grid);
+		synchronized (tickingGridsToRegenerate) {
+			tickingGridsToRegenerate.add(grid);
+		}
 	}
 
 	public boolean isGridTicking(G grid) {
@@ -71,12 +77,16 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 
 	public void addConduitForTick(N node) {
 
-		conduitToAdd.add(node);
+		synchronized (conduitToAdd) {
+			conduitToAdd.add(node);
+		}
 	}
 
 	public void addConduitForUpdate(N node) {
 
-		conduitToUpd.add(node);
+		synchronized (conduitToUpd) {
+			conduitToUpd.add(node);
+		}
 	}
 
 	@SubscribeEvent
@@ -92,9 +102,13 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 	public void clear() {
 
 		clearSetSynchronized(tickingGridsToRegenerate);
-		clearSetSynchronized(tickingGridsToAdd);
+		if (!tickingGridsToAdd.isEmpty() || !tickingGridsToRemove.isEmpty()) {
+			synchronized (addRemoveLock) {
+				tickingGridsToAdd.clear();
+				tickingGridsToRemove.clear();
+			}
+		}
 		clearSetSynchronized(tickingGrids);
-		clearSetSynchronized(tickingGridsToRemove);
 
 		clearSetSynchronized(conduit);
 		clearSetSynchronized(conduitToAdd);
@@ -161,13 +175,13 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 
 		//{ Changes in what grids are being ticked
 		if (!tickingGridsToRemove.isEmpty())
-			synchronized (tickingGridsToRemove) {
+			synchronized (addRemoveLock) {
 				tickingGrids.removeAll(tickingGridsToRemove);
 				tickingGridsToRemove.clear();
 			}
 
 		if (!tickingGridsToAdd.isEmpty())
-			synchronized (tickingGridsToAdd) {
+			synchronized (addRemoveLock) {
 				tickingGrids.addAll(tickingGridsToAdd);
 				tickingGridsToAdd.clear();
 			}
