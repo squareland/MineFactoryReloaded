@@ -29,17 +29,19 @@ import javax.annotation.Nullable;
 public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 
 	public static final int maxTemp = 730;
+	public static final int WATER_TO_STEAM = 40;
 
 	public static final int getItemBurnTime(@Nonnull ItemStack stack) {
 		// TODO: special-case some items (e.g., TE's dynamo)
-		return TileEntityFurnace.getItemBurnTime(stack) / 2;
+		return TileEntityFurnace.getItemBurnTime(stack);
 	}
 
 	private final Fluid _liquid;
 	private int _ticksUntilConsumption = 0;
 	private int _ticksSinceLastConsumption = 0;
-	private int _totalBurningTime;
-	private float _temp;
+	private int _totalBurningTime = Short.MIN_VALUE;
+	private int _totalActiveTime = 0;
+	private float _temp = 0;
 
 	public TileEntitySteamBoiler() {
 
@@ -75,13 +77,13 @@ public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 
 	public int getWorkDone() {
 
-		return _ticksSinceLastConsumption;
+		return Math.min(_ticksSinceLastConsumption, getWorkMax());
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getFuelConsumptionPerTick() {
 
-		return 1 + (Math.abs(Math.max(_totalBurningTime, -180)) + 1063) / 1064;
+		return 1 + (Math.max(0, _totalBurningTime) + 458) / 459;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -108,43 +110,50 @@ public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 		super.update();
 		if (!world.isRemote) {
 			boolean active = _ticksSinceLastConsumption < _ticksUntilConsumption;
-			setIsActive(active);
+			setIsActive(active || _temp >= 80);
 
-			if (_ticksUntilConsumption > 0) {
-				int inc = 1 + (Math.abs(_totalBurningTime) + 1063) / 1064;
-				_ticksSinceLastConsumption = Math.min(_ticksSinceLastConsumption + inc, _ticksUntilConsumption);
-			}
-			boolean skipConsumption = _ticksSinceLastConsumption < _ticksUntilConsumption;
+			boolean skipConsumption = ++_ticksSinceLastConsumption < _ticksUntilConsumption;
 
-			if (active)
-				_totalBurningTime = Math.max(Math.min(_totalBurningTime + 1, 10649), -180);
-			else if (_temp != 0) {
-				_totalBurningTime = Math.max(_totalBurningTime - 16, -(10649 * 2));
-				_ticksUntilConsumption = 0;
+			if (active) {
+				if (_totalActiveTime < 10801)
+					_totalActiveTime += 1;
+			} else if (_temp != 0) {
+				_ticksSinceLastConsumption = _ticksUntilConsumption = 0;
+				if (_totalActiveTime >= -36000)
+					_totalActiveTime -= 16;
 			}
 
-			if (_temp == 0 && _inventory.get(3).isEmpty()) {
-				if ((world.getTotalWorldTime() & 0x6F) == 0 && !(_rednetState != 0 || CoreUtils.isRedstonePowered(this)))
-					mergeFuel();
-				return; // we're not burning anything and not changing the temp
+			if (_temp == 0 && _totalActiveTime < 0) {
+				_totalActiveTime = 0;
+				_totalBurningTime = -1800;
+
+				if (_inventory.get(3).isEmpty()) {
+					if ((world.getTotalWorldTime() & 0x6F) == 0 && !(_rednetState != 0 || CoreUtils.isRedstonePowered(this)))
+						mergeFuel();
+					return; // we're not burning anything and not changing the temp
+				}
+			} else {
+				if (_totalActiveTime > 0 &&
+						_totalBurningTime < 36001)
+					_totalBurningTime = Math.max(_totalBurningTime + 1, _temp > 1 ? -3600 : -1800);
+				else if (_totalActiveTime < -36000 && _totalBurningTime > -36000)
+					_totalBurningTime -= 64;
 			}
 
-			if (_temp == maxTemp ? _totalBurningTime < 0 : (_totalBurningTime > 0 ? true : _temp != 0)) {
-				float diff = (float) Math.sqrt(Math.abs(_totalBurningTime)) / 103f;
-				diff = Math.copySign(diff, _totalBurningTime) / 1.26f;
+			if (_temp < maxTemp && _totalActiveTime != 0) {
+				float diff = (float) Math.sqrt(Math.abs(_totalActiveTime)) / 103f;
+				diff = Math.copySign(diff, _totalActiveTime) / 1.26f;
 
 				_temp = Math.max(Math.min(_temp + (diff * diff * diff) / 50f, maxTemp), 0);
 			}
 
-			if (_temp > 80) {
-				int toDrain = Math.min(_tanks[0].getSpace(), 100);
+			if (_temp >= 80) {
+				int maxProduction = (8 * 80) / WATER_TO_STEAM; // 8 turbines * default consumption of 80 steam /tick
+				maxProduction = Math.max(Math.min(maxProduction, _totalBurningTime / 2250), 1);
+				int toDrain = Math.min(_tanks[0].getSpace() / WATER_TO_STEAM, maxProduction);
 
-				if (toDrain > 0 && drain(toDrain, false, _tanks[1]) > 0) {
-					int waterDrained = drain(toDrain, true, _tanks[1]);
-					_tanks[0].fill(new FluidStack(_liquid, waterDrained * 4), true);
-				} else {
-					return;
-				}
+				int waterDrained = drain(toDrain, true, _tanks[1]);
+				_tanks[0].fill(new FluidStack(_liquid, waterDrained * WATER_TO_STEAM), true);
 			}
 
 			if (skipConsumption || CoreUtils.isRedstonePowered(this))
@@ -180,8 +189,10 @@ public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 			return false;
 
 		int burnTime = getItemBurnTime(_inventory.get(3));
-		if (burnTime <= 0)
+		if (burnTime <= 100)
 			return false;
+		int inc = 1 + (Math.max(0, _totalBurningTime) + 458) / 459;
+		burnTime /= inc;
 
 		_ticksUntilConsumption = burnTime;
 		_inventory.set(3, ItemHelper.consumeItem(_inventory.get(3)));
@@ -225,7 +236,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 	public boolean canInsertItem(int slot, @Nonnull ItemStack stack, EnumFacing side) {
 
 		if (!stack.isEmpty())
-			return getItemBurnTime(stack) > 0;
+			return getItemBurnTime(stack) > 100;
 
 		return false;
 	}
@@ -233,7 +244,7 @@ public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 	@Override
 	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
-		return getItemBurnTime(_inventory.get(slot)) <= 0;
+		return getItemBurnTime(_inventory.get(slot)) <= 100;
 	}
 	//}
 
@@ -253,8 +264,8 @@ public class TileEntitySteamBoiler extends TileEntityFactoryTickable {
 	@Override
 	protected FluidTankCore[] createTanks() {
 
-		return new FluidTankCore[] { new FluidTankCore(BUCKET_VOLUME * 32),
-				new FluidTankCore(BUCKET_VOLUME * 16) };
+		return new FluidTankCore[] { new FluidTankCore(BUCKET_VOLUME * 2 * WATER_TO_STEAM),
+				new FluidTankCore(BUCKET_VOLUME * 4) };
 	}
 
 	@Nullable
