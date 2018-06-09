@@ -70,7 +70,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 		if (b == null)
 			return false;
 
-		String biomeName = b.getBiomeName();
+		String biomeName = b.biomeName;
 
 		if (_rubberTreesEnabled && (newGen || _regenTrees))
 		{
@@ -98,9 +98,9 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 					_sludgeBiomeList.contains(biomeName) == _sludgeLakeMode &&
 					random.nextInt(rarity) == 0)
 			{
-				int lakeX = x - 8 + random.nextInt(16);
+				int lakeX = x + random.nextInt(16);
 				int lakeY = random.nextInt(world.getActualHeight());
-				int lakeZ = z - 8 + random.nextInt(16);
+				int lakeZ = z + random.nextInt(16);
 				new WorldGenLakesMeta(MFRFluids.sludgeLiquid.getDefaultState()).generate(world, random, new BlockPos(lakeX, lakeY, lakeZ));
 			}
 
@@ -109,9 +109,9 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 					_sewageBiomeList.contains(biomeName) == _sewageLakeMode &&
 					random.nextInt(rarity) == 0)
 			{
-				int lakeX = x - 8 + random.nextInt(16);
+				int lakeX = x + random.nextInt(16);
 				int lakeY = random.nextInt(world.getActualHeight());
-				int lakeZ = z - 8 + random.nextInt(16);
+				int lakeZ = z + random.nextInt(16);
 				String ln = biomeName.toLowerCase(Locale.US);
 				if (ln.contains("mushroom"))
 				{
