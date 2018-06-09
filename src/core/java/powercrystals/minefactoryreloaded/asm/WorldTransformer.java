@@ -3,12 +3,16 @@ package powercrystals.minefactoryreloaded.asm;
 import com.google.common.base.Throwables;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.launchwrapper.IClassTransformer;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Type;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraft.launchwrapper.LogWrapper;
+import org.apache.logging.log4j.Level;
+import org.objectweb.asm.*;
 import org.objectweb.asm.tree.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -34,6 +38,152 @@ public class WorldTransformer implements IClassTransformer {
 		transformerMap.put(worldServer.replace('/', '.'), 1);
 		transformerMap.put(world.replace('/', '.'), 2);
 		transformerMap.put(worldServerProxy.replace('/', '.'), 3);
+		transformerMap.put("net.minecraft.profiler.Profiler", 22);
+	}
+
+	private static void saveTransformedClass(final byte[] data, final String transformedName) {
+
+		File tempFolder = new File(Launch.minecraftHome, "CLASSLOADER_TEMP");
+		if (tempFolder == null) {
+			return;
+		}
+
+		final File outFile = new File(tempFolder, transformedName.replace('.', File.separatorChar) + ".class");
+		final File outDir = outFile.getParentFile();
+
+		if (!outDir.exists()) {
+			outDir.mkdirs();
+		}
+
+		if (outFile.exists()) {
+			outFile.delete();
+		}
+
+		try {
+			LogWrapper.fine("Saving transformed class \"%s\" to \"%s\"", transformedName, outFile.getAbsolutePath().replace('\\', '/'));
+
+			final OutputStream output = new FileOutputStream(outFile);
+			output.write(data);
+			output.close();
+		} catch (IOException ex) {
+			LogWrapper.log(Level.WARN, ex, "Could not save transformed class \"%s\"", transformedName);
+		}
+	}
+
+	private static byte[] alterProfiler(String name, byte[] bytes, ClassReader cr) {
+
+		String[] names;
+		names = new String[] { "endSection", "startSection", "endStartSection", "clearProfiling" };
+
+		name = name.replace('.', '/');
+		ClassNode cn = new ClassNode(ASM5);
+		cr.accept(cn, 0);
+
+		cn.fields.add(new FieldNode(ACC_PRIVATE, "cofh_stack", "Ljava/util/Deque;", null, null));
+		cn.fields.add(new FieldNode(ACC_PRIVATE, "cofh_endStart", "Z", null, Boolean.FALSE));
+		for (MethodNode m : cn.methods) {
+			if ("<init>".equals(m.name)) {
+				LabelNode a = new LabelNode(new Label());
+				AbstractInsnNode n;
+				for (n = m.instructions.getFirst(); n != null; n = n.getNext()) {
+					if (n.getOpcode() == INVOKESPECIAL) {
+						break;
+					}
+				}
+				m.instructions.insert(n, n = a);
+				m.instructions.insert(n, n = new LineNumberNode(-15000, a));
+				m.instructions.insert(n, n = new VarInsnNode(ALOAD, 0));
+				m.instructions.insert(n, n = new TypeInsnNode(NEW, "java/util/LinkedList"));
+				m.instructions.insert(n, n = new InsnNode(DUP));
+				m.instructions.insert(n, n = new MethodInsnNode(INVOKESPECIAL, "java/util/LinkedList", "<init>", "()V", false));
+				m.instructions.insert(n, n = new FieldInsnNode(PUTFIELD, name, "cofh_stack", "Ljava/util/Deque;"));
+			} else if (names[0].equals(m.name)) {
+				int c = 0;
+				for (AbstractInsnNode n = m.instructions.getFirst(); n != null; n = n.getNext()) {
+					if (n.getOpcode() == ALOAD && ++c > 1) {
+						LabelNode lCond = new LabelNode(new Label());
+						LabelNode lGuard = new LabelNode(new Label());
+						m.instructions.insertBefore(n, n = new VarInsnNode(ALOAD, 0));
+						m.instructions.insert(n, n = new FieldInsnNode(GETFIELD, name, "cofh_endStart", "Z"));
+						m.instructions.insert(n, n = new JumpInsnNode(IFNE, lGuard));
+						m.instructions.insert(n, n = new VarInsnNode(ALOAD, 0));
+						m.instructions.insert(n, n = new FieldInsnNode(GETFIELD, name, "cofh_stack", "Ljava/util/Deque;"));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKEINTERFACE, "java/util/Deque", "pop", "()Ljava/lang/Object;", true));
+						m.instructions.insert(n, n = new TypeInsnNode(CHECKCAST, "java/lang/Throwable"));
+						m.instructions.insert(n, n = new InsnNode(DUP));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Throwable", "getStackTrace", "()[Ljava/lang/StackTraceElement;", false));
+						m.instructions.insert(n, n = new InsnNode(ARRAYLENGTH));
+						m.instructions.insert(n, n = new TypeInsnNode(NEW, "java/lang/Throwable"));
+						m.instructions.insert(n, n = new InsnNode(DUP));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKESPECIAL, "java/lang/Throwable", "<init>", "()V", false));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Throwable", "getStackTrace", "()[Ljava/lang/StackTraceElement;", false));
+						m.instructions.insert(n, n = new InsnNode(ARRAYLENGTH));
+						m.instructions.insert(n, n = new JumpInsnNode(IF_ICMPLE, lCond));
+						m.instructions.insert(n, n = new TypeInsnNode(NEW, "java/lang/Error"));
+						m.instructions.insert(n, n = new InsnNode(DUP));
+						m.instructions.insert(n, n = new LdcInsnNode("Detected bad stack depth call to endSection"));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKESPECIAL, "java/lang/Error", "<init>", "(Ljava/lang/String;)V", false));
+						m.instructions.insert(n, n = new InsnNode(SWAP));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Throwable", "initCause", "(Ljava/lang/Throwable;)Ljava/lang/Throwable;", false));
+						m.instructions.insert(n, n = new InsnNode(ATHROW));
+						m.instructions.insert(n, n = new FrameNode(F_SAME1, 0, null, 0, new Object[] { "java/lang/Throwable" }));
+						m.instructions.insert(n, n = lCond);
+						m.instructions.insert(n, n = new InsnNode(POP));
+						m.instructions.insert(n, n = new FrameNode(F_SAME, 0, null, 0, null));
+						m.instructions.insert(n, n = lGuard);
+						break;
+					}
+				}
+			} else if (names[1].equals(m.name) || "func_194340_a".equals(m.name)) {
+				int c = 0;
+				for (AbstractInsnNode n = m.instructions.getFirst(); n != null; n = n.getNext()) {
+					if (n.getOpcode() == ALOAD && ++c > 1) {
+						LabelNode lGuard = new LabelNode(new Label());
+						m.instructions.insertBefore(n, n = new VarInsnNode(ALOAD, 0));
+						m.instructions.insert(n, n = new FieldInsnNode(GETFIELD, name, "cofh_endStart", "Z"));
+						m.instructions.insert(n, n = new JumpInsnNode(IFNE, lGuard));
+						m.instructions.insert(n, n = new VarInsnNode(ALOAD, 0));
+						m.instructions.insert(n, n = new FieldInsnNode(GETFIELD, name, "cofh_stack", "Ljava/util/Deque;"));
+						m.instructions.insert(n, n = new TypeInsnNode(NEW, "java/lang/Error"));
+						m.instructions.insert(n, n = new InsnNode(DUP));
+						m.instructions.insert(n, n = new LdcInsnNode("Failed to call endSection after calling startSection"));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKESPECIAL, "java/lang/Error", "<init>", "(Ljava/lang/String;)V", false));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Throwable", "fillInStackTrace", "()Ljava/lang/Throwable;", false));
+						m.instructions.insert(n, n = new MethodInsnNode(INVOKEINTERFACE, "java/util/Deque", "push", "(Ljava/lang/Object;)V", true));
+						m.instructions.insert(n, n = new FrameNode(F_SAME, 0, null, 0, null));
+						m.instructions.insert(n, n = lGuard);
+						break;
+					}
+				}
+			} else if (names[2].equals(m.name) || "func_194339_b".equals(m.name)) {
+				AbstractInsnNode n;
+				for (n = m.instructions.getLast(); n != null; n = n.getPrevious()) {
+					if (n.getOpcode() == RETURN) {
+						m.instructions.insertBefore(n, n = new VarInsnNode(ALOAD, 0));
+						m.instructions.insert(n, n = new InsnNode(ICONST_0));
+						m.instructions.insert(n, n = new FieldInsnNode(PUTFIELD, name, "cofh_endStart", "Z"));
+						break;
+					}
+				}
+
+				m.instructions.insertBefore(m.instructions.getFirst(), n = new VarInsnNode(ALOAD, 0));
+				m.instructions.insert(n, n = new InsnNode(ICONST_1));
+				m.instructions.insert(n, n = new FieldInsnNode(PUTFIELD, name, "cofh_endStart", "Z"));
+			} else if (names[3].equals(m.name)) {
+				AbstractInsnNode n;
+				m.instructions.insertBefore(m.instructions.getFirst(), n = new VarInsnNode(ALOAD, 0));
+				m.instructions.insert(n, n = new FieldInsnNode(GETFIELD, name, "cofh_stack", "Ljava/util/Deque;"));
+				m.instructions.insert(n, n = new MethodInsnNode(INVOKEINTERFACE, "java/util/Deque", "clear", "()V", true));
+			}
+		}
+
+		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+		cn.accept(cw);
+		bytes = cw.toByteArray();
+
+		saveTransformedClass(bytes, name);
+
+		return bytes;
 	}
 
 	@Override
@@ -46,6 +196,8 @@ public class WorldTransformer implements IClassTransformer {
 				return modifyWorld(basicClass);
 			case 3:
 				return modifyWorldServerProxy(basicClass);
+			case 22:
+				//return alterProfiler(transformedName, basicClass, new ClassReader(basicClass));
 			case 0:
 			default:
 				break;
