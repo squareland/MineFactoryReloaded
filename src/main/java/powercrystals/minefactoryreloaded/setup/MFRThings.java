@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -52,7 +53,6 @@ public class MFRThings {
 	public static Item factoryDecorativeBrickItem;
 	public static Block factoryDecorativeStoneBlock;
 	public static Block pinkSlimeBlock;
-	public static Item pinkSlimeBlockItem;
 
 	public static Block rubberWoodBlock;
 	public static Block rubberLeavesBlock;
@@ -196,8 +196,22 @@ public class MFRThings {
 			plasticGlasses.setRepairIngot("itemPlastic").setUnlocalizedName("mfr.glass.armor.helm");
 		}
 
-		rawRubberItem = (new ItemFactory()).setModelLocation("material", "type=rubber_raw").setUnlocalizedName("mfr.rubber.raw");
-		rubberBarItem = (new ItemFactory()).setModelLocation("material", "type=rubber_bar").setUnlocalizedName("mfr.rubber.bar");
+		rawRubberItem = (new ItemFactory() {
+
+			@Override
+			public int getItemBurnTime(ItemStack stack) {
+
+				return 30;
+			}
+		}).setModelLocation("material", "type=rubber_raw").setUnlocalizedName("mfr.rubber.raw");
+		rubberBarItem = (new ItemFactory() {
+
+			@Override
+			public int getItemBurnTime(ItemStack stack) {
+
+				return 90;
+			}
+		}).setModelLocation("material", "type=rubber_bar").setUnlocalizedName("mfr.rubber.bar");
 
 		rawPlasticItem = (new ItemFactory()).setModelLocation("material", "type=plastic_raw")
 				.setUnlocalizedName("mfr.plastic.raw");
@@ -259,7 +273,14 @@ public class MFRThings {
 		//plasticCellItem = CarbonContainer.cell;
 		plasticBagItem = new ItemFactoryBag();
 
-		sugarCharcoalItem = (new ItemFactory()).setModelLocation("material", "type=sugar_charcoal")
+		sugarCharcoalItem = (new ItemFactory() {
+
+			@Override
+			public int getItemBurnTime(ItemStack stack) {
+
+				return 400;
+			}
+		}).setModelLocation("material", "type=sugar_charcoal")
 				.setUnlocalizedName("mfr.sugarcharcoal"); // FIXME: relocalize to sugar_charcoal
 		fertilizerItem = (new ItemFactory()).setModelLocation("material", "type=fertilizer").setUnlocalizedName("mfr.fertilizer");
 
@@ -315,7 +336,6 @@ public class MFRThings {
 		rubberLeavesItem = MFRRegistry.getItemBlock(rubberLeavesBlock);
 
 		factoryDecorativeBrickItem = MFRRegistry.getItemBlock(factoryDecorativeBrickBlock);
-		pinkSlimeBlockItem = MFRRegistry.getItemBlock(pinkSlimeBlock);
 	}
 
 	public static void initialize() {

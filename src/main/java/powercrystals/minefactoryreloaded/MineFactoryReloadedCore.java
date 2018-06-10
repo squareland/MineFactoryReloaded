@@ -21,7 +21,6 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import org.apache.logging.log4j.Logger;
 import powercrystals.minefactoryreloaded.farmables.MFRFarmables;
@@ -96,8 +95,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 		//	recipeSets.add(new EnderIO());
 
 		Blocks.FIRE.setFireInfo(MFRFluids.biofuelLiquid, 300, 30);
-
-		GameRegistry.registerFuelHandler(new MineFactoryReloadedFuelHandler());
 		
 		proxy.preInit();
 	}

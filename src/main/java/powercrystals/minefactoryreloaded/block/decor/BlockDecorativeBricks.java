@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -109,7 +110,16 @@ public class BlockDecorativeBricks extends BlockFactory {
 	@Override
 	public boolean initialize() {
 
-		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, Variant.UNLOC_NAMES));
+		MFRRegistry.registerBlock(this, new ItemBlockFactory(this, Variant.UNLOC_NAMES) {
+
+			@Override
+			public int getItemBurnTime(ItemStack stack) {
+
+				if (stack.getItemDamage() == 15)
+					return 4000;
+				return 0;
+			}
+		});
 		return true;
 	}
 
