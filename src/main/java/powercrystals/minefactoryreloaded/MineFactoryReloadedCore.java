@@ -77,7 +77,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 		instance = this;
 		DataFixer.init();
 		setConfigFolderBase(evt.getModConfigurationDirectory());
-		MinecraftForge.EVENT_BUS.register(new MFRRegistry.RegistryHandler());
 
 		MFRConfig.loadClientConfig(getClientConfig());
 		MFRConfig.loadCommonConfig(getCommonConfig());

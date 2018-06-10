@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.RegistryManager;
@@ -487,10 +488,11 @@ public abstract class MFRRegistry {
 		return items.get(block.getRegistryName().getResourcePath());
 	}
 
+	@Mod.EventBusSubscriber
 	static class RegistryHandler {
 
 		@SubscribeEvent
-		public void registerStuff(RegistryEvent.Register e) {
+		public static void registerStuff(RegistryEvent.Register e) {
 
 			if (e.getRegistry() == ForgeRegistries.BLOCKS) {
 				RegistryEvent.Register<Block> evt = e;
@@ -508,7 +510,7 @@ public abstract class MFRRegistry {
 		}
 
 		@SubscribeEvent
-		public void missingMappings(RegistryEvent.MissingMappings e) {
+		public static void missingMappings(RegistryEvent.MissingMappings e) {
 
 			if (e.getName().equals(RegistryManager.ACTIVE.getName(ForgeRegistries.BLOCKS))) {
 				RegistryEvent.MissingMappings<Block> evt = e;
