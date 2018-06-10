@@ -369,8 +369,8 @@ public abstract class MFRRegistry {
 	// INTERNAL ONLY
 
 	private static Map<String, String> remaps = new HashMap<String, String>();
-	private static Map<String, Block> blocks = new HashMap<String, Block>();
-	private static Map<String, Item> items = new HashMap<String, Item>();
+	private static Map<String, Block> blocks = new LinkedHashMap<String, Block>();
+	private static Map<String, Item> items = new LinkedHashMap<String, Item>();
 	static {
 		remaps.put("liquid", null);
 		remaps.put("armor", null);
