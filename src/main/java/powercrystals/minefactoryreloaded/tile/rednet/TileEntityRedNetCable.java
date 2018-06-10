@@ -533,7 +533,6 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 			MFRUtil.notifyBlockUpdate(world, pos);
 	}
 
-	@SideOnly(Side.CLIENT)
 	public RedNetConnectionType getCachedConnectionState(EnumFacing side) {
 
 		return _connectionState[side.ordinal()];

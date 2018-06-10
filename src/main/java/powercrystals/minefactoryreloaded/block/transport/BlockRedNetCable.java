@@ -11,6 +11,7 @@ import cofh.api.block.IBlockInfo;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -344,6 +345,21 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	}
 
 	@Override
+	public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
+
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TileEntityRedNetCable) {
+			RedNetConnectionType type = ((TileEntityRedNetCable)te).getCachedConnectionState(face);
+			if (type.isPlate) {
+				return BlockFaceShape.SOLID;
+			} else if (type.isSingleSubnet && type.isCable) {
+				return BlockFaceShape.MIDDLE_POLE;
+			}
+		}
+		return BlockFaceShape.UNDEFINED;
+	}
+
+	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 
 		return false;
@@ -405,6 +421,12 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 			power = ((TileEntityRedNetCable) te).getStrongPower(side.getOpposite());
 		}
 		return power;
+	}
+
+	@Override
+	public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
+
+		return isSideSolid(state, world, pos, EnumFacing.UP);
 	}
 
 	@Override
