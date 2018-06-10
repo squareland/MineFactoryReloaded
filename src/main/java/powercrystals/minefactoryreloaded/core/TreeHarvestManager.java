@@ -84,8 +84,7 @@ public class TreeHarvestManager implements IHarvestManager {
 					type == HarvestType.TreeLeaf) {
 				_blocks.unshift(node);
 				return;
-			} else if (type == HarvestType.Tree ||
-					type == HarvestType.TreeFlipped) {
+			} else if (type == HarvestType.Tree) {
 				_blocks.push(node);
 				return;
 			}

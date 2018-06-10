@@ -188,7 +188,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	private BlockPos getNextHarvest() {
 
 		if (!_treeManager.getIsDone())
-			return getNextTreeSegment(_lastTree, false);
+			return getNextTreeSegment(_lastTree);
 		BlockPos bp = _areaManager.getNextBlock();
 		_lastTree = null;
 		if (skip) {
@@ -219,9 +219,8 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			case LeaveBottom:
 				return getNextVertical(bp, type == HarvestType.Column ? 0 : 1, harvestable);
 			case Tree:
-			case TreeFlipped:
 			case TreeLeaf:
-				return getNextTreeSegment(bp, type == HarvestType.TreeFlipped);
+				return getNextTreeSegment(bp);
 			case TreeFruit:
 			case Normal:
 				return bp;
@@ -262,26 +261,17 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		return null;
 	}
 
-	private BlockPos getNextTreeSegment(BlockPos pos, boolean treeFlipped) {
+	private BlockPos getNextTreeSegment(BlockPos pos) {
 
 		Block block;
 		_settings.put("isHarvestingTree", true);
 
 		if (!pos.equals(_lastTree) || _treeManager.getIsDone()) {
-			int lowerBound = 0;
-			int upperBound = MFRConfig.treeSearchMaxVertical.getInt();
-			if (treeFlipped) {
-				lowerBound = upperBound;
-				upperBound = 0;
-			}
 
 			_lastTree = new BlockPos(pos);
+			Area a = new Area(_lastTree, MFRConfig.treeSearchMaxHorizontal.getInt(), _lastTree.getY(), world.getHeight() - _lastTree.getY());
 
-			Area a = new Area(_lastTree, MFRConfig.treeSearchMaxHorizontal.getInt(), lowerBound, upperBound);
-
-			_treeManager.reset(world, a,
-				treeFlipped ? HarvestMode.HarvestTreeInverted : HarvestMode.HarvestTree,
-				_immutableSettings);
+			_treeManager.reset(world, a, HarvestMode.HarvestTree, _immutableSettings);
 		}
 
 		Map<Block, IFactoryHarvestable> harvestables = MFRRegistry.getHarvestables();
@@ -296,8 +286,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			if (harvestables.containsKey(block)) {
 				IFactoryHarvestable obj = harvestables.get(block);
 				HarvestType t = obj.getHarvestType();
-				if (t == HarvestType.Tree | t == HarvestType.TreeFlipped |
-						t == HarvestType.TreeLeaf | t == HarvestType.TreeFruit)
+				if (t == HarvestType.Tree | t == HarvestType.TreeLeaf | t == HarvestType.TreeFruit)
 					if (obj.canBeHarvested(world, _immutableSettings, bp))
 						return bp;
 			}

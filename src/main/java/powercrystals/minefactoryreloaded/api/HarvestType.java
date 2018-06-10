@@ -33,12 +33,6 @@ public enum HarvestType {
 	 */
 	Tree,
 	/**
-	 * This block is the base of the tree and the harvester should enter
-	 * tree-cutting mode.
-	 * The tree is searched for in the negative y axis instead.
-	 */
-	TreeFlipped,
-	/**
 	 * This block is part of a tree as above, but leaves are cut before logs.
 	 * The tree is searched for in the current mode.
 	 * <p>

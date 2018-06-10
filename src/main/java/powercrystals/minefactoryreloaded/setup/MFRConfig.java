@@ -1,14 +1,13 @@
 package powercrystals.minefactoryreloaded.setup;
 
-import static net.minecraftforge.common.config.Configuration.CATEGORY_GENERAL;
-
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.Loader;
 
 import java.io.File;
 
-import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+import static net.minecraftforge.common.config.Configuration.CATEGORY_GENERAL;
 
 public class MFRConfig {
 
@@ -160,8 +159,6 @@ public class MFRConfig {
 		//{ Searching
 		treeSearchMaxHorizontal = c.get(CATEGORY_GENERAL + ".SearchDistance", "Tree.MaxHorizontal", 512);
 		treeSearchMaxHorizontal.setComment("When searching for parts of a tree, how far out to the sides (radius) to search");
-		treeSearchMaxVertical = c.get(CATEGORY_GENERAL + ".SearchDistance", "Tree.MaxVertical", 256);
-		treeSearchMaxVertical.setComment("When searching for parts of a tree, how far up to search");
 		verticalHarvestSearchMaxVertical = c.get(CATEGORY_GENERAL + ".SearchDistance", "StackingBlock.MaxVertical", 5);
 		verticalHarvestSearchMaxVertical.setComment("How far upward to search for members of \"stacking\" blocks, like cactus and sugarcane");
 		passengerRailSearchMaxVertical = c.get(CATEGORY_GENERAL + ".SearchDistance", "PassengerRail.MaxVertical", 2);
