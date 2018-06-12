@@ -12,17 +12,15 @@ import powercrystals.minefactoryreloaded.core.MFRUtil;
 public class MineFactoryReloadedFuelHandler {
 
 	@SubscribeEvent
-	public static int getBurnTime(FurnaceFuelBurnTimeEvent e) {
+	public static void getBurnTime(FurnaceFuelBurnTimeEvent e) {
 
 		ItemStack fuel = e.getItemStack();
 		if (fuel.isEmpty())
-			return 0;
+			return;
 		Item item = fuel.getItem();
 		if (item instanceof UniversalBucket && ItemStack.areItemStacksEqual(MFRUtil.getBucketFor(MFRFluids.biofuel), fuel)) {
-			return 22500;
+			e.setBurnTime(22500);
 		}
-
-		return 0;
 	}
 
 }
