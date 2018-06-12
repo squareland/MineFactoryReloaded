@@ -242,9 +242,10 @@ public class MFRPacket extends PacketBase {
 					break;
 				case ROCKET_LAUNCH:
 					Entity owner = world.getEntityByID(getInt());
-					int t = getInt();
+					boolean hasLock = getBool();
+					int t = getVarInt();
 					Entity target = null;
-					if (t != Integer.MIN_VALUE) {
+					if (hasLock) {
 						target = world.getEntityByID(t);
 					}
 
@@ -329,9 +330,9 @@ public class MFRPacket extends PacketBase {
 		PacketHandler.sendToServer(getPacket(PacketType.FAKE_SLOT_CHANGE).addCoords(te).addInt(entityId).addInt(slotNumber).addByte(click));
 	}
 
-	public static void sendRocketLaunchToServer(int ownerId, int entityId) {
+	public static void sendRocketLaunchToServer(int ownerId, boolean hasLock, int entityId) {
 
-		PacketHandler.sendToServer(getPacket(PacketType.ROCKET_LAUNCH).addInt(ownerId).addInt(entityId));
+		PacketHandler.sendToServer(getPacket(PacketType.ROCKET_LAUNCH).addInt(ownerId).addBool(hasLock).addVarInt(entityId));
 	}
 
 	public static PacketBase getPacket(PacketType type) {

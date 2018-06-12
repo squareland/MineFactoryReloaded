@@ -56,8 +56,9 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 					mainInventory.set(slot, ItemStack.EMPTY);
 
 			if (world.isRemote) {
-				MFRPacket.sendRocketLaunchToServer(player.getEntityId(), 
-						damage == 0 ? MineFactoryReloadedClient.instance.getLockedEntity() : Integer.MIN_VALUE);
+				Boolean hasLock = damage == 0 && MineFactoryReloadedClient.instance.getLockedEntity() != null;
+				MFRPacket.sendRocketLaunchToServer(player.getEntityId(), hasLock,
+						hasLock ? MineFactoryReloadedClient.instance.getLockedEntity().intValue() : -1);
 			} else if (!player.addedToChunk) {
 				EntityRocket r = new EntityRocket(world, player, null);
 				world.spawnEntity(r);

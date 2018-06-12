@@ -264,7 +264,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 			ScaledResolution sr = new ScaledResolution(mc);
 			Point center = new Point(sr.getScaledWidth() / 2, sr.getScaledHeight() / 2);
 
-			if (MineFactoryReloadedClient.instance.getLockedEntity() != Integer.MIN_VALUE) {
+			if (MineFactoryReloadedClient.instance.getLockedEntity() != null) {
 				mc.renderEngine.bindTexture(targetingBlue);
 			} else {
 				mc.renderEngine.bindTexture(targetingRed);
@@ -373,13 +373,13 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 		_areaTileEntities.remove(tile);
 	}
 
-	public int getLockedEntity() {
+	public Integer getLockedEntity() {
 
 		if (_lastEntityOver != null && _lockonTicks >= _lockonMax) {
 			return _lastEntityOver.getEntityId();
 		}
 
-		return Integer.MIN_VALUE;
+		return null;
 	}
 
 	public int getLockTimeRemaining() {
