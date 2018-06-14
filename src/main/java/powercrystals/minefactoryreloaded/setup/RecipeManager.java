@@ -5,10 +5,7 @@ import cofh.core.util.helpers.RecipeHelper;
 import com.google.common.collect.Iterators;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.item.crafting.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.RegistrySimple;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -315,12 +312,19 @@ public class RecipeManager {
 			finalizing = false;
 			disableFallback();
 			recipe.setRegistryName(new ResourceLocation(registryName.toString() + '_' + recipes + '_' + ACTIVE_SET));
+			nonair:
+			if (!output.isEmpty() && enabled.getAsBoolean()) {
+				for (Ingredient ing : recipe.getIngredients())
+					if (!ing.apply(ItemStack.EMPTY))
+						break nonair;
+				throw new RuntimeException("All ingredients are air!");
+			}
 			craftingRecipes.add(recipe);
 		}
 
 		private String getGroup() {
 
-			return (MFRProps.PREFIX + ACTIVE_SET).toLowerCase(Locale.ROOT);
+			return (MFRProps.PREFIX + output.getItem().getRegistryName().getResourcePath() + '@' + ACTIVE_SET).toLowerCase(Locale.ROOT);
 		}
 
 		@Override
