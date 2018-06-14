@@ -159,7 +159,7 @@ public class RecipeManager {
 			try {
 				mod = asString(asmData.getCandidate());
 				String className = Type.getObjectType(asmData.getClassName()).getClassName();
-				Class<?> recipeSet = Class.forName(className);
+				Class<?> recipeSet = Class.forName(className, false, this.getClass().getClassLoader());
 				notFound:
 				{
 					IMFRRecipeSet.DependsOn depends = recipeSet.getAnnotation(IMFRRecipeSet.DependsOn.class);
