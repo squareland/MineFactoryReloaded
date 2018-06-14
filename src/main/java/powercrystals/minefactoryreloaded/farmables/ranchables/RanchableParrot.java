@@ -8,8 +8,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
-import powercrystals.minefactoryreloaded.api.RanchedItem;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryRanchable;
+import powercrystals.minefactoryreloaded.api.mob.RanchedItem;
 
 import java.util.LinkedList;
 import java.util.List;

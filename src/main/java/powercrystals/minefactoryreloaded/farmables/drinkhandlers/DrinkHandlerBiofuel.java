@@ -2,10 +2,9 @@ package powercrystals.minefactoryreloaded.farmables.drinkhandlers;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fluids.FluidStack;
-import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
+import powercrystals.minefactoryreloaded.api.handler.ILiquidDrinkHandler;
 
 public class DrinkHandlerBiofuel implements ILiquidDrinkHandler {
 

@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 
 import net.minecraftforge.fluids.FluidStack;
-import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
+import powercrystals.minefactoryreloaded.api.handler.ILiquidDrinkHandler;
 
 public class DrinkHandlerLava implements ILiquidDrinkHandler {
 

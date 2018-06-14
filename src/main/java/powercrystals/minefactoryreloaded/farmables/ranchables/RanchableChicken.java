@@ -12,8 +12,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
-import powercrystals.minefactoryreloaded.api.RanchedItem;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryRanchable;
+import powercrystals.minefactoryreloaded.api.mob.RanchedItem;
 
 public class RanchableChicken implements IFactoryRanchable {
 

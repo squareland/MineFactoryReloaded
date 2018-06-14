@@ -11,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import net.minecraftforge.fluids.FluidStack;
-import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
+import powercrystals.minefactoryreloaded.api.handler.ILiquidDrinkHandler;
 
 public class DrinkHandlerWater implements ILiquidDrinkHandler {
 

@@ -5,8 +5,8 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
-import powercrystals.minefactoryreloaded.api.MobDrop;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryGrindable;
+import powercrystals.minefactoryreloaded.api.mob.MobDrop;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

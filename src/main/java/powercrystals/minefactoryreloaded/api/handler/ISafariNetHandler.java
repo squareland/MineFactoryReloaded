@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.handler;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.nbt.NBTTagCompound;

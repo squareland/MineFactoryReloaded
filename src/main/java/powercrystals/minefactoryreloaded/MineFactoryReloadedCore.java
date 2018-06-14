@@ -1,20 +1,15 @@
 package powercrystals.minefactoryreloaded;
 
-//this import brought to you by the department of redundancies department, the department that brought you this import
-
 import cofh.cofhworld.init.WorldHandler;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.entity.EntityList;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
@@ -30,19 +25,15 @@ import powercrystals.minefactoryreloaded.net.EntityHandler;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
 import powercrystals.minefactoryreloaded.setup.*;
-import powercrystals.minefactoryreloaded.setup.recipe.Vanilla;
 import powercrystals.minefactoryreloaded.setup.village.VillageCreationHandler;
 import powercrystals.minefactoryreloaded.setup.village.Zoologist;
 import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityUnifier;
 import powercrystals.minefactoryreloaded.world.MineFactoryReloadedWorldGen;
 
-import java.io.IOException;
-import java.util.LinkedList;
-
 import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
 
-@Mod(modid = MFRProps.MOD_ID, name = MFRProps.MOD_NAME, version = MFRProps.VERSION, dependencies = MFRProps.DEPENDENCIES,
-		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
+@SuppressWarnings("unused")
+@Mod(modid = MFRProps.MOD_ID, name = MFRProps.MOD_NAME, version = MFRProps.VERSION, dependencies = MFRProps.DEPENDENCIES)
 public class MineFactoryReloadedCore extends BaseMod {
 
 	@SidedProxy(clientSide = "powercrystals.minefactoryreloaded.net.ClientProxy",
@@ -52,7 +43,6 @@ public class MineFactoryReloadedCore extends BaseMod {
 	public static SimpleNetworkWrapper networkWrapper = null;
 
 	public static Object balance = "balance";
-	private LinkedList<Vanilla> recipeSets = new LinkedList<Vanilla>();
 
 	private static MineFactoryReloadedCore instance;
 
@@ -72,36 +62,32 @@ public class MineFactoryReloadedCore extends BaseMod {
 	}
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent evt) throws IOException {
+	public void preInit(FMLPreInitializationEvent evt) {
 
 		instance = this;
 		DataFixer.init();
 		setConfigFolderBase(evt.getModConfigurationDirectory());
 
-		MFRConfig.loadClientConfig(getClientConfig());
+		MFRRegistry.setup();
+
+		RecipeManager.load(evt.getAsmData());
+		IntegrationManager.load(evt.getAsmData());
+
+		if (FMLCommonHandler.instance().getSide().isClient()) {
+			MFRConfig.loadClientConfig(getClientConfig());
+		}
 		MFRConfig.loadCommonConfig(getCommonConfig());
 
 		MFRFluids.preInit();
 		MFRThings.preInit();
-
-		if (MFRConfig.vanillaRecipes.getBoolean(true))
-			recipeSets.add(new Vanilla());
-
-		//if (MFRConfig.thermalExpansionRecipes.getBoolean(false))
-		//	recipeSets.add(new ThermalExpansion());
-
-		//if (MFRConfig.enderioRecipes.getBoolean(false))
-		//	recipeSets.add(new EnderIO());
-
-		Blocks.FIRE.setFireInfo(MFRFluids.biofuelLiquid, 300, 30);
 		
 		proxy.preInit();
-	}
 
-	private static void registerBlock(Block block, ItemBlock itemBlock) {
-		
-		MFRRegistry.registerBlock(block, itemBlock);
+		RecipeManager.configure(this::getConfig);
+		IntegrationManager.configure(this::getConfig);
 
+		MFRConfig.saveCommon();
+		IntegrationManager.preInit();
 	}
 
 	@EventHandler
@@ -126,11 +112,10 @@ public class MineFactoryReloadedCore extends BaseMod {
 
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandler());
 
-		WorldHandler.registerReloadCallback(() -> {
-			WorldHandler.registerFeature(MineFactoryReloadedWorldGen.INSTANCE);
-		});
+		WorldHandler.registerReloadCallback(() -> WorldHandler.registerFeature(MineFactoryReloadedWorldGen.INSTANCE));
 
 		//UpdateManager.registerUpdater(new UpdateManager(this, null, CoFHProps.DOWNLOAD_URL));
+		IntegrationManager.init();
 	}
 
 	private void addDispenserBehavior() {
@@ -185,16 +170,16 @@ public class MineFactoryReloadedCore extends BaseMod {
 			MFRRegistry.registerAutoSpawnerBlacklist(entry);
 		}
 
-		for (Vanilla e : recipeSets)
-			e.registerRecipes();
-
 		MFRFarmables.post();
+		IntegrationManager.postInit();
 	}
 
 	@EventHandler
 	public void loadComplete(FMLLoadCompleteEvent evt) {
 
 		IMCHandler.processIMC(FMLInterModComms.fetchRuntimeMessages(this));
+
+		IntegrationManager.completeInit();
 
 		// catch biomes whitelisted via IMC that are in the config blacklist
 		String[] list = MFRConfig.rubberTreeBiomeBlacklist.getStringList();

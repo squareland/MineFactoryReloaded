@@ -2,8 +2,8 @@ package powercrystals.minefactoryreloaded.farmables.fertilizables;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizer;
+import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizer;
 
 import javax.annotation.Nonnull;
 

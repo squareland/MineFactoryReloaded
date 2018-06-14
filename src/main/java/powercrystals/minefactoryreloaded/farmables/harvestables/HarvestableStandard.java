@@ -11,8 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import powercrystals.minefactoryreloaded.api.HarvestType;
-import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryHarvestable;
 
 public class HarvestableStandard implements IFactoryHarvestable
 {

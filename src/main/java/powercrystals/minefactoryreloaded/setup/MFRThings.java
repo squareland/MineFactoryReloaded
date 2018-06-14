@@ -30,7 +30,15 @@ import powercrystals.minefactoryreloaded.item.gun.ammo.*;
 import powercrystals.minefactoryreloaded.item.syringe.*;
 import powercrystals.minefactoryreloaded.item.tool.*;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
+
+import static net.minecraft.init.Items.MILK_BUCKET;
+import static net.minecraft.init.Items.POTIONITEM;
+import static net.minecraft.init.Items.WATER_BUCKET;
+import static net.minecraftforge.oredict.OreDictionary.registerOre;
+import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.stack;
+import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.stack_wildcard;
 
 public class MFRThings {
 
@@ -344,4 +352,78 @@ public class MFRThings {
 			//init.initialize();
 		}
 	}
+
+	public static void registerOredict() {
+
+		registerOre("itemRubber", rubberBarItem);
+		registerOre("itemRawRubber", rawRubberItem);
+		registerOre("woodRubber", rubberWoodBlock);
+		registerOre("logWood", rubberWoodBlock);
+		registerOre("leavesRubber", rubberLeavesBlock);
+		registerOre("treeLeaves", rubberLeavesBlock);
+		registerOre("treeSapling", rubberSaplingBlock);
+		registerOre("blockPlastic", stack_wildcard(factoryPlasticBlock));
+		registerOre("sheetPlastic", plasticSheetItem);
+		registerOre("itemPlastic", plasticSheetItem);
+		registerOre("dustPlastic", rawPlasticItem);
+		registerOre("itemPlastic", rawPlasticItem);
+		registerOre("ingotMeat", meatIngotCookedItem);
+		registerOre("ingotMeatRaw", meatIngotRawItem);
+		registerOre("nuggetMeat", meatNuggetCookedItem);
+		registerOre("nuggetMeatRaw", meatNuggetRawItem);
+		registerOre("blockMeat", stack(factoryDecorativeBrickBlock, 1, 13));
+		registerOre("blockMeatRaw", stack(factoryDecorativeBrickBlock, 1, 12));
+		registerOre("itemCharcoalSugar", sugarCharcoalItem);
+		registerOre("blockCharcoalSugar", stack(factoryDecorativeBrickBlock, 1, 15));
+		registerOre("cableRedNet", stack(rednetCableBlock, 1, 0));
+		registerOre("cableRedNet", stack(rednetCableBlock, 1, 1));
+		registerOre("cableRedNetEnergy", stack(rednetCableBlock, 1, 2));
+		registerOre("cableRedNetEnergy", stack(rednetCableBlock, 1, 3));
+		registerOre("slimeballPink", stack(pinkSlimeItem, 1, 0));
+		registerOre("slimeball", stack(pinkSlimeItem, 1, 0));
+		registerOre("blockSlimePink", stack(pinkSlimeBlock));
+		registerOre("blockSlime", stack(pinkSlimeBlock));
+		registerOre("fertilizerOrganic", fertilizerItem);
+		registerOre("fertilizer", fertilizerItem);
+		registerOre("dyeBrown", fertilizerItem);
+		registerOre("wireExplosive", detCordBlock);
+		registerOre("listAllmilk", milkBottleItem);
+		registerOre("listAllmeatraw", meatIngotRawItem);
+		registerOre("listAllmeatcooked", meatIngotCookedItem);
+
+		{ // GLASS:
+			String[] DYES = { "Black", "Red", "Green", "Brown",
+					"Blue", "Purple", "Cyan", "LightGray", "Gray", "Pink", "Lime",
+					"Yellow", "LightBlue", "Magenta", "Orange", "White" };
+
+			String pane = "paneGlass", glass = "blockGlass";
+			@Nonnull
+			ItemStack glassStack = stack_wildcard(factoryGlassBlock, 1);
+			@Nonnull ItemStack paneStack = stack_wildcard(factoryGlassPaneBlock, 1);
+			registerOre(glass, glassStack.copy());
+			registerOre(pane, paneStack.copy());
+
+			for (int i = 0; i < 16; i++) {
+				@Nonnull ItemStack ceramicDye = stack(ceramicDyeItem, 1, i);
+				glassStack = stack(factoryGlassBlock, 1, i);
+				paneStack = stack(factoryGlassPaneBlock, 1, i);
+				String dye = DYES[15 - i];
+				String dye2 = "dyeCeramic" + dye;
+				registerOre(glass + dye, glassStack.copy());
+				registerOre(pane + dye, paneStack.copy());
+				registerOre(dye2, ceramicDye.copy());
+			}
+		}
+
+		registerOre("stone", stack(factoryDecorativeStoneBlock, 1, 0));
+		registerOre("stone", stack(factoryDecorativeStoneBlock, 1, 1));
+		registerOre("cobblestone", stack(factoryDecorativeStoneBlock, 1, 2));
+		registerOre("cobblestone", stack(factoryDecorativeStoneBlock, 1, 3));
+
+		// vanilla items
+		registerOre("listAllmilk", MILK_BUCKET);
+		registerOre("listAllwater", WATER_BUCKET);
+		registerOre("listAllwater", stack(POTIONITEM, 1, 0));
+	}
+
 }

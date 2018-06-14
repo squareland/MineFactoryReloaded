@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.gui.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import powercrystals.minefactoryreloaded.api.INeedleAmmo;
+import powercrystals.minefactoryreloaded.api.handler.INeedleAmmo;
 
 import javax.annotation.Nonnull;
 

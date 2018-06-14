@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import powercrystals.minefactoryreloaded.api.ISyringe;
+import powercrystals.minefactoryreloaded.api.handler.ISyringe;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 

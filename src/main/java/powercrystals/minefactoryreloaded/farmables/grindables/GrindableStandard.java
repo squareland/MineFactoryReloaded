@@ -3,8 +3,8 @@ package powercrystals.minefactoryreloaded.farmables.grindables;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
-import powercrystals.minefactoryreloaded.api.MobDrop;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryGrindable;
+import powercrystals.minefactoryreloaded.api.mob.MobDrop;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

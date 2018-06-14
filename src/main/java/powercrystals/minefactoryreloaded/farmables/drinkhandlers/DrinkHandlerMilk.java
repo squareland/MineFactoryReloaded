@@ -5,7 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import net.minecraftforge.fluids.FluidStack;
-import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
+import powercrystals.minefactoryreloaded.api.handler.ILiquidDrinkHandler;
 
 public class DrinkHandlerMilk implements ILiquidDrinkHandler {
 

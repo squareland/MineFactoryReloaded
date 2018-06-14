@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.init.Blocks;
 
-import powercrystals.minefactoryreloaded.api.IMobSpawnHandler;
+import powercrystals.minefactoryreloaded.api.handler.IMobSpawnHandler;
 
 public class SpawnableEnderman implements IMobSpawnHandler
 {

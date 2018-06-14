@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.mob;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;

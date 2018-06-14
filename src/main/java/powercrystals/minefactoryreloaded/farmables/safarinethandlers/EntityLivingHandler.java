@@ -4,7 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
+import powercrystals.minefactoryreloaded.api.handler.ISafariNetHandler;
 
 import javax.annotation.Nonnull;
 import java.util.List;

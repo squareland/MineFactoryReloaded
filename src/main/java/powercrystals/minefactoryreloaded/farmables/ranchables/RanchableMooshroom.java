@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
-import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
-import powercrystals.minefactoryreloaded.api.RanchedItem;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryRanchable;
+import powercrystals.minefactoryreloaded.api.mob.RanchedItem;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 
 import java.util.LinkedList;

@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
 
 import net.minecraftforge.fluids.FluidStack;
-import powercrystals.minefactoryreloaded.api.ILiquidDrinkHandler;
+import powercrystals.minefactoryreloaded.api.handler.ILiquidDrinkHandler;
 
 public class DrinkHandlerMobEssence implements ILiquidDrinkHandler {
 

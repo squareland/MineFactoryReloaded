@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.laser;
 
 import net.minecraft.util.EnumFacing;
 

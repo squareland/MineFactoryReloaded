@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.farmables.harvestables;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 
 public class HarvestableCropPlant extends HarvestableStandard
 {
@@ -9,7 +10,7 @@ public class HarvestableCropPlant extends HarvestableStandard
 
 	public HarvestableCropPlant(net.minecraft.block.Block block, int targetMeta)
 	{
-		super(block, powercrystals.minefactoryreloaded.api.HarvestType.Normal);
+		super(block, HarvestType.Normal);
 		_targetMeta = targetMeta;
 	}
 

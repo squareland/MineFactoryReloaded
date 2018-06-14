@@ -12,8 +12,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
-import powercrystals.minefactoryreloaded.api.MobDrop;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryGrindable;
+import powercrystals.minefactoryreloaded.api.mob.MobDrop;
 
 public class GrindableEnderman implements IFactoryGrindable
 {

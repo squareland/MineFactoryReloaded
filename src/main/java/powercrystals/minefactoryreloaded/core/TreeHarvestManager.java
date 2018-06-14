@@ -7,8 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.api.HarvestType;
-import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryHarvestable;
 import powercrystals.minefactoryreloaded.core.BlockPool.BlockNode;
 
 import java.util.Map;

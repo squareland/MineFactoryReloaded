@@ -2,12 +2,13 @@ package powercrystals.minefactoryreloaded.farmables.harvestables;
 
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.util.math.BlockPos;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 
 public class HarvestableCocoa extends HarvestableStandard
 {
 	public HarvestableCocoa(net.minecraft.block.Block blockId)
 	{
-		super(blockId, powercrystals.minefactoryreloaded.api.HarvestType.TreeFruit);
+		super(blockId, HarvestType.TreeFruit);
 	}
 
 	@Override

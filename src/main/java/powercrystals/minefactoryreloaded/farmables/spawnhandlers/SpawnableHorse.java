@@ -5,7 +5,7 @@ import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import powercrystals.minefactoryreloaded.api.IMobSpawnHandler;
+import powercrystals.minefactoryreloaded.api.handler.IMobSpawnHandler;
 
 public class SpawnableHorse implements IMobSpawnHandler {
 

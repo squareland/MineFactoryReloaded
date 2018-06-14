@@ -9,17 +9,12 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
-import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.HarvestType;
-import powercrystals.minefactoryreloaded.api.MobDrop;
+import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
+import powercrystals.minefactoryreloaded.api.mob.MobDrop;
+import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerLava;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerWater;
 import powercrystals.minefactoryreloaded.farmables.egghandlers.VanillaEggHandler;
@@ -39,96 +34,94 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 import javax.annotation.Nonnull;
 
-@Mod(modid = "minefactoryreloaded_compatvanilla", name = "MFR Compat: Vanilla", version = MFRProps.VERSION, dependencies = "after:minefactoryreloaded",
-		customProperties = @CustomProperty(k = "cofhversion", v = "true"))
-public class Vanilla {
+public class Minecraft implements IMFRIntegrator {
 
-	@EventHandler
-	public void load(FMLInitializationEvent event) {
+	@Override
+	public void load() {
 
-		MFRRegistry.registerPlantable(new PlantableSapling(Blocks.SAPLING));
-		MFRRegistry.registerPlantable(new PlantableStandard(Blocks.BROWN_MUSHROOM));
-		MFRRegistry.registerPlantable(new PlantableStandard(Blocks.RED_MUSHROOM));
-		MFRRegistry.registerPlantable(new PlantableCropPlant(Items.PUMPKIN_SEEDS, Blocks.PUMPKIN_STEM));
-		MFRRegistry.registerPlantable(new PlantableCropPlant(Items.MELON_SEEDS, Blocks.MELON_STEM));
-		MFRRegistry.registerPlantable(new PlantableCropPlant(Items.WHEAT_SEEDS, Blocks.WHEAT));
-		MFRRegistry.registerPlantable(new PlantableCropPlant(Items.CARROT, Blocks.CARROTS));
-		MFRRegistry.registerPlantable(new PlantableCropPlant(Items.POTATO, Blocks.POTATOES));
-		MFRRegistry.registerPlantable(new PlantableCropPlant(Items.BEETROOT_SEEDS, Blocks.BEETROOTS));
-		MFRRegistry.registerPlantable(new PlantableNetherWart());
-		MFRRegistry.registerPlantable(new PlantableCocoa(Items.DYE, Blocks.COCOA, 3));
-		MFRRegistry.registerPlantable(new PlantableChorus());
+		REGISTRY.registerPlantable(new PlantableSapling(Blocks.SAPLING));
+		REGISTRY.registerPlantable(new PlantableStandard(Blocks.BROWN_MUSHROOM));
+		REGISTRY.registerPlantable(new PlantableStandard(Blocks.RED_MUSHROOM));
+		REGISTRY.registerPlantable(new PlantableCropPlant(Items.PUMPKIN_SEEDS, Blocks.PUMPKIN_STEM));
+		REGISTRY.registerPlantable(new PlantableCropPlant(Items.MELON_SEEDS, Blocks.MELON_STEM));
+		REGISTRY.registerPlantable(new PlantableCropPlant(Items.WHEAT_SEEDS, Blocks.WHEAT));
+		REGISTRY.registerPlantable(new PlantableCropPlant(Items.CARROT, Blocks.CARROTS));
+		REGISTRY.registerPlantable(new PlantableCropPlant(Items.POTATO, Blocks.POTATOES));
+		REGISTRY.registerPlantable(new PlantableCropPlant(Items.BEETROOT_SEEDS, Blocks.BEETROOTS));
+		REGISTRY.registerPlantable(new PlantableNetherWart());
+		REGISTRY.registerPlantable(new PlantableCocoa(Items.DYE, Blocks.COCOA, 3));
+		REGISTRY.registerPlantable(new PlantableChorus());
 
-		MFRRegistry.registerHarvestable(new HarvestableWood(Blocks.LOG));
-		MFRRegistry.registerHarvestable(new HarvestableWood(Blocks.LOG2));
-		MFRRegistry.registerHarvestable(new HarvestableTreeLeaves(Blocks.LEAVES));
-		MFRRegistry.registerHarvestable(new HarvestableTreeLeaves(Blocks.LEAVES2));
-		MFRRegistry.registerHarvestable(new HarvestableStandard(Blocks.REEDS, HarvestType.LeaveBottom));
-		MFRRegistry.registerHarvestable(new HarvestableStandard(Blocks.CACTUS, HarvestType.LeaveBottom));
-		MFRRegistry.registerHarvestable(new HarvestableStandard(Blocks.RED_FLOWER, HarvestType.Normal));
-		MFRRegistry.registerHarvestable(new HarvestableStandard(Blocks.YELLOW_FLOWER, HarvestType.Normal));
-		MFRRegistry.registerHarvestable(new HarvestableShrub(Blocks.TALLGRASS));
-		MFRRegistry.registerHarvestable(new HarvestableShrub(Blocks.DEADBUSH));
-		MFRRegistry.registerHarvestable(new HarvestableShrub(Blocks.DOUBLE_PLANT));
-		MFRRegistry.registerHarvestable(new HarvestableStandard(Blocks.BROWN_MUSHROOM_BLOCK, HarvestType.Tree));
-		MFRRegistry.registerHarvestable(new HarvestableStandard(Blocks.RED_MUSHROOM_BLOCK, HarvestType.Tree));
-		MFRRegistry.registerHarvestable(new HarvestableMushroom(Blocks.BROWN_MUSHROOM));
-		MFRRegistry.registerHarvestable(new HarvestableMushroom(Blocks.RED_MUSHROOM));
-		MFRRegistry.registerHarvestable(new HarvestableStemPlant(Blocks.PUMPKIN_STEM, Blocks.PUMPKIN));
-		MFRRegistry.registerHarvestable(new HarvestableStemPlant(Blocks.MELON_STEM, Blocks.MELON_BLOCK));
-		MFRRegistry.registerHarvestable(new HarvestableGourd(Blocks.PUMPKIN));
-		MFRRegistry.registerHarvestable(new HarvestableGourd(Blocks.MELON_BLOCK));
-		MFRRegistry.registerHarvestable(new HarvestableCropPlant(Blocks.WHEAT, 7));
-		MFRRegistry.registerHarvestable(new HarvestableCropPlant(Blocks.CARROTS, 7));
-		MFRRegistry.registerHarvestable(new HarvestableCropPlant(Blocks.POTATOES, 7));
-		MFRRegistry.registerHarvestable(new HarvestableCropPlant(Blocks.BEETROOTS, 3));
-		MFRRegistry.registerHarvestable(new HarvestableCropPlant(Blocks.NETHER_WART, 3));
-		MFRRegistry.registerHarvestable(new HarvestableVine(Blocks.VINE));
-		MFRRegistry.registerHarvestable(new HarvestableCocoa(Blocks.COCOA));
+		REGISTRY.registerHarvestable(new HarvestableWood(Blocks.LOG));
+		REGISTRY.registerHarvestable(new HarvestableWood(Blocks.LOG2));
+		REGISTRY.registerHarvestable(new HarvestableTreeLeaves(Blocks.LEAVES));
+		REGISTRY.registerHarvestable(new HarvestableTreeLeaves(Blocks.LEAVES2));
+		REGISTRY.registerHarvestable(new HarvestableStandard(Blocks.REEDS, HarvestType.LeaveBottom));
+		REGISTRY.registerHarvestable(new HarvestableStandard(Blocks.CACTUS, HarvestType.LeaveBottom));
+		REGISTRY.registerHarvestable(new HarvestableStandard(Blocks.RED_FLOWER, HarvestType.Normal));
+		REGISTRY.registerHarvestable(new HarvestableStandard(Blocks.YELLOW_FLOWER, HarvestType.Normal));
+		REGISTRY.registerHarvestable(new HarvestableShrub(Blocks.TALLGRASS));
+		REGISTRY.registerHarvestable(new HarvestableShrub(Blocks.DEADBUSH));
+		REGISTRY.registerHarvestable(new HarvestableShrub(Blocks.DOUBLE_PLANT));
+		REGISTRY.registerHarvestable(new HarvestableStandard(Blocks.BROWN_MUSHROOM_BLOCK, HarvestType.Tree));
+		REGISTRY.registerHarvestable(new HarvestableStandard(Blocks.RED_MUSHROOM_BLOCK, HarvestType.Tree));
+		REGISTRY.registerHarvestable(new HarvestableMushroom(Blocks.BROWN_MUSHROOM));
+		REGISTRY.registerHarvestable(new HarvestableMushroom(Blocks.RED_MUSHROOM));
+		REGISTRY.registerHarvestable(new HarvestableStemPlant(Blocks.PUMPKIN_STEM, Blocks.PUMPKIN));
+		REGISTRY.registerHarvestable(new HarvestableStemPlant(Blocks.MELON_STEM, Blocks.MELON_BLOCK));
+		REGISTRY.registerHarvestable(new HarvestableGourd(Blocks.PUMPKIN));
+		REGISTRY.registerHarvestable(new HarvestableGourd(Blocks.MELON_BLOCK));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.WHEAT, 7));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.CARROTS, 7));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.POTATOES, 7));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.BEETROOTS, 3));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.NETHER_WART, 3));
+		REGISTRY.registerHarvestable(new HarvestableVine(Blocks.VINE));
+		REGISTRY.registerHarvestable(new HarvestableCocoa(Blocks.COCOA));
 
-		MFRRegistry.registerFertilizable(new FertilizableStandard((IGrowable) Blocks.SAPLING));
-		MFRRegistry.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.WHEAT, 7));
-		MFRRegistry.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.CARROTS, 7));
-		MFRRegistry.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.POTATOES, 7));
-		MFRRegistry.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.BEETROOTS, 3));
-		MFRRegistry.registerFertilizable(new FertilizableStandard((IGrowable) Blocks.BROWN_MUSHROOM));
-		MFRRegistry.registerFertilizable(new FertilizableStandard((IGrowable) Blocks.RED_MUSHROOM));
-		MFRRegistry.registerFertilizable(new FertilizableStemPlants((IGrowable) Blocks.PUMPKIN_STEM));
-		MFRRegistry.registerFertilizable(new FertilizableStemPlants((IGrowable) Blocks.MELON_STEM));
-		MFRRegistry.registerFertilizable(new FertilizableNetherWart());
-		MFRRegistry.registerFertilizable(new FertilizableCocoa(Blocks.COCOA));
-		MFRRegistry.registerFertilizable(new FertilizableGrass());
+		REGISTRY.registerFertilizable(new FertilizableStandard((IGrowable) Blocks.SAPLING));
+		REGISTRY.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.WHEAT, 7));
+		REGISTRY.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.CARROTS, 7));
+		REGISTRY.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.POTATOES, 7));
+		REGISTRY.registerFertilizable(new FertilizableCropPlant((IGrowable) Blocks.BEETROOTS, 3));
+		REGISTRY.registerFertilizable(new FertilizableStandard((IGrowable) Blocks.BROWN_MUSHROOM));
+		REGISTRY.registerFertilizable(new FertilizableStandard((IGrowable) Blocks.RED_MUSHROOM));
+		REGISTRY.registerFertilizable(new FertilizableStemPlants((IGrowable) Blocks.PUMPKIN_STEM));
+		REGISTRY.registerFertilizable(new FertilizableStemPlants((IGrowable) Blocks.MELON_STEM));
+		REGISTRY.registerFertilizable(new FertilizableNetherWart());
+		REGISTRY.registerFertilizable(new FertilizableCocoa(Blocks.COCOA));
+		REGISTRY.registerFertilizable(new FertilizableGrass());
 
 		if (MFRConfig.enableBonemealFertilizing.getBoolean(false)) {
-			MFRRegistry.registerFertilizer(new FertilizerStandard(Items.DYE, 15));
+			REGISTRY.registerFertilizer(new FertilizerStandard(Items.DYE, 15));
 		} else {
-			MFRRegistry.registerFertilizer(new FertilizerStandard(Items.DYE, 15, FertilizerType.Grass));
+			REGISTRY.registerFertilizer(new FertilizerStandard(Items.DYE, 15, FertilizerType.Grass));
 		}
 
-		MFRRegistry.registerRanchable(new RanchableCow());
-		MFRRegistry.registerRanchable(new RanchableMooshroom());
-		MFRRegistry.registerRanchable(new RanchableSheep());
-		MFRRegistry.registerRanchable(new RanchableSquid());
-		MFRRegistry.registerRanchable(new RanchableChicken());
-		MFRRegistry.registerRanchable(new RanchableParrot());
+		REGISTRY.registerRanchable(new RanchableCow());
+		REGISTRY.registerRanchable(new RanchableMooshroom());
+		REGISTRY.registerRanchable(new RanchableSheep());
+		REGISTRY.registerRanchable(new RanchableSquid());
+		REGISTRY.registerRanchable(new RanchableChicken());
+		REGISTRY.registerRanchable(new RanchableParrot());
 
-		MFRRegistry.registerGrinderBlacklist(EntityDragon.class);
-		MFRRegistry.registerGrinderBlacklist(EntityWither.class);
-		MFRRegistry.registerGrinderBlacklist(EntityVillager.class);
+		REGISTRY.registerGrinderBlacklist(EntityDragon.class);
+		REGISTRY.registerGrinderBlacklist(EntityWither.class);
+		REGISTRY.registerGrinderBlacklist(EntityVillager.class);
 
-		MFRRegistry.registerGrindable(new GrindableStandard(EntityChicken.class, new MobDrop[] {
+		REGISTRY.registerGrindable(new GrindableStandard(EntityChicken.class, new MobDrop[] {
 				new MobDrop(30, ItemStack.EMPTY),
 				new MobDrop(10, new ItemStack(Items.EGG))
 		}, false));
-		MFRRegistry.registerGrindable(new GrindableStandard(EntityOcelot.class, new MobDrop[] {
+		REGISTRY.registerGrindable(new GrindableStandard(EntityOcelot.class, new MobDrop[] {
 				new MobDrop(10, new ItemStack(Items.FISH)),
 				new MobDrop(10, new ItemStack(Items.STRING))
 		}));
-		MFRRegistry.registerGrindable(new GrindableStandard(EntityWolf.class, new ItemStack(Items.BONE)));
-		MFRRegistry.registerGrindable(new GrindableZombiePigman());
-		MFRRegistry.registerGrindable(new GrindableEnderman());
-		MFRRegistry.registerGrindable(new GrindableSlime(EntitySlime.class, new ItemStack(Items.SLIME_BALL), 1));
-		MFRRegistry.registerGrindable(new GrindableSlime(EntityMagmaCube.class, new ItemStack(Items.MAGMA_CREAM), 1) {
+		REGISTRY.registerGrindable(new GrindableStandard(EntityWolf.class, new ItemStack(Items.BONE)));
+		REGISTRY.registerGrindable(new GrindableZombiePigman());
+		REGISTRY.registerGrindable(new GrindableEnderman());
+		REGISTRY.registerGrindable(new GrindableSlime(EntitySlime.class, new ItemStack(Items.SLIME_BALL), 1));
+		REGISTRY.registerGrindable(new GrindableSlime(EntityMagmaCube.class, new ItemStack(Items.MAGMA_CREAM), 1) {
 
 			@Override
 			protected boolean shouldDrop(EntitySlime slime) {
@@ -137,62 +130,62 @@ public class Vanilla {
 			}
 		});
 
-		MFRRegistry.registerSludgeDrop(50, new ItemStack(Blocks.SAND));
-		MFRRegistry.registerSludgeDrop(30, new ItemStack(Blocks.CLAY));
-		MFRRegistry.registerSludgeDrop(30, new ItemStack(Blocks.DIRT, 1, 1));
-		MFRRegistry.registerSludgeDrop(10, new ItemStack(Blocks.DIRT));
-		MFRRegistry.registerSludgeDrop(10, new ItemStack(Blocks.GRAVEL));
-		MFRRegistry.registerSludgeDrop(5, new ItemStack(Blocks.SAND, 1, 1));
-		MFRRegistry.registerSludgeDrop(5, new ItemStack(Blocks.SOUL_SAND));
-		MFRRegistry.registerSludgeDrop(3, new ItemStack(Blocks.MYCELIUM));
-		MFRRegistry.registerSludgeDrop(2, new ItemStack(Blocks.DIRT, 1, 2));
-		MFRRegistry.registerSludgeDrop(1, new ItemStack(Blocks.NETHERRACK));
+		REGISTRY.registerSludgeDrop(50, new ItemStack(Blocks.SAND));
+		REGISTRY.registerSludgeDrop(30, new ItemStack(Blocks.CLAY));
+		REGISTRY.registerSludgeDrop(30, new ItemStack(Blocks.DIRT, 1, 1));
+		REGISTRY.registerSludgeDrop(10, new ItemStack(Blocks.DIRT));
+		REGISTRY.registerSludgeDrop(10, new ItemStack(Blocks.GRAVEL));
+		REGISTRY.registerSludgeDrop(5, new ItemStack(Blocks.SAND, 1, 1));
+		REGISTRY.registerSludgeDrop(5, new ItemStack(Blocks.SOUL_SAND));
+		REGISTRY.registerSludgeDrop(3, new ItemStack(Blocks.MYCELIUM));
+		REGISTRY.registerSludgeDrop(2, new ItemStack(Blocks.DIRT, 1, 2));
+		REGISTRY.registerSludgeDrop(1, new ItemStack(Blocks.NETHERRACK));
 
-		MFRRegistry.registerMobEggHandler(new VanillaEggHandler());
+		REGISTRY.registerMobEggHandler(new VanillaEggHandler());
 
-		MFRRegistry.registerRubberTreeBiome("Swampland");
-		MFRRegistry.registerRubberTreeBiome("Swampland M");
-		MFRRegistry.registerRubberTreeBiome("Forest");
-		MFRRegistry.registerRubberTreeBiome("Flower Forest");
-		MFRRegistry.registerRubberTreeBiome("ForestHills");
-		MFRRegistry.registerRubberTreeBiome("ForestHills M");
-		MFRRegistry.registerRubberTreeBiome("Roofed Forest");
-		MFRRegistry.registerRubberTreeBiome("Roofed Forest M");
-		MFRRegistry.registerRubberTreeBiome("Taiga");
-		MFRRegistry.registerRubberTreeBiome("Taiga M");
-		MFRRegistry.registerRubberTreeBiome("TaigaHills");
-		MFRRegistry.registerRubberTreeBiome("TaigaHills M");
-		MFRRegistry.registerRubberTreeBiome("Cold Taiga");
-		MFRRegistry.registerRubberTreeBiome("Cold Taiga M");
-		MFRRegistry.registerRubberTreeBiome("Cold Taiga Hills");
-		MFRRegistry.registerRubberTreeBiome("Cold Taiga Hills M");
-		MFRRegistry.registerRubberTreeBiome("Mega Taiga");
-		MFRRegistry.registerRubberTreeBiome("Mega Spruce Taiga");
-		MFRRegistry.registerRubberTreeBiome("Mega Taiga Hills");
-		MFRRegistry.registerRubberTreeBiome("Mega Spruce Taiga Hills");
-		MFRRegistry.registerRubberTreeBiome("Jungle");
-		MFRRegistry.registerRubberTreeBiome("Jungle M");
-		MFRRegistry.registerRubberTreeBiome("JungleHills");
-		MFRRegistry.registerRubberTreeBiome("JungleHills M");
-		MFRRegistry.registerRubberTreeBiome("JungleEdge");
-		MFRRegistry.registerRubberTreeBiome("JungleEdge M");
+		REGISTRY.registerRubberTreeBiome("Swampland");
+		REGISTRY.registerRubberTreeBiome("Swampland M");
+		REGISTRY.registerRubberTreeBiome("Forest");
+		REGISTRY.registerRubberTreeBiome("Flower Forest");
+		REGISTRY.registerRubberTreeBiome("ForestHills");
+		REGISTRY.registerRubberTreeBiome("ForestHills M");
+		REGISTRY.registerRubberTreeBiome("Roofed Forest");
+		REGISTRY.registerRubberTreeBiome("Roofed Forest M");
+		REGISTRY.registerRubberTreeBiome("Taiga");
+		REGISTRY.registerRubberTreeBiome("Taiga M");
+		REGISTRY.registerRubberTreeBiome("TaigaHills");
+		REGISTRY.registerRubberTreeBiome("TaigaHills M");
+		REGISTRY.registerRubberTreeBiome("Cold Taiga");
+		REGISTRY.registerRubberTreeBiome("Cold Taiga M");
+		REGISTRY.registerRubberTreeBiome("Cold Taiga Hills");
+		REGISTRY.registerRubberTreeBiome("Cold Taiga Hills M");
+		REGISTRY.registerRubberTreeBiome("Mega Taiga");
+		REGISTRY.registerRubberTreeBiome("Mega Spruce Taiga");
+		REGISTRY.registerRubberTreeBiome("Mega Taiga Hills");
+		REGISTRY.registerRubberTreeBiome("Mega Spruce Taiga Hills");
+		REGISTRY.registerRubberTreeBiome("Jungle");
+		REGISTRY.registerRubberTreeBiome("Jungle M");
+		REGISTRY.registerRubberTreeBiome("JungleHills");
+		REGISTRY.registerRubberTreeBiome("JungleHills M");
+		REGISTRY.registerRubberTreeBiome("JungleEdge");
+		REGISTRY.registerRubberTreeBiome("JungleEdge M");
 
-		MFRRegistry.registerSafariNetBlacklist(EntityDragon.class);
-		MFRRegistry.registerSafariNetBlacklist(EntityWither.class);
+		REGISTRY.registerSafariNetBlacklist(EntityDragon.class);
+		REGISTRY.registerSafariNetBlacklist(EntityWither.class);
 
-		MFRRegistry.registerRandomMobProvider(new VanillaMobProvider());
+		REGISTRY.registerRandomMobProvider(new VanillaMobProvider());
 
-		MFRRegistry.registerLiquidDrinkHandler("water", new DrinkHandlerWater());
-		MFRRegistry.registerLiquidDrinkHandler("lava", new DrinkHandlerLava());
+		REGISTRY.registerLiquidDrinkHandler("water", new DrinkHandlerWater());
+		REGISTRY.registerLiquidDrinkHandler("lava", new DrinkHandlerLava());
 
-		MFRRegistry.registerFruitLogBlock(Blocks.LOG);
-		MFRRegistry.registerFruitLogBlock(Blocks.CHORUS_FLOWER);
-		MFRRegistry.registerFruitLogBlock(Blocks.CHORUS_PLANT);
-		MFRRegistry.registerFruit(new FruitCocoa(Blocks.COCOA));
-		MFRRegistry.registerFruit(new FruitChorus(Blocks.CHORUS_FLOWER));
-		MFRRegistry.registerFruit(new FruitChorus(Blocks.CHORUS_PLANT));
+		REGISTRY.registerFruitLogBlock(Blocks.LOG);
+		REGISTRY.registerFruitLogBlock(Blocks.CHORUS_FLOWER);
+		REGISTRY.registerFruitLogBlock(Blocks.CHORUS_PLANT);
+		REGISTRY.registerFruit(new FruitCocoa(Blocks.COCOA));
+		REGISTRY.registerFruit(new FruitChorus(Blocks.CHORUS_FLOWER));
+		REGISTRY.registerFruit(new FruitChorus(Blocks.CHORUS_PLANT));
 
-		MFRRegistry.registerSpawnHandler(new SpawnableEnderman());
+		REGISTRY.registerSpawnHandler(new SpawnableEnderman());
 		for (Class<? extends AbstractHorse> clazz : new Class[] {
 				EntitySkeletonHorse.class,
 				EntityZombieHorse.class,
@@ -201,12 +194,12 @@ public class Vanilla {
 				EntityHorse.class,
 				EntityMule.class
 		}) {
-			MFRRegistry.registerSpawnHandler(new SpawnableHorse(clazz));
+			REGISTRY.registerSpawnHandler(new SpawnableHorse(clazz));
 		}
 	}
 
-	@EventHandler
-	public void postLoad(FMLPostInitializationEvent event) {
+	@Override
+	public void postLoad() {
 
 		//@formatter:off
 		registerOreDictLaserOre(175, "Coal",               black, false);

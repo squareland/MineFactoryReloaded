@@ -5,7 +5,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
+import powercrystals.minefactoryreloaded.api.handler.ISafariNetHandler;
 
 import javax.annotation.Nonnull;
 import java.util.List;

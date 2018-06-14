@@ -3,7 +3,6 @@ package powercrystals.minefactoryreloaded.setup;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.Loader;
 
 import java.io.File;
 
@@ -50,25 +49,13 @@ public class MFRConfig {
 
 	public static Property vanillaOverrideMilkBucket;
 
-	public static Property enableCheapDSU;
-	public static Property craftSingleDSU;
-	public static Property enableMossyCobbleRecipe;
-	public static Property enableSmoothSlabRecipe;
-	public static Property enablePortaSpawner;
-	public static Property enableSyringes;
 	public static Property enableLiquidSyringe;
-	public static Property enableGuns;
-	public static Property enableNetLauncher;
 	public static Property enableSPAMRExploding;
 	public static Property enableFuelExploding;
 	public static Property enableSpawnerCarts;
-	public static Property enableExpensiveSafariNet;
-	public static Property enableFancySafariNet;
-	public static Property enableExpensiveUpgrades;
 
 	public static Property enableChunkLimitBypassing;
 	public static Property enableChunkLoaderRequiresOwner;
-	public static Property enableCheapCL;
 	public static Property enableConfigurableCLEnergy;
 
 	public static Property redNetDebug;
@@ -125,25 +112,42 @@ public class MFRConfig {
 		c.save();
 	}
 
-	//private static Configuration config;
+	static Configuration config;
+
+	public static boolean isIntegrationEnabled(String name, String from) {
+
+		boolean isVanilla = name.equals("Minecraft");
+		Property value = config.get("Integration.Mod", name, true).setRequiresMcRestart(true);
+		if (isVanilla) {
+			value.setComment("If true, MFR will enable its standard (vanilla-only) integration.");
+		} else {
+			value.setComment("If true, MFR will enable " + name + " integration. Provided by " + from);
+		}
+		return value.getBoolean();
+	}
+
+	public static boolean isRecipeSetEnabled(String name, String from) {
+
+		boolean isVanilla = name.equals("Minecraft");
+		Property value = config.get("Integration.Recipes", name, isVanilla).setRequiresMcRestart(true);
+		if (isVanilla) {
+			value.setComment("If true, MFR will register its standard (vanilla-only) recipes.");
+		} else {
+			value.setComment("If true, MFR will register the " + name + "-based recipes. Provided by " + from);
+		}
+		return value.getBoolean();
+	}
+
+	public static void saveCommon() {
+
+		config.save();
+	}
 
 	public static void loadCommonConfig(File configFile) {
 
 		Configuration c = new Configuration(configFile, true);
 		c.load();
-		//config = c;
-
-		{
-			// Alternate recipe sets TODO: auto-register for config handling
-			boolean te = Loader.isModLoaded("ThermalExpansion");
-			boolean eio = Loader.isModLoaded("EnderIO");
-			vanillaRecipes = c.get("RecipeSets", "Vanilla", !eio && !te).setRequiresMcRestart(true);
-			vanillaRecipes.setComment("If true, MFR will register its standard (vanilla-item-only) recipes.");
-			thermalExpansionRecipes = c.get("RecipeSets", "ThermalExpansion", te).setRequiresMcRestart(true);
-			thermalExpansionRecipes.setComment("If true, MFR will register its Thermal Expansion-based recipes.");
-			enderioRecipes = c.get("RecipeSets", "EnderIO", !te && eio).setRequiresMcRestart(true);
-			enderioRecipes.setComment("If true, MFR will register its EnderIO-based recipes.");
-		}
+		config = c;
 
 		String category = "Entity", subCategory = "";
 		zoologist = c.get(category, "ID.Zoologist", 330).setRequiresMcRestart(true);
@@ -246,34 +250,6 @@ public class MFRConfig {
 
 		armorStacks = c.get(CATEGORY_ITEM, "ArmorStacks", false);
 		armorStacks.setComment("If true, Plastic Armor will stack to 4");
-		//}
-
-		//{ Alterations to recipes
-		category = CATEGORY_ITEM + ".Recipe";
-		enableCheapDSU = c.get(category, "CheaperDSU",  false).setRequiresMcRestart(true);
-		enableCheapDSU.setComment("If true, the DSU can be built out of chests instead of ender pearls. Does nothing if the recipe is disabled.");
-		craftSingleDSU = c.get(category, "SingleDSU",  true).setRequiresMcRestart(true);
-		craftSingleDSU.setComment("DSU recipes will always craft one DSU. Does nothing for recipes that already only craft one DSU (cheap mode, etc).");
-		enableMossyCobbleRecipe = c.get(category, "MossyCobble",  true).setRequiresMcRestart(true);
-		enableMossyCobbleRecipe.setComment("If true, mossy cobble can be crafted.");
-		enablePortaSpawner = c.get(category, "PortaSpawner", true).setRequiresMcRestart(true);
-		enablePortaSpawner.setComment("If true, the PortaSpawner will be craftable.");
-		enableSyringes = c.get(category, "Syringes", true).setRequiresMcRestart(true);
-		enableSyringes.setComment("If true, the Syringes will be craftable.");
-		enableGuns = c.get(category, "Guns", true).setRequiresMcRestart(true);
-		enableGuns.setComment("If true, the Guns will be craftable.");
-		enableNetLauncher = c.get(category, "NetLauncher", true).setRequiresMcRestart(true);
-		enableNetLauncher.setComment("If true, the safarinet launcher will be craftable.");
-		enableSmoothSlabRecipe = c.get(category, "SmoothSlab", true).setRequiresMcRestart(true);
-		enableSmoothSlabRecipe.setComment("If true, smooth double stone slabs can be craftable.");
-		enableCheapCL = c.get(category, "CheaperChunkLoader", false).setRequiresMcRestart(true);
-		enableCheapCL.setComment("If true, the ChunkLoader can be built out of cheaper materials. Does nothing if the recipe is disabled.");
-		enableExpensiveSafariNet = c.get(category, "ExpensiveSafariNet", false).setRequiresMcRestart(true);
-		enableExpensiveSafariNet.setComment("If true, the reusable safarinet will require a portaspawner to craft. The portaspawner must be enabled for the safarinet to be craftable.");
-		enableFancySafariNet = c.get(category, "GoldenJailerSafariNet", true).setRequiresMcRestart(true);
-		enableFancySafariNet.setComment("If true, the golden jailer safarinet will be craftable. It causes released mobs to always render their nametag, like a player would.");
-		enableExpensiveUpgrades = c.get(category, "ExpensiveRangeUpgrades", false).setRequiresMcRestart(true);
-		enableExpensiveUpgrades.setComment("If true, upgrades will require the previous level upgrade and a diamond. NOTE: this option requires all upgrades have recipes");
 		//}
 
 		//{ Additional machine configs

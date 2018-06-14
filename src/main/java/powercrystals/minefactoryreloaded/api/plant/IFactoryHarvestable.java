@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.plant;
 
 import java.util.List;
 import java.util.Map;

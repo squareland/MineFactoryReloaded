@@ -160,7 +160,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 		boolean isItem = entity instanceof EntityItem || entity instanceof EntityXPOrb;
 		if(!isItem)
-			for(Class<?> blacklist : MFRRegistry.getConveyerBlacklist())
+			for(Class<?> blacklist : MFRRegistry.getConveyorBlacklist())
 				if(blacklist.isInstance(entity))
 					return;
 

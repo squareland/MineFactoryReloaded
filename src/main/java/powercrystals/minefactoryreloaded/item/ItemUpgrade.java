@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ItemUpgrade extends ItemMulti implements IAugmentItem {
 
-	private static int NEGATIVE_START = (Short.MIN_VALUE >>> 1) & Short.MAX_VALUE;
+	public static final int NEGATIVE_START = (Short.MIN_VALUE >>> 1) & Short.MAX_VALUE;
 	
 	public ItemUpgrade() {
 

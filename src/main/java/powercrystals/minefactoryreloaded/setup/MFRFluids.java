@@ -241,6 +241,8 @@ public class MFRFluids {
 		mushroomSoupLiquid = new BlockFactoryFluid("mushroom_soup");
 		steamFluid = new BlockFactoryFluid("steam", BlockFactoryFluid.material);
 
+		Blocks.FIRE.setFireInfo(MFRFluids.biofuelLiquid, 300, 30);
+
 		MFRRegistry.registerBlock(milkLiquid, new ItemBlock(milkLiquid));
 		MFRRegistry.registerBlock(sludgeLiquid, new ItemBlock(sludgeLiquid));
 		MFRRegistry.registerBlock(sewageLiquid, new ItemBlock(sewageLiquid));

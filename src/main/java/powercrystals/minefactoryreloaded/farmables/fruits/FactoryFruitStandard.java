@@ -6,8 +6,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
+import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 
 import java.util.List;
 import java.util.Random;

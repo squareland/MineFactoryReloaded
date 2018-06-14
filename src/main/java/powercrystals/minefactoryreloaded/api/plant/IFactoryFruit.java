@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.plant;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

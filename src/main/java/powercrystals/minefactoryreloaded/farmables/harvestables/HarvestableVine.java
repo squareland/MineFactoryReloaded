@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class HarvestableVine extends HarvestableStandard
 {
 	public HarvestableVine(net.minecraft.block.Block vine)
 	{
-		super(vine, powercrystals.minefactoryreloaded.api.HarvestType.TreeFruit);
+		super(vine, HarvestType.TreeFruit);
 	}
 
 	@Override

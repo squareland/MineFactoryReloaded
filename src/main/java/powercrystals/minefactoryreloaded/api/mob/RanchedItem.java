@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.mob;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

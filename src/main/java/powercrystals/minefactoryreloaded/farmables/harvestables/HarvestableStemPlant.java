@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.farmables.harvestables;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 
 public class HarvestableStemPlant extends HarvestableGourd
 {
@@ -9,7 +10,7 @@ public class HarvestableStemPlant extends HarvestableGourd
 
 	public HarvestableStemPlant(Block block, Block fruit)
 	{
-		super(block, powercrystals.minefactoryreloaded.api.HarvestType.Gourd);
+		super(block, HarvestType.Gourd);
 		_fruit = fruit;
 	}
 

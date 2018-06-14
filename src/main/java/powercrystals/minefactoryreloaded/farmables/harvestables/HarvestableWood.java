@@ -4,12 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 
 public class HarvestableWood extends HarvestableStandard
 {
 	public HarvestableWood(Block block)
 	{
-		super(block, powercrystals.minefactoryreloaded.api.HarvestType.Tree);
+		super(block, HarvestType.Tree);
 	}
 
 	@Override

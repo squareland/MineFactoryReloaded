@@ -12,7 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.api.INeedleAmmo;
+import powercrystals.minefactoryreloaded.api.handler.INeedleAmmo;
 import powercrystals.minefactoryreloaded.circuits.*;
 import powercrystals.minefactoryreloaded.circuits.analog.*;
 import powercrystals.minefactoryreloaded.circuits.digital.*;
@@ -47,11 +47,11 @@ public class MFRFarmables {
 	public static void load() {
 
 		if (MFRConfig.conveyorNeverCapturesPlayers.getBoolean(false)) {
-			MFRRegistry.registerConveyerBlacklist(EntityPlayer.class);
+			MFRRegistry.registerConveyorBlacklist(EntityPlayer.class);
 		}
 
 		if (!MFRConfig.conveyorCaptureNonItems.getBoolean(true)) {
-			MFRRegistry.registerConveyerBlacklist(Entity.class);
+			MFRRegistry.registerConveyorBlacklist(Entity.class);
 		}
 
 		MFRRegistry.registerSafariNetHandler(new EntityLivingBaseHandler());

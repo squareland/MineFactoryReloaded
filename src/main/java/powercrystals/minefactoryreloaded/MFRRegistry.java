@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded;
 
+import codechicken.lib.reflect.ReflectionManager;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -12,70 +13,70 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.registries.RegistryManager;
-import powercrystals.minefactoryreloaded.api.*;
+import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
+import powercrystals.minefactoryreloaded.api.handler.*;
+import powercrystals.minefactoryreloaded.api.laser.EnumFactoryLaserColor;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryGrindable;
+import powercrystals.minefactoryreloaded.api.mob.IFactoryRanchable;
+import powercrystals.minefactoryreloaded.api.mob.IRandomMobProvider;
+import powercrystals.minefactoryreloaded.api.plant.*;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.core.WeightedRandomItemStack;
-import powercrystals.minefactoryreloaded.setup.recipe.Vanilla;
+import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static powercrystals.minefactoryreloaded.setup.MFRThings.fakeLaserBlock;
 
 public abstract class MFRRegistry {
 
-	private static Map<Item, IFactoryPlantable> _plantables = new HashMap<Item, IFactoryPlantable>();
+	private static Map<Item, IFactoryPlantable> _plantables = new HashMap<>();
 
-	private static Map<Block, IFactoryHarvestable> _harvestables = new HashMap<Block, IFactoryHarvestable>();
+	private static Map<Block, IFactoryHarvestable> _harvestables = new HashMap<>();
 
-	private static Map<Item, IFactoryFertilizer> _fertilizers = new HashMap<Item, IFactoryFertilizer>();
+	private static Map<Item, IFactoryFertilizer> _fertilizers = new HashMap<>();
 
-	private static Map<Block, IFactoryFertilizable> _fertilizables = new HashMap<Block, IFactoryFertilizable>();
+	private static Map<Block, IFactoryFertilizable> _fertilizables = new HashMap<>();
 
-	private static Map<Class<? extends EntityLivingBase>, IFactoryRanchable> _ranchables =
-			new HashMap<Class<? extends EntityLivingBase>, IFactoryRanchable>();
+	private static Map<Class<? extends EntityLivingBase>, IFactoryRanchable> _ranchables = new HashMap<>();
 
-	private static Map<String, ILiquidDrinkHandler> _liquidDrinkHandlers =
-			new HashMap<String, ILiquidDrinkHandler>();
+	private static Map<String, ILiquidDrinkHandler> _liquidDrinkHandlers = new HashMap<>();
 
-	private static Map<Item, INeedleAmmo> _needleAmmoTypes = new HashMap<Item, INeedleAmmo>();
+	private static Map<Item, INeedleAmmo> _needleAmmoTypes = new HashMap<>();
 
-	private static List<Block> _fruitLogBlocks = new ArrayList<Block>();
-	private static Map<Block, IFactoryFruit> _fruitBlocks = new HashMap<Block, IFactoryFruit>();
+	private static List<Block> _fruitLogBlocks = new ArrayList<>();
+	private static Map<Block, IFactoryFruit> _fruitBlocks = new HashMap<>();
 
-	private static List<WeightedRandom.Item> _sludgeDrops = new ArrayList<WeightedRandom.Item>();
+	private static List<WeightedRandom.Item> _sludgeDrops = new ArrayList<>();
 
-	private static List<String> _rubberTreeBiomes = new ArrayList<String>();
+	private static List<String> _rubberTreeBiomes = new ArrayList<>();
 
-	private static List<IRedNetLogicCircuit> _redNetLogicCircuits = new ArrayList<IRedNetLogicCircuit>();
+	private static List<IRedNetLogicCircuit> _redNetLogicCircuits = new ArrayList<>();
 
-	private static Map<Class<? extends EntityLivingBase>, IFactoryGrindable> _grindables =
-			new HashMap<Class<? extends EntityLivingBase>, IFactoryGrindable>();
-	private static List<Class<?>> _grindableBlacklist = new ArrayList<Class<?>>();
+	private static Map<Class<? extends EntityLivingBase>, IFactoryGrindable> _grindables = new HashMap<>();
+	private static List<Class<?>> _grindableBlacklist = new ArrayList<>();
 
-	private static List<Class<?>> _safariNetBlacklist = new ArrayList<Class<?>>();
-	private static List<IMobEggHandler> _eggHandlers = new ArrayList<IMobEggHandler>();
-	private static List<ISafariNetHandler> _safariNetHandlers = new ArrayList<ISafariNetHandler>();
-	private static List<IRandomMobProvider> _randomMobProviders = new ArrayList<IRandomMobProvider>();
+	private static List<Class<?>> _safariNetBlacklist = new ArrayList<>();
+	private static List<IMobEggHandler> _eggHandlers = new ArrayList<>();
+	private static List<ISafariNetHandler> _safariNetHandlers = new ArrayList<>();
+	private static List<IRandomMobProvider> _randomMobProviders = new ArrayList<>();
 
-	private static Map<Class<? extends EntityLivingBase>, IMobSpawnHandler> _spawnHandlers =
-			new HashMap<Class<? extends EntityLivingBase>, IMobSpawnHandler>();
-	private static List<String> _autoSpawnerBlacklist = new ArrayList<String>();
-	private static List<Class<?>> _autoSpawnerClassBlacklist = new ArrayList<Class<?>>();
-	private static TObjectIntHashMap<String> _autoSpawnerCostMap = new TObjectIntHashMap<String>(10, 0.5f, 0);
+	private static Map<Class<? extends EntityLivingBase>, IMobSpawnHandler> _spawnHandlers = new HashMap<>();
+	private static List<String> _autoSpawnerBlacklist = new ArrayList<>();
+	private static List<Class<?>> _autoSpawnerClassBlacklist = new ArrayList<>();
+	private static TObjectIntHashMap<String> _autoSpawnerCostMap = new TObjectIntHashMap<>(10, 0.5f, 0);
 
-	private static List<Class<?>> _slaughterhouseBlacklist = new ArrayList<Class<?>>();
+	private static List<Class<?>> _slaughterhouseBlacklist = new ArrayList<>();
 
-	private static List<Class<? extends Entity>> _conveyerBlacklist =
-			new ArrayList<Class<? extends Entity>>();
+	private static List<Class<? extends Entity>> _conveyorBlacklist = new ArrayList<>();
 
-	private static Map<String, Boolean> _unifierBlacklist = new TreeMap<String, Boolean>();
+	private static Map<String, Boolean> _unifierBlacklist = new TreeMap<>();
 
-	private static List<WeightedRandom.Item> _laserOres = new ArrayList<WeightedRandom.Item>();
-	private static Map<Integer, List<ItemStack>> _laserPreferredOres = new HashMap<Integer, List<ItemStack>>(16);
+	private static List<WeightedRandom.Item> _laserOres = new ArrayList<>();
+	private static Map<Integer, List<ItemStack>> _laserPreferredOres = new HashMap<>(16);
 
 	public static void registerPlantable(IFactoryPlantable plantable) {
 
@@ -322,14 +323,14 @@ public abstract class MFRRegistry {
 		return _unifierBlacklist;
 	}
 
-	public static void registerConveyerBlacklist(Class<? extends Entity> entityClass) {
+	public static void registerConveyorBlacklist(Class<? extends Entity> entityClass) {
 
-		_conveyerBlacklist.add(entityClass);
+		_conveyorBlacklist.add(entityClass);
 	}
 
-	public static List<Class<? extends Entity>> getConveyerBlacklist() {
+	public static List<Class<? extends Entity>> getConveyorBlacklist() {
 
-		return _conveyerBlacklist;
+		return _conveyorBlacklist;
 	}
 
 	public static void addLaserPreferredOre(int color, @Nonnull ItemStack ore) {
@@ -369,9 +370,175 @@ public abstract class MFRRegistry {
 
 	// INTERNAL ONLY
 
-	private static Map<String, String> remaps = new HashMap<String, String>();
-	private static Map<String, Block> blocks = new LinkedHashMap<String, Block>();
-	private static Map<String, Item> items = new LinkedHashMap<String, Item>();
+	static void setup() {
+
+		try {
+			Field field = IMFRIntegrator.class.getField("REGISTRY");
+			field.setAccessible(true);
+
+			ReflectionManager.removeFinal(field);
+
+			field.set(null, new IMFRIntegrator.IRegistry() {
+
+					@Override
+					public void registerPlantable(@Nonnull IFactoryPlantable plantable) {
+
+						MFRRegistry.registerPlantable(plantable);
+					}
+
+					@Override
+					public void registerHarvestable(@Nonnull IFactoryHarvestable harvestable) {
+
+						MFRRegistry.registerHarvestable(harvestable);
+					}
+
+					@Override
+					public void registerFertilizable(@Nonnull IFactoryFertilizable fertilizable) {
+
+						MFRRegistry.registerFertilizable(fertilizable);
+					}
+
+					@Override
+					public void registerFertilizer(@Nonnull IFactoryFertilizer fertilizer) {
+
+						MFRRegistry.registerFertilizer(fertilizer);
+					}
+
+					@Override
+					public void registerRanchable(@Nonnull IFactoryRanchable ranchable) {
+
+						MFRRegistry.registerRanchable(ranchable);
+					}
+
+					@Override
+					public void registerGrindable(@Nonnull IFactoryGrindable grindable) {
+
+						MFRRegistry.registerGrindable(grindable);
+					}
+
+					@Override
+					public void registerGrinderBlacklist(@Nonnull Class<?> ungrindable) {
+
+						MFRRegistry.registerGrinderBlacklist(ungrindable);
+					}
+
+					@Override
+					public void registerSludgeDrop(int weight, @Nonnull ItemStack drop) {
+
+						MFRRegistry.registerSludgeDrop(weight, drop);
+					}
+
+					@Override
+					public void registerSafariNetHandler(@Nonnull ISafariNetHandler handler) {
+
+						MFRRegistry.registerSafariNetHandler(handler);
+					}
+
+					@Override
+					public void registerMobEggHandler(@Nonnull IMobEggHandler handler) {
+
+						MFRRegistry.registerMobEggHandler(handler);
+					}
+
+					@Override
+					public void registerRubberTreeBiome(@Nonnull String biome) {
+
+						MFRRegistry.registerRubberTreeBiome(biome);
+					}
+
+					@Override
+					public void registerSafariNetBlacklist(@Nonnull Class<?> entityClass) {
+
+						MFRRegistry.registerSafariNetBlacklist(entityClass);
+					}
+
+					@Override
+					public void registerRandomMobProvider(@Nonnull IRandomMobProvider mobProvider) {
+
+						MFRRegistry.registerRandomMobProvider(mobProvider);
+					}
+
+					@Override
+					public void registerLiquidDrinkHandler(@Nonnull String fluidID, @Nonnull ILiquidDrinkHandler liquidDrinkHandler) {
+
+						MFRRegistry.registerLiquidDrinkHandler(fluidID, liquidDrinkHandler);
+					}
+
+					@Override
+					public void registerLaserOre(int weight, @Nonnull ItemStack ore) {
+
+						MFRRegistry.registerLaserOre(weight, ore);
+					}
+
+					@Override
+					public void addLaserPreferredOre(@Nonnull EnumFactoryLaserColor color, @Nonnull ItemStack ore) {
+
+						MFRRegistry.addLaserPreferredOre(color.ordinal(), ore);
+					}
+
+					@Override
+					public void registerFruitLogBlock(@Nonnull Block fruitLogBlock) {
+
+						MFRRegistry.registerFruitLogBlock(fruitLogBlock);
+					}
+
+					@Override
+					public void registerFruit(@Nonnull IFactoryFruit fruit) {
+
+						MFRRegistry.registerFruit(fruit);
+					}
+
+					@Override
+					public void registerAutoSpawnerBlacklistClass(@Nonnull Class<? extends EntityLivingBase> entityClass) {
+
+						MFRRegistry.registerAutoSpawnerBlacklistClass(entityClass);
+					}
+
+					@Override
+					public void registerAutoSpawnerBlacklist(@Nonnull String entityString) {
+
+						MFRRegistry.registerAutoSpawnerBlacklist(entityString);
+					}
+
+					@Override
+					public void registerSpawnHandler(@Nonnull IMobSpawnHandler spawnHandler) {
+
+						MFRRegistry.registerSpawnHandler(spawnHandler);
+					}
+
+					@Override
+					public void registerUnifierBlacklist(@Nonnull String oredict) {
+
+						MFRRegistry.registerUnifierBlacklist(oredict);
+					}
+
+					@Override
+					public void registerConveyorBlacklist(@Nonnull Class<? extends Entity> entityClass) {
+
+						MFRRegistry.registerConveyorBlacklist(entityClass);
+					}
+
+					@Override
+					public void registerRedNetLogicCircuit(@Nonnull IRedNetLogicCircuit circuit) {
+
+						MFRRegistry.registerRedNetLogicCircuit(circuit);
+					}
+
+					@Override
+					public void registerNeedleAmmoType(@Nonnull Item item, @Nonnull INeedleAmmo ammo) {
+
+						MFRRegistry.registerNeedleAmmoType(item, ammo);
+					}
+
+				});
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static Map<String, String> remaps = new HashMap<>();
+	private static Map<String, Block> blocks = new LinkedHashMap<>();
+	private static Map<String, Item> items = new LinkedHashMap<>();
 	static {
 		remaps.put("liquid", null);
 		remaps.put("armor", null);
@@ -426,20 +593,16 @@ public abstract class MFRRegistry {
 		if (name == null) {
 			String[] v = s.split("\\.");
 			if (v.length < 3)
-				return name;
-			name = remapPhrase(v[2]);
-			if (name == null)
-				name = "";
-			else
-				name = '_' + name;
+				return null;
+			StringBuilder nameBuilder = new StringBuilder(s.length());
 
-			for (int i = 3, e = v.length; i < e; ++i)
+			for (int i = 2, e = v.length; i < e; ++i)
 				v[i - 2] = remapPhrase(v[i]);
-			for (int i = 1, e = v.length - 2; i < e; ++i)
+			for (int i = 0, e = v.length - 2; i < e; ++i)
 				if (v[i] != null)
-					name += '_' + v[i];
+					nameBuilder.append('_').append(v[i]);
 
-			name = name.substring(1);
+			name = nameBuilder.substring(1);
 		}
 
 		return name;
@@ -488,53 +651,53 @@ public abstract class MFRRegistry {
 		return items.get(block.getRegistryName().getResourcePath());
 	}
 
-	@Mod.EventBusSubscriber
-	static class RegistryHandler {
+	@Mod.EventBusSubscriber(modid = MFRProps.MOD_ID)
+	@SuppressWarnings("unused")
+	private static class RegistryHandler {
 
 		@SubscribeEvent
-		public static void registerStuff(RegistryEvent.Register e) {
+		public static void registerStuff(RegistryEvent.Register<Block> evt) {
 
-			if (e.getRegistry() == ForgeRegistries.BLOCKS) {
-				RegistryEvent.Register<Block> evt = e;
-				for (Block item : blocks.values()) {
-					evt.getRegistry().register(item);
-				}
-			} else if (e.getRegistry() == ForgeRegistries.ITEMS) {
-				RegistryEvent.Register<Item> evt = e;
-				for (Item item : items.values()) {
-					evt.getRegistry().register(item);
-				}
-
-				Vanilla.registerOredict();
+			for (Block item : blocks.values()) {
+				evt.getRegistry().register(item);
 			}
 		}
 
 		@SubscribeEvent
-		public static void missingMappings(RegistryEvent.MissingMappings e) {
+		public static void registerItems(RegistryEvent.Register<Item> evt) {
 
-			if (e.getName().equals(RegistryManager.ACTIVE.getName(ForgeRegistries.BLOCKS))) {
-				RegistryEvent.MissingMappings<Block> evt = e;
-				for (RegistryEvent.MissingMappings.Mapping<Block> mapping : evt.getMappings()) {
-					String name = mapping.key.getResourcePath();
-					Block block = MFRRegistry.remapBlock(name);
-					if (block != null)
-						mapping.remap(block);
-					else if ("tile.null".equals(name))
-						mapping.remap(fakeLaserBlock);
-					else
-						mapping.warn();
-				}
-			} else if (e.getName().equals(RegistryManager.ACTIVE.getName(ForgeRegistries.ITEMS))) {
-				RegistryEvent.MissingMappings<Item> evt = e;
-				for (RegistryEvent.MissingMappings.Mapping<Item> mapping : evt.getMappings()) {
-					String name = mapping.key.getResourcePath();
-					Item item = MFRRegistry.remapItem(name);
-					if (item != null)
-						mapping.remap(item);
-					else
-						mapping.warn();
-				}
+			for (Item item : items.values()) {
+				evt.getRegistry().register(item);
+			}
 
+			MFRThings.registerOredict();
+		}
+
+		@SubscribeEvent
+		public static void missingBlockMappings(RegistryEvent.MissingMappings<Block> evt) {
+
+			for (RegistryEvent.MissingMappings.Mapping<Block> mapping : evt.getMappings()) {
+				String name = mapping.key.getResourcePath();
+				Block block = MFRRegistry.remapBlock(name);
+				if (block != null)
+					mapping.remap(block);
+				else if ("tile.null".equals(name))
+					mapping.remap(fakeLaserBlock);
+				else
+					mapping.warn();
+			}
+		}
+
+		@SubscribeEvent
+		public static void missingItemMappings(RegistryEvent.MissingMappings<Item> evt) {
+
+			for (RegistryEvent.MissingMappings.Mapping<Item> mapping : evt.getMappings()) {
+				String name = mapping.key.getResourcePath();
+				Item item = MFRRegistry.remapItem(name);
+				if (item != null)
+					mapping.remap(item);
+				else
+					mapping.warn();
 			}
 		}
 

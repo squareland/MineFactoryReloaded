@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.ISafariNetHandler;
+import powercrystals.minefactoryreloaded.api.handler.ISafariNetHandler;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 
 import javax.annotation.Nonnull;

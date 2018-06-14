@@ -3,7 +3,7 @@ package powercrystals.minefactoryreloaded.item.gun.ammo;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.INeedleAmmo;
+import powercrystals.minefactoryreloaded.api.handler.INeedleAmmo;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
 

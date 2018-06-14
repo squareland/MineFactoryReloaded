@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import powercrystals.minefactoryreloaded.api.IMobEggHandler;
+import powercrystals.minefactoryreloaded.api.handler.IMobEggHandler;
 
 import javax.annotation.Nonnull;
 

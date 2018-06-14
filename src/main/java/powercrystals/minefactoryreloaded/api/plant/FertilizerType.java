@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.plant;
 
 /**
  * Determines what kind of action a given fertilizer can perform. Your

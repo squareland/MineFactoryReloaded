@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.mob;
 
 import net.minecraft.world.World;
 
@@ -11,10 +11,10 @@ public interface IRandomMobProvider {
 	 *
 	 * @param world
 	 *            The world object the entities will be spawned in.
-	 * @return A list of RandomMob instances of entities that are all ready to
+	 * @return A list of RandomMobProvider instances of entities that are all ready to
 	 *         be spawned in the world with no additional method calls.
 	 */
+	// TODO: docs
 	public List<RandomMobProvider> getRandomMobs(World world);
-	// TODO: Predicate? Function? need to delay creation of entities
 
 }

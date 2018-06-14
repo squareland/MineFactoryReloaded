@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.api;
+package powercrystals.minefactoryreloaded.api.plant;
 
 /**
  * Determines what algorithm the Harvester uses when it encounters this
@@ -10,12 +10,12 @@ public enum HarvestType {
 
 	/**
 	 * Just break the single block - no special action needed. e.g. Carrots,
-	 * flowers, wheat.
+	 * flowers, pumpkins, wheat.
 	 */
 	Normal,
 	/**
 	 * Search for harvestable blocks adjacent to this block but leave this
-	 * block. e.g. Pumpkin, melon
+	 * block. e.g. Pumpkin stem, melon stem
 	 */
 	Gourd,
 	/**
