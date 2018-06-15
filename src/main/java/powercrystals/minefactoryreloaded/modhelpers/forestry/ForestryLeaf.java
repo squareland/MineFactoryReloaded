@@ -14,10 +14,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
+import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
 

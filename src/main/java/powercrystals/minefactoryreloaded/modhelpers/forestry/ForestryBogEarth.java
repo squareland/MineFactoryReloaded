@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.*;
+import powercrystals.minefactoryreloaded.api.plant.*;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSoil;
 
 import javax.annotation.Nonnull;

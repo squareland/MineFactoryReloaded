@@ -1,14 +1,13 @@
 package powercrystals.minefactoryreloaded.modhelpers.ic2;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
 
-import powercrystals.minefactoryreloaded.api.FertilizerType;
-import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
+import java.util.Random;
 
 public class FertilizableIC2RubberTree implements IFactoryFertilizable
 {
