@@ -26,6 +26,7 @@ import powercrystals.minefactoryreloaded.render.ModelHelper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 public class BlockDecorativeStone extends BlockFactory {
@@ -169,18 +170,18 @@ public class BlockDecorativeStone extends BlockFactory {
 
 	public enum Variant implements IStringSerializable{
 
-		BLACK_SMOOTH("black_smooth"),
-		WHITE_SMOOTH("white_smooth"),
-		BLACK_COBBLE("black_cobble"),
-		WHITE_COBBLE("white_cobble"),
-		BLACK_BRICK_LARGE("black_brick_large"),
-		WHITE_BRICK_LARGE("white_brick_large"),
-		BLACK_BRICK_SMALL("black_brick_small"),
-		WHITE_BRICK_SMALL("white_brick_small"),
-		BLACK_GRAVEL("black_gravel"),
-		WHITE_GRAVEL("white_gravel"),
-		BLACK_PAVED("black_paved"),
-		WHITE_PAVED("white_paved");
+		BLACK_SMOOTH,
+		WHITE_SMOOTH,
+		BLACK_COBBLE,
+		WHITE_COBBLE,
+		BLACK_BRICK_LARGE,
+		WHITE_BRICK_LARGE,
+		BLACK_BRICK_SMALL,
+		WHITE_BRICK_SMALL,
+		BLACK_GRAVEL,
+		WHITE_GRAVEL,
+		BLACK_PAVED,
+		WHITE_PAVED;
 
 		private final int meta;
 		private final String name;
@@ -188,10 +189,10 @@ public class BlockDecorativeStone extends BlockFactory {
 		public static final String[] NAMES;
 		public static final String[] UNLOC_NAMES;
 
-		Variant(String name) {
+		Variant() {
 
 			this.meta = ordinal();
-			this.name = name;
+			this.name = name().toLowerCase(Locale.ROOT);
 		}
 
 		@Override
@@ -210,7 +211,7 @@ public class BlockDecorativeStone extends BlockFactory {
 			UNLOC_NAMES = new String[values().length];
 			for (Variant variant : values()) {
 				NAMES[variant.meta] = variant.name;
-				UNLOC_NAMES[variant.meta] = variant.name.replace("_", "");
+				UNLOC_NAMES[variant.meta] = variant.name.replace("_", ".");
 			}
 		}
 	}

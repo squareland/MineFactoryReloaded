@@ -65,39 +65,39 @@ tile.mfr.conveyor.green.name = Conveyor Belt (Green)
 tile.mfr.conveyor.red.name = Conveyor Belt (Red)
 tile.mfr.conveyor.black.name = Conveyor Belt (Black)
 
-tile.mfr.stainedglass.block.white.name = Stained Glass (White)
-tile.mfr.stainedglass.block.orange.name = Stained Glass (Orange)
-tile.mfr.stainedglass.block.magenta.name = Stained Glass (Magenta)
-tile.mfr.stainedglass.block.lightblue.name = Stained Glass (Light Blue)
-tile.mfr.stainedglass.block.yellow.name = Stained Glass (Yellow)
-tile.mfr.stainedglass.block.lime.name = Stained Glass (Lime)
-tile.mfr.stainedglass.block.pink.name = Stained Glass (Pink)
-tile.mfr.stainedglass.block.gray.name = Stained Glass (Gray)
-tile.mfr.stainedglass.block.lightgray.name = Stained Glass (Light Gray)
-tile.mfr.stainedglass.block.cyan.name = Stained Glass (Cyan)
-tile.mfr.stainedglass.block.purple.name = Stained Glass (Purple)
-tile.mfr.stainedglass.block.blue.name = Stained Glass (Blue)
-tile.mfr.stainedglass.block.brown.name = Stained Glass (Brown)
-tile.mfr.stainedglass.block.green.name = Stained Glass (Green)
-tile.mfr.stainedglass.block.red.name = Stained Glass (Red)
-tile.mfr.stainedglass.block.black.name = Stained Glass (Black)
+tile.mfr.stained_glass.block.white.name = Stained Glass (White)
+tile.mfr.stained_glass.block.orange.name = Stained Glass (Orange)
+tile.mfr.stained_glass.block.magenta.name = Stained Glass (Magenta)
+tile.mfr.stained_glass.block.lightblue.name = Stained Glass (Light Blue)
+tile.mfr.stained_glass.block.yellow.name = Stained Glass (Yellow)
+tile.mfr.stained_glass.block.lime.name = Stained Glass (Lime)
+tile.mfr.stained_glass.block.pink.name = Stained Glass (Pink)
+tile.mfr.stained_glass.block.gray.name = Stained Glass (Gray)
+tile.mfr.stained_glass.block.lightgray.name = Stained Glass (Light Gray)
+tile.mfr.stained_glass.block.cyan.name = Stained Glass (Cyan)
+tile.mfr.stained_glass.block.purple.name = Stained Glass (Purple)
+tile.mfr.stained_glass.block.blue.name = Stained Glass (Blue)
+tile.mfr.stained_glass.block.brown.name = Stained Glass (Brown)
+tile.mfr.stained_glass.block.green.name = Stained Glass (Green)
+tile.mfr.stained_glass.block.red.name = Stained Glass (Red)
+tile.mfr.stained_glass.block.black.name = Stained Glass (Black)
 
-tile.mfr.stainedglass.pane.white.name = Stained Glass Pane (White)
-tile.mfr.stainedglass.pane.orange.name = Stained Glass Pane (Orange)
-tile.mfr.stainedglass.pane.magenta.name = Stained Glass Pane (Magenta)
-tile.mfr.stainedglass.pane.lightblue.name = Stained Glass Pane (Light Blue)
-tile.mfr.stainedglass.pane.yellow.name = Stained Glass Pane (Yellow)
-tile.mfr.stainedglass.pane.lime.name = Stained Glass Pane (Lime)
-tile.mfr.stainedglass.pane.pink.name = Stained Glass Pane (Pink)
-tile.mfr.stainedglass.pane.gray.name = Stained Glass Pane (Gray)
-tile.mfr.stainedglass.pane.lightgray.name = Stained Glass Pane (Light Gray)
-tile.mfr.stainedglass.pane.cyan.name = Stained Glass Pane (Cyan)
-tile.mfr.stainedglass.pane.purple.name = Stained Glass Pane (Purple)
-tile.mfr.stainedglass.pane.blue.name = Stained Glass Pane (Blue)
-tile.mfr.stainedglass.pane.brown.name = Stained Glass Pane (Brown)
-tile.mfr.stainedglass.pane.green.name = Stained Glass Pane (Green)
-tile.mfr.stainedglass.pane.red.name = Stained Glass Pane (Red)
-tile.mfr.stainedglass.pane.black.name = Stained Glass Pane (Black)
+tile.mfr.stained_glass.pane.white.name = Stained Glass Pane (White)
+tile.mfr.stained_glass.pane.orange.name = Stained Glass Pane (Orange)
+tile.mfr.stained_glass.pane.magenta.name = Stained Glass Pane (Magenta)
+tile.mfr.stained_glass.pane.lightblue.name = Stained Glass Pane (Light Blue)
+tile.mfr.stained_glass.pane.yellow.name = Stained Glass Pane (Yellow)
+tile.mfr.stained_glass.pane.lime.name = Stained Glass Pane (Lime)
+tile.mfr.stained_glass.pane.pink.name = Stained Glass Pane (Pink)
+tile.mfr.stained_glass.pane.gray.name = Stained Glass Pane (Gray)
+tile.mfr.stained_glass.pane.lightgray.name = Stained Glass Pane (Light Gray)
+tile.mfr.stained_glass.pane.cyan.name = Stained Glass Pane (Cyan)
+tile.mfr.stained_glass.pane.purple.name = Stained Glass Pane (Purple)
+tile.mfr.stained_glass.pane.blue.name = Stained Glass Pane (Blue)
+tile.mfr.stained_glass.pane.brown.name = Stained Glass Pane (Brown)
+tile.mfr.stained_glass.pane.green.name = Stained Glass Pane (Green)
+tile.mfr.stained_glass.pane.red.name = Stained Glass Pane (Red)
+tile.mfr.stained_glass.pane.black.name = Stained Glass Pane (Black)
 
 tile.mfr.road.default.name = Road
 tile.mfr.road.light.off.name = Road Light
@@ -119,47 +119,47 @@ tile.mfr.decorative.brick.lapis.name = Lapis Bricks
 tile.mfr.decorative.brick.obsidian.name = Obsidian Bricks
 tile.mfr.decorative.brick.pavedstone.name = Paved Stone Bricks
 tile.mfr.decorative.brick.snow.name = Snow Bricks
-tile.mfr.decorative.brick.icelarge.name = Large Ice Bricks
-tile.mfr.decorative.brick.glowstonelarge.name = Large Glowstone Bricks
-tile.mfr.decorative.brick.lapislarge.name = Large Lapis Bricks
-tile.mfr.decorative.brick.obsidianlarge.name = Large Obsidian Bricks
-tile.mfr.decorative.brick.pavedstonelarge.name = Large Paved Stone Bricks
-tile.mfr.decorative.brick.snowlarge.name = Large Snow Bricks
+tile.mfr.decorative.brick.ice.large.name = Large Ice Bricks
+tile.mfr.decorative.brick.glowstone.large.name = Large Glowstone Bricks
+tile.mfr.decorative.brick.lapis.large.name = Large Lapis Bricks
+tile.mfr.decorative.brick.obsidian.large.name = Large Obsidian Bricks
+tile.mfr.decorative.brick.pavedstone.large.name = Large Paved Stone Bricks
+tile.mfr.decorative.brick.snow.large.name = Large Snow Bricks
 tile.mfr.decorative.brick.meatraw.name = Raw Meat Block
 tile.mfr.decorative.brick.meatcooked.name = Cooked Meat Block
-tile.mfr.decorative.brick.bricklarge.name = Large Bricks
-tile.mfr.decorative.brick.sugarcharcoal.name = Sugar Charcoal Block
+tile.mfr.decorative.brick.brick.large.name = Large Bricks
+tile.mfr.decorative.brick.sugar_charcoal.name = Sugar Charcoal Block
 
-tile.mfr.decorative.stone.blacksmooth.name = Smooth Blackstone
-tile.mfr.decorative.stone.blackcobble.name = Cobble Blackstone
-tile.mfr.decorative.stone.blackbricksmall.name = Small Blackstone Bricks
-tile.mfr.decorative.stone.blackbricklarge.name = Large Blackstone Bricks
-tile.mfr.decorative.stone.blackgravel.name = Blackstone Gravel
-tile.mfr.decorative.stone.blackpaved.name = Paved Blackstone
-tile.mfr.decorative.stone.whitesmooth.name = Smooth Whitestone
-tile.mfr.decorative.stone.whitecobble.name = Cobble Whitestone
-tile.mfr.decorative.stone.whitebricksmall.name = Small Whitestone Bricks
-tile.mfr.decorative.stone.whitebricklarge.name = Large Whitestone Bricks
-tile.mfr.decorative.stone.whitegravel.name = Whitestone Gravel
-tile.mfr.decorative.stone.whitepaved.name = Paved Whitestone
+tile.mfr.decorative.stone.black.smooth.name = Smooth Blackstone
+tile.mfr.decorative.stone.black.cobble.name = Cobble Blackstone
+tile.mfr.decorative.stone.black.brick.small.name = Small Blackstone Bricks
+tile.mfr.decorative.stone.black.brick.large.name = Large Blackstone Bricks
+tile.mfr.decorative.stone.black.gravel.name = Blackstone Gravel
+tile.mfr.decorative.stone.black.paved.name = Paved Blackstone
+tile.mfr.decorative.stone.white.smooth.name = Smooth Whitestone
+tile.mfr.decorative.stone.white.cobble.name = Cobble Whitestone
+tile.mfr.decorative.stone.white.brick.small.name = Small Whitestone Bricks
+tile.mfr.decorative.stone.white.brick.large.name = Large Whitestone Bricks
+tile.mfr.decorative.stone.white.gravel.name = Whitestone Gravel
+tile.mfr.decorative.stone.white.paved.name = Paved Whitestone
 
-tile.mfr.pinkslime.block.name = Pink Slime Block
+tile.mfr.pink_slime.block.name = Pink Slime Block
 
 tile.ice.unmelting.name = Ice (Unmelting)
 
-tile.mfr.vinescaffold.name = Vine Scaffolding
+tile.mfr.vine.scaffold.name = Vine Scaffolding
 
 tile.mfr.detcord.name = DetCord
 
 tile.mfr.farmland.name = Fertile Soil
 
-tile.mfr.rubberwood.sapling.normal.name = Rubber Sapling
-tile.mfr.rubberwood.sapling.sacred.name = Sacred Rubber Sapling
-tile.mfr.rubberwood.sapling.mega.name = Mega Rubber Sapling
-tile.mfr.rubberwood.sapling.massive.name = Sacred Rubber Sapling
-tile.mfr.rubberwood.log.name = Rubber Wood
-tile.mfr.rubberwood.leaves.normal.name = Rubber Leaves
-tile.mfr.rubberwood.leaves.dry.name = Dry Rubber Leaves
+tile.mfr.rubber_wood.sapling.normal.name = Rubber Sapling
+tile.mfr.rubber_wood.sapling.sacred.name = Sacred Rubber Sapling
+tile.mfr.rubber_wood.sapling.mega.name = Mega Rubber Sapling
+tile.mfr.rubber_wood.sapling.massive.name = Sacred Rubber Sapling
+tile.mfr.rubber_wood.log.name = Rubber Wood
+tile.mfr.rubber_wood.leaves.normal.name = Rubber Leaves
+tile.mfr.rubber_wood.leaves.dry.name = Dry Rubber Leaves
 
 tile.mfr.rail.cargo.dropoff.name = Cargo Dropoff Rail
 tile.mfr.rail.cargo.pickup.name = Cargo Pickup Rail
@@ -170,26 +170,27 @@ tile.mfr.cable.redstone.name = RedNet Cable
 tile.mfr.cable.redstone.glass.name = RedNet Cable
 tile.mfr.cable.redstone.energy.name = RedNet Energy Cable
 tile.mfr.cable.redstone.energyglass.name = RedNet Energy Cable
-tile.mfr.cable.plastic.name = Plastic Pipe
+
+tile.mfr.plastic.pipe.name = Plastic Pipe
 
 tile.mfr.rednet.logic.name = Programmable RedNet Controller
 tile.mfr.rednet.panel.historian.name = RedNet Historian
 
-tile.mfr.machineblock.machine = item.mfr.machineblock
-tile.mfr.machineblock.prc.name = Programmable RedNet Controller Housing
+item.mfr.machine_block.base.name = Factory Machine Block
+tile.mfr.machine_block.prc.name = Programmable RedNet Controller Housing
 
 tile.mfr.tank.name = Plastic Tank
 
-fluid.mfr.milk.still.name = Milk
-fluid.mfr.sludge.still.name = Sludge
-fluid.mfr.sewage.still.name = Sewage
-fluid.mfr.mob_essence.still.name = Essence
-fluid.mfr.biofuel.still.name = BioFuel
-fluid.mfr.meat.still.name = Meat
-fluid.mfr.pink_slime.still.name = Pink Slime
-fluid.mfr.chocolate_milk.still.name = Chocolate Milk
-fluid.mfr.mushroom_soup.still.name = Mushroom Soup
-fluid.mfr.steam.still.name = Steam
+fluid.mfr.milk.fluid.name = Milk
+fluid.mfr.sludge.fluid.name = Sludge
+fluid.mfr.sewage.fluid.name = Sewage
+fluid.mfr.mob_essence.fluid.name = Essence
+fluid.mfr.biofuel.fluid.name = BioFuel
+fluid.mfr.meat.fluid.name = Meat
+fluid.mfr.pink_slime.fluid.name = Pink Slime
+fluid.mfr.chocolate_milk.fluid.name = Chocolate Milk
+fluid.mfr.mushroom_soup.fluid.name = Mushroom Soup
+fluid.mfr.steam.fluid.name = Steam
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Pink Slime
 
@@ -199,7 +200,7 @@ item.mfr.bucket.sludge.name = Sludge Bucket
 item.mfr.bucket.essence.name = Essence Bucket
 item.mfr.bucket.biofuel.name = BioFuel Bucket
 item.mfr.bucket.meat.name = Meat Bucket
-item.mfr.bucket.pinkslime.name = Pink Slime Bucket
+item.mfr.bucket.pink_slime.name = Pink Slime Bucket
 item.mfr.bucket.chocolatemilk.name = Chocolate Milk Bucket
 item.mfr.bucket.mushroomsoup.name = Mushroom Soup Bucket
 
@@ -226,7 +227,6 @@ item.mfr.syringe.health.name = Health Syringe
 item.mfr.syringe.slime.name = Slime Embiggening Syringe
 item.mfr.syringe.zombie.name = Zombie Syringe
 
-item.mfr.machineblock.name = Factory Machine Block
 item.mfr.hammer.name = Precision Sledgehammer
 
 item.mfr.plastic = Plastic
@@ -240,18 +240,18 @@ item.mfr.rubber.raw.name = Raw Rubber
 item.mfr.record.blank.name = Blank Record
 
 item.mfr.safarinet.reusable.name = Safari Net (Reusable)
-item.mfr.safarinet.singleuse.name = Safari Net (Single-Use)
+item.mfr.safarinet.single_use.name = Safari Net (Single-Use)
 item.mfr.safarinet.jailer.name = Jailer's Safari Net
 item.mfr.safarinet.jailer.fancy.name = Golden Jailer's Safari Net
 item.mfr.safarinet.launcher.name = Safari Net Launcher
 
-item.mfr.sugarcharcoal.name = Sugar Charcoal
+item.mfr.sugar_charcoal.name = Sugar Charcoal
 item.mfr.fertilizer.name = Industrial Fertilizer
-item.mfr.milkbottle.name = Milk Bottle
+item.mfr.milk_bottle.name = Milk Bottle
 item.mfr.spyglass.name = Spyglass
 item.mfr.ruler.name = Ruler
-item.mfr.xpextractor.name = XP Extractor
-item.mfr.portaspawner.name = PortaSpawner
+item.mfr.xp_extractor.name = XP Extractor
+item.mfr.porta_spawner.name = PortaSpawner
 item.mfr.straw.name = Straw
 
 item.mfr.rednet.meter.name = RedNet Meter
@@ -264,52 +264,52 @@ item.mfr.meat.ingot.cooked.name = Cooked Meat Ingot
 item.mfr.meat.nugget.raw.name = Raw "Meat" Nugget
 item.mfr.meat.nugget.cooked.name = Cooked "Meat" Nugget
 
-item.mfr.pinkslime = Pink Slime
-item.mfr.pinkslime.ability = Slimy\nPink
-item.mfr.pinkslime.ball.name = Pink Slimeball
-item.mfr.pinkslime.gem.name = Pink Slime Crystal
+item.mfr.pink_slime = Pink Slime
+item.mfr.pink_slime.ability = Slimy\nPink
+item.mfr.pink_slime.ball.name = Pink Slimeball
+item.mfr.pink_slime.gem.name = Pink Slime Crystal
 
 item.mfr.rocket.name = Self-Propelled Anti Material Rocket
 item.mfr.rocket.smart.name = Tracking Self-Propelled Anti Material Rocket
-item.mfr.rocketlauncher.name = SPAMR Launcher
+item.mfr.rocket_launcher.name = SPAMR Launcher
 
-item.mfr.potatolauncher.name = Potato Cannon
+item.mfr.potato_launcher.name = Potato Cannon
 
-item.mfr.fishingrod.name = Fishing Rod
+item.mfr.fishing_rod.name = Fishing Rod
 
-item.mfr.ceramicdye.white.name = Ceramic Dye (White)
-item.mfr.ceramicdye.orange.name = Ceramic Dye (Orange)
-item.mfr.ceramicdye.magenta.name = Ceramic Dye (Magenta)
-item.mfr.ceramicdye.lightblue.name = Ceramic Dye (Light Blue)
-item.mfr.ceramicdye.yellow.name = Ceramic Dye (Yellow)
-item.mfr.ceramicdye.lime.name = Ceramic Dye (Lime)
-item.mfr.ceramicdye.pink.name = Ceramic Dye (Pink)
-item.mfr.ceramicdye.gray.name = Ceramic Dye (Gray)
-item.mfr.ceramicdye.lightgray.name = Ceramic Dye (Light Gray)
-item.mfr.ceramicdye.cyan.name = Ceramic Dye (Cyan)
-item.mfr.ceramicdye.purple.name = Ceramic Dye (Purple)
-item.mfr.ceramicdye.blue.name = Ceramic Dye (Blue)
-item.mfr.ceramicdye.brown.name = Ceramic Dye (Brown)
-item.mfr.ceramicdye.green.name = Ceramic Dye (Green)
-item.mfr.ceramicdye.red.name = Ceramic Dye (Red)
-item.mfr.ceramicdye.black.name = Ceramic Dye (Black)
+item.mfr.ceramic.dye.white.name = Ceramic Dye (White)
+item.mfr.ceramic.dye.orange.name = Ceramic Dye (Orange)
+item.mfr.ceramic.dye.magenta.name = Ceramic Dye (Magenta)
+item.mfr.ceramic.dye.lightblue.name = Ceramic Dye (Light Blue)
+item.mfr.ceramic.dye.yellow.name = Ceramic Dye (Yellow)
+item.mfr.ceramic.dye.lime.name = Ceramic Dye (Lime)
+item.mfr.ceramic.dye.pink.name = Ceramic Dye (Pink)
+item.mfr.ceramic.dye.gray.name = Ceramic Dye (Gray)
+item.mfr.ceramic.dye.lightgray.name = Ceramic Dye (Light Gray)
+item.mfr.ceramic.dye.cyan.name = Ceramic Dye (Cyan)
+item.mfr.ceramic.dye.purple.name = Ceramic Dye (Purple)
+item.mfr.ceramic.dye.blue.name = Ceramic Dye (Blue)
+item.mfr.ceramic.dye.brown.name = Ceramic Dye (Brown)
+item.mfr.ceramic.dye.green.name = Ceramic Dye (Green)
+item.mfr.ceramic.dye.red.name = Ceramic Dye (Red)
+item.mfr.ceramic.dye.black.name = Ceramic Dye (Black)
 
-item.mfr.laserfocus.white.name = Laser Focus (White)
-item.mfr.laserfocus.orange.name = Laser Focus (Orange)
-item.mfr.laserfocus.magenta.name = Laser Focus (Magenta)
-item.mfr.laserfocus.lightblue.name = Laser Focus (Light Blue)
-item.mfr.laserfocus.yellow.name = Laser Focus (Yellow)
-item.mfr.laserfocus.lime.name = Laser Focus (Lime)
-item.mfr.laserfocus.pink.name = Laser Focus (Pink)
-item.mfr.laserfocus.gray.name = Laser Focus (Gray)
-item.mfr.laserfocus.lightgray.name = Laser Focus (Light Gray)
-item.mfr.laserfocus.cyan.name = Laser Focus (Cyan)
-item.mfr.laserfocus.purple.name = Laser Focus (Purple)
-item.mfr.laserfocus.blue.name = Laser Focus (Blue)
-item.mfr.laserfocus.brown.name = Laser Focus (Brown)
-item.mfr.laserfocus.green.name = Laser Focus (Green)
-item.mfr.laserfocus.red.name = Laser Focus (Red)
-item.mfr.laserfocus.black.name = Laser Focus (Black)
+item.mfr.laser.focus.white.name = Laser Focus (White)
+item.mfr.laser.focus.orange.name = Laser Focus (Orange)
+item.mfr.laser.focus.magenta.name = Laser Focus (Magenta)
+item.mfr.laser.focus.lightblue.name = Laser Focus (Light Blue)
+item.mfr.laser.focus.yellow.name = Laser Focus (Yellow)
+item.mfr.laser.focus.lime.name = Laser Focus (Lime)
+item.mfr.laser.focus.pink.name = Laser Focus (Pink)
+item.mfr.laser.focus.gray.name = Laser Focus (Gray)
+item.mfr.laser.focus.lightgray.name = Laser Focus (Light Gray)
+item.mfr.laser.focus.cyan.name = Laser Focus (Cyan)
+item.mfr.laser.focus.purple.name = Laser Focus (Purple)
+item.mfr.laser.focus.blue.name = Laser Focus (Blue)
+item.mfr.laser.focus.brown.name = Laser Focus (Brown)
+item.mfr.laser.focus.green.name = Laser Focus (Green)
+item.mfr.laser.focus.red.name = Laser Focus (Red)
+item.mfr.laser.focus.black.name = Laser Focus (Black)
 
 item.mfr.upgrade.radius.cobble.name = Upgrade (Cobble)
 item.mfr.upgrade.radius.lapis.name = Upgrade (Lapis)
@@ -469,7 +469,7 @@ chat.info.mfr.chunkloader.noticket = You have too many chunk loaders and this on
 
 tip.info.mfr.hammer = Like a wrench, but smashier
 
-tip.info.mfr.rubberwood.sapling.massive = Warning: Pakratt's world ship.
+tip.info.mfr.rubber_wood.sapling.massive = Warning: Pakratt's world ship.
 
 tip.info.mfr.prc = If you're lost, read the (in-game) manual
 

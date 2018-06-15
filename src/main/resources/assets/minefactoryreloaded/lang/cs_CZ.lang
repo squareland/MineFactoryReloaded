@@ -65,39 +65,39 @@ tile.mfr.conveyor.green.name = Posuvný pás (Zelený)
 tile.mfr.conveyor.red.name = Posuvný pás (Červený)
 tile.mfr.conveyor.black.name = Posuvný pás (Černý)
 
-tile.mfr.stainedglass.block.white.name = Zabarvené sklo (Bílé)
-tile.mfr.stainedglass.block.orange.name = Zabarvené sklo (Oranžové)
-tile.mfr.stainedglass.block.magenta.name = Zabarvené sklo (Purpurové)
-tile.mfr.stainedglass.block.lightblue.name = Zabarvené sklo (Světle modré)
-tile.mfr.stainedglass.block.yellow.name = Zabarvené sklo (Žluté)
-tile.mfr.stainedglass.block.lime.name = Zabarvené sklo (Světle zelené)
-tile.mfr.stainedglass.block.pink.name = Zabarvené sklo (Růžové)
-tile.mfr.stainedglass.block.gray.name = Zabarvené sklo (Šedé)
-tile.mfr.stainedglass.block.lightgray.name = Zabarvené sklo (Světle šedé)
-tile.mfr.stainedglass.block.cyan.name = Zabarvené sklo (Azurové)
-tile.mfr.stainedglass.block.purple.name = Zabarvené sklo (Fialové)
-tile.mfr.stainedglass.block.blue.name = Zabarvené sklo (Modré)
-tile.mfr.stainedglass.block.brown.name = Zabarvené sklo (Hnědé)
-tile.mfr.stainedglass.block.green.name = Zabarvené sklo (Zelené)
-tile.mfr.stainedglass.block.red.name = Zabarvené sklo (Červené)
-tile.mfr.stainedglass.block.black.name = Zabarvené sklo (Černé)
+tile.mfr.stained_glass.block.white.name = Zabarvené sklo (Bílé)
+tile.mfr.stained_glass.block.orange.name = Zabarvené sklo (Oranžové)
+tile.mfr.stained_glass.block.magenta.name = Zabarvené sklo (Purpurové)
+tile.mfr.stained_glass.block.lightblue.name = Zabarvené sklo (Světle modré)
+tile.mfr.stained_glass.block.yellow.name = Zabarvené sklo (Žluté)
+tile.mfr.stained_glass.block.lime.name = Zabarvené sklo (Světle zelené)
+tile.mfr.stained_glass.block.pink.name = Zabarvené sklo (Růžové)
+tile.mfr.stained_glass.block.gray.name = Zabarvené sklo (Šedé)
+tile.mfr.stained_glass.block.lightgray.name = Zabarvené sklo (Světle šedé)
+tile.mfr.stained_glass.block.cyan.name = Zabarvené sklo (Azurové)
+tile.mfr.stained_glass.block.purple.name = Zabarvené sklo (Fialové)
+tile.mfr.stained_glass.block.blue.name = Zabarvené sklo (Modré)
+tile.mfr.stained_glass.block.brown.name = Zabarvené sklo (Hnědé)
+tile.mfr.stained_glass.block.green.name = Zabarvené sklo (Zelené)
+tile.mfr.stained_glass.block.red.name = Zabarvené sklo (Červené)
+tile.mfr.stained_glass.block.black.name = Zabarvené sklo (Černé)
 
-tile.mfr.stainedglass.pane.white.name = Panel zabarveného skla (Bílý)
-tile.mfr.stainedglass.pane.orange.name = Panel zabarveného skla (Oranžový)
-tile.mfr.stainedglass.pane.magenta.name = Panel zabarveného skla (Purpurový)
-tile.mfr.stainedglass.pane.lightblue.name = Panel zabarveného skla (Světle modrý)
-tile.mfr.stainedglass.pane.yellow.name = Panel zabarveného skla (Žlutý)
-tile.mfr.stainedglass.pane.lime.name = Panel zabarveného skla (Světle zelený)
-tile.mfr.stainedglass.pane.pink.name = Panel zabarveného skla (Růžový)
-tile.mfr.stainedglass.pane.gray.name = Panel zabarveného skla (Šedý)
-tile.mfr.stainedglass.pane.lightgray.name = Panel zabarveného skla (Světle šedý)
-tile.mfr.stainedglass.pane.cyan.name = Panel zabarveného skla (Azurový)
-tile.mfr.stainedglass.pane.purple.name = Panel zabarveného skla (Fialový)
-tile.mfr.stainedglass.pane.blue.name = Panel zabarveného skla (Modrý)
-tile.mfr.stainedglass.pane.brown.name = Panel zabarveného skla (Hnědý)
-tile.mfr.stainedglass.pane.green.name = Panel zabarveného skla (Zelený)
-tile.mfr.stainedglass.pane.red.name = Panel zabarveného skla (Červený)
-tile.mfr.stainedglass.pane.black.name = Panel zabarveného skla (Černý)
+tile.mfr.stained_glass.pane.white.name = Panel zabarveného skla (Bílý)
+tile.mfr.stained_glass.pane.orange.name = Panel zabarveného skla (Oranžový)
+tile.mfr.stained_glass.pane.magenta.name = Panel zabarveného skla (Purpurový)
+tile.mfr.stained_glass.pane.lightblue.name = Panel zabarveného skla (Světle modrý)
+tile.mfr.stained_glass.pane.yellow.name = Panel zabarveného skla (Žlutý)
+tile.mfr.stained_glass.pane.lime.name = Panel zabarveného skla (Světle zelený)
+tile.mfr.stained_glass.pane.pink.name = Panel zabarveného skla (Růžový)
+tile.mfr.stained_glass.pane.gray.name = Panel zabarveného skla (Šedý)
+tile.mfr.stained_glass.pane.lightgray.name = Panel zabarveného skla (Světle šedý)
+tile.mfr.stained_glass.pane.cyan.name = Panel zabarveného skla (Azurový)
+tile.mfr.stained_glass.pane.purple.name = Panel zabarveného skla (Fialový)
+tile.mfr.stained_glass.pane.blue.name = Panel zabarveného skla (Modrý)
+tile.mfr.stained_glass.pane.brown.name = Panel zabarveného skla (Hnědý)
+tile.mfr.stained_glass.pane.green.name = Panel zabarveného skla (Zelený)
+tile.mfr.stained_glass.pane.red.name = Panel zabarveného skla (Červený)
+tile.mfr.stained_glass.pane.black.name = Panel zabarveného skla (Černý)
 
 tile.mfr.road.default.name = Cesta
 tile.mfr.road.light.off.name = Osvětlená cesta
@@ -113,47 +113,47 @@ tile.mfr.decorative.brick.lapis.name = Lapisové cihly
 tile.mfr.decorative.brick.obsidian.name = Obsidianové cihly
 tile.mfr.decorative.brick.pavedstone.name = Zpevněné kamenné cihly
 tile.mfr.decorative.brick.snow.name = Sněhové cihly
-tile.mfr.decorative.brick.icelarge.name = Velké ledové cihly
-tile.mfr.decorative.brick.glowstonelarge.name = Velké světlitové cihly
-tile.mfr.decorative.brick.lapislarge.name = Velké lapisové cihly
-tile.mfr.decorative.brick.obsidianlarge.name = Velké obsidianové cihly
-tile.mfr.decorative.brick.pavedstonelarge.name = Velké zpevněné kamenné cihly
-tile.mfr.decorative.brick.snowlarge.name = Velké sněhové cihly
+tile.mfr.decorative.brick.ice.large.name = Velké ledové cihly
+tile.mfr.decorative.brick.glowstone.large.name = Velké světlitové cihly
+tile.mfr.decorative.brick.lapis.large.name = Velké lapisové cihly
+tile.mfr.decorative.brick.obsidian.large.name = Velké obsidianové cihly
+tile.mfr.decorative.brick.pavedstone.large.name = Velké zpevněné kamenné cihly
+tile.mfr.decorative.brick.snow.large.name = Velké sněhové cihly
 tile.mfr.decorative.brick.meatraw.name = Blok surového masa
 tile.mfr.decorative.brick.meatcooked.name = Blok pečeného masa
-tile.mfr.decorative.brick.bricklarge.name = Velké cihly
-tile.mfr.decorative.brick.sugarcharcoal.name = Blok cukrového dřevěného uhlí
+tile.mfr.decorative.brick.brick.large.name = Velké cihly
+tile.mfr.decorative.brick.sugar_charcoal.name = Blok cukrového dřevěného uhlí
 
-tile.mfr.decorative.stone.blacksmooth.name = Hladký černý kámen
-tile.mfr.decorative.stone.blackcobble.name = Dlažební černý kámen
-tile.mfr.decorative.stone.blackbricksmall.name = Malé černokamenné cihly
-tile.mfr.decorative.stone.blackbricklarge.name = Velké černokamenné cihly
-tile.mfr.decorative.stone.blackgravel.name = Černokamenný štěrk
-tile.mfr.decorative.stone.blackpaved.name = Zpevněný černý kámen
-tile.mfr.decorative.stone.whitesmooth.name = Vyhlazený bílý kámen
-tile.mfr.decorative.stone.whitecobble.name = Dlažební bílý kámen
-tile.mfr.decorative.stone.whitebricksmall.name = Malé bělokamenné cihly
-tile.mfr.decorative.stone.whitebricklarge.name = Velké bělokamenné cihly
-tile.mfr.decorative.stone.whitegravel.name = Bělokamenný štěrk
-tile.mfr.decorative.stone.whitepaved.name = Zpevněný bílý kámen
+tile.mfr.decorative.stone.black.smooth.name = Hladký černý kámen
+tile.mfr.decorative.stone.black.cobble.name = Dlažební černý kámen
+tile.mfr.decorative.stone.black.brick.small.name = Malé černokamenné cihly
+tile.mfr.decorative.stone.black.brick.large.name = Velké černokamenné cihly
+tile.mfr.decorative.stone.black.gravel.name = Černokamenný štěrk
+tile.mfr.decorative.stone.black.paved.name = Zpevněný černý kámen
+tile.mfr.decorative.stone.white.smooth.name = Vyhlazený bílý kámen
+tile.mfr.decorative.stone.white.cobble.name = Dlažební bílý kámen
+tile.mfr.decorative.stone.white.brick.small.name = Malé bělokamenné cihly
+tile.mfr.decorative.stone.white.brick.large.name = Velké bělokamenné cihly
+tile.mfr.decorative.stone.white.gravel.name = Bělokamenný štěrk
+tile.mfr.decorative.stone.white.paved.name = Zpevněný bílý kámen
 
-tile.mfr.pinkslime.block.name = Blok růžového slizu
+tile.mfr.pink_slime.block.name = Blok růžového slizu
 
 tile.ice.unmelting.name = Led (Netající)
 
-tile.mfr.vinescaffold.name = Vinné lešení
+tile.mfr.vine.scaffold.name = Vinné lešení
 
 tile.mfr.detcord.name = Detonátor
 
 tile.mfr.farmland.name = Úrodná půda
 
-tile.mfr.rubberwood.sapling.name = Sazenice gumovníku
-tile.mfr.rubberwood.sapling.sacred.name = Sazenice posvátného gumovníku
-tile.mfr.rubberwood.sapling.mega.name = Sazenice obrovského gumovníku
-tile.mfr.rubberwood.sapling.massive.name = Sazenice posvátného gumovníku
-tile.mfr.rubberwood.log.name = Dřevo gumovníku
-tile.mfr.rubberwood.leaves.name = Listy gumovníku
-tile.mfr.rubberwood.leaves.dry.name = Suché listy gumovníku
+tile.mfr.rubber_wood.sapling.name = Sazenice gumovníku
+tile.mfr.rubber_wood.sapling.sacred.name = Sazenice posvátného gumovníku
+tile.mfr.rubber_wood.sapling.mega.name = Sazenice obrovského gumovníku
+tile.mfr.rubber_wood.sapling.massive.name = Sazenice posvátného gumovníku
+tile.mfr.rubber_wood.log.name = Dřevo gumovníku
+tile.mfr.rubber_wood.leaves.name = Listy gumovníku
+tile.mfr.rubber_wood.leaves.dry.name = Suché listy gumovníku
 
 tile.mfr.rail.cargo.dropoff.name = Nákladové vyhazovací koleje
 tile.mfr.rail.cargo.pickup.name = Nákladové sběrné koleje
@@ -164,26 +164,26 @@ tile.mfr.cable.redstone.name = RedNetový kabel
 tile.mfr.cable.redstone.glass.name = RedNetový kabel
 tile.mfr.cable.redstone.energy.name = RedNetový energetický kabel
 tile.mfr.cable.redstone.energyglass.name = RedNetový energetický kabel
-tile.mfr.cable.plastic.name = Plastová trubka
+tile.mfr.plastic.pipe.name = Plastová trubka
 
 tile.mfr.rednet.logic.name = Programovatelný RedNetový ovladač
 tile.mfr.rednet.panel.historian.name = RedNetový zaznamenávač
 
 tile.mfr.machineblock = Blok stroje
-tile.mfr.machineblock.prc.name = Pouzdro programovatelného RedNet ovladače
+tile.mfr.machine_block.prc.name = Pouzdro programovatelného RedNet ovladače
 
 tile.mfr.tank.name = Plastová nádrž
 
-fluid.mfr.milk.still.name = Mléko
-fluid.mfr.sludge.still.name = Splašky
-fluid.mfr.sewage.still.name = Kal
-fluid.mfr.mobessence.still.name = Esence
-fluid.mfr.biofuel.still.name = Biopalivo
-fluid.mfr.meat.still.name = Maso
-fluid.mfr.pinkslime.still.name = Růžový sliz
-fluid.mfr.chocolatemilk.still.name = Čokoládové mléko
-fluid.mfr.mushroomsoup.still.name = Houbová polévka
-fluid.mfr.steam.still.name = Pára
+fluid.mfr.milk.fluid.name = Mléko
+fluid.mfr.sludge.fluid.name = Splašky
+fluid.mfr.sewage.fluid.name = Kal
+fluid.mfr.mobessence.fluid.name = Esence
+fluid.mfr.biofuel.fluid.name = Biopalivo
+fluid.mfr.meat.fluid.name = Maso
+fluid.mfr.pink_slime.fluid.name = Růžový sliz
+fluid.mfr.chocolatemilk.fluid.name = Čokoládové mléko
+fluid.mfr.mushroomsoup.fluid.name = Houbová polévka
+fluid.mfr.steam.fluid.name = Pára
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Růžový sliz
 
@@ -193,7 +193,7 @@ item.mfr.bucket.sludge.name = Kbelík kalu
 item.mfr.bucket.essence.name = Kbelík esence
 item.mfr.bucket.biofuel.name = Kbelík biopaliva
 item.mfr.bucket.meat.name = Kbelík masa
-item.mfr.bucket.pinkslime.name = Kbelík růžového slizu
+item.mfr.bucket.pink_slime.name = Kbelík růžového slizu
 item.mfr.bucket.chocolatemilk.name = Kbelík čokoládového mléka
 item.mfr.bucket.mushroomsoup.name = Kbelík houbové polévky
 
@@ -218,7 +218,7 @@ item.mfr.syringe.health.name = Zdravotní stříkačka
 item.mfr.syringe.slime.name = Slizová vzrůstová stříkačka
 item.mfr.syringe.zombie.name = Zombíková stříkačka
 
-item.mfr.machineblock.name = Tovární strojový blok
+item.mfr.machine_block.name = Tovární strojový blok
 item.mfr.hammer.name = Přesná palice
 
 item.mfr.plastic = Plast
@@ -232,18 +232,18 @@ item.mfr.rubber.raw.name = Surová guma
 item.mfr.record.blank.name = Prázdný záznam
 
 item.mfr.safarinet.reusable.name = Lovecká síť (Znovupoužitelná)
-item.mfr.safarinet.singleuse.name = Lovecká síť (Jednorázová)
+item.mfr.safarinet.single_use.name = Lovecká síť (Jednorázová)
 item.mfr.safarinet.jailer.name = Věznící lovecká síť
 item.mfr.safarinet.jailer.fancy.name = Zlatá věznící lovecká síť
 item.mfr.safarinet.launcher.name = Síťomet
 
-item.mfr.sugarcharcoal.name = Cukrové dřevěné uhlí
+item.mfr.sugar_charcoal.name = Cukrové dřevěné uhlí
 item.mfr.fertilizer.name = Průmyslové hnojivo
-item.mfr.milkbottle.name = Láhev mléka
+item.mfr.milk_bottle.name = Láhev mléka
 item.mfr.spyglass.name = Skládací dalekohled
 item.mfr.ruler.name = Pravítko
-item.mfr.xpextractor.name = XP vysávač
-item.mfr.portaspawner.name = Přenosný spawner
+item.mfr.xp_extractor.name = XP vysávač
+item.mfr.porta_spawner.name = Přenosný spawner
 item.mfr.straw.name = Brčko
 
 item.mfr.rednet.meter.name = RedNetový metr
@@ -256,52 +256,52 @@ item.mfr.meat.ingot.cooked.name = Cihlička pečeného masa
 item.mfr.meat.nugget.raw.name = Hrudka syrového "masa"
 item.mfr.meat.nugget.cooked.name = Hrudka vařeného "masa"
 
-item.mfr.pinkslime = Růžový sliz
-item.mfr.pinkslime.ability = Slizově\nRůžový
-item.mfr.pinkslime.ball.name = Růžová slizová koule
-item.mfr.pinkslime.gem.name = Krystal růžového slizu
+item.mfr.pink_slime = Růžový sliz
+item.mfr.pink_slime.ability = Slizově\nRůžový
+item.mfr.pink_slime.ball.name = Růžová slizová koule
+item.mfr.pink_slime.gem.name = Krystal růžového slizu
 
 item.mfr.rocket.name = Soběstačná anti-materiální raketa
 item.mfr.rocket.smart.name = Sledovací soběstačná anti-materiální raketa
-item.mfr.rocketlauncher.name = SPAMRmet
+item.mfr.rocket_launcher.name = SPAMRmet
 
-item.mfr.potatolauncher.name = Bramborové dělo
+item.mfr.potato_launcher.name = Bramborové dělo
 
-item.mfr.fishingrod.name = Rybářský prut
+item.mfr.fishing_rod.name = Rybářský prut
 
-item.mfr.ceramicdye.white.name = Keramické barvivo (Bílé)
-item.mfr.ceramicdye.orange.name = Keramické barvivo (Oranžové)
-item.mfr.ceramicdye.magenta.name = Keramické barvivo (Purpurové)
-item.mfr.ceramicdye.lightblue.name = Keramické barvivo (Světle modré)
-item.mfr.ceramicdye.yellow.name = Keramické barvivo (Žluté)
-item.mfr.ceramicdye.lime.name = Keramické barvivo (Světle zelené)
-item.mfr.ceramicdye.pink.name = Keramické barvivo (Růžové)
-item.mfr.ceramicdye.gray.name = Keramické barvivo (Šedé)
-item.mfr.ceramicdye.lightgray.name = Keramické barvivo (Světle šedé)
-item.mfr.ceramicdye.cyan.name = Keramické barvivo (Azurové)
-item.mfr.ceramicdye.purple.name = Keramické barvivo (Fialové)
-item.mfr.ceramicdye.blue.name = Keramické barvivo (Modré)
-item.mfr.ceramicdye.brown.name = Keramické barvivo (Hnědé)
-item.mfr.ceramicdye.green.name = Keramické barvivo (Zelené)
-item.mfr.ceramicdye.red.name = Keramické barvivo (Červené)
-item.mfr.ceramicdye.black.name = Keramické barvivo (Černé)
+item.mfr.ceramic.dye.white.name = Keramické barvivo (Bílé)
+item.mfr.ceramic.dye.orange.name = Keramické barvivo (Oranžové)
+item.mfr.ceramic.dye.magenta.name = Keramické barvivo (Purpurové)
+item.mfr.ceramic.dye.lightblue.name = Keramické barvivo (Světle modré)
+item.mfr.ceramic.dye.yellow.name = Keramické barvivo (Žluté)
+item.mfr.ceramic.dye.lime.name = Keramické barvivo (Světle zelené)
+item.mfr.ceramic.dye.pink.name = Keramické barvivo (Růžové)
+item.mfr.ceramic.dye.gray.name = Keramické barvivo (Šedé)
+item.mfr.ceramic.dye.lightgray.name = Keramické barvivo (Světle šedé)
+item.mfr.ceramic.dye.cyan.name = Keramické barvivo (Azurové)
+item.mfr.ceramic.dye.purple.name = Keramické barvivo (Fialové)
+item.mfr.ceramic.dye.blue.name = Keramické barvivo (Modré)
+item.mfr.ceramic.dye.brown.name = Keramické barvivo (Hnědé)
+item.mfr.ceramic.dye.green.name = Keramické barvivo (Zelené)
+item.mfr.ceramic.dye.red.name = Keramické barvivo (Červené)
+item.mfr.ceramic.dye.black.name = Keramické barvivo (Černé)
 
-item.mfr.laserfocus.white.name = Laserové ohnisko (Bílé)
-item.mfr.laserfocus.orange.name = Laserové ohnisko (Oranžové)
-item.mfr.laserfocus.magenta.name = Laserové ohnisko (Purpurové)
-item.mfr.laserfocus.lightblue.name = Laserové ohnisko (Světle modré)
-item.mfr.laserfocus.yellow.name = Laserové ohnisko (Žluté)
-item.mfr.laserfocus.lime.name = Laserové ohnisko (Světle zelené)
-item.mfr.laserfocus.pink.name = Laserové ohnisko (Růžové)
-item.mfr.laserfocus.gray.name = Laserové ohnisko (Šedé)
-item.mfr.laserfocus.lightgray.name = Laserové ohnisko (Světle šedé)
-item.mfr.laserfocus.cyan.name = Laserové ohnisko (Azurové)
-item.mfr.laserfocus.purple.name = Laserové ohnisko (Fialové)
-item.mfr.laserfocus.blue.name = Laserové ohnisko (Modré)
-item.mfr.laserfocus.brown.name = Laserové ohnisko (Hnědé)
-item.mfr.laserfocus.green.name = Laserové ohnisko (Zelené)
-item.mfr.laserfocus.red.name = Laserové ohnisko (Červené)
-item.mfr.laserfocus.black.name = Laserové ohnisko (Černé)
+item.mfr.laser.focus.white.name = Laserové ohnisko (Bílé)
+item.mfr.laser.focus.orange.name = Laserové ohnisko (Oranžové)
+item.mfr.laser.focus.magenta.name = Laserové ohnisko (Purpurové)
+item.mfr.laser.focus.lightblue.name = Laserové ohnisko (Světle modré)
+item.mfr.laser.focus.yellow.name = Laserové ohnisko (Žluté)
+item.mfr.laser.focus.lime.name = Laserové ohnisko (Světle zelené)
+item.mfr.laser.focus.pink.name = Laserové ohnisko (Růžové)
+item.mfr.laser.focus.gray.name = Laserové ohnisko (Šedé)
+item.mfr.laser.focus.lightgray.name = Laserové ohnisko (Světle šedé)
+item.mfr.laser.focus.cyan.name = Laserové ohnisko (Azurové)
+item.mfr.laser.focus.purple.name = Laserové ohnisko (Fialové)
+item.mfr.laser.focus.blue.name = Laserové ohnisko (Modré)
+item.mfr.laser.focus.brown.name = Laserové ohnisko (Hnědé)
+item.mfr.laser.focus.green.name = Laserové ohnisko (Zelené)
+item.mfr.laser.focus.red.name = Laserové ohnisko (Červené)
+item.mfr.laser.focus.black.name = Laserové ohnisko (Černé)
 
 item.mfr.upgrade.radius.cobble.name = Vylepšení (Kamenné)
 item.mfr.upgrade.radius.lapis.name = Vylepšení (Lapisové)
@@ -454,7 +454,7 @@ chat.info.mfr.chunkloader.noticket = Máš již příliš mnoho načítačů chu
 # Replace "item." or "tile." with "tip.info" and remove ".name" and that tooltip will be
 # displayed under the item with exceptions, such as the PRC which uses a custom entry for legacy reasons
 
-tip.info.mfr.rubberwood.sapling.massive = Varování: Pakratova světová loď.
+tip.info.mfr.rubber_wood.sapling.massive = Varování: Pakratova světová loď.
 
 tip.info.mfr.prc = Pokud se ztratíš, přečti si (herní) manuál
 

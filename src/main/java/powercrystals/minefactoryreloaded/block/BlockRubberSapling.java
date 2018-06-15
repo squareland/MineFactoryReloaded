@@ -48,7 +48,7 @@ public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection
 
 		setHardness(0.0F);
 		setSoundType(SoundType.PLANT);
-		setUnlocalizedName("mfr.rubberwood.sapling");
+		setUnlocalizedName("mfr.rubber_wood.sapling");
 		setCreativeTab(MFRCreativeTab.tab);
 		this.setDefaultState(blockState.getBaseState().withProperty(TYPE, Type.NORMAL).withProperty(STAGE, 0));
 		MFRThings.registerInitializer(this);
@@ -139,7 +139,7 @@ public class BlockRubberSapling extends BlockBush implements IRedNetNoConnection
 		ModelLoader.setCustomStateMapper(this, new StateMap.Builder().ignore(TYPE, STAGE).build());
 		Item item = MFRRegistry.getItemBlock(this);
 		for (int i=0; i<4; i++) {
-			ModelHelper.registerModel(item, i, "rubberwood_sapling");
+			ModelHelper.registerModel(item, i, "rubber_wood_sapling");
 		}
 	}
 

@@ -59,7 +59,7 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	{
 		super(Material.GLASS, false);
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
-		setUnlocalizedName("mfr.stainedglass.block"); // FIXME: relocalize to stained_glass.block
+		setUnlocalizedName("mfr.stained_glass.block");
 		setHardness(0.3F);
 		setSoundType(SoundType.GLASS);
 		setCreativeTab(MFRCreativeTab.tab);

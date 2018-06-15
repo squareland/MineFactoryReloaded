@@ -36,7 +36,7 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 
 	public BlockRubberWood()
 	{
-		setUnlocalizedName("mfr.rubberwood.log");
+		setUnlocalizedName("mfr.rubber_wood.log");
 		setCreativeTab(MFRCreativeTab.tab);
 		setHarvestLevel("axe", 0);
 		setDefaultState(blockState.getBaseState().withProperty(RUBBER_FILLED, true).withProperty(LOG_AXIS, EnumAxis.Y));
@@ -157,7 +157,7 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 
 		ModelLoader.setCustomStateMapper(this, new StateMap.Builder().ignore(RUBBER_FILLED).build());
 		Item item = MFRRegistry.getItemBlock(this);
-		ModelHelper.registerModel(item, "rubberwood_log", "axis=y");
-		ModelHelper.registerModel(item, 1, "rubberwood_log", "axis=y");
+		ModelHelper.registerModel(item, "rubber_wood_log", "axis=y");
+		ModelHelper.registerModel(item, 1, "rubber_wood_log", "axis=y");
 	}
 }

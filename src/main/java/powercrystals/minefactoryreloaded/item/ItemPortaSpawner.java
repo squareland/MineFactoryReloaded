@@ -40,7 +40,7 @@ public class ItemPortaSpawner extends ItemFactory {
 
 	public ItemPortaSpawner() {
 
-		setUnlocalizedName("mfr.portaspawner"); // FIXME: relocalize to porta_spawner
+		setUnlocalizedName("mfr.porta_spawner");
 		setMaxStackSize(1);
 	}
 

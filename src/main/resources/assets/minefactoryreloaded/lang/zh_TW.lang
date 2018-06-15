@@ -69,39 +69,39 @@ tile.mfr.conveyor.green.name = 綠色輸送帶
 tile.mfr.conveyor.red.name = 紅色輸送帶
 tile.mfr.conveyor.black.name = 黑色輸送帶
 
-tile.mfr.stainedglass.block.white.name = 白色玻璃
-tile.mfr.stainedglass.block.orange.name = 橙色玻璃
-tile.mfr.stainedglass.block.magenta.name = 洋紅色玻璃
-tile.mfr.stainedglass.block.lightblue.name = 淺藍色玻璃
-tile.mfr.stainedglass.block.yellow.name = 黃色玻璃
-tile.mfr.stainedglass.block.lime.name = 檸檬色玻璃
-tile.mfr.stainedglass.block.pink.name = 粉色玻璃
-tile.mfr.stainedglass.block.gray.name = 灰色玻璃
-tile.mfr.stainedglass.block.lightgray.name = 淺灰色玻璃
-tile.mfr.stainedglass.block.cyan.name = 青色玻璃
-tile.mfr.stainedglass.block.purple.name = 紫色玻璃
-tile.mfr.stainedglass.block.blue.name = 藍色玻璃
-tile.mfr.stainedglass.block.brown.name = 棕色玻璃
-tile.mfr.stainedglass.block.green.name = 綠色玻璃
-tile.mfr.stainedglass.block.red.name = 紅色玻璃
-tile.mfr.stainedglass.block.black.name = 黑色玻璃
+tile.mfr.stained_glass.block.white.name = 白色玻璃
+tile.mfr.stained_glass.block.orange.name = 橙色玻璃
+tile.mfr.stained_glass.block.magenta.name = 洋紅色玻璃
+tile.mfr.stained_glass.block.lightblue.name = 淺藍色玻璃
+tile.mfr.stained_glass.block.yellow.name = 黃色玻璃
+tile.mfr.stained_glass.block.lime.name = 檸檬色玻璃
+tile.mfr.stained_glass.block.pink.name = 粉色玻璃
+tile.mfr.stained_glass.block.gray.name = 灰色玻璃
+tile.mfr.stained_glass.block.lightgray.name = 淺灰色玻璃
+tile.mfr.stained_glass.block.cyan.name = 青色玻璃
+tile.mfr.stained_glass.block.purple.name = 紫色玻璃
+tile.mfr.stained_glass.block.blue.name = 藍色玻璃
+tile.mfr.stained_glass.block.brown.name = 棕色玻璃
+tile.mfr.stained_glass.block.green.name = 綠色玻璃
+tile.mfr.stained_glass.block.red.name = 紅色玻璃
+tile.mfr.stained_glass.block.black.name = 黑色玻璃
 
-tile.mfr.stainedglass.pane.white.name = 白色玻璃片
-tile.mfr.stainedglass.pane.orange.name = 橙色玻璃片
-tile.mfr.stainedglass.pane.magenta.name = 洋紅色玻璃片
-tile.mfr.stainedglass.pane.lightblue.name = 淺藍色玻璃片
-tile.mfr.stainedglass.pane.yellow.name = 黃色玻璃片
-tile.mfr.stainedglass.pane.lime.name = 檸檬色玻璃片
-tile.mfr.stainedglass.pane.pink.name = 粉色玻璃片
-tile.mfr.stainedglass.pane.gray.name = 灰色玻璃片
-tile.mfr.stainedglass.pane.lightgray.name = 淺灰色玻璃片
-tile.mfr.stainedglass.pane.cyan.name = 青色玻璃片
-tile.mfr.stainedglass.pane.purple.name = 紫色玻璃片
-tile.mfr.stainedglass.pane.blue.name = 藍色玻璃片
-tile.mfr.stainedglass.pane.brown.name = 棕色玻璃片
-tile.mfr.stainedglass.pane.green.name = 綠色玻璃片
-tile.mfr.stainedglass.pane.red.name = 紅色玻璃片
-tile.mfr.stainedglass.pane.black.name = 黑色玻璃片
+tile.mfr.stained_glass.pane.white.name = 白色玻璃片
+tile.mfr.stained_glass.pane.orange.name = 橙色玻璃片
+tile.mfr.stained_glass.pane.magenta.name = 洋紅色玻璃片
+tile.mfr.stained_glass.pane.lightblue.name = 淺藍色玻璃片
+tile.mfr.stained_glass.pane.yellow.name = 黃色玻璃片
+tile.mfr.stained_glass.pane.lime.name = 檸檬色玻璃片
+tile.mfr.stained_glass.pane.pink.name = 粉色玻璃片
+tile.mfr.stained_glass.pane.gray.name = 灰色玻璃片
+tile.mfr.stained_glass.pane.lightgray.name = 淺灰色玻璃片
+tile.mfr.stained_glass.pane.cyan.name = 青色玻璃片
+tile.mfr.stained_glass.pane.purple.name = 紫色玻璃片
+tile.mfr.stained_glass.pane.blue.name = 藍色玻璃片
+tile.mfr.stained_glass.pane.brown.name = 棕色玻璃片
+tile.mfr.stained_glass.pane.green.name = 綠色玻璃片
+tile.mfr.stained_glass.pane.red.name = 紅色玻璃片
+tile.mfr.stained_glass.pane.black.name = 黑色玻璃片
 
 tile.mfr.road.default.name = 鋪路磚
 tile.mfr.road.light.off.name = 鋪路燈
@@ -117,15 +117,15 @@ tile.mfr.decorative.brick.lapis.name = 青金石磚塊
 tile.mfr.decorative.brick.obsidian.name = 黑曜石磚塊
 tile.mfr.decorative.brick.pavedstone.name = 鋪路石磚塊
 tile.mfr.decorative.brick.snow.name = 雪磚塊
-tile.mfr.decorative.brick.ice_large.name = 大型冰磚塊
-tile.mfr.decorative.brick.glowstone_large.name = 大型螢光磚塊
-tile.mfr.decorative.brick.lapis_large.name = 大型青金石磚塊
-tile.mfr.decorative.brick.obsidian_large.name = 大型黑曜石磚塊
-tile.mfr.decorative.brick.pavedstone_large.name = 大型路石磚塊
-tile.mfr.decorative.brick.snow_large.name = 大型雪磚塊
+tile.mfr.decorative.brick.ice.large.name = 大型冰磚塊
+tile.mfr.decorative.brick.glowstone.large.name = 大型螢光磚塊
+tile.mfr.decorative.brick.lapis.large.name = 大型青金石磚塊
+tile.mfr.decorative.brick.obsidian.large.name = 大型黑曜石磚塊
+tile.mfr.decorative.brick.pavedstone.large.name = 大型路石磚塊
+tile.mfr.decorative.brick.snow.large.name = 大型雪磚塊
 tile.mfr.decorative.brick.meat.raw.name = 生肉塊
 tile.mfr.decorative.brick.meat.cooked.name = 烤肉塊
-tile.mfr.decorative.brick.brick_large.name = 大型磚塊
+tile.mfr.decorative.brick.brick.large.name = 大型磚塊
 tile.mfr.decorative.brick.sugar_charcoal.name = 竹炭磚
 
 tile.mfr.decorative.stone.black.smooth.name = 光滑黑岩
@@ -141,23 +141,23 @@ tile.mfr.decorative.stone.white.brick.large.name = 大型白岩磚塊
 tile.mfr.decorative.stone.white.gravel.name = 白岩砂礫
 tile.mfr.decorative.stone.white.paved.name = 鋪路白岩
 
-tile.mfr.pinkslime.block.name = 粉紅史萊姆磚
+tile.mfr.pink_slime.block.name = 粉紅史萊姆磚
 
 tile.ice.unmelting.name = 不融冰
 
-tile.mfr.vinescaffold.name = 藤蔓鷹架
+tile.mfr.vine.scaffold.name = 藤蔓鷹架
 
 tile.mfr.detcord.name = 導火線
 
 tile.mfr.farmland.name = 肥沃土壤
 
-tile.mfr.rubberwood.sapling.name = 橡膠樹樹苗
-tile.mfr.rubberwood.sapling.sacred.name = 神聖橡膠樹樹苗
-tile.mfr.rubberwood.sapling.mega.name = 巨型橡膠樹樹苗
-le.mfr.rubberwood.sapling.massive.name = 神聖橡膠樹樹苗
-tile.mfr.rubberwood.log.name = 橡膠木
-tile.mfr.rubberwood.leaves.name = 橡膠樹葉
-tile.mfr.rubberwood.leaves.dry.name = 乾枯橡膠樹葉
+tile.mfr.rubber_wood.sapling.name = 橡膠樹樹苗
+tile.mfr.rubber_wood.sapling.sacred.name = 神聖橡膠樹樹苗
+tile.mfr.rubber_wood.sapling.mega.name = 巨型橡膠樹樹苗
+tile.mfr.rubber_wood.sapling.massive.name = 神聖橡膠樹樹苗
+tile.mfr.rubber_wood.log.name = 橡膠木
+tile.mfr.rubber_wood.leaves.name = 橡膠樹葉
+tile.mfr.rubber_wood.leaves.dry.name = 乾枯橡膠樹葉
 
 tile.mfr.rail.cargo.dropoff.name = 貨運卸載軌道
 tile.mfr.rail.cargo.pickup.name = 貨運裝載軌道
@@ -168,26 +168,26 @@ tile.mfr.cable.redstone.name = RedNet 線纜
 tile.mfr.cable.redstone.glass.name = RedNet 線纜
 tile.mfr.cable.redstone.energy.name = RedNet 能量線纜
 tile.mfr.cable.redstone.energyglass.name = RedNet 能量線纜
-tile.mfr.cable.plastic.name = 塑膠管子
+tile.mfr.plastic.pipe.name = 塑膠管子
 
 tile.mfr.rednet.logic.name = 可燒錄式 RedNet 控制器
 tile.mfr.rednet.panel.historian.name = RedNet 波形記錄器
 
 tile.mfr.machineblock = item.mfr.machineblock
-tile.mfr.machineblock.prc.name = 可燒錄式 RedNet 控制器外殼
+tile.mfr.machine_block.prc.name = 可燒錄式 RedNet 控制器外殼
 
 tile.mfr.tank.name = 塑膠水槽
 
-fluid.mfr.milk.still.name = 牛奶
-fluid.mfr.sludge.still.name = 污泥
-fluid.mfr.sewage.still.name = 污水
-fluid.mfr.mobessence.still.name = 怪物精華液
-fluid.mfr.biofuel.still.name = 生物燃油
-fluid.mfr.meat.still.name = 肉湯
-fluid.mfr.pinkslime.still.name = 粉色黏液
-fluid.mfr.chocolatemilk.still.name = 巧克力牛奶
-fluid.mfr.mushroomsoup.still.name = 蘑菇湯
-fluid.mfr.steam.still.name = 蒸氣
+fluid.mfr.milk.fluid.name = 牛奶
+fluid.mfr.sludge.fluid.name = 污泥
+fluid.mfr.sewage.fluid.name = 污水
+fluid.mfr.mobessence.fluid.name = 怪物精華液
+fluid.mfr.biofuel.fluid.name = 生物燃油
+fluid.mfr.meat.fluid.name = 肉湯
+fluid.mfr.pink_slime.fluid.name = 粉色黏液
+fluid.mfr.chocolatemilk.fluid.name = 巧克力牛奶
+fluid.mfr.mushroomsoup.fluid.name = 蘑菇湯
+fluid.mfr.steam.fluid.name = 蒸氣
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = 粉紅史萊姆
 
@@ -197,7 +197,7 @@ item.mfr.bucket.sludge.name = 污泥桶
 item.mfr.bucket.essence.name = 怪物精華液桶
 item.mfr.bucket.biofuel.name = 生物燃油桶
 item.mfr.bucket.meat.name = 肉湯桶
-item.mfr.bucket.pinkslime.name = 粉色粘液桶
+item.mfr.bucket.pink_slime.name = 粉色粘液桶
 item.mfr.bucket.chocolatemilk.name = 巧克力牛奶桶
 item.mfr.bucket.mushroomsoup.name = 蘑菇湯桶
 
@@ -222,7 +222,7 @@ item.mfr.syringe.health.name = 治愈藥水注射器
 item.mfr.syringe.slime.name = 史萊姆巨大化激素注射器
 item.mfr.syringe.zombie.name = 殭屍病毒注射器
 
-item.mfr.machineblock.name = 工廠機械方塊
+item.mfr.machine_block.name = 工廠機械方塊
 item.mfr.hammer.name = 精密大錘
 
 item.mfr.plastic = 塑膠
@@ -236,18 +236,18 @@ item.mfr.rubber.raw.name = 天然橡膠
 item.mfr.record.blank.name = 空唱片
 
 item.mfr.safarinet.reusable.name = 狩獵球 (可重複使用)
-item.mfr.safarinet.singleuse.name = 狩獵球 (單次使用)
+item.mfr.safarinet.single_use.name = 狩獵球 (單次使用)
 item.mfr.safarinet.jailer.name = 獄卒的狩獵球
 item.mfr.safarinet.jailer.fancy.name = 獄卒的黃金狩獵球
 item.mfr.safarinet.launcher.name = 狩獵球發射器
 
-item.mfr.sugarcharcoal.name = 竹炭
+item.mfr.sugar_charcoal.name = 竹炭
 item.mfr.fertilizer.name = 工業肥料
-item.mfr.milkbottle.name = 牛奶瓶
+item.mfr.milk_bottle.name = 牛奶瓶
 item.mfr.spyglass.name = 單筒望遠鏡
 item.mfr.ruler.name = 尺
-item.mfr.xpextractor.name = XP抽取器
-item.mfr.portaspawner.name = 生怪磚狩獵球
+item.mfr.xp_extractor.name = XP抽取器
+item.mfr.porta_spawner.name = 生怪磚狩獵球
 item.mfr.straw.name = 吸管
 
 item.mfr.rednet.meter.name = RedNet 讀數表
@@ -260,49 +260,49 @@ item.mfr.meat.ingot.cooked.name = 烤肉錠
 item.mfr.meat.nugget.raw.name = 生肉粒
 item.mfr.meat.nugget.cooked.name = 烤肉粒
 
-item.mfr.pinkslime = 粉紅史萊姆
-item.mfr.pinkslime.ability = 黏滑\n粉紅
-item.mfr.pinkslime.ball.name = 粉紅史萊姆球
-item.mfr.pinkslime.gem.name = 粉紅史萊姆水晶
+item.mfr.pink_slime = 粉紅史萊姆
+item.mfr.pink_slime.ability = 黏滑\n粉紅
+item.mfr.pink_slime.ball.name = 粉紅史萊姆球
+item.mfr.pink_slime.gem.name = 粉紅史萊姆水晶
 
 item.mfr.rocket.name = 自推進反物質火箭
 item.mfr.rocket.smart.name = 追蹤型自推進反物質火箭
-item.mfr.rocketlauncher.name = 自推進反物質火箭筒
-item.mfr.fishingrod.name = 炸魚竿
+item.mfr.rocket_launcher.name = 自推進反物質火箭筒
+item.mfr.fishing_rod.name = 炸魚竿
 
-item.mfr.ceramicdye.white.name = 陶瓷顔料(白色)
-item.mfr.ceramicdye.orange.name = 陶瓷顔料(橙色)
-item.mfr.ceramicdye.magenta.name = 陶瓷顔料(洋紅色)
-item.mfr.ceramicdye.lightblue.name = 陶瓷顔料(淺藍色)
-item.mfr.ceramicdye.yellow.name = 陶瓷顔料(黃色)
-item.mfr.ceramicdye.lime.name = 陶瓷顔料(檸檬色)
-item.mfr.ceramicdye.pink.name = 陶瓷顔料(粉色)
-item.mfr.ceramicdye.gray.name = 陶瓷顔料(灰色)
-item.mfr.ceramicdye.lightgray.name = 陶瓷顔料(淺灰色)
-item.mfr.ceramicdye.cyan.name = 陶瓷顔料(青色)
-item.mfr.ceramicdye.purple.name = 陶瓷顔料(紫色)
-item.mfr.ceramicdye.blue.name = 陶瓷顔料(藍色)
-item.mfr.ceramicdye.brown.name = 陶瓷顔料(棕色)
-item.mfr.ceramicdye.green.name = 陶瓷顔料(綠色)
-item.mfr.ceramicdye.red.name = 陶瓷顔料(紅色)
-item.mfr.ceramicdye.black.name = 陶瓷顔料(黑色)
+item.mfr.ceramic.dye.white.name = 陶瓷顔料(白色)
+item.mfr.ceramic.dye.orange.name = 陶瓷顔料(橙色)
+item.mfr.ceramic.dye.magenta.name = 陶瓷顔料(洋紅色)
+item.mfr.ceramic.dye.lightblue.name = 陶瓷顔料(淺藍色)
+item.mfr.ceramic.dye.yellow.name = 陶瓷顔料(黃色)
+item.mfr.ceramic.dye.lime.name = 陶瓷顔料(檸檬色)
+item.mfr.ceramic.dye.pink.name = 陶瓷顔料(粉色)
+item.mfr.ceramic.dye.gray.name = 陶瓷顔料(灰色)
+item.mfr.ceramic.dye.lightgray.name = 陶瓷顔料(淺灰色)
+item.mfr.ceramic.dye.cyan.name = 陶瓷顔料(青色)
+item.mfr.ceramic.dye.purple.name = 陶瓷顔料(紫色)
+item.mfr.ceramic.dye.blue.name = 陶瓷顔料(藍色)
+item.mfr.ceramic.dye.brown.name = 陶瓷顔料(棕色)
+item.mfr.ceramic.dye.green.name = 陶瓷顔料(綠色)
+item.mfr.ceramic.dye.red.name = 陶瓷顔料(紅色)
+item.mfr.ceramic.dye.black.name = 陶瓷顔料(黑色)
 
-item.mfr.laserfocus.white.name = 鐳射聚焦透鏡 (白色)
-item.mfr.laserfocus.orange.name = 鐳射聚焦透鏡  (橙色）
-item.mfr.laserfocus.magenta.name = 鐳射聚焦透鏡 (洋紅色)
-item.mfr.laserfocus.lightblue.name = 鐳射聚焦透鏡  (淺藍色)
-item.mfr.laserfocus.yellow.name = 鐳射聚焦透鏡 (黃色)
-item.mfr.laserfocus.lime.name = 鐳射聚焦透鏡  (檸檬色)
-item.mfr.laserfocus.pink.name = 鐳射聚焦透鏡 (粉色)
-item.mfr.laserfocus.gray.name = 鐳射聚焦透鏡 (灰色)
-item.mfr.laserfocus.lightgray.name = 鐳射聚焦透鏡  (淺灰色)
-item.mfr.laserfocus.cyan.name = 鐳射聚焦透鏡  (青色)
-item.mfr.laserfocus.purple.name = 鐳射聚焦透鏡  (紫色)
-item.mfr.laserfocus.blue.name = 鐳射聚焦透鏡  (藍色)
-item.mfr.laserfocus.brown.name = 鐳射聚焦透鏡  (棕色)
-item.mfr.laserfocus.green.name = 鐳射聚焦透鏡  (綠色)
-item.mfr.laserfocus.red.name = 鐳射聚焦透鏡  (紅色)
-item.mfr.laserfocus.black.name = 鐳射聚焦透鏡  (黑色)
+item.mfr.laser.focus.white.name = 鐳射聚焦透鏡 (白色)
+item.mfr.laser.focus.orange.name = 鐳射聚焦透鏡  (橙色）
+item.mfr.laser.focus.magenta.name = 鐳射聚焦透鏡 (洋紅色)
+item.mfr.laser.focus.lightblue.name = 鐳射聚焦透鏡  (淺藍色)
+item.mfr.laser.focus.yellow.name = 鐳射聚焦透鏡 (黃色)
+item.mfr.laser.focus.lime.name = 鐳射聚焦透鏡  (檸檬色)
+item.mfr.laser.focus.pink.name = 鐳射聚焦透鏡 (粉色)
+item.mfr.laser.focus.gray.name = 鐳射聚焦透鏡 (灰色)
+item.mfr.laser.focus.lightgray.name = 鐳射聚焦透鏡  (淺灰色)
+item.mfr.laser.focus.cyan.name = 鐳射聚焦透鏡  (青色)
+item.mfr.laser.focus.purple.name = 鐳射聚焦透鏡  (紫色)
+item.mfr.laser.focus.blue.name = 鐳射聚焦透鏡  (藍色)
+item.mfr.laser.focus.brown.name = 鐳射聚焦透鏡  (棕色)
+item.mfr.laser.focus.green.name = 鐳射聚焦透鏡  (綠色)
+item.mfr.laser.focus.red.name = 鐳射聚焦透鏡  (紅色)
+item.mfr.laser.focus.black.name = 鐳射聚焦透鏡  (黑色)
 
 item.mfr.upgrade.radius.cobble.name = 升級插件 (鵝卵石)
 item.mfr.upgrade.radius.lapis.name = 升級插件(青金石)
@@ -455,7 +455,7 @@ chat.info.mfr.chunkloader.noticket = 你的區塊載入器太多了,因此它不
 # Replace "item." or "tile." with "tip.info" and remove ".name" and that tooltip will be
 # displayed under the item with exceptions, such as the PRC which uses a custom entry for legacy reasons
 
-tip.info.mfr.rubberwood.sapling.massive = Warning: Pakratt's world ship.
+tip.info.mfr.rubber_wood.sapling.massive = Warning: Pakratt's world ship.
 
 tip.info.mfr.prc = 如果你不知所措,請閱讀遊戲內內的手冊
 

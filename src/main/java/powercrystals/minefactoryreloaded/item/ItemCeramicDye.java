@@ -22,7 +22,7 @@ public class ItemCeramicDye extends ItemFactoryColored {
 
 	public ItemCeramicDye() {
 
-		setUnlocalizedName("mfr.ceramicdye"); // FIXME: relocalize to ceramic.dye
+		setUnlocalizedName("mfr.ceramic.dye");
 	}
 
 	@Override

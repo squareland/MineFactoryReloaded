@@ -50,7 +50,7 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 		super(laser);
 		setHardness(-1);
 		setResistance(Float.POSITIVE_INFINITY);
-		setUnlocalizedName("mfr.laserair"); // FIXME: relocalize to fake_laser
+		setUnlocalizedName("mfr.fake_laser");
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 	}

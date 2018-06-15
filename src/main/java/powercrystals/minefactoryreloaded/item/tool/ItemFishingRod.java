@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 public class ItemFishingRod extends ItemFactoryTool {
 
 	public ItemFishingRod() {
-		setUnlocalizedName("mfr.fishingrod"); // FIXME: relocalize to fishing_rod
+		setUnlocalizedName("mfr.fishing_rod");
 		setMaxStackSize(1);
 	}
 

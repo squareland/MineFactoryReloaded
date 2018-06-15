@@ -25,6 +25,7 @@ import powercrystals.minefactoryreloaded.block.ItemBlockFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
 import javax.annotation.Nullable;
+import java.util.Locale;
 
 public class BlockDecorativeBricks extends BlockFactory {
 
@@ -141,40 +142,50 @@ public class BlockDecorativeBricks extends BlockFactory {
 
 	public enum Variant implements IStringSerializable {
 
-		ICE("ice", GLASS_LIKE),
-		GLOWSTONE("glowstone", GLASS_LIKE),
-		LAPIS("lapis"),
-		OBSIDIAN("obsidian"),
-		PAVEDSTONE("pavedstone"),
-		SNOW("snow", SoundType.SNOW),
-		ICE_LARGE("ice_large", GLASS_LIKE),
-		GLOWSTONE_LARGE("glowstone_large", GLASS_LIKE),
-		LAPIS_LARGE("lapis_large"),
-		OBSIDIAN_LARGE("obsidian_large"),
-		PAVEDSTONE_LARGE("pavedstone_large"),
-		SNOW_LARGE("snow_large", SoundType.SNOW),
-		MEAT_RAW("meat_raw", SoundType.SLIME),
-		MEAT_COOKED("meat_cooked", SoundType.SLIME),
-		BRICK_LARGE("brick_large"),
+		ICE(GLASS_LIKE),
+		GLOWSTONE(GLASS_LIKE),
+		LAPIS,
+		OBSIDIAN,
+		PAVEDSTONE,
+		SNOW(SoundType.SNOW),
+		ICE_LARGE(GLASS_LIKE),
+		GLOWSTONE_LARGE(GLASS_LIKE),
+		LAPIS_LARGE,
+		OBSIDIAN_LARGE,
+		PAVEDSTONE_LARGE,
+		SNOW_LARGE(SoundType.SNOW),
+		MEAT_RAW(SoundType.SLIME),
+		MEAT_COOKED(SoundType.SLIME),
+		BRICK_LARGE,
 		SUGAR_CHARCOAL("sugar_charcoal");
 
 		private final int meta;
 		private final String name;
+		private final String unlocName;
 		private final SoundType soundType;
 
 		public static final String[] NAMES;
 		public static final String[] UNLOC_NAMES;
 
-		Variant(String name) {
+		Variant() {
 
-			this(name, null);
+			this((SoundType) null);
 		}
 
-		Variant(String name, SoundType sound) {
+		Variant(SoundType sound) {
 
 			this.meta = ordinal();
-			this.name = name;
+			this.name = name().toLowerCase(Locale.ROOT);
+			this.unlocName = name.replace('_', '.');
 			this.soundType = sound;
+		}
+
+		Variant(String name) {
+
+			this.meta = ordinal();
+			this.name = name().toLowerCase(Locale.ROOT);
+			this.unlocName = name;
+			this.soundType = null;
 		}
 
 		@Override
@@ -193,7 +204,7 @@ public class BlockDecorativeBricks extends BlockFactory {
 			UNLOC_NAMES = new String[values().length];
 			for (Variant variant : values()) {
 				NAMES[variant.meta] = variant.name;
-				UNLOC_NAMES[variant.meta] = variant.name.replace("_", "");
+				UNLOC_NAMES[variant.meta] = variant.unlocName;
 			}
 		}
 	}

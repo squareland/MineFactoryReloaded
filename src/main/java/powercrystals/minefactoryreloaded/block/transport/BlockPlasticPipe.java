@@ -64,7 +64,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	public BlockPlasticPipe() {
 
 		super(0.8F);
-		setUnlocalizedName("mfr.cable.plastic"); // FIXME: relocalize to plastic_pipe
+		setUnlocalizedName("mfr.plastic.pipe");
 		providesPower = true;
 	}
 

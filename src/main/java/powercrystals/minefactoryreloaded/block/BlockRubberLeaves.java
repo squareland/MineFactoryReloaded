@@ -48,7 +48,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	
 	public BlockRubberLeaves() {
 
-		setUnlocalizedName("mfr.rubberwood.leaves");
+		setUnlocalizedName("mfr.rubber_wood.leaves");
 		setCreativeTab(MFRCreativeTab.tab);
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
@@ -270,7 +270,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 		final ModelResourceLocation[] leavesModels = new ModelResourceLocation[4];
 		for(int i = 0; i < 4; i++) {
 			String variant = "fancy=" + (i < 2) + ",variant=" + (((i % 2) == 0) ? "normal" : "dry");
-			leavesModels[i] = new ModelResourceLocation(MFRProps.PREFIX + "rubberwood_leaves", variant);
+			leavesModels[i] = new ModelResourceLocation(MFRProps.PREFIX + "rubber_wood_leaves", variant);
 			ModelLoader.registerItemVariants(item, leavesModels[i]);
 		}
 		ModelLoader.setCustomMeshDefinition(item, stack -> {

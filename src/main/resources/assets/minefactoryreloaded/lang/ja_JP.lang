@@ -65,39 +65,39 @@ tile.mfr.conveyor.green.name = ベルトコンベア (Green)
 tile.mfr.conveyor.red.name = ベルトコンベア (Red)
 tile.mfr.conveyor.black.name = ベルトコンベア (Black)
 
-tile.mfr.stainedglass.block.white.name = ステンドグラス (White)
-tile.mfr.stainedglass.block.orange.name = ステンドグラス (Orange)
-tile.mfr.stainedglass.block.magenta.name = ステンドグラス (Magenta)
-tile.mfr.stainedglass.block.lightblue.name = ステンドグラス (Light Blue)
-tile.mfr.stainedglass.block.yellow.name = ステンドグラス (Yellow)
-tile.mfr.stainedglass.block.lime.name = ステンドグラス (Lime)
-tile.mfr.stainedglass.block.pink.name = ステンドグラス (Pink)
-tile.mfr.stainedglass.block.gray.name = ステンドグラス (Gray)
-tile.mfr.stainedglass.block.lightgray.name = ステンドグラス (Light Gray)
-tile.mfr.stainedglass.block.cyan.name = ステンドグラス (Cyan)
-tile.mfr.stainedglass.block.purple.name = ステンドグラス (Purple)
-tile.mfr.stainedglass.block.blue.name = ステンドグラス (Blue)
-tile.mfr.stainedglass.block.brown.name = ステンドグラス (Brown)
-tile.mfr.stainedglass.block.green.name = ステンドグラス (Green)
-tile.mfr.stainedglass.block.red.name = ステンドグラス (Red)
-tile.mfr.stainedglass.block.black.name = ステンドグラス (Black)
+tile.mfr.stained_glass.block.white.name = ステンドグラス (White)
+tile.mfr.stained_glass.block.orange.name = ステンドグラス (Orange)
+tile.mfr.stained_glass.block.magenta.name = ステンドグラス (Magenta)
+tile.mfr.stained_glass.block.lightblue.name = ステンドグラス (Light Blue)
+tile.mfr.stained_glass.block.yellow.name = ステンドグラス (Yellow)
+tile.mfr.stained_glass.block.lime.name = ステンドグラス (Lime)
+tile.mfr.stained_glass.block.pink.name = ステンドグラス (Pink)
+tile.mfr.stained_glass.block.gray.name = ステンドグラス (Gray)
+tile.mfr.stained_glass.block.lightgray.name = ステンドグラス (Light Gray)
+tile.mfr.stained_glass.block.cyan.name = ステンドグラス (Cyan)
+tile.mfr.stained_glass.block.purple.name = ステンドグラス (Purple)
+tile.mfr.stained_glass.block.blue.name = ステンドグラス (Blue)
+tile.mfr.stained_glass.block.brown.name = ステンドグラス (Brown)
+tile.mfr.stained_glass.block.green.name = ステンドグラス (Green)
+tile.mfr.stained_glass.block.red.name = ステンドグラス (Red)
+tile.mfr.stained_glass.block.black.name = ステンドグラス (Black)
 
-tile.mfr.stainedglass.pane.white.name = ステンドグラス板 (White)
-tile.mfr.stainedglass.pane.orange.name = ステンドグラス板 (Orange)
-tile.mfr.stainedglass.pane.magenta.name = ステンドグラス板 (Magenta)
-tile.mfr.stainedglass.pane.lightblue.name = ステンドグラス板 (Light Blue)
-tile.mfr.stainedglass.pane.yellow.name = ステンドグラス板 (Yellow)
-tile.mfr.stainedglass.pane.lime.name = ステンドグラス板 (Lime)
-tile.mfr.stainedglass.pane.pink.name = ステンドグラス板 (Pink)
-tile.mfr.stainedglass.pane.gray.name = ステンドグラス板 (Gray)
-tile.mfr.stainedglass.pane.lightgray.name = ステンドグラス板 (Light Gray)
-tile.mfr.stainedglass.pane.cyan.name = ステンドグラス板 (Cyan)
-tile.mfr.stainedglass.pane.purple.name = ステンドグラス板 (Purple)
-tile.mfr.stainedglass.pane.blue.name = ステンドグラス板 (Blue)
-tile.mfr.stainedglass.pane.brown.name = ステンドグラス板 (Brown)
-tile.mfr.stainedglass.pane.green.name = ステンドグラス板 (Green)
-tile.mfr.stainedglass.pane.red.name = ステンドグラス板 (Red)
-tile.mfr.stainedglass.pane.black.name = ステンドグラス板 (Black)
+tile.mfr.stained_glass.pane.white.name = ステンドグラス板 (White)
+tile.mfr.stained_glass.pane.orange.name = ステンドグラス板 (Orange)
+tile.mfr.stained_glass.pane.magenta.name = ステンドグラス板 (Magenta)
+tile.mfr.stained_glass.pane.lightblue.name = ステンドグラス板 (Light Blue)
+tile.mfr.stained_glass.pane.yellow.name = ステンドグラス板 (Yellow)
+tile.mfr.stained_glass.pane.lime.name = ステンドグラス板 (Lime)
+tile.mfr.stained_glass.pane.pink.name = ステンドグラス板 (Pink)
+tile.mfr.stained_glass.pane.gray.name = ステンドグラス板 (Gray)
+tile.mfr.stained_glass.pane.lightgray.name = ステンドグラス板 (Light Gray)
+tile.mfr.stained_glass.pane.cyan.name = ステンドグラス板 (Cyan)
+tile.mfr.stained_glass.pane.purple.name = ステンドグラス板 (Purple)
+tile.mfr.stained_glass.pane.blue.name = ステンドグラス板 (Blue)
+tile.mfr.stained_glass.pane.brown.name = ステンドグラス板 (Brown)
+tile.mfr.stained_glass.pane.green.name = ステンドグラス板 (Green)
+tile.mfr.stained_glass.pane.red.name = ステンドグラス板 (Red)
+tile.mfr.stained_glass.pane.black.name = ステンドグラス板 (Black)
 
 tile.mfr.road.default.name = 道路
 tile.mfr.road.light.off.name = 道路照明
@@ -113,47 +113,47 @@ tile.mfr.decorative.brick.lapis.name = ラピスラズリBricks
 tile.mfr.decorative.brick.obsidian.name = Obsidian Bricks
 tile.mfr.decorative.brick.pavedstone.name = Paved Stone Bricks
 tile.mfr.decorative.brick.snow.name = Snow Bricks
-tile.mfr.decorative.brick.icelarge.name = Large Ice Bricks
-tile.mfr.decorative.brick.glowstonelarge.name = Large Glowstone Bricks
-tile.mfr.decorative.brick.lapislarge.name = Large Lapis Bricks
-tile.mfr.decorative.brick.obsidianlarge.name = Large Obsidian Bricks
-tile.mfr.decorative.brick.pavedstonelarge.name = Large Paved Stone Bricks
-tile.mfr.decorative.brick.snowlarge.name = Large Snow Bricks
+tile.mfr.decorative.brick.ice.large.name = Large Ice Bricks
+tile.mfr.decorative.brick.glowstone.large.name = Large Glowstone Bricks
+tile.mfr.decorative.brick.lapis.large.name = Large Lapis Bricks
+tile.mfr.decorative.brick.obsidian.large.name = Large Obsidian Bricks
+tile.mfr.decorative.brick.pavedstone.large.name = Large Paved Stone Bricks
+tile.mfr.decorative.brick.snow.large.name = Large Snow Bricks
 tile.mfr.decorative.brick.meatraw.name = Raw Meat Block
 tile.mfr.decorative.brick.meatcooked.name = Cooked Meat Block
-tile.mfr.decorative.brick.bricklarge.name = Large Bricks
-tile.mfr.decorative.brick.sugarcharcoal.name = Sugar Charcoal Block
+tile.mfr.decorative.brick.brick.large.name = Large Bricks
+tile.mfr.decorative.brick.sugar_charcoal.name = Sugar Charcoal Block
 
-tile.mfr.decorative.stone.blacksmooth.name = Smooth Blackstone
-tile.mfr.decorative.stone.blackcobble.name = Cobble Blackstone
-tile.mfr.decorative.stone.blackbricksmall.name = Small Blackstone Bricks
-tile.mfr.decorative.stone.blackbricklarge.name = Large Blackstone Bricks
-tile.mfr.decorative.stone.blackgravel.name = Blackstone Gravel
-tile.mfr.decorative.stone.blackpaved.name = Paved Blackstone
-tile.mfr.decorative.stone.whitesmooth.name = Smooth Whitestone
-tile.mfr.decorative.stone.whitecobble.name = Cobble Whitestone
-tile.mfr.decorative.stone.whitebricksmall.name = Small Whitestone Bricks
-tile.mfr.decorative.stone.whitebricklarge.name = Large Whitestone Bricks
-tile.mfr.decorative.stone.whitegravel.name = Whitestone Gravel
-tile.mfr.decorative.stone.whitepaved.name = Paved Whitestone
+tile.mfr.decorative.stone.black.smooth.name = Smooth Blackstone
+tile.mfr.decorative.stone.black.cobble.name = Cobble Blackstone
+tile.mfr.decorative.stone.black.brick.small.name = Small Blackstone Bricks
+tile.mfr.decorative.stone.black.brick.large.name = Large Blackstone Bricks
+tile.mfr.decorative.stone.black.gravel.name = Blackstone Gravel
+tile.mfr.decorative.stone.black.paved.name = Paved Blackstone
+tile.mfr.decorative.stone.white.smooth.name = Smooth Whitestone
+tile.mfr.decorative.stone.white.cobble.name = Cobble Whitestone
+tile.mfr.decorative.stone.white.brick.small.name = Small Whitestone Bricks
+tile.mfr.decorative.stone.white.brick.large.name = Large Whitestone Bricks
+tile.mfr.decorative.stone.white.gravel.name = Whitestone Gravel
+tile.mfr.decorative.stone.white.paved.name = Paved Whitestone
 
-tile.mfr.pinkslime.block.name = ピンクスライムブロック
+tile.mfr.pink_slime.block.name = ピンクスライムブロック
 
 tile.ice.unmelting.name = 不溶氷
 
-tile.mfr.vinescaffold.name = 蔦の足場
+tile.mfr.vine.scaffold.name = 蔦の足場
 
 tile.mfr.detcord.name = 導爆線
 
 tile.mfr.farmland.name = Fertile Soil
 
-tile.mfr.rubberwood.sapling.normal.name = ゴムの苗木
-tile.mfr.rubberwood.sapling.sacred.name = Sacred Rubber Sapling
-tile.mfr.rubberwood.sapling.mega.name = Mega Rubber Sapling
-tile.mfr.rubberwood.sapling.massive.name = Sacred Rubber Sapling
-tile.mfr.rubberwood.log.name = ゴムの原木
-tile.mfr.rubberwood.leaves.normal.name = ゴムの葉
-tile.mfr.rubberwood.leaves.dry.name = 乾燥したゴムの葉
+tile.mfr.rubber_wood.sapling.normal.name = ゴムの苗木
+tile.mfr.rubber_wood.sapling.sacred.name = Sacred Rubber Sapling
+tile.mfr.rubber_wood.sapling.mega.name = Mega Rubber Sapling
+tile.mfr.rubber_wood.sapling.massive.name = Sacred Rubber Sapling
+tile.mfr.rubber_wood.log.name = ゴムの原木
+tile.mfr.rubber_wood.leaves.normal.name = ゴムの葉
+tile.mfr.rubber_wood.leaves.dry.name = 乾燥したゴムの葉
 
 tile.mfr.rail.cargo.dropoff.name = 荷降ろしレール
 tile.mfr.rail.cargo.pickup.name = 積み込みレール
@@ -164,26 +164,26 @@ tile.mfr.cable.redstone.name = レッドネットケーブル
 tile.mfr.cable.redstone.glass.name = レッドネットケーブル
 tile.mfr.cable.redstone.energy.name = レッドネットエネルギーケーブル
 tile.mfr.cable.redstone.energyglass.name = レッドネットエネルギーケーブル
-tile.mfr.cable.plastic.name = プラスチックパイプ
+tile.mfr.plastic.pipe.name = プラスチックパイプ
 
 tile.mfr.rednet.logic.name = レッドネットコントローラ
 tile.mfr.rednet.panel.historian.name = レッドネットヒストリアン
 
-tile.mfr.machineblock.machine = item.mfr.machineblock
-tile.mfr.machineblock.prc.name = レッドネットコントローラハウジング
+tile.mfr.machine_block.machine = item.mfr.machineblock
+tile.mfr.machine_block.prc.name = レッドネットコントローラハウジング
 
 tile.mfr.tank.name = プラスチックタンク
 
-fluid.mfr.milk.still.name = 牛乳
-fluid.mfr.sludge.still.name = 汚泥
-fluid.mfr.sewage.still.name = 汚水
-fluid.mfr.mobessence.still.name = モブエッセンス
-fluid.mfr.biofuel.still.name = バイオ燃料
-fluid.mfr.meat.still.name = 肉
-fluid.mfr.pinkslime.still.name = ピンクスライム
-fluid.mfr.chocolatemilk.still.name = チョコレート牛乳
-fluid.mfr.mushroomsoup.still.name = キノコシチュー
-fluid.mfr.steam.still.name = スチーム
+fluid.mfr.milk.fluid.name = 牛乳
+fluid.mfr.sludge.fluid.name = 汚泥
+fluid.mfr.sewage.fluid.name = 汚水
+fluid.mfr.mobessence.fluid.name = モブエッセンス
+fluid.mfr.biofuel.fluid.name = バイオ燃料
+fluid.mfr.meat.fluid.name = 肉
+fluid.mfr.pink_slime.fluid.name = ピンクスライム
+fluid.mfr.chocolatemilk.fluid.name = チョコレート牛乳
+fluid.mfr.mushroomsoup.fluid.name = キノコシチュー
+fluid.mfr.steam.fluid.name = スチーム
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = ピンクスライム
 
@@ -193,7 +193,7 @@ item.mfr.bucket.sludge.name = 汚泥入りバケツ
 item.mfr.bucket.essence.name = モブエッセンス入りバケツ
 item.mfr.bucket.biofuel.name = バイオ燃料入りバケツ
 item.mfr.bucket.meat.name = 肉入りバケツ
-item.mfr.bucket.pinkslime.name = ピンクスライム入りバケツ
+item.mfr.bucket.pink_slime.name = ピンクスライム入りバケツ
 item.mfr.bucket.chocolatemilk.name = チョコレート牛乳入りバケツ
 item.mfr.bucket.mushroomsoup.name = キノコシチュー入りバケツ
 
@@ -218,7 +218,7 @@ item.mfr.syringe.health.name = Health Syringe
 item.mfr.syringe.slime.name = Slime Embiggening Syringe
 item.mfr.syringe.zombie.name = Zombie Syringe
 
-item.mfr.machineblock.name = ファクトリーマシンブロック
+item.mfr.machine_block.name = ファクトリーマシンブロック
 item.mfr.hammer.name = 精密ハンマー
 item.mfr.plastic.sheet.name = プラスチックシート
 item.mfr.plastic.raw.name = 生プラスチック
@@ -228,17 +228,17 @@ item.mfr.rubber.raw.name = ゴム
 item.mfr.record.blank.name = 空のレコード
 
 item.mfr.safarinet.reusable.name = サファリネット
-item.mfr.safarinet.singleuse.name = サファリネット(シングルユース)
+item.mfr.safarinet.single_use.name = サファリネット(シングルユース)
 item.mfr.safarinet.jailer.name = ジェイラーズ・サファリネット
 item.mfr.safarinet.launcher.name = サファリネットランチャー
 
-item.mfr.sugarcharcoal.name = 砂糖炭
+item.mfr.sugar_charcoal.name = 砂糖炭
 item.mfr.fertilizer.name = 工業用肥料
-item.mfr.milkbottle.name = 牛乳入り瓶
+item.mfr.milk_bottle.name = 牛乳入り瓶
 item.mfr.spyglass.name = 望遠鏡
 item.mfr.ruler.name = 定規
-item.mfr.xpextractor.name = 経験値抽出機
-item.mfr.portaspawner.name = スポナー移動機
+item.mfr.xp_extractor.name = 経験値抽出機
+item.mfr.porta_spawner.name = スポナー移動機
 item.mfr.straw.name = ストロー
 
 item.mfr.rednet.meter.name = レッドネット測定器
@@ -251,47 +251,47 @@ item.mfr.meat.ingot.cooked.name = 焼肉インゴット
 item.mfr.meat.nugget.raw.name = 生肉ナゲット
 item.mfr.meat.nugget.cooked.name = 焼肉ナゲット
 
-item.mfr.pinkslime.ball.name = ピンクスライムボール
-item.mfr.pinkslime.gem.name = ピンクスライムクリスタル
+item.mfr.pink_slime.ball.name = ピンクスライムボール
+item.mfr.pink_slime.gem.name = ピンクスライムクリスタル
 
 item.mfr.rocket.name = 自己推進式対物ロケット
 item.mfr.rocket.smart.name = 追跡型自己推進式対物ロケット
-item.mfr.rocketlauncher.name = SPAMRランチャー
-item.mfr.fishingrod.name = 釣竿
+item.mfr.rocket_launcher.name = SPAMRランチャー
+item.mfr.fishing_rod.name = 釣竿
 
-item.mfr.ceramicdye.white.name = セラミック染料 (White)
-item.mfr.ceramicdye.orange.name = セラミック染料 (Orange)
-item.mfr.ceramicdye.magenta.name = セラミック染料 (Magenta)
-item.mfr.ceramicdye.lightblue.name = セラミック染料 (Light Blue)
-item.mfr.ceramicdye.yellow.name = セラミック染料 (Yellow)
-item.mfr.ceramicdye.lime.name = セラミック染料 (Lime)
-item.mfr.ceramicdye.pink.name = セラミック染料 (Pink)
-item.mfr.ceramicdye.gray.name = セラミック染料 (Gray)
-item.mfr.ceramicdye.lightgray.name = セラミック染料 (Light Gray)
-item.mfr.ceramicdye.cyan.name = セラミック染料 (Cyan)
-item.mfr.ceramicdye.purple.name = セラミック染料 (Purple)
-item.mfr.ceramicdye.blue.name = セラミック染料 (Blue)
-item.mfr.ceramicdye.brown.name = セラミック染料 (Brown)
-item.mfr.ceramicdye.green.name = セラミック染料 (Green)
-item.mfr.ceramicdye.red.name = セラミック染料 (Red)
-item.mfr.ceramicdye.black.name = セラミック染料 (Black)
+item.mfr.ceramic.dye.white.name = セラミック染料 (White)
+item.mfr.ceramic.dye.orange.name = セラミック染料 (Orange)
+item.mfr.ceramic.dye.magenta.name = セラミック染料 (Magenta)
+item.mfr.ceramic.dye.lightblue.name = セラミック染料 (Light Blue)
+item.mfr.ceramic.dye.yellow.name = セラミック染料 (Yellow)
+item.mfr.ceramic.dye.lime.name = セラミック染料 (Lime)
+item.mfr.ceramic.dye.pink.name = セラミック染料 (Pink)
+item.mfr.ceramic.dye.gray.name = セラミック染料 (Gray)
+item.mfr.ceramic.dye.lightgray.name = セラミック染料 (Light Gray)
+item.mfr.ceramic.dye.cyan.name = セラミック染料 (Cyan)
+item.mfr.ceramic.dye.purple.name = セラミック染料 (Purple)
+item.mfr.ceramic.dye.blue.name = セラミック染料 (Blue)
+item.mfr.ceramic.dye.brown.name = セラミック染料 (Brown)
+item.mfr.ceramic.dye.green.name = セラミック染料 (Green)
+item.mfr.ceramic.dye.red.name = セラミック染料 (Red)
+item.mfr.ceramic.dye.black.name = セラミック染料 (Black)
 
-item.mfr.laserfocus.white.name = レーザーフォーカス (White)
-item.mfr.laserfocus.orange.name = レーザーフォーカス (Orange)
-item.mfr.laserfocus.magenta.name = レーザーフォーカス (Magenta)
-item.mfr.laserfocus.lightblue.name = レーザーフォーカス (Light Blue)
-item.mfr.laserfocus.yellow.name = レーザーフォーカス (Yellow)
-item.mfr.laserfocus.lime.name = レーザーフォーカス (Lime)
-item.mfr.laserfocus.pink.name = レーザーフォーカス (Pink)
-item.mfr.laserfocus.gray.name = レーザーフォーカス (Gray)
-item.mfr.laserfocus.lightgray.name = レーザーフォーカス (Light Gray)
-item.mfr.laserfocus.cyan.name = レーザーフォーカス (Cyan)
-item.mfr.laserfocus.purple.name = レーザーフォーカス (Purple)
-item.mfr.laserfocus.blue.name = レーザーフォーカス (Blue)
-item.mfr.laserfocus.brown.name = レーザーフォーカス (Brown)
-item.mfr.laserfocus.green.name = レーザーフォーカス (Green)
-item.mfr.laserfocus.red.name = レーザーフォーカス (Red)
-item.mfr.laserfocus.black.name = レーザーフォーカス (Black)
+item.mfr.laser.focus.white.name = レーザーフォーカス (White)
+item.mfr.laser.focus.orange.name = レーザーフォーカス (Orange)
+item.mfr.laser.focus.magenta.name = レーザーフォーカス (Magenta)
+item.mfr.laser.focus.lightblue.name = レーザーフォーカス (Light Blue)
+item.mfr.laser.focus.yellow.name = レーザーフォーカス (Yellow)
+item.mfr.laser.focus.lime.name = レーザーフォーカス (Lime)
+item.mfr.laser.focus.pink.name = レーザーフォーカス (Pink)
+item.mfr.laser.focus.gray.name = レーザーフォーカス (Gray)
+item.mfr.laser.focus.lightgray.name = レーザーフォーカス (Light Gray)
+item.mfr.laser.focus.cyan.name = レーザーフォーカス (Cyan)
+item.mfr.laser.focus.purple.name = レーザーフォーカス (Purple)
+item.mfr.laser.focus.blue.name = レーザーフォーカス (Blue)
+item.mfr.laser.focus.brown.name = レーザーフォーカス (Brown)
+item.mfr.laser.focus.green.name = レーザーフォーカス (Green)
+item.mfr.laser.focus.red.name = レーザーフォーカス (Red)
+item.mfr.laser.focus.black.name = レーザーフォーカス (Black)
 
 item.mfr.upgrade.radius.cobble.name = アップグレードパーツ (Cobble)
 item.mfr.upgrade.radius.lapis.name = アップグレードパーツ (Lapis)
@@ -442,7 +442,7 @@ chat.info.mfr.chunkloader.noticket = You have too many chunk loaders and this on
 # Replace "item." or "tile." with "tip.info" and remove ".name" and that tooltip will be
 # displayed under the item with exceptions, such as the PRC which uses a custom entry for legacy reasons
 
-tip.info.mfr.rubberwood.sapling.massive = Warning: Pakratt's world ship.
+tip.info.mfr.rubber_wood.sapling.massive = Warning: Pakratt's world ship.
 
 tip.info.mfr.prc = If you're lost, read the (in-game) manual
 

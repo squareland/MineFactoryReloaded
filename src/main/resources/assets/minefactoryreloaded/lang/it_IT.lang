@@ -65,39 +65,39 @@ tile.mfr.conveyor.green.name = Nastro trasportatore (grigio)
 tile.mfr.conveyor.red.name = Nastro trasportatore (rosso)
 tile.mfr.conveyor.black.name = Nastro trasportatore (nero)
 
-tile.mfr.stainedglass.block.white.name = Vetro colorato (bianco)
-tile.mfr.stainedglass.block.orange.name = Vetro colorato (arancione)
-tile.mfr.stainedglass.block.magenta.name = Vetro colorato (magenta)
-tile.mfr.stainedglass.block.lightblue.name = Vetro colorato (azzurro)
-tile.mfr.stainedglass.block.yellow.name = Vetro colorato (giallo)
-tile.mfr.stainedglass.block.lime.name = Vetro colorato (lime)
-tile.mfr.stainedglass.block.pink.name = Vetro colorato (Pink)
-tile.mfr.stainedglass.block.gray.name = Vetro colorato (grigio)
-tile.mfr.stainedglass.block.lightgray.name = Vetro colorato (grigio chiaro)
-tile.mfr.stainedglass.block.cyan.name = Vetro colorato (ciano)
-tile.mfr.stainedglass.block.purple.name = Vetro colorato (viola)
-tile.mfr.stainedglass.block.blue.name = Vetro colorato (blu)
-tile.mfr.stainedglass.block.brown.name = Vetro colorato (marrone)
-tile.mfr.stainedglass.block.green.name = Vetro colorato (grigio)
-tile.mfr.stainedglass.block.red.name = Vetro colorato (rosso)
-tile.mfr.stainedglass.block.black.name = Vetro colorato (nero)
+tile.mfr.stained_glass.block.white.name = Vetro colorato (bianco)
+tile.mfr.stained_glass.block.orange.name = Vetro colorato (arancione)
+tile.mfr.stained_glass.block.magenta.name = Vetro colorato (magenta)
+tile.mfr.stained_glass.block.lightblue.name = Vetro colorato (azzurro)
+tile.mfr.stained_glass.block.yellow.name = Vetro colorato (giallo)
+tile.mfr.stained_glass.block.lime.name = Vetro colorato (lime)
+tile.mfr.stained_glass.block.pink.name = Vetro colorato (Pink)
+tile.mfr.stained_glass.block.gray.name = Vetro colorato (grigio)
+tile.mfr.stained_glass.block.lightgray.name = Vetro colorato (grigio chiaro)
+tile.mfr.stained_glass.block.cyan.name = Vetro colorato (ciano)
+tile.mfr.stained_glass.block.purple.name = Vetro colorato (viola)
+tile.mfr.stained_glass.block.blue.name = Vetro colorato (blu)
+tile.mfr.stained_glass.block.brown.name = Vetro colorato (marrone)
+tile.mfr.stained_glass.block.green.name = Vetro colorato (grigio)
+tile.mfr.stained_glass.block.red.name = Vetro colorato (rosso)
+tile.mfr.stained_glass.block.black.name = Vetro colorato (nero)
 
-tile.mfr.stainedglass.pane.white.name = Pannello di vetro colorato (bianco)
-tile.mfr.stainedglass.pane.orange.name = Pannello di vetro colorato (arancione)
-tile.mfr.stainedglass.pane.magenta.name = Pannello di vetro colorato (magenta)
-tile.mfr.stainedglass.pane.lightblue.name = Pannello di vetro colorato (azzurro)
-tile.mfr.stainedglass.pane.yellow.name = Pannello di vetro colorato (giallo)
-tile.mfr.stainedglass.pane.lime.name = Pannello di vetro colorato (lime)
-tile.mfr.stainedglass.pane.pink.name = Pannello di vetro colorato (Pink)
-tile.mfr.stainedglass.pane.gray.name = Pannello di vetro colorato (grigio)
-tile.mfr.stainedglass.pane.lightgray.name = Pannello di vetro colorato (grigio chiaro)
-tile.mfr.stainedglass.pane.cyan.name = Pannello di vetro colorato (ciano)
-tile.mfr.stainedglass.pane.purple.name = Pannello di vetro colorato (viola)
-tile.mfr.stainedglass.pane.blue.name = Pannello di vetro colorato (blu)
-tile.mfr.stainedglass.pane.brown.name = Pannello di vetro colorato (marrone)
-tile.mfr.stainedglass.pane.green.name = Pannello di vetro colorato (grigio)
-tile.mfr.stainedglass.pane.red.name = Pannello di vetro colorato (rosso)
-tile.mfr.stainedglass.pane.black.name = Pannello di vetro colorato (nero)
+tile.mfr.stained_glass.pane.white.name = Pannello di vetro colorato (bianco)
+tile.mfr.stained_glass.pane.orange.name = Pannello di vetro colorato (arancione)
+tile.mfr.stained_glass.pane.magenta.name = Pannello di vetro colorato (magenta)
+tile.mfr.stained_glass.pane.lightblue.name = Pannello di vetro colorato (azzurro)
+tile.mfr.stained_glass.pane.yellow.name = Pannello di vetro colorato (giallo)
+tile.mfr.stained_glass.pane.lime.name = Pannello di vetro colorato (lime)
+tile.mfr.stained_glass.pane.pink.name = Pannello di vetro colorato (Pink)
+tile.mfr.stained_glass.pane.gray.name = Pannello di vetro colorato (grigio)
+tile.mfr.stained_glass.pane.lightgray.name = Pannello di vetro colorato (grigio chiaro)
+tile.mfr.stained_glass.pane.cyan.name = Pannello di vetro colorato (ciano)
+tile.mfr.stained_glass.pane.purple.name = Pannello di vetro colorato (viola)
+tile.mfr.stained_glass.pane.blue.name = Pannello di vetro colorato (blu)
+tile.mfr.stained_glass.pane.brown.name = Pannello di vetro colorato (marrone)
+tile.mfr.stained_glass.pane.green.name = Pannello di vetro colorato (grigio)
+tile.mfr.stained_glass.pane.red.name = Pannello di vetro colorato (rosso)
+tile.mfr.stained_glass.pane.black.name = Pannello di vetro colorato (nero)
 
 tile.mfr.road.default.name = Strada
 tile.mfr.road.light.off.name = Luce stradale
@@ -113,47 +113,47 @@ tile.mfr.decorative.brick.lapis.name = Mattoni di lapislazzuli
 tile.mfr.decorative.brick.obsidian.name = Mattoni di ossidiana
 tile.mfr.decorative.brick.pavedstone.name = Mattoni di strada lastricata
 tile.mfr.decorative.brick.snow.name = Mattoni di neve
-tile.mfr.decorative.brick.icelarge.name = Ghiaccio concio
-tile.mfr.decorative.brick.glowstonelarge.name = Luminite concia
-tile.mfr.decorative.brick.lapislarge.name = Lapislazzuli conci
-tile.mfr.decorative.brick.obsidianlarge.name = Ossidiana concia
-tile.mfr.decorative.brick.pavedstonelarge.name = Strada lastricata concia
-tile.mfr.decorative.brick.snowlarge.name = Neve concia
+tile.mfr.decorative.brick.ice.large.name = Ghiaccio concio
+tile.mfr.decorative.brick.glowstone.large.name = Luminite concia
+tile.mfr.decorative.brick.lapis.large.name = Lapislazzuli conci
+tile.mfr.decorative.brick.obsidian.large.name = Ossidiana concia
+tile.mfr.decorative.brick.pavedstone.large.name = Strada lastricata concia
+tile.mfr.decorative.brick.snow.large.name = Neve concia
 tile.mfr.decorative.brick.meatraw.name = Blocco di carne cruda
 tile.mfr.decorative.brick.meatcooked.name = Blocco di carne cotta
-tile.mfr.decorative.brick.bricklarge.name = Mattoni conci
-tile.mfr.decorative.brick.sugarcharcoal.name = Blocco di carbonella di zucchero
+tile.mfr.decorative.brick.brick.large.name = Mattoni conci
+tile.mfr.decorative.brick.sugar_charcoal.name = Blocco di carbonella di zucchero
 
-tile.mfr.decorative.stone.blacksmooth.name = Roccianera
-tile.mfr.decorative.stone.blackcobble.name = Pietramenero
-tile.mfr.decorative.stone.blackbricksmall.name = Mattoni di pietranera
-tile.mfr.decorative.stone.blackbricklarge.name = Pietranera concia
-tile.mfr.decorative.stone.blackgravel.name = Ghiaia di pietranera
-tile.mfr.decorative.stone.blackpaved.name = Pietranera lastricata
-tile.mfr.decorative.stone.whitesmooth.name = Rocciabianca
-tile.mfr.decorative.stone.whitecobble.name = Pietramebianco
-tile.mfr.decorative.stone.whitebricksmall.name = Mattoni di pietrabianca
-tile.mfr.decorative.stone.whitebricklarge.name = Pietrabianca concia
-tile.mfr.decorative.stone.whitegravel.name = Ghiaia di pietrabianca
-tile.mfr.decorative.stone.whitepaved.name = Pietrabianca lastricata
+tile.mfr.decorative.stone.black.smooth.name = Roccianera
+tile.mfr.decorative.stone.black.cobble.name = Pietramenero
+tile.mfr.decorative.stone.black.brick.small.name = Mattoni di pietranera
+tile.mfr.decorative.stone.black.brick.large.name = Pietranera concia
+tile.mfr.decorative.stone.black.gravel.name = Ghiaia di pietranera
+tile.mfr.decorative.stone.black.paved.name = Pietranera lastricata
+tile.mfr.decorative.stone.white.smooth.name = Rocciabianca
+tile.mfr.decorative.stone.white.cobble.name = Pietramebianco
+tile.mfr.decorative.stone.white.brick.small.name = Mattoni di pietrabianca
+tile.mfr.decorative.stone.white.brick.large.name = Pietrabianca concia
+tile.mfr.decorative.stone.white.gravel.name = Ghiaia di pietrabianca
+tile.mfr.decorative.stone.white.paved.name = Pietrabianca lastricata
 
-tile.mfr.pinkslime.block.name = Blocco di gelatina rosa
+tile.mfr.pink_slime.block.name = Blocco di gelatina rosa
 
 tile.ice.unmelting.name = Ghiaccio (inscioglibile)
 
-tile.mfr.vinescaffold.name = Impalcatura di rampicante
+tile.mfr.vine.scaffold.name = Impalcatura di rampicante
 
 tile.mfr.detcord.name = Filo detonante
 
 tile.mfr.farmland.name = Terreno fertile
 
-tile.mfr.rubberwood.sapling.normal.name = Arboscello della gomma
-tile.mfr.rubberwood.sapling.sacred.name = Arboscello della gomma sacro
-tile.mfr.rubberwood.sapling.mega.name = Mega arboscello della gomma
-tile.mfr.rubberwood.sapling.massive.name = Arboscello della gomma sacro
-tile.mfr.rubberwood.log.name = Legno della gomma
-tile.mfr.rubberwood.leaves.normal.name = Foglie della gomma
-tile.mfr.rubberwood.leaves.dry.name = Foglie della gomma secche
+tile.mfr.rubber_wood.sapling.normal.name = Arboscello della gomma
+tile.mfr.rubber_wood.sapling.sacred.name = Arboscello della gomma sacro
+tile.mfr.rubber_wood.sapling.mega.name = Mega arboscello della gomma
+tile.mfr.rubber_wood.sapling.massive.name = Arboscello della gomma sacro
+tile.mfr.rubber_wood.log.name = Legno della gomma
+tile.mfr.rubber_wood.leaves.normal.name = Foglie della gomma
+tile.mfr.rubber_wood.leaves.dry.name = Foglie della gomma secche
 
 tile.mfr.rail.cargo.dropoff.name = Rotaia di sbarco per merci
 tile.mfr.rail.cargo.pickup.name = Rotaia d'imbarco per merci
@@ -164,26 +164,26 @@ tile.mfr.cable.redstone.name = Cavo RedNet
 tile.mfr.cable.redstone.glass.name = Cavo RedNet
 tile.mfr.cable.redstone.energy.name = Cavo RedNet per corrente
 tile.mfr.cable.redstone.energyglass.name = Cavo RedNet per corrente
-tile.mfr.cable.plastic.name = Tubo di plastica
+tile.mfr.plastic.pipe.name = Tubo di plastica
 
 tile.mfr.rednet.logic.name = Regolatrice programmabile RedNet
 tile.mfr.rednet.panel.historian.name = Storico RedNet
 
-tile.mfr.machineblock.machine = item.mfr.machineblock
-tile.mfr.machineblock.prc.name = Custodia per regolatrice programmabile RedNet
+tile.mfr.machine_block.machine = item.mfr.machineblock
+tile.mfr.machine_block.prc.name = Custodia per regolatrice programmabile RedNet
 
 tile.mfr.tank.name = Serbatoio di plastica
 
-fluid.mfr.milk.still.name = Latte
-fluid.mfr.sludge.still.name = Melma
-fluid.mfr.sewage.still.name = Escrementi
-fluid.mfr.mobessence.still.name = Essenza
-fluid.mfr.biofuel.still.name = Combustibile biologico
-fluid.mfr.meat.still.name = Carne
-fluid.mfr.pinkslime.still.name = Gelatina rosa
-fluid.mfr.chocolatemilk.still.name = Latte al cioccolato
-fluid.mfr.mushroomsoup.still.name = Zuppa di funghi
-fluid.mfr.steam.still.name = Vapore
+fluid.mfr.milk.fluid.name = Latte
+fluid.mfr.sludge.fluid.name = Melma
+fluid.mfr.sewage.fluid.name = Escrementi
+fluid.mfr.mobessence.fluid.name = Essenza
+fluid.mfr.biofuel.fluid.name = Combustibile biologico
+fluid.mfr.meat.fluid.name = Carne
+fluid.mfr.pink_slime.fluid.name = Gelatina rosa
+fluid.mfr.chocolatemilk.fluid.name = Latte al cioccolato
+fluid.mfr.mushroomsoup.fluid.name = Zuppa di funghi
+fluid.mfr.steam.fluid.name = Vapore
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Gelatina rosa
 
@@ -193,7 +193,7 @@ item.mfr.bucket.sludge.name = Secchio di escrementi
 item.mfr.bucket.essence.name = Secchio di essenza
 item.mfr.bucket.biofuel.name = Secchio di combustibile biologico
 item.mfr.bucket.meat.name = Secchio di carne
-item.mfr.bucket.pinkslime.name = Secchio di gelatina rosa
+item.mfr.bucket.pink_slime.name = Secchio di gelatina rosa
 item.mfr.bucket.chocolatemilk.name = Secchio di latte al cioccolato
 item.mfr.bucket.mushroomsoup.name = Secchio di zuppa di funghi
 
@@ -218,7 +218,7 @@ item.mfr.syringe.health.name = Siringa della salute
 item.mfr.syringe.slime.name = Siringa della grandezza di gelatina
 item.mfr.syringe.zombie.name = Siringa zombi
 
-item.mfr.machineblock.name = Blocco per macchinario
+item.mfr.machine_block.name = Blocco per macchinario
 item.mfr.hammer.name = Martello di precisione
 
 item.mfr.plastic = Plastica
@@ -232,18 +232,18 @@ item.mfr.rubber.raw.name = Gomma grezza
 item.mfr.record.blank.name = Disco vuoto
 
 item.mfr.safarinet.reusable.name = Rete safari (riutilizzabile)
-item.mfr.safarinet.singleuse.name = Rete safari (monouso)
+item.mfr.safarinet.single_use.name = Rete safari (monouso)
 item.mfr.safarinet.jailer.name = Rete safari del carceriere
 item.mfr.safarinet.jailer.fancy.name = Rete safari del carceriere dorato
 item.mfr.safarinet.launcher.name = Lanciatore di reti safari
 
-item.mfr.sugarcharcoal.name = Carbonella di zucchero
+item.mfr.sugar_charcoal.name = Carbonella di zucchero
 item.mfr.fertilizer.name = Fertilizzante industriale
-item.mfr.milkbottle.name = Bottiglia di latte
+item.mfr.milk_bottle.name = Bottiglia di latte
 item.mfr.spyglass.name = Cannocchiale
 item.mfr.ruler.name = Righello
-item.mfr.xpextractor.name = Estrattore di XP
-item.mfr.portaspawner.name = Generatore portabile
+item.mfr.xp_extractor.name = Estrattore di XP
+item.mfr.porta_spawner.name = Generatore portabile
 item.mfr.straw.name = Cannuccia
 
 item.mfr.rednet.meter.name = Metro RedNet
@@ -256,51 +256,51 @@ item.mfr.meat.ingot.cooked.name = Lingotto di carne cotta
 item.mfr.meat.nugget.raw.name = Pepita di "carne" cruda
 item.mfr.meat.nugget.cooked.name = Pepita di "carne" cotta
 
-item.mfr.pinkslime = Gelatina rosa
-item.mfr.pinkslime.ability = Gelatinoso\nrosa
-item.mfr.pinkslime.ball.name = Palla di gelatina rosa
-item.mfr.pinkslime.gem.name = Cristallo di gelatina rosa
+item.mfr.pink_slime = Gelatina rosa
+item.mfr.pink_slime.ability = Gelatinoso\nrosa
+item.mfr.pink_slime.ball.name = Palla di gelatina rosa
+item.mfr.pink_slime.gem.name = Cristallo di gelatina rosa
 
 item.mfr.rocket.name = Razzo autopropulsore anti-materiale
 item.mfr.rocket.smart.name = Razzo autopropulsore anti-materiale a rilevamento
-item.mfr.rocketlauncher.name = Lanciatore RAPAM
-item.mfr.fishingrod.name = Canna da pesca
+item.mfr.rocket_launcher.name = Lanciatore RAPAM
+item.mfr.fishing_rod.name = Canna da pesca
 
-item.mfr.potatolauncher.name = Cannone a patate
+item.mfr.potato_launcher.name = Cannone a patate
 
-item.mfr.ceramicdye.white.name = Ceramica colorata (bianco)
-item.mfr.ceramicdye.orange.name = Ceramica colorata (arancione)
-item.mfr.ceramicdye.magenta.name = Ceramica colorata (magenta)
-item.mfr.ceramicdye.lightblue.name = Ceramica colorata (azzurro)
-item.mfr.ceramicdye.yellow.name = Ceramica colorata (giallo)
-item.mfr.ceramicdye.lime.name = Ceramica colorata (lime)
-item.mfr.ceramicdye.pink.name = Ceramica colorata (Pink)
-item.mfr.ceramicdye.gray.name = Ceramica colorata (grigio)
-item.mfr.ceramicdye.lightgray.name = Ceramica colorata (grigio chiaro)
-item.mfr.ceramicdye.cyan.name = Ceramica colorata (ciano)
-item.mfr.ceramicdye.purple.name = Ceramica colorata (viola)
-item.mfr.ceramicdye.blue.name = Ceramica colorata (blu)
-item.mfr.ceramicdye.brown.name = Ceramica colorata (marrone)
-item.mfr.ceramicdye.green.name = Ceramica colorata (grigio)
-item.mfr.ceramicdye.red.name = Ceramica colorata (rosso)
-item.mfr.ceramicdye.black.name = Ceramica colorata (nero)
+item.mfr.ceramic.dye.white.name = Ceramica colorata (bianco)
+item.mfr.ceramic.dye.orange.name = Ceramica colorata (arancione)
+item.mfr.ceramic.dye.magenta.name = Ceramica colorata (magenta)
+item.mfr.ceramic.dye.lightblue.name = Ceramica colorata (azzurro)
+item.mfr.ceramic.dye.yellow.name = Ceramica colorata (giallo)
+item.mfr.ceramic.dye.lime.name = Ceramica colorata (lime)
+item.mfr.ceramic.dye.pink.name = Ceramica colorata (Pink)
+item.mfr.ceramic.dye.gray.name = Ceramica colorata (grigio)
+item.mfr.ceramic.dye.lightgray.name = Ceramica colorata (grigio chiaro)
+item.mfr.ceramic.dye.cyan.name = Ceramica colorata (ciano)
+item.mfr.ceramic.dye.purple.name = Ceramica colorata (viola)
+item.mfr.ceramic.dye.blue.name = Ceramica colorata (blu)
+item.mfr.ceramic.dye.brown.name = Ceramica colorata (marrone)
+item.mfr.ceramic.dye.green.name = Ceramica colorata (grigio)
+item.mfr.ceramic.dye.red.name = Ceramica colorata (rosso)
+item.mfr.ceramic.dye.black.name = Ceramica colorata (nero)
 
-item.mfr.laserfocus.white.name = Focus per laser (bianco)
-item.mfr.laserfocus.orange.name = Focus per laser (arancione)
-item.mfr.laserfocus.magenta.name = Focus per laser (magenta)
-item.mfr.laserfocus.lightblue.name = Focus per laser (azzurro)
-item.mfr.laserfocus.yellow.name = Focus per laser (giallo)
-item.mfr.laserfocus.lime.name = Focus per laser (lime)
-item.mfr.laserfocus.pink.name = Focus per laser (Pink)
-item.mfr.laserfocus.gray.name = Focus per laser (grigio)
-item.mfr.laserfocus.lightgray.name = Focus per laser (grigio chiaro)
-item.mfr.laserfocus.cyan.name = Focus per laser (ciano)
-item.mfr.laserfocus.purple.name = Focus per laser (viola)
-item.mfr.laserfocus.blue.name = Focus per laser (blu)
-item.mfr.laserfocus.brown.name = Focus per laser (marrone)
-item.mfr.laserfocus.green.name = Focus per laser (grigio)
-item.mfr.laserfocus.red.name = Focus per laser (rosso)
-item.mfr.laserfocus.black.name = Focus per laser (nero)
+item.mfr.laser.focus.white.name = Focus per laser (bianco)
+item.mfr.laser.focus.orange.name = Focus per laser (arancione)
+item.mfr.laser.focus.magenta.name = Focus per laser (magenta)
+item.mfr.laser.focus.lightblue.name = Focus per laser (azzurro)
+item.mfr.laser.focus.yellow.name = Focus per laser (giallo)
+item.mfr.laser.focus.lime.name = Focus per laser (lime)
+item.mfr.laser.focus.pink.name = Focus per laser (Pink)
+item.mfr.laser.focus.gray.name = Focus per laser (grigio)
+item.mfr.laser.focus.lightgray.name = Focus per laser (grigio chiaro)
+item.mfr.laser.focus.cyan.name = Focus per laser (ciano)
+item.mfr.laser.focus.purple.name = Focus per laser (viola)
+item.mfr.laser.focus.blue.name = Focus per laser (blu)
+item.mfr.laser.focus.brown.name = Focus per laser (marrone)
+item.mfr.laser.focus.green.name = Focus per laser (grigio)
+item.mfr.laser.focus.red.name = Focus per laser (rosso)
+item.mfr.laser.focus.black.name = Focus per laser (nero)
 
 item.mfr.upgrade.radius.cobble.name = Potenziamento (pietrame)
 item.mfr.upgrade.radius.lapis.name = Potenziamento (lapis)
@@ -453,7 +453,7 @@ chat.info.mfr.chunkloader.noticket = Hai troppi Caricatrici di chunk e questo qu
 # Replace "item." or "tile." with "tip.info" and remove ".name" and that tooltip will be
 # displayed under the item with exceptions, such as the PRC which uses a custom entry for legacy reasons
 
-tip.info.mfr.rubberwood.sapling.massive = Attenzione: non piantarlo in casa.
+tip.info.mfr.rubber_wood.sapling.massive = Attenzione: non piantarlo in casa.
 
 tip.info.mfr.prc = Se ti sei perso, leggi il manuale (nel gioco)
 
@@ -497,7 +497,7 @@ death.attack.mfr.laser.player = %2$s si è assicurato che %1$s fosse disintegrat
 #TConstuct tools
 
 item.mfr.plastic.display = Plastica
-item.mfr.pinkslime.display = Gelatina rosa
+item.mfr.pink_slime.display = Gelatina rosa
 
 tool.pickaxe.plastic=Piccone di plastica
 tool.pickaxe.pinkslime=Piccone di gelatina rosa

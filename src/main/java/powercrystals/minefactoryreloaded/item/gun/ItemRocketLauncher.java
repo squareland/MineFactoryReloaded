@@ -29,7 +29,7 @@ public class ItemRocketLauncher extends ItemFactoryGun {
 
 	public ItemRocketLauncher() {
 
-		setUnlocalizedName("mfr.rocketlauncher"); // FIXME: relocalize to rocket_launcher
+		setUnlocalizedName("mfr.rocket_launcher");
 		setMaxStackSize(1);
 	}
 

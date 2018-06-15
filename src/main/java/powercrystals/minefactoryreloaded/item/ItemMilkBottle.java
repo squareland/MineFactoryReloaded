@@ -21,7 +21,7 @@ public class ItemMilkBottle extends ItemFactory {
 	public ItemMilkBottle() {
 
 		setContainerItem(Items.GLASS_BOTTLE);
-		setUnlocalizedName("mfr.milkbottle"); // FIXME: relocalize to milk_bottle
+		setUnlocalizedName("mfr.milk_bottle");
 		setMaxStackSize(16);
 	}
 

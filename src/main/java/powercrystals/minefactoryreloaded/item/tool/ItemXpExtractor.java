@@ -45,7 +45,7 @@ public class ItemXpExtractor extends ItemFactoryTool {
 			}
 		});
 
-		setUnlocalizedName("mfr.xpextractor"); // FIXME: relocalize to xp_extractor
+		setUnlocalizedName("mfr.xp_extractor");
 		setMaxStackSize(1);
 	}
 	

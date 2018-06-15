@@ -11,6 +11,8 @@ import powercrystals.minefactoryreloaded.block.BlockFactory;
 import powercrystals.minefactoryreloaded.block.ItemBlockFactory;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 
+import java.util.Locale;
+
 public class BlockFactoryDecoration extends BlockFactory
 {
 	public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
@@ -18,7 +20,7 @@ public class BlockFactoryDecoration extends BlockFactory
 	public BlockFactoryDecoration() {
 		
 		super(0.5f);
-		setUnlocalizedName("mfr.machineblock"); // FIXME: relocalize to machine_block
+		setUnlocalizedName("mfr.machine_block");
 	}
 
 	@Override
@@ -53,18 +55,18 @@ public class BlockFactoryDecoration extends BlockFactory
 	}
 
 	public enum Variant implements IStringSerializable {
-		MACHINE(0, "machine"),
-		PRC(1, "prc");
+		BASE,
+		PRC;
 
 		private final int meta;
 		private final String name;
 
 		public static final String[] NAMES;
 
-		Variant(int meta, String name) {
+		Variant() {
 
-			this.meta = meta;
-			this.name = name;
+			this.meta = ordinal();
+			this.name = name().toLowerCase(Locale.ROOT);
 		}
 
 		@Override

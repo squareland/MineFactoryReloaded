@@ -33,6 +33,7 @@ import powercrystals.minefactoryreloaded.setup.MFRFluids;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
+import java.util.Locale;
 import java.util.Random;
 
 public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorative { // TODO: convert to BlockFluidFinite
@@ -215,6 +216,6 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 	@Override
 	public String getUnlocalizedName() {
 
-		return "fluid.mfr." + fluidName.replace("_", "") + ".still";
+		return "fluid.mfr." + fluidName.toLowerCase(Locale.ROOT) + ".fluid";
 	}
 }

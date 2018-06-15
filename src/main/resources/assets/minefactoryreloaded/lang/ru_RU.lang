@@ -65,39 +65,39 @@ tile.mfr.conveyor.green.name = Конвейерная лента (Зелёная
 tile.mfr.conveyor.red.name = Конвейерная лента (Красная)
 tile.mfr.conveyor.black.name = Конвейерная лента (Чёрная)
 
-tile.mfr.stainedglass.block.white.name = Цветное стекло (Белое)
-tile.mfr.stainedglass.block.orange.name = Цветное стекло (Оранжевое)
-tile.mfr.stainedglass.block.magenta.name = Цветное стекло (Сиреневое)
-tile.mfr.stainedglass.block.lightblue.name = Цветное стекло(Светло-синее)
-tile.mfr.stainedglass.block.yellow.name = Цветное стекло (Жёлтое)
-tile.mfr.stainedglass.block.lime.name = Цветное стекло (Лаймовое)
-tile.mfr.stainedglass.block.pink.name = Цветное стекло (Розовое)
-tile.mfr.stainedglass.block.gray.name = Цветное стекло (Серое)
-tile.mfr.stainedglass.block.lightgray.name = Цветное стекло (Светло-серое)
-tile.mfr.stainedglass.block.cyan.name = Цветное стекло (Бирюзовое)
-tile.mfr.stainedglass.block.purple.name = Цветное стекло (Фиолетовое)
-tile.mfr.stainedglass.block.blue.name = Цветное стекло (Синее)
-tile.mfr.stainedglass.block.brown.name = Цветное стекло (Коричневое)
-tile.mfr.stainedglass.block.green.name = Цветное стекло (Зелёное)
-tile.mfr.stainedglass.block.red.name = Цветное стекло (Красное)
-tile.mfr.stainedglass.block.black.name = Цветное стекло (Чёрное)
+tile.mfr.stained_glass.block.white.name = Цветное стекло (Белое)
+tile.mfr.stained_glass.block.orange.name = Цветное стекло (Оранжевое)
+tile.mfr.stained_glass.block.magenta.name = Цветное стекло (Сиреневое)
+tile.mfr.stained_glass.block.lightblue.name = Цветное стекло(Светло-синее)
+tile.mfr.stained_glass.block.yellow.name = Цветное стекло (Жёлтое)
+tile.mfr.stained_glass.block.lime.name = Цветное стекло (Лаймовое)
+tile.mfr.stained_glass.block.pink.name = Цветное стекло (Розовое)
+tile.mfr.stained_glass.block.gray.name = Цветное стекло (Серое)
+tile.mfr.stained_glass.block.lightgray.name = Цветное стекло (Светло-серое)
+tile.mfr.stained_glass.block.cyan.name = Цветное стекло (Бирюзовое)
+tile.mfr.stained_glass.block.purple.name = Цветное стекло (Фиолетовое)
+tile.mfr.stained_glass.block.blue.name = Цветное стекло (Синее)
+tile.mfr.stained_glass.block.brown.name = Цветное стекло (Коричневое)
+tile.mfr.stained_glass.block.green.name = Цветное стекло (Зелёное)
+tile.mfr.stained_glass.block.red.name = Цветное стекло (Красное)
+tile.mfr.stained_glass.block.black.name = Цветное стекло (Чёрное)
 
-tile.mfr.stainedglass.pane.white.name = Цветная стеклянная панель (Белая)
-tile.mfr.stainedglass.pane.orange.name = Цветная стеклянная панель (Оранжевая)
-tile.mfr.stainedglass.pane.magenta.name = Цветная стеклянная панель (Сиреневая)
-tile.mfr.stainedglass.pane.lightblue.name = Цветная стеклянная панель (Светло-синяя)
-tile.mfr.stainedglass.pane.yellow.name = Цветная стеклянная панель (Жёлтая)
-tile.mfr.stainedglass.pane.lime.name = Цветная стеклянная панель (Лаймовая)
-tile.mfr.stainedglass.pane.pink.name = Цветная стеклянная панель (Розовая)
-tile.mfr.stainedglass.pane.gray.name = Цветная стеклянная панель (Серая)
-tile.mfr.stainedglass.pane.lightgray.name = Цветная стеклянная панель (Светло-серая)
-tile.mfr.stainedglass.pane.cyan.name = Цветная стеклянная панель (Бирюзовая)
-tile.mfr.stainedglass.pane.purple.name = Цветная стеклянная панель (Фиолетовая)
-tile.mfr.stainedglass.pane.blue.name = Цветная стеклянная панель (Синяя)
-tile.mfr.stainedglass.pane.brown.name = Цветная стеклянная панель (Коричневая)
-tile.mfr.stainedglass.pane.green.name = Цветная стеклянная панель (Зелёная)
-tile.mfr.stainedglass.pane.red.name = Цветная стеклянная панель (Красная)
-tile.mfr.stainedglass.pane.black.name = Цветная стеклянная панель (Чёрная)
+tile.mfr.stained_glass.pane.white.name = Цветная стеклянная панель (Белая)
+tile.mfr.stained_glass.pane.orange.name = Цветная стеклянная панель (Оранжевая)
+tile.mfr.stained_glass.pane.magenta.name = Цветная стеклянная панель (Сиреневая)
+tile.mfr.stained_glass.pane.lightblue.name = Цветная стеклянная панель (Светло-синяя)
+tile.mfr.stained_glass.pane.yellow.name = Цветная стеклянная панель (Жёлтая)
+tile.mfr.stained_glass.pane.lime.name = Цветная стеклянная панель (Лаймовая)
+tile.mfr.stained_glass.pane.pink.name = Цветная стеклянная панель (Розовая)
+tile.mfr.stained_glass.pane.gray.name = Цветная стеклянная панель (Серая)
+tile.mfr.stained_glass.pane.lightgray.name = Цветная стеклянная панель (Светло-серая)
+tile.mfr.stained_glass.pane.cyan.name = Цветная стеклянная панель (Бирюзовая)
+tile.mfr.stained_glass.pane.purple.name = Цветная стеклянная панель (Фиолетовая)
+tile.mfr.stained_glass.pane.blue.name = Цветная стеклянная панель (Синяя)
+tile.mfr.stained_glass.pane.brown.name = Цветная стеклянная панель (Коричневая)
+tile.mfr.stained_glass.pane.green.name = Цветная стеклянная панель (Зелёная)
+tile.mfr.stained_glass.pane.red.name = Цветная стеклянная панель (Красная)
+tile.mfr.stained_glass.pane.black.name = Цветная стеклянная панель (Чёрная)
 
 tile.mfr.road.default.name = Дорожка
 tile.mfr.road.light.off.name = Светящаяся дорожка
@@ -113,47 +113,47 @@ tile.mfr.decorative.brick.lapis.name = Лазуритовые кирпичи
 tile.mfr.decorative.brick.obsidian.name = Обсидиановые кирпичи
 tile.mfr.decorative.brick.pavedstone.name = Асфальтовые кирпичи
 tile.mfr.decorative.brick.snow.name = Снежные кирпичи
-tile.mfr.decorative.brick.icelarge.name = Большие ледяные кирпичи
-tile.mfr.decorative.brick.glowstonelarge.name = Большие светящиеся кирпичи
-tile.mfr.decorative.brick.lapislarge.name = Большие лазуритовые кирпичи
-tile.mfr.decorative.brick.obsidianlarge.name = Большие обсидиановые кирпичи
-tile.mfr.decorative.brick.pavedstonelarge.name = Большие мощённые каменные кирпичи
-tile.mfr.decorative.brick.snowlarge.name = Большие снежные кирпичи
+tile.mfr.decorative.brick.ice.large.name = Большие ледяные кирпичи
+tile.mfr.decorative.brick.glowstone.large.name = Большие светящиеся кирпичи
+tile.mfr.decorative.brick.lapis.large.name = Большие лазуритовые кирпичи
+tile.mfr.decorative.brick.obsidian.large.name = Большие обсидиановые кирпичи
+tile.mfr.decorative.brick.pavedstone.large.name = Большие мощённые каменные кирпичи
+tile.mfr.decorative.brick.snow.large.name = Большие снежные кирпичи
 tile.mfr.decorative.brick.meatraw.name = Блок сырого мяса
 tile.mfr.decorative.brick.meatcooked.name = Блок приготовленного мяса
-tile.mfr.decorative.brick.bricklarge.name = Большие кирпичи
-tile.mfr.decorative.brick.sugarcharcoal.name = Сахарный древесноугольный блок
+tile.mfr.decorative.brick.brick.large.name = Большие кирпичи
+tile.mfr.decorative.brick.sugar_charcoal.name = Сахарный древесноугольный блок
 
-tile.mfr.decorative.stone.blacksmooth.name = Гладкий чёрный камень
-tile.mfr.decorative.stone.blackcobble.name = Чёрный булыжник
-tile.mfr.decorative.stone.blackbricksmall.name = Маленькие чёрные кирпичи
-tile.mfr.decorative.stone.blackbricklarge.name = Большие чёрные кирпичи
-tile.mfr.decorative.stone.blackgravel.name = Гравиевый чёрный камень
-tile.mfr.decorative.stone.blackpaved.name = Мощёный чёрный камень
-tile.mfr.decorative.stone.whitesmooth.name = Гладкий белый камень
-tile.mfr.decorative.stone.whitecobble.name = Белый булыжник
-tile.mfr.decorative.stone.whitebricksmall.name = Маленькие белые кирпичи
-tile.mfr.decorative.stone.whitebricklarge.name = Большие белые кирпичи
-tile.mfr.decorative.stone.whitegravel.name = Гравиевый белый камень
-tile.mfr.decorative.stone.whitepaved.name = Мощёный белый камень
+tile.mfr.decorative.stone.black.smooth.name = Гладкий чёрный камень
+tile.mfr.decorative.stone.black.cobble.name = Чёрный булыжник
+tile.mfr.decorative.stone.black.brick.small.name = Маленькие чёрные кирпичи
+tile.mfr.decorative.stone.black.brick.large.name = Большие чёрные кирпичи
+tile.mfr.decorative.stone.black.gravel.name = Гравиевый чёрный камень
+tile.mfr.decorative.stone.black.paved.name = Мощёный чёрный камень
+tile.mfr.decorative.stone.white.smooth.name = Гладкий белый камень
+tile.mfr.decorative.stone.white.cobble.name = Белый булыжник
+tile.mfr.decorative.stone.white.brick.small.name = Маленькие белые кирпичи
+tile.mfr.decorative.stone.white.brick.large.name = Большие белые кирпичи
+tile.mfr.decorative.stone.white.gravel.name = Гравиевый белый камень
+tile.mfr.decorative.stone.white.paved.name = Мощёный белый камень
 
-tile.mfr.pinkslime.block.name = Блок розовой слизи
+tile.mfr.pink_slime.block.name = Блок розовой слизи
 
 tile.ice.unmelting.name = Укреплённый лёд
 
-tile.mfr.vinescaffold.name = Лиановые строительные леса
+tile.mfr.vine.scaffold.name = Лиановые строительные леса
 
 tile.mfr.detcord.name = DetCord
 
 tile.mfr.farmland.name = Плодородная почва
 
-tile.mfr.rubberwood.sapling.normal.name = Саженец гевеи
-tile.mfr.rubberwood.sapling.sacred.name = Священный саженец гевеи
-tile.mfr.rubberwood.sapling.mega.name = Большой саженец гевеи
-tile.mfr.rubberwood.sapling.massive.name = Священный саженец гевеи
-tile.mfr.rubberwood.log.name = Древесина гевеи
-tile.mfr.rubberwood.leaves.normal.name = Листва гевеи
-tile.mfr.rubberwood.leaves.dry.name = Сухая листва гевеи
+tile.mfr.rubber_wood.sapling.normal.name = Саженец гевеи
+tile.mfr.rubber_wood.sapling.sacred.name = Священный саженец гевеи
+tile.mfr.rubber_wood.sapling.mega.name = Большой саженец гевеи
+tile.mfr.rubber_wood.sapling.massive.name = Священный саженец гевеи
+tile.mfr.rubber_wood.log.name = Древесина гевеи
+tile.mfr.rubber_wood.leaves.normal.name = Листва гевеи
+tile.mfr.rubber_wood.leaves.dry.name = Сухая листва гевеи
 
 tile.mfr.rail.cargo.dropoff.name = Грузовой высаживающий путь
 tile.mfr.rail.cargo.pickup.name = Грузовой погружающий путь
@@ -164,26 +164,26 @@ tile.mfr.cable.redstone.name = RedNet кабель
 tile.mfr.cable.redstone.glass.name = RedNet кабель
 tile.mfr.cable.redstone.energy.name = RedNet энергетический кабель
 tile.mfr.cable.redstone.energyglass.name = RedNet энергетический кабель
-tile.mfr.cable.plastic.name = Пластиковая труба
+tile.mfr.plastic.pipe.name = Пластиковая труба
 
 tile.mfr.rednet.logic.name = Программируемый RedNet контроллер
 tile.mfr.rednet.panel.historian.name = RedNet гистограф
 
-tile.mfr.machineblock.machine = item.mfr.machineblock
-tile.mfr.machineblock.prc.name = Корпус программируемого RedNet контроллера
+tile.mfr.machine_block.machine = item.mfr.machineblock
+tile.mfr.machine_block.prc.name = Корпус программируемого RedNet контроллера
 
 tile.mfr.tank.name = Пластиковый резервуар
 
-fluid.mfr.milk.still.name = Молоко
-fluid.mfr.sludge.still.name = Шлам
-fluid.mfr.sewage.still.name = Навоз
-fluid.mfr.mobessence.still.name = Эссенция
-fluid.mfr.biofuel.still.name = Биотопливо
-fluid.mfr.meat.still.name = Фарш
-fluid.mfr.pinkslime.still.name = Розовая слизь
-fluid.mfr.chocolatemilk.still.name = Молочный шоколад
-fluid.mfr.mushroomsoup.still.name = Грибной суп
-fluid.mfr.steam.still.name = Пар
+fluid.mfr.milk.fluid.name = Молоко
+fluid.mfr.sludge.fluid.name = Шлам
+fluid.mfr.sewage.fluid.name = Навоз
+fluid.mfr.mobessence.fluid.name = Эссенция
+fluid.mfr.biofuel.fluid.name = Биотопливо
+fluid.mfr.meat.fluid.name = Фарш
+fluid.mfr.pink_slime.fluid.name = Розовая слизь
+fluid.mfr.chocolatemilk.fluid.name = Молочный шоколад
+fluid.mfr.mushroomsoup.fluid.name = Грибной суп
+fluid.mfr.steam.fluid.name = Пар
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Розовый слизень
 
@@ -193,7 +193,7 @@ item.mfr.bucket.sludge.name = Ведро шлама
 item.mfr.bucket.essence.name = Ведро эссенции
 item.mfr.bucket.biofuel.name = Ведро биотоплива
 item.mfr.bucket.meat.name = Ведро фарша
-item.mfr.bucket.pinkslime.name = Ведро розовой слизи
+item.mfr.bucket.pink_slime.name = Ведро розовой слизи
 item.mfr.bucket.chocolatemilk.name = Ведро молочного шоколада
 item.mfr.bucket.mushroomsoup.name = Ведро грибного супа
 
@@ -218,7 +218,7 @@ item.mfr.syringe.health.name = Шприц здоровья
 item.mfr.syringe.slime.name = Увеличитель слизней
 item.mfr.syringe.zombie.name = Шприц зомби
 
-item.mfr.machineblock.name = Фабричный блок механизма
+item.mfr.machine_block.name = Фабричный блок механизма
 item.mfr.hammer.name = Точная кувалда
 
 item.mfr.plastic = Пластик
@@ -232,18 +232,18 @@ item.mfr.rubber.raw.name = Сырая резина
 item.mfr.record.blank.name = Пустая пластинка
 
 item.mfr.safarinet.reusable.name = Сафари сеть (Многоразовая)
-item.mfr.safarinet.singleuse.name = Сафари сеть (Одноразовая)
+item.mfr.safarinet.single_use.name = Сафари сеть (Одноразовая)
 item.mfr.safarinet.jailer.name = Тюремная сафари сеть
 item.mfr.safarinet.jailer.fancy.name = Золотая тюремная сафари сеть
 item.mfr.safarinet.launcher.name = Метатель сети
 
-item.mfr.sugarcharcoal.name = Сахарный древесный уголь
+item.mfr.sugar_charcoal.name = Сахарный древесный уголь
 item.mfr.fertilizer.name = Промышленное удобрение
-item.mfr.milkbottle.name = Бутылка молока
+item.mfr.milk_bottle.name = Бутылка молока
 item.mfr.spyglass.name = Подзорная труба
 item.mfr.ruler.name = Линейка
-item.mfr.xpextractor.name = Экстрактор опыта
-item.mfr.portaspawner.name = Портоспаунер
+item.mfr.xp_extractor.name = Экстрактор опыта
+item.mfr.porta_spawner.name = Портоспаунер
 item.mfr.straw.name = Соломка
 
 item.mfr.rednet.meter.name = RedNet измеритель
@@ -256,49 +256,49 @@ item.mfr.meat.ingot.cooked.name = Приготовленный слиток мя
 item.mfr.meat.nugget.raw.name = Кусочек сырого мяса
 item.mfr.meat.nugget.cooked.name = Кусочек приготовленного мяса
 
-item.mfr.pinkslime = Розовая слизь
-item.mfr.pinkslime.ability = Розовая\nслизь
-item.mfr.pinkslime.ball.name = Шарик розовой слизи
-item.mfr.pinkslime.gem.name = Кристалл розовой слизи
+item.mfr.pink_slime = Розовая слизь
+item.mfr.pink_slime.ability = Розовая\nслизь
+item.mfr.pink_slime.ball.name = Шарик розовой слизи
+item.mfr.pink_slime.gem.name = Кристалл розовой слизи
 
 item.mfr.rocket.name = Self-Propelled Anti Material Rocket
 item.mfr.rocket.smart.name = Tracking Self-Propelled Anti Material Rocket
-item.mfr.rocketlauncher.name = SPAMR Launcher
-item.mfr.fishingrod.name = Удочка
+item.mfr.rocket_launcher.name = SPAMR Launcher
+item.mfr.fishing_rod.name = Удочка
 
-item.mfr.ceramicdye.white.name = Керамическая краска (Белая)
-item.mfr.ceramicdye.orange.name = Керамическая краска (Оранжевая)
-item.mfr.ceramicdye.magenta.name = Керамическая краска (Сиреневая)
-item.mfr.ceramicdye.lightblue.name = Керамическая краска (Светло-синяя)
-item.mfr.ceramicdye.yellow.name = Керамическая краска (Жёлтая)
-item.mfr.ceramicdye.lime.name = Керамическая краска (Лаймовая)
-item.mfr.ceramicdye.pink.name = Керамическая краска (Розовая)
-item.mfr.ceramicdye.gray.name = Керамическая краска (Серая)
-item.mfr.ceramicdye.lightgray.name = Керамическая краска (Светло-серая)
-item.mfr.ceramicdye.cyan.name = Керамическая краска (Бирюзовая)
-item.mfr.ceramicdye.purple.name = Керамическая краска (Фиолетовая)
-item.mfr.ceramicdye.blue.name = Керамическая краска (Синяя)
-item.mfr.ceramicdye.brown.name = Керамическая краска (Коричневая)
-item.mfr.ceramicdye.green.name = Керамическая краска (Зелёная)
-item.mfr.ceramicdye.red.name = Керамическая краска (Красная)
-item.mfr.ceramicdye.black.name = Керамическая краска (Чёрная)
+item.mfr.ceramic.dye.white.name = Керамическая краска (Белая)
+item.mfr.ceramic.dye.orange.name = Керамическая краска (Оранжевая)
+item.mfr.ceramic.dye.magenta.name = Керамическая краска (Сиреневая)
+item.mfr.ceramic.dye.lightblue.name = Керамическая краска (Светло-синяя)
+item.mfr.ceramic.dye.yellow.name = Керамическая краска (Жёлтая)
+item.mfr.ceramic.dye.lime.name = Керамическая краска (Лаймовая)
+item.mfr.ceramic.dye.pink.name = Керамическая краска (Розовая)
+item.mfr.ceramic.dye.gray.name = Керамическая краска (Серая)
+item.mfr.ceramic.dye.lightgray.name = Керамическая краска (Светло-серая)
+item.mfr.ceramic.dye.cyan.name = Керамическая краска (Бирюзовая)
+item.mfr.ceramic.dye.purple.name = Керамическая краска (Фиолетовая)
+item.mfr.ceramic.dye.blue.name = Керамическая краска (Синяя)
+item.mfr.ceramic.dye.brown.name = Керамическая краска (Коричневая)
+item.mfr.ceramic.dye.green.name = Керамическая краска (Зелёная)
+item.mfr.ceramic.dye.red.name = Керамическая краска (Красная)
+item.mfr.ceramic.dye.black.name = Керамическая краска (Чёрная)
 
-item.mfr.laserfocus.white.name = Фокусирующая линза (Белая)
-item.mfr.laserfocus.orange.name = Фокусирующая линза (Оранжевая)
-item.mfr.laserfocus.magenta.name = Фокусирующая линза (Сиреневая)
-item.mfr.laserfocus.lightblue.name = Фокусирующая линза (Светло-синяя)
-item.mfr.laserfocus.yellow.name = Фокусирующая линза (Жёлтая)
-item.mfr.laserfocus.lime.name = Фокусирующая линза (Лаймовая)
-item.mfr.laserfocus.pink.name = Фокусирующая линза (Розовая)
-item.mfr.laserfocus.gray.name = Фокусирующая линза (Серая)
-item.mfr.laserfocus.lightgray.name = Фокусирующая линза (Светло-серая)
-item.mfr.laserfocus.cyan.name = Фокусирующая линза (Бирюзовая)
-item.mfr.laserfocus.purple.name = Фокусирующая линза (Фиолетовая)
-item.mfr.laserfocus.blue.name = Фокусирующая линза (Синяя)
-item.mfr.laserfocus.brown.name = Фокусирующая линза (Коричневая)
-item.mfr.laserfocus.green.name = Фокусирующая линза (Зелёная)
-item.mfr.laserfocus.red.name = Фокусирующая линза (Красная)
-item.mfr.laserfocus.black.name = Фокусирующая линза (Чёрная)
+item.mfr.laser.focus.white.name = Фокусирующая линза (Белая)
+item.mfr.laser.focus.orange.name = Фокусирующая линза (Оранжевая)
+item.mfr.laser.focus.magenta.name = Фокусирующая линза (Сиреневая)
+item.mfr.laser.focus.lightblue.name = Фокусирующая линза (Светло-синяя)
+item.mfr.laser.focus.yellow.name = Фокусирующая линза (Жёлтая)
+item.mfr.laser.focus.lime.name = Фокусирующая линза (Лаймовая)
+item.mfr.laser.focus.pink.name = Фокусирующая линза (Розовая)
+item.mfr.laser.focus.gray.name = Фокусирующая линза (Серая)
+item.mfr.laser.focus.lightgray.name = Фокусирующая линза (Светло-серая)
+item.mfr.laser.focus.cyan.name = Фокусирующая линза (Бирюзовая)
+item.mfr.laser.focus.purple.name = Фокусирующая линза (Фиолетовая)
+item.mfr.laser.focus.blue.name = Фокусирующая линза (Синяя)
+item.mfr.laser.focus.brown.name = Фокусирующая линза (Коричневая)
+item.mfr.laser.focus.green.name = Фокусирующая линза (Зелёная)
+item.mfr.laser.focus.red.name = Фокусирующая линза (Красная)
+item.mfr.laser.focus.black.name = Фокусирующая линза (Чёрная)
 
 item.mfr.upgrade.radius.cobble.name = Улучшение (Булыжник)
 item.mfr.upgrade.radius.lapis.name = Улучшение (Лазурит)
@@ -451,7 +451,7 @@ chat.info.mfr.chunkloader.noticket = У Вас слишком много заг�
 # Replace "item." or "tile." with "tip.info" and remove ".name" and that tooltip will be
 # displayed under the item with exceptions, such as the PRC which uses a custom entry for legacy reasons
 
-tip.info.mfr.rubberwood.sapling.massive = Внимание: Pakratt's world ship.
+tip.info.mfr.rubber_wood.sapling.massive = Внимание: Pakratt's world ship.
 
 tip.info.mfr.prc = Если Вы потерялись, прочитайте руководство (в игре)
 
@@ -494,7 +494,7 @@ death.attack.mfr.laser.player = %2$s обеспечил %1$s распад
 
 # Custom names
 item.mfr.plastic.display = Пластиковый
-item.mfr.pinkslime.display = Розовослизневый
+item.mfr.pink_slime.display = Розовослизневый
 
 tool.pickaxe.plastic=Пластиковая кирка
 tool.shovel.plastic=Пластиковая лопата

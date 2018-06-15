@@ -70,7 +70,7 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 		if (mfr)
 		{
 			setCreativeTab(MFRCreativeTab.tab);
-			setUnlocalizedName("mfr.stainedglass.pane"); // FIXME: relocalize to stained_glass.pane
+			setUnlocalizedName("mfr.stained_glass.pane");
 		}
 		else
 			setCreativeTab(CreativeTabs.DECORATIONS);

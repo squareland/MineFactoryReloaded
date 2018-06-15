@@ -5,7 +5,7 @@
 	},
 	"variants": {
 		"variant": {
-			"machine": {
+			"base": {
 				"textures": {
 					"particle": "minefactoryreloaded:blocks/machines/tile.mfr.machine.0.active.side",
 					"down": "minefactoryreloaded:blocks/machines/tile.mfr.machine.0.bottom",

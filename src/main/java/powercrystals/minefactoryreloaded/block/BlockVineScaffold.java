@@ -45,7 +45,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	public BlockVineScaffold() {
 
 		super(Material.LEAVES);
-		setUnlocalizedName("mfr.vinescaffold"); // FIXME: relocalize to vine.scaffold
+		setUnlocalizedName("mfr.vine.scaffold");
 		setSoundType(SoundType.PLANT);
 		setHardness(0.1F);
 		setTickRandomly(true);

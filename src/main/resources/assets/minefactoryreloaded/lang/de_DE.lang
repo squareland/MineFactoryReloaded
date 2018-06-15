@@ -65,39 +65,39 @@ tile.mfr.conveyor.green.name = Grünes Förderband
 tile.mfr.conveyor.red.name = Rotes Förderband
 tile.mfr.conveyor.black.name = Schwarzes Förderband
 
-tile.mfr.stainedglass.block.white.name = Weiß getöntes Glas
-tile.mfr.stainedglass.block.orange.name = Orange getöntes Glas
-tile.mfr.stainedglass.block.magenta.name = Magentafarben getöntes Glas
-tile.mfr.stainedglass.block.lightblue.name = Hellblau getöntes Glas
-tile.mfr.stainedglass.block.yellow.name = Gelb getöntes Glas
-tile.mfr.stainedglass.block.lime.name = Hellgrün getöntes Glas
-tile.mfr.stainedglass.block.pink.name = Pink getöntes Glas
-tile.mfr.stainedglass.block.gray.name = Grau getöntes Glas
-tile.mfr.stainedglass.block.lightgray.name = Hellgrau getöntes Glas
-tile.mfr.stainedglass.block.cyan.name = Türkis getöntes Glas
-tile.mfr.stainedglass.block.purple.name = Violett getöntes Glas
-tile.mfr.stainedglass.block.blue.name = Blau getöntes Glas
-tile.mfr.stainedglass.block.brown.name = Braun getöntes Glas
-tile.mfr.stainedglass.block.green.name = Grün getöntes Glas
-tile.mfr.stainedglass.block.red.name = Rot getöntes Glas
-tile.mfr.stainedglass.block.black.name = Schwarz getöntes Glas
+tile.mfr.stained_glass.block.white.name = Weiß getöntes Glas
+tile.mfr.stained_glass.block.orange.name = Orange getöntes Glas
+tile.mfr.stained_glass.block.magenta.name = Magentafarben getöntes Glas
+tile.mfr.stained_glass.block.lightblue.name = Hellblau getöntes Glas
+tile.mfr.stained_glass.block.yellow.name = Gelb getöntes Glas
+tile.mfr.stained_glass.block.lime.name = Hellgrün getöntes Glas
+tile.mfr.stained_glass.block.pink.name = Pink getöntes Glas
+tile.mfr.stained_glass.block.gray.name = Grau getöntes Glas
+tile.mfr.stained_glass.block.lightgray.name = Hellgrau getöntes Glas
+tile.mfr.stained_glass.block.cyan.name = Türkis getöntes Glas
+tile.mfr.stained_glass.block.purple.name = Violett getöntes Glas
+tile.mfr.stained_glass.block.blue.name = Blau getöntes Glas
+tile.mfr.stained_glass.block.brown.name = Braun getöntes Glas
+tile.mfr.stained_glass.block.green.name = Grün getöntes Glas
+tile.mfr.stained_glass.block.red.name = Rot getöntes Glas
+tile.mfr.stained_glass.block.black.name = Schwarz getöntes Glas
 
-tile.mfr.stainedglass.pane.white.name = Weiß getönte Glasscheibe
-tile.mfr.stainedglass.pane.orange.name = Orange getönte Glasscheibe
-tile.mfr.stainedglass.pane.magenta.name = Magentafarben getönte Glasscheibe
-tile.mfr.stainedglass.pane.lightblue.name = Hellblau getönte Glasscheibe
-tile.mfr.stainedglass.pane.yellow.name = Gelb getönte Glasscheibe
-tile.mfr.stainedglass.pane.lime.name = Hellgrün getönte Glasscheibe
-tile.mfr.stainedglass.pane.pink.name = Pink getönte Glasscheibe
-tile.mfr.stainedglass.pane.gray.name = Grau getönte Glasscheibe
-tile.mfr.stainedglass.pane.lightgray.name = Hellgrau getönte Glasscheibe
-tile.mfr.stainedglass.pane.cyan.name = Türkis getönte Glasscheibe
-tile.mfr.stainedglass.pane.purple.name = Violett getönte Glasscheibe
-tile.mfr.stainedglass.pane.blue.name = Blau getönte Glasscheibe
-tile.mfr.stainedglass.pane.brown.name = Braun getönte Glasscheibe
-tile.mfr.stainedglass.pane.green.name = Grün getönte Glasscheibe
-tile.mfr.stainedglass.pane.red.name = Rot getönte Glasscheibe
-tile.mfr.stainedglass.pane.black.name = Schwarz getönte Glasscheibe
+tile.mfr.stained_glass.pane.white.name = Weiß getönte Glasscheibe
+tile.mfr.stained_glass.pane.orange.name = Orange getönte Glasscheibe
+tile.mfr.stained_glass.pane.magenta.name = Magentafarben getönte Glasscheibe
+tile.mfr.stained_glass.pane.lightblue.name = Hellblau getönte Glasscheibe
+tile.mfr.stained_glass.pane.yellow.name = Gelb getönte Glasscheibe
+tile.mfr.stained_glass.pane.lime.name = Hellgrün getönte Glasscheibe
+tile.mfr.stained_glass.pane.pink.name = Pink getönte Glasscheibe
+tile.mfr.stained_glass.pane.gray.name = Grau getönte Glasscheibe
+tile.mfr.stained_glass.pane.lightgray.name = Hellgrau getönte Glasscheibe
+tile.mfr.stained_glass.pane.cyan.name = Türkis getönte Glasscheibe
+tile.mfr.stained_glass.pane.purple.name = Violett getönte Glasscheibe
+tile.mfr.stained_glass.pane.blue.name = Blau getönte Glasscheibe
+tile.mfr.stained_glass.pane.brown.name = Braun getönte Glasscheibe
+tile.mfr.stained_glass.pane.green.name = Grün getönte Glasscheibe
+tile.mfr.stained_glass.pane.red.name = Rot getönte Glasscheibe
+tile.mfr.stained_glass.pane.black.name = Schwarz getönte Glasscheibe
 
 tile.mfr.road.default.name = Straße
 tile.mfr.road.light.off.name = Straßenlaterne
@@ -113,47 +113,47 @@ tile.mfr.decorative.brick.lapis.name = Lapislazuliziegel
 tile.mfr.decorative.brick.obsidian.name = Obsidianziegel
 tile.mfr.decorative.brick.pavedstone.name = Gepflasterte Steinziegel
 tile.mfr.decorative.brick.snow.name = Schneeziegel
-tile.mfr.decorative.brick.icelarge.name = Großer Eisziegel
-tile.mfr.decorative.brick.glowstonelarge.name = Großer Glühsteinziegel
-tile.mfr.decorative.brick.lapislarge.name = Großer Lapislazuliziegel
-tile.mfr.decorative.brick.obsidianlarge.name = Großer Obsidianziegel
-tile.mfr.decorative.brick.pavedstonelarge.name = Große Gepflasterte Steinziegel
-tile.mfr.decorative.brick.snowlarge.name = Großer Schneeziegel
+tile.mfr.decorative.brick.ice.large.name = Großer Eisziegel
+tile.mfr.decorative.brick.glowstone.large.name = Großer Glühsteinziegel
+tile.mfr.decorative.brick.lapis.large.name = Großer Lapislazuliziegel
+tile.mfr.decorative.brick.obsidian.large.name = Großer Obsidianziegel
+tile.mfr.decorative.brick.pavedstone.large.name = Große Gepflasterte Steinziegel
+tile.mfr.decorative.brick.snow.large.name = Großer Schneeziegel
 tile.mfr.decorative.brick.meatraw.name = Roher Fleischblock
 tile.mfr.decorative.brick.meatcooked.name = Gekochter Fleischblock
-tile.mfr.decorative.brick.bricklarge.name = Große Ziegel
-tile.mfr.decorative.brick.sugarcharcoal.name = Zuckerkohleblock
+tile.mfr.decorative.brick.brick.large.name = Große Ziegel
+tile.mfr.decorative.brick.sugar_charcoal.name = Zuckerkohleblock
 
-tile.mfr.decorative.stone.blacksmooth.name = Glatter schwarzer Stein
-tile.mfr.decorative.stone.blackcobble.name = Schwarzer Pflasterstein
-tile.mfr.decorative.stone.blackbricksmall.name = Kleine schwarze Ziegel
-tile.mfr.decorative.stone.blackbricklarge.name = Große schwarze Ziegel
-tile.mfr.decorative.stone.blackgravel.name = Schwarzer Kies
-tile.mfr.decorative.stone.blackpaved.name = Schwarzer gepflasterter Stein
-tile.mfr.decorative.stone.whitesmooth.name = Glatter weißer Stein
-tile.mfr.decorative.stone.whitecobble.name = Weißer Pflasterstein
-tile.mfr.decorative.stone.whitebricksmall.name = Kleine weiße Ziegel
-tile.mfr.decorative.stone.whitebricklarge.name = Große weiße Ziegel
-tile.mfr.decorative.stone.whitegravel.name = Weißer Kies
-tile.mfr.decorative.stone.whitepaved.name = Weißer gepflasterter Stein
+tile.mfr.decorative.stone.black.smooth.name = Glatter schwarzer Stein
+tile.mfr.decorative.stone.black.cobble.name = Schwarzer Pflasterstein
+tile.mfr.decorative.stone.black.brick.small.name = Kleine schwarze Ziegel
+tile.mfr.decorative.stone.black.brick.large.name = Große schwarze Ziegel
+tile.mfr.decorative.stone.black.gravel.name = Schwarzer Kies
+tile.mfr.decorative.stone.black.paved.name = Schwarzer gepflasterter Stein
+tile.mfr.decorative.stone.white.smooth.name = Glatter weißer Stein
+tile.mfr.decorative.stone.white.cobble.name = Weißer Pflasterstein
+tile.mfr.decorative.stone.white.brick.small.name = Kleine weiße Ziegel
+tile.mfr.decorative.stone.white.brick.large.name = Große weiße Ziegel
+tile.mfr.decorative.stone.white.gravel.name = Weißer Kies
+tile.mfr.decorative.stone.white.paved.name = Weißer gepflasterter Stein
 
-tile.mfr.pinkslime.block.name = Rosa Schleimblock
+tile.mfr.pink_slime.block.name = Rosa Schleimblock
 
 tile.ice.unmelting.name = Nichtschmelzendes Eis
 
-tile.mfr.vinescaffold.name = Lianengerüst
+tile.mfr.vine.scaffold.name = Lianengerüst
 
 tile.mfr.detcord.name = Sprengschnur
 
 tile.mfr.farmland.name = Fruchtbare Erde
 
-tile.mfr.rubberwood.sapling.normal.name = Gummibaumsetzling
-tile.mfr.rubberwood.sapling.sacred.name = Heiliger Gummibaumsetzling
-tile.mfr.rubberwood.sapling.mega.name = Mega-Gummibaumsetzling
-tile.mfr.rubberwood.sapling.massive.name = Heiliger Gummibaumsetzling
-tile.mfr.rubberwood.log.name = Gummibaumholz
-tile.mfr.rubberwood.leaves.normal.name = Gummibaumblätter
-tile.mfr.rubberwood.leaves.dry.name = Trockene Gummibaumblätter
+tile.mfr.rubber_wood.sapling.normal.name = Gummibaumsetzling
+tile.mfr.rubber_wood.sapling.sacred.name = Heiliger Gummibaumsetzling
+tile.mfr.rubber_wood.sapling.mega.name = Mega-Gummibaumsetzling
+tile.mfr.rubber_wood.sapling.massive.name = Heiliger Gummibaumsetzling
+tile.mfr.rubber_wood.log.name = Gummibaumholz
+tile.mfr.rubber_wood.leaves.normal.name = Gummibaumblätter
+tile.mfr.rubber_wood.leaves.dry.name = Trockene Gummibaumblätter
 
 tile.mfr.rail.cargo.dropoff.name = Entladungsgleis
 tile.mfr.rail.cargo.pickup.name = Beladungsgleis
@@ -164,26 +164,26 @@ tile.mfr.cable.redstone.name = RedNet-Kabel
 tile.mfr.cable.redstone.glass.name = RedNet-Kabel
 tile.mfr.cable.redstone.energy.name = RedNet-Energiekabel
 tile.mfr.cable.redstone.energyglass.name = RedNet-Energiekabel
-tile.mfr.cable.plastic.name = Plastikrohr
+tile.mfr.plastic.pipe.name = Plastikrohr
 
 tile.mfr.rednet.logic.name = Programmierbarer RedNet-Controller
 tile.mfr.rednet.panel.historian.name = Graph
 
-tile.mfr.machineblock.machine = item.mfr.machineblock
-tile.mfr.machineblock.prc.name = Gehäuse für den Programmierbaren RedNet-Controller
+tile.mfr.machine_block.machine = item.mfr.machineblock
+tile.mfr.machine_block.prc.name = Gehäuse für den Programmierbaren RedNet-Controller
 
 tile.mfr.tank.name = Plastiktank
 
-fluid.mfr.milk.still.name = Milch
-fluid.mfr.sludge.still.name = Schlacke
-fluid.mfr.sewage.still.name = Gülle
-fluid.mfr.mobessence.still.name = Essenz
-fluid.mfr.biofuel.still.name = Biodiesel
-fluid.mfr.meat.still.name = Fleischmasse
-fluid.mfr.pinkslime.still.name = Rosa Schleim
-fluid.mfr.chocolatemilk.still.name = Kakao
-fluid.mfr.mushroomsoup.still.name = Pilzsuppe
-fluid.mfr.steam.still.name = Dampf
+fluid.mfr.milk.fluid.name = Milch
+fluid.mfr.sludge.fluid.name = Schlacke
+fluid.mfr.sewage.fluid.name = Gülle
+fluid.mfr.mobessence.fluid.name = Essenz
+fluid.mfr.biofuel.fluid.name = Biodiesel
+fluid.mfr.meat.fluid.name = Fleischmasse
+fluid.mfr.pink_slime.fluid.name = Rosa Schleim
+fluid.mfr.chocolatemilk.fluid.name = Kakao
+fluid.mfr.mushroomsoup.fluid.name = Pilzsuppe
+fluid.mfr.steam.fluid.name = Dampf
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Rosa Schleim
 
@@ -193,7 +193,7 @@ item.mfr.bucket.sludge.name = Schlackeeimer
 item.mfr.bucket.essence.name = Eimer mit Monsteressenz
 item.mfr.bucket.biofuel.name = Eimer mit Biodiesel
 item.mfr.bucket.meat.name = Eimer mit Fleischmasse
-item.mfr.bucket.pinkslime.name = Eimer mit rosa Schleim
+item.mfr.bucket.pink_slime.name = Eimer mit rosa Schleim
 item.mfr.bucket.chocolatemilk.name = Eimer mit Kakao
 item.mfr.bucket.mushroomsoup.name = Eimer mit Pilzsuppe
 
@@ -220,7 +220,7 @@ item.mfr.syringe.health.name = Gesundheitsspritze
 item.mfr.syringe.slime.name = Schleimvergrößerungsspritze
 item.mfr.syringe.zombie.name = Zombifizierungsspritze
 
-item.mfr.machineblock.name = Maschinenblock
+item.mfr.machine_block.name = Maschinenblock
 item.mfr.hammer.name = Präzisionsschmiedehammer
 
 item.mfr.plastic = Plastik
@@ -234,18 +234,18 @@ item.mfr.rubber.raw.name = Kautschuk
 item.mfr.record.blank.name = Leere Schallplatte
 
 item.mfr.safarinet.reusable.name = Wiederverwendbares Safarinetz
-item.mfr.safarinet.singleuse.name = Wegwerfsafarinetz
+item.mfr.safarinet.single_use.name = Wegwerfsafarinetz
 item.mfr.safarinet.jailer.name = Gefängnis-Safarinetz
 item.mfr.safarinet.jailer.fancy.name = Goldenes Gefängnis-Safarinetz
 item.mfr.safarinet.launcher.name = Safarinetzwerfer
 
-item.mfr.sugarcharcoal.name = Zuckerkohle
+item.mfr.sugar_charcoal.name = Zuckerkohle
 item.mfr.fertilizer.name = Industriedünger
-item.mfr.milkbottle.name = Milchflasche
+item.mfr.milk_bottle.name = Milchflasche
 item.mfr.spyglass.name = Fernglas
 item.mfr.ruler.name = Lineal
-item.mfr.xpextractor.name = Erfahrungsextrakteur
-item.mfr.portaspawner.name = Portalspawner
+item.mfr.xp_extractor.name = Erfahrungsextrakteur
+item.mfr.porta_spawner.name = Portalspawner
 item.mfr.straw.name = Strohhalm
 
 item.mfr.rednet.meter.name = RedNet-Messgerät
@@ -258,52 +258,52 @@ item.mfr.meat.ingot.cooked.name = Gekochter Fleischbarren
 item.mfr.meat.nugget.raw.name = Roher Fleischnugget
 item.mfr.meat.nugget.cooked.name = Gekochter Fleischnugget
 
-item.mfr.pinkslime = Rosa Schleim
-item.mfr.pinkslime.ability = Schleimig\nRosa
-item.mfr.pinkslime.ball.name = Rosa Schleimball
-item.mfr.pinkslime.gem.name = Rosa Schleimkristall
+item.mfr.pink_slime = Rosa Schleim
+item.mfr.pink_slime.ability = Schleimig\nRosa
+item.mfr.pink_slime.ball.name = Rosa Schleimball
+item.mfr.pink_slime.gem.name = Rosa Schleimkristall
 
 item.mfr.rocket.name = Selbstangetriebene Anti-Material-Rakete (SPAMR)
 item.mfr.rocket.smart.name = Verfolgende Selbstangetriebene Anti-Material-Rakete
-item.mfr.rocketlauncher.name = SPAMR-Raketenwerfer
+item.mfr.rocket_launcher.name = SPAMR-Raketenwerfer
 
-item.mfr.potatolauncher.name = Kartoffelkanone
+item.mfr.potato_launcher.name = Kartoffelkanone
 
-item.mfr.fishingrod.name = Angel
+item.mfr.fishing_rod.name = Angel
 
-item.mfr.ceramicdye.white.name = Weiße Lasur
-item.mfr.ceramicdye.orange.name = Orange Lasur
-item.mfr.ceramicdye.magenta.name = Magentafarbene Lasur
-item.mfr.ceramicdye.lightblue.name = Hellblaue Lasur
-item.mfr.ceramicdye.yellow.name = Gelbe Lasur
-item.mfr.ceramicdye.lime.name = Hellgrüne Lasur
-item.mfr.ceramicdye.pink.name = Pinke Lasur
-item.mfr.ceramicdye.gray.name = Graue Lasur
-item.mfr.ceramicdye.lightgray.name = Hellgraue Lasur
-item.mfr.ceramicdye.cyan.name = Türkise Lasur
-item.mfr.ceramicdye.purple.name = Violette Lasur
-item.mfr.ceramicdye.blue.name = Blaue Lasur
-item.mfr.ceramicdye.brown.name = Braune Lasur
-item.mfr.ceramicdye.green.name = Grüne Lasur
-item.mfr.ceramicdye.red.name = Rote Lasur
-item.mfr.ceramicdye.black.name = Schwarze Lasur
+item.mfr.ceramic.dye.white.name = Weiße Lasur
+item.mfr.ceramic.dye.orange.name = Orange Lasur
+item.mfr.ceramic.dye.magenta.name = Magentafarbene Lasur
+item.mfr.ceramic.dye.lightblue.name = Hellblaue Lasur
+item.mfr.ceramic.dye.yellow.name = Gelbe Lasur
+item.mfr.ceramic.dye.lime.name = Hellgrüne Lasur
+item.mfr.ceramic.dye.pink.name = Pinke Lasur
+item.mfr.ceramic.dye.gray.name = Graue Lasur
+item.mfr.ceramic.dye.lightgray.name = Hellgraue Lasur
+item.mfr.ceramic.dye.cyan.name = Türkise Lasur
+item.mfr.ceramic.dye.purple.name = Violette Lasur
+item.mfr.ceramic.dye.blue.name = Blaue Lasur
+item.mfr.ceramic.dye.brown.name = Braune Lasur
+item.mfr.ceramic.dye.green.name = Grüne Lasur
+item.mfr.ceramic.dye.red.name = Rote Lasur
+item.mfr.ceramic.dye.black.name = Schwarze Lasur
 
-item.mfr.laserfocus.white.name = Weiße Linse
-item.mfr.laserfocus.orange.name = Orange Linse
-item.mfr.laserfocus.magenta.name = Magentafarbene Linse
-item.mfr.laserfocus.lightblue.name = Hellblaue Linse
-item.mfr.laserfocus.yellow.name = Gelbe Linse
-item.mfr.laserfocus.lime.name = Hellgrüne Linse
-item.mfr.laserfocus.pink.name = Pinke Linse
-item.mfr.laserfocus.gray.name = Graue Linse
-item.mfr.laserfocus.lightgray.name = Hellgraue Linse
-item.mfr.laserfocus.cyan.name = Türkise Linse
-item.mfr.laserfocus.purple.name = Violette Linse
-item.mfr.laserfocus.blue.name = Blaue Linse
-item.mfr.laserfocus.brown.name = Braune Linse
-item.mfr.laserfocus.green.name = Grüne Linse
-item.mfr.laserfocus.red.name = Rote Linse
-item.mfr.laserfocus.black.name = Schwarze Linse
+item.mfr.laser.focus.white.name = Weiße Linse
+item.mfr.laser.focus.orange.name = Orange Linse
+item.mfr.laser.focus.magenta.name = Magentafarbene Linse
+item.mfr.laser.focus.lightblue.name = Hellblaue Linse
+item.mfr.laser.focus.yellow.name = Gelbe Linse
+item.mfr.laser.focus.lime.name = Hellgrüne Linse
+item.mfr.laser.focus.pink.name = Pinke Linse
+item.mfr.laser.focus.gray.name = Graue Linse
+item.mfr.laser.focus.lightgray.name = Hellgraue Linse
+item.mfr.laser.focus.cyan.name = Türkise Linse
+item.mfr.laser.focus.purple.name = Violette Linse
+item.mfr.laser.focus.blue.name = Blaue Linse
+item.mfr.laser.focus.brown.name = Braune Linse
+item.mfr.laser.focus.green.name = Grüne Linse
+item.mfr.laser.focus.red.name = Rote Linse
+item.mfr.laser.focus.black.name = Schwarze Linse
 
 item.mfr.upgrade.radius.cobble.name = Pflasterstein-Upgrade
 item.mfr.upgrade.radius.lapis.name = Lapislazuli-Upgrade
@@ -461,7 +461,7 @@ chat.info.mfr.chunkloader.noticket = Du hast zu viele Chunk-Loader, dieser funkt
 
 tip.info.mfr.hammer = Wie eine Zange, nur mehr zertrümmernd
 
-tip.info.mfr.rubberwood.sapling.massive = Warnung: Packratt's Weltenschiff.
+tip.info.mfr.rubber_wood.sapling.massive = Warnung: Packratt's Weltenschiff.
 
 tip.info.mfr.prc = Wenn du nicht mehr weißt, wie es weitergeht, lese die Anleitung.
 

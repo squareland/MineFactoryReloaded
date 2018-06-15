@@ -546,20 +546,18 @@ public abstract class MFRRegistry {
 
 		remaps.put("still", "fluid");
 		remaps.put("laserair", "fake_laser");
+		remaps.put("pinkslime", "pink_slime");
+		remaps.put("singleuse", "single_use");
+		remaps.put("rubberwood", "rubber_wood");
+		remaps.put("ceramicdye", "ceramic_dye");
+		remaps.put("fishingrod", "fishing_rod");
+		remaps.put("milkbottle", "milk_bottle");
+		remaps.put("laserfocus", "laser_focus");
+		remaps.put("xpextractor", "xp_extractor");
 		remaps.put("vinescaffold", "vine_scaffold");
 		remaps.put("machineblock", "machine_block");
 		remaps.put("stainedglass", "stained_glass");
-		remaps.put("pinkslime", "pink_slime");
-		remaps.put("needlegun", "needle_gun");
-		remaps.put("potatolauncher", "potato_launcher");
-		remaps.put("rocketlauncher", "rocket_launcher");
-		remaps.put("ceramicdye", "ceramic_dye");
 		remaps.put("portaspawner", "porta_spawner");
-		remaps.put("fishingrod", "fishing_rod");
-		remaps.put("xpextractor", "xp_extractor");
-		remaps.put("milkbottle", "milk_bottle");
-		remaps.put("laserfocus", "laser_focus");
-		remaps.put("chocolatemilk", "chocolate_milk");
 		remaps.put("sugarcharcoal", "sugar_charcoal");
 		remaps.put("mushroomsoup", "mushroom_soup");
 		remaps.put("singleuse", "single_use");
@@ -577,6 +575,9 @@ public abstract class MFRRegistry {
 		// FIXME: TEMPORARY for dev worlds
 		remaps.put("stained_glass", "stained_glass_block");
 		remaps.put("fertile_soil", "farmland");
+		remaps.put("mobessence", "mob_essence");
+		remaps.put("chocolatemilk", "chocolate_milk");
+		remaps.put("mushroomsoup", "mushroom_soup");
 	}
 
 	private static String remapPhrase(String s) {

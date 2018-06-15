@@ -43,7 +43,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 
 	public ItemPotatoCannon() {
 
-		setUnlocalizedName("mfr.potatolauncher"); // FIXME: relocalize to potato_launcher
+		setUnlocalizedName("mfr.potato_launcher");
 		setMaxStackSize(1);
 	}
 

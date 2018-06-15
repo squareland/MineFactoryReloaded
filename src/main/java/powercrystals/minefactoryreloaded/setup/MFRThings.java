@@ -259,7 +259,7 @@ public class MFRThings {
 		safariNetItem = (new ItemSafariNet(0, true)).setModelLocation("safari_net", "reusable")
 				.setUnlocalizedName("mfr.safarinet.reusable");
 		safariNetSingleItem = (new ItemSafariNet(0)).setModelLocation("safari_net", "single_use")
-				.setUnlocalizedName("mfr.safarinet.singleuse");
+				.setUnlocalizedName("mfr.safarinet.single_use");
 		safariNetJailerItem = (new ItemSafariNet(1)).setModelLocation("safari_net", "jailer")
 				.setUnlocalizedName("mfr.safarinet.jailer");
 		safariNetFancyJailerItem = (new ItemSafariNet(3)).setModelLocation("safari_net", "jailer_fancy")
@@ -289,11 +289,11 @@ public class MFRThings {
 				return 400;
 			}
 		}).setModelLocation("material", "type=sugar_charcoal")
-				.setUnlocalizedName("mfr.sugarcharcoal"); // FIXME: relocalize to sugar_charcoal
+				.setUnlocalizedName("mfr.sugar_charcoal");
 		fertilizerItem = (new ItemFactory()).setModelLocation("material", "type=fertilizer").setUnlocalizedName("mfr.fertilizer");
 
 		ceramicDyeItem = new ItemCeramicDye();
-		(laserFocusItem = new ItemFactoryColored()).setModelLocation("laser_focus", "").setUnlocalizedName("mfr.laserfocus")
+		(laserFocusItem = new ItemFactoryColored()).setModelLocation("laser_focus", "").setUnlocalizedName("mfr.laser.focus")
 				.setMaxStackSize(1);
 
 		blankRecordItem = (new ItemFactory()).setModelLocation("material", "type=blank_record")
