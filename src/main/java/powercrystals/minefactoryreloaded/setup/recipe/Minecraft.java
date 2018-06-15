@@ -139,8 +139,8 @@ public class Minecraft implements IMFRRecipeSet {
 		//region radius upgrades
 		for (int meta : upgradeItem.getMetadataValues()) {
 			String radius = meta >= ItemUpgrade.NEGATIVE_START ? "negative_" + (meta - ItemUpgrade.NEGATIVE_START + 1) : "positive_" + (meta + 1);
-			RecipeManager.addRecipe("upgrade_radius_" + radius, stack(upgradeItem, 1, meta));
-			RecipeManager.addRecipe("expensive_upgrade_radius_" + radius, stack(upgradeItem, 1, meta));
+			RecipeManager.addRecipe("upgrade_radius_" + radius, stack(upgradeItem, 1, meta), () -> !enableExpensiveUpgrades.getBoolean());
+			RecipeManager.addRecipe("expensive_upgrade_radius_" + radius, stack(upgradeItem, 1, meta), enableExpensiveUpgrades::getBoolean);
 		}//endregion
 
 		//region conveyor and laser focus
