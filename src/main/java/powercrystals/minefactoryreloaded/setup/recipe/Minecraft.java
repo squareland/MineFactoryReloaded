@@ -714,11 +714,11 @@ public class Minecraft implements IMFRRecipeSet {
 
 		Grinder.addShaped(
 				"GGG",
-				"BSP",
+				"BPS",
 				" M ",
 				'G', "sheetPlastic",
-				'P', PISTON,
 				'B', BOOK,
+				'P', PISTON,
 				'S', GOLDEN_SWORD,
 				'M', machine_block
 		);
@@ -768,7 +768,7 @@ public class Minecraft implements IMFRRecipeSet {
 				"RBR",
 				"PMP",
 				'G', "sheetPlastic",
-				'R', REPEATER,
+				'R', rednet_multimeter,
 				'B', BUCKET,
 				'P', plastic_pipe,
 				'M', machine_block
@@ -811,7 +811,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'G', "sheetPlastic",
 				'O', OBSIDIAN,
 				'B', BLAZE_ROD,
-				'C', MAGMA_CREAM,
+				'C', MAGMA,
 				'M', machine_block
 		);
 
