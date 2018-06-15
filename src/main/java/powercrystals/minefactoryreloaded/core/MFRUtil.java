@@ -310,11 +310,9 @@ public class MFRUtil {
 		return null;
 	}
 
-	public static <V extends Entity, T extends Class<V>> BiFunction<World, Vec3d, Entity> prepareMob(T entity) {
+	public static <V extends Entity, T extends Class<V>> BiFunction<World, Vec3d, Entity> prepareMob(final T entity) {
 
-		return (world, pos) -> {
-			return spawnMob(entity, world, pos);
-		};
+		return (world, pos) -> spawnMob(entity, world, pos);
 	}
 
 	public static TileEntity getTile(IBlockAccess world, BlockPos pos) {
