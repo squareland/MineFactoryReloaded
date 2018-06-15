@@ -110,7 +110,7 @@ public class Minecraft implements IMFRRecipeSet {
 
 		//region machines
 		List<Machine> stackMachines = Arrays.asList(Machine.ItemCollector, Machine.Sewer, Machine.Ejector, Machine.ItemRouter, Machine.LiquidRouter);
-		int[] stackSizes = {8, 4, 8, 8, 8};
+		int[] stackSizes = { 8, 4, 8, 8, 8 };
 		for (Machine machine : Machine.values())
 			if (machine != Machine.DeepStorageUnit && machine != Machine.ChunkLoader && !stackMachines.contains(machine))
 				RecipeManager.addRecipe(machine.getName(), machine.getItemStack(), machine::getIsRecipeEnabled);
@@ -330,9 +330,9 @@ public class Minecraft implements IMFRRecipeSet {
 			//region glass
 			{
 				for (int i = 0; i < 16; i++) {
-					@Nonnull ItemStack ceramicDye = stack(ceramicDyeItem, 1, i);
-					@Nonnull ItemStack glassStack = stack(factoryGlassBlock, 1, i);
-					@Nonnull ItemStack paneStack = stack(factoryGlassPaneBlock, 1, i);
+					ItemStack ceramicDye = stack(ceramicDyeItem, 1, i);
+					ItemStack glassStack = stack(factoryGlassBlock, 1, i);
+					ItemStack paneStack = stack(factoryGlassPaneBlock, 1, i);
 					String dye = DYES[i];
 					RecipeManager.addRecipe("ceramic_dye_4_" + dye, cloneStack(ceramicDye, 4)).setRecipeGroup("ceramic_dye");
 					RecipeManager.addRecipe("ceramic_dye_8_" + dye, cloneStack(ceramicDye, 8)).setRecipeGroup("ceramic_dye");
@@ -1338,8 +1338,8 @@ public class Minecraft implements IMFRRecipeSet {
 				'X', plastic_block_paver
 		);
 		plastic_block_column.addShaped(
-			LAYER,
-			'X', plastic_block_paver
+				LAYER,
+				'X', plastic_block_paver
 		);
 		plastic_block_bricks_large.addShaped(
 				STORAGE_SMALL,
@@ -1707,14 +1707,12 @@ public class Minecraft implements IMFRRecipeSet {
 				'P', "sheetPlastic"
 		);
 
-
 		plastic_cell.addShaped(
 				" P ",
 				"P P",
 				" P ",
 				'P', "sheetPlastic"
 		);
-
 
 		plastic_bag.addShaped(
 				"SPS",
