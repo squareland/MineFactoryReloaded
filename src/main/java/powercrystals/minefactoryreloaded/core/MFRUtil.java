@@ -23,10 +23,10 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
@@ -111,9 +111,15 @@ public class MFRUtil {
 	}
 
 	@Nonnull
-	public static ItemStack getBucketFor(Fluid fluid){
+	public static ItemStack getBucketFor(String name) {
+
+		return getBucketFor(FluidRegistry.getFluid(name));
+	}
+
+	@Nonnull
+	public static ItemStack getBucketFor(Fluid fluid) {
 		
-		return UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid);
+		return FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
 	}
 
 	public static FluidStack getFluidContents(@Nonnull ItemStack stack) {

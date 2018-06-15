@@ -1,287 +1,324 @@
-/*
+
 package powercrystals.minefactoryreloaded.setup.recipe;
 
-import static cofh.core.util.helpers.ItemHelper.*;
-import static powercrystals.minefactoryreloaded.setup.MFRThings.*;
-
-import cofh.api.modhelpers.ThermalExpansionHelper;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.MissingModsException;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.versioning.ArtifactVersion;
-import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
-
-import java.util.Collections;
-
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet;
+import powercrystals.minefactoryreloaded.core.MFRUtil;
 
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.setup.MFRConfig;
-import powercrystals.minefactoryreloaded.setup.Machine;
+import static net.minecraft.init.Blocks.*;
+import static net.minecraft.init.Items.*;
 
-public class ThermalExpansion extends Vanilla {
+@IMFRRecipeSet.DependsOn("thermalexpansion")
+public class ThermalExpansion implements IMFRRecipeSet {
 
-	private static final String TE = "ThermalExpansion";
-	private static final String TF = "ThermalFoundation";
-	@Nonnull ItemStack conduitLiquid;
-	@Nonnull ItemStack tankBasic;
-	@Nonnull ItemStack tankReinforced;
-	@Nonnull ItemStack lamp;
-	@Nonnull ItemStack machineFrame;
-	@Nonnull ItemStack pneumaticServo;
-	@Nonnull ItemStack powerCoilElectrum;
-	@Nonnull ItemStack powerCoilGold;
-	@Nonnull ItemStack powerCoilSilver;
-	@Nonnull ItemStack tesseractFrameFull;
-	@Nonnull ItemStack strongBox;
-	@Nonnull ItemStack strongBoxBasic;
-	@Nonnull ItemStack sulfur;
-	@Nonnull ItemStack multimeter;
-	@Nonnull ItemStack invarAxe;
-	@Nonnull ItemStack invarSword;
-	@Nonnull ItemStack invarPickaxe;
-	@Nonnull ItemStack invarShovel;
-	@Nonnull ItemStack dynamoSteam;
-	@Nonnull ItemStack tesseract;
-	@Nonnull ItemStack tesseractFrameEmpty;
-	@Nonnull ItemStack cellResonant;
-	@Nonnull ItemStack cellRedstone;
-	@Nonnull ItemStack igniter;
+	//region materials
+
+	//region power
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 512)
+	public static final ItemStack redstoneServo = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 513)
+	public static final ItemStack powerCoilGold = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 514)
+	public static final ItemStack powerCoilSilver = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 515)
+	public static final ItemStack powerCoilElectrum = ItemStack.EMPTY;
+	//endregion
+
+	//region parts
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 657)
+	public static final ItemStack sawblade = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 656)
+	public static final ItemStack drillHead = ItemStack.EMPTY;
+	//endregion
+
+	//region frames
+	@GameRegistry.ItemStackHolder(value = "thermalexpansion:frame", meta = 0)
+	public static final ItemStack machineFrame = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalexpansion:frame", meta = 64)
+	public static final ItemStack deviceFrame = ItemStack.EMPTY;
+	//endregion
+
+	//region components
+	@GameRegistry.ItemStackHolder(value = "thermalexpansion:tank")
+	public static final ItemStack portable_tank = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalexpansion:strongbox")
+	public static final ItemStack strongbox = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalexpansion:cell")
+	public static final ItemStack energy_cell = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder("minecraft:glowstone") // TODO: glowstone illuminators
+	public static final ItemStack lamp = ItemStack.EMPTY;
+	//endregion
+
+	//region tools
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:tool.axe_invar")
+	public static final ItemStack invarAxe = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:tool.pickaxe_invar")
+	public static final ItemStack invarPickaxe = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:tool.shovel_invar")
+	public static final ItemStack invarShovel = ItemStack.EMPTY;
+	@GameRegistry.ItemStackHolder(value = "thermalfoundation:tool.sword_invar")
+	public static final ItemStack invarSword = ItemStack.EMPTY;
+	//endregion
+
+	//region other
+	@GameRegistry.ItemStackHolder("thermalfoundation:tome_lexicon")
+	public static final ItemStack lexicon = ItemStack.EMPTY;
+	//endregion
+
+	//endregion
 
 	@Override
-	protected void gatherItems() {
+	public final void registerRecipes() {
 
-		if (!Loader.isModLoaded(TE)) {
-			MineFactoryReloadedCore.log().fatal("ThermalExpansion is required for ThermalExpansion recipes to be enabled.");
-			throw new MissingModsException(Collections.
-					singleton((ArtifactVersion) new DefaultArtifactVersion(TE)), MineFactoryReloadedCore.modId, MineFactoryReloadedCore.modName);
-		}
-
-		{
-			conduitLiquid = new ItemStack(plasticPipeBlock);
-		}
-
-		*/
-/* Blocks *//*
-
-		tankBasic = GameRegistry.findItemStack(TE, "tankBasic", 1);
-		tankReinforced = GameRegistry.findItemStack(TE, "tankReinforced", 1);
-		lamp = GameRegistry.findItemStack(TE, "illuminator", 1);
-		machineFrame = new ItemStack(GameRegistry.findBlock(TE, "Frame"), 1, 0);
-		strongBox = GameRegistry.findItemStack(TE, "strongboxReinforced", 1);
-		strongBoxBasic = GameRegistry.findItemStack(TE, "strongboxBasic", 1);
-		dynamoSteam = GameRegistry.findItemStack(TE, "dynamoSteam", 1);
-		tesseract = new ItemStack(GameRegistry.findBlock(TE, "Tesseract"), 1, 0);
-		tesseractFrameEmpty = new ItemStack(GameRegistry.findBlock(TE, "Frame"), 1, 7);
-		tesseractFrameFull = new ItemStack(GameRegistry.findBlock(TE, "Frame"), 1, 8);
-		cellResonant = GameRegistry.findItemStack(TE, "cellResonant", 1);
-		cellRedstone = GameRegistry.findItemStack(TE, "cellReinforced", 1);
-
-		*/
-/* Items *//*
-
-		pneumaticServo = GameRegistry.findItemStack(TE, "pneumaticServo", 1);
-		powerCoilElectrum = GameRegistry.findItemStack(TE, "powerCoilElectrum", 1);
-		powerCoilGold = GameRegistry.findItemStack(TE, "powerCoilGold", 1);
-		powerCoilSilver = GameRegistry.findItemStack(TE, "powerCoilSilver", 1);
-		multimeter = GameRegistry.findItemStack(TE, "multimeter", 1);
-		igniter = GameRegistry.findItemStack(TE, "igniter", 1);
-		invarAxe = GameRegistry.findItemStack(TF, "toolInvarAxe", 1);
-		invarSword = GameRegistry.findItemStack(TF, "toolInvarSword", 1);
-		invarPickaxe = GameRegistry.findItemStack(TF, "toolInvarPickaxe", 1);
-		invarShovel = GameRegistry.findItemStack(TF, "toolInvarShovel", 1);
-		sulfur = GameRegistry.findItemStack(TF, "dustSulfur", 1);
+		registerMachines();
+		registerMiscItems();
+		registerRedNet();
 	}
 
-	@Override
-	protected void registerMachines() {
+	//region machines
+	private final IRecipeHolder Planter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Fisher = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Harvester = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Rancher = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Fertilizer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Vet = IRecipeHolder.EMPTY;
+	private final IRecipeHolder ItemCollector = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BlockBreaker = IRecipeHolder.EMPTY;
+	private final IRecipeHolder WeatherCollector = IRecipeHolder.EMPTY;
+	private final IRecipeHolder SludgeBoiler = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Sewer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Composter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Breeder = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Grinder = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoEnchanter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Chronotyper = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Ejector = IRecipeHolder.EMPTY;
+	private final IRecipeHolder ItemRouter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LiquidRouter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LiquiCrafter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LavaFabricator = IRecipeHolder.EMPTY;
+	private final IRecipeHolder SteamBoiler = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoJukebox = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Unifier = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoSpawner = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BioReactor = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BiofuelGenerator = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoDisenchanter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Slaughterhouse = IRecipeHolder.EMPTY;
+	private final IRecipeHolder MeatPacker = IRecipeHolder.EMPTY;
+	private final IRecipeHolder EnchantmentRouter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LaserDrill = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LaserDrillPrecharger = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoAnvil = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BlockSmasher = IRecipeHolder.EMPTY;
+	private final IRecipeHolder RedNote = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoBrewer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder FruitPicker = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BlockPlacer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder MobCounter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder SteamTurbine = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Fountain = IRecipeHolder.EMPTY;
+	private final IRecipeHolder DeepStorageUnit = IRecipeHolder.EMPTY;
+	private final IRecipeHolder cheap_DeepStorageUnit = IRecipeHolder.EMPTY;
+	private final IRecipeHolder ChunkLoader = IRecipeHolder.EMPTY;
+	private final IRecipeHolder cheap_ChunkLoader = IRecipeHolder.EMPTY;
 
-		String prefix = "ingot";
-		if (true) {
-			prefix = "thermalexpansion:machine";
-		}
+	//ingredients
+	private final IRecipeHolder syringe_empty = IRecipeHolder.EMPTY;
+	private final IRecipeHolder pinkslime_gem = IRecipeHolder.EMPTY;
+	private final IRecipeHolder plastic_pipe = IRecipeHolder.EMPTY;
+	private final IRecipeHolder plastic_tank = IRecipeHolder.EMPTY;
+	private final IRecipeHolder hammer = IRecipeHolder.EMPTY;
 
-		registerMachine(Machine.Planter, new Object[] {
+	private void registerMachines() {
+
+		final String prefix = "ingot";
+
+		Planter.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
 				'T', Items.FLOWER_POT,
-				'S', Blocks.PISTON,
+				'S', PISTON,
 				'F', machineFrame,
-				'O', prefix + "Copper",
-				'C', powerCoilGold,
-		});
+				'O', "gearCopper",
+				'C', powerCoilGold
+		);
 
-		registerMachine(Machine.Fisher, new Object[] {
+		Fisher.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Items.FISHING_ROD,
-				'S', Items.BUCKET,
+				'T', FISHING_ROD,
+				'S', BUCKET,
 				'F', machineFrame,
-				'O', prefix + "Iron",
+				'O', "plateIron",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Harvester, new Object[] {
+		Harvester.addShaped(
 				"PSP",
 				"TFT",
 				"OCO",
 				'P', "sheetPlastic",
-				'S', Items.SHEARS,
+				'S', sawblade,
 				'T', invarAxe,
 				'F', machineFrame,
-				'O', prefix + "Gold",
+				'O', "gearConstantan",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Rancher, new Object[] {
+		Rancher.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', conduitLiquid,
-				'S', Items.SHEARS,
+				'T', plastic_pipe,
+				'S', SHEARS,
 				'F', machineFrame,
-				'O', prefix + "Tin",
+				'O', "plateTin",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Fertilizer, new Object[] {
+		Fertilizer.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Items.GLASS_BOTTLE,
-				'S', Items.LEATHER,
+				'T', GLASS_BOTTLE,
+				'S', LEATHER,
 				'F', machineFrame,
-				'O', prefix + "Nickel",
+				'O', "plateNickel",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Vet, new Object[] {
+		Vet.addShaped(
 				"PTP",
 				"TFT",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', syringeEmptyItem,
+				'T', syringe_empty,
 				'F', machineFrame,
-				'O', prefix + "Copper",
+				'O', "plateCopper",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.ItemCollector, 8, new Object[] {
+		ItemCollector.addShaped(
 				"P P",
 				" F ",
 				"PCP",
 				'P', "sheetPlastic",
-				'F', machineFrame,
-				'C', Blocks.CHEST
-		});
+				'F', deviceFrame,
+				'C', CHEST
+		);
 
-		registerMachine(Machine.BlockBreaker, new Object[] {
+		BlockBreaker.addShaped(
 				"PTP",
 				"SFA",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', "gearInvar",
+				'T', drillHead,
 				'S', invarPickaxe,
 				'F', machineFrame,
 				'A', invarShovel,
-				'O', prefix + "Iron",
+				'O', "plateIron",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.WeatherCollector, new Object[] {
+		WeatherCollector.addShaped(
 				"PBP",
 				"TFT",
 				"OCO",
 				'P', "sheetPlastic",
-				'B', Blocks.IRON_BARS,
-				'T', Items.BUCKET,
+				'B', IRON_BARS,
+				'T', BUCKET,
 				'F', machineFrame,
 				'O', prefix + "Copper",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.SludgeBoiler, new Object[] {
+		SludgeBoiler.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Items.BUCKET,
-				'S', Blocks.FURNACE,
+				'T', BUCKET,
+				'S', FURNACE,
 				'F', machineFrame,
 				'O', prefix + "Iron",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Sewer, 4, new Object[] {
+		Sewer.addShaped(
 				"PTP",
 				"SFS",
 				"SQS",
 				'P', "sheetPlastic",
-				'T', Items.BUCKET,
-				'S', Items.BRICK,
-				'F', machineFrame,
-				'Q', pneumaticServo,
-		});
+				'T', BUCKET,
+				'S', BRICK,
+				'F', deviceFrame,
+				'Q', redstoneServo
+		);
 
-		registerMachine(Machine.Composter, new Object[] {
+		Composter.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Blocks.FURNACE,
-				'S', Blocks.PISTON,
+				'T', FURNACE,
+				'S', PISTON,
 				'F', machineFrame,
-				'O', Items.BRICK,
+				'O', BRICK,
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Breeder, new Object[] {
+		Breeder.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Items.GOLDEN_APPLE,
-				'S', Items.GOLDEN_CARROT,
+				'T', GOLDEN_APPLE,
+				'S', GOLDEN_CARROT,
 				'F', machineFrame,
 				'O', "dyePurple",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Grinder, new Object[] {
-				"PTP",
-				"OFO",
+		Grinder.addShaped(
+				"POP",
+				"TFT",
 				"SCS",
 				'P', "sheetPlastic",
+				'O', BOOK,
 				'T', invarSword,
-				'O', Items.BOOK,
 				'F', machineFrame,
-				'S', prefix + "Tin",
+				'S', "gearSteel",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.AutoEnchanter, new Object[] {
+		AutoEnchanter.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Blocks.OBSIDIAN,
-				'S', Items.BOOK,
+				'T', OBSIDIAN,
+				'S', BOOK,
 				'F', machineFrame,
 				'O', "gemDiamond",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Chronotyper, new Object[] {
+		Chronotyper.addShaped(
 				"PTP",
 				"TFT",
 				"OCO",
@@ -290,553 +327,463 @@ public class ThermalExpansion extends Vanilla {
 				'F', machineFrame,
 				'O', "dyePurple",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Ejector, 8, new Object[] {
-				"PPP",
-				" T ",
-				"OFO",
+		Ejector.addShaped(
+				"PFP",
+				"OTO",
 				'P', "sheetPlastic",
-				'T', pneumaticServo,
-				'F', machineFrame,
-				'O', "dustRedstone"
-		});
+				'F', deviceFrame,
+				'O', "dustRedstone",
+				'T', redstoneServo
+		);
 
-		registerMachine(Machine.ItemRouter, 8, new Object[] {
+		ItemRouter.addShaped(
 				"PTP",
 				"SFS",
 				"PSP",
 				'P', "sheetPlastic",
-				'T', Blocks.CHEST,
-				'S', multimeter,
-				'F', machineFrame
-		});
+				'T', CHEST,
+				'S', rednet_multimeter,
+				'F', deviceFrame
+		);
 
-		registerMachine(Machine.LiquidRouter, 8, new Object[] {
+		LiquidRouter.addShaped(
 				"PTP",
 				"SFS",
 				"PSP",
 				'P', "sheetPlastic",
-				'T', conduitLiquid,
-				'S', multimeter,
-				'F', machineFrame
-		});
+				'T', plastic_pipe,
+				'S', rednet_multimeter,
+				'F', deviceFrame
+		);
 
-		int dsuCount = MFRConfig.craftSingleDSU.getBoolean(false) ? 1 : 4;
-		registerMachine(Machine.DeepStorageUnit, dsuCount, new Object[] {
+		DeepStorageUnit.addShaped(
+				"PSP",
+				"FEF",
+				"CSC",
+				'P', "sheetPlastic",
+				'S', SHULKER_SHELL,
+				'F', CHORUS_FRUIT_POPPED,
+				'E', forBucketFluid("ender"), // TODO: placeholder?
+				'C', forLevel(strongbox, 2)
+		);
+
+		cheap_DeepStorageUnit.addShaped(
 				"PCP",
 				"CFC",
 				"PCP",
 				'P', "sheetPlastic",
-				'C', strongBox,
-				'F', tesseractFrameFull
-		});
+				'C', forLevel(strongbox, 0),
+				'F', machineFrame
+		);
 
-		if (MFRConfig.enableCheapDSU.getBoolean(false)) {
-			registerMachine(Machine.DeepStorageUnit, new Object[] {
-					"PCP",
-					"CFC",
-					"PCP",
-					'P', "sheetPlastic",
-					'C', strongBoxBasic,
-					'F', machineFrame
-			});
-		}
-
-		registerMachine(Machine.LiquiCrafter, new Object[] {
+		LiquiCrafter.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Blocks.CRAFTING_TABLE,
-				'S', tankBasic,
-				'F', machineFrame,
-				'O', Items.BOOK,
-				'C', pneumaticServo
-		});
+				'T', CRAFTING_TABLE,
+				'S', forLevel(portable_tank, 0),
+				'F', deviceFrame,
+				'O', BOOK,
+				'C', redstoneServo
+		);
 
-		registerMachine(Machine.LavaFabricator, new Object[] {
+		LavaFabricator.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Blocks.OBSIDIAN,
-				'S', Items.MAGMA_CREAM,
+				'T', OBSIDIAN,
+				'S', MAGMA,
 				'F', machineFrame,
-				'O', Items.BLAZE_ROD,
+				'O', BLAZE_ROD,
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.SteamBoiler, new Object[] {
+		SteamBoiler.addShaped(
 				"PPP",
-				"TBT",
-				"SSS",
+				"PBP",
+				"STS",
 				'P', "sheetPlastic",
-				'T', tankReinforced,
-				'B', Machine.SludgeBoiler.getItemStack(),
-				'S', Blocks.NETHER_BRICK_STAIRS
-		});
+				'T', forLevel(portable_tank, 1),
+				'B', SludgeBoiler,
+				'S', NETHER_BRICK_STAIRS
+		);
 
-		registerMachine(Machine.AutoJukebox, new Object[] {
+		AutoJukebox.addShaped(
 				"PJP",
 				"PFP",
 				'P', "sheetPlastic",
-				'J', Blocks.JUKEBOX,
-				'F', machineFrame
-		});
+				'J', JUKEBOX,
+				'F', deviceFrame
+		);
 
-		registerMachine(Machine.Unifier, new Object[] {
+		Unifier.addShaped(
 				"PTP",
 				"OFO",
 				"SCS",
 				'P', "sheetPlastic",
-				'T', multimeter,
-				'O', Items.COMPARATOR,
-				'F', machineFrame,
-				'S', prefix + "Silver",
-				'C', Items.BOOK
-		});
+				'T', lexicon,
+				'O', OBSERVER,
+				'F', deviceFrame,
+				'S', "ingotSilver",
+				'C', BOOK
+		);
 
-		registerMachine(Machine.AutoSpawner, new Object[] {
+		AutoSpawner.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
 				'T', Items.NETHER_WART,
-				'S', Items.MAGMA_CREAM,
+				'S', MAGMA_CREAM,
 				'F', machineFrame,
 				'O', "gemEmerald",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.BioReactor, new Object[] {
+		BioReactor.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Items.FERMENTED_SPIDER_EYE,
+				'T', FERMENTED_SPIDER_EYE,
 				'S', "slimeball",
-				'F', machineFrame,
-				'O', Items.BRICK,
-				'C', Items.SUGAR
-		});
+				'F', deviceFrame,
+				'O', BRICK,
+				'C', SUGAR
+		);
 
-		registerMachine(Machine.BioFuelGenerator, new Object[] {
+		BiofuelGenerator.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Blocks.FURNACE,
-				'S', Blocks.PISTON,
+				'T', FURNACE,
+				'S', PISTON,
 				'F', machineFrame,
-				'O', Items.BLAZE_ROD,
+				'O', BLAZE_ROD,
 				'C', powerCoilSilver
-		});
+		);
 
-		registerMachine(Machine.AutoDisenchanter, new Object[] {
+		AutoDisenchanter.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', Blocks.NETHER_BRICK,
-				'S', Items.BOOK,
+				'T', NETHER_BRICK,
+				'S', BOOK,
 				'F', machineFrame,
 				'O', "gemDiamond",
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.Slaughterhouse, new Object[] {
+		Slaughterhouse.addShaped(
 				"GIG",
 				"SFS",
 				"XCX",
 				'G', "sheetPlastic",
-				'S', invarSword,
-				'X', invarAxe,
-				'I', "gearInvar",
+				'I', "gearSteel",
+				'S', invarAxe,
 				'F', machineFrame,
+				'X', sawblade,
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.MeatPacker, new Object[] {
+		MeatPacker.addShaped(
 				"GSG",
 				"BFB",
 				"BCB",
 				'G', "sheetPlastic",
-				'B', Blocks.BRICK_BLOCK,
-				'S', igniter,
+				'S', FLINT_AND_STEEL,
+				'B', BRICK_BLOCK,
 				'F', machineFrame,
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.EnchantmentRouter, new Object[] {
-				"PBP",
-				"SFS",
-				"PSP",
+		EnchantmentRouter.addShaped(
+				"PPP",
+				"BFB",
+				"POP",
 				'P', "sheetPlastic",
-				'B', Items.BOOK,
-				'S', Items.REPEATER,
-				'F', machineFrame
-		});
+				'B', BOOK,
+				'F', deviceFrame,
+				'O', OBSERVER
+		);
 
-		registerMachine(Machine.LaserDrill, new Object[] {
+		LaserDrill.addShaped(
 				"GFG",
-				"CFC",
-				"DHD",
+				"DFD",
+				"CHC",
 				'G', "sheetPlastic",
+				'F', lamp,
 				'D', "gemDiamond",
 				'H', "blockGlassHardened",
-				'F', lamp,
-				'C', powerCoilGold
-		});
+				'C', "platePlatinum"
+		);
 
-		registerMachine(Machine.LaserDrillPrecharger, new Object[] {
-				"GSG",
-				"HFH",
-				"CDC",
+		LaserDrillPrecharger.addShaped(
+				"GCG",
+				"SFD",
+				"HCH",
 				'G', "sheetPlastic",
-				'D', "gemDiamond",
-				'S', new ItemStack(pinkSlimeItem, 1, 1),
-				'H', "blockGlassHardened",
+				'C', powerCoilElectrum,
+				'S', pinkslime_gem,
 				'F', lamp,
-				'C', powerCoilElectrum
-		});
+				'D', "gemDiamond",
+				'H', "blockGlassHardened"
+		);
 
-		registerMachine(Machine.AutoAnvil, new Object[] {
+		AutoAnvil.addShaped(
 				"GGG",
 				"AFA",
 				"OCO",
 				'G', "sheetPlastic",
-				'A', Blocks.ANVIL,
+				'A', ANVIL,
 				'F', machineFrame,
-				'C', powerCoilGold,
-				'O', prefix + "Iron"
-		});
+				'O', "gearSteel",
+				'C', powerCoilGold
+		);
 
-		registerMachine(Machine.BlockSmasher, new Object[] {
+		BlockSmasher.addShaped(
 				"GPG",
 				"HFH",
 				"BCB",
 				'G', "sheetPlastic",
-				'P', Blocks.PISTON,
-				'H', factoryHammerItem,
-				'B', Items.BOOK,
+				'P', PISTON,
+				'H', hammer,
 				'F', machineFrame,
+				'B', BOOK,
 				'C', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.RedNote, new Object[] {
+		RedNote.addShaped(
 				"GNG",
 				"CFC",
 				'G', "sheetPlastic",
+				'N', NOTEBLOCK,
 				'C', "cableRedNet",
-				'N', Blocks.NOTEBLOCK,
-				'F', machineFrame
-		});
+				'F', deviceFrame
+		);
 
-		registerMachine(Machine.AutoBrewer, new Object[] {
+		AutoBrewer.addShaped(
 				"GBG",
 				"CFC",
 				"RPR",
 				'G', "sheetPlastic",
-				'C', conduitLiquid,
 				'B', Items.BREWING_STAND,
-				'R', Items.REPEATER,
+				'C', plastic_pipe,
 				'F', machineFrame,
+				'R', REPEATER,
 				'P', powerCoilGold
-		});
+		);
 
-		registerMachine(Machine.FruitPicker, new Object[] {
+		FruitPicker.addShaped(
 				"GXG",
 				"SFS",
 				"OCO",
 				'G', "sheetPlastic",
 				'X', invarAxe,
-				'S', Items.SHEARS,
+				'S', SHEARS,
 				'F', machineFrame,
-				'C', powerCoilGold,
-				'O', prefix + "Tin"
-		});
+				'O', "plateTin",
+				'C', powerCoilGold
+		);
 
-		registerMachine(Machine.BlockPlacer, new Object[] {
+		BlockPlacer.addShaped(
 				"GDG",
 				"DMD",
 				"GSG",
 				'G', "sheetPlastic",
-				'D', Blocks.DISPENSER,
-				'S', powerCoilGold,
+				'D', DISPENSER,
 				'M', machineFrame,
-		});
+				'S', powerCoilGold
+		);
 
-		registerMachine(Machine.MobCounter, new Object[] {
+		MobCounter.addShaped(
 				"GGG",
-				"RCR",
-				"SMS",
+				"RMR",
+				"SCS",
 				'G', "sheetPlastic",
-				'R', Items.REPEATER,
-				'C', Items.COMPARATOR,
-				'S', multimeter,
-				'M', machineFrame,
-		});
+				'R', spyglass,
+				'M', deviceFrame,
+				'S', COMPARATOR,
+				'C', OBSERVER
+		);
 
-		registerMachine(Machine.SteamTurbine, new Object[] {
+		SteamTurbine.addShaped(
 				"PTP",
 				"SFS",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', dynamoSteam,
-				'S', Blocks.PISTON,
+				'T', PISTON,
+				'S', "gearSteel",
 				'F', machineFrame,
-				'O', prefix + "Silver",
+				'O', "plateInvar",
 				'C', powerCoilSilver
-		});
+		);
 
-		registerMachine(Machine.ChunkLoader, new Object[] {
+		ChunkLoader.addShaped(
 				"PEP",
 				"TFT",
 				"OCO",
 				'P', "sheetPlastic",
-				'T', tesseract,
-				'E', cellResonant,
-				'F', tesseractFrameEmpty,
-				'O', prefix + "Electrum",
+				'E', forLevel(energy_cell, 5),
+				'T', "ingotEnderium",
+				'F', "blockEnderium", // TODO: placeholder
+				'O', "plateElectrum",
 				'C', powerCoilElectrum
-		});
-		if (MFRConfig.enableCheapCL.getBoolean(false)) {
-			registerMachine(Machine.ChunkLoader, new Object[] {
-					"PEP",
-					"TFT",
-					"OCO",
-					'P', "sheetPlastic",
-					'T', tesseractFrameEmpty,
-					'E', cellRedstone,
-					'F', machineFrame,
-					'O', prefix + "Electrum",
-					'C', powerCoilElectrum
-			});
-		}
+		);
 
-		registerMachine(Machine.Fountain, new Object[] {
+		cheap_ChunkLoader.addShaped(
+				"PEP",
+				"TFT",
+				"OCO",
+				'P', "sheetPlastic",
+				'E', forLevel(energy_cell, 0),
+				'T', "ingotEnderium",
+				'F', machineFrame,
+				'O', "plateElectrum",
+				'C', powerCoilElectrum
+		);
+
+		Fountain.addShaped(
 				"PBP",
 				"TFT",
 				"OCO",
 				'P', "sheetPlastic",
-				'B', Blocks.IRON_BARS,
-				'T', tankBasic,
+				'B', IRON_BARS,
+				'T', plastic_tank,
 				'F', machineFrame,
-				'O', prefix + "Nickel",
+				'O', "plateNickel",
 				'C', powerCoilGold
-		});
-
-		registerMachine(Machine.MobRouter, new Object[] {
-				"PPP",
-				"BRB",
-				"OCO",
-				'P', "sheetPlastic",
-				'B', Blocks.IRON_BARS,
-				'R', Machine.ItemRouter.getItemStack(),
-				'O', "dyeOrange",
-				'C', Machine.Chronotyper.getItemStack(),
-		});
-
-		RecipeHelper.addShapedRecipe(stack(plasticTank, 1), new Object[] {
-				"PPP",
-				"P P",
-				"PMP",
-				'P', "sheetPlastic",
-				'M', machineBaseItem,
-		}));
+		);
 	}
+	//endregion
 
-	@Override
-	protected void registerSmelting() {
+	//region misc
+	private final IRecipeHolder fertilizer_item = IRecipeHolder.EMPTY;
+	private final IRecipeHolder porta_spawner = IRecipeHolder.EMPTY;
+	private final IRecipeHolder spyglass = IRecipeHolder.EMPTY;
 
-		super.registerSmelting();
-		ThermalExpansionHelper.addSmelterRecipe(2000, stack(rawRubberItem, 2), sulfur,
-			stack(rubberBarItem, 4), stack(rubberBarItem, 1), 45);
-	}
+	private void registerMiscItems() {
 
-	@Override
-	protected void registerMiscItems() {
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(fertilizerItem, 24), new Object[] {
+		fertilizer_item.addShaped(
 				"WBW",
 				"STS",
 				"WBW",
 				'W', Items.WHEAT,
-				'B', new ItemStack(Items.DYE, 1, 15),
+				'B', new ItemStack(DYE, 1, 15),
 				'S', "dustSulfur",
-				'T', "stickWood",
-		}));
+				'T', "stickWood"
+		);
 
-		RecipeHelper.addShapedOreRecipe(new ItemStack(spyglassItem), new Object[] {
+		spyglass.addShaped(
 				"GLG",
 				"PLP",
 				" S ",
 				'G', "ingotBronze",
 				'L', "blockGlass",
 				'P', "sheetPlastic",
-				'S', "stickWood",
-		}));
+				'S', "stickWood"
+		);
 
-		if (MFRConfig.enablePortaSpawner.getBoolean(true))
-			RecipeHelper.addShapedOreRecipe(new ItemStack(portaSpawnerItem), new Object[] {
-					"GLG",
-					"DND",
-					"GLG",
-					'G', "ingotInvar",
-					'L', "blockGlass",
-					'D', "ingotEnderium",
-					'N', Items.NETHER_STAR
-			}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(detCordBlock, 12), new Object[] {
-				"PPP",
-				"PTP",
-				"PPP",
-				'P', "itemRubber",
-				'T', Blocks.TNT,
-		}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(fishingRodItem, 1), new Object[] {
-				"DD ",
-				"DFD",
-				"TDD",
-				'D', "wireExplosive",
-				'F', Items.FISHING_ROD,
-				'T', Blocks.REDSTONE_TORCH
-		}));
+		porta_spawner.addShaped(
+				"GLG",
+				"DND",
+				"GLG",
+				'G', "ingotInvar",
+				'L', "blockGlass",
+				'D', "ingotEnderium",
+				'N', NETHER_STAR
+		);
 	}
+	//endregion
 
-	@Override
-	protected void registerRedNet() {
+	//region rednet
+	private final IRecipeHolder rednet_cable_energy_single = IRecipeHolder.EMPTY;
+	private final IRecipeHolder rednet_cable_energy_multi = IRecipeHolder.EMPTY;
+	private final IRecipeHolder rednet_multimeter = IRecipeHolder.EMPTY;
 
-		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetCableBlock, 8), new Object[] {
-				"PPP",
-				"RRR",
-				"PPP",
-				'R', "dustRedstone",
-				'P', "sheetPlastic",
-		}));
+	//ingredients
+	private final IRecipeHolder rednet_cable = IRecipeHolder.EMPTY;
+	private final IRecipeHolder rednet_meter = IRecipeHolder.EMPTY;
 
-		{
-			@Nonnull ItemStack pipe = stack(plasticPipeBlock);
-			RecipeHelper.addShapelessRecipe(stack(rednetCableBlock, 5), pipe, pipe, pipe, pipe, pipe, "dustRedstone", "dustRedstone"));
-		}
+	private void registerRedNet() {
 
-		RecipeHelper.addShapelessOreRecipe(new ItemStack(rednetCableBlock, 1, 2), new Object[] {
-				"nuggetElectrum",
-				"nuggetElectrum",
-				"nuggetElectrum",
-				"dustRedstone",
-				"dustRedstone",
-				new ItemStack(rednetCableBlock),
-		}));
+		rednet_cable_energy_single.addShapeless(
+				rednet_cable, "dustRedstone", "dustRedstone",
+				"nuggetElectrum", "nuggetElectrum", "nuggetElectrum"
+		);
 
-		RecipeHelper.addShapelessOreRecipe(new ItemStack(rednetCableBlock, 6, 2), new Object[] {
-				"ingotElectrum",
-				"ingotElectrum",
-				Blocks.REDSTONE_BLOCK,
-				new ItemStack(rednetCableBlock),
-				new ItemStack(rednetCableBlock),
-				new ItemStack(rednetCableBlock),
-				new ItemStack(rednetCableBlock),
-				new ItemStack(rednetCableBlock),
-				new ItemStack(rednetCableBlock),
-		}));
+		rednet_cable_energy_multi.addShapeless(
+				REDSTONE_BLOCK,
+				"ingotElectrum", "ingotElectrum",
+				rednet_cable, rednet_cable, rednet_cable,
+				rednet_cable, rednet_cable, rednet_cable
+		);
 
-		RecipeHelper.addShapedOreRecipe(new ItemStack(machineBlock, 1, 1), new Object[] {
-				"PRP",
-				"RGR",
-				"PIP",
-				'R', "dustRedstone",
-				'P', "sheetPlastic",
-				'G', "blockGlass",
-				'I', "ingotIron",
-		}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetLogicBlock), new Object[] {
-				"RDR",
-				"LGL",
-				"PHP",
-				'H', new ItemStack(machineBlock, 1, 1),
-				'P', "sheetPlastic",
-				'G', "ingotGold",
-				'L', "gemLapis",
-				'D', "gemDiamond",
-				'R', "dustRedstone",
-		}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(logicCardItem, 1, 0), new Object[] {
-				"RPR",
-				"PGP",
-				"RPR",
-				'P', "sheetPlastic",
-				'G', "ingotGold",
-				'R', "dustRedstone",
-		}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(logicCardItem, 1, 1), new Object[] {
-				"GPG",
-				"PCP",
-				"RGR",
-				'C', new ItemStack(logicCardItem, 1, 0),
-				'P', "sheetPlastic",
-				'G', "ingotGold",
-				'R', "dustRedstone",
-		}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(logicCardItem, 1, 2), new Object[] {
-				"DPD",
-				"RCR",
-				"GDG",
-				'C', new ItemStack(logicCardItem, 1, 1),
-				'P', "sheetPlastic",
-				'G', "ingotGold",
-				'D', "gemDiamond",
-				'R', "dustRedstone",
-		}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetMeterItem, 1, 0), new Object[] {
-				" G",
-				"PR",
-				"PP",
-				'P', "sheetPlastic",
-				'G', "nuggetElectrum",
-				'R', "dustRedstone",
-		}));
-
-		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetMeterItem, 1, 1), new Object[] {
+		rednet_multimeter.addShaped(
 				"RGR",
 				"IMI",
 				"PPP",
-				'P', "sheetPlastic",
+				'R', "dustRedstone",
 				'G', powerCoilElectrum,
 				'I', "ingotCopper",
-				'R', "dustRedstone",
-				'M', new ItemStack(rednetMeterItem, 1, 0)
-		}));
+				'M', rednet_meter,
+				'P', "sheetPlastic"
+		);
+	}
+	//endregion
 
-		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetMemoryCardItem, 1, 0), new Object[] {
-				"GGG",
-				"PRP",
-				"PPP",
-				'P', "sheetPlastic",
-				'G', "nuggetGold",
-				'R', "dustRedstone",
-		}));
+	public static Ingredient forLevel(ItemStack stack, final int level) {
 
-		RecipeHelper.addShapedOreRecipe(new ItemStack(rednetPanelBlock, 1, 0), new Object[] {
-				"PCP",
-				"PBP",
-				"KPK",
-				'P', "sheetPlastic",
-				'C', rednetCableBlock,
-				'B', Blocks.BOOKSHELF,
-				'K', new ItemStack(Items.DYE, 1, 0)
-		}));
+		stack = stack.copy();
+		stack.setTagInfo("Level", new NBTTagInt(level));
+		return new Ingredient(stack) {
 
-		GameRegistry.addShapelessRecipe(new ItemStack(rednetMemoryCardItem, 1, 0), new ItemStack(rednetMemoryCardItem, 1, 0));
+			@Override
+			public boolean apply(ItemStack stack) {
+
+				if (super.apply(stack)) {
+					NBTTagCompound tag = stack.getTagCompound();
+					if (tag == null || !tag.hasKey("Level", Constants.NBT.TAG_ANY_NUMERIC))
+						return level == 0;
+					return level == tag.getInteger("Level");
+				}
+				return false;
+			}
+
+			@Override
+			public boolean isSimple() {
+
+				return false;
+			}
+		};
+	}
+
+	private static Ingredient forBucketFluid(final String fluidName) {
+
+		return new Ingredient(MFRUtil.getBucketFor(fluidName)) {
+			@Override
+			public boolean apply(ItemStack stack) {
+
+				if (super.apply(stack)) {
+					FluidStack fluid = FluidUtil.getFluidContained(stack);
+					return fluid != null && fluidName.equals(fluid.getFluid().getName());
+				}
+				return false;
+			}
+
+			@Override
+			public boolean isSimple() {
+
+				return false;
+			}
+		};
 	}
 
 }
-*/
+
