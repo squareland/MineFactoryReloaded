@@ -530,58 +530,58 @@ public class Minecraft implements IMFRRecipeSet {
 	}
 
 	//region machines
-	private final IRecipeHolder planter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder fisher = IRecipeHolder.EMPTY;
-	private final IRecipeHolder harvester = IRecipeHolder.EMPTY;
-	private final IRecipeHolder rancher = IRecipeHolder.EMPTY;
-	private final IRecipeHolder fertilizer = IRecipeHolder.EMPTY;
-	private final IRecipeHolder vet = IRecipeHolder.EMPTY;
-	private final IRecipeHolder itemcollector = IRecipeHolder.EMPTY;
-	private final IRecipeHolder blockbreaker = IRecipeHolder.EMPTY;
-	private final IRecipeHolder weathercollector = IRecipeHolder.EMPTY;
-	private final IRecipeHolder sludgeboiler = IRecipeHolder.EMPTY;
-	private final IRecipeHolder sewer = IRecipeHolder.EMPTY;
-	private final IRecipeHolder composter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder breeder = IRecipeHolder.EMPTY;
-	private final IRecipeHolder grinder = IRecipeHolder.EMPTY;
-	private final IRecipeHolder autoenchanter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder chronotyper = IRecipeHolder.EMPTY;
-	private final IRecipeHolder ejector = IRecipeHolder.EMPTY;
-	private final IRecipeHolder itemrouter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder liquidrouter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder liquicrafter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder lavafabricator = IRecipeHolder.EMPTY;
-	private final IRecipeHolder steamboiler = IRecipeHolder.EMPTY;
-	private final IRecipeHolder autojukebox = IRecipeHolder.EMPTY;
-	private final IRecipeHolder unifier = IRecipeHolder.EMPTY;
-	private final IRecipeHolder autospawner = IRecipeHolder.EMPTY;
-	private final IRecipeHolder bioreactor = IRecipeHolder.EMPTY;
-	private final IRecipeHolder biofuelgenerator = IRecipeHolder.EMPTY;
-	private final IRecipeHolder autodisenchanter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder slaughterhouse = IRecipeHolder.EMPTY;
-	private final IRecipeHolder meatpacker = IRecipeHolder.EMPTY;
-	private final IRecipeHolder enchantmentrouter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder laserdrill = IRecipeHolder.EMPTY;
-	private final IRecipeHolder laserdrillprecharger = IRecipeHolder.EMPTY;
-	private final IRecipeHolder autoanvil = IRecipeHolder.EMPTY;
-	private final IRecipeHolder blocksmasher = IRecipeHolder.EMPTY;
-	private final IRecipeHolder rednote = IRecipeHolder.EMPTY;
-	private final IRecipeHolder autobrewer = IRecipeHolder.EMPTY;
-	private final IRecipeHolder fruitpicker = IRecipeHolder.EMPTY;
-	private final IRecipeHolder blockplacer = IRecipeHolder.EMPTY;
-	private final IRecipeHolder mobcounter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder steamturbine = IRecipeHolder.EMPTY;
-	private final IRecipeHolder fountain = IRecipeHolder.EMPTY;
-	private final IRecipeHolder mobrouter = IRecipeHolder.EMPTY;
-	private final IRecipeHolder deepstorageunit = IRecipeHolder.EMPTY;
-	private final IRecipeHolder cheap_deepstorageunit = IRecipeHolder.EMPTY;
-	private final IRecipeHolder chunkloader = IRecipeHolder.EMPTY;
-	private final IRecipeHolder cheap_chunkloader = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Planter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Fisher = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Harvester = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Rancher = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Fertilizer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Vet = IRecipeHolder.EMPTY;
+	private final IRecipeHolder ItemCollector = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BlockBreaker = IRecipeHolder.EMPTY;
+	private final IRecipeHolder WeatherCollector = IRecipeHolder.EMPTY;
+	private final IRecipeHolder SludgeBoiler = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Sewer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Composter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Breeder = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Grinder = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoEnchanter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Chronotyper = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Ejector = IRecipeHolder.EMPTY;
+	private final IRecipeHolder ItemRouter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LiquidRouter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LiquiCrafter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LavaFabricator = IRecipeHolder.EMPTY;
+	private final IRecipeHolder SteamBoiler = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoJukebox = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Unifier = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoSpawner = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BioReactor = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BiofuelGenerator = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoDisenchanter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Slaughterhouse = IRecipeHolder.EMPTY;
+	private final IRecipeHolder MeatPacker = IRecipeHolder.EMPTY;
+	private final IRecipeHolder EnchantmentRouter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LaserDrill = IRecipeHolder.EMPTY;
+	private final IRecipeHolder LaserDrillPrecharger = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoAnvil = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BlockSmasher = IRecipeHolder.EMPTY;
+	private final IRecipeHolder RedNote = IRecipeHolder.EMPTY;
+	private final IRecipeHolder AutoBrewer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder FruitPicker = IRecipeHolder.EMPTY;
+	private final IRecipeHolder BlockPlacer = IRecipeHolder.EMPTY;
+	private final IRecipeHolder MobCounter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder SteamTurbine = IRecipeHolder.EMPTY;
+	private final IRecipeHolder Fountain = IRecipeHolder.EMPTY;
+	private final IRecipeHolder MobRouter = IRecipeHolder.EMPTY;
+	private final IRecipeHolder DeepStorageUnit = IRecipeHolder.EMPTY;
+	private final IRecipeHolder cheap_DeepStorageUnit = IRecipeHolder.EMPTY;
+	private final IRecipeHolder ChunkLoader = IRecipeHolder.EMPTY;
+	private final IRecipeHolder cheap_ChunkLoader = IRecipeHolder.EMPTY;
 	private final IRecipeHolder plastic_tank = IRecipeHolder.EMPTY;
 
 	private void registerMachines() {
 
-		planter.addShaped(
+		Planter.addShaped(
 				"GGG",
 				"CPC",
 				" M ",
@@ -591,7 +591,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		fisher.addShaped(
+		Fisher.addShaped(
 				"GGG",
 				"RRR",
 				"BMB",
@@ -601,7 +601,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		harvester.addShaped(
+		Harvester.addShaped(
 				"GGG",
 				"XSX",
 				" M ",
@@ -611,7 +611,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		rancher.addShaped(
+		Rancher.addShaped(
 				"GGG",
 				"SBS",
 				"PMP",
@@ -622,47 +622,47 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		fertilizer.addShaped(
+		Fertilizer.addShaped(
 				"GGG",
 				"LBL",
 				" M ",
 				'G', "sheetPlastic",
-				'L',LEATHER,
-				'B',GLASS_BOTTLE,
+				'L', LEATHER,
+				'B', GLASS_BOTTLE,
 				'M', machine_block
 		);
 
-		vet.addShaped(
+		Vet.addShaped(
 				"GGG",
 				"SSS",
 				"EME",
 				'G', "sheetPlastic",
-				'E',SPIDER_EYE,
+				'E', SPIDER_EYE,
 				'S', syringe_empty,
 				'M', machine_block
 		);
 
-		itemcollector.addShaped(
+		ItemCollector.addShaped(
 				"GGG",
 				" C ",
 				" M ",
 				'G', "sheetPlastic",
-				'C',CHEST,
+				'C', CHEST,
 				'M', machine_block
 		);
 
-		blockbreaker.addShaped(
+		BlockBreaker.addShaped(
 				"GGG",
 				"PHS",
 				" M ",
 				'G', "sheetPlastic",
-				'P',GOLDEN_PICKAXE,
+				'P', GOLDEN_PICKAXE,
 				'H', hammer,
 				'S', GOLDEN_SHOVEL,
 				'M', machine_block
 		);
 
-		weathercollector.addShaped(
+		WeatherCollector.addShaped(
 				"GGG",
 				"BBB",
 				"UMU",
@@ -672,7 +672,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		sludgeboiler.addShaped(
+		SludgeBoiler.addShaped(
 				"GGG",
 				"FFF",
 				" M ",
@@ -681,7 +681,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		sewer.addShaped(
+		Sewer.addShaped(
 				"GGG",
 				"BUB",
 				"BMB",
@@ -691,7 +691,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		composter.addShaped(
+		Composter.addShaped(
 				"GGG",
 				"PFP",
 				" M ",
@@ -701,7 +701,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		breeder.addShaped(
+		Breeder.addShaped(
 				"GGG",
 				"CAC",
 				"PMP",
@@ -712,7 +712,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		grinder.addShaped(
+		Grinder.addShaped(
 				"GGG",
 				"BSP",
 				" M ",
@@ -723,7 +723,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		autoenchanter.addShaped(
+		AutoEnchanter.addShaped(
 				"GGG",
 				"BBB",
 				"DMD",
@@ -733,7 +733,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		chronotyper.addShaped(
+		Chronotyper.addShaped(
 				"GGG",
 				"EEE",
 				"PMP",
@@ -743,7 +743,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		ejector.addShaped(
+		Ejector.addShaped(
 				"GGG",
 				" D ",
 				"RMR",
@@ -753,7 +753,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		itemrouter.addShaped(
+		ItemRouter.addShaped(
 				"GGG",
 				"RCR",
 				" M ",
@@ -763,7 +763,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		liquidrouter.addShaped(
+		LiquidRouter.addShaped(
 				"GGG",
 				"RBR",
 				"PMP",
@@ -774,16 +774,17 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		deepstorageunit.addShaped(
+		DeepStorageUnit.addShaped(
 				"GGG",
-				"PPP",
+				"SPS",
 				"EME",
 				'G', "sheetPlastic",
-				'P', ENDER_PEARL,
+				'S', SHULKER_SHELL,
+				'P', CHORUS_FRUIT_POPPED,
 				'E', ENDER_EYE,
 				'M', machine_block
 		);
-		cheap_deepstorageunit.addShaped(
+		cheap_DeepStorageUnit.addShaped(
 				"GGG",
 				"CCC",
 				"CMC",
@@ -792,7 +793,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		liquicrafter.addShaped(
+		LiquiCrafter.addShaped(
 				"GGG",
 				"BWB",
 				"FMF",
@@ -803,7 +804,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		lavafabricator.addShaped(
+		LavaFabricator.addShaped(
 				"GGG",
 				"OBO",
 				"CMC",
@@ -814,7 +815,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		steamboiler.addShaped(
+		SteamBoiler.addShaped(
 				"GGG",
 				"OTO",
 				"NBN",
@@ -822,10 +823,10 @@ public class Minecraft implements IMFRRecipeSet {
 				'T', Items.CAULDRON,
 				'O', OBSIDIAN,
 				'N', NETHER_BRICK_STAIRS,
-				'B', sludgeboiler
+				'B', SludgeBoiler
 		);
 
-		autojukebox.addShaped(
+		AutoJukebox.addShaped(
 				"GGG",
 				" J ",
 				" M ",
@@ -834,7 +835,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		unifier.addShaped(
+		Unifier.addShaped(
 				"GGG",
 				"CBC",
 				" M ",
@@ -844,7 +845,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		autospawner.addShaped(
+		AutoSpawner.addShaped(
 				"GGG",
 				"NCS",
 				"EME",
@@ -856,7 +857,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		bioreactor.addShaped(
+		BioReactor.addShaped(
 				"GGG",
 				"UEU",
 				"SMS",
@@ -867,7 +868,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		biofuelgenerator.addShaped(
+		BiofuelGenerator.addShaped(
 				"GGG",
 				"PFP",
 				"RMR",
@@ -878,7 +879,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		autodisenchanter.addShaped(
+		AutoDisenchanter.addShaped(
 				"GGG",
 				"RDR",
 				"BMB",
@@ -889,7 +890,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		slaughterhouse.addShaped(
+		Slaughterhouse.addShaped(
 				"GGG",
 				"SSS",
 				"XMX",
@@ -899,7 +900,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		meatpacker.addShaped(
+		MeatPacker.addShaped(
 				"GGG",
 				"BFB",
 				"BMB",
@@ -909,17 +910,17 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		enchantmentrouter.addShaped(
+		EnchantmentRouter.addShaped(
 				"GGG",
 				"RBR",
 				" M ",
 				'G', "sheetPlastic",
-				'B', BOOK,
-				'R', REPEATER,
+				'B', OBSERVER,
+				'R', BOOK,
 				'M', machine_block
 		);
 
-		laserdrill.addShaped(
+		LaserDrill.addShaped(
 				"GGG",
 				"LLL",
 				"DMD",
@@ -929,7 +930,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		laserdrillprecharger.addShaped(
+		LaserDrillPrecharger.addShaped(
 				"GGG",
 				"LSL",
 				"DMD",
@@ -940,7 +941,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		autoanvil.addShaped(
+		AutoAnvil.addShaped(
 				"GGG",
 				"AAA",
 				" M ",
@@ -949,7 +950,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		blocksmasher.addShaped(
+		BlockSmasher.addShaped(
 				"GGG",
 				"HHH",
 				"BMB",
@@ -959,7 +960,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		rednote.addShaped(
+		RedNote.addShaped(
 				"GGG",
 				"CNC",
 				" M ",
@@ -969,18 +970,18 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		autobrewer.addShaped(
+		AutoBrewer.addShaped(
 				"GGG",
 				"CBC",
 				"RMR",
 				'G', "sheetPlastic",
 				'C', plastic_pipe,
 				'B', Items.BREWING_STAND,
-				'R', COMPARATOR,
+				'R', OBSERVER,
 				'M', machine_block
 		);
 
-		fruitpicker.addShaped(
+		FruitPicker.addShaped(
 				"GGG",
 				"SXS",
 				" M ",
@@ -990,7 +991,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		blockplacer.addShaped(
+		BlockPlacer.addShaped(
 				"GGG",
 				"DDD",
 				" M ",
@@ -999,18 +1000,18 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		mobcounter.addShaped(
+		MobCounter.addShaped(
 				"GGG",
 				"RCR",
 				"SMS",
 				'G', "sheetPlastic",
-				'R', REPEATER,
-				'C', COMPARATOR,
+				'R', COMPARATOR,
+				'C', OBSERVER,
 				'S', spyglass,
 				'M', machine_block
 		);
 
-		steamturbine.addShaped(
+		SteamTurbine.addShaped(
 				"GGG",
 				"PFP",
 				"RMR",
@@ -1021,17 +1022,17 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		chunkloader.addShaped(
+		ChunkLoader.addShaped(
 				"GGG",
 				"PFP",
 				"RMR",
 				'G', "sheetPlastic",
 				'F', NETHER_STAR,
-				'P', deepstorageunit,
+				'P', DeepStorageUnit,
 				'R', "blockRedstone",
 				'M', machine_block
 		);
-		cheap_chunkloader.addShaped(
+		cheap_ChunkLoader.addShaped(
 				"GGG",
 				"PFP",
 				"RMR",
@@ -1042,7 +1043,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		fountain.addShaped(
+		Fountain.addShaped(
 				"GBG",
 				"GBG",
 				"UMU",
@@ -1052,15 +1053,15 @@ public class Minecraft implements IMFRRecipeSet {
 				'M', machine_block
 		);
 
-		mobrouter.addShaped(
+		MobRouter.addShaped(
 				"GGG",
 				"BRB",
 				"PCP",
 				'G', "sheetPlastic",
 				'B', IRON_BARS,
-				'R', itemrouter,
+				'R', ItemRouter,
 				'P', "dyeOrange",
-				'C', chronotyper
+				'C', Chronotyper
 		);
 
 		plastic_tank.addShaped(
