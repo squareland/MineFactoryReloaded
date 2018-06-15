@@ -6,8 +6,8 @@
             "entries": [
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:rubberwood_sapling",
-                    "name": "minefactoryreloaded:rubberwood_sapling",
+                    "entryName": "minefactoryreloaded:rubber_wood_sapling",
+                    "name": "minefactoryreloaded:rubber_wood_sapling",
                     "weight": 8,
                     "functions": [
                         {
@@ -25,8 +25,8 @@
                 },
                 {
                     "type": "item",
-                    "entryName": "minefactoryreloaded:rubberwood_sapling_sacred",
-                    "name": "minefactoryreloaded:rubberwood_sapling",
+                    "entryName": "minefactoryreloaded:rubber_wood_sapling_sacred",
+                    "name": "minefactoryreloaded:rubber_wood_sapling",
                     "weight": 1,
                     "functions": [
                         {

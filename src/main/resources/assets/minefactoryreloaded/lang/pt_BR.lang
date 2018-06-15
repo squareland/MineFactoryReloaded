@@ -105,7 +105,7 @@ tile.mfr.road.light.on.name = Luz de Estrada
 tile.mfr.road.light.inverted.off.name = Luz de Estrada (Invertida)
 tile.mfr.road.light.inverted.on.name = Luz de Estrada (Invertida)
 
-tile.mfr.plastic.plain.name = Bloco de Plástico
+tile.mfr.plastic.block.plain.name = Bloco de Plástico
 
 tile.mfr.decorative.brick.ice.name = Tijolos de Gelo
 tile.mfr.decorative.brick.glowstone.name = Tijolos de Pedra Luminosa

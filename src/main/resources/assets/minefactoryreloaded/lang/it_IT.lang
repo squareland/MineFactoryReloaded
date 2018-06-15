@@ -105,7 +105,7 @@ tile.mfr.road.light.on.name = Luce stradale
 tile.mfr.road.light.inverted.off.name = Luce stradale (invertito)
 tile.mfr.road.light.inverted.on.name = Luce stradale (invertito)
 
-tile.mfr.plastic.plain.name = Blocco di plastica
+tile.mfr.plastic.block.plain.name = Blocco di plastica
 
 tile.mfr.decorative.brick.ice.name = Mattoni di ghiaccio
 tile.mfr.decorative.brick.glowstone.name = Mattoni di luminite

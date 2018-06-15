@@ -105,7 +105,7 @@ tile.mfr.road.light.on.name = Osvětlená cesta
 tile.mfr.road.light.inverted.off.name = Osvětlená cesta (Obrácená)
 tile.mfr.road.light.inverted.on.name = Osvětlená cesta (Obrácená)
 
-tile.mfr.plastic.plain.name = Blok plastu
+tile.mfr.plastic.block.plain.name = Blok plastu
 
 tile.mfr.decorative.brick.ice.name = Ledové cihly
 tile.mfr.decorative.brick.glowstone.name = Světlitové cihly

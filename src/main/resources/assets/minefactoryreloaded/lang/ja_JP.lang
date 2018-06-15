@@ -105,7 +105,7 @@ tile.mfr.road.light.on.name = 道路照明
 tile.mfr.road.light.inverted.off.name = 反転道路照明
 tile.mfr.road.light.inverted.on.name = 反転道路照明
 
-tile.mfr.plastic.plain.name = Block of Plastic
+tile.mfr.plastic.block.plain.name = Block of Plastic
 
 tile.mfr.decorative.brick.ice.name = 氷Bricks
 tile.mfr.decorative.brick.glowstone.name = グロウストーンBricks

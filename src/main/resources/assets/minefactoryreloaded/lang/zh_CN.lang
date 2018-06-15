@@ -105,13 +105,13 @@ tile.mfr.road.light.on.name = 铺路灯
 tile.mfr.road.light.inverted.off.name = 铺路灯(反相)
 tile.mfr.road.light.inverted.on.name = 铺路灯(反相)
 
-tile.mfr.plastic.plain.name = 塑料块
-tile.mfr.plastic.bricks.name = 塑料砖块
-tile.mfr.plastic.brickslarge.name = 大型塑料砖块
-tile.mfr.plastic.chiseled.name =  雕凿塑料砖块
-tile.mfr.plastic.column.name = 塑料柱
-tile.mfr.plastic.paver.name = 塑料铺路石
-tile.mfr.plastic.road.name = 塑料铺路砖
+tile.mfr.plastic.block.plain.name = 塑料块
+tile.mfr.plastic.block.bricks.name = 塑料砖块
+tile.mfr.plastic.block.bricks.large.name = 大型塑料砖块
+tile.mfr.plastic.block.chiseled.name =  雕凿塑料砖块
+tile.mfr.plastic.block.column.name = 塑料柱
+tile.mfr.plastic.block.paver.name = 塑料铺路石
+tile.mfr.plastic.block.road.name = 塑料铺路砖
 
 tile.mfr.decorative.brick.ice.name = 冰砖块
 tile.mfr.decorative.brick.glowstone.name = 荧光砖块

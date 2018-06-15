@@ -19,7 +19,7 @@ public class BlockFactoryPlastic extends BlockFactory {
 
 		super(0.3f);
 		slipperiness = 1f / 0.9801f;
-		setUnlocalizedName("mfr.plastic");
+		setUnlocalizedName("mfr.plastic.block");
 		setHarvestLevel("axe", 0);
 		providesPower = false;
 	}
@@ -93,7 +93,7 @@ public class BlockFactoryPlastic extends BlockFactory {
 			UNLOC_NAMES = new String[values().length];
 			for (Variant variant : values()) {
 				NAMES[variant.meta] = variant.name;
-				UNLOC_NAMES[variant.meta] = variant.name.replace("_", "");
+				UNLOC_NAMES[variant.meta] = variant.name.replace("_", ".");
 			}
 		}
 	}

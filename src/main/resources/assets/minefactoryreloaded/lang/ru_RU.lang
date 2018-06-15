@@ -105,7 +105,7 @@ tile.mfr.road.light.on.name = Светящаяся дорожка
 tile.mfr.road.light.inverted.off.name = Светящаяся дорожка (Перевёрнутая)
 tile.mfr.road.light.inverted.on.name = Светящаяся дорожка (Перевёрнутая)
 
-tile.mfr.plastic.plain.name = Блок пластика
+tile.mfr.plastic.block.plain.name = Блок пластика
 
 tile.mfr.decorative.brick.ice.name = Ледяные кирпичи
 tile.mfr.decorative.brick.glowstone.name = Светящиеся кирпичи

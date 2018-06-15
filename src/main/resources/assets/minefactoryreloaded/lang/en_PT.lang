@@ -61,7 +61,7 @@ tile.mfr.stained_glass.pane.green.name = Stained Porthole (Green)
 tile.mfr.stained_glass.pane.red.name = Stained Porthole (Red)
 tile.mfr.stained_glass.pane.black.name = Stained Porthole (Black)
 
-tile.mfr.plastic.plain.name = Block o' Plastic
+tile.mfr.plastic.block.plain.name = Block o' Plastic
 
 tile.mfr.decorative.brick.ice.name = Frost Bricks
 tile.mfr.decorative.brick.glowstone.name = Brimstone Bricks

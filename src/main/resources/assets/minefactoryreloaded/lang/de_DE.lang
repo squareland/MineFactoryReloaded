@@ -105,7 +105,7 @@ tile.mfr.road.light.on.name = Straßenlaterne
 tile.mfr.road.light.inverted.off.name = Invertierte Straßenlaterne
 tile.mfr.road.light.inverted.on.name = Invertierte Straßenlaterne
 
-tile.mfr.plastic.plain.name = Plastikblock
+tile.mfr.plastic.block.plain.name = Plastikblock
 
 tile.mfr.decorative.brick.ice.name = Eisziegel
 tile.mfr.decorative.brick.glowstone.name = Glühsteinziegel

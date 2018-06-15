@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -573,6 +574,7 @@ public abstract class MFRRegistry {
 		remaps.put("cable.redstone", "rednet_cable");
 		remaps.put("tile.mfr.cable.plastic", "plastic_pipe");
 		remaps.put("cable.plastic", "plastic_pipe");
+		remaps.put(MFRProps.PREFIX + "plastic", "plastic_block");
 
 		// VANILLA REMAPS -- use in recipe naming
 		remaps.put("tile.pistonBase", "piston");
@@ -644,25 +646,31 @@ public abstract class MFRRegistry {
 		return name;
 	}
 
-	private static Block remapBlock(String id) {
+	private static Block remapBlock(ResourceLocation id) {
 
-		Block block = blocks.get(id);
+		Block block = blocks.get(remaps.get(id.toString()));
+		if (block == null)
+			block = blocks.get(id.getResourcePath());
 		if (block == null) {
-			id = remapInternal(id.split("[._]"), 0, id.length());
-			if (id != null)
-				block = blocks.get(id);
+			String name = id.getResourcePath();
+			name = remapInternal(name.split("[._]"), 0, name.length());
+			if (name != null)
+				block = blocks.get(name);
 		}
 
 		return block;
 	}
 
-	private static Item remapItem(String id) {
+	private static Item remapItem(ResourceLocation id) {
 
-		Item item = items.get(id);
+		Item item = items.get(remaps.get(id.toString()));
+		if (item == null)
+			item = items.get(id.getResourcePath());
 		if (item == null) {
-			id = remapInternal(id.split("[._]"), 0, id.length());
-			if (id != null)
-				item = items.get(id);
+			String name = id.getResourcePath();
+			name = remapInternal(name.split("[._]"), 0, name.length());
+			if (name != null)
+				item = items.get(name);
 		}
 		return item;
 	}
@@ -713,11 +721,10 @@ public abstract class MFRRegistry {
 		public static void missingBlockMappings(RegistryEvent.MissingMappings<Block> evt) {
 
 			for (RegistryEvent.MissingMappings.Mapping<Block> mapping : evt.getMappings()) {
-				String name = mapping.key.getResourcePath();
-				Block block = MFRRegistry.remapBlock(name);
+				Block block = MFRRegistry.remapBlock(mapping.key);
 				if (block != null)
 					mapping.remap(block);
-				else if ("tile.null".equals(name))
+				else if ("tile.null".equals(mapping.key.getResourcePath()))
 					mapping.remap(fakeLaserBlock);
 				else
 					mapping.warn();
@@ -728,8 +735,7 @@ public abstract class MFRRegistry {
 		public static void missingItemMappings(RegistryEvent.MissingMappings<Item> evt) {
 
 			for (RegistryEvent.MissingMappings.Mapping<Item> mapping : evt.getMappings()) {
-				String name = mapping.key.getResourcePath();
-				Item item = MFRRegistry.remapItem(name);
+				Item item = MFRRegistry.remapItem(mapping.key);
 				if (item != null)
 					mapping.remap(item);
 				else
