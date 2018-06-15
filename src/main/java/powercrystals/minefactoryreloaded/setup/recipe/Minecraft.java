@@ -147,8 +147,8 @@ public class Minecraft implements IMFRRecipeSet {
 		RecipeManager.addRecipe("conveyor_default", stack(conveyorBlock, 16, 16));
 
 		for (int i = 0; i < 16; i++) {
-			RecipeManager.addRecipe("conveyor_dyed_" + DYES[i], stack(conveyorBlock, 1, i));
-			RecipeManager.addRecipe("laser_focus_" + DYES[i], stack(laserFocusItem, 1, i));
+			RecipeManager.addRecipe("conveyor_dyed_" + DYES[i], stack(conveyorBlock, 1, i)).setRecipeGroup("dyed_conveyor");
+			RecipeManager.addRecipe("laser_focus_" + DYES[i], stack(laserFocusItem, 1, i)).setRecipeGroup("laser_focus");
 		}
 		//endregion
 
@@ -158,7 +158,7 @@ public class Minecraft implements IMFRRecipeSet {
 
 			RecipeManager.addRecipe("plastic_sheet", stack(plasticSheetItem, 4));
 
-			RecipeManager.addRecipe("plastic_block", stack(factoryPlasticBlock, 1));
+			RecipeManager.addRecipe("plastic_block", stack(factoryPlasticBlock, 1)).setRecipeGroup("plastic_block");
 			RecipeManager.addRecipe("plastic_block_to_sheet", stack(plasticSheetItem, 4));
 
 			RecipeManager.addRecipe("hammer", stack(factoryHammerItem, 1));
@@ -173,7 +173,7 @@ public class Minecraft implements IMFRRecipeSet {
 
 			RecipeManager.addRecipe("plastic_bag", stack(plasticBagItem, 3));
 
-			RecipeManager.addRecipe("plastic_bag_erasure", stack(plasticBagItem));
+			RecipeManager.addRecipe("plastic_bag_erasure", stack(plasticBagItem)).setRecipeGroup("erasure");
 
 			RecipeManager.addRecipe("plastic_pipe", stack(plasticPipeBlock, 8));
 		}//endregion
@@ -196,12 +196,12 @@ public class Minecraft implements IMFRRecipeSet {
 
 		//region armor
 		{
-			RecipeManager.addRecipe("armor_glasses", stack(plasticGlasses, 1));
+			RecipeManager.addRecipe("armor_glasses", stack(plasticGlasses, 1)).setRecipeGroup("glasses");
 
-			RecipeManager.addRecipe("armor_plastic_helmet", stack(plasticHelmetItem, 1));
-			RecipeManager.addRecipe("armor_plastic_chestplate", stack(plasticChestplateItem, 1));
-			RecipeManager.addRecipe("armor_plastic_leggings", stack(plasticLeggingsItem, 1));
-			RecipeManager.addRecipe("armor_plastic_boots", stack(plasticBootsItem, 1));
+			RecipeManager.addRecipe("armor_plastic_helmet", stack(plasticHelmetItem, 1)).setRecipeGroup("plastic_armor");
+			RecipeManager.addRecipe("armor_plastic_chestplate", stack(plasticChestplateItem, 1)).setRecipeGroup("plastic_armor");
+			RecipeManager.addRecipe("armor_plastic_leggings", stack(plasticLeggingsItem, 1)).setRecipeGroup("plastic_armor");
+			RecipeManager.addRecipe("armor_plastic_boots", stack(plasticBootsItem, 1)).setRecipeGroup("plastic_armor");
 		}//endregion
 
 		//region safari nets
@@ -242,12 +242,12 @@ public class Minecraft implements IMFRRecipeSet {
 			RecipeManager.addRecipe("rednet_multimeter", stack(rednetMeterItem, 1, 1));
 
 			RecipeManager.addRecipe("rednet_memorycard", stack(rednetMemoryCardItem, 1, 0));
-			RecipeManager.addRecipe("rednet_memorycard_erasure", stack(rednetMemoryCardItem, 1, 0));
+			RecipeManager.addRecipe("rednet_memorycard_erasure", stack(rednetMemoryCardItem, 1, 0)).setRecipeGroup("erasure");
 		}//endregion
 
 		//region misc
 		{
-			RecipeManager.addRecipe("fertilizer_item", stack(fertilizerItem, 16));
+			RecipeManager.addRecipe("fertilizer_item", stack(fertilizerItem, 16)).setRecipeGroup("fertilizer_item");
 
 			RecipeManager.addRecipe("spyglass", stack(spyglassItem));
 
@@ -305,12 +305,12 @@ public class Minecraft implements IMFRRecipeSet {
 			RecipeManager.addRecipe("rubber_bar", stack(rubberBarItem));
 			RecipeManager.addRecipe("raw_plastic", stack(rawPlasticItem));
 
-			RecipeManager.addRecipe("plastic_block_to_raw_plastic", stack(rawPlasticItem, 4));
-			RecipeManager.addRecipe("plastic_sheet_to_raw_plastic", stack(rawPlasticItem));
+			RecipeManager.addRecipe("plastic_block_to_raw_plastic", stack(rawPlasticItem, 4)).setRecipeGroup("recycle_plastics");
+			RecipeManager.addRecipe("plastic_sheet_to_raw_plastic", stack(rawPlasticItem)).setRecipeGroup("recycle_plastics");
 
-			RecipeManager.addRecipe("plastic_bag_to_raw_plastic", stack(rawPlasticItem, 2));
-			RecipeManager.addRecipe("straw_to_raw_plastic", stack(rawPlasticItem, 4));
-			RecipeManager.addRecipe("ruler_to_raw_plastic", stack(rawPlasticItem, 2));
+			RecipeManager.addRecipe("plastic_bag_to_raw_plastic", stack(rawPlasticItem, 2)).setRecipeGroup("recycle_plastics");
+			RecipeManager.addRecipe("straw_to_raw_plastic", stack(rawPlasticItem, 4)).setRecipeGroup("recycle_plastics");
+			RecipeManager.addRecipe("ruler_to_raw_plastic", stack(rawPlasticItem, 2)).setRecipeGroup("recycle_plastics");
 
 			RecipeManager.addRecipe("meat_nugget_raw_to_cooked", stack(meatNuggetCookedItem));
 
@@ -323,9 +323,9 @@ public class Minecraft implements IMFRRecipeSet {
 
 		//region decorative
 		{
-			RecipeManager.addRecipe("road_block", stack(factoryRoadBlock, 16));
-			RecipeManager.addRecipe("road_light", stack(factoryRoadBlock, 4, 4));
-			RecipeManager.addRecipe("road_light_inverted", stack(factoryRoadBlock, 1, 1));
+			RecipeManager.addRecipe("road_block", stack(factoryRoadBlock, 16)).setRecipeGroup("road_block");
+			RecipeManager.addRecipe("road_light", stack(factoryRoadBlock, 4, 4)).setRecipeGroup("road_light");
+			RecipeManager.addRecipe("road_light_inverted", stack(factoryRoadBlock, 1, 1)).setRecipeGroup("road_light");
 
 			//region glass
 			{
@@ -334,51 +334,51 @@ public class Minecraft implements IMFRRecipeSet {
 					@Nonnull ItemStack glassStack = stack(factoryGlassBlock, 1, i);
 					@Nonnull ItemStack paneStack = stack(factoryGlassPaneBlock, 1, i);
 					String dye = DYES[i];
-					RecipeManager.addRecipe("ceramic_dye_4_" + dye, cloneStack(ceramicDye, 4));
-					RecipeManager.addRecipe("ceramic_dye_8_" + dye, cloneStack(ceramicDye, 8));
-					RecipeManager.addRecipe("glass_1_" + dye, cloneStack(glassStack, 1));
-					RecipeManager.addRecipe("glass_3_" + dye, cloneStack(glassStack, 3));
-					RecipeManager.addRecipe("glass_6_" + dye, cloneStack(glassStack, 6));
-					RecipeManager.addRecipe("pane_1_" + dye, cloneStack(paneStack, 1));
-					RecipeManager.addRecipe("pane_3_" + dye, cloneStack(paneStack, 3));
-					RecipeManager.addRecipe("pane_8_" + dye, cloneStack(paneStack, 8));
+					RecipeManager.addRecipe("ceramic_dye_4_" + dye, cloneStack(ceramicDye, 4)).setRecipeGroup("ceramic_dye");
+					RecipeManager.addRecipe("ceramic_dye_8_" + dye, cloneStack(ceramicDye, 8)).setRecipeGroup("ceramic_dye");
+					RecipeManager.addRecipe("glass_1_" + dye, cloneStack(glassStack, 1)).setRecipeGroup("stained_glass_block");
+					RecipeManager.addRecipe("glass_3_" + dye, cloneStack(glassStack, 3)).setRecipeGroup("stained_glass_block");
+					RecipeManager.addRecipe("glass_6_" + dye, cloneStack(glassStack, 6)).setRecipeGroup("stained_glass_block");
+					RecipeManager.addRecipe("pane_1_" + dye, cloneStack(paneStack, 1)).setRecipeGroup("stained_glass_pane_redye");
+					RecipeManager.addRecipe("pane_3_" + dye, cloneStack(paneStack, 3)).setRecipeGroup("stained_glass_pane_redye");
+					RecipeManager.addRecipe("pane_8_" + dye, cloneStack(paneStack, 8)).setRecipeGroup("stained_glass_pane_redye");
 
-					RecipeManager.addRecipe("pane_16_" + dye, cloneStack(paneStack, 16));
+					RecipeManager.addRecipe("pane_16_" + dye, cloneStack(paneStack, 16)).setRecipeGroup("stained_glass_pane");
 				}
 			}//endregion
 
-			RecipeManager.addRecipe("plastic_block_paver", stack(factoryPlasticBlock, 1, 1));
-			RecipeManager.addRecipe("plastic_block_column", stack(factoryPlasticBlock, 3, 2));
-			RecipeManager.addRecipe("plastic_block_bricks_large", stack(factoryPlasticBlock, 4, 3));
-			RecipeManager.addRecipe("plastic_block_chiseled", stack(factoryPlasticBlock, 4, 4));
-			RecipeManager.addRecipe("plastic_block_road", stack(factoryPlasticBlock, 8, 5));
-			RecipeManager.addRecipe("plastic_block_bricks_small", stack(factoryPlasticBlock, 4, 6));
+			RecipeManager.addRecipe("plastic_block_paver", stack(factoryPlasticBlock, 1, 1)).setRecipeGroup("plastic_block_decoration");
+			RecipeManager.addRecipe("plastic_block_column", stack(factoryPlasticBlock, 3, 2)).setRecipeGroup("plastic_block_decoration");
+			RecipeManager.addRecipe("plastic_block_bricks_large", stack(factoryPlasticBlock, 4, 3)).setRecipeGroup("plastic_block_decoration");
+			RecipeManager.addRecipe("plastic_block_chiseled", stack(factoryPlasticBlock, 4, 4)).setRecipeGroup("plastic_block_decoration");
+			RecipeManager.addRecipe("plastic_block_road", stack(factoryPlasticBlock, 8, 5)).setRecipeGroup("plastic_block_decoration");
+			RecipeManager.addRecipe("plastic_block_bricks_small", stack(factoryPlasticBlock, 4, 6)).setRecipeGroup("plastic_block_decoration");
 
 			//region bricks
-			RecipeManager.addRecipe("ice_brick_small", stack(factoryDecorativeBrickBlock, 8, 0));
-			RecipeManager.addRecipe("glowstone_brick_small", stack(factoryDecorativeBrickBlock, 8, 1));
-			RecipeManager.addRecipe("lapis_brick_small", stack(factoryDecorativeBrickBlock, 8, 2));
-			RecipeManager.addRecipe("obsidian_brick_small", stack(factoryDecorativeBrickBlock, 8, 3));
-			RecipeManager.addRecipe("pavedstone_brick_small", stack(factoryDecorativeBrickBlock, 8, 4));
-			RecipeManager.addRecipe("snow_brick_small", stack(factoryDecorativeBrickBlock, 8, 5));
+			RecipeManager.addRecipe("ice_brick_small", stack(factoryDecorativeBrickBlock, 8, 0)).setRecipeGroup("ice_brick");
+			RecipeManager.addRecipe("glowstone_brick_small", stack(factoryDecorativeBrickBlock, 8, 1)).setRecipeGroup("glowstone_brick");
+			RecipeManager.addRecipe("lapis_brick_small", stack(factoryDecorativeBrickBlock, 8, 2)).setRecipeGroup("lapis_brick");
+			RecipeManager.addRecipe("obsidian_brick_small", stack(factoryDecorativeBrickBlock, 8, 3)).setRecipeGroup("obsidian_brick");
+			RecipeManager.addRecipe("pavedstone_brick_small", stack(factoryDecorativeBrickBlock, 8, 4)).setRecipeGroup("pavedstone_brick");
+			RecipeManager.addRecipe("snow_brick_small", stack(factoryDecorativeBrickBlock, 8, 5)).setRecipeGroup("snow_brick");
 
-			RecipeManager.addRecipe("ice_brick_large", stack(factoryDecorativeBrickBlock, 8, 6));
-			RecipeManager.addRecipe("glowstone_brick_large", stack(factoryDecorativeBrickBlock, 8, 7));
-			RecipeManager.addRecipe("lapis_brick_large", stack(factoryDecorativeBrickBlock, 8, 8));
-			RecipeManager.addRecipe("obsidian_brick_large", stack(factoryDecorativeBrickBlock, 8, 9));
-			RecipeManager.addRecipe("pavedstone_brick_large", stack(factoryDecorativeBrickBlock, 4, 10));
-			RecipeManager.addRecipe("snow_brick_large", stack(factoryDecorativeBrickBlock, 8, 11));
+			RecipeManager.addRecipe("ice_brick_large", stack(factoryDecorativeBrickBlock, 8, 6)).setRecipeGroup("ice_brick");
+			RecipeManager.addRecipe("glowstone_brick_large", stack(factoryDecorativeBrickBlock, 8, 7)).setRecipeGroup("glowstone_brick");
+			RecipeManager.addRecipe("lapis_brick_large", stack(factoryDecorativeBrickBlock, 8, 8)).setRecipeGroup("lapis_brick");
+			RecipeManager.addRecipe("obsidian_brick_large", stack(factoryDecorativeBrickBlock, 8, 9)).setRecipeGroup("obsidian_brick");
+			RecipeManager.addRecipe("pavedstone_brick_large", stack(factoryDecorativeBrickBlock, 4, 10)).setRecipeGroup("pavedstone_brick");
+			RecipeManager.addRecipe("snow_brick_large", stack(factoryDecorativeBrickBlock, 8, 11)).setRecipeGroup("snow_brick");
 			// 12 & 13 are special blocks
-			RecipeManager.addRecipe("brick_brick_large", stack(factoryDecorativeBrickBlock, 8, 14));
+			RecipeManager.addRecipe("brick_brick_large", stack(factoryDecorativeBrickBlock, 8, 14)).setRecipeGroup("brick_brick");
 			// 15 is special
 
-			RecipeManager.addRecipe("ice_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 0));
-			RecipeManager.addRecipe("glowstone_brick_from_large", stack(factoryDecorativeBrickBlock, 4, 1));
-			RecipeManager.addRecipe("lapis_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 2));
-			RecipeManager.addRecipe("obsidian_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 3));
-			RecipeManager.addRecipe("pavedstone_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 4));
-			RecipeManager.addRecipe("snow_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 5));
-			RecipeManager.addRecipe("brick_from_large_brick", stack(BRICK_BLOCK, 2, 0));
+			RecipeManager.addRecipe("ice_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 0)).setRecipeGroup("ice_brick");
+			RecipeManager.addRecipe("glowstone_brick_from_large", stack(factoryDecorativeBrickBlock, 4, 1)).setRecipeGroup("glowstone_brick");
+			RecipeManager.addRecipe("lapis_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 2)).setRecipeGroup("lapis_brick");
+			RecipeManager.addRecipe("obsidian_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 3)).setRecipeGroup("obsidian_brick");
+			RecipeManager.addRecipe("pavedstone_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 4)).setRecipeGroup("pavedstone_brick");
+			RecipeManager.addRecipe("snow_brick_small_from_large", stack(factoryDecorativeBrickBlock, 4, 5)).setRecipeGroup("snow_brick");
+			RecipeManager.addRecipe("brick_from_large_brick", stack(BRICK_BLOCK, 2, 0)).setRecipeGroup("brick_brick");
 			//endregion
 
 			//region stone
@@ -448,7 +448,7 @@ public class Minecraft implements IMFRRecipeSet {
 
 			RecipeManager.addRecipe("fertile_soil", stack(fertileSoil));
 
-			RecipeManager.addRecipe("chocolate_milk_bucket", MFRUtil.getBucketFor(MFRFluids.chocolateMilk));
+			RecipeManager.addRecipe("chocolate_milk_bucket", MFRUtil.getBucketFor(MFRFluids.chocolateMilk)).setRecipeGroup("chocolate_milk");
 
 			RecipeManager.addRecipe("sugar_charcoal_block", stack(factoryDecorativeBrickBlock, 1, 15));
 
