@@ -341,7 +341,14 @@ public class RecipeManager {
 
 		public void setRecipeGroup(String group) {
 
-			recipeName = group;
+			ModContainer active = Loader.instance().activeModContainer();
+			if (active == null) {
+				// ..?
+				recipeName = "BROKEN_MOD";
+			} else {
+				recipeName = active.getModId();
+			}
+			recipeName +=  ':' + group;
 		}
 
 		@Override
