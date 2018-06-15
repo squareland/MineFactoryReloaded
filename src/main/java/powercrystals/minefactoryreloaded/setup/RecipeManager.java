@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 import org.objectweb.asm.Type;
 import powercrystals.minefactoryreloaded.MFRProps;
+import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet;
 import powercrystals.minefactoryreloaded.setup.recipe.Minecraft;
 
@@ -48,19 +49,20 @@ public class RecipeManager {
 	private static RecipeSetContainer VANILLA;
 	private static String ACTIVE_SET = null;
 
-	public static void addRecipe(RecipeContainer container) {
+	public static RecipeContainer addRecipe(RecipeContainer container) {
 
 		recipes.putObject(container.getName(), container);
+		return container;
 	}
 
-	public static void addRecipe(String id, ItemStack output, BooleanSupplier enabled) {
+	public static RecipeContainer addRecipe(String id, ItemStack output, BooleanSupplier enabled) {
 
-		addRecipe(new RecipeContainer(id, output, enabled));
+		return addRecipe(new RecipeContainer(id, output, enabled));
 	}
 
-	public static void addRecipe(String id, ItemStack output) {
+	public static RecipeContainer addRecipe(String id, ItemStack output) {
 
-		addRecipe(new RecipeContainer(id, output));
+		return addRecipe(new RecipeContainer(id, output));
 	}
 
 	public static void load(ASMDataTable data) {
@@ -259,6 +261,8 @@ public class RecipeManager {
 		private final BooleanSupplier enabled;
 		private final ItemStack output;
 
+		private String recipeName;
+
 		private boolean finalizing = false;
 		private final LinkedList<IRecipe> craftingRecipes = new LinkedList<>();
 		private final LinkedList<SmeltContainer> smeltingRecipes = new LinkedList<>();
@@ -324,7 +328,20 @@ public class RecipeManager {
 
 		private String getGroup() {
 
-			return (MFRProps.PREFIX + output.getItem().getRegistryName().getResourcePath() + '@' + ACTIVE_SET).toLowerCase(Locale.ROOT);
+			if (recipeName == null) {
+				String domain = output.getItem().getRegistryName().getResourceDomain();
+				if (domain.equals("minecraft")) {
+					recipeName = "minecraft:" + MFRRegistry.remapName(output.getUnlocalizedName(), 1);
+				} else {
+					recipeName = domain + ":" + MFRRegistry.remapName(output.getUnlocalizedName(), 2);
+				}
+			}
+			return recipeName;
+		}
+
+		public void setRecipeGroup(String group) {
+
+			recipeName = group;
 		}
 
 		@Override

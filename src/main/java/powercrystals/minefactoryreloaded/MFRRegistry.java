@@ -559,8 +559,10 @@ public abstract class MFRRegistry {
 		remaps.put("stainedglass", "stained_glass");
 		remaps.put("portaspawner", "porta_spawner");
 		remaps.put("sugarcharcoal", "sugar_charcoal");
-		remaps.put("mushroomsoup", "mushroom_soup");
-		remaps.put("singleuse", "single_use");
+		remaps.put("potatolauncher", "potato_launcher");
+		remaps.put("rocketlauncher", "rocket_launcher");
+
+		remaps.put("needlegun", "needle_gun");
 
 		remaps.put("tile.mfr.decorativebrick", "brick");
 		remaps.put("tile.mfr.decorativestone", "stone");
@@ -571,6 +573,14 @@ public abstract class MFRRegistry {
 		remaps.put("cable.redstone", "rednet_cable");
 		remaps.put("tile.mfr.cable.plastic", "plastic_pipe");
 		remaps.put("cable.plastic", "plastic_pipe");
+
+		// VANILLA REMAPS -- use in recipe naming
+		remaps.put("tile.pistonBase", "piston");
+		remaps.put("tile.pistonStickyBase", "sticky_piston");
+		remaps.put("tile.brick", "brick_block");
+		remaps.put("tile.wood.jungle", "jungle_planks");
+		remaps.put("tile.stoneMoss", "mossy_cobblestone");
+		remaps.put("tile.stonebricksmooth.mossy", "mossy_stonebrick");
 
 		// FIXME: TEMPORARY for dev worlds
 		remaps.put("stained_glass", "stained_glass_block");
@@ -587,6 +597,36 @@ public abstract class MFRRegistry {
 		return remaps.get(s);
 	}
 
+	private static String remapInternal(String[] v, int o, int l) {
+
+		StringBuilder nameBuilder = new StringBuilder(l+10);
+
+		for (int i = o, e = v.length; i < e; ++i)
+			v[i - o] = remapPhrase(v[i]);
+		for (int i = 0, e = v.length - o; i < e; ++i)
+			if (v[i] != null)
+				nameBuilder.append('_').append(v[i]);
+
+		return nameBuilder.substring(1);
+	}
+
+	public static String remapName(String s, int offset) {
+
+		String name = remaps.get(s);
+
+		if (name == null) {
+			String[] v = s.split("\\.");
+			if (v.length < offset + 1)
+				return null;
+
+			name = remapInternal(v, offset, s.length());
+
+			remaps.put(s, name);
+		}
+
+		return name;
+	}
+
 	private static String remapName(String s) {
 
 		String name = remaps.get(s);
@@ -595,15 +635,10 @@ public abstract class MFRRegistry {
 			String[] v = s.split("\\.");
 			if (v.length < 3)
 				return null;
-			StringBuilder nameBuilder = new StringBuilder(s.length());
 
-			for (int i = 2, e = v.length; i < e; ++i)
-				v[i - 2] = remapPhrase(v[i]);
-			for (int i = 0, e = v.length - 2; i < e; ++i)
-				if (v[i] != null)
-					nameBuilder.append('_').append(v[i]);
+			name = remapInternal(v, 2, s.length());
 
-			name = nameBuilder.substring(1);
+			remaps.put(s, name);
 		}
 
 		return name;
@@ -613,7 +648,7 @@ public abstract class MFRRegistry {
 
 		Block block = blocks.get(id);
 		if (block == null) {
-			id = remapName(id);
+			id = remapInternal(id.split("[._]"), 0, id.length());
 			if (id != null)
 				block = blocks.get(id);
 		}
@@ -625,7 +660,7 @@ public abstract class MFRRegistry {
 
 		Item item = items.get(id);
 		if (item == null) {
-			id = remapName(id);
+			id = remapInternal(id.split("[._]"), 0, id.length());
 			if (id != null)
 				item = items.get(id);
 		}
