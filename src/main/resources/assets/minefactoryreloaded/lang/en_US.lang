@@ -176,7 +176,7 @@ tile.mfr.plastic.pipe.name = Plastic Pipe
 tile.mfr.rednet.logic.name = Programmable RedNet Controller
 tile.mfr.rednet.panel.historian.name = RedNet Historian
 
-item.mfr.machine_block.base.name = Factory Machine Block
+tile.mfr.machine_block.base.name = Factory Machine Block
 tile.mfr.machine_block.prc.name = Programmable RedNet Controller Housing
 
 tile.mfr.tank.name = Plastic Tank
