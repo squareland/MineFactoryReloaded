@@ -159,7 +159,7 @@ public class Minecraft implements IMFRRecipeSet {
 			RecipeManager.addRecipe("plastic_sheet", stack(plasticSheetItem, 4));
 
 			RecipeManager.addRecipe("plastic_block", stack(factoryPlasticBlock, 1)).setRecipeGroup("plastic_block");
-			RecipeManager.addRecipe("plastic_block_to_sheet", stack(plasticSheetItem, 4));
+			RecipeManager.addRecipe("plastic_block_to_sheet", stack(plasticSheetItem, 4)).setRecipeGroup("plastic_sheet_from_block");
 
 			RecipeManager.addRecipe("hammer", stack(factoryHammerItem, 1));
 
@@ -415,23 +415,23 @@ public class Minecraft implements IMFRRecipeSet {
 			RecipeManager.addRecipe("meat_block_raw", stack(factoryDecorativeBrickBlock, 1, 12));
 			RecipeManager.addRecipe("meat_block_cooked", stack(factoryDecorativeBrickBlock, 1, 13));
 
-			RecipeManager.addRecipe("meat_ingot_raw_from_block", stack(meatIngotRawItem, 9));
-			RecipeManager.addRecipe("meat_ingot_cooked_from_block", stack(meatIngotCookedItem, 9));
-			RecipeManager.addRecipe("meat_nugget_raw_from_ingot", stack(meatNuggetRawItem, 9));
-			RecipeManager.addRecipe("meat_nugget_cooked_from_ingot", stack(meatNuggetCookedItem, 9));
+			RecipeManager.addRecipe("meat_ingot_raw_from_block", stack(meatIngotRawItem, 9)).setRecipeGroup("meat_ingot_raw_from_block");
+			RecipeManager.addRecipe("meat_ingot_cooked_from_block", stack(meatIngotCookedItem, 9)).setRecipeGroup("meat_ingot_cooked_from_block");
+			RecipeManager.addRecipe("meat_nugget_raw_from_ingot", stack(meatNuggetRawItem, 9)).setRecipeGroup("meat_nugget_raw_from_ingot");
+			RecipeManager.addRecipe("meat_nugget_cooked_from_ingot", stack(meatNuggetCookedItem, 9)).setRecipeGroup("meat_nugget_cooked_from_ingot");
 			//endregion
 
 			RecipeManager.addRecipe("pinkslime_block", stack(pinkSlimeBlock));
-			RecipeManager.addRecipe("pinkslime_block_to_ball", stack(pinkSlimeItem, 9));
+			RecipeManager.addRecipe("pinkslime_block_to_ball", stack(pinkSlimeItem, 9)).setRecipeGroup("pinkslime_ball_from_block");
 		}//endregion
 
 		//region vanilla improvements
 		{
-			RecipeManager.addRecipe("rubberwood_planks", stack(PLANKS, 3, 3));
+			RecipeManager.addRecipe("rubberwood_planks", stack(PLANKS, 3, 3)).setRecipeGroup("rubber_wood_planks");
 
-			RecipeManager.addRecipe("stick_piston_clean_with_milk", stack(PISTON, 1, 0));
+			RecipeManager.addRecipe("stick_piston_clean_with_milk", stack(PISTON, 1, 0)).setRecipeGroup("clean_sticky_piston");
 
-			RecipeManager.addRecipe("sticky_piston_from_raw_rubber", stack(STICKY_PISTON));
+			RecipeManager.addRecipe("sticky_piston_from_raw_rubber", stack(STICKY_PISTON)).setRecipeGroup("sticky_piston_from_rubber");
 
 			RecipeManager.addRecipe("record_blank", stack(blankRecordItem, 1));
 
@@ -452,16 +452,16 @@ public class Minecraft implements IMFRRecipeSet {
 
 			RecipeManager.addRecipe("sugar_charcoal_block", stack(factoryDecorativeBrickBlock, 1, 15));
 
-			RecipeManager.addRecipe("torch_3", stack(TORCH, 3));
+			RecipeManager.addRecipe("torch_3", stack(TORCH, 3)).setRecipeGroup("torch_from_rubber");
 
-			RecipeManager.addRecipe("torch_2", stack(TORCH, 2));
+			RecipeManager.addRecipe("torch_2", stack(TORCH, 2)).setRecipeGroup("torch_from_sugar_charcoal");
 
 			for (@Nonnull ItemStack torchStone : getOres("torchStone")) {
 				if (torchStone.isEmpty())
 					continue;
-				RecipeManager.addRecipe("torch_stone_3", cloneStack(torchStone, 3));
+				RecipeManager.addRecipe("torch_stone_3", cloneStack(torchStone, 3)).setRecipeGroup("stone_torch_from_rubber");
 
-				RecipeManager.addRecipe("torch_stone_2", cloneStack(torchStone, 2));
+				RecipeManager.addRecipe("torch_stone_2", cloneStack(torchStone, 2)).setRecipeGroup("stone_torch_from_sugar_charcoal");
 				break;
 			}
 		}//endregion
