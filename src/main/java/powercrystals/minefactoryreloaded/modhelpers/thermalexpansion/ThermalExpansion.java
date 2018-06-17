@@ -22,6 +22,8 @@ import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.st
 import static powercrystals.minefactoryreloaded.setup.MFRThings.rawRubberItem;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.rubberBarItem;
 
+@IMFRIntegrator.DependsOn("thermalexpansion")
+@IMFRIntegrator.After("Minecraft")
 public class ThermalExpansion implements IMFRIntegrator, IRandomMobProvider {
 
 	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 771)

@@ -15,6 +15,10 @@ import powercrystals.minefactoryreloaded.api.rednet.IRedNetLogicCircuit;
 
 import javax.annotation.Nonnull;
 import java.io.File;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * This interface is used to integrate into MFR.
@@ -23,6 +27,17 @@ import java.io.File;
  */
 @SuppressWarnings("unused")
 public interface IMFRIntegrator {
+
+	/**
+	 * Apply this annotation to your Integrator if it depends on other mods,
+	 * they will be checked to see if they are loaded before creating your Integrator.
+	 */
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	@interface DependsOn {
+
+		String[] value();
+	}
 
 	IRegistry REGISTRY = IRegistry.EMPTY_REGISTRY;
 
@@ -82,6 +97,19 @@ public interface IMFRIntegrator {
 	default String getIntegratorName() {
 
 		return this.getClass().getSimpleName();
+	}
+
+	/**
+	 * Apply this annotation to your Integrator if it depends on other Integrators.
+	 * they will be sorted out after creation, before running {@link #preLoad()}.
+	 * <p>
+	 * Cyclic dependencies will result in a random order for Integrators in the cycle.
+	 */
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	@interface After {
+
+		String[] value();
 	}
 
 	interface IRegistry {
