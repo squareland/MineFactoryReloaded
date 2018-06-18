@@ -389,7 +389,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				}
 
 				if (newRepairCost > 0) {
-					// vanilla enchancement: don't write a 0. if it's not there, it's a 0 anyway.
+					// vanilla enhancement: don't write a 0. if it's not there, it's a 0 anyway.
 					outputItem.setRepairCost(newRepairCost);
 				}
 				EnchantmentHelper.setEnchantments(existingEnchantments, outputItem);

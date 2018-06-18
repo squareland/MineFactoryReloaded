@@ -163,15 +163,15 @@ public class ItemSpyglass extends ItemFactoryTool {
 			if (entity.canBeCollidedWith()) {
 				double entitySize = entity.getCollisionBorderSize();
 				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow(entitySize, entitySize, entitySize);
-				RayTraceResult movingobjectposition = axisalignedbb.calculateIntercept(playerPos, playerLookRel);
+				RayTraceResult traceResult = axisalignedbb.calculateIntercept(playerPos, playerLookRel);
 
 				if (axisalignedbb.contains(playerPos)) {
 					if (0.0D < entityDistTotal || entityDistTotal == 0.0D) {
 						pointedEntity = entity;
 						entityDistTotal = 0.0D;
 					}
-				} else if (movingobjectposition != null) {
-					double entityDist = playerPos.distanceTo(movingobjectposition.hitVec);
+				} else if (traceResult != null) {
+					double entityDist = playerPos.distanceTo(traceResult.hitVec);
 
 					if (entityDist < entityDistTotal || entityDistTotal == 0.0D) {
 						pointedEntity = entity;

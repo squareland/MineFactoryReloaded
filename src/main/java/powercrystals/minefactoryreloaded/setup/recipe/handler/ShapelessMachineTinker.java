@@ -37,7 +37,7 @@ public abstract class ShapelessMachineTinker extends ShapelessRecipes {
 		return o;
 	}
 
-	private static NonNullList<Ingredient> createIngredientListforNEI(Machine machine, @Nonnull ItemStack... items) {
+	private static NonNullList<Ingredient> createIngredientListForNEI(Machine machine, @Nonnull ItemStack... items) {
 
 		NonNullList<Ingredient> ret = RecipeHelper.buildInput(items);
 		ret.add(Ingredient.fromStacks(machine.getItemStack()));
@@ -63,7 +63,7 @@ public abstract class ShapelessMachineTinker extends ShapelessRecipes {
 
 	protected ShapelessMachineTinker(@Nonnull Machine machine, String lore, @Nonnull ItemStack... tinkerItems) {
 
-		this(machine, createMachineWithLore(machine, lore), createIngredientListforNEI(machine, tinkerItems));
+		this(machine, createMachineWithLore(machine, lore), createIngredientListForNEI(machine, tinkerItems));
 		for (@Nonnull ItemStack s : tinkerItems) {
 			List<ItemStack> l = new LinkedList<>();
 			l.add(s);

@@ -36,8 +36,6 @@ import java.util.Locale;
 
 public class MFRFluids {
 
-	public static Enum fuckthiside;
-
 	public static final MFRFluids INSTANCE = new MFRFluids();
 
 	public static Fluid milk;

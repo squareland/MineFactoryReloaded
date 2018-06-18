@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.core;
 
 import net.minecraft.util.EnumFacing;
 
-public interface IRotateableTile {
+public interface IRotatableTile {
 
 	boolean canRotate();
 

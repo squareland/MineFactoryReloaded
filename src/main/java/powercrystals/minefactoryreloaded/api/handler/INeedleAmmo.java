@@ -11,9 +11,9 @@ import javax.annotation.Nonnull;
 
 public interface INeedleAmmo {
 
-	boolean onHitEntity(@Nonnull ItemStack stac, EntityPlayer owner, Entity hit, double distance);
+	boolean onHitEntity(@Nonnull ItemStack stack, EntityPlayer owner, Entity hit, double distance);
 
-	void onHitBlock(@Nonnull ItemStack stac, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance);
+	void onHitBlock(@Nonnull ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance);
 	// TODO: needle entity should be available
 
 	float getSpread(@Nonnull ItemStack stack);

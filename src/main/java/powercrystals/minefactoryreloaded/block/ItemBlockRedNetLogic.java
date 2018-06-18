@@ -134,7 +134,7 @@ public class ItemBlockRedNetLogic extends ItemBlock {
 				"Ex 5: Daylight Clock\n\nConnect I to I/O U White, and A through G to cyan through black in order. If you " +
 						"have wired everything correctly, the clock will display the current daylight value."));
 		pages.appendTag(wrapText(
-				"Ex 5: Daylight Clock\n\nNote that as the daylight sensor has outputs 0-15, these are reprsented as hex characters " +
+				"Ex 5: Daylight Clock\n\nNote that as the daylight sensor has outputs 0-15, these are represented as hex characters " +
 						"as 0-9 and A-F."));
 		pages.appendTag(wrapText(
 				"Additional Suggestions\n\n* Try the various wave generators connected to redstone dust\n* Try using the counter - " +

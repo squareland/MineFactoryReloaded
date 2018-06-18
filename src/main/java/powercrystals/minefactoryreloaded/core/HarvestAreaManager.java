@@ -10,7 +10,7 @@ import powercrystals.minefactoryreloaded.item.ItemUpgrade;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class HarvestAreaManager <T extends TileEntity & IRotateableTile>
+public class HarvestAreaManager <T extends TileEntity & IRotatableTile>
 {
 	private T _owner;
 
@@ -200,16 +200,16 @@ public class HarvestAreaManager <T extends TileEntity & IRotateableTile>
 
 	private void recalculateArea()
 	{
-		BlockPos ourpos = _owner.getPos();
+		BlockPos ourPos = _owner.getPos();
 		EnumFacing facing = _owner.getDirectionFacing();
 		if (_overrideDirection != null)
 		{
 			facing = _overrideDirection;
 		}
 
-		_originX = ourpos.getX() + _originOffsetX;
-		_originY = ourpos.getY() + _originOffsetY;
-		_originZ = ourpos.getZ() + _originOffsetZ;
+		_originX = ourPos.getX() + _originOffsetX;
+		_originY = ourPos.getY() + _originOffsetY;
+		_originZ = ourPos.getZ() + _originOffsetZ;
 		_originOrientation = facing;
 
 		int radius = _radius + _upgradeLevel;
@@ -223,16 +223,16 @@ public class HarvestAreaManager <T extends TileEntity & IRotateableTile>
 					areaUp += _upgradeLevel * 2;
 				else
 					areaDown += _upgradeLevel * 2;
-			ourpos = ourpos.offset(facing);
+			ourPos = ourPos.offset(facing);
 		}
 		else
 		{
-			ourpos = ourpos.offset(facing, radius + 1);
+			ourPos = ourPos.offset(facing, radius + 1);
 		}
 
-		ourpos = new BlockPos(ourpos.getX() + _originOffsetX, ourpos.getY() + _originOffsetY, ourpos.getZ() + _originOffsetZ);
+		ourPos = new BlockPos(ourPos.getX() + _originOffsetX, ourPos.getY() + _originOffsetY, ourPos.getZ() + _originOffsetZ);
 
-		_harvestArea = new Area(ourpos, radius, areaDown, areaUp);
+		_harvestArea = new Area(ourPos, radius, areaDown, areaUp);
 		if (_usesBlocks)
 			_harvestedBlocks = _harvestArea.getPositionsBottomFirst();
 		_currentBlock = 0;

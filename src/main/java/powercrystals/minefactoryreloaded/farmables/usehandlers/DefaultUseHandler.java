@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import powercrystals.minefactoryreloaded.core.IAdvFluidContainerItem;
 import powercrystals.minefactoryreloaded.core.IUseHandler;
-import powercrystals.minefactoryreloaded.core.IUseable;
+import powercrystals.minefactoryreloaded.core.IUsable;
 import powercrystals.minefactoryreloaded.core.MFRLiquidMover;
 
 import javax.annotation.Nonnull;
@@ -57,7 +57,7 @@ public class DefaultUseHandler implements IUseHandler {
 		if (liquid == null || liquid.amount <= 0 || liquid.amount + Fluid.BUCKET_VOLUME <= tankProperties[0].getCapacity()) {
 			if (!fluidHandler.canBeFilledFromWorld())
 				return bucket;
-			RayTraceResult objectPosition = ((IUseable) item).rayTrace(world, entity, true);
+			RayTraceResult objectPosition = ((IUsable) item).rayTrace(world, entity, true);
 			if (objectPosition != null && objectPosition.typeOfHit == Type.BLOCK) {
 				BlockPos pos = objectPosition.getBlockPos();
 				if (canEntityAct(world, entity, pos, objectPosition.sideHit, bucket, false)) {
@@ -75,7 +75,7 @@ public class DefaultUseHandler implements IUseHandler {
 		}
 
 		if (liquid != null && liquid.amount >= Fluid.BUCKET_VOLUME && fluidHandler.canPlaceInWorld()) {
-			RayTraceResult objectPosition = ((IUseable) item).rayTrace(world, entity, false);
+			RayTraceResult objectPosition = ((IUsable) item).rayTrace(world, entity, false);
 			if (objectPosition != null && objectPosition.typeOfHit == Type.BLOCK) {
 				BlockPos pos = objectPosition.getBlockPos();
 				if (canEntityAct(world, entity, pos, objectPosition.sideHit, bucket, true)) {

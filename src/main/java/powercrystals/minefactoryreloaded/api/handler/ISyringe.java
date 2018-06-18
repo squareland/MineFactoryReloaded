@@ -54,7 +54,7 @@ public interface ISyringe {
 	/**
 	 * Called to get the empty syringe
 	 * <p>
-	 * <b>Note</b>: this will replace the syringe, max stacksize should be 1
+	 * <b>Note</b>: this will replace the syringe, max stack size should be 1
 	 *
 	 * @param syringe
 	 *            The syringe @Nonnull ItemStack.

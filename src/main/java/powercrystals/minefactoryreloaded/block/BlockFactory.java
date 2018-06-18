@@ -45,7 +45,7 @@ import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.IRedNetConnection;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.core.IEntityCollidable;
-import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.IRotatableTile;
 import powercrystals.minefactoryreloaded.core.ITankContainerBucketable;
 import powercrystals.minefactoryreloaded.core.ITraceable;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
@@ -120,9 +120,9 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 			return false;
 		}
 		TileEntity te = getTile(world, pos);
-		if (te instanceof IRotateableTile)
+		if (te instanceof IRotatableTile)
 		{
-			IRotateableTile tile = ((IRotateableTile)te);
+			IRotatableTile tile = ((IRotatableTile)te);
 			if (tile.canRotate(axis))
 			{
 				tile.rotate(axis);

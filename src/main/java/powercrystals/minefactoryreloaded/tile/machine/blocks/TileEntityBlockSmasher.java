@@ -228,9 +228,9 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 		if (_lastOutput != null) {
 			NBTTagList nbttaglist = new NBTTagList();
 			for (@Nonnull ItemStack item : _lastOutput) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				item.writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
+				NBTTagCompound tagCompound = new NBTTagCompound();
+				item.writeToNBT(tagCompound);
+				nbttaglist.appendTag(tagCompound);
 			}
 			tag.setTag("SmashedItems", nbttaglist);
 		}
@@ -251,8 +251,8 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 			NonNullList<ItemStack> drops = NonNullList.create();
 			NBTTagList nbttaglist = tag.getTagList("SmashedItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
-				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				@Nonnull ItemStack item = new ItemStack(nbttagcompound1);
+				NBTTagCompound tagCompound = nbttaglist.getCompoundTagAt(i);
+				@Nonnull ItemStack item = new ItemStack(tagCompound);
 				if (!item.isEmpty() && item.getCount() > 0) {
 					drops.add(item);
 				}

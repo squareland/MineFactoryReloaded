@@ -84,11 +84,11 @@ public class EntityPinkSlime extends EntitySlime {
 
 	@Nullable
 	@Override
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingData) {
 
-		IEntityLivingData ret = super.onInitialSpawn(difficulty, livingdata);
+		IEntityLivingData ret = super.onInitialSpawn(difficulty, livingData);
 
-		if (livingdata != null && livingdata instanceof GroupData && ((GroupData) livingdata).forceSmall) {
+		if (livingData != null && livingData instanceof GroupData && ((GroupData) livingData).forceSmall) {
 			setSlimeSize(1, true);
 		}
 

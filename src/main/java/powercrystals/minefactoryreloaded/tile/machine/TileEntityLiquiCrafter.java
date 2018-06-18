@@ -178,7 +178,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryTickable {
 		/**
 		 * Consuming
 		 */
-		// TODO: this stage needs broken apart; cloning into the <tt>craft</tt> object, then getCraftingResult, then call IRecipie.getRemainingItems
+		// TODO: this stage needs broken apart; cloning into the <tt>craft</tt> object, then getCraftingResult, then call IRecipe.getRemainingItems
 		// afterwards we can then consume items and process the outputs correctly; extra outputs should be done after the main crafting output logic to ensure ordering consistency
 		for (int i = 11; i < 29; i++) {
 			@Nonnull ItemStack item = _inventory.get(i);
@@ -499,9 +499,9 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryTickable {
 		if (outputs.size() != 0) {
 			NBTTagList dropItems = new NBTTagList();
 			for (@Nonnull ItemStack item : outputs) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				item.writeToNBT(nbttagcompound1);
-				dropItems.appendTag(nbttagcompound1);
+				NBTTagCompound tagCompound = new NBTTagCompound();
+				item.writeToNBT(tagCompound);
+				dropItems.appendTag(tagCompound);
 			}
 			if (dropItems.tagCount() > 0)
 				tag.setTag("OutItems", dropItems);
@@ -520,8 +520,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryTickable {
 			ArrayList<ItemStack> drops = new ArrayList<>();
 			NBTTagList nbttaglist = tag.getTagList("OutItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0; ) {
-				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				@Nonnull ItemStack item = new ItemStack(nbttagcompound1);
+				NBTTagCompound tagCompound = nbttaglist.getCompoundTagAt(i);
+				@Nonnull ItemStack item = new ItemStack(tagCompound);
 				if (!item.isEmpty() && item.getCount() > 0) {
 					drops.add(item);
 				}

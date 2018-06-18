@@ -32,7 +32,7 @@ import powercrystals.minefactoryreloaded.MFRProps;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.core.IAdvFluidContainerItem;
 import powercrystals.minefactoryreloaded.core.IUseHandler;
-import powercrystals.minefactoryreloaded.core.IUseable;
+import powercrystals.minefactoryreloaded.core.IUsable;
 import powercrystals.minefactoryreloaded.farmables.usehandlers.DefaultUseHandler;
 import powercrystals.minefactoryreloaded.farmables.usehandlers.DrinkUseHandler;
 import powercrystals.minefactoryreloaded.item.base.ItemFactory;
@@ -45,7 +45,7 @@ import javax.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ItemFactoryCup extends ItemFactory implements IUseable {
+public class ItemFactoryCup extends ItemFactory implements IUsable {
 
 	public final static int MELTING_POINT = 523; // melting point of Polyethylene terphthalate
 	public final static IUseHandler defaultUseAction = new DefaultUseHandler();

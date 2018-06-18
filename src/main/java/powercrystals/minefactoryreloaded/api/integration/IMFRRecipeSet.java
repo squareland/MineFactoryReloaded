@@ -28,7 +28,7 @@ public interface IMFRRecipeSet {
 	}
 
 	/**
-	 * Register oredictionary entries for MFR's (or your) items that are not otherwise registered by default.
+	 * Register ore dictionary entries for MFR's (or your) items that are not otherwise registered by default.
 	 */
 	default void registerOredict() {
 

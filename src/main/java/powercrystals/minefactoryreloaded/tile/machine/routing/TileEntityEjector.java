@@ -273,7 +273,6 @@ public class TileEntityEjector extends TileEntityFactoryTickable {
 
 /*	TODO readd once BC team figure out what they want to do
 	@Override
-	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
 
 		if (type == PipeType.STRUCTURE)

@@ -149,8 +149,8 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 
 	private void updateSideConnection(IBlockAccess world, BlockPos pos, MFRDyeColor color, Map<Integer, Tuple<Boolean, Boolean>> connections, EnumFacing facing)
 	{
-		IBlockState stateNeigbor = world.getBlockState(pos.offset(facing));
-		connections.put(facing.ordinal(), new Tuple<>(stateNeigbor.getBlock() == this, stateNeigbor.getBlock() == this && stateNeigbor.getValue(COLOR) != color));
+		IBlockState stateNeighbor = world.getBlockState(pos.offset(facing));
+		connections.put(facing.ordinal(), new Tuple<>(stateNeighbor.getBlock() == this, stateNeighbor.getBlock() == this && stateNeighbor.getValue(COLOR) != color));
 	}
 
 	@Override

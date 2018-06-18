@@ -38,7 +38,7 @@ import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectio
 import powercrystals.minefactoryreloaded.block.BlockFactory;
 import powercrystals.minefactoryreloaded.block.ItemBlockConveyor;
 import powercrystals.minefactoryreloaded.core.IEntityCollidable;
-import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.IRotatableTile;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.MFRCreativeTab;
@@ -385,8 +385,8 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 		if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 			TileEntity te = world.getTileEntity(pos);
-			if (te instanceof IRotateableTile) {
-				((IRotateableTile) te).rotate(side);
+			if (te instanceof IRotatableTile) {
+				((IRotatableTile) te).rotate(side);
 			}
 			MFRUtil.usedWrench(player, hand, pos, side);
 			return true;

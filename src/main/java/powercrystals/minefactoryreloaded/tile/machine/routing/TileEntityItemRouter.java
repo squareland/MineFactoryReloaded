@@ -124,8 +124,8 @@ public class TileEntityItemRouter extends TileEntityFactoryTickable implements I
 		}
 
 		if (0 < remainingOverall.getCount() && remainingOverall.getCount() < totalWeight(routes)) {
-			int outdir = weightedRandomSide(routes);
-			remainingOverall = UtilInventory.dropStack(this, remainingOverall, _outputDirections[outdir], _outputDirections[outdir]);
+			int outDir = weightedRandomSide(routes);
+			remainingOverall = UtilInventory.dropStack(this, remainingOverall, _outputDirections[outDir], _outputDirections[outDir]);
 		}
 		return remainingOverall;
 	}

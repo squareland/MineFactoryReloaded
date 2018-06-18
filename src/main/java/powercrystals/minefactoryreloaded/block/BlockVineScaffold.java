@@ -80,7 +80,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 		}
 		/** TODO: apparently we need a packet now for 100% functionality,
 		 *  player's server packet handler now resets their position every tick after calling the movement code
-		 *  and the values that store that position are private, wirtten only by a single private function called
+		 *  and the values that store that position are private, written only by a single private function called
 		 *  in places that cannot be tricked into being invoked. used to be modifying the AABB would keep the data
 		 *  perfectly synced, but in making that write-only mojang has discarded the possibility of blocks like this
 		**/

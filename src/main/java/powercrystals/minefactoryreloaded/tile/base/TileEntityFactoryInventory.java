@@ -441,10 +441,10 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 
 			nbttaglist = tag.getTagList("Tanks", 10);
 			for (int i = 0; i < nbttaglist.tagCount(); i++) {
-				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				int j = nbttagcompound1.getByte("Tank") & 0xff;
+				NBTTagCompound tagCompound = nbttaglist.getCompoundTagAt(i);
+				int j = tagCompound.getByte("Tank") & 0xff;
 				if (j < _tanks.length) {
-					FluidStack l = FluidStack.loadFluidStackFromNBT(nbttagcompound1);
+					FluidStack l = FluidStack.loadFluidStackFromNBT(tagCompound);
 					if (l != null) {
 						((FluidTankCore) _tanks[j]).setFluid(l);
 					}
@@ -456,8 +456,8 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			NonNullList<ItemStack> drops = NonNullList.create();
 			nbttaglist = tag.getTagList("DropItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0;) {
-				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-				@Nonnull ItemStack item = new ItemStack(nbttagcompound1);
+				NBTTagCompound tagCompound = nbttaglist.getCompoundTagAt(i);
+				@Nonnull ItemStack item = new ItemStack(tagCompound);
 				if (!item.isEmpty() && item.getCount() > 0) {
 					drops.add(item);
 				}
@@ -507,9 +507,9 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		if (failedDrops != null) {
 			NBTTagList dropItems = new NBTTagList();
 			for (@Nonnull ItemStack item : failedDrops) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				item.writeToNBT(nbttagcompound1);
-				dropItems.appendTag(nbttagcompound1);
+				NBTTagCompound tagCompound = new NBTTagCompound();
+				item.writeToNBT(tagCompound);
+				dropItems.appendTag(tagCompound);
 			}
 			if (dropItems.tagCount() > 0)
 				tag.setTag("DropItems", dropItems);
@@ -531,11 +531,11 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 			for (int i = 0, n = _tanks.length; i < n; i++) {
 				FluidStack fluid = _tanks[i].getFluid();
 				if (fluid != null && fluid.amount > 0) {
-					NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-					nbttagcompound1.setByte("Tank", (byte) i);
+					NBTTagCompound tagCompound = new NBTTagCompound();
+					tagCompound.setByte("Tank", (byte) i);
 
-					fluid.writeToNBT(nbttagcompound1);
-					tanks.appendTag(nbttagcompound1);
+					fluid.writeToNBT(tagCompound);
+					tanks.appendTag(tagCompound);
 				}
 			}
 			if (tanks.tagCount() > 0)

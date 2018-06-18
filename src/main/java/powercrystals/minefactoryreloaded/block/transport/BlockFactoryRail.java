@@ -129,7 +129,7 @@ public class BlockFactoryRail extends BlockRailBase implements IInitializer, IMo
 	}
 
 	@Override
-	protected void updateState(IBlockState state, World world, BlockPos pos, Block neighor) {
+	protected void updateState(IBlockState state, World world, BlockPos pos, Block neighbor) {
 
 		if (!isPowered) {
 			return;

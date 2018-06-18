@@ -34,7 +34,7 @@ import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetOmniNode;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
-import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.IRotatableTile;
 import powercrystals.minefactoryreloaded.render.MachineStateMapper;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
 import powercrystals.minefactoryreloaded.render.tileentity.LaserDrillPrechargerRenderer;
@@ -222,20 +222,20 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		super.onBlockPlacedBy(world, pos, state, entity, stack);
 		if (entity != null) {
 			TileEntity te = getTile(world, pos);
-			if (te instanceof IRotateableTile)
-				if (((IRotateableTile) te).canRotate())
+			if (te instanceof IRotatableTile)
+				if (((IRotatableTile) te).canRotate())
 					switch (MathHelper.floor((entity.rotationYaw * 4F) / 360F + 0.5D) & 3) {
 					case 0:
-						((IRotateableTile) te).rotateDirectlyTo(3);
+						((IRotatableTile) te).rotateDirectlyTo(3);
 						break;
 					case 1:
-						((IRotateableTile) te).rotateDirectlyTo(4);
+						((IRotatableTile) te).rotateDirectlyTo(4);
 						break;
 					case 2:
-						((IRotateableTile) te).rotateDirectlyTo(2);
+						((IRotatableTile) te).rotateDirectlyTo(2);
 						break;
 					case 3:
-						((IRotateableTile) te).rotateDirectlyTo(5);
+						((IRotatableTile) te).rotateDirectlyTo(5);
 						break;
 					}
 

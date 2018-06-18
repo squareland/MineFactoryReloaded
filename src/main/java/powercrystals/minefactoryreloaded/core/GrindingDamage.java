@@ -61,7 +61,7 @@ public class GrindingDamage extends DamageSource {
 	@Override
 	public ITextComponent getDeathMessage(EntityLivingBase entity) {
 
-		EntityLivingBase entityliving1 = entity.getAttackingEntity();
+		EntityLivingBase attackingEntity = entity.getAttackingEntity();
 		String s = "death.attack." + this.damageType;
 		if (_msgCount > 1) {
 			int msg = _rand.nextInt(_msgCount);
@@ -70,8 +70,8 @@ public class GrindingDamage extends DamageSource {
 			}
 		}
 		String s1 = s + ".player";
-		if (entityliving1 != null && I18n.canTranslate(s1))
-			return new TextComponentTranslation(s1, entity.getName(), entityliving1.getName());
+		if (attackingEntity != null && I18n.canTranslate(s1))
+			return new TextComponentTranslation(s1, entity.getName(), attackingEntity.getName());
 		return new TextComponentTranslation(s, entity.getName());
 	}
 

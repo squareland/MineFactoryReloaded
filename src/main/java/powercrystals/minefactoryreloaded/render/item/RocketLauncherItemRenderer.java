@@ -25,7 +25,7 @@ import java.util.Map;
 public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 	CCModel launcherModel;
-	RocketLauncherItemRenderer offHandRenderrer;
+	RocketLauncherItemRenderer offHandRenderer;
 	private static ResourceLocation textureLocation = new ResourceLocation(MFRProps.MODEL_TEXTURE_FOLDER + "rocket_launcher.png");
 
 	private RocketLauncherItemRenderer(boolean offHand) {
@@ -37,7 +37,7 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 	public RocketLauncherItemRenderer() {
 
-		offHandRenderrer = new RocketLauncherItemRenderer(true);
+		offHandRenderer = new RocketLauncherItemRenderer(true);
 
 		Map<String, CCModel> models = OBJParser.parseModels(new ResourceLocation(MFRProps.MODEL_FOLDER + "rocket_launcher.obj"), new SwapYZ());
 		launcherModel = models.get("Box009").copy().apply(new Scale(-1, 1, 1)).backfacedCopy();
@@ -63,7 +63,7 @@ public class RocketLauncherItemRenderer extends BaseItemRenderer {
 
 		if (cameraTransformType == ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND
 				|| cameraTransformType == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
-			return PerspectiveMapWrapper.handlePerspective(offHandRenderrer, transformations, cameraTransformType);
+			return PerspectiveMapWrapper.handlePerspective(offHandRenderer, transformations, cameraTransformType);
 
 		return PerspectiveMapWrapper.handlePerspective(this, transformations, cameraTransformType);
 	}

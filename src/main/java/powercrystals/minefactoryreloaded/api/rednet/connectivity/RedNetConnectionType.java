@@ -10,7 +10,7 @@ import java.util.Map;
  * <p>
  * CableSingle:          Connections will use the cable renderer with a single band, best used for whole blocks
  * <br>
- * PlateSingle:          Connections will use the plate renderer with a single band, used for conveyers and rails
+ * PlateSingle:          Connections will use the plate renderer with a single band, used for conveyors and rails
  * <p>
  * CableAll:             Connections permit access to all 16 bands
  * <br>

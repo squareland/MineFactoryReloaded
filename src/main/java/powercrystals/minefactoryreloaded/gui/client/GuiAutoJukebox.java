@@ -43,6 +43,6 @@ public class GuiAutoJukebox extends GuiFactoryInventory
 	@Override
 	protected void actionPerformed(GuiButton button)
 	{
-		MFRPacket.sendAutoJukeBoxButtonToServer(_tileEntity, (byte)button.id);
+		MFRPacket.sendAutoJukeboxButtonToServer(_tileEntity, (byte)button.id);
 	}
 }

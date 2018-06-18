@@ -290,7 +290,7 @@ public class MFRPacket extends PacketBase {
 		PacketHandler.sendToServer(getPacket(PacketType.CHRONOTYPER_BUTTON).addCoords(te));
 	}
 
-	public static void sendAutoJukeBoxButtonToServer(TileEntity te, byte button) {
+	public static void sendAutoJukeboxButtonToServer(TileEntity te, byte button) {
 
 		PacketHandler.sendToServer(getPacket(PacketType.AUTO_JUKEBOX_BUTTON).addCoords(te).addByte(button));
 	}

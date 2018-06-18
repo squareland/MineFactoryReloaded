@@ -67,7 +67,7 @@ public class ReplacementBlock
 	}
 	
 	/**
-	 * Called to set the metdata of this ReplacementBlock to a fixed value
+	 * Called to set the metadata of this ReplacementBlock to a fixed value
 	 * @param meta The metadata of the block 
 	 * @return This instance
 	 */
@@ -82,7 +82,7 @@ public class ReplacementBlock
 	}
 	
 	/**
-	 * Called to set the metdata of this ReplacementBlock to a value read from an @Nonnull ItemStack
+	 * Called to set the metadata of this ReplacementBlock to a value read from an @Nonnull ItemStack
 	 * @param hasMeta The metadata of the block
 	 * @return This instance
 	 */

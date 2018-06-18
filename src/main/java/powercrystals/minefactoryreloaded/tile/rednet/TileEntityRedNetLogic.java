@@ -21,7 +21,7 @@ import powercrystals.minefactoryreloaded.api.rednet.IRedNetNetworkContainer;
 import powercrystals.minefactoryreloaded.api.rednet.connectivity.RedNetConnectionType;
 import powercrystals.minefactoryreloaded.block.BlockRedNetLogic;
 import powercrystals.minefactoryreloaded.circuits.Noop;
-import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.IRotatableTile;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.item.ItemLogicUpgradeCard;
 import powercrystals.minefactoryreloaded.net.Packets;
@@ -31,7 +31,7 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 
-public class TileEntityRedNetLogic extends TileEntityBase implements IRotateableTile, IPortableData, ITickable {
+public class TileEntityRedNetLogic extends TileEntityBase implements IRotatableTile, IPortableData, ITickable {
 
 	public static class PinMapping {
 
@@ -373,7 +373,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 	@Override
 	public void writePortableData(EntityPlayer player, NBTTagCompound tag) {
 
-		writeCricuitsOnly(tag, false);
+		writeCircuitsOnly(tag, false);
 		if (tag.hasKey("circuits", 9)) {
 			tag.setByte("p_rot", (byte) world.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal());
 			player.sendMessage(new TextComponentTranslation("chat.info.mfr.rednet.memorycard.uploaded"));
@@ -402,7 +402,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 	public void writeItemNBT(NBTTagCompound tag) {
 
 		super.writeItemNBT(tag);
-		writeCricuitsOnly(tag, true);
+		writeCircuitsOnly(tag, true);
 		if (tag.hasKey("circuits", 9))
 			tag.setByte("p_rot", (byte) world.getBlockState(pos).getValue(BlockRedNetLogic.FACING).ordinal());
 		l: for (int v : _upgradeLevel)
@@ -423,7 +423,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		return tag;
 	}
 
-	public void writeCricuitsOnly(NBTTagCompound tag, boolean includeNoop) {
+	public void writeCircuitsOnly(NBTTagCompound tag, boolean includeNoop) {
 
 		NBTTagList circuits = new NBTTagList();
 		for (int c = 0; c < _circuits.length; c++) {
@@ -513,9 +513,9 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 				{
 					for (int k = 0; k < inputPins.tagCount() && k < _pinMappingInputs[c].length; k++) {
 						NBTTagCompound pin = inputPins.getCompoundTagAt(k);
-						int ipin = pin.getInteger("pin");
+						int iPin = pin.getInteger("pin");
 						int buffer = pin.getInteger("buffer");
-						_pinMappingInputs[i][k] = new PinMapping(ipin, mapBuffer(map, buffer));
+						_pinMappingInputs[i][k] = new PinMapping(iPin, mapBuffer(map, buffer));
 					}
 				}
 
@@ -523,9 +523,9 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 				{
 					for (int k = 0; k < outputPins.tagCount() && k < _pinMappingOutputs[c].length; k++) {
 						NBTTagCompound pin = outputPins.getCompoundTagAt(k);
-						int ipin = pin.getInteger("pin");
+						int iPin = pin.getInteger("pin");
 						int buffer = pin.getInteger("buffer");
-						_pinMappingOutputs[i][k] = new PinMapping(ipin, mapBuffer(map, buffer));
+						_pinMappingOutputs[i][k] = new PinMapping(iPin, mapBuffer(map, buffer));
 					}
 				}
 
@@ -624,7 +624,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		_updatable = Arrays.copyOf(_updatable, _circuitCount);
 		_buffers[13] = Arrays.copyOf(_buffers[13], _variableCount);
 
-		// re-init pinmapping arrays
+		// re-init pin mapping arrays
 		PinMapping[][] inputMappings = new PinMapping[_circuitCount][];
 		for (int i = 0; i < inputMappings.length; i++) {
 			if (i < _pinMappingInputs.length && _pinMappingInputs[i] != null) {

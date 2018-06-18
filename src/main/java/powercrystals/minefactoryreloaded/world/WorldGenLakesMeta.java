@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.world;
 
-import java.util.Random;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -10,6 +8,8 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class WorldGenLakesMeta extends WorldGenerator
 {
@@ -39,7 +39,7 @@ public class WorldGenLakesMeta extends WorldGenerator
 		else
 		{
 			y -= 4;
-			boolean[] aboolean = new boolean[2048];
+			boolean[] booleans = new boolean[2048];
 			int l = random.nextInt(4) + 4;
 			int i1;
 			
@@ -65,7 +65,7 @@ public class WorldGenLakesMeta extends WorldGenerator
 							
 							if(d9 < 1.0D)
 							{
-								aboolean[(j1 * 16 + k1) * 8 + l1] = true;
+								booleans[(j1 * 16 + k1) * 8 + l1] = true;
 							}
 						}
 					}
@@ -82,10 +82,10 @@ public class WorldGenLakesMeta extends WorldGenerator
 				{
 					for(i2 = 0; i2 < 8; ++i2)
 					{
-						flag = !aboolean[(i1 * 16 + j2) * 8 + i2]
-								&& (i1 < 15 && aboolean[((i1 + 1) * 16 + j2) * 8 + i2] || i1 > 0 && aboolean[((i1 - 1) * 16 + j2) * 8 + i2] || j2 < 15
-										&& aboolean[(i1 * 16 + j2 + 1) * 8 + i2] || j2 > 0 && aboolean[(i1 * 16 + (j2 - 1)) * 8 + i2] || i2 < 7
-										&& aboolean[(i1 * 16 + j2) * 8 + i2 + 1] || i2 > 0 && aboolean[(i1 * 16 + j2) * 8 + (i2 - 1)]);
+						flag = !booleans[(i1 * 16 + j2) * 8 + i2]
+								&& (i1 < 15 && booleans[((i1 + 1) * 16 + j2) * 8 + i2] || i1 > 0 && booleans[((i1 - 1) * 16 + j2) * 8 + i2] || j2 < 15
+										&& booleans[(i1 * 16 + j2 + 1) * 8 + i2] || j2 > 0 && booleans[(i1 * 16 + (j2 - 1)) * 8 + i2] || i2 < 7
+										&& booleans[(i1 * 16 + j2) * 8 + i2 + 1] || i2 > 0 && booleans[(i1 * 16 + j2) * 8 + (i2 - 1)]);
 						
 						if(flag)
 						{
@@ -111,7 +111,7 @@ public class WorldGenLakesMeta extends WorldGenerator
 				{
 					for(i2 = 0; i2 < 8; ++i2)
 					{
-						if(aboolean[(i1 * 16 + j2) * 8 + i2])
+						if(booleans[(i1 * 16 + j2) * 8 + i2])
 						{
 							world.setBlockState(new BlockPos(x + i1, y + i2, z + j2), i2 >= 4 ? Blocks.AIR.getDefaultState() : state, 2);
 						}
@@ -126,7 +126,7 @@ public class WorldGenLakesMeta extends WorldGenerator
 					for(i2 = 4; i2 < 8; ++i2)
 					{
 						BlockPos placementPos = new BlockPos(x + i1, y + i2, z + j2);
-						if(aboolean[(i1 * 16 + j2) * 8 + i2] && world.getBlockState(new BlockPos(x + i1, y + i2 - 1, z + j2)).getBlock().equals(Blocks.DIRT)
+						if(booleans[(i1 * 16 + j2) * 8 + i2] && world.getBlockState(new BlockPos(x + i1, y + i2 - 1, z + j2)).getBlock().equals(Blocks.DIRT)
 								&& world.getLightFor(EnumSkyBlock.SKY, placementPos) > 0)
 						{
 							Biome biome = world.getBiome(placementPos);

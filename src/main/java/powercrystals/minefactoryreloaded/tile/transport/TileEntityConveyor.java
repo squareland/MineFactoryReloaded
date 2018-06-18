@@ -16,7 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import powercrystals.minefactoryreloaded.block.transport.BlockConveyor;
-import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.IRotatableTile;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityBase;
@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import static powercrystals.minefactoryreloaded.block.transport.BlockConveyor.ConveyorDirection.*;
 
 public class TileEntityConveyor extends TileEntityBase
-		implements IRotateableTile, ISidedInventory, /*IPipeConnection,*/ IInventoryConnection
+		implements IRotatableTile, ISidedInventory, /*IPipeConnection,*/ IInventoryConnection
 {
 	MFRDyeColor _dye = null;
 
@@ -524,7 +524,7 @@ public class TileEntityConveyor extends TileEntityBase
 		}
 	}
 
-	public void setConveyerActiveFromGate(boolean conveyorActive)
+	public void setConveyorActiveFromGate(boolean conveyorActive)
 	{
 		boolean wasActive = _gateAllowsActive;
 		_gateAllowsActive = conveyorActive;
@@ -567,7 +567,6 @@ public class TileEntityConveyor extends TileEntityBase
 /*	TODO: readd once BC team figure out what they want to do with this
 
 @Override
-	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(Object type, EnumFacing with) {
 		if (type == PipeType.ITEM)
 			return ConnectOverride.CONNECT;

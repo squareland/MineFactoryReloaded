@@ -316,11 +316,11 @@ public class RecipeManager {
 			finalizing = false;
 			disableFallback();
 			recipe.setRegistryName(new ResourceLocation(registryName.toString() + '_' + recipes + '_' + ACTIVE_SET));
-			nonair:
+			nonAir:
 			if (!output.isEmpty() && enabled.getAsBoolean()) {
 				for (Ingredient ing : recipe.getIngredients())
 					if (!ing.apply(ItemStack.EMPTY))
-						break nonair;
+						break nonAir;
 				throw new RuntimeException("All ingredients are air!");
 			}
 			craftingRecipes.add(recipe);

@@ -114,10 +114,10 @@ public class TileEntityLiquidRouter extends TileEntityFactoryTickable {
 		}
 
 		if (0 < amountRemaining && amountRemaining < totalWeight(routes)) {
-			int outdir = weightedRandomSide(routes);
-			TileEntity te = MFRUtil.getTile(world, pos.offset(_outputDirections[outdir]));
-			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outdir].getOpposite())) {
-				amountRemaining -= te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outdir].getOpposite())
+			int outDir = weightedRandomSide(routes);
+			TileEntity te = MFRUtil.getTile(world, pos.offset(_outputDirections[outDir]));
+			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outDir].getOpposite())) {
+				amountRemaining -= te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, _outputDirections[outDir].getOpposite())
 						.fill(new FluidStack(resource, amountRemaining), doFill);
 			}
 		}

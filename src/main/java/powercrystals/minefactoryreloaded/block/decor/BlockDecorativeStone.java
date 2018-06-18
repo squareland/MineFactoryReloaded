@@ -117,8 +117,8 @@ public class BlockDecorativeStone extends BlockFactory {
 		if (BlockFalling.canFallThrough(world.getBlockState(new BlockPos(pos.down()))) && pos.getY() >= 0) {
 			if (!BlockSand.fallInstantly && world.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32))) {
 				if (!world.isRemote) {
-					EntityFallingBlock entityfallingsand = new EntityFallingBlock(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, state);
-					world.spawnEntity(entityfallingsand);
+					EntityFallingBlock entityFallingBlock = new EntityFallingBlock(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, state);
+					world.spawnEntity(entityFallingBlock);
 				}
 			} else {
 				world.setBlockToAir(pos);

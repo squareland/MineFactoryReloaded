@@ -45,7 +45,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper {
 
 		Collections.shuffle(enchantments);
 
-		outerlist:
+		outerList:
 		for (EnchantmentData newEnchant : enchantments) {
 			if (isBook) {
 				ItemEnchantedBook.addEnchantment(output, newEnchant);
@@ -56,7 +56,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper {
 						if (oldEnchant.getValue() <= newEnchant.enchantmentLevel) {
 							updateEnchantment(output, oldEnchant.getKey(), (short) newEnchant.enchantmentLevel);
 						}
-						continue outerlist;
+						continue outerList;
 					}
 				}
 				output.addEnchantment(newEnchant.enchantment, newEnchant.enchantmentLevel);
@@ -98,11 +98,11 @@ public class AutoEnchantmentHelper extends EnchantmentHelper {
 			}
 
 			List<EnchantmentData> returnList = null;
-			List<EnchantmentData> enchantDatas = EnchantmentHelper.getEnchantmentDatas((blockInvalid ?
+			List<EnchantmentData> enchantData = EnchantmentHelper.getEnchantmentDatas((blockInvalid ?
 					targetEnchantability : Math.min(40, targetEnchantability)), stack, false);
 
-			if (!enchantDatas.isEmpty()) {
-				EnchantmentData enchData = WeightedRandom.getRandomItem(rand, enchantDatas);
+			if (!enchantData.isEmpty()) {
+				EnchantmentData enchData = WeightedRandom.getRandomItem(rand, enchantData);
 
 				{
 					returnList = new ArrayList<>();
@@ -110,7 +110,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper {
 
 					for (int i = targetEnchantability; rand.nextInt(50) <= i; i >>= 1) {
 						if (blockInvalid)
-							for (Iterator<EnchantmentData> iter = enchantDatas.iterator(); iter.hasNext(); ) {
+							for (Iterator<EnchantmentData> iter = enchantData.iterator(); iter.hasNext(); ) {
 								Enchantment ench = iter.next().enchantment;
 								for (EnchantmentData newEnchantment : returnList)
 									if (!newEnchantment.enchantment.isCompatibleWith(ench)) {
@@ -119,8 +119,8 @@ public class AutoEnchantmentHelper extends EnchantmentHelper {
 									}
 							}
 
-						if (!enchantDatas.isEmpty()) {
-							EnchantmentData randomEnchant = WeightedRandom.getRandomItem(rand, enchantDatas);
+						if (!enchantData.isEmpty()) {
+							EnchantmentData randomEnchant = WeightedRandom.getRandomItem(rand, enchantData);
 							returnList.add(randomEnchant);
 						} else
 							break;

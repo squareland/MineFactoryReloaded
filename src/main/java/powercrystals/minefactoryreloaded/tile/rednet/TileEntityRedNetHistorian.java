@@ -115,7 +115,6 @@ public class TileEntityRedNetHistorian extends TileEntityFactory {
 
 /*	TODO readd when BC team figure out what they want to do
 	@Override
-	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
 		return ConnectOverride.DISCONNECT;
 	}

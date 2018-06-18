@@ -245,14 +245,14 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		int maxBlockOffset = MFRConfig.verticalHarvestSearchMaxVertical.getInt();
 
 		Block plant = harvestable.getPlant();
-		for (int currentYoffset = startOffset; currentYoffset < maxBlockOffset; ++currentYoffset) {
-			BlockPos offsetPos = pos.offset(EnumFacing.UP, currentYoffset);
+		for (int currentYOffset = startOffset; currentYOffset < maxBlockOffset; ++currentYOffset) {
+			BlockPos offsetPos = pos.offset(EnumFacing.UP, currentYOffset);
 			Block block = world.getBlockState(offsetPos).getBlock();
 			if (!block.equals(plant) ||
 					!harvestable.canBeHarvested(world, _immutableSettings, offsetPos))
 				break;
 
-			highestBlockOffset = currentYoffset;
+			highestBlockOffset = currentYOffset;
 		}
 
 		if (highestBlockOffset >= 0)

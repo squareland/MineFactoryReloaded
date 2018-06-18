@@ -65,10 +65,10 @@ public class RedNetHistorianRenderer extends TileEntitySpecialRenderer<TileEntit
 	public void render(TileEntityRedNetHistorian.Client historian, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 
-		TextureManager renderengine = Minecraft.getMinecraft().renderEngine;
+		TextureManager renderEngine = Minecraft.getMinecraft().renderEngine;
 
-		if (renderengine != null) {
-			renderengine.bindTexture(historianTex);
+		if (renderEngine != null) {
+			renderEngine.bindTexture(historianTex);
 		}
 
 		GlStateManager.pushMatrix();

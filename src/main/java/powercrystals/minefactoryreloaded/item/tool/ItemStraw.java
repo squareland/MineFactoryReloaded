@@ -60,16 +60,16 @@ public class ItemStraw extends ItemFactoryTool {
 						IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, result.sideHit);
 						IFluidTankProperties[] info = handler.getTankProperties();
 						for (int i = info.length; i-- > 0;) {
-							FluidStack fstack = info[i].getContents();
-							if (fstack != null) {
-								fluid = fstack.getFluid();
-								if (fluid != null && map.containsKey(fluid.getName()) && fstack.amount >= 1000) {
-									fstack = fstack.copy();
-									fstack.amount = 1000;
-									FluidStack r = handler.drain(fstack.copy(), false);
+							FluidStack fStack = info[i].getContents();
+							if (fStack != null) {
+								fluid = fStack.getFluid();
+								if (fluid != null && map.containsKey(fluid.getName()) && fStack.amount >= 1000) {
+									fStack = fStack.copy();
+									fStack.amount = 1000;
+									FluidStack r = handler.drain(fStack.copy(), false);
 									if (r != null && r.amount >= 1000) {
 										map.get(fluid.getName()).onDrink(player, r);
-										handler.drain(fstack, true);
+										handler.drain(fStack, true);
 										break;
 									}
 								}
@@ -115,11 +115,11 @@ public class ItemStraw extends ItemFactoryTool {
 					IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, result.sideHit);
 					IFluidTankProperties[] info = handler.getTankProperties();
 					for (int i = info.length; i-- > 0;) {
-						FluidStack fstack = info[i].getContents();
-						if (fstack != null) {
-							fluid = fstack.getFluid();
-							if (fluid != null && map.containsKey(fluid.getName()) && fstack.amount >= 1000) {
-								FluidStack r = handler.drain(fstack, false);
+						FluidStack fStack = info[i].getContents();
+						if (fStack != null) {
+							fluid = fStack.getFluid();
+							if (fluid != null && map.containsKey(fluid.getName()) && fStack.amount >= 1000) {
+								FluidStack r = handler.drain(fStack, false);
 								if (r != null && r.amount >= 1000) {
 									player.setActiveHand(hand);
 									break;

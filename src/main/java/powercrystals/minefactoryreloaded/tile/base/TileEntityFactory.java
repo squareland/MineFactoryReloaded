@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedClient;
 import powercrystals.minefactoryreloaded.core.HarvestAreaManager;
 import powercrystals.minefactoryreloaded.core.IHarvestAreaContainer;
-import powercrystals.minefactoryreloaded.core.IRotateableTile;
+import powercrystals.minefactoryreloaded.core.IRotatableTile;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.container.ContainerFactoryInventory;
@@ -23,7 +23,7 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import java.util.Locale;
 
 public abstract class TileEntityFactory extends TileEntityBase
-		implements IRotateableTile, IInventoryConnection, IPortableData,
+		implements IRotatableTile, IInventoryConnection, IPortableData,
 				   IHarvestAreaContainer/*, IPipeConnection*/ {
 
 	protected static class FactoryAreaManager extends HarvestAreaManager<TileEntityFactory> {
@@ -364,7 +364,6 @@ public abstract class TileEntityFactory extends TileEntityBase
 
 /*	TODO: readd once BC team figure out what they want to do here
 	@Override
-	@Strippable("buildcraft.api.transport.IPipeConnection")
 	public ConnectOverride overridePipeConnection(PipeType type, EnumFacing with) {
 
 		if (type == PipeType.FLUID)

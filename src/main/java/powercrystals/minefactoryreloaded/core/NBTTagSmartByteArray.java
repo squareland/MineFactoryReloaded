@@ -33,8 +33,8 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 		}
 	}
 
-	private _ByteArrayOutputStream arrayout;
-	private DataOutputStream dataout;
+	private _ByteArrayOutputStream arrayOut;
+	private DataOutputStream dataOut;
 
 	public NBTTagSmartByteArray() {
 
@@ -45,14 +45,14 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 
 		super(new byte[0]);
 
-		arrayout = new _ByteArrayOutputStream(initialSize);
-		dataout = new DataOutputStream(arrayout);
+		arrayOut = new _ByteArrayOutputStream(initialSize);
+		dataOut = new DataOutputStream(arrayOut);
 	}
 
 	public NBTTagSmartByteArray addString(String theString) {
 
 		try {
-			dataout.writeUTF(theString);
+			dataOut.writeUTF(theString);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -62,8 +62,8 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addUUID(UUID theUUID) {
 
 		try {
-			dataout.writeLong(theUUID.getMostSignificantBits());
-			dataout.writeLong(theUUID.getLeastSignificantBits());
+			dataOut.writeLong(theUUID.getMostSignificantBits());
+			dataOut.writeLong(theUUID.getLeastSignificantBits());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -73,7 +73,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addLong(long theLong) {
 
 		try {
-			dataout.writeLong(theLong);
+			dataOut.writeLong(theLong);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addInt(int theInteger) {
 
 		try {
-			dataout.writeInt(theInteger);
+			dataOut.writeInt(theInteger);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -101,10 +101,10 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 			if ((theInteger & ~0x3F) != 0) {
 				v |= 0x80;
 			}
-			dataout.writeByte(v | (theInteger & 0x3F));
+			dataOut.writeByte(v | (theInteger & 0x3F));
 			theInteger >>>= 6;
 			while (theInteger != 0) {
-				dataout.writeByte((theInteger & 0x7F) | ((theInteger & ~0x7F) != 0 ? 0x80 : 0));
+				dataOut.writeByte((theInteger & 0x7F) | ((theInteger & ~0x7F) != 0 ? 0x80 : 0));
 				theInteger >>>= 7;
 			}
 		} catch (IOException e) {
@@ -116,7 +116,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addBool(boolean theBoolean) {
 
 		try {
-			dataout.writeBoolean(theBoolean);
+			dataOut.writeBoolean(theBoolean);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -126,7 +126,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addByte(byte theByte) {
 
 		try {
-			dataout.writeByte(theByte);
+			dataOut.writeByte(theByte);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -141,7 +141,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addShort(short theShort) {
 
 		try {
-			dataout.writeShort(theShort);
+			dataOut.writeShort(theShort);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -156,7 +156,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addByteArray(byte theByteArray[]) {
 
 		try {
-			dataout.write(theByteArray);
+			dataOut.write(theByteArray);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -166,7 +166,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	public NBTTagSmartByteArray addFloat(float theFloat) {
 
 		try {
-			dataout.writeFloat(theFloat);
+			dataOut.writeFloat(theFloat);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -197,9 +197,9 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 		} else {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			CompressedStreamTools.writeCompressed(nbt, baos);
-			byte[] abyte = baos.toByteArray();
-			addShort((short) abyte.length);
-			addByteArray(abyte);
+			byte[] bytes = baos.toByteArray();
+			addShort((short) bytes.length);
+			addByteArray(bytes);
 		}
 	}
 
@@ -219,14 +219,14 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 
 	public void write(DataOutput output) throws IOException {
 
-		output.writeInt(arrayout.size());
-		output.write(arrayout.getByteArray(), 0, arrayout.size());
+		output.writeInt(arrayOut.size());
+		output.write(arrayOut.getByteArray(), 0, arrayOut.size());
 	}
 
 	@Override
 	public String toString() {
 
-		return "[" + arrayout.size() + " bytes]";
+		return "[" + arrayOut.size() + " bytes]";
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 
 		if (super.equals(o) && o.getClass() == NBTTagSmartByteArray.class) {
 			NBTTagSmartByteArray other = (NBTTagSmartByteArray) o;
-			return other.dataout.equals(dataout);
+			return other.dataOut.equals(dataOut);
 		}
 		return false;
 	}
@@ -248,13 +248,13 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 	@Override
 	public int hashCode() {
 
-		return super.hashCode() ^ dataout.hashCode();
+		return super.hashCode() ^ dataOut.hashCode();
 	}
 
 	@Override
 	public byte[] getByteArray() {
 
-		return arrayout.toByteArray();
+		return arrayOut.toByteArray();
 	}
 
 }

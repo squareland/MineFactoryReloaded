@@ -29,6 +29,7 @@ public class ButtonLogicPinSelect extends ElementButtonManaged
 		new GuiColor( 22,  22,  26), // black
 			};
 
+	@SuppressWarnings("SpellCheckingInspection")
 	private static String[] _pinColorNames = new String[]
 			{
 		"WHIT",

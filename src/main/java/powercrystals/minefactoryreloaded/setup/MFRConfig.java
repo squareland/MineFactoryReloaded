@@ -90,11 +90,6 @@ public class MFRConfig {
 	public static Property passengerRailSearchMaxHorizontal;
 	public static Property passengerRailSearchMaxVertical;
 
-	// recipes config
-	public static Property vanillaRecipes;
-	public static Property thermalExpansionRecipes;
-    public static Property enderioRecipes;
-
 	public static String CATEGORY_ITEM = "item";
 
 	public static void loadClientConfig(File configFile) {
@@ -169,7 +164,7 @@ public class MFRConfig {
 		passengerRailSearchMaxVertical.setComment("When searching for players or dropoff locations, how far up to search");
 		passengerRailSearchMaxHorizontal = c.get(CATEGORY_GENERAL + ".SearchDistance", "PassengerRail.MaxHorizontal", 3);
 		passengerRailSearchMaxHorizontal.setComment("When searching for players or dropoff locations, how far out to the sides (radius) to search");
-		fruitTreeSearchMaxHorizontal = c.get(CATEGORY_GENERAL + ".SearchDistance", "FruitTree.MaxHoriztonal", 7);
+		fruitTreeSearchMaxHorizontal = c.get(CATEGORY_GENERAL + ".SearchDistance", "FruitTree.MaxHorizontal", 7);
 		fruitTreeSearchMaxHorizontal.setComment("When searching for parts of a fruit tree, how far out to the sides (radius) to search");
 		fruitTreeSearchMaxVertical = c.get(CATEGORY_GENERAL + ".SearchDistance", "FruitTree.MaxVertical", 25);
 		fruitTreeSearchMaxVertical.setComment("When searching for parts of a fruit tree, how far up to search");
@@ -191,7 +186,7 @@ public class MFRConfig {
 		worldGenDimensionBlacklist.setComment("A list of dimension IDs to disable MFR worldgen in.");
 
 		subCategory = category + ".RetroGen";
-		c.getCategory(subCategory).setComment("Enable or disable specific retrogen items.\nOnly has an effect if retroactive geneneration is enabled in CoFHCore.");
+		c.getCategory(subCategory).setComment("Enable or disable specific retrogen items.\nOnly has an effect if retroactive generation is enabled in CoFHWorld.");
 		mfrLakeSewageRetrogen = c.get(subCategory, "SewageLakes", false).setRequiresMcRestart(true);
 		mfrLakeSludgeRetrogen = c.get(subCategory, "SludgeLakes", false).setRequiresMcRestart(true);
 		rubberTreeRetrogen = c.get(subCategory, "RubberTrees", true).setRequiresMcRestart(true);
@@ -261,7 +256,7 @@ public class MFRConfig {
 			conveyorNeverCapturesPlayers = c.get(category, "NeverCapturePlayers", false).setRequiresMcRestart(true);
 			conveyorNeverCapturesPlayers.setComment("If true, conveyors will NEVER capture players regardless of other settings.");
 			conveyorNeverCapturesTCGolems = c.get(category, "NeverCaptureTCGolems", false).setRequiresMcRestart(true);
-			conveyorNeverCapturesTCGolems.setComment("If true, conveyors will NEVER capture ThaumCraft golems regardless of other settings.");
+			conveyorNeverCapturesTCGolems.setComment("If true, conveyors will NEVER capture Thaumcraft golems regardless of other settings.");
 
 			category = machine + Machine.ChunkLoader.getName();
 			enableChunkLimitBypassing = c.get(category, "IgnoreChunkLimit", false);
@@ -280,7 +275,7 @@ public class MFRConfig {
 			autospawnerCostStandard = c.get(category, "Standard", 1).setRequiresMcRestart(true);
 			autospawnerCostStandard.setComment("The multiplier for work required to generate a mob in standard (non-exact) mode.");
 			spawnerCustomization = c.getCategory(category + ".Custom").setRequiresMcRestart(true);
-			spawnerCustomization.setComment("Custom base XP costs for entities. format: I:<entityid> = #. e.g.:\n" + "I:VillagerGolem = 25\nI:Slime = 50");
+			spawnerCustomization.setComment("Custom base XP costs for entities. format: I:<entity_id> = #. e.g.:\n" + "I:VillagerGolem = 25\nI:Slime = 50");
 
 			harvesterSkip = c.get(machine + Machine.Harvester.getName(), "SkipWork", false).setRequiresMcRestart(true);
 			harvesterSkip.setComment("If true, the harvester will skip scanning some bocks when filled with sludge");
@@ -289,7 +284,7 @@ public class MFRConfig {
 			laserdrillCost.setComment("The work required by the drill to generate a single ore.");
 
 			unifierBlacklist = c.get(machine + Machine.Unifier.getName(), "Blacklist", new String[] {"dyeBlue","dyeWhite","dyeBrown","dyeBlack","listAllwater","listAllmilk"}).setRequiresMcRestart(true);
-			unifierBlacklist.setComment("A list of ore dictionary entrys to disable unifying for. By default, MFR will not attempt to unify anything with more than one oredict name.");
+			unifierBlacklist.setComment("A list of ore dictionary entries to disable unifying for. By default, MFR will not attempt to unify anything with more than one oredict name.");
 
 			breederShutdownThreshold = c.get(machine + Machine.Breeder.getName(), "ShutdownThreshold", 50).setRequiresMcRestart(true);
 			breederShutdownThreshold.setComment("If the number of entities in the breeder's target area exceeds this value, the breeder will cease operating. This is provided to control server lag.");
