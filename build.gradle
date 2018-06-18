@@ -68,10 +68,11 @@ sourceSets {
             srcDir 'src/api/java'
         }
     }
-    main_api {
+    dependencies {
         java {
-            srcDir 'src/main/java/powercrystals/minefactoryreloaded/api'
+            srcDir 'src/dependencies/java/'
         }
+        compileClasspath += sourceSets.api.compileClasspath
     }
     core {
         java {
@@ -91,6 +92,7 @@ sourceSets {
         }
         compileClasspath += sourceSets.api.output
         compileClasspath += sourceSets.core.output
+        compileClasspath += sourceSets.dependencies.output
     }
     doLast {
 
@@ -100,6 +102,7 @@ sourceSets {
         // i want ant back
         reobfJar.classpath += sourceSets.core.output
         reobfJar.classpath += sourceSets.api.output
+        reobfJar.classpath += sourceSets.dependencies.output
     }
 }
 
@@ -153,6 +156,7 @@ task moveCore {
 
 jar {
     dependsOn 'moveCore'
+    from sourceSets.api.output // this is a +=
     classifier = 'universal'
     manifest { from sourceSets.main.output.resourcesDir.toString() + '/META-INF/MANIFEST.MF' }
 }
@@ -164,7 +168,7 @@ task deobfJar(type: Jar) {
 }
 
 task srcJar(type: Jar) {
-    from sourceSets.main_api.allSource
+    from([sourceSets.api.allSource, sourceSets.api.output])
     classifier = 'api'
 }
 
