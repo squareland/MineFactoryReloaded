@@ -79,7 +79,7 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 
 		l: if (!special && te instanceof IPortableData) {
 			if (read) {
-				NBTTagCompound tag2 = (NBTTagCompound) tag.copy();
+				NBTTagCompound tag2 = tag.copy();
 				((IPortableData) te).writePortableData(player, tag2);
 				if (!tag2.equals(tag)) {
 					tag = tag2;

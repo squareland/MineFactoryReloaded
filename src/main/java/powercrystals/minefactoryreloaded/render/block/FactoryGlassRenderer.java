@@ -96,7 +96,7 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 			return Collections.emptyList();
 		}
 
-		List<BakedQuad> quads = new ArrayList<>();
+		List<BakedQuad> quads = new ArrayList<>(3);
 		quads.addAll(getCoreQuadsForSide(state.getValue(BlockFactoryGlass.COLOR), face));
 		quads.add(getFrameQuadForSide(face, state.getValue(BlockFactoryGlass.CTM_VALUE[face.ordinal()])));
 		return quads;

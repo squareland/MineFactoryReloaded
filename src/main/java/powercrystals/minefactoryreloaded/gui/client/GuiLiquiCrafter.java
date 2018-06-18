@@ -1,22 +1,17 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
-import java.util.Arrays;
-
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-
-import org.lwjgl.opengl.GL11;
-
 import powercrystals.minefactoryreloaded.core.MFRUtil;
 import powercrystals.minefactoryreloaded.gui.container.ContainerLiquiCrafter;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityLiquiCrafter;
+
+import java.util.Collections;
 
 public class GuiLiquiCrafter extends GuiFactoryInventory {
 
@@ -70,7 +65,7 @@ public class GuiLiquiCrafter extends GuiFactoryInventory {
 			int i = tankX + tankY * 3;
 			drawTankTooltip(_crafter.getTanks()[i], mouseX, mouseY);
 		} else if (_container.drops && isPointInRegion(130, 39, 24, 16, mouseX, mouseY)) {
-			this.drawTooltip(Arrays.asList(MFRUtil.localize("container.mfr.pendingDrops")), mouseX, mouseY);
+			this.drawTooltip(Collections.singletonList(MFRUtil.localize("container.mfr.pendingDrops")), mouseX, mouseY);
 		}
 	}
 

@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.core;
 
-import net.minecraft.util.math.BlockPos;
-
 import java.util.List;
 import java.util.Map;
 

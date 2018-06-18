@@ -73,11 +73,11 @@ public class ItemPortaSpawner extends ItemFactory {
 
 		super.addInformation(stack, world, tooltip, tooltipFlag);
 		if (hasData(stack)) {
-			String entities = "";
+			StringBuilder entities = new StringBuilder();
 			for (String entityUnlocalized : getEntityNames(stack)) {
 				if (entities.length() > 0)
-					entities += ", ";
-				entities += MFRUtil.localize("entity.", entityUnlocalized);
+					entities.append(", ");
+				entities.append(MFRUtil.localize("entity.", entityUnlocalized));
 			}
 			tooltip.add(MFRUtil.localize("tile.mobSpawner") + ": " + entities);
 		}

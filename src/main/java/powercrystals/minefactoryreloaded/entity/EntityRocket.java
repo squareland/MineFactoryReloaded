@@ -38,7 +38,7 @@ public class EntityRocket extends Entity
 		setPosition(posX, posY, posZ);
 		recalculateVelocity();
 		if (owner instanceof EntityPlayer)
-			_owner = ((EntityPlayer)owner).getName();
+			_owner = owner.getName();
 	}
 	
 	public EntityRocket(World world, EntityLivingBase owner, Entity target)

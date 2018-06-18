@@ -10,8 +10,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-
 import powercrystals.minefactoryreloaded.gui.container.ContainerBag;
 
 @SideOnly(Side.CLIENT)

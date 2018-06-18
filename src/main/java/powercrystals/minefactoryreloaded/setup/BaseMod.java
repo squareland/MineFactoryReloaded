@@ -62,7 +62,6 @@ public abstract class BaseMod {
 				} else {
 					FMLCommonHandler.instance().registerCrashCallable(new CrashCallable("Lacking version information."));
 				}
-				jar.close();
 			} catch (IOException e) {
 				FMLCommonHandler.instance().registerCrashCallable(new CrashCallable("Error reading version information." + e.getMessage()));
 			}

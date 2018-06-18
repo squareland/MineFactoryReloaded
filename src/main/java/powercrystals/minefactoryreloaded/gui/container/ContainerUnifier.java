@@ -37,7 +37,7 @@ public class ContainerUnifier extends ContainerFactoryInventory
 		super.detectAndSendChanges();
 		for (int i = 2; i --> 0; )
 		{
-			Slot slotObject = (Slot)inventorySlots.get(i);
+			Slot slotObject = inventorySlots.get(i);
 			if (slotObject != null)
 				for (IContainerListener listener : this.listeners)
 					listener.

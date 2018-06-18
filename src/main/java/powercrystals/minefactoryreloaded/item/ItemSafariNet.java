@@ -347,14 +347,14 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 		return s.hasTagCompound() && s.getTagCompound().hasKey("EntityData", Constants.NBT.TAG_COMPOUND) ? s.getTagCompound().getCompoundTag("EntityData") : null;
 	}
 
-	public static Class<?> getEntityClass(@Nonnull ItemStack s) {
+	public static Class<? extends Entity> getEntityClass(@Nonnull ItemStack s) {
 
 		if (!isSafariNet(s) || isEmpty(s))
 			return null;
 		String mobId = getEntityData(s).getString("id");
 		if (!ForgeRegistries.ENTITIES.containsKey(new ResourceLocation(mobId)))
 			return null;
-		return (Class<?>) EntityList.getClass(new ResourceLocation(mobId));
+		return EntityList.getClass(new ResourceLocation(mobId));
 	}
 
 	@Override

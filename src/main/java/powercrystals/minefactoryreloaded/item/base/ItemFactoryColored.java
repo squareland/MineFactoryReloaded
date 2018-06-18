@@ -1,7 +1,5 @@
 package powercrystals.minefactoryreloaded.item.base;
 
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.core.MFRDyeColor;

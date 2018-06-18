@@ -446,15 +446,15 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	public String getRedNetInfo(EnumFacing side, EntityPlayer player) {
 
 		// TODO: localize
-		String o;
+		StringBuilder o;
 		if (side != null)
-			o = "Side " + side + " is " + ItemRedNetMeter._colorNames[getSideColor(side)];
+			o = new StringBuilder("Side " + side + " is " + ItemRedNetMeter._colorNames[getSideColor(side)]);
 		else {
-			o = "Sides are: ";
+			o = new StringBuilder("Sides are: ");
 			for (EnumFacing dir : EnumFacing.VALUES)
-				o += dir + ": " + ItemRedNetMeter._colorNames[getSideColor(dir)] + "; ";
+				o.append(dir).append(": ").append(ItemRedNetMeter._colorNames[getSideColor(dir)]).append("; ");
 		}
-		return o;
+		return o.toString();
 	}
 
 	@Override
@@ -466,10 +466,10 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 			if (_network != null) {
 				info.add(text("Grid:" + _network));
 				info.add(text("Conduits: " + _network.getConduitCount() + ", Nodes: " + _network.getNodeCount()));
-				String o = "[";
+				StringBuilder o = new StringBuilder("[");
 				for (int i = 0; i < 15; ++i)
-					o += _network.getPowerLevelOutput(i) + ",";
-				o += _network.getPowerLevelOutput(15) + "]";
+					o.append(_network.getPowerLevelOutput(i)).append(",");
+				o.append(_network.getPowerLevelOutput(15)).append("]");
 				info.add(text("Outputs: " + o));
 			} else {
 				info.add(text("Null Grid"));

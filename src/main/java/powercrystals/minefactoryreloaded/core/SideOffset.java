@@ -3,7 +3,6 @@ package powercrystals.minefactoryreloaded.core;
 import gnu.trove.impl.unmodifiable.TUnmodifiableIntObjectMap;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import net.minecraft.util.math.Vec3i;
 
 public enum SideOffset {
 

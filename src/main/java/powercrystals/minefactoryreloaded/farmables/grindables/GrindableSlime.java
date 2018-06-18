@@ -9,10 +9,7 @@ import powercrystals.minefactoryreloaded.api.mob.IFactoryGrindable;
 import powercrystals.minefactoryreloaded.api.mob.MobDrop;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GrindableSlime implements IFactoryGrindable
 {
@@ -23,9 +20,9 @@ public class GrindableSlime implements IFactoryGrindable
 	public GrindableSlime(Class<? extends EntityLivingBase> slime, MobDrop[] drops, int dropSize)
 	{
 		grindable = slime;
-		ArrayList<MobDrop> q = new ArrayList<>();
-		q.addAll(Arrays.asList(drops));
-		this.drops = q;
+		ArrayList<MobDrop> list = new ArrayList<>();
+		Collections.addAll(list, drops);
+		this.drops = list;
 		this.dropSize = dropSize;
 	}
 

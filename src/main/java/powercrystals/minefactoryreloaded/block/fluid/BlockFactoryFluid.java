@@ -38,7 +38,8 @@ import java.util.Random;
 
 public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorative { // TODO: convert to BlockFluidFinite
 
-	private static DamageSource steam = new DamageSource("steam"); {
+	private static DamageSource steam = new DamageSource("steam");
+	static {
 		steam.setDamageBypassesArmor().setFireDamage().setDifficultyScaled();
 		steam.setDamageIsAbsolute();
 	}

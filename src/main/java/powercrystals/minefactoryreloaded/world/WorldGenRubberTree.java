@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.util.EnumFacing;
 
-import powercrystals.minefactoryreloaded.block.BlockRubberWood;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 public class WorldGenRubberTree extends WorldGenerator {

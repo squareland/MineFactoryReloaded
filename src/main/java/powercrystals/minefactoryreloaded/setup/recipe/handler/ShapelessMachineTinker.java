@@ -16,7 +16,6 @@ import powercrystals.minefactoryreloaded.core.UtilInventory;
 import powercrystals.minefactoryreloaded.setup.Machine;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 

@@ -20,13 +20,14 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GuiFactoryInventory extends GuiContainerCore {
 
 	protected static DecimalFormat decimal_format = new DecimalFormat();
 
-	{
+	static {
 		decimal_format.setMaximumFractionDigits(1);
 		decimal_format.setMinimumFractionDigits(1);
 	}
@@ -178,14 +179,14 @@ public class GuiFactoryInventory extends GuiContainerCore {
 		List<String> lines = new ArrayList<>(2);
 		lines.add(name);
 		String m = String.valueOf(max);
-		String v = String.valueOf(value);
+		StringBuilder v = new StringBuilder(String.valueOf(value));
+		v.reverse();
 		while (v.length() < m.length())
-			v = " " + v;
+			v.append(' ');
+		v.reverse();
 		lines.add(v + " / " + m + " " + unit);
 		if (extra != null) {
-			for (String l : extra) {
-				lines.add(l);
-			}
+			Collections.addAll(lines, extra);
 		}
 		drawTooltip(lines, x, y);
 	}
@@ -195,9 +196,11 @@ public class GuiFactoryInventory extends GuiContainerCore {
 		List<String> lines = new ArrayList<>(2);
 		lines.add(name);
 		String m = decimal_format.format(max);
-		String v = decimal_format.format(value);
+		StringBuilder v = new StringBuilder(decimal_format.format(value));
+		v.reverse();
 		while (v.length() < m.length())
-			v = " " + v;
+			v.append(' ');
+		v.reverse();
 		lines.add(v + " / " + m + " " + unit);
 		drawTooltip(lines, x, y);
 	}

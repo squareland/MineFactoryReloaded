@@ -8,6 +8,7 @@ import powercrystals.minefactoryreloaded.api.mob.MobDrop;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -21,10 +22,7 @@ public class GrindableStandard implements IFactoryGrindable
 	{
 		_grindableClass = entityToGrind;
 		_drops = new ArrayList<>();
-		for(MobDrop d : dropStacks)
-		{
-			_drops.add(d);
-		}
+		Collections.addAll(_drops, dropStacks);
 		_entityProcessed = entityProcessed;
 	}
 

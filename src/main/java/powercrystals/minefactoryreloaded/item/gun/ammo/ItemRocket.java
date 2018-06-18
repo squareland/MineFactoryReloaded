@@ -13,7 +13,7 @@ public class ItemRocket extends ItemMulti {
 
 	public ItemRocket() {
 
-		setNames(new String[] {"smart", null});
+		setNames("smart", null);
 		setUnlocalizedName("mfr.rocket");
 		setMaxStackSize(16);
 	}

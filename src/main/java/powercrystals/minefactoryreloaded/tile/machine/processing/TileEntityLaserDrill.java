@@ -280,7 +280,7 @@ public class TileEntityLaserDrill extends TileEntityFactoryTickable implements I
 			}
 		}
 
-		return ((WeightedRandomItemStack) WeightedRandom.getRandomItem(_rand, drops)).getStack();
+		return WeightedRandom.getRandomItem(_rand, drops).getStack();
 	}
 
 	@Override

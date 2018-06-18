@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.net;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
 import net.minecraft.server.management.PlayerChunkMap;
 import net.minecraft.server.management.PlayerChunkMapEntry;

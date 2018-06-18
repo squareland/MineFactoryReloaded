@@ -3,7 +3,6 @@ package powercrystals.minefactoryreloaded.gui.container;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 
-import net.minecraft.util.ResourceLocation;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptBlankRecord;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptRecord;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoJukebox;

@@ -64,7 +64,7 @@ public class EntityFishingRod extends EntityThrowable {
 			setDead();
 		} else if (fuse == 1) {
 			if (world instanceof WorldServer) {
-				((WorldServer)world).setEntityState(this, (byte)18);
+				world.setEntityState(this, (byte)18);
 			}
 		}
 	}
