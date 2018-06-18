@@ -133,10 +133,10 @@ public class FluidTankMulti implements IFluidTank, IFluidHandler {
 			}
 		}
 		return f;
-		} catch (Throwable _) {
+		} catch (Throwable t) {
 			System.out.format("%s, ", Arrays.toString(tanks));
 			System.out.format("index: %s, length: %s, tanks.length: %s, grid: %s\n", index, length, tanks.length, grid);
-			throw Throwables.propagate(_);
+			throw Throwables.propagate(t);
 		}
 	}
 
@@ -170,10 +170,10 @@ public class FluidTankMulti implements IFluidTank, IFluidHandler {
 			}
 			return r;
 		}
-		} catch (Throwable _) {
+		} catch (Throwable t) {
 			System.out.format("%s, ", Arrays.toString(tanks));
 			System.out.format("index: %s, length: %s, tanks.length: %s, grid: %s\n", index, length, tanks.length, grid);
-			throw Throwables.propagate(_);
+			throw Throwables.propagate(t);
 		}
 		return null;
 	}

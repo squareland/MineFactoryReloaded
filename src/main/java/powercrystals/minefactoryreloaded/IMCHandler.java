@@ -394,9 +394,9 @@ public class IMCHandler {
 				 */
 				else
 					bigWarning(_log, Level.WARN, "Unknown IMC message (%s)\nfrom %s", k, m.getSender());
-			} catch (Throwable _) {
+			} catch (Throwable t) {
 				bigWarning(_log, Level.ERROR, "Bad IMC message (%s)\nfrom %s", m.key, m.getSender());
-				_log.catching(_);
+				_log.catching(t);
 			}
 		}
 	}
