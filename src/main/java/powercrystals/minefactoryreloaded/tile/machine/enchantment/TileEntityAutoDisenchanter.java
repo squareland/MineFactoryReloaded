@@ -74,7 +74,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 		if (stack.isEmpty())
 			return false;
 		if (slot == 0) {
-			return stack.getEnchantmentTagList() != null || stack.getItem().equals(Items.ENCHANTED_BOOK);
+			return !stack.getEnchantmentTagList().hasNoTags() || stack.getItem().equals(Items.ENCHANTED_BOOK);
 		} else if (slot == 1) {
 			return stack.getItem().equals(Items.BOOK);
 		}
@@ -103,10 +103,10 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 		@Nonnull ItemStack stack = _inventory.get(4);
 		boolean isBook = stack.getItem().equals(Items.ENCHANTED_BOOK);
 		NBTTagList list = isBook ? ItemEnchantedBook.getEnchantments(stack) : stack.getEnchantmentTagList();
-		if ((list == null || list.tagCount() <= 0) && _inventory.get(2).isEmpty()) {
+		if (list.tagCount() <= 0 && _inventory.get(2).isEmpty()) {
 			_inventory.set(2, stack);
 			setInventorySlotContents(4, ItemStack.EMPTY);
-		} else if ((list != null && list.tagCount() > 0) &&
+		} else if (list.tagCount() > 0 &&
 				(!_inventory.get(1).isEmpty() && _inventory.get(1).getItem().equals(Items.BOOK)) &
 				_inventory.get(2).isEmpty() &
 				_inventory.get(3).isEmpty()) {
@@ -142,7 +142,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 					}
 				}
 
-				if (!_repeatDisenchant || (!_inventory.get(4).isEmpty() && _inventory.get(4).getEnchantmentTagList() == null)) {
+				if (!_repeatDisenchant || (!_inventory.get(4).isEmpty() && _inventory.get(4).getEnchantmentTagList().hasNoTags())) {
 					_inventory.set(2, _inventory.get(4));
 					_inventory.set(4, ItemStack.EMPTY);
 				}
