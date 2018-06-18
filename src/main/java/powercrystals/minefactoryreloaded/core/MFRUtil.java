@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -404,13 +405,8 @@ public class MFRUtil {
 
 	public static NBTTagCompound writeModifierToNBT(String name, AttributeModifier modifier) {
 
-		NBTTagCompound tag = new NBTTagCompound();
+		NBTTagCompound tag = SharedMonsterAttributes.writeAttributeModifierToNBT(modifier);
 		tag.setString("AttributeName", name);
-		tag.setString("Name", modifier.getName());
-		tag.setDouble("Amount", modifier.getAmount());
-		tag.setInteger("Operation", modifier.getOperation());
-		tag.setLong("UUIDMost", modifier.getID().getMostSignificantBits());
-		tag.setLong("UUIDLeast", modifier.getID().getLeastSignificantBits());
 		return tag;
 	}
 
