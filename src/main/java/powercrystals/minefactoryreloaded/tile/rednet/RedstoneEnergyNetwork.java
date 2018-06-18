@@ -7,9 +7,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.core.ArrayHashList;
 import powercrystals.minefactoryreloaded.core.IGrid;
+import powercrystals.minefactoryreloaded.core.LinkedHashList;
 import powercrystals.minefactoryreloaded.net.GridTickHandler;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 public class RedstoneEnergyNetwork implements IGrid {
@@ -20,7 +20,7 @@ public class RedstoneEnergyNetwork implements IGrid {
 			GridTickHandler.energy;
 
 	private ArrayHashList<TileEntityRedNetEnergy> nodeSet = new ArrayHashList<>();
-	private LinkedHashSet<TileEntityRedNetEnergy> conduitSet;
+	private LinkedHashList<TileEntityRedNetEnergy> conduitSet;
 	private TileEntityRedNetEnergy master;
 	private int overflowSelector;
 	private boolean regenerating = false;
@@ -35,7 +35,7 @@ public class RedstoneEnergyNetwork implements IGrid {
 	}
 
 	public RedstoneEnergyNetwork(TileEntityRedNetEnergy base) { this();
-		conduitSet = new LinkedHashSet<>();
+		conduitSet = new LinkedHashList<>();
 		regenerating = true;
 		addConduit(base);
 		regenerating = false;
@@ -90,37 +90,39 @@ public class RedstoneEnergyNetwork implements IGrid {
 
 	@Override
 	public void markSweep() {
+
 		destroyGrid();
 		if (conduitSet.isEmpty())
 			return;
-		TileEntityRedNetEnergy main = conduitSet.iterator().next();
-		LinkedHashSet<TileEntityRedNetEnergy> oldSet = conduitSet;
+		TileEntityRedNetEnergy main = conduitSet.poke();
+		LinkedHashList<TileEntityRedNetEnergy> oldSet = conduitSet;
 		nodeSet.clear();
-		conduitSet = new LinkedHashSet<>(Math.min(oldSet.size() / 6, 5));
-
-		LinkedHashSet<TileEntityRedNetEnergy> toCheck = new LinkedHashSet<>();
-		LinkedHashSet<TileEntityRedNetEnergy> checked = new LinkedHashSet<>();
-		EnumFacing[] dir = EnumFacing.VALUES;
-		toCheck.add(main);
-		checked.add(main);
-		while (!toCheck.isEmpty()) {
-			Iterator<TileEntityRedNetEnergy> it = toCheck.iterator();
-			main = it.next();
-			it.remove();
-			addConduit(main);
-			World world = main.getWorld();
-			for (int i = 6; i --> 0; ) {
-				BlockPos bp = main.getPos().offset(dir[i]);
-				if (world.isBlockLoaded(bp)) {
-					TileEntity te = world.getTileEntity(bp);
-					if (te instanceof TileEntityRedNetEnergy) {
-						TileEntityRedNetEnergy ter = (TileEntityRedNetEnergy)te;
-						if (main.canInterface(ter, dir[i].getOpposite()) && checked.add(ter))
-							toCheck.add(ter);
+		conduitSet = new LinkedHashList<>(Math.min(oldSet.size() / 6, 5));
+		{
+			LinkedHashList<TileEntityRedNetEnergy> toCheck = new LinkedHashList<>();
+			LinkedHashSet<TileEntityRedNetEnergy> checked = new LinkedHashSet<>();
+			EnumFacing[] dir = EnumFacing.VALUES;
+			toCheck.add(main);
+			checked.add(main);
+			BlockPos.PooledMutableBlockPos pos = BlockPos.PooledMutableBlockPos.retain();
+			while (!toCheck.isEmpty()) {
+				main = toCheck.shift();
+				addConduit(main);
+				World world = main.getWorld();
+				for (int i = 6; i-- > 0; ) {
+					BlockPos bp = pos.setPos(main.getPos()).offset(dir[i]);
+					if (world.isBlockLoaded(bp)) {
+						TileEntity te = world.getTileEntity(bp);
+						if (te instanceof TileEntityRedNetEnergy) {
+							TileEntityRedNetEnergy ter = (TileEntityRedNetEnergy) te;
+							if (main.canInterface(ter, dir[i].getOpposite()) && checked.add(ter))
+								toCheck.add(ter);
+						}
 					}
 				}
+				oldSet.remove(main);
 			}
-			oldSet.remove(main);
+			pos.release();
 		}
 		if (!oldSet.isEmpty()) {
 			RedstoneEnergyNetwork newGrid = new RedstoneEnergyNetwork();
