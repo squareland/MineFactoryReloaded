@@ -183,10 +183,10 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, @Nullable Block block, BlockPos fromPos) {
 
 		if (!canBlockStay(world, pos)) {
-			int height = world.getActualHeight();
+			int height = world.getHeight();
 			BlockPos currentPos = pos;
 			while(currentPos.getY() < height) {
 				IBlockState currentState = world.getBlockState(currentPos);

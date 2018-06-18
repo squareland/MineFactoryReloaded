@@ -43,7 +43,7 @@ public class HarvestableShearable extends HarvestableStandard
 					return ((IShearable)block).onSheared(stack, world, pos, 0);
 				}
 			}
-			if (Item.getItemFromBlock(block) != null)
+			if (Item.getItemFromBlock(block) != Items.AIR)
 			{
 				ArrayList<ItemStack> drops = new ArrayList<>();
 				drops.add(block.getItem(world, pos, state));

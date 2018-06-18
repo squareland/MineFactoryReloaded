@@ -492,7 +492,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 
 		boolean oldMode = (_cableMode[side.ordinal()] & 1) == 1;
 		boolean removed = false;
-		if (side != null && _connectionState[side.ordinal()].isAllSubnets) {
+		if (_connectionState[side.ordinal()].isAllSubnets) {
 			removeFromGrid();
 			removed = true;
 			RedstoneNetwork.HANDLER.addConduitForUpdate(this);

@@ -110,8 +110,7 @@ public class CommonProxy implements LoadingCallback {
 			World world = chunk.getWorld();
 			if (world instanceof WorldServer) {
 				PlayerChunkMap chunkMap = ((WorldServer) world).getPlayerChunkMap();
-				if (chunkMap == null)
-					return;
+
 				PlayerChunkMapEntry entry = chunkMap.getEntry(chunk.x, chunk.z);
 
 				if (entry != null)

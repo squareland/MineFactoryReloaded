@@ -4,6 +4,7 @@ import codechicken.lib.model.PlanarFaceBakery;
 import codechicken.lib.model.bakery.generation.ISimpleBlockBakery;
 import codechicken.lib.texture.SpriteSheetManager;
 import codechicken.lib.texture.TextureUtils;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -32,7 +33,7 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 
 	static {
 
-		for(int i=0; i < 64; i++)
+		for (int i = 0; i < 64; i++)
 			spriteSheet.setupSprite(i); //TODO do not setup for blank textures
 
 		TextureUtils.addIconRegister(FactoryGlassRenderer.spriteSheet);
@@ -89,6 +90,7 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 		return spriteSheet.getSprite(index);
 	}
 
+	@Nonnull
 	@Override
 	public List<BakedQuad> bakeQuads(EnumFacing face, IExtendedBlockState state) {
 
@@ -117,14 +119,18 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 
 		return faceQuads;
 	}
-	
+
 	@Override
 	public IExtendedBlockState handleState(IExtendedBlockState state, IBlockAccess access, BlockPos pos) {
+
 		return null;
 	}
 
+	@Nonnull
 	@Override
 	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
-		return null;
+
+		return ImmutableList.of();
 	}
+
 }

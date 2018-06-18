@@ -5,6 +5,7 @@ import codechicken.lib.render.CCModel;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.buffer.BakingVertexBuffer;
 import codechicken.lib.vec.uv.IconTransformation;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.state.IBlockState;
@@ -37,7 +38,7 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 	private TextureAtlasSprite glassStreaksTexture;
 
 	private FactoryGlassPaneRenderer() {
-		
+
 		post = CCModel.quadModel(24);
 		post.generateBlock(0, 0.4375, 0, 0.4375, 0.5625, 1, 0.5625).computeNormals();
 
@@ -55,7 +56,8 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 		glassStreaksTexture = FactoryGlassRenderer.spriteSheet.getSprite(62);
 
 	}
-	
+
+	@Nonnull
 	@Override
 	public List<BakedQuad> bakeQuads(EnumFacing face, IExtendedBlockState state) {
 
@@ -75,7 +77,7 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 		return buffer.bake();
 	}
 
-	private void renderPane(@Nullable IBlockState state, CCRenderState ccrs) {
+	private void renderPane(IBlockState state, CCRenderState ccrs) {
 
 		IExtendedBlockState exState = (IExtendedBlockState) state;
 
@@ -88,7 +90,7 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 		renderPaneParts(exState, ccrs, color, overlayTextures, connections);
 	}
 
-	private void renderPaneParts(@Nullable IExtendedBlockState state, CCRenderState ccrs, int color, Map<EnumFacing, TextureAtlasSprite> overlayTextures,
+	private void renderPaneParts(IExtendedBlockState state, CCRenderState ccrs, int color, Map<EnumFacing, TextureAtlasSprite> overlayTextures,
 			Map<EnumFacing, Boolean> connections) {
 
 		int facesToShow = state.getValue(BlockFactoryGlassPane.FACES);
@@ -109,9 +111,10 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 	}
 
 	private Map<EnumFacing, TextureAtlasSprite> getOverlayTextures(IExtendedBlockState exState) {
+
 		ImmutableMap.Builder<EnumFacing, TextureAtlasSprite> builder = ImmutableMap.builder();
 
-		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			builder.put(facing, FactoryGlassRenderer.getSpriteByCTMValue(exState.getValue(BlockFactoryGlassPane.CTM_VALUE[facing.getHorizontalIndex()])));
 		}
 		return builder.build();
@@ -158,13 +161,17 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 			renderModelFace(ccrs, post, facing, texture);
 	}
 
-	private void renderPanePart(CCRenderState ccrs,	@Nullable EnumFacing side, Map<EnumFacing, TextureAtlasSprite> overlayTextures, int color,
+	private void renderPanePart(CCRenderState ccrs, @Nullable EnumFacing side, Map<EnumFacing, TextureAtlasSprite> overlayTextures, int color,
 			Map<EnumFacing, Boolean> connections, int facesToShow) {
+
+		if (side == null) {
+			return;
+		}
 
 		CCModel model = sideModels.get(side).copy();
 
 		boolean renderFaceOnSide = shouldRenderFace(facesToShow, side);
-		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			//skip the face that's next to post and the face that's connected to another pane and is not supposed to be rendered (same color pane)
 			if (facing == side.getOpposite() || (facing == side && connections.get(side) && !renderFaceOnSide))
 				continue;
@@ -194,21 +201,26 @@ public class FactoryGlassPaneRenderer implements ISimpleBlockBakery {
 	}
 
 	private void renderModelFace(CCRenderState ccrs, CCModel model, EnumFacing facing, TextureAtlasSprite texture) {
+
 		model.render(ccrs, facing.ordinal() * 4, (facing.ordinal() + 1) * 4, new IconTransformation(texture));
 	}
 
 	private void renderModelFace(CCRenderState ccrs, CCModel model, EnumFacing facing, TextureAtlasSprite texture, int color) {
+
 		model.copy().setColour(color).render(ccrs, facing.ordinal() * 4, (facing.ordinal() + 1) * 4, new IconTransformation(texture));
 	}
 
 	@Override
 	public IExtendedBlockState handleState(IExtendedBlockState state, IBlockAccess access, BlockPos pos) {
+
 		return null;
 	}
 
+	@Nonnull
 	@Override
 	public List<BakedQuad> bakeItemQuads(EnumFacing face, @Nonnull ItemStack stack) {
-		return null;
+
+		return ImmutableList.of();
 	}
 
 }

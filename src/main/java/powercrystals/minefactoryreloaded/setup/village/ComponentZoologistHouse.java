@@ -87,7 +87,7 @@ public class ComponentZoologistHouse extends StructureVillagePieces.Village
 		super.readStructureFromNBT(tag, p_143011_2_);
 		this.hasMadeChest = tag.getBoolean("Chest");
 		int[] blocks = tag.getIntArray("blocks");
-		if (blocks == null || blocks.length != 4)
+		if (blocks.length != 4)
 			return;
 
 		lightMeta = blocks[2];
@@ -97,12 +97,12 @@ public class ComponentZoologistHouse extends StructureVillagePieces.Village
 	}
 
 	public static ComponentZoologistHouse buildComponent(PieceWeight villagePiece,
-			Start startPiece, List pieces, Random random, int p1, int p2,
+			Start startPiece, List<StructureComponent> pieces, Random random, int p1, int p2,
 			int p3, EnumFacing facing, int p5)
 	{
 		StructureBoundingBox sbb = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3,
 				0, 0, 0, 9, 9, 6, facing);
-		return (!canVillageGoDeeper(sbb)) || (StructureComponent.findIntersecting(pieces, sbb) != null)
+		return (!canVillageGoDeeper(sbb) || (StructureComponent.findIntersecting(pieces, sbb) != null))
 				? null : new ComponentZoologistHouse(startPiece, p5, random, sbb, facing);
 	}
 

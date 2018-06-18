@@ -80,7 +80,7 @@ public class DefaultUseHandler implements IUseHandler {
 				BlockPos pos = objectPosition.getBlockPos();
 				if (canEntityAct(world, entity, pos, objectPosition.sideHit, bucket, true)) {
 					FluidActionResult result = FluidUtil
-							.tryPlaceFluid(((EntityPlayer) entity), world, objectPosition.getBlockPos().offset(objectPosition.sideHit), bucket, liquid);
+							.tryPlaceFluid(player, world, objectPosition.getBlockPos().offset(objectPosition.sideHit), bucket, liquid);
 					if (result.isSuccess()) {
 						@Nonnull ItemStack drop = result.getResult();
 						bucket.shrink(1);

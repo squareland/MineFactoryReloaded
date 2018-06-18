@@ -1,17 +1,15 @@
 package powercrystals.minefactoryreloaded.world;
 
 import cofh.core.util.helpers.BlockHelper;
-
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.util.EnumFacing;
-
 import powercrystals.minefactoryreloaded.setup.MFRThings;
+
+import java.util.Random;
 
 public class WorldGenRubberTree extends WorldGenerator {
 
@@ -140,7 +138,7 @@ public class WorldGenRubberTree extends WorldGenerator {
 
 							if (((xPos != center | zPos != center) ||
 									rand.nextInt(2) != 0 && var12 != 0) &&
-									(block == null || block.isLeaves(state, world, pos) ||
+									(block.isLeaves(state, world, pos) ||
 											block.isAir(state, world, pos) ||
 									block.canBeReplacedByLeaves(state, world, pos))) {
 
@@ -155,7 +153,7 @@ public class WorldGenRubberTree extends WorldGenerator {
 					state = world.getBlockState(pos);
 					block = state.getBlock();
 
-					if (block == null || block.isAir(state, world, pos) ||
+					if (block.isAir(state, world, pos) ||
 							block.isLeaves(state, world, pos) ||
 							block.isReplaceable(world, pos)) { // replace snow
 

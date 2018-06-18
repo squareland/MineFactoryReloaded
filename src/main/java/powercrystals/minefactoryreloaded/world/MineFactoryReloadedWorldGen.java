@@ -67,8 +67,6 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 
 		BlockPos pos = new BlockPos(x, 1, z);
 		Biome b = world.getBiome(pos);
-		if (b == null)
-			return false;
 
 		String biomeName = b.biomeName;
 

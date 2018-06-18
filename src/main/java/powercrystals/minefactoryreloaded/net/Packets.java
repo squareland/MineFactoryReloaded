@@ -24,8 +24,6 @@ public final class Packets
 		if (world instanceof WorldServer)
 		{
 			PlayerChunkMap map = ((WorldServer)world).getPlayerChunkMap();
-			if (map == null)
-				return;
 			PlayerChunkMapEntry entry = map.getEntry(pos.getX() >> 4, pos.getZ() >> 4);
 			if (entry != null)
 				entry.sendPacket(packet);
@@ -37,9 +35,8 @@ public final class Packets
 			return;
 		if (world instanceof WorldServer)
 		{
+			// FIXME: this logic sends the packet multiple times
 			PlayerChunkMap map = ((WorldServer)world).getPlayerChunkMap();
-			if (map == null)
-				return;
 			int xS = (pos.getX() - range) >> 4, zS = (pos.getZ() - range) >> 4;
 			int xE = (pos.getX() + range) >> 4, zE = (pos.getZ() + range) >> 4;
 			for (; xS < xE; ++xS) for (; zS < zE; ++zS)

@@ -317,13 +317,11 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	public void readPortableData(EntityPlayer player, NBTTagCompound tag) {
 
 		NBTTagCompound list = (NBTTagCompound) tag.getTag("harvesterSettings");
-		if (list != null) {
-			for (String s : _settings.keySet()) {
-				if ("playSounds".equals(s))
-					continue;
-				boolean b = list.getBoolean(s);
-				_settings.put(s.intern(), b);
-			}
+		for (String s : _settings.keySet()) {
+			if ("playSounds".equals(s))
+				continue;
+			boolean b = list.getBoolean(s);
+			_settings.put(s.intern(), b);
 		}
 	}
 

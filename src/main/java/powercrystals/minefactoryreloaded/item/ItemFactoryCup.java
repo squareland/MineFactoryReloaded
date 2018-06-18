@@ -111,10 +111,8 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		_prefix = true;
 		t = super.getItemStackDisplayName(item);
 		_prefix = false;
-		t = t != null ? t.trim() : "";
 		ret = (t.isEmpty() ? "" : t + " ") + ret;
 		t = super.getItemStackDisplayName(item);
-		t = t != null ? t.trim() : "";
 		ret += t.isEmpty() ? " Cup" : " " + t;
 		return ret;
 	}
@@ -318,7 +316,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
 			FluidStack fluid = null;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")) == null ||
+					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				fillAmount = Math.min(capacity, resource.amount);
 			if (fluid == null) {
@@ -349,7 +347,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag;
 			FluidStack fluid;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")) == null ||
+					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null ||
 					!(fluid.getFluid().equals(resource.getFluid())))
 				return null;
@@ -364,7 +362,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag;
 			FluidStack fluid;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")) == null ||
+					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				return null;
 			return drain(maxDrain, doDrain, tag, fluid);

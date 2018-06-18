@@ -31,7 +31,7 @@ public class ItemCeramicDye extends ItemFactoryColored {
 		@Nonnull ItemStack stack = player.getHeldItem(hand);
 
 		Block block = world.getBlockState(pos).getBlock();
-		if (!world.isRemote & block != null) {
+		if (!world.isRemote) {
 			if (Blocks.GLASS.equals(block)) {
 				if (world.setBlockState(pos, MFRThings.factoryGlassBlock.getStateFromMeta(stack.getItemDamage()), 3)) {
 					if (!player.capabilities.isCreativeMode)

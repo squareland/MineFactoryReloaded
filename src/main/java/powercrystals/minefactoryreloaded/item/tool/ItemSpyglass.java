@@ -56,12 +56,11 @@ public class ItemSpyglass extends ItemFactoryTool {
 			} else {
 				IBlockState state = world.getBlockState(result.getBlockPos());
 				Block block = state.getBlock();
-				@Nonnull ItemStack tempStack = ItemStack.EMPTY;
-				if (block != null)
-					tempStack = block.getPickBlock(state, result, world, result.getBlockPos(), player);
+				@Nonnull
+				ItemStack tempStack = block.getPickBlock(state, result, world, result.getBlockPos(), player);
 				if (tempStack.isEmpty())
 					tempStack = new ItemStack(block, 1, block.getMetaFromState(state));
-				if (tempStack.getItem() != null) {
+				if (!tempStack.isEmpty()) {
 					state = block.getActualState(state, world, result.getBlockPos());
 					List<ITextComponent> messages = new ArrayList<>();
 					messages.add(new TextComponentString("")
@@ -75,6 +74,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 					}
 					printChatMessagesNoSpam(messages);
 				} else {
+					// TODO: move property scan?
 					printChatMessageNoSpam(new TextComponentString("")
 							.appendText(I18n
 									.translateToLocalFormatted("chat.info.mfr.spyglass.hitunknown",

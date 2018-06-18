@@ -58,7 +58,7 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 
 	protected void placeBlockAt(World world, BlockPos pos, double distance) {
 		Block block = world.getBlockState(pos).getBlock();
-		if (!world.isRemote && (block == null || world.isAirBlock(pos) || block.isReplaceable(world, pos))) {
+		if (!world.isRemote && (world.isAirBlock(pos) || block.isReplaceable(world, pos))) {
 			world.setBlockState(pos, _blockState, 3);
 		}
 	}

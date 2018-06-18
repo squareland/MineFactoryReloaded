@@ -2,7 +2,6 @@ package powercrystals.minefactoryreloaded.tile.machine.routing;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -163,11 +162,9 @@ public class TileEntityLiquidRouter extends TileEntityFactoryTickable {
 		int[] routeWeights = new int[6];
 
 		for (int i = 0; i < 6; i++) {
-			@Nonnull ItemStack stack = _inventory.get(i);
-			Item item = stack != null ? stack.getItem() : null;
-			if (item != null &&
-					resource.isFluidEqual(MFRUtil.getFluidContents(_inventory.get(i)))) {
-				routeWeights[i] = _inventory.get(i).getCount();
+			ItemStack stack = _inventory.get(i);
+			if (resource.isFluidEqual(MFRUtil.getFluidContents(stack))) {
+				routeWeights[i] = stack.getCount();
 			} else {
 				routeWeights[i] = 0;
 			}
@@ -180,8 +177,9 @@ public class TileEntityLiquidRouter extends TileEntityFactoryTickable {
 		int[] routeWeights = new int[6];
 
 		for (int i = 0; i < 6; i++) {
-			if (!_inventory.get(i).isEmpty() && MFRUtil.getFluidContents(_inventory.get(i)) == null) {
-				routeWeights[i] = _inventory.get(i).getCount();
+			ItemStack stack = _inventory.get(i);
+			if (!stack.isEmpty() && MFRUtil.getFluidContents(stack) == null) {
+				routeWeights[i] = stack.getCount();
 			} else {
 				routeWeights[i] = 0;
 			}

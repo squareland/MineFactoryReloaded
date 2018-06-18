@@ -1,11 +1,11 @@
 package powercrystals.minefactoryreloaded.core;
 
-import java.util.List;
-import java.util.Map;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Map;
 
 public class FruitHarvestManager implements IHarvestManager
 {
@@ -84,7 +84,7 @@ public class FruitHarvestManager implements IHarvestManager
 		_currentBlock = data.getInteger("curPos");
 		_harvestMode = HarvestMode.values()[data.getInteger("mode")];
 		int[] area = data.getIntArray("area"), o = data.getIntArray("origin");
-		if (area == null | o == null || o.length < 3 | area.length < 3)
+		if (o.length < 3 || area.length < 3)
 		{
 			_isDone = true;
 			return;

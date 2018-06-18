@@ -76,7 +76,7 @@ public abstract class TileEntityFactoryInventory extends TileEntityFactory imple
 		if (failedDrops != null)
 			inv: while (failedDrops.size() > 0) {
 				@Nonnull ItemStack itemstack = failedDrops.remove(0);
-				if (itemstack.isEmpty() || itemstack.getItem() == null) {
+				if (itemstack.isEmpty()) {
 					continue;
 				}
 				float xOffset = world.rand.nextFloat() * 0.8F + 0.1F;

@@ -476,13 +476,13 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		super.readFromNBT(tag);
 
 		int[] upgrades = tag.getIntArray("upgrades");
-		if (upgrades != null && upgrades.length == _upgradeLevel.length) {
+		if (upgrades.length == _upgradeLevel.length) {
 			_upgradeLevel = upgrades;
 		}
 		updateUpgradeLevels();
 
 		int[] vars = tag.getIntArray("vars");
-		if (vars != null && vars.length == _buffers[13].length) {
+		if (vars.length == _buffers[13].length) {
 			_buffers[13] = vars;
 		}
 
@@ -501,7 +501,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 			if (i < 0) i += 4;
 			map = data[i];
 		}
-		if (circuits != null) {
+		{
 			int c = 0, e = circuits.tagCount();
 			Arrays.fill(_circuits, null);
 			for (; c < e; c++) {
@@ -510,7 +510,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 				initCircuit(i, circuit.getString("circuit"));
 
 				NBTTagList inputPins = circuit.getTagList("inputPins", 10);
-				if (inputPins != null) {
+				{
 					for (int k = 0; k < inputPins.tagCount() && k < _pinMappingInputs[c].length; k++) {
 						NBTTagCompound pin = inputPins.getCompoundTagAt(k);
 						int ipin = pin.getInteger("pin");
@@ -520,7 +520,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 				}
 
 				NBTTagList outputPins = circuit.getTagList("outputPins", 10);
-				if (outputPins != null) {
+				{
 					for (int k = 0; k < outputPins.tagCount() && k < _pinMappingOutputs[c].length; k++) {
 						NBTTagCompound pin = outputPins.getCompoundTagAt(k);
 						int ipin = pin.getInteger("pin");
@@ -530,7 +530,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 				}
 
 				NBTTagCompound circuitState = circuit.getCompoundTag("state");
-				if (circuitState != null) {
+				{
 					_circuits[i].readFromNBT(circuitState);
 				}
 			}

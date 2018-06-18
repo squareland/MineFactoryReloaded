@@ -171,11 +171,11 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 			}
 			int chance = 15;
 			Biome b = world.getBiome(pos);
-			if (b != null) {
+			{
 				float temp = b.getTemperature(pos);
 				float rain = b.getRainfall();
 				boolean t;
-				decay |= (t = rain <= 0.05f);
+				decay = (t = rain <= 0.05f);
 				if (t) chance -= 5;
 				decay |= ((rain <= 0.2f) & temp >= 1.2f);
 				decay |= (t = temp > 1.8f);
@@ -197,14 +197,14 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 
 		if (updating.get() != null) {
-			boolean decay = false;
+			boolean decay;
 			int chance = 15;
 			Biome b = world.getBiome(pos);
-			if (b != null) {
+			{
 				float temp = b.getTemperature(pos);
 				float rain = b.getRainfall();
 				boolean t;
-				decay |= (t = rain <= 0.05f);
+				decay = (t = rain <= 0.05f);
 				if (t) chance -= 5;
 				decay |= ((rain <= 0.2f) & temp >= 1.2f);
 				decay |= (t = temp > 1.8f);

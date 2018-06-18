@@ -286,7 +286,7 @@ public class MFRUtil {
 		//if (wrench.getItem() instanceof IToolWrench) ((IToolWrench) wrench.getItem()).wrenchUsed(p, hand, wrench, rayTrace);
 	}
 
-	public static boolean isHolding(EntityPlayer player, Item item, EnumHand hand) {
+	public static boolean isHolding(EntityPlayer player, @Nonnull Item item, EnumHand hand) {
 
 		if (player == null) {
 			return false;
@@ -295,7 +295,7 @@ public class MFRUtil {
 			return false;
 		}
 		Item currentItem = player.getHeldItem(hand).getItem();
-		if (currentItem != null && item == currentItem) {
+		if (item == currentItem) {
 			return true;
 		}
 		return false;

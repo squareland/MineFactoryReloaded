@@ -81,7 +81,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 
 		int i = 0;
 		if (!flag) {
-			flag |= EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+			flag = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 			for (; !a && i < ammo.length; ++i)
 				a = UtilInventory.playerHasItem(player, ammo[i]);
 			if (a) --i;
@@ -89,14 +89,14 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 		}
 		if (flag || a) {
 
-			@Nonnull ItemStack fstack = new ItemStack(ammo[i]);
+			@Nonnull ItemStack fStack = new ItemStack(ammo[i]);
             if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-            	@Nonnull ItemStack sStack = FurnaceRecipes.instance().getSmeltingResult(fstack);
+            	@Nonnull ItemStack sStack = FurnaceRecipes.instance().getSmeltingResult(fStack);
             	if (!sStack.isEmpty())
-            		fstack = sStack;
+            		fStack = sStack;
             }
-            fstack.setCount(1);
-			EntityFlyingItem item = new EntityFlyingItem(world, player, fstack);
+            fStack.setCount(1);
+			EntityFlyingItem item = new EntityFlyingItem(world, player, fStack);
 			item.shoot(player, player.rotationPitch, player.rotationYaw, 0, 1.5f, 0.5f);
 
             int k = Math.max(0, EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack));

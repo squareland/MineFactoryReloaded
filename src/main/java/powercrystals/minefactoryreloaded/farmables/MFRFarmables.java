@@ -173,7 +173,7 @@ public class MFRFarmables {
 		if (MFRConfig.autoRegisterHarvestables.getBoolean(false)) {
 			ArrayList<ItemStack> list = OreDictionaryArbiter.getOres("logWood");
 			for (@Nonnull ItemStack stack : list) {
-				if (stack.isEmpty() || stack.getItem() == null)
+				if (stack.isEmpty())
 					continue;
 				Block block = Block.getBlockFromItem(stack.getItem());
 				if (block != Blocks.AIR && !MFRRegistry.getHarvestables().containsKey(block))
@@ -182,7 +182,7 @@ public class MFRFarmables {
 
 			list = OreDictionaryArbiter.getOres("treeLeaves");
 			for (@Nonnull ItemStack stack : list) {
-				if (stack.isEmpty() || stack.getItem() == null)
+				if (stack.isEmpty())
 					continue;
 				Block block = Block.getBlockFromItem(stack.getItem());
 				if (block != Blocks.AIR && !MFRRegistry.getHarvestables().containsKey(block))

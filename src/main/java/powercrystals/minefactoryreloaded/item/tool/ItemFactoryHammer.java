@@ -51,7 +51,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (block != null) {
+		{
 			PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(hitX, hitY, hitZ));
 			if (MinecraftForge.EVENT_BUS.post(e) || e.getResult() == Result.DENY
 					|| e.getUseBlock() == Result.DENY || e.getUseItem() == Result.DENY) {
@@ -130,8 +130,6 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	@Override
 	public boolean canHarvestBlock(IBlockState state, @Nonnull ItemStack stack) {
 
-		if (state == null)
-			return false;
 		Material mat = state.getMaterial();
 		return mat == Material.ICE ||
 				mat == Material.CAKE ||
@@ -152,8 +150,6 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	@Override
 	public float getDestroySpeed(@Nonnull ItemStack stack, IBlockState state) {
 
-		if (state == null)
-			return 0;
 		Material mat = state.getMaterial();
 		if (mat == Material.ICE ||
 				mat == Material.CAKE ||

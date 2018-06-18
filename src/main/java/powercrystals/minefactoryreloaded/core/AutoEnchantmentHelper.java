@@ -104,7 +104,7 @@ public class AutoEnchantmentHelper extends EnchantmentHelper {
 			if (!enchantDatas.isEmpty()) {
 				EnchantmentData enchData = WeightedRandom.getRandomItem(rand, enchantDatas);
 
-				if (enchData != null) {
+				{
 					returnList = new ArrayList<>();
 					returnList.add(enchData);
 

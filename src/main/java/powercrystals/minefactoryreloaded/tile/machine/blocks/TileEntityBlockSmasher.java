@@ -144,9 +144,6 @@ public class TileEntityBlockSmasher extends TileEntityFactoryPowered {
 		}
 		ItemBlock block = (ItemBlock) input.getItem();
 		Block b = block.getBlock();
-		if (b == null) {
-			return null;
-		}
 
 		NonNullList<ItemStack> drops = _smashingWorld.smashBlock(input, b, block.getMetadata(input.getItemDamage()), _fortune);
 		if (drops != null && drops.size() > 0) {

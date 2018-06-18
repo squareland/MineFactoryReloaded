@@ -100,7 +100,7 @@ public class ItemBlockTank extends ItemBlockFactory {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
 			FluidStack fluid = null;
 			if (tag == null || !tag.hasKey("tank") ||
-					(fluidTag = tag.getCompoundTag("tank")) == null ||
+					(fluidTag = tag.getCompoundTag("tank")).hasNoTags() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				fillAmount = Math.min(capacity, resource.amount);
 			if (fluid == null) {
@@ -131,7 +131,7 @@ public class ItemBlockTank extends ItemBlockFactory {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
 			FluidStack fluid = null;
 			if (tag == null || !tag.hasKey("tank") ||
-					(fluidTag = tag.getCompoundTag("tank")) == null ||
+					(fluidTag = tag.getCompoundTag("tank")).hasNoTags() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null) {
 				if (fluidTag != null)
 					tag.removeTag("tank");
@@ -151,7 +151,7 @@ public class ItemBlockTank extends ItemBlockFactory {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
 			FluidStack fluid = null;
 			if (tag == null || !tag.hasKey("tank") ||
-					(fluidTag = tag.getCompoundTag("tank")) == null ||
+					(fluidTag = tag.getCompoundTag("tank")).hasNoTags() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null) {
 				if (fluidTag != null)
 					tag.removeTag("tank");
