@@ -33,7 +33,7 @@ public interface IRedNetInputNode extends IRedNetConnection
 	 * @param side The side the input values are being changed on.
 	 * @param inputValues The new set of input values. This array will be 16 elements long. Do not alter or cache.
 	 */
-	public void onInputsChanged(World world, BlockPos pos, EnumFacing side, int[] inputValues);
+	void onInputsChanged(World world, BlockPos pos, EnumFacing side, int[] inputValues);
 
 	/**
 	 * Called when the input value to this block changes. Only called if your block is connected in "Single" mode.
@@ -45,5 +45,5 @@ public interface IRedNetInputNode extends IRedNetConnection
 	 * @param side The side the input values are being changed on.
 	 * @param inputValue The new input value
 	 */
-	public void onInputChanged(World world, BlockPos pos, EnumFacing side, int inputValue);
+	void onInputChanged(World world, BlockPos pos, EnumFacing side, int inputValue);
 }

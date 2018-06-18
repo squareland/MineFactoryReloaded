@@ -4,14 +4,14 @@ import net.minecraft.util.EnumFacing;
 
 public interface IRotateableTile {
 
-	public boolean canRotate();
+	boolean canRotate();
 
-	public boolean canRotate(EnumFacing axis);
+	boolean canRotate(EnumFacing axis);
 
-	public void rotate(EnumFacing axis);
+	void rotate(EnumFacing axis);
 
-	public void rotateDirectlyTo(int facing);
+	void rotateDirectlyTo(int facing);
 
-	public EnumFacing getDirectionFacing();
+	EnumFacing getDirectionFacing();
 
 }

@@ -19,6 +19,6 @@ public interface IFactoryLaserSource {
 	 *
 	 * @return True if the beam should be sustained from this side
 	 */
-	public boolean canFormBeamFrom(EnumFacing from);
+	boolean canFormBeamFrom(EnumFacing from);
 
 }

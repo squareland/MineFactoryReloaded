@@ -18,7 +18,7 @@ public interface IFactoryFertilizable {
 	/**
 	 * @return The block this instance is managing.
 	 */
-	public Block getPlant();
+	Block getPlant();
 
 	/**
 	 * @param world
@@ -31,7 +31,7 @@ public interface IFactoryFertilizable {
 	 * @return True if the block at (x,y,z) can be fertilized with the given
 	 *         type of fertilizer.
 	 */
-	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType);
+	boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType);
 
 	/**
 	 * @param world
@@ -46,6 +46,6 @@ public interface IFactoryFertilizable {
 	 * @return True if fertilization was successful. If false, the Fertilizer
 	 *         will not consume a fertilizer item and will not drain power.
 	 */
-	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType);
+	boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType);
 
 }

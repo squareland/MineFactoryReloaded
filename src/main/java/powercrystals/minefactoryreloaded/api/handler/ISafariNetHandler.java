@@ -18,7 +18,7 @@ public interface ISafariNetHandler {
 	/**
 	 * @return The class of mob that this handler applies to.
 	 */
-	public Class<?> validFor();
+	Class<?> validFor();
 
 	/**
 	 * Called to add information regarding a mob contained in a SafariNet.
@@ -32,6 +32,6 @@ public interface ISafariNetHandler {
 	 * @param tooltipFlag
 	 *            Normal or Advanced tooltip.
 	 */
-	public void addInformation(@Nonnull NBTTagCompound safariNetEntity, World world, List<String> infoList, ITooltipFlag tooltipFlag);
+	void addInformation(@Nonnull NBTTagCompound safariNetEntity, World world, List<String> infoList, ITooltipFlag tooltipFlag);
 
 }

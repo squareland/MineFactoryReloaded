@@ -19,12 +19,12 @@ public interface IFactoryHarvestable {
 	/**
 	 * @return The block this harvestable instance is managing.
 	 */
-	public Block getPlant();
+	Block getPlant();
 
 	/**
 	 * @return The type of harvest the Harvester should perform on this block.
 	 */
-	public HarvestType getHarvestType();
+	HarvestType getHarvestType();
 
 	/**
 	 * Used to determine if the harvester should replace this block with air.
@@ -33,7 +33,7 @@ public interface IFactoryHarvestable {
 	 *         harvesting. If false, no changes will be performed by the
 	 *         Harvester itself.
 	 */
-	public boolean breakBlock();
+	boolean breakBlock();
 
 	/**
 	 * Used to determine if this crop can be harvested (is it at a stage that
@@ -48,7 +48,7 @@ public interface IFactoryHarvestable {
 	 *
 	 * @return True if this block can be harvested.
 	 */
-	public boolean canBeHarvested(World world, Map<String, Boolean> harvesterSettings, BlockPos pos);
+	boolean canBeHarvested(World world, Map<String, Boolean> harvesterSettings, BlockPos pos);
 
 	/**
 	 * @param world
@@ -64,7 +64,7 @@ public interface IFactoryHarvestable {
 	 *         implementation, calling Block.getDrops() is usually
 	 *         sufficient.
 	 */
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, BlockPos pos);
+	List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, BlockPos pos);
 
 	/**
 	 * Called before the block is going to be harvested, after getDrops. Usually
@@ -75,7 +75,7 @@ public interface IFactoryHarvestable {
 	 * @param pos
 	 *            The position of the block being harvested.
 	 */
-	public void preHarvest(World world, BlockPos pos);
+	void preHarvest(World world, BlockPos pos);
 
 	/**
 	 * Called after the block is going to be harvested. Used to re-till soil,
@@ -86,6 +86,6 @@ public interface IFactoryHarvestable {
 	 * @param pos
 	 *            The position of the block being harvested.
 	 */
-	public void postHarvest(World world, BlockPos pos);
+	void postHarvest(World world, BlockPos pos);
 
 }

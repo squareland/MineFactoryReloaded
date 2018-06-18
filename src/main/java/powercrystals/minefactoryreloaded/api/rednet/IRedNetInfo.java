@@ -22,6 +22,6 @@ public interface IRedNetInfo
 	 * @param player Player doing the querying - this can be NULL.
 	 * @param info The list that the information should be appended to.
 	 */
-	public void getRedNetInfo(IBlockAccess world, BlockPos pos,
+	void getRedNetInfo(IBlockAccess world, BlockPos pos,
 			EnumFacing side, EntityPlayer player, List<ITextComponent> info);
 }

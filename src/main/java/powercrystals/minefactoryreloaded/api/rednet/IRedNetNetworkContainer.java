@@ -17,7 +17,7 @@ public interface IRedNetNetworkContainer
 	 * @param world The world this cable is in.
 	 * @param pos The position of this cable.
 	 */
-	public void updateNetwork(World world, BlockPos pos, EnumFacing from);
+	void updateNetwork(World world, BlockPos pos, EnumFacing from);
 	
 	/**
 	 * Tells the network to recalculate a specific subnet.
@@ -25,5 +25,5 @@ public interface IRedNetNetworkContainer
 	 * @param pos The position of this cable.
 	 * @param subnet The subnet to recalculate.
 	 */
-	public void updateNetwork(World world, BlockPos pos, int subnet, EnumFacing from);
+	void updateNetwork(World world, BlockPos pos, int subnet, EnumFacing from);
 }

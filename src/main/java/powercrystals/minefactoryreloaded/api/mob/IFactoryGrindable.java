@@ -18,7 +18,7 @@ public interface IFactoryGrindable {
 	 *         a subtype of EntityLivingBase or the entity will never
 	 *         be noticed by the Grinder.
 	 */
-	public Class<? extends EntityLivingBase> getGrindableEntity();
+	Class<? extends EntityLivingBase> getGrindableEntity();
 
 	/**
 	 * @param world
@@ -31,7 +31,7 @@ public interface IFactoryGrindable {
 	 * @return The drops generated when this entity is killed. Only one of these
 	 *         will be chosen.
 	 */
-	public List<MobDrop> grind(World world, EntityLivingBase entity, Random random);
+	List<MobDrop> grind(World world, EntityLivingBase entity, Random random);
 
 	/**
 	 * @param entity
@@ -40,6 +40,6 @@ public interface IFactoryGrindable {
 	 * @return Whether this entity has been fully processed or not. (e.g., it is
 	 *         already dead)
 	 */
-	public boolean processEntity(EntityLivingBase entity);
+	boolean processEntity(EntityLivingBase entity);
 
 }

@@ -2,7 +2,7 @@ package powercrystals.minefactoryreloaded.core;
 
 public interface INode
 {
-	public boolean isNotValid();
-	public void firstTick(IGridController grid);
-	public void updateInternalTypes(IGridController grid);
+	boolean isNotValid();
+	void firstTick(IGridController grid);
+	void updateInternalTypes(IGridController grid);
 }

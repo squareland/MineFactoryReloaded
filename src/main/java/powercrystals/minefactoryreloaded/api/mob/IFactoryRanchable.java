@@ -16,7 +16,7 @@ public interface IFactoryRanchable {
 	/**
 	 * @return The entity being ranched. Must be a subtype of EntityLivingBase.
 	 */
-	public Class<? extends EntityLivingBase> getRanchableEntity();
+	Class<? extends EntityLivingBase> getRanchableEntity();
 
 	/**
 	 * @param world
@@ -29,6 +29,6 @@ public interface IFactoryRanchable {
 	 *
 	 * @return A list of drops. All Items BE dropped, fluids not matching the tank's contents will be discarded.
 	 */
-	public List<RanchedItem> ranch(World world, EntityLivingBase entity, IInventory rancher);
+	List<RanchedItem> ranch(World world, EntityLivingBase entity, IInventory rancher);
 
 }

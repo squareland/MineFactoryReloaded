@@ -28,7 +28,7 @@ public class FactoryGlassRenderer implements ISimpleBlockBakery {
 	public static final ModelResourceLocation MODEL_LOCATION = new ModelResourceLocation(MFRProps.PREFIX + "stained_glass", "normal");
 	private static final ResourceLocation SPRITE_LOCATION = new ResourceLocation(MFRProps.TEXTURE_FOLDER + "blocks/tile.mfr.stainedglass.png");
 	public static final int FULL_FRAME = 0;
-	public static SpriteSheetManager.SpriteSheet spriteSheet = SpriteSheetManager.getSheet(8, 8, SPRITE_LOCATION);;
+	public static SpriteSheetManager.SpriteSheet spriteSheet = SpriteSheetManager.getSheet(8, 8, SPRITE_LOCATION);
 
 	static {
 

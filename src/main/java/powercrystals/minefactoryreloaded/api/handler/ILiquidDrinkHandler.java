@@ -14,7 +14,7 @@ public interface ILiquidDrinkHandler {
 	 * @param fluid
 	 * 			  The FluidStack that this entity is consuming
 	 */
-	public void onDrink(EntityLivingBase entity, FluidStack fluid);
+	void onDrink(EntityLivingBase entity, FluidStack fluid);
 
 	// TODO: on onInject? `source`?
 }

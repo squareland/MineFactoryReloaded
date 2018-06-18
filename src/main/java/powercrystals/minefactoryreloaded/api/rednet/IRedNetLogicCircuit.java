@@ -4,16 +4,16 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public interface IRedNetLogicCircuit
 {
-	public byte getInputCount();
+	byte getInputCount();
 	
-	public byte getOutputCount();
+	byte getOutputCount();
 	
-	public int[] recalculateOutputValues(long worldTime, int[] inputValues);
+	int[] recalculateOutputValues(long worldTime, int[] inputValues);
 	
-	public String getUnlocalizedName();
-	public String getInputPinLabel(int pin);
-	public String getOutputPinLabel(int pin);
+	String getUnlocalizedName();
+	String getInputPinLabel(int pin);
+	String getOutputPinLabel(int pin);
 	
-	public void readFromNBT(NBTTagCompound tag);
-	public void writeToNBT(NBTTagCompound tag);
+	void readFromNBT(NBTTagCompound tag);
+	void writeToNBT(NBTTagCompound tag);
 }

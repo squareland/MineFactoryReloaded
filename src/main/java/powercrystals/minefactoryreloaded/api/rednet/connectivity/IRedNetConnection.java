@@ -21,5 +21,5 @@ public interface IRedNetConnection
 	 * @param side The side that connection information is required for.
 	 * @return The connection type.
 	 */
-	public RedNetConnectionType getConnectionType(World world, BlockPos pos, EnumFacing side);
+	RedNetConnectionType getConnectionType(World world, BlockPos pos, EnumFacing side);
 }

@@ -17,7 +17,7 @@ public interface IFactoryPlantable {
 	/**
 	 * @return The item this plantable is managing.
 	 */
-	public Item getSeed();
+	Item getSeed();
 
 	/**
 	 * @param stack
@@ -28,7 +28,7 @@ public interface IFactoryPlantable {
 	 * @return True if this plantable can be planted (useful for metadata
 	 *         items).
 	 */
-	public boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting);
+	boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting);
 
 	/**
 	 * @param world
@@ -40,7 +40,7 @@ public interface IFactoryPlantable {
 	 *
 	 * @return The block that will be placed into the world.
 	 */
-	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack);
+	ReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack);
 
 	/**
 	 * @param world
@@ -52,6 +52,6 @@ public interface IFactoryPlantable {
 	 *
 	 * @return True if this plantable can be placed at the provided coordinates.
 	 */
-	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack);
+	boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack);
 
 }

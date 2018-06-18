@@ -17,7 +17,7 @@ public interface IFactoryLaserTarget {
 	 *
 	 * @return True if the precharger can form a beam from this side
 	 */
-	public boolean canFormBeamWith(EnumFacing from);
+	boolean canFormBeamWith(EnumFacing from);
 
 	/**
 	 * Used to add energy to the tile.
@@ -31,6 +31,6 @@ public interface IFactoryLaserTarget {
 	 *
 	 * @return The amount of energy not consumed
 	 */
-	public int addEnergy(EnumFacing from, int energy, boolean simulate);
+	int addEnergy(EnumFacing from, int energy, boolean simulate);
 
 }

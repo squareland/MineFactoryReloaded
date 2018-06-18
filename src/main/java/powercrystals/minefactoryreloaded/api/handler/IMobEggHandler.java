@@ -20,6 +20,6 @@ public interface IMobEggHandler {
 	 * @return An EntityEggInfo, or null if this instance cannot handle this
 	 *         mob.
 	 */
-	public EntityEggInfo getEgg(@Nonnull NBTTagCompound safariNetEntity);
+	EntityEggInfo getEgg(@Nonnull NBTTagCompound safariNetEntity);
 
 }

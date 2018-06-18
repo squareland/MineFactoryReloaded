@@ -15,6 +15,6 @@ public interface IRandomMobProvider {
 	 *         be spawned in the world with no additional method calls.
 	 */
 	// TODO: docs
-	public List<RandomMobProvider> getRandomMobs(World world);
+	List<RandomMobProvider> getRandomMobs(World world);
 
 }

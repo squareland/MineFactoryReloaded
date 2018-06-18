@@ -45,7 +45,7 @@ public abstract class BaseItemRenderer implements IItemRenderer, IBakedModel {
 		GlStateManager.popMatrix();
 	}
 
-	protected void drawModel(CCRenderState ccrs, @Nonnull ItemStack stack) {};
+	protected void drawModel(CCRenderState ccrs, @Nonnull ItemStack stack) {}
 
 	@Override
 	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {

@@ -32,7 +32,7 @@ public interface IRedNetOutputNode extends IRedNetConnection
 	 * @param side The side the output values are required for.
 	 * @return The output values.
 	 */
-	public int[] getOutputValues(World world, BlockPos pos, EnumFacing side);
+	int[] getOutputValues(World world, BlockPos pos, EnumFacing side);
 
 	/**
 	 * Returns the output value of this RedNet node for a given subnet.
@@ -44,5 +44,5 @@ public interface IRedNetOutputNode extends IRedNetConnection
 	 * @param subnet The subnet to get the output value for (0-15).
 	 * @return The output value.
 	 */
-	public int getOutputValue(World world, BlockPos pos, EnumFacing side, int subnet);
+	int getOutputValue(World world, BlockPos pos, EnumFacing side, int subnet);
 }
