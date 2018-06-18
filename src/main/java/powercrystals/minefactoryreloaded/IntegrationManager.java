@@ -14,8 +14,6 @@ import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 import java.io.File;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static powercrystals.minefactoryreloaded.MineFactoryReloadedCore.log;
@@ -61,12 +59,12 @@ public class IntegrationManager {
 		} while (!sorted);
 	}
 
-	private static void iterate(final Consumer<IMFRIntegrator> consumer, String error) {
+	private static void iterate(final ThrowingConsumer<IMFRIntegrator> consumer, String error) {
 
 		iterate((c, name) -> consumer.accept(c), error);
 	}
 
-	private static void iterate(BiConsumer<IMFRIntegrator, String> consumer, String error) {
+	private static void iterate(ThrowingBiConsumer<IMFRIntegrator, String> consumer, String error) {
 
 		for (IntegrationContainer container : integrationSets) {
 			if (container.isEnabled()) {
@@ -201,6 +199,18 @@ public class IntegrationManager {
 			return "MFR Integrator: " + name + (sortAfter.length > 0 ? "(After: " + Arrays.toString(sortAfter) + ")" : "");
 		}
 
+	}
+
+	@FunctionalInterface
+	private interface ThrowingConsumer<T> {
+
+		void accept(T a) throws Throwable;
+	}
+
+	@FunctionalInterface
+	private interface ThrowingBiConsumer<T1, T2> {
+
+		void accept(T1 a, T2 b) throws Throwable;
 	}
 
 }

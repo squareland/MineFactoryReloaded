@@ -47,7 +47,7 @@ public interface IMFRIntegrator {
 	 * You are handed a {@link File} instead of a {@link net.minecraftforge.common.config.Configuration Configuration}
 	 * so that you may either use a different format, or ignore this entirely if you have no settings.
 	 */
-	default void readConfig(File config) {
+	default void readConfig(File config) throws Throwable {
 
 	}
 
@@ -57,7 +57,7 @@ public interface IMFRIntegrator {
 	 * <p>
 	 * Be careful not to crash when using this method.
 	 */
-	default void preLoad() {
+	default void preLoad() throws Throwable {
 
 	}
 
@@ -66,7 +66,7 @@ public interface IMFRIntegrator {
 	 * <p>
 	 * By this stage, all mods should have registered their blocks and items, and most Ore Dictionary entries.
 	 */
-	void load();
+	void load() throws Throwable;
 
 	/**
 	 * Post-initialization of your integration, this runs during MFR's post-initialization phase.
@@ -74,7 +74,7 @@ public interface IMFRIntegrator {
 	 * By this stage, all mods should have registered ALL Ore Dictionary entries and
 	 * processed their {@link net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent IMC} messages.
 	 */
-	default void postLoad() {
+	default void postLoad() throws Throwable {
 
 	}
 
@@ -85,7 +85,7 @@ public interface IMFRIntegrator {
 	 * You will most likely not need to use this at all, but is available for completeness' sake.
 	 * There will be no further method calls on your Integrator, and references to it will not be kept after this method is called.
 	 */
-	default void completeLoad() {
+	default void completeLoad() throws Throwable {
 
 	}
 
