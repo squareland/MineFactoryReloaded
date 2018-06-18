@@ -26,7 +26,7 @@ public class GrindableEnderman implements IFactoryGrindable
 	@Override
 	public List<MobDrop> grind(World world, EntityLivingBase entity, Random random)
 	{
-		List<MobDrop> drops = new LinkedList<MobDrop>();
+		List<MobDrop> drops = new LinkedList<>();
 		IBlockState state = ((EntityEnderman)entity).getHeldBlockState();
 		Block block = null;
 		if (state != null)

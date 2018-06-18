@@ -29,7 +29,7 @@ public class RanchableSquid implements IFactoryRanchable {
 			return null;
 		tag.setLong("mfr:lastRanched", world.getTotalWorldTime() + 20 * 15);
 
-		List<RanchedItem> drops = new ArrayList<RanchedItem>();
+		List<RanchedItem> drops = new ArrayList<>();
 		drops.add(new RanchedItem(Items.DYE, 1, 0));
 		return drops;
 	}

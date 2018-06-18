@@ -46,7 +46,7 @@ public class GrindableZombiePigman implements IFactoryGrindable
 	@Override
 	public List<MobDrop> grind(World world, EntityLivingBase entity, Random random)
 	{
-		List<MobDrop> drops = new ArrayList<MobDrop>();
+		List<MobDrop> drops = new ArrayList<>();
 
 		if (random.nextInt(3000) == 0)
 			drops.add(new MobDrop(10, sign.copy()));

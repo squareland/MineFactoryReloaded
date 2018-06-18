@@ -51,7 +51,7 @@ public class VanillaMobProvider implements IRandomMobProvider {
 	@Override
 	public List<RandomMobProvider> getRandomMobs(World theWorld) {
 
-		List<RandomMobProvider> mobs = new ArrayList<RandomMobProvider>();
+		List<RandomMobProvider> mobs = new ArrayList<>();
 
 		mobs.add(new RandomMobProvider(100, MFRUtil.prepareMob(EntitySheep.class)));
 		mobs.add(new RandomMobProvider(100, MFRUtil.prepareMob(EntityPig.class)));

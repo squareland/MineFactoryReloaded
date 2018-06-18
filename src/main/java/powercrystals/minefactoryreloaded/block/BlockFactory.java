@@ -320,7 +320,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		TileEntity te = getTile(world, pos);
 		if (te instanceof ITraceable)
 		{
-			List<IndexedCuboid6> cuboids = new LinkedList<IndexedCuboid6>();
+			List<IndexedCuboid6> cuboids = new LinkedList<>();
 			((ITraceable)te).addTraceableCuboids(cuboids, false, false, true);
 			for (IndexedCuboid6 c : cuboids)
 			{
@@ -353,7 +353,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof ITraceable)
 		{
-			List<IndexedCuboid6> cuboids = new LinkedList<IndexedCuboid6>();
+			List<IndexedCuboid6> cuboids = new LinkedList<>();
 			((ITraceable)te).addTraceableCuboids(cuboids, true, MFRUtil.isHoldingUsableTool(harvesters.get(), EnumHand.MAIN_HAND, pos, EnumFacing.UP), false);
 			return RayTracer.rayTraceCuboidsClosest(start, end, pos, cuboids);
 		}

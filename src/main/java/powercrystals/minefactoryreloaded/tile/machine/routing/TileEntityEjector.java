@@ -46,7 +46,7 @@ public class TileEntityEjector extends TileEntityFactoryTickable {
 	@Override
 	protected void onRotate() {
 
-		LinkedList<EnumFacing> list = new LinkedList<EnumFacing>();
+		LinkedList<EnumFacing> list = new LinkedList<>();
 		list.addAll(MFRUtil.VALID_DIRECTIONS);
 		list.remove(getDirectionFacing());
 		_pullDirections = list.toArray(new EnumFacing[5]);

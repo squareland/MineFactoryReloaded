@@ -39,12 +39,12 @@ public class RedstoneNetwork implements IGrid {
 	@SuppressWarnings("unchecked")
 	// cast is a warning too. using a generic type is an error?
 	private Set<RedstoneNode>[] _singleNodes = new Set[16];
-	private Set<RedstoneNode> _omniNodes = new LinkedHashSet<RedstoneNode>();
+	private Set<RedstoneNode> _omniNodes = new LinkedHashSet<>();
 
-	private Set<RedstoneNode> _weakNodes = new LinkedHashSet<RedstoneNode>();
+	private Set<RedstoneNode> _weakNodes = new LinkedHashSet<>();
 
 	private boolean regenerating;
-	private ArrayHashList<TileEntityRedNetCable> nodeSet = new ArrayHashList<TileEntityRedNetCable>();
+	private ArrayHashList<TileEntityRedNetCable> nodeSet = new ArrayHashList<>();
 	private LinkedHashSet<TileEntityRedNetCable> conduitSet;
 
 	private int[] _powerLevelOutput = new int[16];
@@ -68,13 +68,13 @@ public class RedstoneNetwork implements IGrid {
 		log = MFRConfig.redNetDebug.getBoolean(false);
 
 		for (int i = 0; i < 16; i++)
-			_singleNodes[i] = new LinkedHashSet<RedstoneNode>();
+			_singleNodes[i] = new LinkedHashSet<>();
 	}
 
 	public RedstoneNetwork(TileEntityRedNetCable base) {
 
 		this(base.getWorld());
-		conduitSet = new LinkedHashSet<TileEntityRedNetCable>();
+		conduitSet = new LinkedHashSet<>();
 		regenerating = true;
 		addConduit(base);
 		regenerating = false;
@@ -144,8 +144,8 @@ public class RedstoneNetwork implements IGrid {
 		LinkedHashSet<TileEntityRedNetCable> oldSet = conduitSet;
 		conduitSet = new LinkedHashSet<>(Math.min(oldSet.size() / 6, 5));
 
-		LinkedHashSet<TileEntityRedNetCable> toCheck = new LinkedHashSet<TileEntityRedNetCable>();
-		LinkedHashSet<TileEntityRedNetCable> checked = new LinkedHashSet<TileEntityRedNetCable>();
+		LinkedHashSet<TileEntityRedNetCable> toCheck = new LinkedHashSet<>();
+		LinkedHashSet<TileEntityRedNetCable> checked = new LinkedHashSet<>();
 		EnumFacing[] dir = EnumFacing.VALUES;
 		toCheck.add(main);
 		checked.add(main);

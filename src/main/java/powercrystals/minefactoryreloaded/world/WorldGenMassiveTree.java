@@ -80,7 +80,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 		leafBases = MathHelper.ceil(heightLimit * heightAttenuation);
 		density = Math.max(1, (int) (1.382D + Math.pow(branchDensity * heightLimit / 13.0D, 2.0D)));
-		chunkMap = new TLongObjectHashMap<Chunk>((int) (scaleWidth * heightLimit));
+		chunkMap = new TLongObjectHashMap<>((int) (scaleWidth * heightLimit));
 	}
 
 	private float layerSize(int par1) {

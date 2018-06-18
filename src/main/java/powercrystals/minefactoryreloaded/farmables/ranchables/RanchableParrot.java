@@ -32,7 +32,7 @@ public class RanchableParrot implements IFactoryRanchable {
 		if (tag.getLong("mfr:lastRanched") > world.getTotalWorldTime())
 			return null;
 		tag.setLong("mfr:lastRanched", world.getTotalWorldTime() + 20 * 90);
-		List<RanchedItem> drops = new LinkedList<RanchedItem>();
+		List<RanchedItem> drops = new LinkedList<>();
 		EntityParrot parrot = ((EntityParrot) entity);
 		parrot.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (parrot.getRNG().nextFloat() - parrot.getRNG().nextFloat()) * 0.2F + 1.0F);
 		parrot.attackEntityFrom(DamageSource.GENERIC, 0.1f);

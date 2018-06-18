@@ -194,7 +194,7 @@ public class ItemSafariNet extends ItemFactory implements IColorRegister {
 
 		Entity e;
 		if (mobTag.getBoolean("mfr:hide") && !mobTag.hasKey("id", Constants.NBT.TAG_STRING)) {
-			List<RandomMobProvider> mobs = new ArrayList<RandomMobProvider>();
+			List<RandomMobProvider> mobs = new ArrayList<>();
 
 			for (IRandomMobProvider p : MFRRegistry.getRandomMobProviders()) {
 				mobs.addAll(p.getRandomMobs(world));

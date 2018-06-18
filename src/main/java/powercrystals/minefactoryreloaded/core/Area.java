@@ -56,7 +56,7 @@ public class Area {
 
     public List<BlockPos> getPositionsTopFirst() {
 
-        ArrayList<BlockPos> positions = new ArrayList<BlockPos>();
+        ArrayList<BlockPos> positions = new ArrayList<>();
         for (int y = yMax; y >= yMin; y--) {
             for (int x = xMin; x <= xMax; x++) {
                 for (int z = zMin; z <= zMax; z++) {
@@ -69,7 +69,7 @@ public class Area {
 
     public List<BlockPos> getPositionsBottomFirst() {
 
-        ArrayList<BlockPos> positions = new ArrayList<BlockPos>();
+        ArrayList<BlockPos> positions = new ArrayList<>();
         for (int y = yMin; y <= yMax; y++) {
             for (int x = xMin; x <= xMax; x++) {
                 for (int z = zMin; z <= zMax; z++) {

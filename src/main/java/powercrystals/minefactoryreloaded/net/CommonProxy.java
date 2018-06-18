@@ -28,7 +28,7 @@ import java.util.List;
 
 public class CommonProxy implements LoadingCallback {
 
-	public static LinkedList<Ticket> ticketsInLimbo = new LinkedList<Ticket>();
+	public static LinkedList<Ticket> ticketsInLimbo = new LinkedList<>();
 
 	public static boolean loadTicket(Ticket ticket, boolean addToList) {
 

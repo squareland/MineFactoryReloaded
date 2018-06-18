@@ -17,7 +17,7 @@ public class GrindingWorldServer extends WorldServerProxy {
 
 	protected TileEntityFactoryPowered grinder;
 	protected boolean allowSpawns;
-	protected LinkedList<Entity> entitiesToGrind = new LinkedList<Entity>();
+	protected LinkedList<Entity> entitiesToGrind = new LinkedList<>();
 
 	public GrindingWorldServer(WorldServer world, TileEntityFactoryPowered grinder) {
 

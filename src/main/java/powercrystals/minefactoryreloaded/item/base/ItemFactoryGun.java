@@ -44,7 +44,7 @@ public abstract class ItemFactoryGun extends ItemFactory {
 		} else {
 			result = EnumActionResult.SUCCESS;
 		}
-		return new ActionResult<ItemStack>(result, stack);
+		return new ActionResult<>(result, stack);
 	}
 
 }

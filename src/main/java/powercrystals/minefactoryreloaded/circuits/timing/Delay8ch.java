@@ -11,13 +11,13 @@ import powercrystals.minefactoryreloaded.circuits.base.StatelessCircuit;
 public class Delay8ch extends StatelessCircuit
 {
 	private int delayTime;
-	private Map<Integer, List<Integer>> history = new HashMap<Integer, List<Integer>>();
+	private Map<Integer, List<Integer>> history = new HashMap<>();
 	
 	public Delay8ch()
 	{
 		for(int i = 0; i < 8; i++)
 		{
-			history.put(i, new ArrayList<Integer>());
+			history.put(i, new ArrayList<>());
 		}
 	}
 	

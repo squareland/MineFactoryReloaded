@@ -20,7 +20,7 @@ public class GrindableStandard implements IFactoryGrindable
 	public GrindableStandard(Class<? extends EntityLivingBase> entityToGrind, MobDrop[] dropStacks, boolean entityProcessed)
 	{
 		_grindableClass = entityToGrind;
-		_drops = new ArrayList<MobDrop>();
+		_drops = new ArrayList<>();
 		for(MobDrop d : dropStacks)
 		{
 			_drops.add(d);
@@ -36,7 +36,7 @@ public class GrindableStandard implements IFactoryGrindable
 	public GrindableStandard(Class<? extends EntityLivingBase> entityToGrind, @Nonnull ItemStack dropStack, boolean entityProcessed)
 	{
 		_grindableClass = entityToGrind;
-		_drops = new ArrayList<MobDrop>();
+		_drops = new ArrayList<>();
 		_drops.add(new MobDrop(10, dropStack));
 		_entityProcessed = entityProcessed;
 	}
@@ -49,7 +49,7 @@ public class GrindableStandard implements IFactoryGrindable
 	public GrindableStandard(Class<? extends EntityLivingBase> entityToGrind, boolean entityProcessed)
 	{
 		_grindableClass = entityToGrind;
-		_drops = new ArrayList<MobDrop>();
+		_drops = new ArrayList<>();
 		_entityProcessed = entityProcessed;
 	}
 

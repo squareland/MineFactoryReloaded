@@ -39,7 +39,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	private static Map<String, Boolean> DEFAULT_SETTINGS;
 	static {
 
-		HashMap<String, Boolean> _settings = new HashMap<String, Boolean>();
+		HashMap<String, Boolean> _settings = new HashMap<>();
 		_settings.put("silkTouch", false);
 		_settings.put("harvestSmallMushrooms", false);
 		_settings.put("playSounds", MFRConfig.playSounds.getBoolean(true));
@@ -61,7 +61,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		createHAM(this, 1);
 		setManageSolids(true);
 
-		_settings = new HashMap<String, Boolean>();
+		_settings = new HashMap<>();
 		_settings.putAll(DEFAULT_SETTINGS);
 		_immutableSettings = java.util.Collections.unmodifiableMap(_settings);
 

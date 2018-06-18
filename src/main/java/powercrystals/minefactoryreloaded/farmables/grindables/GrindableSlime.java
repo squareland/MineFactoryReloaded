@@ -23,7 +23,7 @@ public class GrindableSlime implements IFactoryGrindable
 	public GrindableSlime(Class<? extends EntityLivingBase> slime, MobDrop[] drops, int dropSize)
 	{
 		grindable = slime;
-		ArrayList<MobDrop> q = new ArrayList<MobDrop>();
+		ArrayList<MobDrop> q = new ArrayList<>();
 		q.addAll(Arrays.asList(drops));
 		this.drops = q;
 		this.dropSize = dropSize;
@@ -37,7 +37,7 @@ public class GrindableSlime implements IFactoryGrindable
 	public GrindableSlime(Class<? extends EntityLivingBase> slime, NonNullList<ItemStack> drops, int dropSize)
 	{
 		grindable = slime;
-		ArrayList<MobDrop> q = new ArrayList<MobDrop>();
+		ArrayList<MobDrop> q = new ArrayList<>();
 		for (@Nonnull ItemStack drop : drops)
 			q.add(new MobDrop(10, drop));
 		this.drops = q;

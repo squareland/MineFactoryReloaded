@@ -517,7 +517,7 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryTickable {
 		calculateOutput();
 
 		if (tag.hasKey("OutItems")) {
-			ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+			ArrayList<ItemStack> drops = new ArrayList<>();
 			NBTTagList nbttaglist = tag.getTagList("OutItems", 10);
 			for (int i = nbttaglist.tagCount(); i-- > 0; ) {
 				NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);

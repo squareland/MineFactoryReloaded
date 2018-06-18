@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 
 public class ItemMulti extends ItemFactory {
 
-	protected TIntObjectHashMap<String> _names = new TIntObjectHashMap<String>(16);
+	protected TIntObjectHashMap<String> _names = new TIntObjectHashMap<>(16);
 	protected TIntArrayList _indicies = new TIntArrayList(16);
 
 	public ItemMulti() {

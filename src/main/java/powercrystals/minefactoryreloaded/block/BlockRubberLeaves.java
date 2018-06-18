@@ -97,7 +97,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 		return false;
 	}
 
-	private ThreadLocal<Boolean> updating = new ThreadLocal<Boolean>();
+	private ThreadLocal<Boolean> updating = new ThreadLocal<>();
 
 	@Override
 	public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {

@@ -110,12 +110,12 @@ public enum SideOffset {
 
     public static final TIntObjectMap<SideOffset> lookup;
     static {
-    	TIntObjectHashMap<SideOffset> a = new TIntObjectHashMap<SideOffset>();
+    	TIntObjectHashMap<SideOffset> a = new TIntObjectHashMap<>();
     	for (int i = 0x40; i --> 0;)
     		a.put(i, UNKNOWN);
     	for (SideOffset v : SideOffset.values())
     		a.put(v.flag, v);
-    	lookup = new TUnmodifiableIntObjectMap<SideOffset>(a);//ImmutableMap.copyOf(a);
+    	lookup = new TUnmodifiableIntObjectMap<>(a);//ImmutableMap.copyOf(a);
     }
 
 	public final int offsetX;

@@ -69,7 +69,7 @@ public class ItemRedNetMeter extends ItemMulti {
 		Block block = state.getBlock();
 		switch (stack.getItemDamage()) {
 		case 2:
-			ArrayList<ITextComponent> info = new ArrayList<ITextComponent>();
+			ArrayList<ITextComponent> info = new ArrayList<>();
 			if (block instanceof IBlockInfo) {
 				if (ServerHelper.isClientWorld(world)) {
 					info.add(new TextComponentString("-Client-"));

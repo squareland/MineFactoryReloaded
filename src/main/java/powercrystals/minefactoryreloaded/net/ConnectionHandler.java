@@ -14,10 +14,10 @@ import java.util.LinkedHashSet;
 
 public class ConnectionHandler {
 
-	public static HashMap<String, Boolean> onlinePlayerMap = new HashMap<String, Boolean>();
+	public static HashMap<String, Boolean> onlinePlayerMap = new HashMap<>();
 
-	private static LinkedHashSet<IDelayedValidate> nodes = new LinkedHashSet<IDelayedValidate>();
-	private static LinkedHashSet<IDelayedValidate> nodesToAdd = new LinkedHashSet<IDelayedValidate>();
+	private static LinkedHashSet<IDelayedValidate> nodes = new LinkedHashSet<>();
+	private static LinkedHashSet<IDelayedValidate> nodesToAdd = new LinkedHashSet<>();
 
 	public static void update(IDelayedValidate node) {
 

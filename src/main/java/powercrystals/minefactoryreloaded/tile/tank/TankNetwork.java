@@ -24,7 +24,7 @@ public class TankNetwork implements IDelayedValidate {
 
 	public TankNetwork(TileEntityTank base) {
 
-		nodeSet = new LinkedHashSet<TileEntityTank>();
+		nodeSet = new LinkedHashSet<>();
 		addNode(base);
 	}
 
@@ -63,10 +63,10 @@ public class TankNetwork implements IDelayedValidate {
 			return;
 		TileEntityTank main = nodeSet.iterator().next();
 		LinkedHashSet<TileEntityTank> oldSet = nodeSet;
-		nodeSet = new LinkedHashSet<TileEntityTank>(Math.min(oldSet.size() / 6, 5));
+		nodeSet = new LinkedHashSet<>(Math.min(oldSet.size() / 6, 5));
 
-		LinkedHashSet<TileEntityTank> toCheck = new LinkedHashSet<TileEntityTank>();
-		LinkedHashSet<TileEntityTank> checked = new LinkedHashSet<TileEntityTank>();
+		LinkedHashSet<TileEntityTank> toCheck = new LinkedHashSet<>();
+		LinkedHashSet<TileEntityTank> checked = new LinkedHashSet<>();
 		BlockPos bp = new BlockPos(0, 0, 0);
 		EnumFacing[] dir = EnumFacing.VALUES;
 		toCheck.add(main);

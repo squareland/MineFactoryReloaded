@@ -42,7 +42,7 @@ import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.st
 
 public class MFRThings {
 
-	public static TIntObjectMap<Block> machineBlocks = new TIntObjectHashMap<Block>();
+	public static TIntObjectMap<Block> machineBlocks = new TIntObjectHashMap<>();
 
 	private static ArrayList<IInitializer> initList = new ArrayList<>();
 

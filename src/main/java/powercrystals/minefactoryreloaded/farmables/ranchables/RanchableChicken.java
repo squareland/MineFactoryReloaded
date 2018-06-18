@@ -28,7 +28,7 @@ public class RanchableChicken implements IFactoryRanchable {
 	@Override
 	public List<RanchedItem> ranch(World world, EntityLivingBase entity, IInventory rancher) {
 
-		List<RanchedItem> drops = new LinkedList<RanchedItem>();
+		List<RanchedItem> drops = new LinkedList<>();
 		EntityChicken chicken = ((EntityChicken) entity);
 		if (chicken.timeUntilNextEgg < 500) {
 			chicken.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (chicken.getRNG().nextFloat() - chicken.getRNG().nextFloat()) * 0.2F + 1.0F);

@@ -8,7 +8,7 @@ import powercrystals.minefactoryreloaded.circuits.base.StatelessCircuit;
 public class Delay extends StatelessCircuit
 {
 	private int delayTime;
-	private ArrayList<Integer> history = new ArrayList<Integer>();
+	private ArrayList<Integer> history = new ArrayList<>();
 	
 	@Override
 	public byte getInputCount()

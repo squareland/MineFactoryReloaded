@@ -77,8 +77,8 @@ import static net.minecraft.util.text.TextFormatting.*;
 public class Machine {
 
 	public static final Material MATERIAL = new MachineMaterial(MapColor.IRON);
-	protected static List<Machine> _machines = new LinkedList<Machine>();
-	protected static TIntObjectHashMap<Machine> _machineMappings = new TIntObjectHashMap<Machine>();
+	protected static List<Machine> _machines = new LinkedList<>();
+	protected static TIntObjectHashMap<Machine> _machineMappings = new TIntObjectHashMap<>();
 	protected static TIntArrayList _highestMetas = new TIntArrayList();
 
 	public static Machine Planter = new Machine(0, 0, "Planter", TileEntityPlanter.class, 160, 8000);

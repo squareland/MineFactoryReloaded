@@ -256,7 +256,7 @@ public class TileEntityLaserDrill extends TileEntityFactoryTickable implements I
 	@Nonnull
 	private ItemStack getRandomDrop() {
 
-		List<WeightedRandomItemStack> drops = new LinkedList<WeightedRandomItemStack>();
+		List<WeightedRandomItemStack> drops = new LinkedList<>();
 		int boost = WeightedRandom.getTotalWeight(MFRRegistry.getLaserOres()) / 30;
 
 		for (WeightedRandom.Item i : MFRRegistry.getLaserOres()) {

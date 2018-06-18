@@ -21,7 +21,7 @@ public class GuiConfig extends net.minecraftforge.fml.client.config.GuiConfig {
 
 	private static List<IConfigElement> getConfigElements(GuiScreen parent) {
 
-		List<IConfigElement> list = new ArrayList<IConfigElement>();
+		List<IConfigElement> list = new ArrayList<>();
 
 		{
 			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -35,7 +35,7 @@ public class GuiConfig extends net.minecraftforge.fml.client.config.GuiConfig {
 
 	private static List<IConfigElement> getClientConfigElements() {
 
-		List<IConfigElement> list = new ArrayList<IConfigElement>();
+		List<IConfigElement> list = new ArrayList<>();
 
 		//ModContainer container = Loader.instance().getIndexedModList().get(MineFactoryReloadedCore.modId);
 		//container.get

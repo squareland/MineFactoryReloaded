@@ -77,7 +77,7 @@ public enum RedNetConnectionType
 		return ret;
 	}
 	
-	private static final Map<Short, RedNetConnectionType> connections = new HashMap<Short, RedNetConnectionType>();
+	private static final Map<Short, RedNetConnectionType> connections = new HashMap<>();
 	
 	static {
 		for (RedNetConnectionType type : RedNetConnectionType.values())

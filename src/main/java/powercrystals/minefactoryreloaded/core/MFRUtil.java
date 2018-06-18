@@ -341,7 +341,7 @@ public class MFRUtil {
 
 	public static EnumFacing[] directionsWithoutConveyors(World world, BlockPos pos) {
 
-		ArrayList<EnumFacing> nonConveyors = new ArrayList<EnumFacing>();
+		ArrayList<EnumFacing> nonConveyors = new ArrayList<>();
 		Block id = MFRThings.conveyorBlock;
 
 		for (EnumFacing direction : EnumFacing.VALUES) {

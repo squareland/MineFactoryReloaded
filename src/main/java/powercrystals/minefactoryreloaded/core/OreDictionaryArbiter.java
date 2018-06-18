@@ -84,15 +84,15 @@ public class OreDictionaryArbiter {
 		oreIDs.put(name, id);
 
 		if (!oreStacks.containsKey(id)) {
-			oreStacks.put(id, new ArrayList<ItemStack>());
+			oreStacks.put(id, new ArrayList<>());
 		}
 		oreStacks.get(id).add(stack);
 
 		ItemWrapper item = ItemWrapper.fromItemStack(stack);
 
 		if (!stackIDs.containsKey(item)) {
-			stackIDs.put(item, new ArrayList<Integer>());
-			stackNames.put(item, new ArrayList<String>());
+			stackIDs.put(item, new ArrayList<>());
+			stackNames.put(item, new ArrayList<>());
 		}
 		stackIDs.get(item).add(OreDictionary.getOreID(name));
 		stackNames.get(item).add(name);

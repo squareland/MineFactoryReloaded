@@ -175,7 +175,7 @@ public class GuiFactoryInventory extends GuiContainerCore {
 
 	protected void drawBarTooltip(String name, String unit, int value, int max, int x, int y, String... extra) {
 
-		List<String> lines = new ArrayList<String>(2);
+		List<String> lines = new ArrayList<>(2);
 		lines.add(name);
 		String m = String.valueOf(max);
 		String v = String.valueOf(value);
@@ -192,7 +192,7 @@ public class GuiFactoryInventory extends GuiContainerCore {
 
 	protected void drawBarTooltip(String name, String unit, float value, float max, int x, int y) {
 
-		List<String> lines = new ArrayList<String>(2);
+		List<String> lines = new ArrayList<>(2);
 		lines.add(name);
 		String m = decimal_format.format(max);
 		String v = decimal_format.format(value);

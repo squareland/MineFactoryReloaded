@@ -19,23 +19,20 @@ import java.util.LinkedHashSet;
 
 public class GridTickHandler<G extends IGrid, N extends INode> implements IGridController {
 
-	public static final GridTickHandler<RedstoneEnergyNetwork, TileEntityRedNetEnergy> energy =
-			new GridTickHandler<RedstoneEnergyNetwork, TileEntityRedNetEnergy>("Energy");
-	public static final GridTickHandler<RedstoneNetwork, TileEntityRedNetCable> redstone =
-			new GridTickHandler<RedstoneNetwork, TileEntityRedNetCable>("Redstone");
-	public static final GridTickHandler<FluidNetwork, TileEntityPlasticPipe> fluid =
-			new GridTickHandler<FluidNetwork, TileEntityPlasticPipe>("Fluid");
+	public static final GridTickHandler<RedstoneEnergyNetwork, TileEntityRedNetEnergy> energy = new GridTickHandler<>("Energy");
+	public static final GridTickHandler<RedstoneNetwork, TileEntityRedNetCable> redstone = new GridTickHandler<>("Redstone");
+	public static final GridTickHandler<FluidNetwork, TileEntityPlasticPipe> fluid = new GridTickHandler<>("Fluid");
 
 	private final Object addRemoveLock = new Object();
 
-	private final LinkedHashSet<G> tickingGridsToRegenerate = new LinkedHashSet<G>();
-	private final LinkedHashSet<G> tickingGridsToAdd = new LinkedHashSet<G>();
-	private final LinkedHashSet<G> tickingGridsToRemove = new LinkedHashSet<G>();
-	private final LinkedHashSet<G> tickingGrids = new LinkedHashSet<G>();
+	private final LinkedHashSet<G> tickingGridsToRegenerate = new LinkedHashSet<>();
+	private final LinkedHashSet<G> tickingGridsToAdd = new LinkedHashSet<>();
+	private final LinkedHashSet<G> tickingGridsToRemove = new LinkedHashSet<>();
+	private final LinkedHashSet<G> tickingGrids = new LinkedHashSet<>();
 
-	private final LinkedHashSet<N> conduitToAdd = new LinkedHashSet<N>();
-	private final LinkedHashSet<N> conduitToUpd = new LinkedHashSet<N>();
-	private final LinkedHashSet<N> conduit = new LinkedHashSet<N>();
+	private final LinkedHashSet<N> conduitToAdd = new LinkedHashSet<>();
+	private final LinkedHashSet<N> conduitToUpd = new LinkedHashSet<>();
+	private final LinkedHashSet<N> conduit = new LinkedHashSet<>();
 
 	private final String label;
 

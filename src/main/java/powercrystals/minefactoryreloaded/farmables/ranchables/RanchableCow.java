@@ -35,7 +35,7 @@ public class RanchableCow implements IFactoryRanchable {
 			return null;
 		tag.setLong("mfr:lastRanched", world.getTotalWorldTime() + 20 * 30);
 
-		List<RanchedItem> drops = new LinkedList<RanchedItem>();
+		List<RanchedItem> drops = new LinkedList<>();
 
 		IItemHandler handler = UtilInventory.getItemHandlerCap(rancher, EnumFacing.UP);
 

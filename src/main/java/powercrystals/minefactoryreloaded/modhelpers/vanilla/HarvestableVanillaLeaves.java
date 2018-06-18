@@ -29,7 +29,7 @@ public class HarvestableVanillaLeaves extends HarvestableTreeLeaves {
 		if (settings.get("silkTouch") == Boolean.TRUE)
 			return super.getDrops(world, rand, settings, pos);
 		
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> drops = new ArrayList<>();
 		IBlockState state = world.getBlockState(pos);
 		int d = getPlant().damageDropped(state);
 		if(rand.nextInt(d == 3 ? 40 : 20) == 0)

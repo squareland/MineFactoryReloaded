@@ -107,7 +107,7 @@ public class GuiRedNetLogic extends GuiContainerCore {
 
 		super.initGui();
 
-		List<IRedNetLogicCircuit> circuits = new LinkedList<IRedNetLogicCircuit>(MFRRegistry.getRedNetLogicCircuits());
+		List<IRedNetLogicCircuit> circuits = new LinkedList<>(MFRRegistry.getRedNetLogicCircuits());
 		// circuits.add(new Debug());
 		circuits.sort(new CircuitComparator());
 		boolean unicode = false;

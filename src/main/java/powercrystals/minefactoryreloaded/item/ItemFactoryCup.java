@@ -58,7 +58,7 @@ public class ItemFactoryCup extends ItemFactory implements IUseable {
 		this.setMaxStackSize(stackSize);
 		this.setMaxDamage(maxUses);
 		this.setHasSubtypes(true);
-		useHandlers = new LinkedList<IUseHandler>();
+		useHandlers = new LinkedList<>();
 		useHandlers.add(defaultUseAction);
 		useHandlers.add(drinkUseAction);
 		setUnlocalizedName("mfr.plastic.cup");

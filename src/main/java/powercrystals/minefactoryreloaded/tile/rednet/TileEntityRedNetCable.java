@@ -67,7 +67,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 	public TileEntityRedNetCable() {
 
 		if (_connectionBlackList == null) {
-			THashSet<Block> connectionBlackList = new THashSet<Block>(256);
+			THashSet<Block> connectionBlackList = new THashSet<>(256);
 			for (String s : MFRConfig.redNetConnectionBlacklist.getStringList()) {
 				if (!StringUtils.isNullOrEmpty(s))
 					connectionBlackList.add(Block.getBlockFromName(s));

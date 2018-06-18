@@ -31,7 +31,7 @@ public class TileEntityUnifier extends TileEntityFactoryInventory {
 	private static FluidStack _ethanol;
 	private int _roundingCompensation;
 
-	private Map<String, ItemStack> _preferredOutputs = new HashMap<String, ItemStack>();
+	private Map<String, ItemStack> _preferredOutputs = new HashMap<>();
 
 	public TileEntityUnifier() {
 
