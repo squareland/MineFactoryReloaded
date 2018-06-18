@@ -266,7 +266,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 			if(!BlockHelper.getAdjacentBlock(world, pos, direction.getFacing()).getBlock().equals(this)) {
 				if(direction.isUphill() || direction.isDownhill()) {
 					double d = .25;
-					if(!BlockHelper.getAdjacentBlock(world, pos.add(0, direction.getYOffset(), 0), direction.getFacing()).equals(this)) {
+					if(!BlockHelper.getAdjacentBlock(world, pos.add(0, direction.getYOffset(), 0), direction.getFacing()).getBlock().equals(this)) {
 						d = 1;
 					}
 					entity.motionY = yVelocity * d;
