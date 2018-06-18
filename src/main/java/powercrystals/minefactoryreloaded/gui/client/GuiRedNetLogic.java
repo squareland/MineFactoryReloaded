@@ -32,7 +32,6 @@ import powercrystals.minefactoryreloaded.net.MFRPacket;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic;
 import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetLogic.PinMapping;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -110,7 +109,7 @@ public class GuiRedNetLogic extends GuiContainerCore {
 
 		List<IRedNetLogicCircuit> circuits = new LinkedList<IRedNetLogicCircuit>(MFRRegistry.getRedNetLogicCircuits());
 		// circuits.add(new Debug());
-		Collections.sort(circuits, new CircuitComparator());
+		circuits.sort(new CircuitComparator());
 		boolean unicode = false;
 		for (IRedNetLogicCircuit e : circuits) {
 			if (MFRUtil.containsForcedUnicode(MFRUtil.localize(e.getUnlocalizedName()))) {

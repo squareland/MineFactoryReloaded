@@ -148,7 +148,7 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 		while (!_treeManager.getIsDone()) {
 			BlockPos bp = _treeManager.getNextBlock();
 			block = world.getBlockState(bp).getBlock();
-			IFactoryFruit fruit = fruits.containsKey(block) ? fruits.get(block) : null;
+			IFactoryFruit fruit = fruits.getOrDefault(block, null);
 
 			if (fruit != null && fruit.canBePicked(world, bp))
 				return bp;

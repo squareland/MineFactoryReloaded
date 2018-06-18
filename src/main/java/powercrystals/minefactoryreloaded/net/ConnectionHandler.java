@@ -1,6 +1,5 @@
 package powercrystals.minefactoryreloaded.net;
 
-import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -11,7 +10,6 @@ import powercrystals.minefactoryreloaded.core.IDelayedValidate;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 public class ConnectionHandler {
@@ -49,12 +47,7 @@ public class ConnectionHandler {
 
 		String name = player.player.getName();
 		onlinePlayerMap.put(name, Boolean.TRUE);
-		Iterator<Ticket> i = CommonProxy.ticketsInLimbo.iterator();
-		while (i.hasNext()) {
-			Ticket ticket = i.next();
-			if (ticket.getPlayerName().equals(name) && CommonProxy.loadTicket(ticket, false))
-				i.remove();
-		}
+		CommonProxy.ticketsInLimbo.removeIf(ticket -> ticket.getPlayerName().equals(name) && CommonProxy.loadTicket(ticket, false));
 	}
 
 	@SubscribeEvent

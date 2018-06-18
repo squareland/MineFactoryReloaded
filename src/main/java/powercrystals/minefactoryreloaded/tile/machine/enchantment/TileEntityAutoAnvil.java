@@ -272,7 +272,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 					for (Enchantment addedEnchant : addedEnchantments.keySet()) {
 						if (addedEnchant == null)
 							continue;
-						int existingEnchLevel = existingEnchantments.containsKey(addedEnchant) ? existingEnchantments.get(addedEnchant) : 0;
+						int existingEnchLevel = existingEnchantments.getOrDefault(addedEnchant, 0);
 						int addedEnchLevel = addedEnchantments.get(addedEnchant);
 						int newEnchLevel;
 
