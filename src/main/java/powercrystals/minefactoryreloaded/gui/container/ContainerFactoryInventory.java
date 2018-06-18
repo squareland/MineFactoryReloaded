@@ -5,6 +5,7 @@ import cofh.core.util.CoreUtils;
 import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -55,18 +56,18 @@ public class ContainerFactoryInventory extends ContainerCore {
 
 		FluidTankInfo[] tank = _te.getTankInfo();
 		int n = tank.length;
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendWindowProperty(this, 33, (_te.hasDrops() ? 1 : 0) |
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 33, (_te.hasDrops() ? 1 : 0) |
 					(CoreUtils.isRedstonePowered(_te) ? 2 : 0));
 			for (int j = n; j-- > 0; ) {
-				listeners.get(i).sendWindowProperty(this, 30, j);
+				listener.sendWindowProperty(this, 30, j);
 				if (tank[j] != null && tank[j].fluid != null) {
-					listeners.get(i).sendWindowProperty(this, 31, tank[j].fluid.amount);
-					listeners.get(i)
+					listener.sendWindowProperty(this, 31, tank[j].fluid.amount);
+					listener
 							.sendWindowProperty(this, 32, FluidRegistry.getRegisteredFluidIDs().get(tank[j].fluid.getFluid()));
 				} else if (tank[j] != null) {
-					listeners.get(i).sendWindowProperty(this, 31, 0);
-					listeners.get(i).sendWindowProperty(this, 32, 0);
+					listener.sendWindowProperty(this, 31, 0);
+					listener.sendWindowProperty(this, 32, 0);
 				}
 			}
 		}

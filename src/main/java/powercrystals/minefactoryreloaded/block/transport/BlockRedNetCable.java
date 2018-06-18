@@ -589,8 +589,8 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 
 		StringBuilder sb = new StringBuilder();
 
-		for(int i=0; i < propertyArray.length; i++) {
-			sb.append(state.getValue(propertyArray[i]) ? 1 : 0);
+		for (IUnlistedProperty<Boolean> aPropertyArray : propertyArray) {
+			sb.append(state.getValue(aPropertyArray) ? 1 : 0);
 		}
 
 		return sb.toString();

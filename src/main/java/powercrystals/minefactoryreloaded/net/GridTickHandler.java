@@ -15,7 +15,6 @@ import powercrystals.minefactoryreloaded.tile.rednet.TileEntityRedNetEnergy;
 import powercrystals.minefactoryreloaded.tile.transport.FluidNetwork;
 import powercrystals.minefactoryreloaded.tile.transport.TileEntityPlasticPipe;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 public class GridTickHandler<G extends IGrid, N extends INode> implements IGridController {
@@ -146,9 +145,8 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 		if (!conduit.isEmpty()) {
 			N cond = null;
 			try {
-				Iterator<N> iter = conduit.iterator();
-				while (iter.hasNext()) {
-					cond = iter.next();
+				for (N aConduit : conduit) {
+					cond = aConduit;
 					if (!cond.isNotValid())
 						cond.updateInternalTypes(this);
 				}
@@ -203,9 +201,8 @@ public class GridTickHandler<G extends IGrid, N extends INode> implements IGridC
 		if (!conduit.isEmpty()) {
 			N cond = null;
 			try {
-				Iterator<N> iter = conduit.iterator();
-				while (iter.hasNext()) {
-					cond = iter.next();
+				for (N aConduit : conduit) {
+					cond = aConduit;
 					if (!cond.isNotValid())
 						cond.firstTick(this);
 				}

@@ -14,7 +14,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -108,27 +107,21 @@ public class EntityRocket extends Entity
 			}
 			
 			Entity entityHit = null;
-			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+			List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
 					this.getEntityBoundingBox().expand(this.motionX, this.motionY, this.motionZ).grow(1.0D, 1.0D, 1.0D));
 			double closestRange = 0.0D;
 			double collisionRange = 0.3D;
 			EntityPlayer owner = _owner == null ? null : this.world.getPlayerEntityByName(_owner);
-			
-			for(int i = 0, end = list.size(); i < end; ++i)
-			{
-				Entity e = (Entity)list.get(i);
-				
-				if((e != owner | _ticksAlive > 5) && e.canBeCollidedWith())
-				{
+
+			for (Entity e : list) {
+				if ((e != owner | _ticksAlive > 5) && e.canBeCollidedWith()) {
 					AxisAlignedBB entitybb = e.getEntityBoundingBox().grow(collisionRange, collisionRange, collisionRange);
 					RayTraceResult entityHitPos = entitybb.calculateIntercept(pos, nextPos);
-					
-					if(entityHitPos != null)
-					{
+
+					if (entityHitPos != null) {
 						double range = pos.distanceTo(entityHitPos.hitVec);
-						
-						if((range < closestRange) | closestRange == 0D)
-						{
+
+						if ((range < closestRange) | closestRange == 0D) {
 							entityHit = e;
 							closestRange = range;
 						}
@@ -256,20 +249,15 @@ public class EntityRocket extends Entity
             double x = _lostTarget.getDouble("xTarget");
             double y = _lostTarget.getDouble("yTarget");
             double z = _lostTarget.getDouble("zTarget");
-            List list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - 5, y - 5, z - 5, x + 5, y + 5, z + 5));
-            Iterator iterator = list.iterator();
+            List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - 5, y - 5, z - 5, x + 5, y + 5, z + 5));
 
-            while (iterator.hasNext())
-            {
-            	Entity e = (Entity)iterator.next();
-
-                if (e.getUniqueID().equals(uuid))
-                {
-                    _target = e;
-                    _lostTarget = null;
-                    break findTarget;
-                }
-            }
+			for (Entity e : list) {
+				if (e.getUniqueID().equals(uuid)) {
+					_target = e;
+					_lostTarget = null;
+					break findTarget;
+				}
+			}
             return new Vec3d(x - posX, y - posY, z - posZ);
 		}
 		if (_target != null)

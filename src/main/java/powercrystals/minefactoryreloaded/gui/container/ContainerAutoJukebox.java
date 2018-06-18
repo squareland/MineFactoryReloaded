@@ -33,8 +33,7 @@ public class ContainerAutoJukebox extends ContainerFactoryInventory {
 	public void detectAndSendChanges() {
 
 		super.detectAndSendChanges();
-		for (int i = 0; i < listeners.size(); i++) {
-			IContainerListener listener = listeners.get(i);
+		for (IContainerListener listener : listeners) {
 			if (listener != null) {
 				listener.sendWindowProperty(this, 100, (_jukebox.getCanCopy() ? 1 : 0) | (_jukebox.getCanPlay() ? 2 : 0));
 			}

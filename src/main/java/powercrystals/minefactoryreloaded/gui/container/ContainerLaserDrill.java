@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptLaserFocus;
 import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityLaserDrill;
 
@@ -27,12 +28,11 @@ public class ContainerLaserDrill extends ContainerFactoryInventory
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, ((TileEntityLaserDrill)_te).getWorkDone());
-			listeners.get(i).sendWindowProperty(this, 101, ((TileEntityLaserDrill)_te).getWorkDone() >> 16);
-			listeners.get(i).sendWindowProperty(this, 102, ((TileEntityLaserDrill)_te).getEnergyStored());
-			listeners.get(i).sendWindowProperty(this, 103, ((TileEntityLaserDrill)_te).getEnergyStored() >> 16);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, ((TileEntityLaserDrill) _te).getWorkDone());
+			listener.sendWindowProperty(this, 101, ((TileEntityLaserDrill) _te).getWorkDone() >> 16);
+			listener.sendWindowProperty(this, 102, ((TileEntityLaserDrill) _te).getEnergyStored());
+			listener.sendWindowProperty(this, 103, ((TileEntityLaserDrill) _te).getEnergyStored() >> 16);
 		}
 	}
 	

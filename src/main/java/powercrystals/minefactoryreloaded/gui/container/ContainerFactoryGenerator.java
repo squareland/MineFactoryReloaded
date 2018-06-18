@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import cofh.core.gui.slot.SlotEnergy;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,9 +26,8 @@ public class ContainerFactoryGenerator extends ContainerFactoryInventory
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, ((TileEntityFactoryGenerator)_te).getBuffer());
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, ((TileEntityFactoryGenerator) _te).getBuffer());
 		}
 	}
 

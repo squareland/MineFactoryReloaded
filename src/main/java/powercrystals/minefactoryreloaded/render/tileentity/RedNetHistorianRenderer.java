@@ -105,8 +105,7 @@ public class RedNetHistorianRenderer extends TileEntitySpecialRenderer<TileEntit
 		int yMin = Integer.MAX_VALUE;
 		int yMax = Integer.MIN_VALUE;
 
-		for (int i = 0; i < values.length; i++) {
-			Integer v = values[i];
+		for (Integer v : values) {
 			if (v == null) {
 				continue;
 			}

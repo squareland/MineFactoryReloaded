@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 
+import net.minecraft.inventory.IContainerListener;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptUpgrade;
 import powercrystals.minefactoryreloaded.tile.machine.plants.TileEntityHarvester;
 
@@ -23,10 +24,9 @@ public class ContainerHarvester extends ContainerUpgradeable
 	{
 		super.detectAndSendChanges();
 
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, getSetting("silkTouch"));
-			listeners.get(i).sendWindowProperty(this, 101, getSetting("harvestSmallMushrooms"));
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, getSetting("silkTouch"));
+			listener.sendWindowProperty(this, 101, getSetting("harvestSmallMushrooms"));
 		}
 	}
 

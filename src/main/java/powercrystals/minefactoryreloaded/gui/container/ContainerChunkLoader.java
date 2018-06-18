@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 
+import net.minecraft.inventory.IContainerListener;
 import powercrystals.minefactoryreloaded.tile.machine.TileEntityChunkLoader;
 
 public class ContainerChunkLoader extends ContainerFactoryPowered
@@ -21,11 +22,11 @@ public class ContainerChunkLoader extends ContainerFactoryPowered
 
 		short radius = _cl.getRadius();
 		short empty = _cl.getEmpty();
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, radius);
-			listeners.get(i).sendWindowProperty(this, 101, empty);;
-			listeners.get(i).sendWindowProperty(this, 102, _cl.useAltPower ? 1 : 0);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, radius);
+			listener.sendWindowProperty(this, 101, empty);
+			;
+			listener.sendWindowProperty(this, 102, _cl.useAltPower ? 1 : 0);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
+import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -39,9 +40,8 @@ public class ContainerEjector extends ContainerFactoryInventory
 		int data = (_ejector.getIsWhitelist() ? 1 : 0) |
 				(_ejector.getIsNBTMatch() ? 2 : 0) |
 				(_ejector.getIsIDMatch() ? 4 : 0);
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, data);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, data);
 		}
 	}
 	

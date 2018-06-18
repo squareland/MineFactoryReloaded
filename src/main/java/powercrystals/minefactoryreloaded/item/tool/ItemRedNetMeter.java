@@ -77,8 +77,8 @@ public class ItemRedNetMeter extends ItemMulti {
 					info.add(new TextComponentString("-Server-"));
 				}
 				((IBlockInfo) (block)).getBlockInfo(info, world, pos, hitSide, player, true);
-				for (int i = 0; i < info.size(); i++) {
-					player.sendMessage(info.get(i));
+				for (ITextComponent anInfo : info) {
+					player.sendMessage(anInfo);
 				}
 				return true;
 			} else {
@@ -86,8 +86,8 @@ public class ItemRedNetMeter extends ItemMulti {
 				if (theTile instanceof ITileInfo) {
 					if (ServerHelper.isServerWorld(world)) {
 						((ITileInfo) theTile).getTileInfo(info, hitSide, player, player.isSneaking());
-						for (int i = 0; i < info.size(); i++) {
-							player.sendMessage(info.get(i));
+						for (ITextComponent anInfo : info) {
+							player.sendMessage(anInfo);
 						}
 					}
 					return true;
@@ -108,8 +108,8 @@ public class ItemRedNetMeter extends ItemMulti {
 			}
 			if (block instanceof IBlockInfo) {
 				((IBlockInfo) (block)).getBlockInfo(info, world, pos, hitSide, player, false);
-				for (int i = 0; i < info.size(); i++) {
-					player.sendMessage(info.get(i));
+				for (ITextComponent anInfo : info) {
+					player.sendMessage(anInfo);
 				}
 				return true;
 			} else {
@@ -117,8 +117,8 @@ public class ItemRedNetMeter extends ItemMulti {
 				if (theTile instanceof ITileInfo) {
 					if (ServerHelper.isServerWorld(world)) {
 						((ITileInfo) theTile).getTileInfo(info, hitSide, player, false);
-						for (int i = 0; i < info.size(); i++) {
-							player.sendMessage(info.get(i));
+						for (ITextComponent anInfo : info) {
+							player.sendMessage(anInfo);
 						}
 					}
 					return true;
@@ -136,8 +136,8 @@ public class ItemRedNetMeter extends ItemMulti {
 			}
 			else if (block instanceof IRedNetInfo) {
 				((IRedNetInfo) (block)).getRedNetInfo(world, pos, hitSide, player, info);
-				for (int i = 0; i < info.size(); i++) {
-					player.sendMessage(info.get(i));
+				for (ITextComponent anInfo : info) {
+					player.sendMessage(anInfo);
 				}
 				return true;
 			}

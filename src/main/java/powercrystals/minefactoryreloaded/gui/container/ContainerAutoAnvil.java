@@ -4,6 +4,7 @@ import cofh.core.gui.slot.SlotLocked;
 import cofh.core.gui.slot.SlotRemoveOnly;
 import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -57,8 +58,8 @@ public class ContainerAutoAnvil extends ContainerFactoryPowered {
 		if (_anvil.getRepairOnly() != repairOnly) {
 			repairOnly = _anvil.getRepairOnly();
 			int data = (repairOnly ? 1 : 0);
-			for (int i = 0; i < listeners.size(); i++) {
-				listeners.get(i).sendWindowProperty(this, 100, data);
+			for (IContainerListener listener : listeners) {
+				listener.sendWindowProperty(this, 100, data);
 			}
 		}
 	}

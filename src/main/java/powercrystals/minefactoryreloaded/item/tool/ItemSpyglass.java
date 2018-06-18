@@ -150,7 +150,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 		Vec3d playerLook = renderViewEntity.getLook(1.0F);
 		Vec3d playerLookRel = playerPos
 				.addVector(playerLook.x * range, playerLook.y * range, playerLook.z * range);
-		List<?> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
+		List<Entity> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 				renderViewEntity,
 				renderViewEntity
 						.getEntityBoundingBox()
@@ -159,9 +159,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 
 		double entityDistTotal = blockDist;
 		Entity pointedEntity = null;
-		for (int i = 0; i < list.size(); ++i) {
-			Entity entity = (Entity) list.get(i);
-
+		for (Entity entity : list) {
 			if (entity.canBeCollidedWith()) {
 				double entitySize = entity.getCollisionBorderSize();
 				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow(entitySize, entitySize, entitySize);

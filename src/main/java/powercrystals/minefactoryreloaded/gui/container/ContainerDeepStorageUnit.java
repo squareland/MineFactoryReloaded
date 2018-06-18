@@ -6,6 +6,7 @@ import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -94,9 +95,9 @@ public class ContainerDeepStorageUnit extends ContainerFactoryInventory {
 		super.detectAndSendChanges();
 
 		int v = _dsu.getQuantity();
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendWindowProperty(this, 200, v);
-			listeners.get(i).sendWindowProperty(this, 201, v >> 16);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 200, v);
+			listener.sendWindowProperty(this, 201, v >> 16);
 		}
 	}
 

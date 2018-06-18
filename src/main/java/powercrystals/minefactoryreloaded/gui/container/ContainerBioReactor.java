@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import cofh.core.gui.slot.SlotRemoveOnly;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -19,8 +20,8 @@ public class ContainerBioReactor extends ContainerFactoryInventory {
 	public void detectAndSendChanges() {
 
 		super.detectAndSendChanges();
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendWindowProperty(this, 100, ((TileEntityBioReactor) _te).getBurnTime());
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, ((TileEntityBioReactor) _te).getBurnTime());
 		}
 	}
 

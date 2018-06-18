@@ -155,15 +155,13 @@ public class EntityNeedle extends Entity implements IProjectile, IEntityAddition
 		}
 
 		Entity entityHit = null;
-		List<?> list = world.getEntitiesWithinAABBExcludingEntity(this,
+		List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(this,
 			getEntityBoundingBox().expand(motionX, motionY, motionZ).grow(1.0D, 1.0D, 1.0D));
 		double closestRange = 0.0D;
 		double collisionRange = 0.3D;
 		EntityPlayer owner = _owner == null ? null : world.getPlayerEntityByName(_owner);
 
-		for (int l = 0; l < list.size(); ++l) {
-			Entity e = (Entity) list.get(l);
-
+		for (Entity e : list) {
 			if ((e != owner | ticksInAir >= 2) && e.canBeCollidedWith()) {
 				AxisAlignedBB entitybb = e.getEntityBoundingBox().grow(collisionRange, collisionRange, collisionRange);
 				RayTraceResult entityHitPos = entitybb.calculateIntercept(pos, nextPos);

@@ -214,8 +214,8 @@ public class GuiFactoryInventory extends GuiContainerCore {
 		int xStart;
 		int yStart;
 
-		for (int i = 0; i < lines.size(); i++) {
-			tempWidth = fontRenderer.getStringWidth(lines.get(i));
+		for (String line1 : lines) {
+			tempWidth = fontRenderer.getStringWidth(line1);
 
 			if (tempWidth > tooltipWidth) {
 				tooltipWidth = tempWidth;

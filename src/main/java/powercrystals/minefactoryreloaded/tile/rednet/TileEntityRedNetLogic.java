@@ -611,9 +611,9 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotateable
 		// recalculate sizes
 		int circuitCount = 6;
 		int variableCount = 16;
-		for (int i = 0; i < _upgradeLevel.length; i++) {
-			circuitCount += ItemLogicUpgradeCard.getCircuitsForLevel(_upgradeLevel[i]);
-			variableCount += ItemLogicUpgradeCard.getVariablesForLevel(_upgradeLevel[i]);
+		for (int a_upgradeLevel : _upgradeLevel) {
+			circuitCount += ItemLogicUpgradeCard.getCircuitsForLevel(a_upgradeLevel);
+			variableCount += ItemLogicUpgradeCard.getVariablesForLevel(a_upgradeLevel);
 		}
 
 		_circuitCount = circuitCount;

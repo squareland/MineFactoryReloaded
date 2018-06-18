@@ -50,11 +50,11 @@ public class OreDictionaryArbiter {
 
 		oreNames = OreDictionary.getOreNames();
 
-		for (int i = 0; i < oreNames.length; i++) {
-			NonNullList<ItemStack> ores = OreDictionary.getOres(oreNames[i]);
+		for (String oreName : oreNames) {
+			NonNullList<ItemStack> ores = OreDictionary.getOres(oreName);
 
-			for (int j = 0; j < ores.size(); j++) {
-				registerOreDictionaryEntry(ores.get(j), oreNames[i]);
+			for (ItemStack ore : ores) {
+				registerOreDictionaryEntry(ore, oreName);
 			}
 		}
 	}

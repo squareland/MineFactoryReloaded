@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
 import powercrystals.minefactoryreloaded.tile.machine.routing.TileEntityEnchantmentRouter;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,11 +33,10 @@ public class ContainerEnchantmentRouter extends ContainerFactoryInventory
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
-		for(int i = 0; i < listeners.size(); i++)
-		{
+		for (IContainerListener listener : listeners) {
 			int data = (_router.getRejectUnmapped() ? 1 : 0) |
 					(_router.getMatchLevels() ? 2 : 0);
-			listeners.get(i).sendWindowProperty(this, 100, data);
+			listener.sendWindowProperty(this, 100, data);
 		}
 	}
 	

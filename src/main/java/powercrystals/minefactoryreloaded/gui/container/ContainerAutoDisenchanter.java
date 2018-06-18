@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 import cofh.core.gui.slot.SlotRemoveOnly;
 import cofh.core.util.helpers.InventoryHelper;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import powercrystals.minefactoryreloaded.tile.machine.enchantment.TileEntityAutoDisenchanter;
@@ -39,8 +40,8 @@ public class ContainerAutoDisenchanter extends ContainerFactoryPowered {
 	public void detectAndSendChanges() {
 
 		super.detectAndSendChanges();
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendWindowProperty(this, 100, _disenchanter.getRepeatDisenchant() ? 1 : 0);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, _disenchanter.getRepeatDisenchant() ? 1 : 0);
 		}
 	}
 

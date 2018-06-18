@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
+import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,8 +33,8 @@ public class ContainerItemRouter extends ContainerFactoryInventory {
 	public void detectAndSendChanges() {
 
 		super.detectAndSendChanges();
-		for (int i = 0; i < listeners.size(); i++) {
-			listeners.get(i).sendWindowProperty(this, 100, _router.getRejectUnmapped() ? 1 : 0);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, _router.getRejectUnmapped() ? 1 : 0);
 		}
 	}
 

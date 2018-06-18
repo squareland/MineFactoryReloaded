@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import powercrystals.minefactoryreloaded.tile.machine.animals.TileEntityChronotyper;
 
 public class ContainerChronotyper extends ContainerFactoryPowered
@@ -17,9 +18,8 @@ public class ContainerChronotyper extends ContainerFactoryPowered
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, _chronotyper.getMoveOld() ? 1 : 0);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, _chronotyper.getMoveOld() ? 1 : 0);
 		}
 	}
 	

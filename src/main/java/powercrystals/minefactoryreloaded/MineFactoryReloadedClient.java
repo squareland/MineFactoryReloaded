@@ -402,7 +402,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 		Vec3d playerLook = Minecraft.getMinecraft().getRenderViewEntity().getLook(1);
 		Vec3d playerLookRel = playerPos.addVector(playerLook.x * range, playerLook.y * range, playerLook.z * range);
-		List<?> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
+		List<Entity> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 			Minecraft.getMinecraft().getRenderViewEntity(),
 			Minecraft.getMinecraft().getRenderViewEntity().getEntityBoundingBox().expand(playerLook.x * range, playerLook.y * range,
 				playerLook.z * range)
@@ -410,9 +410,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 
 		double entityDistTotal = range;
 		Entity pointedEntity = null;
-		for (int i = 0; i < list.size(); ++i) {
-			Entity entity = (Entity) list.get(i);
-
+		for (Entity entity : list) {
 			if (entity.canBeCollidedWith()) {
 				double entitySize = entity.getCollisionBorderSize();
 				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow(entitySize, entitySize, entitySize);

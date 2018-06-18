@@ -244,8 +244,8 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < CONNECTION.length; i++) {
-			sb.append(state.getValue(CONNECTION[i]).ordinal());
+		for (IUnlistedProperty<TileEntityPlasticPipe.ConnectionType> aCONNECTION : CONNECTION) {
+			sb.append(state.getValue(aCONNECTION).ordinal());
 		}
 
 		return sb.toString();

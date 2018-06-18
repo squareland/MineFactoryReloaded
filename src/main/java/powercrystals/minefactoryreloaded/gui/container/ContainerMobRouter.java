@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 
+import net.minecraft.inventory.IContainerListener;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptReusableSafariNet;
 import powercrystals.minefactoryreloaded.tile.machine.mobs.TileEntityMobRouter;
 
@@ -27,9 +28,8 @@ public class ContainerMobRouter extends ContainerFactoryPowered
 		super.detectAndSendChanges();
 		int data = (_router.getWhiteList() ? 1 : 0) |
 				(_router.getMatchMode() << 1);
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, data);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, data);
 		}
 	}
 	

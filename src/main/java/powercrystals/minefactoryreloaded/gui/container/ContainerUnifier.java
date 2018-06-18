@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 import cofh.core.gui.slot.SlotRemoveOnly;
 
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 
 import powercrystals.minefactoryreloaded.gui.slot.SlotFake;
@@ -38,9 +39,9 @@ public class ContainerUnifier extends ContainerFactoryInventory
 		{
 			Slot slotObject = (Slot)inventorySlots.get(i);
 			if (slotObject != null)
-				for (int j = 0; j < this.listeners.size(); ++j)
-					this.listeners.get(j).
-						sendSlotContents(this, slotObject.slotNumber, slotObject.getStack());
+				for (IContainerListener listener : this.listeners)
+					listener.
+							sendSlotContents(this, slotObject.slotNumber, slotObject.getStack());
 		}
 	}
 }

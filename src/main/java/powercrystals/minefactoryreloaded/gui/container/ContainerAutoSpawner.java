@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 
+import net.minecraft.inventory.IContainerListener;
 import powercrystals.minefactoryreloaded.gui.slot.SlotAcceptReusableSafariNet;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 import powercrystals.minefactoryreloaded.tile.machine.mobs.TileEntityAutoSpawner;
@@ -23,11 +24,10 @@ public class ContainerAutoSpawner extends ContainerFactoryPowered
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 100, ((TileEntityAutoSpawner)_te).getSpawnExact() ? 1 : 0);
-			listeners.get(i).sendWindowProperty(this, 101, ((TileEntityFactoryPowered)_te).getWorkMax() & 65535);
-			listeners.get(i).sendWindowProperty(this, 102, ((TileEntityFactoryPowered)_te).getWorkMax() >>> 16);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 100, ((TileEntityAutoSpawner) _te).getSpawnExact() ? 1 : 0);
+			listener.sendWindowProperty(this, 101, ((TileEntityFactoryPowered) _te).getWorkMax() & 65535);
+			listener.sendWindowProperty(this, 102, ((TileEntityFactoryPowered) _te).getWorkMax() >>> 16);
 		}
 	}
 

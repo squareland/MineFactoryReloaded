@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryInventory;
@@ -25,14 +26,13 @@ public class ContainerSteamBoiler extends ContainerFactoryInventory
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
-		for(int i = 0; i < listeners.size(); i++)
-		{
-			listeners.get(i).sendWindowProperty(this, 0, ((TileEntitySteamBoiler)_te).getWorkDone() & 65535);
-			listeners.get(i).sendWindowProperty(this, 1, ((TileEntitySteamBoiler)_te).getWorkDone() >> 16);
-			int temp = (int)(((TileEntitySteamBoiler)_te).getTemp() * 10);
-			listeners.get(i).sendWindowProperty(this, 2, temp);
-			listeners.get(i).sendWindowProperty(this, 3, ((TileEntitySteamBoiler)_te).getWorkMax() & 65535);
-			listeners.get(i).sendWindowProperty(this, 4, ((TileEntitySteamBoiler)_te).getWorkMax() >> 16);
+		for (IContainerListener listener : listeners) {
+			listener.sendWindowProperty(this, 0, ((TileEntitySteamBoiler) _te).getWorkDone() & 65535);
+			listener.sendWindowProperty(this, 1, ((TileEntitySteamBoiler) _te).getWorkDone() >> 16);
+			int temp = (int) (((TileEntitySteamBoiler) _te).getTemp() * 10);
+			listener.sendWindowProperty(this, 2, temp);
+			listener.sendWindowProperty(this, 3, ((TileEntitySteamBoiler) _te).getWorkMax() & 65535);
+			listener.sendWindowProperty(this, 4, ((TileEntitySteamBoiler) _te).getWorkMax() >> 16);
 		}
 	}
 	

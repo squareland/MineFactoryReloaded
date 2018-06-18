@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 
 import javax.annotation.Nonnull;
-import java.util.Iterator;
+import java.util.List;
 
 public class EntityFishingRod extends EntityThrowable {
 	public int fuse;
@@ -103,12 +103,12 @@ public class EntityFishingRod extends EntityThrowable {
 					if (block.isAssociatedBlock(Blocks.WATER) || block.isAssociatedBlock(Blocks.FLOWING_WATER))
 						if (rand.nextInt(rate) == 0) {
 							LootContext.Builder builder = new LootContext.Builder((WorldServer)this.world);
-							Iterator iterator = this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING_FISH).
-									generateLootForPools(rand, builder.build()).iterator();
+							List<ItemStack> list = this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING_FISH).
+									generateLootForPools(rand, builder.build());
 
-							while (iterator.hasNext()) {
-								@Nonnull ItemStack stack = (ItemStack) iterator.next();
-								@Nonnull ItemStack smelted;
+							for (ItemStack stack : list) {
+								@Nonnull
+								ItemStack smelted;
 								if (rand.nextInt(30) == 0 && (!(smelted = FurnaceRecipes.instance().getSmeltingResult(stack)).isEmpty())) {
 									stack = smelted;
 								}

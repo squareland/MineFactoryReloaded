@@ -149,8 +149,8 @@ public class TileEntityLiquiCrafter extends TileEntityFactoryTickable {
 			}
 		}
 
-		for (int i = 0; i < _tanks.length; i++) {
-			FluidStack l = _tanks[i].getFluid();
+		for (FluidTankCore _tank : _tanks) {
+			FluidStack l = _tank.getFluid();
 			if (l == null || l.amount == 0)
 				continue;
 

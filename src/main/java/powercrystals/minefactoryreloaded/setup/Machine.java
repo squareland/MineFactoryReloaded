@@ -340,10 +340,7 @@ public class Machine {
 		try {
 			TileEntityFactory tileEntity = _tileEntityClass.newInstance();
 			return tileEntity;
-		} catch (IllegalAccessException x) {
-			FMLLog.severe("Unable to create instance of TileEntity from %s", _tileEntityClass.getName());
-			return null;
-		} catch (InstantiationException x) {
+		} catch (IllegalAccessException | InstantiationException x) {
 			FMLLog.severe("Unable to create instance of TileEntity from %s", _tileEntityClass.getName());
 			return null;
 		}
