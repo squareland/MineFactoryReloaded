@@ -14,19 +14,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class GrindableEnderman implements IFactoryGrindable
-{
+public class GrindableEnderman implements IFactoryGrindable {
+
 	@Override
-	public Class<? extends EntityLivingBase> getGrindableEntity()
-	{
+	public Class<? extends EntityLivingBase> getGrindableEntity() {
+
 		return EntityEnderman.class;
 	}
 
 	@Override
-	public List<MobDrop> grind(World world, EntityLivingBase entity, Random random)
-	{
+	public List<MobDrop> grind(World world, EntityLivingBase entity, Random random) {
+
 		List<MobDrop> drops = new LinkedList<>();
-		IBlockState state = ((EntityEnderman)entity).getHeldBlockState();
+		IBlockState state = ((EntityEnderman) entity).getHeldBlockState();
 		Block block = state != null ? state.getBlock() : null;
 		if (block != null && !block.equals(Blocks.AIR))
 			drops.add(new MobDrop(10, new ItemStack(block, 1, block.damageDropped(state))));
@@ -34,8 +34,8 @@ public class GrindableEnderman implements IFactoryGrindable
 	}
 
 	@Override
-	public boolean processEntity(EntityLivingBase entity)
-	{
+	public boolean processEntity(EntityLivingBase entity) {
+
 		return false;
 	}
 
