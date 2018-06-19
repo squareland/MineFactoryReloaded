@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class ForestryBogEarth extends PlantableSoil implements IFactoryFertilizable, IFactoryHarvestable, IFactoryFruit
-{
+public class ForestryBogEarth extends PlantableSoil implements IFactoryFertilizable, IFactoryHarvestable, IFactoryFruit {
+
 	private ReplacementBlock repl;
 	private Item dirt;
 
-	public ForestryBogEarth(Block block)
-	{
+	ForestryBogEarth(Block block) {
+
 		super(block);
 		_plantedBlock.setMeta(true);
 		repl = new ReplacementBlock(Blocks.DIRT);
@@ -30,64 +30,64 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	}
 
 	@Override
-	public boolean breakBlock()
-	{
+	public boolean breakBlock() {
+
 		return true;
 	}
 
 	@Override
-	public Block getPlant()
-	{
+	public Block getPlant() {
+
 		return _block;
 	}
 
 	@Override
-	public HarvestType getHarvestType()
-	{
+	public HarvestType getHarvestType() {
+
 		return HarvestType.Normal;
 	}
 
 	@Override
-	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType)
-	{
-		return fertilizerType == FertilizerType.GrowPlant && 
+	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType) {
+
+		return fertilizerType == FertilizerType.GrowPlant &&
 				BlockBogEarth.SoilType.fromMaturity(world.getBlockState(pos).getValue(BlockBogEarth.MATURITY)) != BlockBogEarth.SoilType.PEAT;
 	}
 
 	@Override
-	public boolean canBePicked(World world, BlockPos pos)
-	{
+	public boolean canBePicked(World world, BlockPos pos) {
+
 		return BlockBogEarth.SoilType.fromMaturity(world.getBlockState(pos).getValue(BlockBogEarth.MATURITY)) == BlockBogEarth.SoilType.PEAT;
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, Map<String, Boolean> settings, BlockPos pos)
-	{
+	public boolean canBeHarvested(World world, Map<String, Boolean> settings, BlockPos pos) {
+
 		return BlockBogEarth.SoilType.fromMaturity(world.getBlockState(pos).getValue(BlockBogEarth.MATURITY)) == BlockBogEarth.SoilType.PEAT;
 	}
 
 	@Override
-	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType) {
+
 		return world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockBogEarth.MATURITY, 3), 3);
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos) {
+
 		IBlockState state = world.getBlockState(pos);
 		return state.getBlock().getDrops(world, pos, state, 0);
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos)
-	{
+	public ReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+
 		return repl;
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos) {
+
 		IBlockState state = world.getBlockState(pos);
 		List<ItemStack> list = state.getBlock().getDrops(world, pos, state, 0);
 		for (@Nonnull ItemStack a : list)
@@ -99,12 +99,13 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	}
 
 	@Override
-	public void preHarvest(World world, BlockPos pos)
-	{
+	public void preHarvest(World world, BlockPos pos) {
+
 	}
 
 	@Override
-	public void postHarvest(World world, BlockPos pos)
-	{
+	public void postHarvest(World world, BlockPos pos) {
+
 	}
+
 }

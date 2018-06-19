@@ -1,55 +1,26 @@
-/*
+
 package powercrystals.minefactoryreloaded.modhelpers.backtools;
 
-import cofh.mod.ChildMod;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
+import powercrystals.minefactoryreloaded.setup.MFRThings;
 
-import java.lang.reflect.Method;
+import static powercrystals.minefactoryreloaded.modhelpers.Compats.ModIds.BACKTOOLS;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
+@IMFRIntegrator.DependsOn(BACKTOOLS)
+public class BackTools implements IMFRIntegrator {
 
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.item.gun.ItemSafariNetLauncher;
-import powercrystals.minefactoryreloaded.item.tool.ItemFactoryHammer;
-import powercrystals.minefactoryreloaded.item.tool.ItemSpyglass;
+	public void load() {
+		/*
+		 *  orientation is 0-3, and rotates counterclockwise by 90 deg * orientation
+		 *  flipped true for vertical flipping of the texture
+		 */
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatbacktools",
-		name = "MFR Compat: BackTools",
-		version = MineFactoryReloadedCore.version,
-		dependencies = "after:MineFactoryReloaded;after:mod_BackTools",
-		customProperties = @CustomProperty(k = "cofhversion", v = "true")))
-public class BackTools {
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@EventHandler
-	public void load(FMLInitializationEvent e) {
-
-		try {
-			Class modBackTools = Class.forName("mod_BackTools");
-			*/
-/*
-			 *  addBackItem(Class itemClass, int orientation, boolean flipped)
-			 *  orientation is 0-3, and rotates counterclockwise by 90 deg * orientation
-			 *  flipped true for vertical flipping of the texture
-			 *//*
-
-			Method addBackItem = modBackTools.getMethod("addBackItem", Class.class, int.class, boolean.class);
-			if (addBackItem != null) {
-				addBackItem.invoke(modBackTools, ItemSafariNetLauncher.class, 2, true);
-				addBackItem.invoke(modBackTools, ItemSpyglass.class, 1, true);
-				addBackItem.invoke(modBackTools, ItemFactoryHammer.class, 1, true);
-			}
-		} catch (Throwable $) {
-			ModContainer This = FMLCommonHandler.instance().findContainerFor(this);
-			LogManager.getLogger(This.getModId()).log(Level.ERROR, "There was a problem loading " + This.getName(), $);
-		}
+		FMLInterModComms.sendMessage(BACKTOOLS, "backtool", new ItemStack(MFRThings.safariNetLauncherItem, 2)); // flip?
+		FMLInterModComms.sendMessage(BACKTOOLS, "backtool", new ItemStack(MFRThings.spyglassItem, 1)); // flip?
+		FMLInterModComms.sendMessage(BACKTOOLS, "backtool", new ItemStack(MFRThings.factoryHammerItem, 1)); // flip?
 	}
 
 }
-*/
+

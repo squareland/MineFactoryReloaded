@@ -15,31 +15,33 @@ import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class ForestrySapling extends PlantableStandard implements IFactoryFertilizable
-{
+public class ForestrySapling extends PlantableStandard implements IFactoryFertilizable {
+
 	private ITreeRoot root;
 
-	public ForestrySapling(Item item, Block block)
-	{
+	ForestrySapling(Item item, Block block) {
+
 		super(item, block, WILDCARD, null);
-		root = (ITreeRoot)AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
-		_plantedBlock = new ReplacementBlock((Block)null) {
+		root = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
+		_plantedBlock = new ReplacementBlock((Block) null) {
+
 			@Override
 			public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 				return root.plantSapling(world, root.getMember(stack), null, pos);
 			}
 		};
 	}
 
 	@Override
-	public Block getPlant()
-	{
+	public Block getPlant() {
+
 		return _block;
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
-	{
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		if (!world.isAirBlock(pos))
 			return false;
 
@@ -47,16 +49,17 @@ public class ForestrySapling extends PlantableStandard implements IFactoryFertil
 	}
 
 	@Override
-	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType) {
+
 		return true;
 	}
 
 	@Override
-	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType) {
+
 		Block block = world.getBlockState(pos).getBlock();
 		root.getTree(world, pos).getTreeGenerator(world, pos, true).generate(world, rand, pos);
 		return world.getBlockState(pos).getBlock() != block;
 	}
+
 }

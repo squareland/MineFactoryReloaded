@@ -19,10 +19,11 @@ import java.util.List;
 import java.util.Objects;
 
 import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.stack;
+import static powercrystals.minefactoryreloaded.modhelpers.Compats.ModIds.THERMAL_EXPANSION;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.rawRubberItem;
 import static powercrystals.minefactoryreloaded.setup.MFRThings.rubberBarItem;
 
-@IMFRIntegrator.DependsOn("thermalexpansion")
+@IMFRIntegrator.DependsOn(THERMAL_EXPANSION)
 @IMFRIntegrator.After("Minecraft")
 public class ThermalExpansion implements IMFRIntegrator, IRandomMobProvider {
 

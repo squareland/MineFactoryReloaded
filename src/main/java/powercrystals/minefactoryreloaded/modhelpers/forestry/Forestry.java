@@ -3,154 +3,131 @@ package powercrystals.minefactoryreloaded.modhelpers.forestry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
+import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 import powercrystals.minefactoryreloaded.farmables.drinkhandlers.DrinkHandlerBiofuel;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 import powercrystals.minefactoryreloaded.tile.machine.processing.TileEntityUnifier;
 
+import static net.minecraft.init.Blocks.AIR;
 import static powercrystals.minefactoryreloaded.core.MFRUtil.findBlock;
 import static powercrystals.minefactoryreloaded.core.MFRUtil.findItem;
+import static powercrystals.minefactoryreloaded.modhelpers.Compats.ModIds.FORESTRY;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatforestry",
-		name = "MFR Compat: Forestry",
-		version = MineFactoryReloadedCore.version,
-		dependencies = "after:MineFactoryReloaded;after:Forestry",
-		customProperties = @CustomProperty(k = "cofhversion", v = "true")))*/
-public class Forestry {
+@IMFRIntegrator.DependsOn(FORESTRY)
+public class Forestry implements IMFRIntegrator {
 
-	private static final String name = "Forestry";
+	public void load() {
 
-	@EventHandler
-	public void load(FMLInitializationEvent e) {
-
-		try {
-			initForestry();
-		} catch (Throwable $) {
-			ModContainer This = FMLCommonHandler.instance().findContainerFor(this);
-			LogManager.getLogger(This.getModId()).log(Level.ERROR, "There was a problem loading " + This.getName(), $);
-		}
-	}
-
-	private static void initForestry() {
-
-		Item item = findItem(name, "fertilizerCompound");
+		Item item = findItem(FORESTRY, "fertilizerCompound");
 		if (item != null)
-			MFRRegistry.registerFertilizer(new FertilizerStandard(item, 0));
+			REGISTRY.registerFertilizer(new FertilizerStandard(item, 0));
 		else
 			MineFactoryReloadedCore.log().error("Forestry fertilizer null!");
 
-		item = findItem(name, "fertilizerBio");
+		item = findItem(FORESTRY, "fertilizerBio");
 		if (item != null)
-			MFRRegistry.registerFertilizer(new FertilizerStandard(item, 0));
+			REGISTRY.registerFertilizer(new FertilizerStandard(item, 0));
 		else
 			MineFactoryReloadedCore.log().error("Forestry compost null!");
 
-		item = findItem(name, "peat");
+		item = findItem(FORESTRY, "peat");
 		if (item != null)
-			MFRRegistry.registerSludgeDrop(10, new ItemStack(item));
+			REGISTRY.registerSludgeDrop(10, new ItemStack(item));
 		else
 			MineFactoryReloadedCore.log().error("Forestry peat null!");
 
-		item = findItem(name, "ash");
+		item = findItem(FORESTRY, "ash");
 		if (item != null)
-			MFRRegistry.registerSludgeDrop(1, new ItemStack(item));
+			REGISTRY.registerSludgeDrop(1, new ItemStack(item));
 		else
 			MineFactoryReloadedCore.log().error("Forestry ash null!");
 
-		item = findItem(name, "decayingWheat");
+		item = findItem(FORESTRY, "decayingWheat");
 		if (item != null)
-			MFRRegistry.registerSludgeDrop(20, new ItemStack(item));
+			REGISTRY.registerSludgeDrop(20, new ItemStack(item));
 		else
 			MineFactoryReloadedCore.log().error("Forestry wheat null!");
 
-		item = findItem(name, "sapling");
-		Block block = findBlock(name, "saplingGE");
-		if (item != null && block != null) {
+		item = findItem(FORESTRY, "sapling");
+		Block block = findBlock(FORESTRY, "saplingGE");
+		if (item != null && block != AIR) {
 			ForestrySapling sapling = new ForestrySapling(item, block);
-			MFRRegistry.registerPlantable(sapling);
-			MFRRegistry.registerFertilizable(sapling);
+			REGISTRY.registerPlantable(sapling);
+			REGISTRY.registerFertilizable(sapling);
 		} else
 			MineFactoryReloadedCore.log().error("Forestry sapling/block null!");
 
-		block = findBlock(name, "soil");
-		if (block != null) {
+		block = findBlock(FORESTRY, "soil");
+		if (block != AIR) {
 			ForestryBogEarth bog = new ForestryBogEarth(block);
-			MFRRegistry.registerPlantable(bog);
-			MFRRegistry.registerFertilizable(bog);
-			MFRRegistry.registerHarvestable(bog);
-			MFRRegistry.registerFruit(bog);
+			REGISTRY.registerPlantable(bog);
+			REGISTRY.registerFertilizable(bog);
+			REGISTRY.registerHarvestable(bog);
+			REGISTRY.registerFruit(bog);
 		} else
 			MineFactoryReloadedCore.log().error("Forestry bog earth null!");
 
 		for (int i = 1; true; ++i) {
-			block = findBlock(name, "log" + i);
-			l: if (block == null) {
+			block = findBlock(FORESTRY, "log" + i);
+			l: if (block == AIR) {
 				if (i > 1)
 					MineFactoryReloadedCore.log().debug("Forestry logs null at " + i + ".");
 				else {
-					block = findBlock(name, "logs");
-					if (block != null) {
+					block = findBlock(FORESTRY, "logs");
+					if (block != AIR) {
 						break l;
 					}
 					MineFactoryReloadedCore.log().error("Forestry logs null!");
 				}
 				break;
 			}
-			MFRRegistry.registerHarvestable(new HarvestableWood(block));
-			MFRRegistry.registerFruitLogBlock(block);
+			REGISTRY.registerHarvestable(new HarvestableWood(block));
+			REGISTRY.registerFruitLogBlock(block);
 		}
 
 		for (int i = 1; true; ++i) {
-			block = findBlock(name, "fireproofLog" + i);
-			l: if (block == null) {
+			block = findBlock(FORESTRY, "fireproofLog" + i);
+			l: if (block == AIR) {
 				if (i > 1)
 					MineFactoryReloadedCore.log().debug("Forestry logs null at " + i + ".");
 				else {
-					block = findBlock(name, "logsFireproof");
-					if (block != null) {
+					block = findBlock(FORESTRY, "logsFireproof");
+					if (block != AIR) {
 						break l;
 					}
 					MineFactoryReloadedCore.log().error("Forestry logs null!");
 				}
 				break;
 			}
-			MFRRegistry.registerHarvestable(new HarvestableWood(block));
-			MFRRegistry.registerFruitLogBlock(block);
+			REGISTRY.registerHarvestable(new HarvestableWood(block));
+			REGISTRY.registerFruitLogBlock(block);
 		}
 
-		block = findBlock(name, "leaves");
-		if (block != null) {
+		block = findBlock(FORESTRY, "leaves");
+		if (block != AIR) {
 			ForestryLeaf leaf = new ForestryLeaf(block);
-			MFRRegistry.registerFertilizable(leaf);
-			MFRRegistry.registerHarvestable(leaf);
-			MFRRegistry.registerFruit(leaf);
+			REGISTRY.registerFertilizable(leaf);
+			REGISTRY.registerHarvestable(leaf);
+			REGISTRY.registerFruit(leaf);
 		} else
 			MineFactoryReloadedCore.log().error("Forestry leaves null!");
 
-		block = findBlock(name, "pods");
-		item = findItem(name, "grafterProven");
-		if (block != null) {
+		block = findBlock(FORESTRY, "pods");
+		item = findItem(FORESTRY, "grafterProven");
+		if (block != AIR) {
 			ForestryPod pod = new ForestryPod(block, item);
-			MFRRegistry.registerFertilizable(pod);
-			MFRRegistry.registerHarvestable(pod);
-			MFRRegistry.registerFruit(pod);
+			REGISTRY.registerFertilizable(pod);
+			REGISTRY.registerHarvestable(pod);
+			REGISTRY.registerFruit(pod);
 		} else
 			MineFactoryReloadedCore.log().error("Forestry pods null!");
 	}
 
-	@EventHandler
-	public static void postInit(FMLPostInitializationEvent e) {
+	public void postLoad() {
 
-		MFRRegistry.registerLiquidDrinkHandler("bioethanol", new DrinkHandlerBiofuel());
+		REGISTRY.registerLiquidDrinkHandler("bioethanol", new DrinkHandlerBiofuel());
 
 		TileEntityUnifier.updateUnifierLiquids();
 	}

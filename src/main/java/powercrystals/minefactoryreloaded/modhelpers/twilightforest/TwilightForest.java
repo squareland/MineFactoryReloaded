@@ -1,26 +1,12 @@
-/*
+
 package powercrystals.minefactoryreloaded.modhelpers.twilightforest;
-
-import cofh.mod.ChildMod;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.CustomProperty;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-
-import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.item.Item;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-
 import powercrystals.minefactoryreloaded.MFRRegistry;
-import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
-import powercrystals.minefactoryreloaded.api.HarvestType;
+import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
+import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableShearable;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStandard;
@@ -29,27 +15,13 @@ import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
 
-@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compattwilightforest",
-		name = "MFR Compat: TwilightForest",
-		version = MineFactoryReloadedCore.version,
-		dependencies = "after:MineFactoryReloaded;after:TwilightForest",
-		customProperties = @CustomProperty(k = "cofhversion", v = "true")))
+import static powercrystals.minefactoryreloaded.modhelpers.Compats.ModIds.TWILIGHT_FOREST;
+
+@IMFRIntegrator.DependsOn(TWILIGHT_FOREST)
 public class TwilightForest {
 
-	@SuppressWarnings("rawtypes")
-	public static HashMap entityEggs;
-
-	public static ModContainer twilightForestContainer;
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@EventHandler
-	public void load(FMLInitializationEvent e) {
-
-		try {
-
-			entityEggs = (HashMap) Class.forName("twilightforest.entity.TFCreatures").getField("entityEggs").get(null);
-			twilightForestContainer = FMLCommonHandler.instance().findContainerFor(
-				Class.forName("twilightforest.TwilightForestMod").getField("instance").get(null));
+	public void load() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
 
 			Class tfBighorn = Class.forName("twilightforest.entity.passive.EntityTFBighorn");
 			Class tfHydra = Class.forName("twilightforest.entity.boss.EntityTFHydra");
@@ -105,7 +77,7 @@ public class TwilightForest {
 			MFRRegistry.registerHarvestable(new HarvestableWood(((Block) tfBlocks.getField("magicLogSpecial").get(null))));
 			MFRRegistry.registerHarvestable(new HarvestableWood(((Block) tfBlocks.getField("hugeStalk").get(null))));
 			MFRRegistry.registerHarvestable(new HarvestableStandard(((Block) tfBlocks.getField("root").get(null)),
-					HarvestType.TreeFlipped));
+					HarvestType.Tree));
 			MFRRegistry.registerHarvestable(new HarvestableStandard(((Block) tfBlocks.getField("hugeGloomBlock").get(null))));
 			MFRRegistry.registerHarvestable(new HarvestableTreeLeaves(((Block) tfBlocks.getField("leaves").get(null))));
 			MFRRegistry.registerHarvestable(new HarvestableTreeLeaves(((Block) tfBlocks.getField("leaves3").get(null))));
@@ -127,11 +99,6 @@ public class TwilightForest {
 			MFRRegistry.registerFertilizable(new FertilizableStandard(((IGrowable) tfBlocks.getField("sapling").get(null))));
 
 			MFRRegistry.registerRandomMobProvider(new TwilightForestMobProvider());
-		} catch (Throwable $) {
-			ModContainer This = FMLCommonHandler.instance().findContainerFor(this);
-			LogManager.getLogger(This.getModId()).log(Level.ERROR, "There was a problem loading " + This.getName(), $);
-		}
 	}
 
 }
-*/

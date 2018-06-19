@@ -2,22 +2,20 @@ package powercrystals.minefactoryreloaded.modhelpers.tinkersconstruct;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.stack;
+import static powercrystals.minefactoryreloaded.modhelpers.Compats.ModIds.TINKERS_CONSTRUCT;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compattconstruct",
-		name = "MFR Compat: Tinkers' Construct",
-		version = MineFactoryReloadedCore.version,
-		dependencies = "after:MineFactoryReloaded;after:TConstruct",
-		customProperties = @CustomProperty(k = "cofhversion", v = "true")))*/
-public class TConstruct {
+@IMFRIntegrator.DependsOn(TINKERS_CONSTRUCT)
+public class TinkersConstruct implements IMFRIntegrator {
 
-	@EventHandler
-	public static void load(FMLInitializationEvent e) {
+	public void load() {
+
+		if (true) // TODO must evaluate values
+			return;
 
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setInteger("Id", 1000);
@@ -66,7 +64,6 @@ public class TConstruct {
 		//tag.setTag("Shard", stack(MFRThings.plasticSheetItem).writeToNBT(new NBTTagCompound()));
 		tag.setInteger("Value", 2);
 		FMLInterModComms.sendMessage("TConstruct", "addPartBuilderMaterial", tag);
-		return;
 	}
 
 }

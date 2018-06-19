@@ -1,31 +1,22 @@
 package powercrystals.minefactoryreloaded.modhelpers.buildcraft;
 
-//import buildcraft.api.fuels.BuildcraftFuelRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import powercrystals.minefactoryreloaded.setup.MFRFluids;
+import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 
-/*@ChildMod(parent = MineFactoryReloadedCore.modId, mod = @Mod(modid = "minefactoryreloaded_compatbuildcraft",
-		name = "MFR Compat: BuildCraft",
-		version = MineFactoryReloadedCore.version,
-		dependencies = "after:MineFactoryReloaded;after:BuildCraftAPI|fuels",
-		customProperties = @CustomProperty(k = "cofhversion", v = "true")))*/
-public class Buildcraft {
+import static powercrystals.minefactoryreloaded.modhelpers.Compats.ModIds.BUILDCRAFT;
 
-	@Mod.EventHandler
-	private void postInit(FMLPostInitializationEvent evt) {
+@IMFRIntegrator.DependsOn(BUILDCRAFT)
+public class Buildcraft implements IMFRIntegrator {
 
-		try {
-			//if (BuildcraftFuelRegistry.fuel != null)
-				//BuildcraftFuelRegistry.fuel.addFuel(MFRFluids.getFluid("biofuel"), 40, 15000);
-		} catch (Throwable $) {
-			ModContainer This = FMLCommonHandler.instance().findContainerFor(this);
-			LogManager.getLogger(This.getModId()).log(Level.ERROR, "There was a problem loading " + This.getName(), $);
-		}
+	@Override
+	public void load() {
+
+	}
+
+	@Override
+	public void postLoad() {
+
+		//if (BuildcraftFuelRegistry.fuel != null)
+			//BuildcraftFuelRegistry.fuel.addFuel(MFRFluids.getFluid("biofuel"), 40, 15000);
 	}
 
 }

@@ -19,7 +19,6 @@ import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
 import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
-import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -27,60 +26,70 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit, IFactoryFertilizable
-{
+public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit, IFactoryFertilizable {
+
 	private ITreeRoot root;
 	private ReplacementBlock repl;
-	protected Item _item;
+	private Item _item;
 
-	public ForestryLeaf(Block block)
-	{
+	ForestryLeaf(Block block) {
+
 		super(block);
-		root = (ITreeRoot)AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
-		repl = EmptyReplacement.INSTANCE;
+		root = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
+		repl = new ReplacementBlock((Block) null) {
+
+			@Override
+			public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
+				TileEntity te = world.getTileEntity(pos);
+				if (te instanceof IFruitBearer) {
+					IFruitBearer fruit = (IFruitBearer) te;
+					fruit.addRipeness(-fruit.getRipeness());
+				}
+				return true;
+			}
+		};
 		_item = Item.getItemFromBlock(block);
 	}
 
 	@Override
-	public boolean canBePicked(World world, BlockPos pos)
-	{
+	public boolean canBePicked(World world, BlockPos pos) {
+
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IFruitBearer)
-		{
-			IFruitBearer fruit = (IFruitBearer)te;
+		if (te instanceof IFruitBearer) {
+			IFruitBearer fruit = (IFruitBearer) te;
 			return fruit.getRipeness() >= 0.99f;
 		}
 		return false;
 	}
 
 	@Override
-	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType) {
+
 		return !canBePicked(world, pos);
 	}
 
 	@Override
-	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType) {
+
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IFruitBearer)
-		{
-			IFruitBearer fruit = (IFruitBearer)te;
-			fruit.addRipeness(1f);
+		if (te instanceof IFruitBearer) {
+			IFruitBearer fruit = (IFruitBearer) te;
+			fruit.addRipeness(0.15f + rand.nextFloat() * 0.35f);
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos)
-	{
+	public ReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+
 		return repl;
 	}
 
 	@Override // HARVESTER
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos) {
+
 		ITree tree = getTree(world, pos);
 		if (tree == null)
 			return null;
@@ -88,16 +97,14 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		ArrayList<ItemStack> prod = new ArrayList<ItemStack>();
 
 		float modifier = 1f;
-		if (settings.get("silkTouch") == Boolean.TRUE)
-		{
-			@Nonnull ItemStack item = new ItemStack(_item);
+		if (settings.get("silkTouch") == Boolean.TRUE) {
+			@Nonnull
+			ItemStack item = new ItemStack(_item);
 			NBTTagCompound tag = new NBTTagCompound();
 			tree.writeToNBT(tag);
 			item.setTagCompound(tag);
 			prod.add(item);
-		}
-		else
-		{
+		} else {
 			boolean hasMate = tree.getMate() != null;
 			for (ITree s : getSaplings(tree, world, pos, modifier))
 				if (s != null) {
@@ -115,12 +122,13 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 	}
 
 	private static List<ITree> getSaplings(ITree tree, World world, BlockPos pos, float modifier) {
+
 		return tree.getSaplings(world, null, pos, modifier);
 	}
 
 	@Override // FRUIT PICKER
-	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos) {
+
 		ITree tree = getTree(world, pos);
 		if (tree == null)
 			return null;
@@ -130,25 +138,23 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		return prod;
 	}
 
-	private ITree getTree(World world, BlockPos pos)
-	{
+	private ITree getTree(World world, BlockPos pos) {
+
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof IPollinatable) {
-			IIndividual t = ((IPollinatable)te).getPollen();
+			IIndividual t = ((IPollinatable) te).getPollen();
 			if (t instanceof ITree)
-				return (ITree)t;
+				return (ITree) t;
 		}
 		return null;
 	}
 
-	private void getFruits(World world, BlockPos pos, ITree tree, ArrayList<ItemStack> prod)
-	{
+	private void getFruits(World world, BlockPos pos, ITree tree, ArrayList<ItemStack> prod) {
+
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IFruitBearer)
-		{
-			IFruitBearer fruit = (IFruitBearer)te;
-			if (fruit.hasFruit())
-			{
+		if (te instanceof IFruitBearer) {
+			IFruitBearer fruit = (IFruitBearer) te;
+			if (fruit.hasFruit()) {
 				//int period = tree.getGenome().getFruitProvider().getRipeningPeriod();
 				//ItemStack[] o = tree.produceStacks(world, pos, (int)(fruit.getRipeness() * period + 0.1f));
 				prod.addAll(fruit.pickFruit(ItemStack.EMPTY));
@@ -156,16 +162,4 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		}
 	}
 
-/* TODO: take care of this now that there's no postPick
-	@Override
-	public void postPick(World world, BlockPos pos)
-	{
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IFruitBearer)
-		{
-			IFruitBearer fruit = (IFruitBearer)te;
-			fruit.addRipeness(-fruit.getRipeness());
-		}
-	}
-*/
 }

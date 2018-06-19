@@ -9,39 +9,36 @@ import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
 
 import java.util.Random;
 
-public class FertilizableIC2RubberTree implements IFactoryFertilizable
-{
+public class FertilizableIC2RubberTree implements IFactoryFertilizable {
+
 	private Block _saplingId;
-	
-	public FertilizableIC2RubberTree(Block blockId)
-	{
+
+	FertilizableIC2RubberTree(Block blockId) {
+
 		_saplingId = blockId;
 	}
-	
+
 	@Override
-	public Block getPlant()
-	{
+	public Block getPlant() {
+
 		return _saplingId;
 	}
-	
+
 	@Override
-	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType) {
+
 		return fertilizerType == FertilizerType.GrowPlant;
 	}
-	
+
 	@Override
-	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType)
-	{
-		try
-		{
-			((BlockSapling)_saplingId).grow(world, rand, pos, world.getBlockState(pos));
-		}
-		catch (Exception e)
-		{
+	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType) {
+
+		try {
+			((BlockSapling) _saplingId).grow(world, rand, pos, world.getBlockState(pos));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return world.getBlockState(pos).getBlock() != _saplingId;
 	}
-	
+
 }

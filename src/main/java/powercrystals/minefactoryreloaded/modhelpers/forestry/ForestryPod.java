@@ -16,21 +16,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class ForestryPod extends HarvestableStandard implements IFactoryFruit, IFactoryFertilizable
-{
+public class ForestryPod extends HarvestableStandard implements IFactoryFruit, IFactoryFertilizable {
+
 	private Item grafter;
 	private ReplacementBlock repl;
 
-	public ForestryPod(Block block, Item tool)
-	{
+	ForestryPod(Block block, Item tool) {
+
 		super(block, HarvestType.TreeFruit);
 		repl = EmptyReplacement.INSTANCE;
 		grafter = tool;
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, Map<String, Boolean> settings, BlockPos pos)
-	{
+	public boolean canBeHarvested(World world, Map<String, Boolean> settings, BlockPos pos) {
+
 		if (settings.get("isHarvestingTree") == Boolean.TRUE)
 			return true;
 
@@ -38,8 +38,8 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override
-	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType) {
+
 		if (fertilizerType != FertilizerType.GrowPlant)
 			return false;
 
@@ -47,24 +47,22 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override
-	public boolean canBePicked(World world, BlockPos pos)
-	{
+	public boolean canBePicked(World world, BlockPos pos) {
+
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IFruitBearer)
-		{
-			IFruitBearer fruit = (IFruitBearer)te;
+		if (te instanceof IFruitBearer) {
+			IFruitBearer fruit = (IFruitBearer) te;
 			return fruit.getRipeness() >= 0.99f;
 		}
 		return false;
 	}
 
 	@Override
-	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType) {
+
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IFruitBearer)
-		{
-			IFruitBearer fruit = (IFruitBearer)te;
+		if (te instanceof IFruitBearer) {
+			IFruitBearer fruit = (IFruitBearer) te;
 			fruit.addRipeness(1f);
 			return true;
 		}
@@ -72,27 +70,27 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos)
-	{
+	public ReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+
 		return repl;
 	}
 
 	@Override // HARVESTER
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos) {
+
 		return getDrops(world, rand, pos);
 	}
 
 	@Override // FRUIT PICKER
-	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos) {
+
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IFruitBearer)
-		{
+		if (te instanceof IFruitBearer) {
 			NonNullList<ItemStack> prod = NonNullList.create();
-			prod.addAll(((IFruitBearer)te).pickFruit(new ItemStack(grafter)));
+			prod.addAll(((IFruitBearer) te).pickFruit(new ItemStack(grafter)));
 			return prod;
 		}
 		return null;
 	}
+
 }

@@ -8,17 +8,19 @@ import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 
 import javax.annotation.Nonnull;
 
-public class EmptyReplacement extends ReplacementBlock
-{
+public class EmptyReplacement extends ReplacementBlock {
+
 	public static final EmptyReplacement INSTANCE = new EmptyReplacement();
 
-	public EmptyReplacement()
-	{
-		super((Block)null);
+	private EmptyReplacement() {
+
+		super((Block) null);
 	}
 
 	@Override
 	public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		return true;
 	}
+
 }
