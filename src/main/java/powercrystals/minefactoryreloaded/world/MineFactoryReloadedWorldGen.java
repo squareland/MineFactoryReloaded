@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.world;
 
 import cofh.cofhworld.feature.IFeatureGenerator;
 import com.google.common.primitives.Ints;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -9,15 +10,13 @@ import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.setup.MFRConfig;
 import powercrystals.minefactoryreloaded.setup.MFRFluids;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 {
 	private static List<Integer> _blacklistedDimensions;
-	private static List<String> _sludgeBiomeList, _sewageBiomeList, _rubberTreeBiomeList;
+	private static Set<ResourceLocation> _sludgeBiomeList, _sewageBiomeList, _rubberTreeBiomeList;
 	private static boolean _sludgeLakeMode, _sewageLakeMode, _rubberTreesEnabled;
 	private static boolean _lakesEnabled;
 	private static boolean _regenSewage, _regenSludge, _regenTrees;
@@ -68,18 +67,18 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 		BlockPos pos = new BlockPos(x, 1, z);
 		Biome b = world.getBiome(pos);
 
-		String biomeName = b.biomeName;
+		ResourceLocation biomeID = b.delegate.name();
 
 		if (_rubberTreesEnabled && (newGen || _regenTrees))
 		{
-			if (_rubberTreeBiomeList.contains(biomeName))
+			if (_rubberTreeBiomeList.contains(biomeID))
 			{
 				if (random.nextInt(100) < 40)
 				{
 					if (random.nextInt(30) == 0)
 					{
-						String ln = biomeName.toLowerCase(Locale.US);
-						if (ln.contains("mega"))
+						String ln = biomeID.toString();
+						if (ln.contains("mega") || ln.contains("redwood"))
 							generateMegaRubberTree(world, random, world.getHeight(pos), false);
 						else if (ln.contains("sacred") && random.nextInt(20) == 0)
 							generateSacredSpringRubberTree(world, random, world.getHeight(pos));
@@ -93,7 +92,7 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 		{
 			int rarity = _sludgeLakeRarity;
 			if (rarity > 0 && (newGen || _regenSludge) &&
-					_sludgeBiomeList.contains(biomeName) == _sludgeLakeMode &&
+					_sludgeBiomeList.contains(biomeID) == _sludgeLakeMode &&
 					random.nextInt(rarity) == 0)
 			{
 				int lakeX = x + random.nextInt(16);
@@ -104,13 +103,13 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 
 			rarity = _sewageLakeRarity;
 			if (rarity > 0 && (newGen || _regenSewage) &&
-					_sewageBiomeList.contains(biomeName) == _sewageLakeMode &&
+					_sewageBiomeList.contains(biomeID) == _sewageLakeMode &&
 					random.nextInt(rarity) == 0)
 			{
 				int lakeX = x + random.nextInt(16);
 				int lakeY = random.nextInt(world.getActualHeight());
 				int lakeZ = z + random.nextInt(16);
-				String ln = biomeName.toLowerCase(Locale.US);
+				String ln = biomeID.toString();
 				if (ln.contains("mushroom"))
 				{
 					new WorldGenLakesMeta(MFRFluids.mushroomSoupLiquid.getDefaultState()).generate(world, random, new BlockPos(lakeX, lakeY, lakeZ));
@@ -135,11 +134,11 @@ public class MineFactoryReloadedWorldGen implements IFeatureGenerator
 		_lakesEnabled = MFRConfig.mfrLakeWorldGen.getBoolean(true);
 
 		_sludgeLakeRarity = MFRConfig.mfrLakeSludgeRarity.getInt();
-		_sludgeBiomeList = Arrays.asList(MFRConfig.mfrLakeSludgeBiomeList.getStringList());
+		_sludgeBiomeList = Arrays.stream(MFRConfig.mfrLakeSludgeBiomeList.getStringList()).map(ResourceLocation::new).collect(Collectors.toSet());
 		_sludgeLakeMode = MFRConfig.mfrLakeSludgeBiomeListToggle.getBoolean(false);
 
 		_sewageLakeRarity = MFRConfig.mfrLakeSewageRarity.getInt();
-		_sewageBiomeList = Arrays.asList(MFRConfig.mfrLakeSewageBiomeList.getStringList());
+		_sewageBiomeList = Arrays.stream(MFRConfig.mfrLakeSewageBiomeList.getStringList()).map(ResourceLocation::new).collect(Collectors.toSet());
 		_sewageLakeMode = MFRConfig.mfrLakeSewageBiomeListToggle.getBoolean(false);
 
 		_regenSewage = MFRConfig.mfrLakeSewageRetrogen.getBoolean(false);
