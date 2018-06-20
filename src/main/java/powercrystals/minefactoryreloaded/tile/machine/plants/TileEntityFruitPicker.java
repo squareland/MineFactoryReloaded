@@ -95,12 +95,12 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 		if (replacement == null) {
 			if (!world.setBlockToAir(targetCoords))
 				return false;
-			if (MFRConfig.playSounds.getBoolean(true)) {
-				world.playEvent(null, 2001, targetCoords, Block.getStateId(targetState));
-			}
 		} else {
 			if (!replacement.replaceBlock(world, targetCoords, ItemStack.EMPTY))
 				return false;
+		}
+		if (MFRConfig.playSounds.getBoolean(true)) {
+			world.playEvent(null, 2001, targetCoords, Block.getStateId(targetState));
 		}
 
 		doDrop(drops);
