@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.farmables;
+package powercrystals.minefactoryreloaded.setup;
 
 import cofh.core.util.oredict.OreDictionaryArbiter;
 import net.minecraft.block.Block;

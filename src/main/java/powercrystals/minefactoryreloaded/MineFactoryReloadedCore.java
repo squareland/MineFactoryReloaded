@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import org.apache.logging.log4j.Logger;
-import powercrystals.minefactoryreloaded.farmables.MFRFarmables;
+import powercrystals.minefactoryreloaded.setup.MFRFarmables;
 import powercrystals.minefactoryreloaded.gui.MFRGUIHandler;
 import powercrystals.minefactoryreloaded.net.CommonProxy;
 import powercrystals.minefactoryreloaded.net.EntityHandler;
