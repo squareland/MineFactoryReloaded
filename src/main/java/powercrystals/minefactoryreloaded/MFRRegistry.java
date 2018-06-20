@@ -696,7 +696,6 @@ public abstract class MFRRegistry {
 	}
 
 	@Mod.EventBusSubscriber(modid = MFRProps.MOD_ID)
-	@SuppressWarnings("unused")
 	private static class RegistryHandler {
 
 		@SubscribeEvent
