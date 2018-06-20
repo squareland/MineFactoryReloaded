@@ -53,7 +53,7 @@ public abstract class MFRRegistry {
 
 	private static List<WeightedRandom.Item> _sludgeDrops = new ArrayList<>();
 
-	private static List<String> _rubberTreeBiomes = new ArrayList<>();
+	private static Set<ResourceLocation> _rubberTreeBiomes = new HashSet<>();
 
 	private static List<IRedNetLogicCircuit> _redNetLogicCircuits = new ArrayList<>();
 
@@ -186,12 +186,12 @@ public abstract class MFRRegistry {
 		return _safariNetHandlers;
 	}
 
-	public static void registerRubberTreeBiome(String biome) {
+	public static void registerRubberTreeBiome(ResourceLocation biome) {
 
 		_rubberTreeBiomes.add(biome);
 	}
 
-	public static List<String> getRubberTreeBiomes() {
+	public static Set<ResourceLocation> getRubberTreeBiomes() {
 
 		return _rubberTreeBiomes;
 	}
@@ -442,7 +442,7 @@ public abstract class MFRRegistry {
 					}
 
 					@Override
-					public void registerRubberTreeBiome(@Nonnull String biome) {
+					public void registerRubberTreeBiome(@Nonnull ResourceLocation biome) {
 
 						MFRRegistry.registerRubberTreeBiome(biome);
 					}

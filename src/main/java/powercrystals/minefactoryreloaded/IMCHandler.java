@@ -159,7 +159,7 @@ public class IMCHandler {
 				 * Rubber tree biome whitelisting
 				 */
 				else if ("registerRubberTreeBiome".equals(k)) {
-					MFRRegistry.registerRubberTreeBiome(m.getStringValue());
+					MFRRegistry.registerRubberTreeBiome(new ResourceLocation(m.getStringValue()));
 				}
 				/*
 				 * SafariNet Blacklist

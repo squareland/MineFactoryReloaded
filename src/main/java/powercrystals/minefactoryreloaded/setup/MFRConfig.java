@@ -174,7 +174,7 @@ public class MFRConfig {
 		category = CATEGORY_GENERAL + ".RedNet";
 		redNetDebug = c.get(category, "Debug", false);
 		redNetDebug.setComment("If true, RedNet cables will dump a massive amount of data to the log file. You should probably only use this if PC tells you to.");
-		redNetConnectionBlacklist = c.get(category, "ConnectionBlackList", new String[] {}).setRequiresMcRestart(true);
+		redNetConnectionBlacklist = c.get(category, "ConnectionBlackList", new String[0]).setRequiresMcRestart(true);
 		redNetConnectionBlacklist.setComment("A list of block IDs to prevent RedNet cables from connecting to. (e.g., minecraft:torch)");
 		defaultRedNetCableOnly = c.get(category, "CableOnly", false);
 		defaultRedNetCableOnly.setComment("If true, placed rednet cable will default to cable-only connections.");
@@ -182,7 +182,7 @@ public class MFRConfig {
 
 		//{ Worldgen
 		category = CATEGORY_GENERAL + ".WorldGen";
-		worldGenDimensionBlacklist = c.get(category, "Dimension.Blacklist", new int[] {}).setRequiresMcRestart(true);
+		worldGenDimensionBlacklist = c.get(category, "Dimension.Blacklist", new int[0]).setRequiresMcRestart(true);
 		worldGenDimensionBlacklist.setComment("A list of dimension IDs to disable MFR worldgen in.");
 
 		subCategory = category + ".RetroGen";
@@ -194,10 +194,10 @@ public class MFRConfig {
 		subCategory = category + ".RubberTrees";
 		rubberTreeWorldGen = c.get(subCategory, "Enable", true).setRequiresMcRestart(true);
 		rubberTreeWorldGen.setComment("Whether or not to generate MFR rubber trees during map generation");
-		rubberTreeBiomeWhitelist = c.get(subCategory, "Biome.Whitelist", new String[] {}).setRequiresMcRestart(true);
-		rubberTreeBiomeWhitelist.setComment("A list of biomes to allow rubber trees to spawn in. Does nothing if rubber tree worldgen is disabled.");
-		rubberTreeBiomeBlacklist = c.get(subCategory, "Biome.Blacklist", new String[] {}).setRequiresMcRestart(true);
-		rubberTreeBiomeBlacklist.setComment("A list of biomes to disallow rubber trees to spawn in. Overrides any other biomes added.");
+		rubberTreeBiomeWhitelist = c.get(subCategory, "Biome.Whitelist", new String[0]).setRequiresMcRestart(true);
+		rubberTreeBiomeWhitelist.setComment("A list of biome IDs to allow rubber trees to spawn in. Does nothing if rubber tree worldgen is disabled.");
+		rubberTreeBiomeBlacklist = c.get(subCategory, "Biome.Blacklist", new String[] { "void" }).setRequiresMcRestart(true);
+		rubberTreeBiomeBlacklist.setComment("A list of biome IDs to disallow rubber trees to spawn in. Overrides any other biomes added.");
 		enableMassiveTree = c.get(subCategory, "SacredRubberSapling", true).setRequiresMcRestart(true);
 		enableMassiveTree.setComment("If true, enable adding Enchanted Sacred Rubber Saplings to stronghold library loot.");
 
@@ -205,19 +205,23 @@ public class MFRConfig {
 		mfrLakeWorldGen = c.get(subCategory, "Enable", true).setRequiresMcRestart(true);
 		mfrLakeWorldGen.setComment("Whether or not to generate MFR lakes during map generation. By default, MFR will not attempt lake worldgen in dimensions where the player cannot respawn.");
 
-		mfrLakeSludgeRarity = c.get(subCategory + ".Sludge", "Rarity", 32).setRequiresMcRestart(true);
-		mfrLakeSludgeRarity.setComment("Higher numbers make sludge lakes rarer. A value of one will be approximately one per chunk. 0 will disable.");
-		mfrLakeSludgeBiomeList = c.get(subCategory + ".Sludge", "BiomeList", new String[] {}).setRequiresMcRestart(true);
-		mfrLakeSludgeBiomeList.setComment("A list of biomes to allow/disallow Sludge lakes to spawn in. Does nothing if lake worldgen is disabled.");
-		mfrLakeSludgeBiomeListToggle = c.get(subCategory + ".Sludge", "BiomeList.Mode", false).setRequiresMcRestart(true);
-		mfrLakeSludgeBiomeListToggle.setComment("If false, the biome list is a blacklist. If true, the biome list is a whitelist.");
+		{
+			String[] lakeBlacklist = { "ocean", "river", "frozen_ocean", "frozen_river", "beaches", "deep_ocean", "stone_beach", "cold_beach", "void" };
 
-		mfrLakeSewageRarity = c.get(subCategory + ".Sewage", "Rarity", 32).setRequiresMcRestart(true);
-		mfrLakeSewageRarity.setComment("Higher numbers make Sewage lakes rarer. A value of one will be approximately one per chunk. 0 will disable.");
-		mfrLakeSewageBiomeList = c.get(subCategory + ".Sewage", "BiomeList", new String[] {}).setRequiresMcRestart(true);
-		mfrLakeSewageBiomeList.setComment("A list of biomes to allow/disallow Sewage lakes to spawn in. Does nothing if lake worldgen is disabled.");
-		mfrLakeSewageBiomeListToggle = c.get(subCategory + ".Sewage", "BiomeList.Mode", false).setRequiresMcRestart(true);
-		mfrLakeSewageBiomeListToggle.setComment("If false, the biome list is a blacklist. If true, the biome list is a whitelist.");
+			mfrLakeSludgeRarity = c.get(subCategory + ".Sludge", "Rarity", 32).setRequiresMcRestart(true);
+			mfrLakeSludgeRarity.setComment("Higher numbers make sludge lakes rarer. A value of one will be approximately one per chunk. 0 will disable.");
+			mfrLakeSludgeBiomeList = c.get(subCategory + ".Sludge", "BiomeList", lakeBlacklist).setRequiresMcRestart(true);
+			mfrLakeSludgeBiomeList.setComment("A list of biome IDs to allow/disallow Sludge lakes to spawn in. Does nothing if lake worldgen is disabled.");
+			mfrLakeSludgeBiomeListToggle = c.get(subCategory + ".Sludge", "BiomeList.Mode", false).setRequiresMcRestart(true);
+			mfrLakeSludgeBiomeListToggle.setComment("If false, the biome list is a blacklist. If true, the biome list is a whitelist.");
+
+			mfrLakeSewageRarity = c.get(subCategory + ".Sewage", "Rarity", 32).setRequiresMcRestart(true);
+			mfrLakeSewageRarity.setComment("Higher numbers make Sewage lakes rarer. A value of one will be approximately one per chunk. 0 will disable.");
+			mfrLakeSewageBiomeList = c.get(subCategory + ".Sewage", "BiomeList", lakeBlacklist).setRequiresMcRestart(true);
+			mfrLakeSewageBiomeList.setComment("A list of biome IDs to allow/disallow Sewage lakes to spawn in. Does nothing if lake worldgen is disabled.");
+			mfrLakeSewageBiomeListToggle = c.get(subCategory + ".Sewage", "BiomeList.Mode", false).setRequiresMcRestart(true);
+			mfrLakeSewageBiomeListToggle.setComment("If false, the biome list is a blacklist. If true, the biome list is a whitelist.");
+		}
 		//}
 
 		//{ Item/block behavior overriding

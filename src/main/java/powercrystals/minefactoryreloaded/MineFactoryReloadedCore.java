@@ -157,7 +157,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 
 		String[] list = MFRConfig.rubberTreeBiomeWhitelist.getStringList();
 		for (String biome : list) {
-			MFRRegistry.registerRubberTreeBiome(biome);
+			MFRRegistry.registerRubberTreeBiome(new ResourceLocation(biome));
 		}
 
 		list = MFRConfig.unifierBlacklist.getStringList();
@@ -184,7 +184,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 		// catch biomes whitelisted via IMC that are in the config blacklist
 		String[] list = MFRConfig.rubberTreeBiomeBlacklist.getStringList();
 		for (String biome : list) {
-			MFRRegistry.getRubberTreeBiomes().remove(biome);
+			MFRRegistry.getRubberTreeBiomes().remove(new ResourceLocation(biome));
 		}
 		for (Property prop : MFRConfig.spawnerCustomization.values()) {
 			MFRRegistry.setBaseSpawnCost(prop.getName(), prop.getInt(0));

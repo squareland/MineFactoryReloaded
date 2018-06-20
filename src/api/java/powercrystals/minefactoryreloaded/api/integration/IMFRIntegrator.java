@@ -5,6 +5,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import powercrystals.minefactoryreloaded.api.handler.*;
 import powercrystals.minefactoryreloaded.api.laser.EnumFactoryLaserColor;
 import powercrystals.minefactoryreloaded.api.mob.IFactoryGrindable;
@@ -152,8 +154,10 @@ public interface IMFRIntegrator {
 		/**
 		 * Registers a possible output with the Sludge Boiler.
 		 *
-		 * @param weight Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
-		 * @param drop The thing being produced by the sludge boiler.
+		 * @param weight
+		 * 			Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
+		 * @param drop
+		 * 			The thing being produced by the sludge boiler.
 		 */
 		void registerSludgeDrop(int weight, @Nonnull ItemStack drop);
 
@@ -180,24 +184,41 @@ public interface IMFRIntegrator {
 		/**
 		 * Allows Rubber Trees to spawn in the specified biome.
 		 *
-		 * @param biome	The `biomeName` of the biome to spawn in
+		 * @param biome
+		 * 			The registry id of the biome to spawn in
 		 */
-		// TODO: ResourceLocation
-		void registerRubberTreeBiome(@Nonnull String biome);
+		void registerRubberTreeBiome(@Nonnull ResourceLocation biome);
+
+		/**
+		 * Allows Rubber Trees to spawn in the specified biome.
+		 *
+		 * @param biome
+		 * 			The biome to spawn in
+		 */
+		default void registerRubberTreeBiome(@Nonnull Biome biome) {
+
+			if (biome.delegate.name() == null)
+				throw new IllegalArgumentException("Attempted to add unregistered Biome to rubber tree spawn list.");
+			this.registerRubberTreeBiome(biome.delegate.name());
+		}
 
 		/**
 		 * Registers a handler for drinking liquids with the straw.
 		 *
-		 * @param fluidID The fluid ID the handler handles.
-		 * @param liquidDrinkHandler The drink handler instance.
+		 * @param fluidID
+		 * 			The fluid ID the handler handles.
+		 * @param liquidDrinkHandler
+		 * 			The drink handler instance.
 		 */
 		void registerLiquidDrinkHandler(@Nonnull String fluidID, @Nonnull ILiquidDrinkHandler liquidDrinkHandler);
 
 		/**
 		 * Registers a possible output with the laser drill.
 		 *
-		 * @param weight Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
-		 * @param ore The thing being produced by the laser drill.
+		 * @param weight
+		 * 			Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
+		 * @param ore
+		 * 			The thing being produced by the laser drill.
 		 */
 		void registerLaserOre(int weight, @Nonnull ItemStack ore);
 
@@ -215,7 +236,8 @@ public interface IMFRIntegrator {
 		 * Registers a Block as a fruit tree log. When the Fruit Picker sees this block on the ground, it will
 		 * begin a search in tree mode for any fruit nearby.
 		 *
-		 * @param fruitLogBlock The block to mark as a fruit tree log.
+		 * @param fruitLogBlock
+		 * 			The block to mark as a fruit tree log.
 		 */
 		void registerFruitLogBlock(@Nonnull Block fruitLogBlock);
 
@@ -235,7 +257,8 @@ public interface IMFRIntegrator {
 		 * Registers an entity id as an invalid entry for the Auto-Spawner.
 		 * See also: {@link net.minecraft.entity.EntityList}'s classToStringMapping and stringToClassMapping.
 		 *
-		 * @param entityString The entity id to blacklist.
+		 * @param entityString
+		 * 			The entity id to blacklist.
 		 */
 		// TODO docs
 		void registerAutoSpawnerBlacklist(@Nonnull String entityString);
@@ -250,21 +273,24 @@ public interface IMFRIntegrator {
 		/**
 		 * Registers an Ore Dictionary name that the Unifier will not unify with matching items
 		 *
-		 * @param oredict	The Ore Dictionary name to disallow unification on
+		 * @param oredict
+		 * 			The Ore Dictionary name to disallow unification on
 		 */
 		void registerUnifierBlacklist(@Nonnull String oredict);
 
 		/**
 		 * Registers an entity Class that will not be moved around by Conveyors
 		 *
-		 * @param entityClass The entity Class to ignore
+		 * @param entityClass
+		 * 			The entity Class to ignore
 		 */
 		void registerConveyorBlacklist(@Nonnull Class<? extends Entity> entityClass);
 
 		/**
 		 * Registers logic circuit to be usable in the Programmable RedNet Controller.
 		 *
-		 * @param circuit The circuit to be registered.
+		 * @param circuit
+		 * 			The circuit to be registered.
 		 */
 		void registerRedNetLogicCircuit(@Nonnull IRedNetLogicCircuit circuit);
 
@@ -327,7 +353,7 @@ public interface IMFRIntegrator {
 			}
 
 			@Override
-			public void registerRubberTreeBiome(@Nonnull String biome) {
+			public void registerRubberTreeBiome(@Nonnull ResourceLocation biome) {
 
 			}
 
