@@ -83,6 +83,13 @@ sourceSets {
         }
         compileClasspath += sourceSets.api.compileClasspath
     }
+    compat {
+        java {
+            srcDir 'src/compat/java'
+        }
+        compileClasspath += sourceSets.api.compileClasspath
+        compileClasspath += sourceSets.api.output
+    }
     main {
         java {
             srcDir 'src/main/java'
@@ -156,7 +163,7 @@ task moveCore {
 
 jar {
     dependsOn 'moveCore'
-    from sourceSets.api.output // this is a +=
+    from([sourceSets.api.output, sourceSets.compat.output]) // this is a +=
     classifier = 'universal'
     manifest { from sourceSets.main.output.resourcesDir.toString() + '/META-INF/MANIFEST.MF' }
 }
