@@ -17,11 +17,11 @@ public interface ISyringe {
 	 * Called when the vet is deciding if it should use this syringe.
 	 *
 	 * @param world
-	 *            The world instance.
+	 * 		The world instance.
 	 * @param entity
-	 *            The entity being injected.
+	 * 		The entity being injected.
 	 * @param syringe
-	 *            The syringe @Nonnull ItemStack.
+	 * 		The syringe ItemStack.
 	 *
 	 * @return True if the entity can be injected by this syringe.
 	 */
@@ -31,11 +31,11 @@ public interface ISyringe {
 	 * Called to perform an injection.
 	 *
 	 * @param world
-	 *            The world instance.
+	 * 		The world instance.
 	 * @param entity
-	 *            The entity being injected.
+	 * 		The entity being injected.
 	 * @param syringe
-	 *            The syringe @Nonnull ItemStack.
+	 * 		The syringe ItemStack.
 	 *
 	 * @return True if injection was successful.
 	 */
@@ -45,7 +45,7 @@ public interface ISyringe {
 	 * Called to check if a syringe is empty
 	 *
 	 * @param syringe
-	 *            The syringe @Nonnull ItemStack.
+	 * 		The syringe ItemStack.
 	 *
 	 * @return True if the syringe is empty
 	 */
@@ -57,9 +57,9 @@ public interface ISyringe {
 	 * <b>Note</b>: this will replace the syringe, max stack size should be 1
 	 *
 	 * @param syringe
-	 *            The syringe @Nonnull ItemStack.
+	 * 		The syringe ItemStack.
 	 *
-	 * @return An empty syringe @Nonnull ItemStack
+	 * @return An empty syringe ItemStack
 	 */
 	@Nonnull
 	ItemStack getEmptySyringe(@Nonnull ItemStack syringe);

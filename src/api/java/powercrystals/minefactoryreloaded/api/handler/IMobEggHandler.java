@@ -15,11 +15,11 @@ public interface IMobEggHandler {
 
 	/**
 	 * @param safariNetEntity
-	 *            The Entity NBT the Safari Net is looking for egg info.
+	 * 		The Entity NBT the Safari Net is looking for egg info.
 	 *
-	 * @return An EntityEggInfo, or null if this instance cannot handle this
-	 *         mob.
+	 * @return An EntityEggInfo, or null if this instance cannot handle this mob.
 	 */
+	// TODO: separate from vanilla here
 	EntityEggInfo getEgg(@Nonnull NBTTagCompound safariNetEntity);
 
 }

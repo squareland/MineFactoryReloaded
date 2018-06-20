@@ -13,28 +13,31 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 
 //TODO probably change to ReplacementBlockState
-public class ReplacementBlock
-{
+public class ReplacementBlock {
+
 	protected byte _hasMeta;
 	protected int _meta;
 	protected final Block _block;
 	protected final NBTTagCompound _tileTag;
-	
+
 	/**
 	 * Called to replace a block in the world.
-	 * @param world The world object
-	 * @param pos Block position
-	 * @param stack The @Nonnull ItemStack being used to replace the block
+	 *
+	 * @param world
+	 * 		The world object
+	 * @param pos
+	 * 		Block position
+	 * @param stack
+	 * 		The @Nonnull ItemStack being used to replace the block
+	 *
 	 * @return True if the block was set successfully
 	 */
-	public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack)
-	{
+	public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		int meta = getMeta(world, pos, stack);
 		IBlockState state = _block.getStateFromMeta(meta);
-		if (world.setBlockState(pos, state, 3))
-		{
-			if (hasTag(stack) && _block.hasTileEntity(state))
-			{
+		if (world.setBlockState(pos, state, 3)) {
+			if (hasTag(stack) && _block.hasTileEntity(state)) {
 				TileEntity tile = world.getTileEntity(pos);
 				if (tile != null)
 					tile.readFromNBT(getTag(world, pos, stack));
@@ -46,16 +49,20 @@ public class ReplacementBlock
 
 	/**
 	 * Called to get the metadata of the replacement block in the world.
-	 * @param world The world object
-	 * @param pos Block position
-	 * @param stack The @Nonnull ItemStack being used to replace the block
+	 *
+	 * @param world
+	 * 		The world object
+	 * @param pos
+	 * 		Block position
+	 * @param stack
+	 * 		The @Nonnull ItemStack being used to replace the block
+	 *
 	 * @return The metadata of the block
 	 */
-	protected int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack)
-	{
+	protected int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		int m = 0;
-		if (_hasMeta > 0)
-		{
+		if (_hasMeta > 0) {
 			if (_hasMeta > 1)
 				return _meta;
 			m = stack.getItemDamage();
@@ -65,72 +72,85 @@ public class ReplacementBlock
 		}
 		return m;
 	}
-	
+
 	/**
 	 * Called to set the metadata of this ReplacementBlock to a fixed value
-	 * @param meta The metadata of the block 
+	 *
+	 * @param meta
+	 * 		The metadata of the block
+	 *
 	 * @return This instance
 	 */
-	public ReplacementBlock setMeta(int meta)
-	{
-		if (meta >= 0)
-		{
+	public ReplacementBlock setMeta(int meta) {
+
+		if (meta >= 0) {
 			_hasMeta = 2;
 			_meta = meta;
 		}
 		return this;
 	}
-	
+
 	/**
 	 * Called to set the metadata of this ReplacementBlock to a value read from an @Nonnull ItemStack
-	 * @param hasMeta The metadata of the block
+	 *
+	 * @param hasMeta
+	 * 		The metadata of the block
+	 *
 	 * @return This instance
 	 */
-	public ReplacementBlock setMeta(boolean hasMeta)
-	{
+	public ReplacementBlock setMeta(boolean hasMeta) {
+
 		_hasMeta = (byte) (hasMeta ? 1 : 0);
 		return this;
 	}
-	
+
 	/**
 	 * Called to get the NBTTagCompound a TileEntity will read its state from
-	 * @param world The world object
-	 * @param pos Block position
-	 * @param stack The @Nonnull ItemStack being used to replace the block
+	 *
+	 * @param world
+	 * 		The world object
+	 * @param pos
+	 * 		Block position
+	 * @param stack
+	 * 		The @Nonnull ItemStack being used to replace the block
+	 *
 	 * @return The NBTTagCompound a TileEntity will read its state from
 	 */
-	protected NBTTagCompound getTag(World world, BlockPos pos, @Nonnull ItemStack stack)
-	{
+	protected NBTTagCompound getTag(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		return _tileTag;
 	}
-	
+
 	/**
 	 * Called to see if a TileEntity should have its state set
-	 * @param stack The @Nonnull ItemStack being used to replace the block
+	 *
+	 * @param stack
+	 * 		The @Nonnull ItemStack being used to replace the block
+	 *
 	 * @return True if the TileEntity should have its state set
 	 */
-	protected boolean hasTag(@Nonnull ItemStack stack)
-	{
+	protected boolean hasTag(@Nonnull ItemStack stack) {
+
 		return _tileTag != null;
 	}
-	
-	public ReplacementBlock(Item block)
-	{
+
+	public ReplacementBlock(Item block) {
+
 		this(Block.getBlockFromItem(block));
 	}
-	
-	public ReplacementBlock(Item block, NBTTagCompound tag)
-	{
+
+	public ReplacementBlock(Item block, NBTTagCompound tag) {
+
 		this(Block.getBlockFromItem(block), tag);
 	}
-	
-	public ReplacementBlock(Block block)
-	{
+
+	public ReplacementBlock(Block block) {
+
 		this(block, null);
 	}
-	
-	public ReplacementBlock(Block block, NBTTagCompound tag)
-	{
+
+	public ReplacementBlock(Block block, NBTTagCompound tag) {
+
 		_block = block;
 		_tileTag = tag;
 	}

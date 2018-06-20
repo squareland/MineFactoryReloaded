@@ -94,7 +94,7 @@ public interface IMFRIntegrator {
 	/**
 	 * The name of your integrator, by default the Class's name is used
 	 *
-	 * @return String	The name of this integrator used in MFR's config for enabling/disabling
+	 * @return String    The name of this integrator used in MFR's config for enabling/disabling
 	 */
 	default String getIntegratorName() {
 
@@ -155,9 +155,9 @@ public interface IMFRIntegrator {
 		 * Registers a possible output with the Sludge Boiler.
 		 *
 		 * @param weight
-		 * 			Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
+		 * 		Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
 		 * @param drop
-		 * 			The thing being produced by the sludge boiler.
+		 * 		The thing being produced by the sludge boiler.
 		 */
 		void registerSludgeDrop(int weight, @Nonnull ItemStack drop);
 
@@ -185,7 +185,7 @@ public interface IMFRIntegrator {
 		 * Allows Rubber Trees to spawn in the specified biome.
 		 *
 		 * @param biome
-		 * 			The registry id of the biome to spawn in
+		 * 		The registry id of the biome to spawn in
 		 */
 		void registerRubberTreeBiome(@Nonnull ResourceLocation biome);
 
@@ -193,7 +193,7 @@ public interface IMFRIntegrator {
 		 * Allows Rubber Trees to spawn in the specified biome.
 		 *
 		 * @param biome
-		 * 			The biome to spawn in
+		 * 		The biome to spawn in
 		 */
 		default void registerRubberTreeBiome(@Nonnull Biome biome) {
 
@@ -206,9 +206,9 @@ public interface IMFRIntegrator {
 		 * Registers a handler for drinking liquids with the straw.
 		 *
 		 * @param fluidID
-		 * 			The fluid ID the handler handles.
+		 * 		The fluid ID the handler handles.
 		 * @param liquidDrinkHandler
-		 * 			The drink handler instance.
+		 * 		The drink handler instance.
 		 */
 		void registerLiquidDrinkHandler(@Nonnull String fluidID, @Nonnull ILiquidDrinkHandler liquidDrinkHandler);
 
@@ -216,9 +216,9 @@ public interface IMFRIntegrator {
 		 * Registers a possible output with the laser drill.
 		 *
 		 * @param weight
-		 * 			Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
+		 * 		Likelihood that this item will be produced. Lower means rarer. Must be greater than 0.
 		 * @param ore
-		 * 			The thing being produced by the laser drill.
+		 * 		The thing being produced by the laser drill.
 		 */
 		void registerLaserOre(int weight, @Nonnull ItemStack ore);
 
@@ -227,8 +227,10 @@ public interface IMFRIntegrator {
 		 * Used by MFR itself for vanilla: Black (Coal), Azure (Diamond), Lime (Emerald), Yellow (Gold), Brown (Iron), Blue (Lapis),
 		 * Red (Redstone), and White (Nether Quartz).
 		 *
-		 * @param color The color that the preferred ore is being set for.
-		 * @param ore The ore that will be preferred by the drill when a focus with the specified color is present.
+		 * @param color
+		 * 		The color that the preferred ore is being set for.
+		 * @param ore
+		 * 		The ore that will be preferred by the drill when a focus with the specified color is present.
 		 */
 		void addLaserPreferredOre(EnumFactoryLaserColor color, @Nonnull ItemStack ore);
 
@@ -237,7 +239,7 @@ public interface IMFRIntegrator {
 		 * begin a search in tree mode for any fruit nearby.
 		 *
 		 * @param fruitLogBlock
-		 * 			The block to mark as a fruit tree log.
+		 * 		The block to mark as a fruit tree log.
 		 */
 		void registerFruitLogBlock(@Nonnull Block fruitLogBlock);
 
@@ -249,7 +251,8 @@ public interface IMFRIntegrator {
 		/**
 		 * Registers an entity Class as an invalid entry for the Auto-Spawner.
 		 *
-		 * @param entityClass The entity Class to blacklist.
+		 * @param entityClass
+		 * 		The entity Class to blacklist.
 		 */
 		void registerAutoSpawnerBlacklistClass(@Nonnull Class<? extends EntityLivingBase> entityClass);
 
@@ -258,14 +261,14 @@ public interface IMFRIntegrator {
 		 * See also: {@link net.minecraft.entity.EntityList}'s classToStringMapping and stringToClassMapping.
 		 *
 		 * @param entityString
-		 * 			The entity id to blacklist.
+		 * 		The entity id to blacklist.
 		 */
 		// TODO docs
 		void registerAutoSpawnerBlacklist(@Nonnull String entityString);
 
 		/**
 		 * Registers a spawn handler for the Auto-Spawner for tighter control over the spawn results
-		 *
+		 * <p>
 		 * Used by MFR to erase horse inventories and clear held blocks for endermen
 		 */
 		void registerSpawnHandler(@Nonnull IMobSpawnHandler spawnHandler);
@@ -274,7 +277,7 @@ public interface IMFRIntegrator {
 		 * Registers an Ore Dictionary name that the Unifier will not unify with matching items
 		 *
 		 * @param oredict
-		 * 			The Ore Dictionary name to disallow unification on
+		 * 		The Ore Dictionary name to disallow unification on
 		 */
 		void registerUnifierBlacklist(@Nonnull String oredict);
 
@@ -282,7 +285,7 @@ public interface IMFRIntegrator {
 		 * Registers an entity Class that will not be moved around by Conveyors
 		 *
 		 * @param entityClass
-		 * 			The entity Class to ignore
+		 * 		The entity Class to ignore
 		 */
 		void registerConveyorBlacklist(@Nonnull Class<? extends Entity> entityClass);
 
@@ -290,7 +293,7 @@ public interface IMFRIntegrator {
 		 * Registers logic circuit to be usable in the Programmable RedNet Controller.
 		 *
 		 * @param circuit
-		 * 			The circuit to be registered.
+		 * 		The circuit to be registered.
 		 */
 		void registerRedNetLogicCircuit(@Nonnull IRedNetLogicCircuit circuit);
 
@@ -432,6 +435,5 @@ public interface IMFRIntegrator {
 		};
 
 	}
-
 
 }

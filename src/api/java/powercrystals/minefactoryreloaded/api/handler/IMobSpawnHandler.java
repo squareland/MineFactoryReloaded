@@ -19,8 +19,7 @@ public interface IMobSpawnHandler {
 	 * Called when a mob has been spawned normally.
 	 *
 	 * @param entity
-	 *            The entity instance being spawned. Typically your regular
-	 *            spawn code 100% handles this
+	 * 		The entity instance being spawned. Typically your regular spawn code 100% handles this
 	 */
 	void onMobSpawn(EntityLivingBase entity);
 
@@ -28,8 +27,7 @@ public interface IMobSpawnHandler {
 	 * Called when an exact copy of an entity has been made.
 	 *
 	 * @param entity
-	 *            The entity instance being exact-copied. Clear your inventories
-	 *            & etc. here
+	 * 		The entity instance being exact-copied. Clear your inventorie & etc. here
 	 */
 	void onMobExactSpawn(EntityLivingBase entity);
 

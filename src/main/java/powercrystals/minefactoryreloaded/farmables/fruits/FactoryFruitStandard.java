@@ -49,12 +49,6 @@ public abstract class FactoryFruitStandard implements IFactoryFruit  {
 	
 	@Override
 	public abstract boolean canBePicked(World world, BlockPos pos);
-
-	@Override
-	public boolean breakBlock()
-	{
-		return replBlock == null;
-	}
 	
 	@Override
 	public ReplacementBlock getReplacementBlock(World world, BlockPos pos)

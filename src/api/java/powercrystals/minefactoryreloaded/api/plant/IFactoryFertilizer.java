@@ -13,21 +13,29 @@ import javax.annotation.Nonnull;
 public interface IFactoryFertilizer {
 
 	/**
-	 * @return The ID of this fertilizer item.
+	 * @return The fertilizer item managed by this instance.
 	 */
+	@Nonnull
 	Item getFertilizer();
 
 	/**
-	 * @return The type of fertilizer this is.
+	 * Called to determine the type of fertilizer.
+	 *
+	 * @param stack
+	 * 		The ItemStack used to fertilize.
+	 *
+	 * @return The type of fertilizer the stack is.
 	 */
+	@Nonnull
 	FertilizerType getFertilizerType(@Nonnull ItemStack stack);
 
 	/**
-	 * Called when a fertilization is successful. If you set the @Nonnull ItemStack size
-	 * to 0, it will be deleted by the fertilizer.
+	 * Called when a fertilization is successful.
+	 * <p>
+	 * If you set the ItemStack size to 0, it will be deleted by the fertilizer.
 	 *
 	 * @param fertilizer
-	 *            The @Nonnull ItemStack used to fertilize.
+	 * 		The stack used to fertilize.
 	 */
 	void consume(@Nonnull ItemStack fertilizer);
 

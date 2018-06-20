@@ -9,62 +9,65 @@ import javax.annotation.Nonnull;
 
 /**
  * @author skyboy026
- *
- * Defines an @Nonnull ItemStack or a FluidStack that is the result of an entity being ranched
+ * <p>
+ * Defines an ItemStack or a FluidStack that is the result of an entity being ranched
  */
 public final class RanchedItem {
-	private final @Nonnull ItemStack item;
+
+	private final @Nonnull
+	ItemStack item;
 	private final FluidStack fluid;
-	
-	public RanchedItem(Block item, int amount, int meta)
-	{
+
+	public RanchedItem(Block item, int amount, int meta) {
+
 		this(new ItemStack(item, amount, meta));
 	}
-	
-	public RanchedItem(Block item, int amount)
-	{
+
+	public RanchedItem(Block item, int amount) {
+
 		this(new ItemStack(item, amount));
 	}
 
-	public RanchedItem(Block item)
-	{
+	public RanchedItem(Block item) {
+
 		this(new ItemStack(item));
 	}
-	
-	public RanchedItem(Item item, int amount, int meta)
-	{
+
+	public RanchedItem(Item item, int amount, int meta) {
+
 		this(new ItemStack(item, amount, meta));
 	}
-	
-	public RanchedItem(Item item, int amount)
-	{
+
+	public RanchedItem(Item item, int amount) {
+
 		this(new ItemStack(item, amount));
 	}
-	
-	public RanchedItem(Item item)
-	{
+
+	public RanchedItem(Item item) {
+
 		this(new ItemStack(item));
 	}
-	
-	public RanchedItem(@Nonnull ItemStack item)
-	{
+
+	public RanchedItem(@Nonnull ItemStack item) {
+
 		this.item = item;
 		fluid = null;
 	}
-	
-	public RanchedItem(FluidStack fluid)
-	{
+
+	public RanchedItem(FluidStack fluid) {
+
 		this.fluid = fluid;
 		item = ItemStack.EMPTY;
 	}
-	
-	public boolean hasFluid()
-	{
+
+	public boolean hasFluid() {
+
 		return item.isEmpty() & fluid != null;
 	}
-	
-	public Object getResult()
-	{
+
+	public Object getResult() {
+
 		return item.isEmpty() ? fluid : item;
 	}
+
 }

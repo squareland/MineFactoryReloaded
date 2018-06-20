@@ -1,6 +1,10 @@
 package powercrystals.minefactoryreloaded.api.laser;
 
-@SuppressWarnings("unused")
+/**
+ * Determines what color a laser applies to.
+ *
+ * @author skyboy
+ */
 public enum EnumFactoryLaserColor {
 
 	WHITE,
@@ -19,4 +23,5 @@ public enum EnumFactoryLaserColor {
 	GREEN,
 	RED,
 	BLACK;
+
 }

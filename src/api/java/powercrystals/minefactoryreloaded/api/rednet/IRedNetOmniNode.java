@@ -16,7 +16,6 @@ package powercrystals.minefactoryreloaded.api.rednet;
  * 0:White, 1:Orange, 2:Magenta, 3:LightBlue, 4:Yellow, 5:Lime, 6:Pink, 7:Gray,
  * 8:LightGray, 9:Cyan, 10:Purple, 11:Blue, 12:Brown, 13:Green, 14:Red, 15:Black
  */
-public interface IRedNetOmniNode extends IRedNetInputNode, IRedNetOutputNode
-{
+public interface IRedNetOmniNode extends IRedNetInputNode, IRedNetOutputNode {
 	// this is merely provided for convenience
 }

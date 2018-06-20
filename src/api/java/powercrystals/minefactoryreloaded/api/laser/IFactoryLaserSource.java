@@ -15,7 +15,7 @@ public interface IFactoryLaserSource {
 	 * from <tt>from</tt>
 	 *
 	 * @param from
-	 *            The direction the laser is oriented
+	 * 		The direction the laser is oriented
 	 *
 	 * @return True if the beam should be sustained from this side
 	 */

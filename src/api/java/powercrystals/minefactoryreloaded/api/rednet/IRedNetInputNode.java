@@ -21,17 +21,21 @@ import net.minecraft.util.EnumFacing;
  * 0:White, 1:Orange, 2:Magenta, 3:LightBlue, 4:Yellow, 5:Lime, 6:Pink, 7:Gray,
  * 8:LightGray, 9:Cyan, 10:Purple, 11:Blue, 12:Brown, 13:Green, 14:Red, 15:Black
  */
-public interface IRedNetInputNode extends IRedNetConnection
-{
+public interface IRedNetInputNode extends IRedNetConnection {
+
 	/**
 	 * Called when the input values to this block change. Only called if your block is connected in "All" mode.
 	 * Do not issue a network value update from inside this method call; it will be ignored. Issue your updates
 	 * on the next tick.
-	 * 
-	 * @param world The world this block is in.
-	 * @param pos This block's position.
-	 * @param side The side the input values are being changed on.
-	 * @param inputValues The new set of input values. This array will be 16 elements long. Do not alter or cache.
+	 *
+	 * @param world
+	 * 		The world this block is in.
+	 * @param pos
+	 * 		This block's position.
+	 * @param side
+	 * 		The side the input values are being changed on.
+	 * @param inputValues
+	 * 		The new set of input values. This array will be 16 elements long. Do not alter or cache.
 	 */
 	void onInputsChanged(World world, BlockPos pos, EnumFacing side, int[] inputValues);
 
@@ -39,11 +43,16 @@ public interface IRedNetInputNode extends IRedNetConnection
 	 * Called when the input value to this block changes. Only called if your block is connected in "Single" mode.
 	 * Do not issue a network value update from inside this method call; it will be ignored. Issue your updates
 	 * on the next tick.
-	 * 
-	 * @param world The world this block is in.
-	 * @param pos This block's position.
-	 * @param side The side the input values are being changed on.
-	 * @param inputValue The new input value
+	 *
+	 * @param world
+	 * 		The world this block is in.
+	 * @param pos
+	 * 		This block's position.
+	 * @param side
+	 * 		The side the input values are being changed on.
+	 * @param inputValue
+	 * 		The new input value
 	 */
 	void onInputChanged(World world, BlockPos pos, EnumFacing side, int inputValue);
+
 }

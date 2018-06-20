@@ -633,7 +633,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 			short type = ret.flags;
 			type &= ~24; // 24 represents the two connection type bits
 			type |= nodeFlags;
-			ret = RedNetConnectionType.fromFlags(type);
+			ret = RedNetConnectionType.fromInternal(type);
 		}
 		return ret;
 	}

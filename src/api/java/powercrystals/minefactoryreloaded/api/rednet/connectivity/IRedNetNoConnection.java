@@ -7,7 +7,6 @@ package powercrystals.minefactoryreloaded.api.rednet.connectivity;
  * <br>
  * This behavior can be overridden in subclasses by IRedNetConnection
  */
-public interface IRedNetNoConnection
-{
-	
+public interface IRedNetNoConnection {
+
 }
