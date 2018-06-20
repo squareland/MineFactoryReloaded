@@ -3,7 +3,6 @@ package powercrystals.minefactoryreloaded.api.plant;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -12,35 +11,73 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-//TODO probably change to ReplacementBlockState
-public class ReplacementBlock {
+public class ReplacementBlock implements IReplacementBlock {
 
-	protected byte _hasMeta;
-	protected int _meta;
-	protected final Block _block;
+	protected boolean _hasMeta;
+	protected IBlockState _block;
 	protected final NBTTagCompound _tileTag;
 
+	public ReplacementBlock(ItemStack block) {
+
+		this(Block.getBlockFromItem(block.getItem()), block.getSubCompound("BlockEntityTag"));
+	}
+
+	public ReplacementBlock(Item block) {
+
+		this(Block.getBlockFromItem(block));
+	}
+
+	public ReplacementBlock(Item block, NBTTagCompound tag) {
+
+		this(Block.getBlockFromItem(block), tag);
+	}
+
+	public ReplacementBlock(Block block) {
+
+		this(block, null);
+	}
+
+	public ReplacementBlock(Block block, NBTTagCompound tag) {
+
+		this(block.getDefaultState(), tag);
+	}
+
+	public ReplacementBlock(IBlockState block) {
+
+		this(block, null);
+	}
+
+	public ReplacementBlock(IBlockState block, NBTTagCompound tag) {
+
+		_block = block;
+		_tileTag = tag;
+	}
+
 	/**
-	 * Called to replace a block in the world.
-	 *
-	 * @param world
-	 * 		The world object
-	 * @param pos
-	 * 		Block position
-	 * @param stack
-	 * 		The @Nonnull ItemStack being used to replace the block
-	 *
-	 * @return True if the block was set successfully
+	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
-		int meta = getMeta(world, pos, stack);
-		IBlockState state = _block.getStateFromMeta(meta);
+		IBlockState state = _block;
+		if (_hasMeta)
+			state = state.getBlock().getStateFromMeta(getMeta(world, pos, stack));
 		if (world.setBlockState(pos, state, 3)) {
-			if (hasTag(stack) && _block.hasTileEntity(state)) {
+			if (hasTag(stack) && _block.getBlock().hasTileEntity(state)) {
 				TileEntity tile = world.getTileEntity(pos);
-				if (tile != null)
-					tile.readFromNBT(getTag(world, pos, stack));
+				if (tile != null) {
+					NBTTagCompound source = tile.writeToNBT(new NBTTagCompound());
+					NBTTagCompound comparison = source.copy();
+					source.merge(getTag(world, pos, stack));
+					source.setInteger("x", pos.getX());
+					source.setInteger("y", pos.getY());
+					source.setInteger("z", pos.getZ());
+
+					if (!source.equals(comparison)) {
+						tile.readFromNBT(source);
+						tile.markDirty();
+					}
+				}
 			}
 			return true;
 		}
@@ -61,16 +98,7 @@ public class ReplacementBlock {
 	 */
 	protected int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
-		int m = 0;
-		if (_hasMeta > 0) {
-			if (_hasMeta > 1)
-				return _meta;
-			m = stack.getItemDamage();
-			Item item = stack.getItem();
-			if (item instanceof ItemBlock)
-				m = item.getMetadata(m);
-		}
-		return m;
+		return stack.getItem().getMetadata(stack.getMetadata()); // wee?
 	}
 
 	/**
@@ -83,10 +111,7 @@ public class ReplacementBlock {
 	 */
 	public ReplacementBlock setMeta(int meta) {
 
-		if (meta >= 0) {
-			_hasMeta = 2;
-			_meta = meta;
-		}
+		_block = _block.getBlock().getStateFromMeta(meta);
 		return this;
 	}
 
@@ -100,7 +125,7 @@ public class ReplacementBlock {
 	 */
 	public ReplacementBlock setMeta(boolean hasMeta) {
 
-		_hasMeta = (byte) (hasMeta ? 1 : 0);
+		_hasMeta = hasMeta;
 		return this;
 	}
 
@@ -118,7 +143,7 @@ public class ReplacementBlock {
 	 */
 	protected NBTTagCompound getTag(World world, BlockPos pos, @Nonnull ItemStack stack) {
 
-		return _tileTag;
+		return _tileTag != null ? _tileTag : stack.getSubCompound("BlockEntityTag");
 	}
 
 	/**
@@ -131,27 +156,7 @@ public class ReplacementBlock {
 	 */
 	protected boolean hasTag(@Nonnull ItemStack stack) {
 
-		return _tileTag != null;
+		return _tileTag != null || stack.getSubCompound("BlockEntityTag") != null;
 	}
 
-	public ReplacementBlock(Item block) {
-
-		this(Block.getBlockFromItem(block));
-	}
-
-	public ReplacementBlock(Item block, NBTTagCompound tag) {
-
-		this(Block.getBlockFromItem(block), tag);
-	}
-
-	public ReplacementBlock(Block block) {
-
-		this(block, null);
-	}
-
-	public ReplacementBlock(Block block, NBTTagCompound tag) {
-
-		_block = block;
-		_tileTag = tag;
-	}
 }

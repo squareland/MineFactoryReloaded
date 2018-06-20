@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryPlantable;
-import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.plant.IReplacementBlock;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiPlanter;
 import powercrystals.minefactoryreloaded.gui.container.ContainerPlanter;
@@ -78,7 +78,7 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 					!plantable.canBePlantedHere(world, bp, availableStack))
 				continue;
 
-			ReplacementBlock block = plantable.getPlantedBlock(world, bp, availableStack);
+			IReplacementBlock block = plantable.getPlantedBlock(world, bp, availableStack);
 			if (block == null || !block.replaceBlock(world, bp, availableStack))
 				continue;
 			decrStackSize(stackIndex, 1);

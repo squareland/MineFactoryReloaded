@@ -14,9 +14,9 @@ import javax.annotation.Nonnull;
 
 public class PlantableSoil extends PlantableStandard {
 
-	public PlantableSoil(Block block) {
+	public PlantableSoil(Block block, boolean useItemMeta) {
 
-		super(Item.getItemFromBlock(block), block);
+		super(Item.getItemFromBlock(block), block, useItemMeta);
 	}
 
 	public PlantableSoil(Item block, Block plantedBlock) {

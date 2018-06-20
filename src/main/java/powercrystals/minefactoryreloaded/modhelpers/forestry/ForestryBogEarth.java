@@ -18,13 +18,12 @@ import java.util.Random;
 
 public class ForestryBogEarth extends PlantableSoil implements IFactoryFertilizable, IFactoryHarvestable, IFactoryFruit {
 
-	private ReplacementBlock repl;
+	private IReplacementBlock repl;
 	private Item dirt;
 
 	ForestryBogEarth(Block block) {
 
-		super(block);
-		_plantedBlock.setMeta(true);
+		super(block, true);
 		repl = new ReplacementBlock(Blocks.DIRT);
 		dirt = Item.getItemFromBlock(Blocks.DIRT);
 	}
@@ -80,7 +79,7 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+	public IReplacementBlock getReplacementBlock(World world, BlockPos pos) {
 
 		return repl;
 	}

@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryPlantable;
+import powercrystals.minefactoryreloaded.api.plant.IReplacementBlock;
 import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 
 import javax.annotation.Nonnull;
@@ -24,7 +25,7 @@ public class PlantableStandard implements IFactoryPlantable
 
 	protected Item _seed;
 	protected Block _block;
-	protected ReplacementBlock _plantedBlock;
+	protected IReplacementBlock _plantedBlock;
 	protected int _validMeta;
 
 	public PlantableStandard(Block block)
@@ -35,6 +36,11 @@ public class PlantableStandard implements IFactoryPlantable
 	public PlantableStandard(Block block, Block plantedBlock)
 	{
 		this(Item.getItemFromBlock(block), plantedBlock);
+	}
+
+	public PlantableStandard(Block block, Block plantedBlock, boolean useItemMeta)
+	{
+		this(Item.getItemFromBlock(block), plantedBlock, useItemMeta);
 	}
 
 	public PlantableStandard(Item block, Block plantedBlock)
@@ -60,6 +66,11 @@ public class PlantableStandard implements IFactoryPlantable
 	public PlantableStandard(Item block, Block plantedBlock, int validMeta, int plantedMeta)
 	{
 		this(block, plantedBlock, validMeta, new ReplacementBlock(plantedBlock).setMeta(plantedMeta));
+	}
+
+	public PlantableStandard(Item block, Block plantedBlock, boolean useItemMeta)
+	{
+		this(block, plantedBlock, WILDCARD, new ReplacementBlock(plantedBlock).setMeta(useItemMeta));
 	}
 
 	public PlantableStandard(Item block, Block plantedBlock, int validMeta, boolean useItemMeta)
@@ -94,7 +105,7 @@ public class PlantableStandard implements IFactoryPlantable
 	}
 
 	@Override
-	public ReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack)
+	public IReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack)
 	{
 		return _plantedBlock;
 	}

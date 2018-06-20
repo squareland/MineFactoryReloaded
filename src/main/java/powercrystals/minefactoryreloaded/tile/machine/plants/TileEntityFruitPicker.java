@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.plant.IReplacementBlock;
 import powercrystals.minefactoryreloaded.core.Area;
 import powercrystals.minefactoryreloaded.core.FruitHarvestManager;
 import powercrystals.minefactoryreloaded.core.HarvestMode;
@@ -90,7 +90,7 @@ public class TileEntityFruitPicker extends TileEntityFactoryPowered {
 
 		List<ItemStack> drops = harvestable.getDrops(world, _rand, targetCoords);
 
-		ReplacementBlock replacement = harvestable.getReplacementBlock(world, targetCoords);
+		IReplacementBlock replacement = harvestable.getReplacementBlock(world, targetCoords);
 
 		if (replacement == null) {
 			if (!world.setBlockToAir(targetCoords))

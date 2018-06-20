@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
+import powercrystals.minefactoryreloaded.api.plant.IReplacementBlock;
 import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 
 import java.util.List;
@@ -15,9 +16,9 @@ import java.util.Random;
 public abstract class FactoryFruitStandard implements IFactoryFruit  {
 
 	private Block _block;
-	private ReplacementBlock replBlock;
+	private IReplacementBlock replBlock;
 	
-	public FactoryFruitStandard(Block block, ReplacementBlock replacement)
+	public FactoryFruitStandard(Block block, IReplacementBlock replacement)
 	{
 		if (block.equals(Blocks.AIR))
 			throw new IllegalArgumentException("Passed air FactoryFruitStandard");
@@ -38,7 +39,7 @@ public abstract class FactoryFruitStandard implements IFactoryFruit  {
 	
 	public FactoryFruitStandard(Block block)
 	{
-		this(block, (ReplacementBlock)null);
+		this(block, (IReplacementBlock)null);
 	}
 	
 	@Override
@@ -51,7 +52,7 @@ public abstract class FactoryFruitStandard implements IFactoryFruit  {
 	public abstract boolean canBePicked(World world, BlockPos pos);
 	
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos)
+	public IReplacementBlock getReplacementBlock(World world, BlockPos pos)
 	{
 		return replBlock;
 	}

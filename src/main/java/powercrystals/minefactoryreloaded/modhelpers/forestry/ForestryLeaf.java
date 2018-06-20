@@ -14,10 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
-import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.plant.*;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 
 import javax.annotation.Nonnull;
@@ -29,27 +26,23 @@ import java.util.Random;
 public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit, IFactoryFertilizable {
 
 	private ITreeRoot root;
-	private ReplacementBlock repl;
+	private IReplacementBlock repl;
 	private Item _item;
 
 	ForestryLeaf(Block block) {
 
 		super(block);
 		root = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
-		repl = new ReplacementBlock((Block) null) {
-
-			@Override
-			public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
-
-				TileEntity te = world.getTileEntity(pos);
-				if (te instanceof IFruitBearer) {
-					IFruitBearer fruit = (IFruitBearer) te;
-					fruit.addRipeness(-fruit.getRipeness());
-				}
-				return true;
-			}
-		};
 		_item = Item.getItemFromBlock(block);
+		repl = (world, pos, stack) -> {
+
+			TileEntity te = world.getTileEntity(pos);
+			if (te instanceof IFruitBearer) {
+				IFruitBearer fruit = (IFruitBearer) te;
+				fruit.addRipeness(-fruit.getRipeness());
+			}
+			return true;
+		};
 	}
 
 	@Override
@@ -58,7 +51,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof IFruitBearer) {
 			IFruitBearer fruit = (IFruitBearer) te;
-			return fruit.getRipeness() >= 0.99f;
+			return fruit.getRipeness() > 0.99f;
 		}
 		return false;
 	}
@@ -82,7 +75,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+	public IReplacementBlock getReplacementBlock(World world, BlockPos pos) {
 
 		return repl;
 	}

@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableStandard;
 
 import javax.annotation.Nonnull;
@@ -23,14 +22,7 @@ public class ForestrySapling extends PlantableStandard implements IFactoryFertil
 
 		super(item, block, WILDCARD, null);
 		root = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
-		_plantedBlock = new ReplacementBlock((Block) null) {
-
-			@Override
-			public boolean replaceBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
-
-				return root.plantSapling(world, root.getMember(stack), null, pos);
-			}
-		};
+		_plantedBlock = (world, pos, stack) -> root.plantSapling(world, root.getMember(stack), null, pos);
 	}
 
 	@Override

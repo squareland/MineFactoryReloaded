@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.*;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStandard;
-import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
 
 import java.util.List;
 import java.util.Map;
@@ -19,12 +18,10 @@ import java.util.Random;
 public class ForestryPod extends HarvestableStandard implements IFactoryFruit, IFactoryFertilizable {
 
 	private Item grafter;
-	private ReplacementBlock repl;
 
 	ForestryPod(Block block, Item tool) {
 
 		super(block, HarvestType.TreeFruit);
-		repl = EmptyReplacement.INSTANCE;
 		grafter = tool;
 	}
 
@@ -70,9 +67,9 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+	public IReplacementBlock getReplacementBlock(World world, BlockPos pos) {
 
-		return repl;
+		return IReplacementBlock.NO_OP;
 	}
 
 	@Override // HARVESTER

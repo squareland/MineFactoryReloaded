@@ -7,10 +7,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
-import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
-import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
-import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
+import powercrystals.minefactoryreloaded.api.plant.*;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ public class FruitIC2Resin implements IFactoryFruit, IFactoryFertilizable {
 	private Block _rubberWood;
 	@Nonnull
 	private ItemStack _resin;
-	private ReplacementBlock _repl;
+	private IReplacementBlock _repl;
 
 	FruitIC2Resin(@Nonnull ItemStack rubberWood, @Nonnull ItemStack resin) {
 
@@ -71,7 +68,7 @@ public class FruitIC2Resin implements IFactoryFruit, IFactoryFertilizable {
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+	public IReplacementBlock getReplacementBlock(World world, BlockPos pos) {
 
 		return _repl;
 	}

@@ -9,7 +9,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.*;
-import powercrystals.minefactoryreloaded.modhelpers.EmptyReplacement;
 
 import java.util.List;
 import java.util.Map;
@@ -164,9 +163,9 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 	}
 
 	@Override
-	public ReplacementBlock getReplacementBlock(World world, BlockPos pos)
+	public IReplacementBlock getReplacementBlock(World world, BlockPos pos)
 	{
-		return EmptyReplacement.INSTANCE;
+		return IReplacementBlock.NO_OP;
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public interface IFactoryPlantable {
 	 * @return The block that will be placed into the world.
 	 */
 	@Nonnull
-	ReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack);
+	IReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack);
 
 	/**
 	 * Called to determine if the {@link ItemStack} can be planted at this location.

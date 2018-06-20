@@ -47,7 +47,7 @@ public interface IFactoryFruit {
 	 * @return The block to replace the fruit block with, or null for air.
 	 */
 	@Nullable
-	ReplacementBlock getReplacementBlock(World world, BlockPos pos);
+	IReplacementBlock getReplacementBlock(World world, BlockPos pos);
 
 	/**
 	 * Called by the Fruit Picker to determine what drops to generate. At the

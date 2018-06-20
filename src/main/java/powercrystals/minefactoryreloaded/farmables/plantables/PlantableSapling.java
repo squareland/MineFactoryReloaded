@@ -15,14 +15,12 @@ public class PlantableSapling extends PlantableStandard
 {
 	public PlantableSapling(Item seed, Block plant)
 	{
-		super(seed, plant);
-		_plantedBlock.setMeta(true);
+		super(seed, plant, true);
 	}
 	
 	public PlantableSapling(Block plant)
 	{
-		super(plant, plant);
-		_plantedBlock.setMeta(true);
+		super(plant, plant, true);
 	}
 	
 	@Override
