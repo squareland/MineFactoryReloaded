@@ -1,26 +1,24 @@
 package powercrystals.minefactoryreloaded.modcompat.railcraft;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator.findBlock;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.MFR;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.RAILCRAFT;
 
 @IMFRIntegrator.DependsOn(RAILCRAFT)
 public class Railcraft implements IMFRIntegrator {
 
-	@GameRegistry.ObjectHolder(value = MFR + ":decorative_stone")
-	public static final Block factoryDecorativeStoneBlock = Blocks.AIR;
-
 	public void load() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+
+		final Block factoryDecorativeStoneBlock = findBlock(MFR, "decorative_stone");
 
 		String id = Block.REGISTRY.getNameForObject(factoryDecorativeStoneBlock).toString();
 		FMLInterModComms.sendMessage(RAILCRAFT, "balast", String.format("%s@%s", id, 8));

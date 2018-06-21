@@ -1,33 +1,46 @@
 package powercrystals.minefactoryreloaded.modcompat.forestry;
 
+import forestry.core.items.ItemWrench;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import powercrystals.minefactoryreloaded.api.handler.IFactoryTool;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 
 import static net.minecraft.init.Blocks.AIR;
 import static net.minecraftforge.fml.common.FMLLog.log;
+import static powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator.findBlock;
+import static powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator.findItem;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.FORESTRY;
 
 @IMFRIntegrator.DependsOn(FORESTRY)
 public class Forestry implements IMFRIntegrator {
 
-	public static Item findItem(String modId, String itemName) {
-
-		return Item.REGISTRY.getObject(new ResourceLocation(modId, itemName));
-	}
-
-	public static Block findBlock(String modId, String blockName) {
-
-		return Block.REGISTRY.getObject(new ResourceLocation(modId, blockName));
-	}
-
 	public void load() {
+
+		// *best* tool
+		REGISTRY.addToolHandler(new IFactoryTool() {
+
+			@Override
+			public boolean isFactoryToolUsable(EntityPlayer player, EnumHand hand, ItemStack stack, BlockPos pos, EnumFacing side) {
+
+				return stack.getItem() instanceof ItemWrench;
+			}
+
+			@Override
+			public boolean onFactoryToolUsed(EntityPlayer player, EnumHand hand, ItemStack stack, BlockPos pos, EnumFacing side) {
+
+				return stack.getItem() instanceof ItemWrench;
+			}
+		});
 
 		Item item = findItem(FORESTRY, "fertilizerCompound");
 		if (item != null)

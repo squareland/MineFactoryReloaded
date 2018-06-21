@@ -1,13 +1,12 @@
 package powercrystals.minefactoryreloaded.modcompat.tinkersconstruct;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 
+import static powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator.findItem;
 import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.stack;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.MFR;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.TINKERS_CONSTRUCT;
@@ -15,14 +14,11 @@ import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.TINKERS
 @IMFRIntegrator.DependsOn(TINKERS_CONSTRUCT)
 public class TinkersConstruct implements IMFRIntegrator {
 
-	@GameRegistry.ObjectHolder(value = MFR + ":plastic_block")
-	public static final Item factoryPlasticBlock = Items.AIR;
-	@GameRegistry.ObjectHolder(value = MFR + ":plastic_sheet")
-	public static final Item plasticSheetItem = Items.AIR;
-	@GameRegistry.ObjectHolder(value = MFR + ":pink_slime")
-	public static final Item pinkSlimeItem = Items.AIR;
-
 	public void load() {
+
+		final Item factoryPlasticBlock = findItem(MFR, "plastic_block");
+		final Item plasticSheetItem = findItem(MFR, "plastic_sheet");
+		final Item pinkSlimeItem = findItem(MFR, "pink_slime");
 
 		if (true) // TODO must evaluate values
 			return;

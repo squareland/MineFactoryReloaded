@@ -4,14 +4,20 @@ import ic2.api.item.IC2Items;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.ISemiFluidFuelManager.BurnProperty;
 import ic2.api.recipe.Recipes;
+import ic2.core.item.tool.ItemToolWrench;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.logging.log4j.Level;
+import powercrystals.minefactoryreloaded.api.handler.IFactoryTool;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
@@ -21,14 +27,12 @@ import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
+import static powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator.findBlock;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.INDUSTRIAL_CRAFT;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.MFR;
 
 @IMFRIntegrator.DependsOn(INDUSTRIAL_CRAFT)
 public class IndustrialCraft implements IMFRIntegrator {
-
-	@GameRegistry.ObjectHolder(value = MFR + ":rubber_wood_sapling")
-	public static final Block rubberSaplingBlock = Blocks.AIR;
 
 	public void postLoad() {
 
@@ -40,6 +44,45 @@ public class IndustrialCraft implements IMFRIntegrator {
 	}
 
 	public void load() {
+
+		final Block rubberSaplingBlock = findBlock(MFR, "rubber_wood_sapling");
+
+		try {
+			IFactoryTool IC2wrench = new IFactoryTool() {
+
+				@Override
+				public boolean isFactoryToolUsable(EntityPlayer player, EnumHand hand, ItemStack stack, BlockPos pos, EnumFacing side) {
+
+					if (stack.getItem() instanceof ItemToolWrench)
+						return ((ItemToolWrench) stack.getItem()).canTakeDamage(stack, 1);
+					return false;
+				}
+
+				@Override
+				public boolean onFactoryToolUsed(EntityPlayer player, EnumHand hand, ItemStack stack, BlockPos pos, EnumFacing side) {
+
+					if (stack.getItem() instanceof ItemToolWrench) {
+						((ItemToolWrench) stack.getItem()).damage(stack, 1, player);
+						return true;
+					}
+					return false;
+				}
+			};
+
+			ItemStack wrench = IC2Items.getItem("wrench");
+
+			// fail if the class name changes, item name changes, or `canTakeDamage` changes
+			IC2wrench.isFactoryToolUsable(null, null, wrench, null, null);
+			// fail if `damage` changes: calls into ItemStack#damageItem which will exit without doing anything on null player
+			IC2wrench.onFactoryToolUsed(null, null, wrench, null, null);
+
+			// hey! non-API still works, register it
+			REGISTRY.addToolHandler(IC2wrench);
+		} catch (Throwable p) {
+			// eh.
+			FMLLog.log.debug("IC2 wrench internals changed:");
+			FMLLog.log.catching(Level.DEBUG, p);
+		}
 
 		@Nonnull
 		ItemStack crop = IC2Items.getItem("crop");
