@@ -25,7 +25,7 @@ import powercrystals.minefactoryreloaded.api.mob.IRandomMobProvider;
 import powercrystals.minefactoryreloaded.api.mob.RandomMobProvider;
 import powercrystals.minefactoryreloaded.core.AutoEnchantmentHelper;
 import powercrystals.minefactoryreloaded.core.MFRUtil;
-import powercrystals.minefactoryreloaded.farmables.grindables.GrindableZombiePigman;
+import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.grindables.GrindableZombiePigman;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

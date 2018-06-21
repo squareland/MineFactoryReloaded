@@ -15,7 +15,7 @@ import powercrystals.minefactoryreloaded.core.Area;
 import powercrystals.minefactoryreloaded.core.FruitHarvestManager;
 import powercrystals.minefactoryreloaded.core.HarvestMode;
 import powercrystals.minefactoryreloaded.core.IHarvestManager;
-import powercrystals.minefactoryreloaded.farmables.fruits.FruitChorus;
+import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.FruitChorus;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiUpgradeable;
 import powercrystals.minefactoryreloaded.gui.container.ContainerUpgradeable;

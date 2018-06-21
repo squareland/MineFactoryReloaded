@@ -1,16 +1,15 @@
 package powercrystals.minefactoryreloaded.farmables.ranchables;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.mob.IFactoryRanchable;
 import powercrystals.minefactoryreloaded.api.mob.RanchedItem;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class RanchableSheep implements IFactoryRanchable {
 
