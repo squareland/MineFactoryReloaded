@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.api.handler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fluids.FluidStack;
 
+@FunctionalInterface
 public interface ILiquidDrinkHandler {
 
 	/**
