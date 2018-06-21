@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.item.tool;
 
+import buildcraft.api.tools.IToolWrench;
 import cofh.api.block.IDismantleable;
 import cofh.api.item.IToolHammer;
 import cofh.core.util.helpers.BlockHelper;
@@ -34,8 +35,10 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 @Optional.Interface(iface = "buildcraft.api.tools.IToolWrench", modid = Compats.ModIds.BUILDCRAFT)
-public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IToolHammer
-//		, IToolWrench
+public class ItemFactoryHammer extends ItemFactoryTool
+		implements IMFRHammer,
+				   IToolHammer,
+				   IToolWrench
 {
 
 	public ItemFactoryHammer() {
@@ -49,14 +52,14 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world,
 			BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 
-		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
 		{
 			PlayerInteractEvent.RightClickBlock e = new PlayerInteractEvent.RightClickBlock(player, hand, pos, side, new Vec3d(hitX, hitY, hitZ));
 			if (MinecraftForge.EVENT_BUS.post(e) || e.getResult() == Result.DENY
 					|| e.getUseBlock() == Result.DENY || e.getUseItem() == Result.DENY) {
 				return EnumActionResult.PASS;
 			}
+			IBlockState state = world.getBlockState(pos);
+			Block block = state.getBlock();
 
 			if (player.isSneaking() && block instanceof IDismantleable &&
 					((IDismantleable) block).canDismantle(world, pos, state, player)) {
@@ -66,20 +69,16 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 				return EnumActionResult.PASS;
 			}
 
-			if (BlockHelper.canRotate(block)) {
+			if (!player.isSneaking()) {
 				player.swingArm(hand);
-				if (player.isSneaking()) {
-					//TODO there used to be an alt rotate in core which rotated in opposite direction - rotateVanillaBlockAlt - get it back
-					world.setBlockState(pos, BlockHelper.rotateVanillaBlock(world, state, pos), 3);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.PLAYERS, 1.0F, 0.6F);
-				} else {
-					world.setBlockState(pos, BlockHelper.rotateVanillaBlock(world, state, pos), 3);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.PLAYERS, 1.0F, 0.8F);
+				if (BlockHelper.canRotate(state.getBlock()) ? // ternary in the condition!
+						world.setBlockState(pos, BlockHelper.rotateVanillaBlock(world, state, pos), 3) :
+						block.rotateBlock(world, pos, side)) {
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+							block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.PLAYERS,
+							1.0F, 0.8F);
 				}
-				return !world.isRemote ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
-			} else if (!player.isSneaking() && block.rotateBlock(world, pos, side)) {
-				player.swingArm(hand);
-				world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, block.getSoundType(state, world, pos, null).getBreakSound(), SoundCategory.PLAYERS, 1.0F, 0.8F);
+
 				return !world.isRemote ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 			}
 		}
@@ -108,14 +107,12 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 
 	}
 
-	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
 	//@Override
 	public boolean canWrench(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
 		return true;
 	}
 
-	@Optional.Method(modid = Compats.ModIds.BUILDCRAFT)
 	//@Override
 	public void wrenchUsed(EntityPlayer player, EnumHand hand, ItemStack wrench, RayTraceResult rayTrace) {
 
@@ -146,7 +143,6 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 				mat == Material.PACKED_ICE;
 	}
 
-
 	@Override
 	public float getDestroySpeed(@Nonnull ItemStack stack, IBlockState state) {
 
@@ -165,7 +161,8 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 		IBlockState state = player.world.getBlockState(pos);
 		if (state.getBlockHardness(player.world, pos) > 2.9f) {
 			Random rnd = player.getRNG();
-			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 0.8F + rnd.nextFloat() * 0.4F, 0.4F);
+			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK,
+					SoundCategory.PLAYERS, 0.8F + rnd.nextFloat() * 0.4F, 0.4F);
 
 			for (int i = 0, e = 10 + rnd.nextInt(5); i < e; ++i) {
 				Vec3d vec3 = new Vec3d((rnd.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
@@ -176,7 +173,7 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 				vec31.rotateYaw(-player.rotationYaw * (float) Math.PI / 180.0F);
 				vec31 = vec31.addVector(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 				player.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.x, vec31.y, vec31.z, vec3.x,
-					vec3.y + 0.05D, vec3.z, Block.getStateId(Blocks.FIRE.getDefaultState()));
+						vec3.y + 0.05D, vec3.z, Block.getStateId(Blocks.FIRE.getDefaultState()));
 			}
 			return true;
 		}
@@ -195,4 +192,5 @@ public class ItemFactoryHammer extends ItemFactoryTool implements IMFRHammer, IT
 
 		ModelHelper.registerModel(this, "tool", "variant=hammer");
 	}
+
 }
