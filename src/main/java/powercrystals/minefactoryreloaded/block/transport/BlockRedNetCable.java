@@ -265,6 +265,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 						}
 						cable.setSideColor(EnumFacing.VALUES[subSide], nextColor);
 					}
+					// no calling back to the tool for just changing color
 					return true;
 				} else if (!heldItem.isEmpty() && heldItem.getItem().equals(Items.DYE)) {
 					if (!world.isRemote) {
@@ -272,7 +273,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 					}
 					return true;
 				}
-			} else if (subHit >= 0 && subHit < (2 + 6 * 2) || subHit >= (2 + 6 * 5)) {
+			} else if (subHit < (2 + 6 * 2) || subHit >= (2 + 6 * 5)) {
 				l: if (MFRUtil.isHoldingUsableTool(player, hand, pos, side)) {
 					if (!world.isRemote) {
 						if (subSide > 6) {
