@@ -1,8 +1,4 @@
-package powercrystals.minefactoryreloaded.farmables.ranchables;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+package powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.ranchables;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityChicken;
@@ -11,9 +7,12 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.mob.IFactoryRanchable;
 import powercrystals.minefactoryreloaded.api.mob.RanchedItem;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 public class RanchableChicken implements IFactoryRanchable {
 

@@ -1,17 +1,17 @@
 package powercrystals.minefactoryreloaded.farmables.ranchables;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-
 import powercrystals.minefactoryreloaded.api.mob.IFactoryRanchable;
 import powercrystals.minefactoryreloaded.api.mob.RanchedItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RanchableSquid implements IFactoryRanchable {
 
@@ -30,7 +30,7 @@ public class RanchableSquid implements IFactoryRanchable {
 		tag.setLong("mfr:lastRanched", world.getTotalWorldTime() + 20 * 15);
 
 		List<RanchedItem> drops = new ArrayList<>();
-		drops.add(new RanchedItem(Items.DYE, 1, 0));
+		drops.add(new RanchedItem(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()));
 		return drops;
 	}
 

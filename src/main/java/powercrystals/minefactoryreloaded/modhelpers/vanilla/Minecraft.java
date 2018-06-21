@@ -30,6 +30,9 @@ import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.grindables.
 import powercrystals.minefactoryreloaded.farmables.harvestables.*;
 import powercrystals.minefactoryreloaded.farmables.plantables.*;
 import powercrystals.minefactoryreloaded.farmables.ranchables.*;
+import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.ranchables.RanchableChicken;
+import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.ranchables.RanchableCow;
+import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.ranchables.RanchableMooshroom;
 import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.spawnhandlers.SpawnableEnderman;
 import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.spawnhandlers.SpawnableHorse;
 import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.VanillaEggHandler;

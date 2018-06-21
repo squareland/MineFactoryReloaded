@@ -1,4 +1,4 @@
-package powercrystals.minefactoryreloaded.farmables.ranchables;
+package powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.ranchables;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityMooshroom;
