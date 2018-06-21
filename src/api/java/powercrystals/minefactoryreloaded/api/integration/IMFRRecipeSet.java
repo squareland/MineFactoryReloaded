@@ -233,6 +233,21 @@ public interface IMFRRecipeSet {
 	}
 
 	//region CREATING ItemStacks
+	static ItemStack stack(ItemStack input) {
+
+		return new ItemStack(input.getItem());
+	}
+
+	static ItemStack stack(ItemStack input, int size) {
+
+		return new ItemStack(input.getItem(), size);
+	}
+
+	static ItemStack stack(ItemStack input, int size, int meta) {
+
+		return new ItemStack(input.getItem(), size, meta);
+	}
+
 	static ItemStack stack(Item input) {
 
 		return new ItemStack(input);
@@ -261,6 +276,16 @@ public interface IMFRRecipeSet {
 	static ItemStack stack(Block input, int size, int meta) {
 
 		return new ItemStack(input, size, meta);
+	}
+
+	static ItemStack stack_wildcard(ItemStack input) {
+
+		return new ItemStack(input.getItem(), 1, WILDCARD_VALUE);
+	}
+
+	static ItemStack stack_wildcard(ItemStack input, int size) {
+
+		return new ItemStack(input.getItem(), size, WILDCARD_VALUE);
 	}
 
 	static ItemStack stack_wildcard(Item input) {

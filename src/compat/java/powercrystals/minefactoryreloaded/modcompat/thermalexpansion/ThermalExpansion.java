@@ -3,36 +3,42 @@ package powercrystals.minefactoryreloaded.modcompat.thermalexpansion;
 import cofh.api.util.ThermalExpansionHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 import powercrystals.minefactoryreloaded.api.mob.IRandomMobProvider;
 import powercrystals.minefactoryreloaded.api.mob.RandomMobProvider;
-import powercrystals.minefactoryreloaded.core.MFRUtil;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.stack;
-import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.THERMAL_EXPANSION;
-import static powercrystals.minefactoryreloaded.setup.MFRThings.rawRubberItem;
-import static powercrystals.minefactoryreloaded.setup.MFRThings.rubberBarItem;
+import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.*;
 
 @IMFRIntegrator.DependsOn(THERMAL_EXPANSION)
 @IMFRIntegrator.After("Minecraft")
 public class ThermalExpansion implements IMFRIntegrator, IRandomMobProvider {
 
-	@GameRegistry.ItemStackHolder(value = "thermalfoundation:material", meta = 771)
+	@GameRegistry.ItemStackHolder(value = THERMAL_FOUNDATION + ":material", meta = 771)
 	public static final ItemStack SULFUR = ItemStack.EMPTY;
+
+	@GameRegistry.ObjectHolder(value = MFR + ":rubber_raw")
+	public static final Item rawRubberItem = Items.AIR;
+	@GameRegistry.ObjectHolder(value = MFR + ":rubber_bar")
+	public static final Item rubberBarItem = Items.AIR;
+	@GameRegistry.ObjectHolder(value = MFR + ":decorative_stone")
+	public static final Item factoryDecorativeStoneBlock = Items.AIR;
+	@GameRegistry.ObjectHolder(value = MFR + ":plastic_boots")
+	public static final Item plasticBootsItem = Items.AIR;
 
 	public void load() {
 
-		MFRRegistry.registerRandomMobProvider(this);
+		REGISTRY.registerRandomMobProvider(this);
 
 		ThermalExpansionHelper.addSmelterRecipe(2000,
 				stack(rawRubberItem, 2), SULFUR,
@@ -41,12 +47,12 @@ public class ThermalExpansion implements IMFRIntegrator, IRandomMobProvider {
 
 		// Smooth Blackstone -> Cobble
 		ThermalExpansionHelper.addPulverizerRecipe(3200,
-				new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 0),
-				new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 2));
+				stack(factoryDecorativeStoneBlock, 1, 0),
+				stack(factoryDecorativeStoneBlock, 1, 2));
 		// Smooth Whitestone -> Cobble
 		ThermalExpansionHelper.addPulverizerRecipe(3200,
-				new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 1),
-				new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 3));
+				stack(factoryDecorativeStoneBlock, 1, 1),
+				stack(factoryDecorativeStoneBlock, 1, 3));
 	}
 
 	@Override
@@ -55,11 +61,11 @@ public class ThermalExpansion implements IMFRIntegrator, IRandomMobProvider {
 		ArrayList<RandomMobProvider> mobs = new ArrayList<>();
 
 		mobs.add(new RandomMobProvider(20, (world, pos) -> {
-			EntityCreeper creeper = MFRUtil.spawnMob(EntityCreeper.class, world, pos);
+			EntityCreeper creeper = IRandomMobProvider.spawnMob(EntityCreeper.class, world, pos);
 			Objects.requireNonNull(creeper).setCustomNameTag("Exploding Zeldo");
 			creeper.setAlwaysRenderNameTag(true);
 			creeper.enablePersistence();
-			ItemStack armor = new ItemStack(MFRThings.plasticBootsItem);
+			ItemStack armor = stack(plasticBootsItem);
 			armor.setStackDisplayName("Zeldo's Ruby Slippers");
 			EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armor);
 			creeper.setItemStackToSlot(slot, armor);

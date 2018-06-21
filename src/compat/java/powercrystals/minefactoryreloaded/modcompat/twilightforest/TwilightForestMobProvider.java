@@ -4,7 +4,6 @@ package powercrystals.minefactoryreloaded.modcompat.twilightforest;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.mob.IRandomMobProvider;
 import powercrystals.minefactoryreloaded.api.mob.RandomMobProvider;
-import powercrystals.minefactoryreloaded.core.MFRUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +28,16 @@ public class TwilightForestMobProvider implements IRandomMobProvider {
 			Class tfTinyBird = Class.forName("twilightforest.entity.passive.EntityTFTinyBird");
 			Class tfWraith = Class.forName("twilightforest.entity.EntityTFWraith");
 
-			mobs.add(new RandomMobProvider(80, MFRUtil.prepareMob(tfBoar)));
-			mobs.add(new RandomMobProvider(80, MFRUtil.prepareMob(tfDeer)));
-			mobs.add(new RandomMobProvider(50, MFRUtil.prepareMob(tfRaven)));
-			mobs.add(new RandomMobProvider(25, MFRUtil.prepareMob(tfPenguin)));
-			mobs.add(new RandomMobProvider(25, MFRUtil.prepareMob(tfSquirrel)));
-			mobs.add(new RandomMobProvider(75, MFRUtil.prepareMob(tfTinyBird)));
-			mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(tfMazeSlime)));
-			mobs.add(new RandomMobProvider(15, MFRUtil.prepareMob(tfPinchBeetle)));
-			mobs.add(new RandomMobProvider(5, MFRUtil.prepareMob(tfWraith)));
-			mobs.add(new RandomMobProvider(10, MFRUtil.prepareMob(tfDeathTome)));
+			mobs.add(new RandomMobProvider(80, IRandomMobProvider.prepareMob(tfBoar)));
+			mobs.add(new RandomMobProvider(80, IRandomMobProvider.prepareMob(tfDeer)));
+			mobs.add(new RandomMobProvider(50, IRandomMobProvider.prepareMob(tfRaven)));
+			mobs.add(new RandomMobProvider(25, IRandomMobProvider.prepareMob(tfPenguin)));
+			mobs.add(new RandomMobProvider(25, IRandomMobProvider.prepareMob(tfSquirrel)));
+			mobs.add(new RandomMobProvider(75, IRandomMobProvider.prepareMob(tfTinyBird)));
+			mobs.add(new RandomMobProvider(15, IRandomMobProvider.prepareMob(tfMazeSlime)));
+			mobs.add(new RandomMobProvider(15, IRandomMobProvider.prepareMob(tfPinchBeetle)));
+			mobs.add(new RandomMobProvider(5, IRandomMobProvider.prepareMob(tfWraith)));
+			mobs.add(new RandomMobProvider(10, IRandomMobProvider.prepareMob(tfDeathTome)));
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

@@ -5,26 +5,30 @@ import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.ISemiFluidFuelManager.BurnProperty;
 import ic2.api.recipe.Recipes;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.INDUSTRIAL_CRAFT;
+import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.MFR;
 
 @IMFRIntegrator.DependsOn(INDUSTRIAL_CRAFT)
 public class IndustrialCraft implements IMFRIntegrator {
+
+	@GameRegistry.ObjectHolder(value = MFR + ":rubber_wood_sapling")
+	public static final Block rubberSaplingBlock = Blocks.AIR;
 
 	public void postLoad() {
 
@@ -51,37 +55,37 @@ public class IndustrialCraft implements IMFRIntegrator {
 		ItemStack stickyResin = IC2Items.getItem("resin");
 
 		if (rubberSapling != null) {
-			MFRRegistry.registerPlantable(new PlantableSapling(rubberSapling.getItem(), Block.getBlockFromItem(rubberSapling.getItem())));
-			MFRRegistry.registerFertilizable(new FertilizableIC2RubberTree(Block.getBlockFromItem(rubberSapling.getItem())));
+			REGISTRY.registerPlantable(new PlantableSapling(rubberSapling.getItem(), Block.getBlockFromItem(rubberSapling.getItem())));
+			REGISTRY.registerFertilizable(new FertilizableIC2RubberTree(Block.getBlockFromItem(rubberSapling.getItem())));
 		}
 		if (rubberLeaves != null) {
-			MFRRegistry.registerHarvestable(new HarvestableTreeLeaves(Block.getBlockFromItem(rubberLeaves.getItem())));
+			REGISTRY.registerHarvestable(new HarvestableTreeLeaves(Block.getBlockFromItem(rubberLeaves.getItem())));
 		}
 		if (rubberWood != null) {
-			MFRRegistry.registerHarvestable(new HarvestableIC2RubberWood(Block.getBlockFromItem(rubberWood.getItem()), stickyResin.getItem()));
-			MFRRegistry.registerFruitLogBlock(Block.getBlockFromItem(rubberWood.getItem()));
+			REGISTRY.registerHarvestable(new HarvestableIC2RubberWood(Block.getBlockFromItem(rubberWood.getItem()), stickyResin.getItem()));
+			REGISTRY.registerFruitLogBlock(Block.getBlockFromItem(rubberWood.getItem()));
 			FruitIC2Resin resin = new FruitIC2Resin(rubberWood, stickyResin);
-			MFRRegistry.registerFruit(resin);
-			MFRRegistry.registerFertilizable(resin);
+			REGISTRY.registerFruit(resin);
+			REGISTRY.registerFertilizable(resin);
 		}
 
 		@Nonnull
 		ItemStack fertilizer = IC2Items.getItem("fertilizer");
 		if (fertilizer != null) {
-			MFRRegistry.registerFertilizer(new FertilizerStandard(fertilizer.getItem(), fertilizer.getItemDamage()));
+			REGISTRY.registerFertilizer(new FertilizerStandard(fertilizer.getItem(), fertilizer.getItemDamage()));
 		}
 
 		if (crop != null) {
 			IC2Crop ic2crop = new IC2Crop(Block.getBlockFromItem(crop.getItem()));
-			MFRRegistry.registerHarvestable(ic2crop);
-			MFRRegistry.registerFertilizable(ic2crop);
-			MFRRegistry.registerFruit(ic2crop);
+			REGISTRY.registerHarvestable(ic2crop);
+			REGISTRY.registerFertilizable(ic2crop);
+			REGISTRY.registerFruit(ic2crop);
 		}
 
 		copyEthanol();
 
 		@Nonnull
-		ItemStack item = new ItemStack(MFRThings.rubberSaplingBlock);
+		ItemStack item = new ItemStack(rubberSaplingBlock);
 		rubber.setCount(1);
 		Recipes.extractor.addRecipe(
 				new IRecipeInput() {
@@ -89,7 +93,7 @@ public class IndustrialCraft implements IMFRIntegrator {
 					@Override
 					public boolean matches(@Nonnull ItemStack itemStack) {
 
-						return itemStack.getItem() == Item.getItemFromBlock(MFRThings.rubberSaplingBlock);
+						return itemStack.getItem() == Item.getItemFromBlock(rubberSaplingBlock);
 					}
 
 					@Override

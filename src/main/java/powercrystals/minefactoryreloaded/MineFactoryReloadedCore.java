@@ -172,6 +172,7 @@ public class MineFactoryReloadedCore extends BaseMod {
 
 		MFRFarmables.post();
 		IntegrationManager.postInit();
+		TileEntityUnifier.updateUnifierLiquids();
 	}
 
 	@EventHandler

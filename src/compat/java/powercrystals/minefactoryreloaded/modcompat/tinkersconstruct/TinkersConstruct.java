@@ -1,16 +1,26 @@
 package powercrystals.minefactoryreloaded.modcompat.tinkersconstruct;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import static powercrystals.minefactoryreloaded.api.integration.IMFRRecipeSet.stack;
+import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.MFR;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.TINKERS_CONSTRUCT;
 
 @IMFRIntegrator.DependsOn(TINKERS_CONSTRUCT)
 public class TinkersConstruct implements IMFRIntegrator {
+
+	@GameRegistry.ObjectHolder(value = MFR + ":plastic_block")
+	public static final Item factoryPlasticBlock = Items.AIR;
+	@GameRegistry.ObjectHolder(value = MFR + ":plastic_sheet")
+	public static final Item plasticSheetItem = Items.AIR;
+	@GameRegistry.ObjectHolder(value = MFR + ":pink_slime")
+	public static final Item pinkSlimeItem = Items.AIR;
 
 	public void load() {
 
@@ -36,8 +46,8 @@ public class TinkersConstruct implements IMFRIntegrator {
 
 		tag = new NBTTagCompound();
 		tag.setInteger("MaterialId", 1000);
-		tag.setTag("Item", stack(MFRThings.factoryPlasticBlock).writeToNBT(new NBTTagCompound()));
-		tag.setTag("Shard", stack(MFRThings.plasticSheetItem).writeToNBT(new NBTTagCompound()));
+		tag.setTag("Item", stack(factoryPlasticBlock).writeToNBT(new NBTTagCompound()));
+		tag.setTag("Shard", stack(plasticSheetItem).writeToNBT(new NBTTagCompound()));
 		tag.setInteger("Value", 4);
 		FMLInterModComms.sendMessage("TConstruct", "addPartBuilderMaterial", tag);
 
@@ -60,7 +70,7 @@ public class TinkersConstruct implements IMFRIntegrator {
 
 		tag = new NBTTagCompound();
 		tag.setInteger("MaterialId", 1001);
-		tag.setTag("Item", stack(MFRThings.pinkSlimeItem, 1, 1).writeToNBT(new NBTTagCompound()));
+		tag.setTag("Item", stack(pinkSlimeItem, 1, 1).writeToNBT(new NBTTagCompound()));
 		//tag.setTag("Shard", stack(MFRThings.plasticSheetItem).writeToNBT(new NBTTagCompound()));
 		tag.setInteger("Value", 2);
 		FMLInterModComms.sendMessage("TConstruct", "addPartBuilderMaterial", tag);

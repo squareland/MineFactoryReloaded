@@ -2,7 +2,6 @@ package powercrystals.minefactoryreloaded.modcompat.chococraft;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableCropPlant;
 
@@ -13,16 +12,16 @@ public class Chococraft implements IMFRIntegrator {
 
 	public void load() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
 
-			Class<?> blocks = Class.forName("chococraft.common.config.ChocoCraftBlocks");
+		Class<?> blocks = Class.forName("chococraft.common.config.ChocoCraftBlocks");
 
-			Block blockId = ((Block) (blocks.getField("gysahlStemBlock").get(null)));
+		Block blockId = ((Block) (blocks.getField("gysahlStemBlock").get(null)));
 
-			Class<?> items = Class.forName("chococraft.common.config.ChocoCraftItems");
-			Item seedId = ((Item) (items.getField("gysahlSeedsItem").get(null)));
+		Class<?> items = Class.forName("chococraft.common.config.ChocoCraftItems");
+		Item seedId = ((Item) (items.getField("gysahlSeedsItem").get(null)));
 
-			MFRRegistry.registerPlantable(new PlantableCropPlant(seedId, blockId));
-			MFRRegistry.registerHarvestable(new HarvestableChococraft(blockId));
-			MFRRegistry.registerFertilizable(new FertilizableChococraft(blockId));
+		REGISTRY.registerPlantable(new PlantableCropPlant(seedId, blockId));
+		REGISTRY.registerHarvestable(new HarvestableChococraft(blockId));
+		REGISTRY.registerFertilizable(new FertilizableChococraft(blockId));
 	}
 
 }

@@ -4,7 +4,9 @@ public class Compats {
 
 	@SuppressWarnings("SpellCheckingInspection")
 	public static class ModIds {
+		public static final String MFR = "minefactoryreloaded";
 		public static final String THERMAL_EXPANSION = "thermalexpansion";
+		public static final String THERMAL_FOUNDATION = "thermalfoundation";
 		public static final String APP_ENG = "appliedenergistics2";
 		public static final String BUILDCRAFT = "buildcraftcore";
 		public static final String RAILCRAFT = "railcraft";

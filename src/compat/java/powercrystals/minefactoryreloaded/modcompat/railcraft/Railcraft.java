@@ -1,23 +1,28 @@
 package powercrystals.minefactoryreloaded.modcompat.railcraft;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import powercrystals.minefactoryreloaded.api.integration.IMFRIntegrator;
-import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.MFR;
 import static powercrystals.minefactoryreloaded.modcompat.Compats.ModIds.RAILCRAFT;
 
 @IMFRIntegrator.DependsOn(RAILCRAFT)
 public class Railcraft implements IMFRIntegrator {
 
+	@GameRegistry.ObjectHolder(value = MFR + ":decorative_stone")
+	public static final Block factoryDecorativeStoneBlock = Blocks.AIR;
+
 	public void load() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
-		String id = Block.REGISTRY.getNameForObject(MFRThings.factoryDecorativeStoneBlock).toString();
+		String id = Block.REGISTRY.getNameForObject(factoryDecorativeStoneBlock).toString();
 		FMLInterModComms.sendMessage(RAILCRAFT, "balast", String.format("%s@%s", id, 8));
 		FMLInterModComms.sendMessage(RAILCRAFT, "balast", String.format("%s@%s", id, 9));
 		// white sand? black sand?
@@ -29,26 +34,26 @@ public class Railcraft implements IMFRIntegrator {
 		Method addOutput = Class.forName("mods.railcraft.api.crafting.IRockCrusherRecipe").getMethod("addOutput",
 				ItemStack.class, float.class);
 
-		Object recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 10),
+		Object recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(factoryDecorativeStoneBlock, 1, 10),
 				true, false);
-		addOutput.invoke(recipe, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 2), 1.0f); // Paved Blackstone -> Cobble
+		addOutput.invoke(recipe, new ItemStack(factoryDecorativeStoneBlock, 1, 2), 1.0f); // Paved Blackstone -> Cobble
 
 		recipe = createNewRecipe
-				.invoke(rockCrusher, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 11), true, false);
-		addOutput.invoke(recipe, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 3), 1.0f); // Paved Whitestone -> Cobble
+				.invoke(rockCrusher, new ItemStack(factoryDecorativeStoneBlock, 1, 11), true, false);
+		addOutput.invoke(recipe, new ItemStack(factoryDecorativeStoneBlock, 1, 3), 1.0f); // Paved Whitestone -> Cobble
 
-		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 0), true, false);
-		addOutput.invoke(recipe, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 2), 1.0f); // Smooth Blackstone -> Cobble
+		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(factoryDecorativeStoneBlock, 1, 0), true, false);
+		addOutput.invoke(recipe, new ItemStack(factoryDecorativeStoneBlock, 1, 2), 1.0f); // Smooth Blackstone -> Cobble
 
-		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 1), true, false);
-		addOutput.invoke(recipe, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 3), 1.0f); // Smooth Whitestone -> Cobble
+		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(factoryDecorativeStoneBlock, 1, 1), true, false);
+		addOutput.invoke(recipe, new ItemStack(factoryDecorativeStoneBlock, 1, 3), 1.0f); // Smooth Whitestone -> Cobble
 
-		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 2), true, false);
-		addOutput.invoke(recipe, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 8), 1.0f); // Cobble Blackstone -> Gravel + flint
+		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(factoryDecorativeStoneBlock, 1, 2), true, false);
+		addOutput.invoke(recipe, new ItemStack(factoryDecorativeStoneBlock, 1, 8), 1.0f); // Cobble Blackstone -> Gravel + flint
 		addOutput.invoke(recipe, new ItemStack(Items.FLINT, 1, 0), 0.05f);
 
-		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 3), true, false);
-		addOutput.invoke(recipe, new ItemStack(MFRThings.factoryDecorativeStoneBlock, 1, 9), 1.0f); // Cobble Whitestone -> Gravel + flint
+		recipe = createNewRecipe.invoke(rockCrusher, new ItemStack(factoryDecorativeStoneBlock, 1, 3), true, false);
+		addOutput.invoke(recipe, new ItemStack(factoryDecorativeStoneBlock, 1, 9), 1.0f); // Cobble Whitestone -> Gravel + flint
 		addOutput.invoke(recipe, new ItemStack(Items.FLINT, 1, 0), 0.05f);
 	}
 
