@@ -57,6 +57,8 @@ public abstract class MFRRegistry {
 
 	private static List<IRedNetLogicCircuit> _redNetLogicCircuits = new ArrayList<>();
 
+	private static List<IFactoryTool> _reactiveToolHandlers = new ArrayList<>();
+
 	private static Map<Class<? extends EntityLivingBase>, IFactoryGrindable> _grindables = new HashMap<>();
 	private static List<Class<?>> _grindableBlacklist = new ArrayList<>();
 
@@ -369,6 +371,16 @@ public abstract class MFRRegistry {
 		return _needleAmmoTypes;
 	}
 
+	public static List<IFactoryTool> getToolHandlers() {
+
+		return _reactiveToolHandlers;
+	}
+
+	public static void registerToolHandler(IFactoryTool handler) {
+
+		_reactiveToolHandlers.add(handler);
+	}
+
 	// INTERNAL ONLY
 
 	static void setup() {
@@ -523,6 +535,12 @@ public abstract class MFRRegistry {
 					public void registerRedNetLogicCircuit(@Nonnull IRedNetLogicCircuit circuit) {
 
 						MFRRegistry.registerRedNetLogicCircuit(circuit);
+					}
+
+					@Override
+					public void addToolHandler(IFactoryTool handler) {
+
+						MFRRegistry.registerToolHandler(handler);
 					}
 
 					@Override

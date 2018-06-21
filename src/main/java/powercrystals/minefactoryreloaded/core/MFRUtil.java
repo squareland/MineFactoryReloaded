@@ -14,10 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -31,7 +28,9 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
+import powercrystals.minefactoryreloaded.api.handler.IFactoryTool;
 import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
@@ -224,19 +223,15 @@ public class MFRUtil {
 
 		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
 
-		if (heldItem.isEmpty()) {
-			return false;
-		}
-
 		if (heldItem.getItem() instanceof IToolHammer) {
 			return ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos);
 		}
 		else if (heldItem.getItem() instanceof IMFRHammer) {
 			return true;
 		}
-		else if (bcWrenchExists && canHandleBCWrench(player, hand, heldItem, new RayTraceResult(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), side, pos))) {
-			return true;
-		}
+
+		for (IFactoryTool handler : MFRRegistry.getToolHandlers())
+			return handler.isFactoryToolUsable(player, hand, heldItem, pos, side);
 
 		return false;
 	}
@@ -246,41 +241,19 @@ public class MFRUtil {
 		if (player == null) {
 			return;
 		}
+		player.swingArm(hand);
 		@Nonnull ItemStack heldItem = player.getHeldItem(hand);
-
-		if (heldItem.isEmpty()) {
-			return;
-		}
 
 		if (heldItem.getItem() instanceof IToolHammer) {
 			((IToolHammer) heldItem.getItem()).toolUsed(player.inventory.getCurrentItem(), player, pos);
 		}
 		else if (heldItem.getItem() instanceof IMFRHammer) {
-			;
+			return;
 		}
-		else if (bcWrenchExists) {
-			bcWrenchUsed(player, hand, heldItem, new RayTraceResult(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), side, pos));
-		}
-	}
 
-	private static boolean bcWrenchExists = false;
-	static {
-		try {
-			Class.forName("buildcraft.api.tools.IToolWrench");
-			bcWrenchExists = true;
-		} catch (Throwable t) {
-		}
-	}
-
-	private static boolean canHandleBCWrench(EntityPlayer p, EnumHand hand, @Nonnull ItemStack wrench, RayTraceResult rayTrace) {
-
-		//return wrench.getItem() instanceof IToolWrench && ((IToolWrench) wrench.getItem()).canWrench(p, hand, wrench, rayTrace);
-		return false;
-	}
-
-	private static void bcWrenchUsed(EntityPlayer p, EnumHand hand, @Nonnull ItemStack wrench, RayTraceResult rayTrace) {
-
-		//if (wrench.getItem() instanceof IToolWrench) ((IToolWrench) wrench.getItem()).wrenchUsed(p, hand, wrench, rayTrace);
+		for (IFactoryTool handler : MFRRegistry.getToolHandlers())
+			if (handler.isFactoryToolUsable(player, hand, heldItem, pos, side))
+				handler.onFactoryToolUsed(player, hand, heldItem, pos, side);
 	}
 
 	public static boolean isHolding(EntityPlayer player, @Nonnull Item item, EnumHand hand) {
@@ -384,15 +357,5 @@ public class MFRUtil {
 		NBTTagCompound tag = SharedMonsterAttributes.writeAttributeModifierToNBT(modifier);
 		tag.setString("AttributeName", name);
 		return tag;
-	}
-
-	public static Item findItem(String modId, String itemName) {
-
-		return Item.REGISTRY.getObject(new ResourceLocation(modId, itemName));
-	}
-
-	public static Block findBlock(String modId, String blockName) {
-
-		return Block.REGISTRY.getObject(new ResourceLocation(modId, blockName));
 	}
 }

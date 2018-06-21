@@ -114,6 +114,7 @@ public interface IMFRIntegrator {
 		String[] value();
 	}
 
+	// fragment into multiple IRegistries? this is kind of a beast to interact with for all the methods
 	interface IRegistry {
 
 		/**
@@ -297,6 +298,14 @@ public interface IMFRIntegrator {
 		 */
 		void registerRedNetLogicCircuit(@Nonnull IRedNetLogicCircuit circuit);
 
+		/**
+		 * Registers a tool handler for telling MFR how to use tools reactively.
+		 *
+		 * @param handler
+		 * 		The IFactoryTool instance to handle tools
+		 */
+		void addToolHandler(IFactoryTool handler);
+
 		// TODO: docs
 		void registerNeedleAmmoType(@Nonnull Item item, @Nonnull INeedleAmmo ammo);
 
@@ -381,6 +390,11 @@ public interface IMFRIntegrator {
 			}
 
 			@Override
+			public void addToolHandler(IFactoryTool handler) {
+
+			}
+
+			@Override
 			public void registerLaserOre(int weight, @Nonnull ItemStack ore) {
 
 				if (weight <= 0) {
@@ -434,6 +448,18 @@ public interface IMFRIntegrator {
 			}
 		};
 
+	}
+
+	/* HELPERS */
+
+	static Item findItem(String modId, String itemName) {
+
+		return Item.REGISTRY.getObject(new ResourceLocation(modId, itemName));
+	}
+
+	static Block findBlock(String modId, String blockName) {
+
+		return Block.REGISTRY.getObject(new ResourceLocation(modId, blockName));
 	}
 
 }
