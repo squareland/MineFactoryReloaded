@@ -158,7 +158,7 @@ public class MFRConfig {
 		//{ Searching
 		treeSearchMaxHorizontal = c.get(CATEGORY_GENERAL + ".SearchDistance", "Tree.MaxHorizontal", 512);
 		treeSearchMaxHorizontal.setComment("When searching for parts of a tree, how far out to the sides (radius) to search");
-		verticalHarvestSearchMaxVertical = c.get(CATEGORY_GENERAL + ".SearchDistance", "StackingBlock.MaxVertical", 5);
+		verticalHarvestSearchMaxVertical = c.get(CATEGORY_GENERAL + ".SearchDistance", "StackingBlock.MaxVertical", 35);
 		verticalHarvestSearchMaxVertical.setComment("How far upward to search for members of \"stacking\" blocks, like cactus and sugarcane");
 		passengerRailSearchMaxVertical = c.get(CATEGORY_GENERAL + ".SearchDistance", "PassengerRail.MaxVertical", 2);
 		passengerRailSearchMaxVertical.setComment("When searching for players or dropoff locations, how far up to search");

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ public class HarvestableVanillaLeaves extends HarvestableTreeLeaves {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings settings) {
 
-		if (settings.getBoolean("silkTouch") == Boolean.TRUE)
-			return super.getDrops(world, rand, settings, pos);
+		if (settings.getBoolean(SettingNames.SHEARS_MODE))
+			return super.getDrops(world, pos, harvestState, rand, settings);
 
 		ArrayList<ItemStack> drops = new ArrayList<>();
 		IBlockState state = world.getBlockState(pos);

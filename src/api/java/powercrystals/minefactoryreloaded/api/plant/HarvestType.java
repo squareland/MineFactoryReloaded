@@ -45,6 +45,13 @@ public enum HarvestType {
 	 * e.g. cocoa
 	 * The tree is not searched for.
 	 */
-	TreeFruit
+	TreeFruit;
+
+	public final boolean isTree;
+
+	private HarvestType() {
+
+		isTree = name().startsWith("Tree");
+	}
 
 }

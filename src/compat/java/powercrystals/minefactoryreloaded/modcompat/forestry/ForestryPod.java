@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.modcompat.forestry;
 
 import forestry.api.genetics.IFruitBearer;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +28,7 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, IFactorySettings settings, BlockPos pos) {
+	public boolean canBeHarvested(World world, BlockPos pos, IBlockState harvestState, IFactorySettings settings) {
 
 		if (settings.getBoolean(SettingNames.HARVESTING_TREE))
 			return true;
@@ -74,7 +75,7 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override // HARVESTER
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings settings) {
 
 		return getDrops(world, rand, pos);
 	}

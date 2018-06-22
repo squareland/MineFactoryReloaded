@@ -8,6 +8,7 @@ import forestry.api.genetics.IFruitBearer;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.IPollinatable;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -84,7 +85,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 	}
 
 	@Override // HARVESTER
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings settings) {
 
 		ITree tree = getTree(world, pos);
 		if (tree == null)

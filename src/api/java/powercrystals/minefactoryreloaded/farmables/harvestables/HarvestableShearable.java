@@ -29,10 +29,9 @@ public class HarvestableShearable extends HarvestableStandard {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings settings) {
 
-		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
+		Block block = harvestState.getBlock();
 		if (settings.getBoolean(SettingNames.SHEARS_MODE)) {
 			if (block instanceof IShearable) {
 				ItemStack stack = new ItemStack(Items.SHEARS, 1, 0);
@@ -42,12 +41,12 @@ public class HarvestableShearable extends HarvestableStandard {
 			}
 			if (Item.getItemFromBlock(block) != Items.AIR) {
 				ArrayList<ItemStack> drops = new ArrayList<>();
-				drops.add(block.getItem(world, pos, state));
+				drops.add(block.getItem(world, pos, harvestState));
 				return drops;
 			}
 		}
 
-		return block.getDrops(world, pos, state, 0);
+		return block.getDrops(world, pos, harvestState, 0);
 	}
 
 }

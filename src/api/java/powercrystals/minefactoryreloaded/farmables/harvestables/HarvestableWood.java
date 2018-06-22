@@ -6,31 +6,34 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 
-public class HarvestableWood extends HarvestableStandard
-{
-	public HarvestableWood(Block block)
-	{
+public class HarvestableWood extends HarvestableStandard {
+
+	public HarvestableWood(Block block) {
+
 		super(block, HarvestType.Tree);
 	}
 
 	@Override
-	public void postHarvest(World world, BlockPos pos)
-	{
+	public boolean postHarvest(World world, BlockPos pos, IBlockState harvestState) {
+
 		Block id = getPlant();
 
-		notifyBlock(world, pos.down(), id);
-		notifyBlock(world, pos.west(), id);
-		notifyBlock(world, pos.east(), id);
-		notifyBlock(world, pos.north(), id);
-		notifyBlock(world, pos.south(), id);
-		notifyBlock(world, pos.up(), id);
+		notifyBlock(world, pos.down(), id, pos);
+		notifyBlock(world, pos.west(), id, pos);
+		notifyBlock(world, pos.east(), id, pos);
+		notifyBlock(world, pos.north(), id, pos);
+		notifyBlock(world, pos.south(), id, pos);
+		notifyBlock(world, pos.up(), id, pos);
+		return true;
 	}
 
-	protected void notifyBlock(World world, BlockPos pos, Block id)
-	{
+	protected void notifyBlock(World world, BlockPos pos, Block id, BlockPos source) {
+
 		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
-		if (!block.isLeaves(state, world, pos))
-			world.neighborChanged(pos, id, pos);
+		if (!state.getBlock().isLeaves(state, world, pos)) {
+			world.neighborChanged(pos, id, source);
+			world.observedNeighborChanged(pos, id, source);
+		}
 	}
+
 }

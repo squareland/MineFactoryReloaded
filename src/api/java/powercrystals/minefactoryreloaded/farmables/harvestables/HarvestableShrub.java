@@ -23,24 +23,27 @@ public class HarvestableShrub extends HarvestableStandard {
 		super(block, HarvestType.Normal);
 	}
 
+	private boolean isTop(IBlockState harvestState) {
+
+		return harvestState.getValue(BlockDoublePlant.HALF) == BlockDoublePlant.EnumBlockHalf.UPPER;
+	}
+
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings harvesterSettings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings harvesterSettings) {
 
 		NonNullList<ItemStack> drops = NonNullList.create();
 
-		boolean doublePlant = getPlant() == Blocks.DOUBLE_PLANT, top = false;
+		boolean doublePlant = getPlant() == Blocks.DOUBLE_PLANT, top = doublePlant && isTop(harvestState);
 
-		IBlockState state = world.getBlockState(pos);
-		if (doublePlant && state.getValue(BlockDoublePlant.HALF) == BlockDoublePlant.EnumBlockHalf.UPPER) {
-			top = true;
-			state = world.getBlockState(pos.down());
+		if (top) {
+			harvestState = world.getBlockState(pos.down());
 		}
 
 		if (harvesterSettings.getBoolean(SettingNames.SHEARS_MODE)) {
 			//TODO get back to this and try to replace meta magic numbers with something better
 			int size = 1, oMeta = 1;
 			if (getPlant() == Blocks.TALLGRASS) {
-				BlockTallGrass.EnumType type = state.getValue(BlockTallGrass.TYPE);
+				BlockTallGrass.EnumType type = harvestState.getValue(BlockTallGrass.TYPE);
 				if (type == BlockTallGrass.EnumType.GRASS || type == BlockTallGrass.EnumType.FERN) {
 					if (type == BlockTallGrass.EnumType.FERN) {
 						oMeta = 1;
@@ -48,7 +51,7 @@ public class HarvestableShrub extends HarvestableStandard {
 					drops.add(new ItemStack(Blocks.TALLGRASS , size, oMeta));
 				}
 			} else if (doublePlant) {
-				BlockDoublePlant.EnumPlantType variant = state.getValue(BlockDoublePlant.VARIANT);
+				BlockDoublePlant.EnumPlantType variant = harvestState.getValue(BlockDoublePlant.VARIANT);
 				if (variant == BlockDoublePlant.EnumPlantType.GRASS || variant == BlockDoublePlant.EnumPlantType.FERN) {
 					size = 2;
 					if (variant == BlockDoublePlant.EnumPlantType.FERN) {
@@ -58,23 +61,19 @@ public class HarvestableShrub extends HarvestableStandard {
 				}
 			}
 		} else {
-			drops.addAll(getPlant().getDrops(world, pos, state, 0));
-		}
-
-		if (doublePlant && top) {
-			world.setBlockToAir(pos.down());
+			drops.addAll(getPlant().getDrops(world, pos, harvestState, 0));
 		}
 
 		return drops;
 	}
 
 	@Override
-	public void postHarvest(World world, BlockPos pos) {
+	public boolean postHarvest(World world, BlockPos pos, IBlockState harvestState) {
 
-		super.postHarvest(world, pos);
-		if (getPlant() == Blocks.DOUBLE_PLANT) {
-			super.postHarvest(world, pos.down());
+		if (getPlant() == Blocks.DOUBLE_PLANT && isTop(harvestState)) {
+			world.setBlockToAir(pos.down());
 		}
+		return super.postHarvest(world, pos, harvestState);
 	}
 
 }

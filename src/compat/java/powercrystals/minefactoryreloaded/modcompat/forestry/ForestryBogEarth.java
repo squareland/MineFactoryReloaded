@@ -28,12 +28,6 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 		dirt = Item.getItemFromBlock(Blocks.DIRT);
 	}
 
-	@Override
-	public boolean breakBlock() {
-
-		return true;
-	}
-
 	@Nonnull
 	@Override
 	public Block getPlant() {
@@ -62,7 +56,7 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, IFactorySettings settings, BlockPos pos) {
+	public boolean canBeHarvested(World world, BlockPos pos, IBlockState harvestState, IFactorySettings settings) {
 
 		return BlockBogEarth.SoilType.fromMaturity(world.getBlockState(pos).getValue(BlockBogEarth.MATURITY)) == BlockBogEarth.SoilType.PEAT;
 	}
@@ -74,7 +68,7 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings settings) {
 
 		IBlockState state = world.getBlockState(pos);
 		return state.getBlock().getDrops(world, pos, state, 0);
@@ -97,16 +91,6 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 				break;
 			}
 		return list;
-	}
-
-	@Override
-	public void preHarvest(World world, BlockPos pos) {
-
-	}
-
-	@Override
-	public void postHarvest(World world, BlockPos pos) {
-
 	}
 
 }

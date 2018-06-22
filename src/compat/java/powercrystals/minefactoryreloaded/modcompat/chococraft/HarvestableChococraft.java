@@ -38,37 +38,25 @@ public class HarvestableChococraft implements IFactoryHarvestable {
 	}
 
 	@Override
-	public boolean breakBlock() {
-
-		return true;
-	}
-
-	@Override
-	public boolean canBeHarvested(World world, IFactorySettings harvesterSettings, BlockPos pos) {
+	public boolean canBeHarvested(World world, BlockPos pos, IBlockState harvestState, IFactorySettings harvesterSettings) {
 
 		IBlockState state = world.getBlockState(pos);
 		return state.getBlock().getMetaFromState(state) >= 4;
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings harvesterSettings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings harvesterSettings) {
 
 		return _block.getDrops(world, pos, world.getBlockState(pos), 0);
 	}
 
 	@Override
-	public void preHarvest(World world, BlockPos pos) {
+	public void preHarvest(World world, BlockPos pos, IBlockState harvestState) {
 
 		IBlockState state = world.getBlockState(pos);
 		if (state.getBlock().getMetaFromState(state) > 4) {
 			world.setBlockState(pos, state.getBlock().getStateFromMeta(4), 2);
 		}
-	}
-
-	@Override
-	public void postHarvest(World world, BlockPos pos) {
-
-		world.notifyNeighborsRespectDebug(pos, _block, true);
 	}
 
 }

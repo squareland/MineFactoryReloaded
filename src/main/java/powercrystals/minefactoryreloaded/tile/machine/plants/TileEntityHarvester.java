@@ -37,12 +37,14 @@ import powercrystals.minefactoryreloaded.setup.Machine;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 	private static boolean skip = false;
 	private static Map<String, ISetting> DEFAULT_SETTINGS;
+
 	static {
 
 		HashMap<String, ISetting> _settings = new HashMap<>();
@@ -58,7 +60,6 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	private Random _rand;
 
 	private IHarvestManager _treeManager;
-	private BlockPos _lastTree;
 
 	public TileEntityHarvester() {
 
@@ -68,7 +69,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		_settings = new HashMap<>();
 		_settings.putAll(DEFAULT_SETTINGS);
-		_settings.put(SettingNames.HARVESTING_TREE,  (BooleanSetting) () -> !_treeManager.getIsDone());
+		_settings.put(SettingNames.HARVESTING_TREE, (BooleanSetting) () -> !_treeManager.getIsDone());
 		_immutableSettings = new FactorySettings(_settings);
 
 		_rand = new Random();
@@ -83,7 +84,6 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		super.onChunkUnload();
 		if (_treeManager != null)
 			_treeManager.free();
-		_lastTree = null;
 	}
 
 	@Override
@@ -154,152 +154,174 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		BlockPos target = getNextHarvest();
 
+		// nothing to harvest this cycle
 		if (target == null) {
 			setIdleTicks(getIdleTicksMax());
 			return false;
 		}
 
 		IBlockState harvestState = world.getBlockState(target);
-		Block harvestedBlock = harvestState.getBlock();
 
-		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(harvestedBlock);
+		// lookup the harvestable for this position: very redundant, but no multi-return
+		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(harvestState.getBlock());
 
-		List<ItemStack> drops = harvestable.getDrops(world, _rand, _immutableSettings, target);
+		List<ItemStack> drops = harvestable.getDrops(world, target, harvestState, _rand, _immutableSettings);
 
-		harvestable.preHarvest(world, target);
+		// let the harvestable pre-process the block before we fire the event
+		harvestable.preHarvest(world, target, harvestState);
 
-		if (drops instanceof ArrayList) {
-			ForgeEventFactory.fireBlockHarvesting(drops, world, target, harvestState, 0,
+		// fire the event so mods can alter the drop list: we look up the state again as it may be changed
+		ForgeEventFactory.fireBlockHarvesting(drops, world, target, world.getBlockState(target), 0,
 				1f, _immutableSettings.getBoolean(SettingNames.SHEARS_MODE), null);
-		}
 
 		if (harvestable.breakBlock()) {
-			if (!world.setBlockState(target, Blocks.AIR.getDefaultState(), 2))
+			if (!world.setBlockState(target, Blocks.AIR.getDefaultState(), 2 | 16))
 				return false;
 			if (_immutableSettings.getBoolean(SettingNames.PLAY_SOUNDS)) {
 				world.playEvent(null, 2001, target, Block.getStateId(harvestState));
 			}
 		}
 
+		_tanks[0].fill(FluidRegistry.getFluidStack("sludge", 10), true);
+		doDrop(drops);
+
 		setIdleTicks(getExtraIdleTime(10));
 
-		doDrop(drops);
-		_tanks[0].fill(FluidRegistry.getFluidStack("sludge", 10), true);
-
-		harvestable.postHarvest(world, target);
+		if (harvestable.postHarvest(world, target, harvestState))
+			if (_immutableSettings.getBoolean(SettingNames.PLAY_SOUNDS)) {
+				world.playEvent(null, 2001, target, Block.getStateId(harvestState));
+			}
 
 		return true;
 	}
 
+	@Nullable
 	private BlockPos getNextHarvest() {
 
-		// eating a tree
-		if (!_treeManager.getIsDone())
-			return getNextTreeSegment(_lastTree);
-
-		// increment the counter for the manager
-		BlockPos bp = _areaManager.getNextBlock();
+		BlockPos bp;
+		boolean skipping = false;
 		// skip blocks if configured
 		if (skip) {
-			int extra = getExtraIdleTime(10);
-			if (extra > 0 && extra > _rand.nextInt(15))
-				return null;
+			int extra = getExtraIdleTime(400);
+			// up to 40%
+			skipping = extra > 0 && extra >= 1 + _rand.nextInt(1000);
 		}
-		if (!world.isBlockLoaded(bp)) {
+
+		// eating a tree
+		if (!_treeManager.getIsDone()) {
+			// increment tree position
+			bp = getNextTreeSegment(null, MFRRegistry.getHarvestables());
+			return skipping ? null : bp;
+		}
+
+		// increment the counter for the manager
+		bp = _areaManager.getNextBlock();
+		if (skipping || !world.isBlockLoaded(bp)) {
 			return null;
 		}
 
-		Block search = world.getBlockState(bp).getBlock();
+		IBlockState harvestState = world.getBlockState(bp);
+		Block search = harvestState.getBlock();
 
-		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(search);
-
+		final Map<Block, IFactoryHarvestable> harvestableMap = MFRRegistry.getHarvestables();
+		IFactoryHarvestable harvestable = harvestableMap.get(search);
 		if (harvestable == null) {
 			return null;
 		}
 
+		// let harvestables know where we first found them
 		_settings.put(SettingNames.START_POSITION, Vec3Setting.of(bp));
 
 		HarvestType type = harvestable.getHarvestType();
-		if (type == HarvestType.PlantStem || harvestable.canBeHarvested(world, _immutableSettings, bp)) {
+		if (harvestable.canBeHarvested(world, bp, harvestState, _immutableSettings)) {
 			switch (type) {
-			case PlantStem:
-				return getNextAdjacent(bp, harvestable);
-			case Column:
-			case LeaveBottom:
-				return getNextVertical(bp, type == HarvestType.Column ? 0 : 1, harvestable);
-			case Tree:
-			case TreeLeaf:
-				return getNextTreeSegment(bp);
-			case TreeFruit:
-			case Normal:
-				return bp;
+				case PlantStem:
+					return getNextAdjacent(bp, harvestable);
+				case Column:
+				case LeaveBottom:
+					return getNextVertical(bp, type == HarvestType.Column ? 0 : 1, harvestable);
+				case Tree:
+				case TreeLeaf:
+					return getNextTreeSegment(bp, harvestableMap);
+				case TreeFruit:
+				case Normal:
+					return bp;
 			}
 		}
 		return null;
 	}
 
-	private BlockPos getNextAdjacent(BlockPos pos, IFactoryHarvestable harvestable) {
+	@Nullable
+	private BlockPos getNextAdjacent(BlockPos pos, final IFactoryHarvestable harvestable) {
 
+		// check the 4 adjacent sides
 		for (EnumFacing side : EnumFacing.HORIZONTALS) {
 			BlockPos offsetPos = pos.offset(side);
-			if (world.isBlockLoaded(offsetPos) && harvestable.canBeHarvested(world, _immutableSettings, offsetPos))
+			if (!world.isBlockLoaded(offsetPos))
+				continue;
+			IBlockState harvestState = world.getBlockState(offsetPos);
+			// ask the stem harvestable if this side contains a harvestable fruit
+			if (harvestable.canBeHarvested(world, offsetPos, harvestState, _immutableSettings))
 				return offsetPos;
 		}
 		return null;
 	}
 
-	private BlockPos getNextVertical(BlockPos pos, int startOffset, IFactoryHarvestable harvestable) {
+	@Nullable
+	private BlockPos getNextVertical(BlockPos pos, int startOffset, final IFactoryHarvestable harvestable) {
 
-		int highestBlockOffset = -1;
+		BlockPos harvestPos = null;
 		int maxBlockOffset = MFRConfig.verticalHarvestSearchMaxVertical.getInt();
+		IBlockState harvestState = null;
 
 		Block plant = harvestable.getPlant();
+		// scan upward until we find the top
 		for (int currentYOffset = startOffset; currentYOffset < maxBlockOffset; ++currentYOffset) {
 			BlockPos offsetPos = pos.offset(EnumFacing.UP, currentYOffset);
-			Block block = world.getBlockState(offsetPos).getBlock();
-			if (!block.equals(plant) ||
-					!harvestable.canBeHarvested(world, _immutableSettings, offsetPos))
+			IBlockState state = world.getBlockState(offsetPos);
+			if (!state.getBlock().equals(plant))
 				break;
 
-			highestBlockOffset = currentYOffset;
+			harvestPos = offsetPos;
+			harvestState = state;
 		}
 
-		if (highestBlockOffset >= 0)
-			return pos.offset(EnumFacing.UP, highestBlockOffset);
+		// if we have a top, check that it can be harvested: we don't care about the interim blocks
+		if (harvestPos != null && harvestable.canBeHarvested(world, harvestPos, harvestState, _immutableSettings)) {
+			// we have something, so come back to this block again on the next cycle
+			_areaManager.rewindBlock();
+			return harvestPos;
+		}
 
 		return null;
 	}
 
-	private BlockPos getNextTreeSegment(BlockPos pos) {
+	@Nullable
+	private BlockPos getNextTreeSegment(@Nullable BlockPos pos, final Map<Block, IFactoryHarvestable> harvestableMap) {
 
-		Block block;
-
-		if (!pos.equals(_lastTree) || _treeManager.getIsDone()) {
-
-			_lastTree = new BlockPos(pos);
-			Area a = new Area(_lastTree, MFRConfig.treeSearchMaxHorizontal.getInt(), _lastTree.getY(), world.getHeight() - _lastTree.getY());
-
+		// null for continuation
+		if (pos != null) {
+			Area a = new Area(pos, MFRConfig.treeSearchMaxHorizontal.getInt(), pos.getY(), world.getHeight() - pos.getY());
 			_treeManager.reset(world, a, HarvestMode.HarvestTree, _immutableSettings);
 		}
 
-		Map<Block, IFactoryHarvestable> harvestables = MFRRegistry.getHarvestables();
+		// we may encounter blocks that were removed before the harvester got to them, loop
 		while (!_treeManager.getIsDone()) {
 			BlockPos bp = _treeManager.getNextBlock();
 			_treeManager.moveNext();
 			if (!world.isBlockLoaded(bp)) {
 				return null;
 			}
-			block = world.getBlockState(bp).getBlock();
+			IBlockState harvestState = world.getBlockState(bp);
 
-			if (harvestables.containsKey(block)) {
-				IFactoryHarvestable obj = harvestables.get(block);
-				HarvestType t = obj.getHarvestType();
-				if (t == HarvestType.Tree | t == HarvestType.TreeLeaf | t == HarvestType.TreeFruit)
-					if (obj.canBeHarvested(world, _immutableSettings, bp))
-						return bp;
+			IFactoryHarvestable harvestable = harvestableMap.get(harvestState.getBlock());
+			if (harvestable != null) {
+				HarvestType t = harvestable.getHarvestType();
+				// possible that a new harvestable block was placed into a location where part of the tree was found
+				if (t.isTree && harvestable.canBeHarvested(world, bp, harvestState, _immutableSettings))
+					return bp;
 			}
 		}
-		_lastTree = null;
 		return null;
 	}
 
@@ -370,8 +392,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		if (_treeManager != null)
 			_treeManager.free();
 		_treeManager = new TreeHarvestManager(tag, _immutableSettings);
-		if (!_treeManager.getIsDone())
-			_lastTree = _treeManager.getOrigin();
+
 		_areaManager.getHarvestArea();
 		_areaManager.setPosition(tag.getInteger("bpos"));
 	}

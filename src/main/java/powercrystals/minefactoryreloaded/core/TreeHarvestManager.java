@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.core;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
@@ -105,10 +106,11 @@ public class TreeHarvestManager implements IHarvestManager {
 		if (!_world.isBlockLoaded(pos))
 			return null;
 
-		Block block = _world.getBlockState(pos).getBlock();
+		IBlockState harvestState = _world.getBlockState(pos);
+		Block block = harvestState.getBlock();
 		if (harvestables.containsKey(block)) {
 			IFactoryHarvestable h = harvestables.get(block);
-			if (h.canBeHarvested(_world, _settings, pos)) {
+			if (h.canBeHarvested(_world, pos, harvestState, _settings)) {
 				return h.getHarvestType();
 			}
 		}

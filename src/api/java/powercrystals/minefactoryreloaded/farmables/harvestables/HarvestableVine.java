@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.farmables.harvestables;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +19,7 @@ public class HarvestableVine extends HarvestableStandard {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings settings) {
 
 		NonNullList<ItemStack> drops = NonNullList.create();
 		drops.add(new ItemStack(getPlant()));

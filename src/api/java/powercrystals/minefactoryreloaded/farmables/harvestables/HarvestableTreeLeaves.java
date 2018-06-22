@@ -14,7 +14,7 @@ public class HarvestableTreeLeaves extends HarvestableShearable {
 	}
 
 	@Override
-	public void postHarvest(World world, BlockPos pos) {
+	public boolean postHarvest(World world, BlockPos pos, IBlockState harvestState) {
 
 		Block id = getPlant();
 
@@ -24,6 +24,7 @@ public class HarvestableTreeLeaves extends HarvestableShearable {
 		notifyBlock(world, pos.north(), id, pos);
 		notifyBlock(world, pos.south(), id, pos);
 		notifyBlock(world, pos.up(), id, pos);
+		return true;
 	}
 
 	protected void notifyBlock(World world, BlockPos pos, Block id, BlockPos source) {

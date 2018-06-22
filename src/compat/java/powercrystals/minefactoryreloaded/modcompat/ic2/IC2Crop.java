@@ -3,6 +3,7 @@ package powercrystals.minefactoryreloaded.modcompat.ic2;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.ICropTile;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
@@ -78,7 +79,7 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, IFactorySettings harvesterSettings, BlockPos pos) {
+	public boolean canBeHarvested(World world, BlockPos pos, IBlockState harvestState, IFactorySettings harvesterSettings) {
 
 		return canHarvest(world, pos);
 	}
@@ -112,7 +113,7 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings harvesterSettings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState harvestState, Random rand, IFactorySettings harvesterSettings) {
 
 		NonNullList<ItemStack> drops = NonNullList.create();
 		getDrops(drops, world, rand, pos);
@@ -165,16 +166,6 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 	public IReplacementBlock getReplacementBlock(World world, BlockPos pos) {
 
 		return IReplacementBlock.NO_OP;
-	}
-
-	@Override
-	public void preHarvest(World world, BlockPos pos) {
-
-	}
-
-	@Override
-	public void postHarvest(World world, BlockPos pos) {
-
 	}
 
 }

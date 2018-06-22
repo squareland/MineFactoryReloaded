@@ -1,6 +1,8 @@
 package powercrystals.minefactoryreloaded.farmables.harvestables;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
 import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
@@ -13,7 +15,7 @@ public class HarvestableMushroom extends HarvestableStandard {
 	}
 
 	@Override
-	public boolean canBeHarvested(net.minecraft.world.World world, IFactorySettings settings, BlockPos pos) {
+	public boolean canBeHarvested(World world, BlockPos pos, IBlockState harvestState, IFactorySettings settings) {
 
 		return settings.getBoolean(SettingNames.HARVEST_SMALL_MUSHROOMS);
 	}
