@@ -9,10 +9,11 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.*;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableStandard;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class ForestryPod extends HarvestableStandard implements IFactoryFruit, IFactoryFertilizable {
@@ -26,9 +27,9 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, Map<String, Boolean> settings, BlockPos pos) {
+	public boolean canBeHarvested(World world, IFactorySettings settings, BlockPos pos) {
 
-		if (settings.get("isHarvestingTree") == Boolean.TRUE)
+		if (settings.getBoolean(SettingNames.HARVESTING_TREE))
 			return true;
 
 		return canBePicked(world, pos);
@@ -73,7 +74,7 @@ public class ForestryPod extends HarvestableStandard implements IFactoryFruit, I
 	}
 
 	@Override // HARVESTER
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
 
 		return getDrops(world, rand, pos);
 	}

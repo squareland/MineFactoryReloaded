@@ -252,12 +252,10 @@ public class IMCHandler {
 				else if ("registerHarvestable_Crop".equals(k)) {
 					if (m.isItemStackMessage()) {
 						@Nonnull ItemStack item = m.getItemStackValue();
-						MFRRegistry.registerHarvestable(new HarvestableCropPlant(
-								Block.getBlockFromItem(item.getItem()), item.getItemDamage()));
+						//MFRRegistry.registerHarvestable(new HarvestableCropPlant(Block.getBlockFromItem(item.getItem()), item.getItemDamage()));
 					} else {
 						ValuedItem item = (ValuedItem) getValue(m);
-						MFRRegistry.registerHarvestable(new HarvestableCropPlant(
-								(Block) item.object, item.value));
+						//MFRRegistry.registerHarvestable(new HarvestableCropPlant((Block) item.object, item.value));
 					}
 				}
 				/*

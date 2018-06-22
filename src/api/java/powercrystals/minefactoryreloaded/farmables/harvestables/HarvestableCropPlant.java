@@ -1,24 +1,26 @@
 package powercrystals.minefactoryreloaded.farmables.harvestables;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.util.math.BlockPos;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
 
-public class HarvestableCropPlant extends HarvestableStandard
-{
-	private int _targetMeta;
+public class HarvestableCropPlant extends HarvestableStandard {
 
-	public HarvestableCropPlant(net.minecraft.block.Block block, int targetMeta)
-	{
+	public HarvestableCropPlant(net.minecraft.block.BlockCrops block) {
+
 		super(block, HarvestType.Normal);
-		_targetMeta = targetMeta;
+	}
+
+	protected BlockCrops getCrop() {
+
+		return (BlockCrops) getPlant();
 	}
 
 	@Override
-	public boolean canBeHarvested(net.minecraft.world.World world, java.util.Map<String, Boolean> settings, BlockPos pos)
-	{
-		//TODO look into replacing this with just a simple BlockCrops.isMaxAge call
-		IBlockState state = world.getBlockState(pos);
-		return state.getBlock().getMetaFromState(state) >= _targetMeta;
+	public boolean canBeHarvested(net.minecraft.world.World world, IFactorySettings settings, BlockPos pos) {
+
+		return getCrop().isMaxAge(world.getBlockState(pos));
 	}
+
 }

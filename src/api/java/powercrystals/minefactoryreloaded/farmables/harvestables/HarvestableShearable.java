@@ -9,42 +9,38 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-public class HarvestableShearable extends HarvestableStandard
-{
-	public HarvestableShearable(Block block, HarvestType harvestType)
-	{
+public class HarvestableShearable extends HarvestableStandard {
+
+	public HarvestableShearable(Block block, HarvestType harvestType) {
+
 		super(block, harvestType);
 	}
 
-	public HarvestableShearable(Block block)
-	{
+	public HarvestableShearable(Block block) {
+
 		super(block);
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
+
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (settings.get("silkTouch") == Boolean.TRUE)
-		{
-			if (block instanceof IShearable)
-			{
-				@Nonnull ItemStack stack = new ItemStack(Items.SHEARS, 1, 0);
-				if (((IShearable)block).isShearable(stack, world, pos))
-				{
-					return ((IShearable)block).onSheared(stack, world, pos, 0);
+		if (settings.getBoolean(SettingNames.SHEARS_MODE)) {
+			if (block instanceof IShearable) {
+				ItemStack stack = new ItemStack(Items.SHEARS, 1, 0);
+				if (((IShearable) block).isShearable(stack, world, pos)) {
+					return ((IShearable) block).onSheared(stack, world, pos, 0);
 				}
 			}
-			if (Item.getItemFromBlock(block) != Items.AIR)
-			{
+			if (Item.getItemFromBlock(block) != Items.AIR) {
 				ArrayList<ItemStack> drops = new ArrayList<>();
 				drops.add(block.getItem(world, pos, state));
 				return drops;
@@ -53,4 +49,5 @@ public class HarvestableShearable extends HarvestableStandard
 
 		return block.getDrops(world, pos, state, 0);
 	}
+
 }

@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.MineFactoryReloadedCore;
 import powercrystals.minefactoryreloaded.core.UtilInventory;
+import powercrystals.minefactoryreloaded.core.settings.BooleanSetting;
 import powercrystals.minefactoryreloaded.entity.EntityRocket;
 import powercrystals.minefactoryreloaded.tile.base.TileEntityFactory;
 import powercrystals.minefactoryreloaded.tile.machine.*;
@@ -87,7 +88,7 @@ public class MFRPacket extends PacketBase {
 					te = world.getTileEntity(pos);
 
 					if (te instanceof TileEntityHarvester) {
-						((TileEntityHarvester) te).getSettings().put(getString(), getBool());
+						((TileEntityHarvester) te).getSettings().put(getString(), getBool() ? BooleanSetting.TRUE : BooleanSetting.FALSE);
 					}
 					break;
 				case CHRONOTYPER_BUTTON:

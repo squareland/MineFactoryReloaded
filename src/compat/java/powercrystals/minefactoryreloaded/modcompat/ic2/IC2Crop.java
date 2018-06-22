@@ -9,95 +9,102 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.*;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
 
+import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFactoryFruit
-{
+public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFactoryFruit {
+
 	private Block _block;
 
-	public IC2Crop(Block block)
-	{
+	IC2Crop(Block block) {
+
 		_block = block;
 	}
 
+	@Nonnull
 	@Override
-	public Block getPlant()
-	{
+	public Block getPlant() {
+
 		return _block;
 	}
 
 	@Override
-	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType)
-	{
+	public boolean canFertilize(World world, BlockPos pos, FertilizerType fertilizerType) {
+
 		return fertilizerType != FertilizerType.Grass && canFert(world, pos);
 	}
 
-	private boolean canFert(World world, BlockPos pos)
-	{
-		TileEntity te = world.getTileEntity(pos);
-		if (te == null || !(te instanceof ICropTile))
+	private boolean canFert(World world, BlockPos pos) {
+
+		try {
+			TileEntity te = world.getTileEntity(pos);
+			if (!(te instanceof ICropTile))
+				return false;
+			ICropTile tec = (ICropTile) te;
+
+			return tec.getStorageNutrients() < 15;
+		} catch (Exception e) {
 			return false;
-		ICropTile tec = (ICropTile)te;
-
-		return tec.getStorageNutrients() < 15;
+		}
 	}
 
 	@Override
-	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType)
-	{
-		ICropTile tec = (ICropTile)world.getTileEntity(pos);
-		tec.setStorageNutrients(100);
-		tec.updateState();
-		return tec.getStorageNutrients() == 100;
+	public boolean fertilize(World world, Random rand, BlockPos pos, FertilizerType fertilizerType) {
+
+		try {
+			ICropTile tec = (ICropTile) world.getTileEntity(pos);
+			tec.setStorageNutrients(100);
+			tec.updateState();
+			return tec.getStorageNutrients() == 100;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
+	@Nonnull
 	@Override
-	public HarvestType getHarvestType()
-	{
+	public HarvestType getHarvestType() {
+
 		return HarvestType.Normal;
 	}
 
 	@Override
-	public boolean breakBlock()
-	{
+	public boolean breakBlock() {
+
 		return false;
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, Map<String, Boolean> harvesterSettings, BlockPos pos)
-	{
+	public boolean canBeHarvested(World world, IFactorySettings harvesterSettings, BlockPos pos) {
+
 		return canHarvest(world, pos);
 	}
 
 	@Override
-	public boolean canBePicked(World world, BlockPos pos)
-	{
+	public boolean canBePicked(World world, BlockPos pos) {
+
 		return canHarvest(world, pos);
 	}
 
-	private boolean canHarvest(World world, BlockPos pos)
-	{
+	private boolean canHarvest(World world, BlockPos pos) {
+
 		TileEntity te = world.getTileEntity(pos);
-		if(te == null || !(te instanceof ICropTile))
+		if (!(te instanceof ICropTile))
 			return false;
 
-		ICropTile tec = (ICropTile)te;
+		ICropTile tec = (ICropTile) te;
 		CropCard crop;
-		try
-		{
+		try {
 			crop = tec.getCrop();
 			if (crop == null)
 				return false;
-			if(!crop.canBeHarvested(tec) || crop.canGrow(tec))
-			{
+			if (!crop.canBeHarvested(tec) || crop.canGrow(tec)) {
 				return false;
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -105,48 +112,42 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings harvesterSettings, BlockPos pos) {
+
 		NonNullList<ItemStack> drops = NonNullList.create();
 		getDrops(drops, world, rand, pos);
 		return drops;
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos)
-	{
+	public List<ItemStack> getDrops(World world, Random rand, BlockPos pos) {
+
 		NonNullList<ItemStack> drops = NonNullList.create();
 		getDrops(drops, world, rand, pos);
 		return drops;
 	}
 
-	private void getDrops(NonNullList<ItemStack> drops, World world, Random rand, BlockPos pos)
-	{
-		ICropTile tec = (ICropTile)world.getTileEntity(pos);
-		CropCard crop;
-		try
-		{
-			crop = tec.getCrop();
+	private void getDrops(NonNullList<ItemStack> drops, World world, Random rand, BlockPos pos) {
+
+		try {
+			ICropTile tec = (ICropTile) world.getTileEntity(pos);
+			CropCard crop = tec.getCrop();
 
 			double chance = crop.dropGainChance();
-			for (int i = 0; i < tec.getStatGain(); i++)
-			{
+			for (int i = 0; i < tec.getStatGain(); i++) {
 				chance *= 1.03F;
 			}
 
 			chance -= rand.nextFloat();
 			int numDrops = 0;
-			while (chance > 0.0F)
-			{
+			while (chance > 0.0F) {
 				numDrops++;
 				chance -= rand.nextFloat();
 			}
 			NonNullList<ItemStack> cropDrops = NonNullList.withSize(numDrops, ItemStack.EMPTY);
-			for (int i = 0; i < numDrops; i++)
-			{
+			for (int i = 0; i < numDrops; i++) {
 				cropDrops.set(i, crop.getGain(tec));
-				if((!cropDrops.get(i).isEmpty()) && (rand.nextInt(100) <= tec.getStatGain()))
-				{
+				if ((!cropDrops.get(i).isEmpty()) && (rand.nextInt(100) <= tec.getStatGain())) {
 					cropDrops.get(i).grow(1);
 				}
 			}
@@ -155,26 +156,25 @@ public class IC2Crop implements IFactoryHarvestable, IFactoryFertilizable, IFact
 			tec.updateState();
 
 			drops.addAll(cropDrops);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public IReplacementBlock getReplacementBlock(World world, BlockPos pos)
-	{
+	public IReplacementBlock getReplacementBlock(World world, BlockPos pos) {
+
 		return IReplacementBlock.NO_OP;
 	}
 
 	@Override
-	public void preHarvest(World world, BlockPos pos)
-	{
+	public void preHarvest(World world, BlockPos pos) {
+
 	}
 
 	@Override
-	public void postHarvest(World world, BlockPos pos)
-	{
+	public void postHarvest(World world, BlockPos pos) {
+
 	}
+
 }

@@ -3,9 +3,9 @@ package powercrystals.minefactoryreloaded.core;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
 
 import java.util.List;
-import java.util.Map;
 
 public class FruitHarvestManager implements IHarvestManager
 {
@@ -39,7 +39,7 @@ public class FruitHarvestManager implements IHarvestManager
 	}
 	
 	@Override
-	public void reset(World world, Area area, HarvestMode harvestMode, Map<String, Boolean> s)
+	public void reset(World world, Area area, HarvestMode harvestMode, IFactorySettings s)
 	{
 		_harvestMode = harvestMode;
 		_area = area;

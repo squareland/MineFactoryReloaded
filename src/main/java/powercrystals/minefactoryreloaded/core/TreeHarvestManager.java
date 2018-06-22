@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryHarvestable;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
 import powercrystals.minefactoryreloaded.core.BlockPool.BlockNode;
 
 import java.util.Map;
@@ -18,20 +19,20 @@ public class TreeHarvestManager implements IHarvestManager {
 	private BlockPool _blocks;
 	private boolean _isDone;
 
-	private Map<String, Boolean> _settings;
+	private IFactorySettings _settings;
 	private HarvestMode _harvestMode;
 	private Area _area;
 	private World _world;
 
 	private BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
-	public TreeHarvestManager(NBTTagCompound tag, Map<String, Boolean> s) {
+	public TreeHarvestManager(NBTTagCompound tag, IFactorySettings s) {
 
 		readFromNBT(tag);
 		_settings = s;
 	}
 
-	public TreeHarvestManager(World world, Area treeArea, HarvestMode harvestMode, Map<String, Boolean> s) {
+	public TreeHarvestManager(World world, Area treeArea, HarvestMode harvestMode, IFactorySettings s) {
 
 		reset(world, treeArea, harvestMode, s);
 		_isDone = true;
@@ -115,7 +116,7 @@ public class TreeHarvestManager implements IHarvestManager {
 	}
 
 	@Override
-	public void reset(World world, Area treeArea, HarvestMode harvestMode, Map<String, Boolean> settings) {
+	public void reset(World world, Area treeArea, HarvestMode harvestMode, IFactorySettings settings) {
 
 		setWorld(world);
 		_harvestMode = harvestMode;

@@ -10,9 +10,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class HarvestableShrub extends HarvestableStandard {
@@ -23,19 +24,19 @@ public class HarvestableShrub extends HarvestableStandard {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings harvesterSettings, BlockPos pos) {
 
 		NonNullList<ItemStack> drops = NonNullList.create();
 
 		boolean doublePlant = getPlant() == Blocks.DOUBLE_PLANT, top = false;
 
 		IBlockState state = world.getBlockState(pos);
-		if (doublePlant && world.getBlockState(pos).getValue(BlockDoublePlant.HALF) == BlockDoublePlant.EnumBlockHalf.UPPER) {
+		if (doublePlant && state.getValue(BlockDoublePlant.HALF) == BlockDoublePlant.EnumBlockHalf.UPPER) {
 			top = true;
 			state = world.getBlockState(pos.down());
 		}
 
-		if (harvesterSettings.get("silkTouch") == Boolean.TRUE) {
+		if (harvesterSettings.getBoolean(SettingNames.SHEARS_MODE)) {
 			//TODO get back to this and try to replace meta magic numbers with something better
 			int size = 1, oMeta = 1;
 			if (getPlant() == Blocks.TALLGRASS) {

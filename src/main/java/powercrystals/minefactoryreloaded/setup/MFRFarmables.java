@@ -2,6 +2,7 @@ package powercrystals.minefactoryreloaded.setup;
 
 import cofh.core.util.oredict.OreDictionaryArbiter;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.INpc;
@@ -10,7 +11,6 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.handler.INeedleAmmo;
 import powercrystals.minefactoryreloaded.circuits.*;
@@ -24,17 +24,18 @@ import powercrystals.minefactoryreloaded.circuits.timing.Multipulse;
 import powercrystals.minefactoryreloaded.circuits.timing.OneShot;
 import powercrystals.minefactoryreloaded.circuits.timing.PulseLengthener;
 import powercrystals.minefactoryreloaded.circuits.wave.*;
-import powercrystals.minefactoryreloaded.entity.EntityPinkSlime;
 import powercrystals.minefactoryreloaded.core.drinkhandlers.*;
+import powercrystals.minefactoryreloaded.core.safarinethandlers.*;
+import powercrystals.minefactoryreloaded.entity.EntityPinkSlime;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableIGrowable;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizableStandard;
 import powercrystals.minefactoryreloaded.farmables.fertilizables.FertilizerStandard;
-import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.grindables.GrindableSlime;
+import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableCropPlant;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableWood;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSapling;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSoil;
-import powercrystals.minefactoryreloaded.core.safarinethandlers.*;
+import powercrystals.minefactoryreloaded.modhelpers.vanilla.handlers.grindables.GrindableSlime;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -188,12 +189,12 @@ public class MFRFarmables {
 					MFRRegistry.registerHarvestable(new HarvestableTreeLeaves(block));
 			}
 
-			for (ResourceLocation key : Block.REGISTRY.getKeys()) {
-				Block block = Block.getBlockFromName(key.toString());
-				if (block instanceof IGrowable && !MFRRegistry.getFertilizables().containsKey(block)) {
-					MFRRegistry.registerFertilizable(new FertilizableIGrowable(block));
-				}
-			}
+			Block.REGISTRY.forEach((block) -> {
+				if (MFRRegistry.getFertilizables().containsKey(block))
+					return;
+				if (block instanceof IGrowable) MFRRegistry.registerFertilizable(new FertilizableIGrowable(block));
+				if (block instanceof BlockCrops) MFRRegistry.registerHarvestable(new HarvestableCropPlant((BlockCrops) block));
+			});
 		}
 	}
 

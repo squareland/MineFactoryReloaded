@@ -1,6 +1,7 @@
 package powercrystals.minefactoryreloaded.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
 import powercrystals.minefactoryreloaded.gui.container.ContainerHarvester;
 import powercrystals.minefactoryreloaded.net.MFRPacket;
 import powercrystals.minefactoryreloaded.tile.machine.plants.TileEntityHarvester;
@@ -40,17 +41,17 @@ public class GuiHarvester extends GuiUpgradeable {
 	@Override
 	protected void updateElementInformation() {
 
-		_settingSilkTouch.displayString = _silkTouchText + getSettingText("silkTouch");
-		_settingSmallShrooms.displayString = _smallShroomsText + getSettingText("harvestSmallMushrooms");
+		_settingSilkTouch.displayString = _silkTouchText + getSettingText(SettingNames.SHEARS_MODE);
+		_settingSmallShrooms.displayString = _smallShroomsText + getSettingText(SettingNames.HARVEST_SMALL_MUSHROOMS);
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
 
 		if (button.id == 1) {
-			MFRPacket.sendHarvesterButtonToServer(_tileEntity, "silkTouch", getNewSettingValue("silkTouch"));
+			MFRPacket.sendHarvesterButtonToServer(_tileEntity, SettingNames.SHEARS_MODE, getNewSettingValue(SettingNames.SHEARS_MODE));
 		} else if (button.id == 2) {
-			MFRPacket.sendHarvesterButtonToServer(_tileEntity, "harvestSmallMushrooms", getNewSettingValue("harvestSmallMushrooms"));
+			MFRPacket.sendHarvesterButtonToServer(_tileEntity, SettingNames.HARVEST_SMALL_MUSHROOMS, getNewSettingValue(SettingNames.HARVEST_SMALL_MUSHROOMS));
 		} else if (button.id == 3) {
 			//PacketDispatcher.sendPacketToServer(PacketWrapper.createPacket(MineFactoryReloadedCore.modNetworkChannel, Packets.HarvesterButton,
 			//		new Object[] { _harvester.x, _harvester.y, _harvester.z, "", getNewSettingValue("") }));
@@ -59,12 +60,12 @@ public class GuiHarvester extends GuiUpgradeable {
 
 	private String getSettingText(String setting) {
 
-		return _harvester.getSettings().get(setting) == Boolean.TRUE ? "Yes" : "No";
+		return _harvester.getImmutableSettings().getBoolean(setting) ? "Yes" : "No";
 	}
 
 	private Boolean getNewSettingValue(String setting) {
 
-		return _harvester.getSettings().get(setting) == Boolean.TRUE ? false : true;
+		return !_harvester.getImmutableSettings().getBoolean(setting);
 	}
 
 }

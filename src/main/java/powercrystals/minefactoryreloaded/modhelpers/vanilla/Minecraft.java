@@ -1,5 +1,7 @@
 package powercrystals.minefactoryreloaded.modhelpers.vanilla;
 
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
@@ -77,11 +79,11 @@ public class Minecraft implements IMFRIntegrator {
 		REGISTRY.registerHarvestable(new HarvestableStemPlant(Blocks.MELON_STEM, Blocks.MELON_BLOCK));
 		REGISTRY.registerHarvestable(new HarvestableGourd(Blocks.PUMPKIN));
 		REGISTRY.registerHarvestable(new HarvestableGourd(Blocks.MELON_BLOCK));
-		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.WHEAT, 7));
-		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.CARROTS, 7));
-		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.POTATOES, 7));
-		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.BEETROOTS, 3));
-		REGISTRY.registerHarvestable(new HarvestableCropPlant(Blocks.NETHER_WART, 3));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant((BlockCrops) Blocks.WHEAT));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant((BlockCrops) Blocks.CARROTS));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant((BlockCrops) Blocks.POTATOES));
+		REGISTRY.registerHarvestable(new HarvestableCropPlant((BlockCrops) Blocks.BEETROOTS));
+		REGISTRY.registerHarvestable(new HarvestableCropMeta(Blocks.NETHER_WART, BlockNetherWart.AGE, 3));
 		REGISTRY.registerHarvestable(new HarvestableVine(Blocks.VINE));
 		REGISTRY.registerHarvestable(new HarvestableCocoa(Blocks.COCOA));
 

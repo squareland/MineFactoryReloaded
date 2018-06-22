@@ -1,5 +1,6 @@
 package powercrystals.minefactoryreloaded.api.plant;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -30,5 +31,18 @@ public interface IReplacementBlock {
 	 * Return this for times when you do not need to do anything to the in-world block.
 	 */
 	IReplacementBlock NO_OP = (world, pos, stack) -> true;
+
+	/**
+	 * Get an IReplacementBlock for a particular state.
+	 *
+	 * @param state
+	 * 		The state you wish placed into the world
+	 *
+	 * @return An IReplacementBlock that will place {@code state} into the world
+	 */
+	static IReplacementBlock of(@Nonnull final IBlockState state) {
+
+		return (world, pos, stack) -> world.setBlockState(pos, state);
+	}
 
 }

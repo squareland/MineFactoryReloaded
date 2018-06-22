@@ -8,9 +8,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryHarvestable;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
 
+import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class HarvestableChococraft implements IFactoryHarvestable {
@@ -22,12 +23,14 @@ public class HarvestableChococraft implements IFactoryHarvestable {
 		_block = block;
 	}
 
+	@Nonnull
 	@Override
 	public Block getPlant() {
 
 		return _block;
 	}
 
+	@Nonnull
 	@Override
 	public HarvestType getHarvestType() {
 
@@ -41,14 +44,14 @@ public class HarvestableChococraft implements IFactoryHarvestable {
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, Map<String, Boolean> harvesterSettings, BlockPos pos) {
+	public boolean canBeHarvested(World world, IFactorySettings harvesterSettings, BlockPos pos) {
 
 		IBlockState state = world.getBlockState(pos);
 		return state.getBlock().getMetaFromState(state) >= 4;
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> harvesterSettings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings harvesterSettings, BlockPos pos) {
 
 		return _block.getDrops(world, pos, world.getBlockState(pos), 0);
 	}

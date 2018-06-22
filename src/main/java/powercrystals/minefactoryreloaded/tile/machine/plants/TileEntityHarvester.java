@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -18,10 +19,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.MFRRegistry;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryHarvestable;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
 import powercrystals.minefactoryreloaded.core.Area;
 import powercrystals.minefactoryreloaded.core.HarvestMode;
 import powercrystals.minefactoryreloaded.core.IHarvestManager;
 import powercrystals.minefactoryreloaded.core.TreeHarvestManager;
+import powercrystals.minefactoryreloaded.core.settings.BooleanSetting;
+import powercrystals.minefactoryreloaded.core.settings.FactorySettings;
+import powercrystals.minefactoryreloaded.core.settings.ISetting;
+import powercrystals.minefactoryreloaded.core.settings.Vec3Setting;
 import powercrystals.minefactoryreloaded.gui.client.GuiFactoryInventory;
 import powercrystals.minefactoryreloaded.gui.client.GuiHarvester;
 import powercrystals.minefactoryreloaded.gui.container.ContainerHarvester;
@@ -31,24 +38,22 @@ import powercrystals.minefactoryreloaded.tile.base.TileEntityFactoryPowered;
 
 import javax.annotation.Nonnull;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 	private static boolean skip = false;
-	private static Map<String, Boolean> DEFAULT_SETTINGS;
+	private static Map<String, ISetting> DEFAULT_SETTINGS;
 	static {
 
-		HashMap<String, Boolean> _settings = new HashMap<>();
-		_settings.put("silkTouch", false);
-		_settings.put("harvestSmallMushrooms", false);
-		_settings.put("playSounds", MFRConfig.playSounds.getBoolean(true));
-		_settings.put("isHarvestingTree", false);
+		HashMap<String, ISetting> _settings = new HashMap<>();
+		_settings.put(SettingNames.SHEARS_MODE, BooleanSetting.FALSE);
+		_settings.put(SettingNames.HARVEST_SMALL_MUSHROOMS, BooleanSetting.FALSE);
+		_settings.put(SettingNames.PLAY_SOUNDS, (BooleanSetting) MFRConfig.playSounds::getBoolean);
 		DEFAULT_SETTINGS = java.util.Collections.unmodifiableMap(_settings);
 	}
 
-	private Map<String, Boolean> _settings;
-	private Map<String, Boolean> _immutableSettings;
+	private Map<String, ISetting> _settings;
+	private IFactorySettings _immutableSettings;
 
 	private Random _rand;
 
@@ -63,7 +68,8 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		_settings = new HashMap<>();
 		_settings.putAll(DEFAULT_SETTINGS);
-		_immutableSettings = java.util.Collections.unmodifiableMap(_settings);
+		_settings.put(SettingNames.HARVESTING_TREE,  (BooleanSetting) () -> !_treeManager.getIsDone());
+		_immutableSettings = new FactorySettings(_settings);
 
 		_rand = new Random();
 		setCanRotate(true);
@@ -110,12 +116,12 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		return new ContainerHarvester(this, inventoryPlayer);
 	}
 
-	public Map<String, Boolean> getSettings() {
+	public Map<String, ISetting> getSettings() {
 
 		return _settings;
 	}
 
-	public Map<String, Boolean> getImmutableSettings() {
+	public IFactorySettings getImmutableSettings() {
 
 		return _immutableSettings;
 	}
@@ -153,8 +159,8 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		IBlockState state = world.getBlockState(target);
-		Block harvestedBlock = state.getBlock();
+		IBlockState harvestState = world.getBlockState(target);
+		Block harvestedBlock = harvestState.getBlock();
 
 		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(harvestedBlock);
 
@@ -163,15 +169,15 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 		harvestable.preHarvest(world, target);
 
 		if (drops instanceof ArrayList) {
-			ForgeEventFactory.fireBlockHarvesting(drops, world, target, state, 0,
-				1f, _settings.get("silkTouch"), null);
+			ForgeEventFactory.fireBlockHarvesting(drops, world, target, harvestState, 0,
+				1f, _immutableSettings.getBoolean(SettingNames.SHEARS_MODE), null);
 		}
 
 		if (harvestable.breakBlock()) {
 			if (!world.setBlockState(target, Blocks.AIR.getDefaultState(), 2))
 				return false;
-			if (_settings.get("playSounds") == Boolean.TRUE) {
-				world.playEvent(null, 2001, target, Block.getStateId(state));
+			if (_immutableSettings.getBoolean(SettingNames.PLAY_SOUNDS)) {
+				world.playEvent(null, 2001, target, Block.getStateId(harvestState));
 			}
 		}
 
@@ -187,10 +193,13 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 	private BlockPos getNextHarvest() {
 
+		// eating a tree
 		if (!_treeManager.getIsDone())
 			return getNextTreeSegment(_lastTree);
+
+		// increment the counter for the manager
 		BlockPos bp = _areaManager.getNextBlock();
-		_lastTree = null;
+		// skip blocks if configured
 		if (skip) {
 			int extra = getExtraIdleTime(10);
 			if (extra > 0 && extra > _rand.nextInt(15))
@@ -202,18 +211,18 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		Block search = world.getBlockState(bp).getBlock();
 
-		if (!MFRRegistry.getHarvestables().containsKey(search)) {
-			_lastTree = null;
+		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(search);
+
+		if (harvestable == null) {
 			return null;
 		}
 
-		_settings.put("isHarvestingTree", false);
+		_settings.put(SettingNames.START_POSITION, Vec3Setting.of(bp));
 
-		IFactoryHarvestable harvestable = MFRRegistry.getHarvestables().get(search);
 		HarvestType type = harvestable.getHarvestType();
-		if (type == HarvestType.Gourd || harvestable.canBeHarvested(world, _immutableSettings, bp)) {
+		if (type == HarvestType.PlantStem || harvestable.canBeHarvested(world, _immutableSettings, bp)) {
 			switch (type) {
-			case Gourd:
+			case PlantStem:
 				return getNextAdjacent(bp, harvestable);
 			case Column:
 			case LeaveBottom:
@@ -264,7 +273,6 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	private BlockPos getNextTreeSegment(BlockPos pos) {
 
 		Block block;
-		_settings.put("isHarvestingTree", true);
 
 		if (!pos.equals(_lastTree) || _treeManager.getIsDone()) {
 
@@ -291,6 +299,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 						return bp;
 			}
 		}
+		_lastTree = null;
 		return null;
 	}
 
@@ -304,12 +313,10 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	public void writePortableData(EntityPlayer player, NBTTagCompound tag) {
 
 		NBTTagCompound list = new NBTTagCompound();
-		for (Entry<String, Boolean> setting : _settings.entrySet()) {
-			String key = setting.getKey();
-			if ("playSounds" == key || "isHarvestingTree" == key)
-				continue;
-			list.setBoolean(key, setting.getValue() == Boolean.TRUE);
-		}
+		DEFAULT_SETTINGS.forEach((key, value) -> {
+			if (!SettingNames.PLAY_SOUNDS.equals(key))
+				list.setBoolean(key, _immutableSettings.getBoolean(key));
+		});
 		tag.setTag("harvesterSettings", list);
 	}
 
@@ -317,12 +324,12 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 	public void readPortableData(EntityPlayer player, NBTTagCompound tag) {
 
 		NBTTagCompound list = (NBTTagCompound) tag.getTag("harvesterSettings");
-		for (String s : _settings.keySet()) {
-			if ("playSounds".equals(s))
-				continue;
-			boolean b = list.getBoolean(s);
-			_settings.put(s.intern(), b);
-		}
+		DEFAULT_SETTINGS.forEach((key, value) -> {
+			if (!SettingNames.PLAY_SOUNDS.equals(key) && list.hasKey(key, NBT.TAG_BYTE)) {
+				boolean b = list.getBoolean(key);
+				_settings.put(key, b ? BooleanSetting.TRUE : BooleanSetting.FALSE);
+			}
+		});
 	}
 
 	@Override
@@ -330,13 +337,10 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		super.writeItemNBT(tag);
 		NBTTagCompound list = new NBTTagCompound();
-		for (Entry<String, Boolean> setting : _settings.entrySet()) {
-			String key = setting.getKey();
-			if ("playSounds" == key | "isHarvestingTree" == key
-					|| DEFAULT_SETTINGS.get(key) == setting.getValue())
-				continue;
-			list.setBoolean(key, setting.getValue() == Boolean.TRUE);
-		}
+		DEFAULT_SETTINGS.forEach((key, value) -> {
+			if (!SettingNames.PLAY_SOUNDS.equals(key))
+				list.setBoolean(key, _immutableSettings.getBoolean(key));
+		});
 		if (!list.hasNoTags())
 			tag.setTag("harvesterSettings", list);
 	}
@@ -357,14 +361,12 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		super.readFromNBT(tag);
 		NBTTagCompound list = (NBTTagCompound) tag.getTag("harvesterSettings");
-		if (list != null) {
-			for (String s : _settings.keySet()) {
-				if ("playSounds".equals(s))
-					continue;
-				boolean b = list.getBoolean(s);
-				_settings.put(s.intern(), b);
+		DEFAULT_SETTINGS.forEach((key, value) -> {
+			if (!SettingNames.PLAY_SOUNDS.equals(key)) {
+				boolean b = list.getBoolean(key);
+				_settings.put(key, b ? BooleanSetting.TRUE : BooleanSetting.FALSE);
 			}
-		}
+		});
 		if (_treeManager != null)
 			_treeManager.free();
 		_treeManager = new TreeHarvestManager(tag, _immutableSettings);

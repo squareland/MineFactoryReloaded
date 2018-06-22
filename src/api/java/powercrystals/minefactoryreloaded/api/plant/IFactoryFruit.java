@@ -58,7 +58,7 @@ public interface IFactoryFruit {
 	 * @param pos
 	 * 		The position of the fruit
 	 */
-	@Nonnull
+	@Nullable
 	List<ItemStack> getDrops(World world, Random rand, BlockPos pos);
 
 }

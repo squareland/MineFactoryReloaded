@@ -9,11 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.plant.*;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
 import powercrystals.minefactoryreloaded.farmables.plantables.PlantableSoil;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class ForestryBogEarth extends PlantableSoil implements IFactoryFertilizable, IFactoryHarvestable, IFactoryFruit {
@@ -34,12 +34,14 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 		return true;
 	}
 
+	@Nonnull
 	@Override
 	public Block getPlant() {
 
 		return _block;
 	}
 
+	@Nonnull
 	@Override
 	public HarvestType getHarvestType() {
 
@@ -60,7 +62,7 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	}
 
 	@Override
-	public boolean canBeHarvested(World world, Map<String, Boolean> settings, BlockPos pos) {
+	public boolean canBeHarvested(World world, IFactorySettings settings, BlockPos pos) {
 
 		return BlockBogEarth.SoilType.fromMaturity(world.getBlockState(pos).getValue(BlockBogEarth.MATURITY)) == BlockBogEarth.SoilType.PEAT;
 	}
@@ -72,7 +74,7 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 	}
 
 	@Override
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
 
 		IBlockState state = world.getBlockState(pos);
 		return state.getBlock().getDrops(world, pos, state, 0);
@@ -89,7 +91,7 @@ public class ForestryBogEarth extends PlantableSoil implements IFactoryFertiliza
 
 		IBlockState state = world.getBlockState(pos);
 		List<ItemStack> list = state.getBlock().getDrops(world, pos, state, 0);
-		for (@Nonnull ItemStack a : list)
+		for (ItemStack a : list)
 			if (a.getItem() == dirt) {
 				list.remove(a);
 				break;

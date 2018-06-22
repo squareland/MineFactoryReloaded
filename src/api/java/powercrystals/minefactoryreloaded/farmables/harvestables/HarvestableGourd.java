@@ -5,27 +5,27 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import powercrystals.minefactoryreloaded.api.plant.HarvestType;
 
-public class HarvestableGourd extends HarvestableStandard
-{
-	public HarvestableGourd(Block block, HarvestType harvestType)
-	{
+public class HarvestableGourd extends HarvestableStandard {
+
+	public HarvestableGourd(Block block, HarvestType harvestType) {
+
 		super(block, harvestType);
 	}
 
-	public HarvestableGourd(Block block)
-	{
+	public HarvestableGourd(Block block) {
+
 		super(block);
 	}
 
 	@Override
-	public void postHarvest(net.minecraft.world.World world, BlockPos pos)
-	{
+	public void postHarvest(net.minecraft.world.World world, BlockPos pos) {
+
 		Block ground = world.getBlockState(pos.down()).getBlock();
 		if (world.isAirBlock(pos) &&
-				(ground.equals(Blocks.DIRT) || ground.equals(Blocks.GRASS)))
-		{
+				(ground.equals(Blocks.DIRT) || ground.equals(Blocks.GRASS))) {
 			world.setBlockState(pos.down(), Blocks.FARMLAND.getDefaultState());
 		}
 		super.postHarvest(world, pos);
 	}
+
 }

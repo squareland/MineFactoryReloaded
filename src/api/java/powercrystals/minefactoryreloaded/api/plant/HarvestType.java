@@ -17,7 +17,7 @@ public enum HarvestType {
 	 * Search for harvestable blocks adjacent to this block but leave this
 	 * block. e.g. Pumpkin stem, melon stem
 	 */
-	Gourd,
+	PlantStem,
 	/**
 	 * Search for identical blocks above.
 	 */

@@ -14,13 +14,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.plant.*;
+import powercrystals.minefactoryreloaded.api.plant.FertilizerType;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryFertilizable;
+import powercrystals.minefactoryreloaded.api.plant.IFactoryFruit;
+import powercrystals.minefactoryreloaded.api.plant.IReplacementBlock;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings;
+import powercrystals.minefactoryreloaded.api.util.IFactorySettings.SettingNames;
 import powercrystals.minefactoryreloaded.farmables.harvestables.HarvestableTreeLeaves;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit, IFactoryFertilizable {
@@ -81,7 +84,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 	}
 
 	@Override // HARVESTER
-	public List<ItemStack> getDrops(World world, Random rand, Map<String, Boolean> settings, BlockPos pos) {
+	public List<ItemStack> getDrops(World world, Random rand, IFactorySettings settings, BlockPos pos) {
 
 		ITree tree = getTree(world, pos);
 		if (tree == null)
@@ -90,8 +93,7 @@ public class ForestryLeaf extends HarvestableTreeLeaves implements IFactoryFruit
 		ArrayList<ItemStack> prod = new ArrayList<ItemStack>();
 
 		float modifier = 1f;
-		if (settings.get("silkTouch") == Boolean.TRUE) {
-			@Nonnull
+		if (settings.getBoolean(SettingNames.SHEARS_MODE)) {
 			ItemStack item = new ItemStack(_item);
 			NBTTagCompound tag = new NBTTagCompound();
 			tree.writeToNBT(tag);
