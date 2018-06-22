@@ -89,6 +89,7 @@ sourceSets {
         }
         compileClasspath += sourceSets.api.compileClasspath
         compileClasspath += sourceSets.api.output
+        compileClasspath += sourceSets.dependencies.output
     }
     main {
         java {
