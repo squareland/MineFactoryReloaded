@@ -25,7 +25,6 @@ public class TreeHarvestManager implements IHarvestManager {
 	private boolean _isDone;
 
 	private IFactorySettings _settings;
-	private HarvestMode _harvestMode;
 	private Area _area;
 	private World _world;
 
@@ -37,9 +36,9 @@ public class TreeHarvestManager implements IHarvestManager {
 		_settings = s;
 	}
 
-	public TreeHarvestManager(World world, Area treeArea, HarvestMode harvestMode, IFactorySettings s) {
+	public TreeHarvestManager(World world, Area treeArea, IFactorySettings s) {
 
-		reset(world, treeArea, harvestMode, s);
+		reset(world, treeArea, HarvestMode.HarvestTree, s);
 		_isDone = true;
 	}
 
@@ -70,8 +69,7 @@ public class TreeHarvestManager implements IHarvestManager {
 		if (type == null || type == HarvestType.TreeFruit)
 			return;
 
-		SideOffset[] sides = !_harvestMode.isInverted ? SideOffset.ADJACENT_CUBE :
-				SideOffset.ADJACENT_CUBE_INVERTED;
+		SideOffset[] sides = SideOffset.ADJACENT_CUBE;
 
 		for (SideOffset side : sides) {
 			cur = BlockPool.getNext(
@@ -125,7 +123,6 @@ public class TreeHarvestManager implements IHarvestManager {
 	public void reset(World world, Area treeArea, HarvestMode harvestMode, IFactorySettings settings) {
 
 		setWorld(world);
-		_harvestMode = harvestMode;
 		_area = treeArea;
 		free();
 		_isDone = false;
@@ -157,7 +154,6 @@ public class TreeHarvestManager implements IHarvestManager {
 
 		NBTTagCompound data = new NBTTagCompound();
 		data.setBoolean("done", _isDone);
-		data.setInteger("mode", _harvestMode.ordinal());
 		BlockPos o = getOrigin();
 		data.setIntArray("area", new int[] { o.getX() - _area.xMin, o.getY() - _area.yMin, _area.yMax - o.getY() });
 		data.setIntArray("origin", new int[] { o.getX(), o.getY(), o.getZ() });
@@ -180,7 +176,6 @@ public class TreeHarvestManager implements IHarvestManager {
 
 		NBTTagCompound data = tag.getCompoundTag("harvestManager");
 		_isDone = data.getBoolean("done");
-		_harvestMode = HarvestMode.values()[data.getInteger("mode")];
 		int[] area = data.getIntArray("area"), o = data.getIntArray("origin");
 		if (o.length < 3 || area.length < 3) {
 			_area = new Area(new BlockPos(0, -1, 0), 0, 0, 0);

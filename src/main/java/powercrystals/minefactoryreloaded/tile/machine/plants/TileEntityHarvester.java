@@ -98,7 +98,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			} else {
 				_treeManager = new TreeHarvestManager(world,
 						new Area(pos, 0, 0, 0),
-						HarvestMode.FruitTree, _immutableSettings);
+						_immutableSettings);
 			}
 		}
 	}
