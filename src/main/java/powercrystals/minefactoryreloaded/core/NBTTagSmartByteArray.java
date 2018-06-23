@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
+import javax.annotation.Nonnull;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
@@ -251,6 +252,7 @@ public final class NBTTagSmartByteArray extends NBTTagByteArray {
 		return super.hashCode() ^ dataOut.hashCode();
 	}
 
+	@Nonnull
 	@Override
 	public byte[] getByteArray() {
 
