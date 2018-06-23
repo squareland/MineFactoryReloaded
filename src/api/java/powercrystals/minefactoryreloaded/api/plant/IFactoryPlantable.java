@@ -15,13 +15,15 @@ import javax.annotation.Nonnull;
 public interface IFactoryPlantable {
 
 	/**
-	 * @return The item this plantable is managing.
+	 * Called to get the Item managed by this Plantable.
+	 *
+	 * @return The Item this Plantable is managing.
 	 */
 	@Nonnull
 	Item getSeed();
 
 	/**
-	 * Called to determine if this {@link ItemStack} can be planted.
+	 * Called to determine if this ItemStack can be planted.
 	 *
 	 * @param stack
 	 * 		The stack being planted.
@@ -34,10 +36,12 @@ public interface IFactoryPlantable {
 	boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting);
 
 	/**
-	 * Called to get the {@link ReplacementBlock} to place at this location.
+	 * Called to get the IReplacementBlock to place at this location.
+	 * <p>
+	 * This block will have to modify the terrain around the planting location if the seed requires it. E.g., tilling soil.
 	 *
 	 * @param world
-	 * 		The {@link World} instance this block or item will be placed into.
+	 * 		The world instance this block or item will be placed into.
 	 * @param pos
 	 * 		The position.
 	 * @param stack
@@ -58,7 +62,7 @@ public interface IFactoryPlantable {
 	 * @param stack
 	 * 		The stack being planted.
 	 *
-	 * @return True if this plantable can be placed at the provided coordinates.
+	 * @return True if this Plantable can be placed at the provided coordinates.
 	 */
 	boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack);
 

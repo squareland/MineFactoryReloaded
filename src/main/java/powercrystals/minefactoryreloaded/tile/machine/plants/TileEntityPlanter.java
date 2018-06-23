@@ -55,31 +55,29 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 			return false;
 		}
 
-		@Nonnull ItemStack match = _inventory.get(getPlanterSlotIdFromBp(bp));
+		ItemStack match = _inventory.get(getPlanterSlotIdFromBp(bp));
 
-		for (int stackIndex = 10; stackIndex <= 25; stackIndex++) {
-			@Nonnull ItemStack availableStack = getStackInSlot(stackIndex);
-
-			// skip planting attempt if there's no stack in that slot,
-			// or if there's a template item that's not matched
-			if (availableStack.isEmpty() ||
-					(!match.isEmpty() &&
-					!stacksEqual(match, availableStack)) ||
-					!MFRRegistry.getPlantables().containsKey(availableStack.getItem())) {
-				continue;
-			}
+		for (int stackIndex = 10, stackEnd = getSizeInventory(); stackIndex < stackEnd; stackIndex++) {
+			ItemStack availableStack = getStackInSlot(stackIndex);
 
 			if (keepLastItem && availableStack.getCount() < 2) {
 				continue;
 			}
-			IFactoryPlantable plantable = MFRRegistry.getPlantables().get(availableStack.getItem());
 
-			if (!plantable.canBePlanted(availableStack, false) ||
+			// skip planting attempt if there's no stack in that slot,
+			// or if there's a template item that's not matched
+			if (availableStack.isEmpty() ||
+					!(match.isEmpty() || stacksEqual(match, availableStack))) {
+				continue;
+			}
+
+			IFactoryPlantable plantable = MFRRegistry.getPlantables().get(availableStack.getItem());
+			if (plantable == null || !plantable.canBePlanted(availableStack, false) || // redundancy checks, in case something changed
 					!plantable.canBePlantedHere(world, bp, availableStack))
 				continue;
 
 			IReplacementBlock block = plantable.getPlantedBlock(world, bp, availableStack);
-			if (block == null || !block.replaceBlock(world, bp, availableStack))
+			if (!block.replaceBlock(world, bp, availableStack))
 				continue;
 			decrStackSize(stackIndex, 1);
 			return true;
@@ -216,7 +214,7 @@ public class TileEntityPlanter extends TileEntityFactoryPowered {
 	@Override
 	public boolean canExtractItem(int slot, @Nonnull ItemStack itemstack, EnumFacing side) {
 
-		if (slot >= 10) return true;
-		return false;
+		return slot > 9;
 	}
+
 }

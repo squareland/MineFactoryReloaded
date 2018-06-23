@@ -14,21 +14,21 @@ import powercrystals.minefactoryreloaded.api.plant.ReplacementBlock;
 
 import javax.annotation.Nonnull;
 
-public class PlantableCocoa extends PlantableStandard
-{
+public class PlantableCocoa extends PlantableStandard {
 
-	public PlantableCocoa(Item source, Block plantedBlock)
-	{
+	public PlantableCocoa(Item source, Block plantedBlock) {
+
 		this(source, plantedBlock, WILDCARD);
 	}
 
-	public PlantableCocoa(Item source, Block plantedBlock, int validMeta)
-	{
-		super(source, plantedBlock, validMeta);
+	public PlantableCocoa(Item source, Block plantedBlock, int validMeta) {
+
+		super(source, plantedBlock, validMeta, null);
 		_plantedBlock = new ReplacementBlock(_block) {
+
 			@Override
-			public int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack)
-			{
+			public int getMeta(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 				int meta = EnumFacing.EAST.getHorizontalIndex();
 				if (isGoodLog(world, pos.west()))
 					meta = EnumFacing.WEST.getHorizontalIndex();
@@ -43,28 +43,29 @@ public class PlantableCocoa extends PlantableStandard
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
-	{
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		if (!world.isAirBlock(pos))
 			return false;
 
 		return isNextToAcceptableLog(world, pos);
 	}
 
-	protected boolean isNextToAcceptableLog(World world, BlockPos pos)
-	{
-		for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+	protected boolean isNextToAcceptableLog(World world, BlockPos pos) {
+
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			if (isGoodLog(world, pos.offset(facing)))
 				return true;
 		}
-		
+
 		return false;
 	}
 
-	protected boolean isGoodLog(World world, BlockPos pos)
-	{
+	protected boolean isGoodLog(World world, BlockPos pos) {
+
 		IBlockState state = world.getBlockState(pos);
 		return state.getBlock().equals(Blocks.LOG) &&
 				state.getValue(BlockOldLog.VARIANT) == BlockPlanks.EnumType.JUNGLE;
 	}
+
 }

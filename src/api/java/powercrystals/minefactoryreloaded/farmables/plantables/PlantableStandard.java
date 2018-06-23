@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 import powercrystals.minefactoryreloaded.api.plant.IFactoryPlantable;
 import powercrystals.minefactoryreloaded.api.plant.IReplacementBlock;
@@ -19,8 +18,8 @@ import javax.annotation.Nonnull;
  * so one instance per source ID.
  */
 
-public class PlantableStandard implements IFactoryPlantable
-{
+public class PlantableStandard implements IFactoryPlantable {
+
 	public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
 
 	protected Item _seed;
@@ -28,58 +27,58 @@ public class PlantableStandard implements IFactoryPlantable
 	protected IReplacementBlock _plantedBlock;
 	protected int _validMeta;
 
-	public PlantableStandard(Block block)
-	{
+	public PlantableStandard(Block block) {
+
 		this(Item.getItemFromBlock(block), block);
 	}
 
-	public PlantableStandard(Block block, Block plantedBlock)
-	{
+	public PlantableStandard(Block block, Block plantedBlock) {
+
 		this(Item.getItemFromBlock(block), plantedBlock);
 	}
 
-	public PlantableStandard(Block block, Block plantedBlock, boolean useItemMeta)
-	{
+	public PlantableStandard(Block block, Block plantedBlock, boolean useItemMeta) {
+
 		this(Item.getItemFromBlock(block), plantedBlock, useItemMeta);
 	}
 
-	public PlantableStandard(Item block, Block plantedBlock)
-	{
+	public PlantableStandard(Item block, Block plantedBlock) {
+
 		this(block, plantedBlock, WILDCARD);
 	}
 
-	public PlantableStandard(Block block, int meta)
-	{
+	public PlantableStandard(Block block, int meta) {
+
 		this(Item.getItemFromBlock(block), block, meta);
 	}
 
-	public PlantableStandard(Block block, Block plantedBlock, int meta)
-	{
+	public PlantableStandard(Block block, Block plantedBlock, int meta) {
+
 		this(Item.getItemFromBlock(block), plantedBlock, meta);
 	}
 
-	public PlantableStandard(Item block, Block plantedBlock, int validMeta)
-	{
+	public PlantableStandard(Item block, Block plantedBlock, int validMeta) {
+
 		this(block, plantedBlock, validMeta, new ReplacementBlock(plantedBlock));
 	}
 
-	public PlantableStandard(Item block, Block plantedBlock, int validMeta, int plantedMeta)
-	{
+	public PlantableStandard(Item block, Block plantedBlock, int validMeta, int plantedMeta) {
+
 		this(block, plantedBlock, validMeta, new ReplacementBlock(plantedBlock).setMeta(plantedMeta));
 	}
 
-	public PlantableStandard(Item block, Block plantedBlock, boolean useItemMeta)
-	{
+	public PlantableStandard(Item block, Block plantedBlock, boolean useItemMeta) {
+
 		this(block, plantedBlock, WILDCARD, new ReplacementBlock(plantedBlock).setMeta(useItemMeta));
 	}
 
-	public PlantableStandard(Item block, Block plantedBlock, int validMeta, boolean useItemMeta)
-	{
+	public PlantableStandard(Item block, Block plantedBlock, int validMeta, boolean useItemMeta) {
+
 		this(block, plantedBlock, validMeta, new ReplacementBlock(plantedBlock).setMeta(useItemMeta));
 	}
 
-	public PlantableStandard(Item block, Block plantedBlock, int validMeta, ReplacementBlock repl)
-	{
+	public PlantableStandard(Item block, Block plantedBlock, int validMeta, IReplacementBlock repl) {
+
 		_seed = block;
 		_block = plantedBlock;
 		_validMeta = validMeta;
@@ -87,32 +86,30 @@ public class PlantableStandard implements IFactoryPlantable
 	}
 
 	@Override
-	public boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting)
-	{
+	public boolean canBePlanted(@Nonnull ItemStack stack, boolean forFermenting) {
+
 		return _validMeta == WILDCARD || stack.getItemDamage() == _validMeta;
 	}
 
 	@Override
-	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack)
-	{
+	public boolean canBePlantedHere(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		if (!world.isAirBlock(pos))
 			return false;
 
-		Block groundId = world.getBlockState(pos.down()).getBlock();
-		return (_block.canPlaceBlockAt(world, pos) && _block.canPlaceBlockOnSide(world, pos, EnumFacing.DOWN)) ||
-				(_block instanceof IPlantable &&
-				groundId.canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, (IPlantable)_block));
+		return (_block.canPlaceBlockAt(world, pos) && _block.canPlaceBlockOnSide(world, pos, EnumFacing.DOWN));
 	}
 
 	@Override
-	public IReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack)
-	{
+	public IReplacementBlock getPlantedBlock(World world, BlockPos pos, @Nonnull ItemStack stack) {
+
 		return _plantedBlock;
 	}
 
 	@Override
-	public Item getSeed()
-	{
+	public Item getSeed() {
+
 		return _seed;
 	}
+
 }
