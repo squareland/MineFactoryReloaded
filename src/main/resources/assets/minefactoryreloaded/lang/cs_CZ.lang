@@ -177,12 +177,12 @@ tile.mfr.tank.name = Plastová nádrž
 fluid.mfr.milk.name = Mléko
 fluid.mfr.sludge.name = Splašky
 fluid.mfr.sewage.name = Kal
-fluid.mfr.mobessence.name = Esence
+fluid.mfr.mob_essence.name = Esence
 fluid.mfr.biofuel.name = Biopalivo
 fluid.mfr.meat.name = Maso
 fluid.mfr.pink_slime.name = Růžový sliz
-fluid.mfr.chocolatemilk.name = Čokoládové mléko
-fluid.mfr.mushroomsoup.name = Houbová polévka
+fluid.mfr.chocolate_milk.name = Čokoládové mléko
+fluid.mfr.mushroom_soup.name = Houbová polévka
 fluid.mfr.steam.name = Pára
 
 entity.mfrEntityPinkSlime.name = Růžový sliz
@@ -190,12 +190,12 @@ entity.mfrEntityPinkSlime.name = Růžový sliz
 item.mfr.bucket.milk.name = Kbelík mléka
 item.mfr.bucket.sewage.name = Kbelík splašků
 item.mfr.bucket.sludge.name = Kbelík kalu
-item.mfr.bucket.essence.name = Kbelík esence
+item.mfr.bucket.mob_essence.name = Kbelík esence
 item.mfr.bucket.biofuel.name = Kbelík biopaliva
 item.mfr.bucket.meat.name = Kbelík masa
 item.mfr.bucket.pink_slime.name = Kbelík růžového slizu
-item.mfr.bucket.chocolatemilk.name = Kbelík čokoládového mléka
-item.mfr.bucket.mushroomsoup.name = Kbelík houbové polévky
+item.mfr.bucket.chocolate_milk.name = Kbelík čokoládového mléka
+item.mfr.bucket.mushroom_soup.name = Kbelík houbové polévky
 
 item.mfr.plastic.cup.name = Plastový šálek
 item.mfr.plastic.cup.prefix.name =
@@ -218,7 +218,7 @@ item.mfr.syringe.health.name = Zdravotní stříkačka
 item.mfr.syringe.slime.name = Slizová vzrůstová stříkačka
 item.mfr.syringe.zombie.name = Zombíková stříkačka
 
-item.mfr.machine_block.name = Tovární strojový blok
+tile.mfr.machine_block.base.name = Tovární strojový blok
 item.mfr.hammer.name = Přesná palice
 
 item.mfr.plastic = Plast

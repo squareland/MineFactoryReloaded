@@ -181,12 +181,12 @@ tile.mfr.tank.name = 塑膠水槽
 fluid.mfr.milk.name = 牛奶
 fluid.mfr.sludge.name = 污泥
 fluid.mfr.sewage.name = 污水
-fluid.mfr.mobessence.name = 怪物精華液
+fluid.mfr.mob_essence.name = 怪物精華液
 fluid.mfr.biofuel.name = 生物燃油
 fluid.mfr.meat.name = 肉湯
 fluid.mfr.pink_slime.name = 粉色黏液
-fluid.mfr.chocolatemilk.name = 巧克力牛奶
-fluid.mfr.mushroomsoup.name = 蘑菇湯
+fluid.mfr.chocolate_milk.name = 巧克力牛奶
+fluid.mfr.mushroom_soup.name = 蘑菇湯
 fluid.mfr.steam.name = 蒸氣
 
 entity.mfrEntityPinkSlime.name = 粉紅史萊姆
@@ -194,12 +194,12 @@ entity.mfrEntityPinkSlime.name = 粉紅史萊姆
 item.mfr.bucket.milk.name = 牛奶桶
 item.mfr.bucket.sewage.name = 污水桶
 item.mfr.bucket.sludge.name = 污泥桶
-item.mfr.bucket.essence.name = 怪物精華液桶
+item.mfr.bucket.mob_essence.name = 怪物精華液桶
 item.mfr.bucket.biofuel.name = 生物燃油桶
 item.mfr.bucket.meat.name = 肉湯桶
 item.mfr.bucket.pink_slime.name = 粉色粘液桶
-item.mfr.bucket.chocolatemilk.name = 巧克力牛奶桶
-item.mfr.bucket.mushroomsoup.name = 蘑菇湯桶
+item.mfr.bucket.chocolate_milk.name = 巧克力牛奶桶
+item.mfr.bucket.mushroom_soup.name = 蘑菇湯桶
 
 item.mfr.plastic.cup.name = 塑膠杯
 item.mfr.plastic.cup.prefix.name =
@@ -222,7 +222,7 @@ item.mfr.syringe.health.name = 治愈藥水注射器
 item.mfr.syringe.slime.name = 史萊姆巨大化激素注射器
 item.mfr.syringe.zombie.name = 殭屍病毒注射器
 
-item.mfr.machine_block.name = 工廠機械方塊
+tile.mfr.machine_block.base.name = 工廠機械方塊
 item.mfr.hammer.name = 精密大錘
 
 item.mfr.plastic = 塑膠

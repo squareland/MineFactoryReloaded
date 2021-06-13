@@ -177,12 +177,12 @@ tile.mfr.tank.name = Serbatoio di plastica
 fluid.mfr.milk.name = Latte
 fluid.mfr.sludge.name = Melma
 fluid.mfr.sewage.name = Escrementi
-fluid.mfr.mobessence.name = Essenza
+fluid.mfr.mob_essence.name = Essenza
 fluid.mfr.biofuel.name = Combustibile biologico
 fluid.mfr.meat.name = Carne
 fluid.mfr.pink_slime.name = Gelatina rosa
-fluid.mfr.chocolatemilk.name = Latte al cioccolato
-fluid.mfr.mushroomsoup.name = Zuppa di funghi
+fluid.mfr.chocolate_milk.name = Latte al cioccolato
+fluid.mfr.mushroom_soup.name = Zuppa di funghi
 fluid.mfr.steam.name = Vapore
 
 entity.mfrEntityPinkSlime.name = Gelatina rosa
@@ -190,12 +190,12 @@ entity.mfrEntityPinkSlime.name = Gelatina rosa
 item.mfr.bucket.milk.name = Secchio di latte
 item.mfr.bucket.sewage.name = Secchio di melma
 item.mfr.bucket.sludge.name = Secchio di escrementi
-item.mfr.bucket.essence.name = Secchio di essenza
+item.mfr.bucket.mob_essence.name = Secchio di essenza
 item.mfr.bucket.biofuel.name = Secchio di combustibile biologico
 item.mfr.bucket.meat.name = Secchio di carne
 item.mfr.bucket.pink_slime.name = Secchio di gelatina rosa
-item.mfr.bucket.chocolatemilk.name = Secchio di latte al cioccolato
-item.mfr.bucket.mushroomsoup.name = Secchio di zuppa di funghi
+item.mfr.bucket.chocolate_milk.name = Secchio di latte al cioccolato
+item.mfr.bucket.mushroom_soup.name = Secchio di zuppa di funghi
 
 item.mfr.plastic.cup.name = Bicchiere di plastica
 item.mfr.plastic.cup.prefix.name = Bicchiere di
@@ -218,7 +218,7 @@ item.mfr.syringe.health.name = Siringa della salute
 item.mfr.syringe.slime.name = Siringa della grandezza di gelatina
 item.mfr.syringe.zombie.name = Siringa zombi
 
-item.mfr.machine_block.name = Blocco per macchinario
+tile.mfr.machine_block.base.name = Blocco per macchinario
 item.mfr.hammer.name = Martello di precisione
 
 item.mfr.plastic = Plastica

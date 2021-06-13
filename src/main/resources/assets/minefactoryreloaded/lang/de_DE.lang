@@ -177,12 +177,12 @@ tile.mfr.tank.name = Plastiktank
 fluid.mfr.milk.name = Milch
 fluid.mfr.sludge.name = Schlacke
 fluid.mfr.sewage.name = Gülle
-fluid.mfr.mobessence.name = Essenz
+fluid.mfr.mob_essence.name = Essenz
 fluid.mfr.biofuel.name = Biodiesel
 fluid.mfr.meat.name = Fleischmasse
 fluid.mfr.pink_slime.name = Rosa Schleim
-fluid.mfr.chocolatemilk.name = Kakao
-fluid.mfr.mushroomsoup.name = Pilzsuppe
+fluid.mfr.chocolate_milk.name = Kakao
+fluid.mfr.mushroom_soup.name = Pilzsuppe
 fluid.mfr.steam.name = Dampf
 
 entity.mfrEntityPinkSlime.name = Rosa Schleim
@@ -190,12 +190,12 @@ entity.mfrEntityPinkSlime.name = Rosa Schleim
 item.mfr.bucket.milk.name = Milcheimer
 item.mfr.bucket.sewage.name = Gülleeimer
 item.mfr.bucket.sludge.name = Schlackeeimer
-item.mfr.bucket.essence.name = Eimer mit Monsteressenz
+item.mfr.bucket.mob_essence.name = Eimer mit Monsteressenz
 item.mfr.bucket.biofuel.name = Eimer mit Biodiesel
 item.mfr.bucket.meat.name = Eimer mit Fleischmasse
 item.mfr.bucket.pink_slime.name = Eimer mit rosa Schleim
-item.mfr.bucket.chocolatemilk.name = Eimer mit Kakao
-item.mfr.bucket.mushroomsoup.name = Eimer mit Pilzsuppe
+item.mfr.bucket.chocolate_milk.name = Eimer mit Kakao
+item.mfr.bucket.mushroom_soup.name = Eimer mit Pilzsuppe
 
 item.mfr.plastic.cup.name = Plastikbecher
 item.mfr.plastic.cup.prefix.name = Becher mit
@@ -220,7 +220,7 @@ item.mfr.syringe.health.name = Gesundheitsspritze
 item.mfr.syringe.slime.name = Schleimvergrößerungsspritze
 item.mfr.syringe.zombie.name = Zombifizierungsspritze
 
-item.mfr.machine_block.name = Maschinenblock
+tile.mfr.machine_block.base.name = Maschinenblock
 item.mfr.hammer.name = Präzisionsschmiedehammer
 
 item.mfr.plastic = Plastik
