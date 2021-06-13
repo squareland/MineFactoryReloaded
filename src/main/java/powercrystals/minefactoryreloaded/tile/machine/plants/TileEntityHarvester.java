@@ -372,6 +372,14 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		tag = super.writeToNBT(tag);
 
+		NBTTagCompound list = new NBTTagCompound();
+		DEFAULT_SETTINGS.forEach((key, value) -> {
+			if (!SettingNames.PLAY_SOUNDS.equals(key))
+				list.setBoolean(key, _immutableSettings.getBoolean(key));
+		});
+		if (!list.hasNoTags())
+			tag.setTag("harvesterSettings", list);
+
 		_treeManager.writeToNBT(tag);
 		tag.setInteger("bpos", _areaManager.getPosition());
 
@@ -383,12 +391,14 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 
 		super.readFromNBT(tag);
 		NBTTagCompound list = (NBTTagCompound) tag.getTag("harvesterSettings");
-		DEFAULT_SETTINGS.forEach((key, value) -> {
-			if (!SettingNames.PLAY_SOUNDS.equals(key)) {
-				boolean b = list.getBoolean(key);
-				_settings.put(key, b ? BooleanSetting.TRUE : BooleanSetting.FALSE);
-			}
-		});
+		if (list != null) {
+			DEFAULT_SETTINGS.forEach((key, value) -> {
+				if (!SettingNames.PLAY_SOUNDS.equals(key)) {
+					boolean b = list.getBoolean(key);
+					_settings.put(key, b ? BooleanSetting.TRUE : BooleanSetting.FALSE);
+				}
+			});
+		}
 		if (_treeManager != null)
 			_treeManager.free();
 		_treeManager = new TreeHarvestManager(tag, _immutableSettings);
