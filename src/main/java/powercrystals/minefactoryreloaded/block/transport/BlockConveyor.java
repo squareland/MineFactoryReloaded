@@ -501,7 +501,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 				@Nonnull ItemStack toInsert = entityitem.getItem().copy();
 				toInsert.setCount(1);
 				toInsert = TileEntityHopper.putStackInInventoryAllSlots(conveyor, (IInventory) teBelow, toInsert, EnumFacing.UP);
-				if (!toInsert.isEmpty()) {
+				if (toInsert.isEmpty()) {
 					entityitem.getItem().shrink(1);
 					((TileEntityHopper) teBelow).setTransferCooldown(8);
 				}
