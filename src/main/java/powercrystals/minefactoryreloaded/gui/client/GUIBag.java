@@ -42,6 +42,7 @@ public class GUIBag extends GuiContainer
     @Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
+        super.drawDefaultBackground();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(guiTextures);
         int k = (this.width - this.xSize) / 2;

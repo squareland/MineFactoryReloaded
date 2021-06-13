@@ -355,7 +355,8 @@ public class GuiRedNetLogic extends GuiContainerCore {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float gameTicks, int x, int y) {
-
+		super.drawDefaultBackground();
+		
 		mouseX = x - guiLeft;
 		mouseY = y - guiTop;
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

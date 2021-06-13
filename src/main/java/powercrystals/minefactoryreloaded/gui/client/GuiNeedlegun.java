@@ -32,6 +32,7 @@ public class GuiNeedlegun extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float gameTicks, int mouseX, int mouseY)
 	{
+		super.drawDefaultBackground();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(needleGunGUI);
 		int x = (width - xSize) / 2;
