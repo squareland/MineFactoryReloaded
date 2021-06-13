@@ -75,8 +75,8 @@ tile.mfr.decorative.brick.lapis.large.name = Large Bricks o' Lāzhward
 tile.mfr.decorative.brick.obsidian.large.name = Large Bricks o' Tears
 tile.mfr.decorative.brick.pavedstone.large.name = Large Bricks o' Paved Stone
 tile.mfr.decorative.brick.snow.large.name = Large Bricks o' Slush
-tile.mfr.decorative.brick.meatraw.name = Block o' Fresh Meat
-tile.mfr.decorative.brick.meatcooked.name = Block o' Cooked Meat
+tile.mfr.decorative.brick.meat.raw.name = Block o' Fresh Meat
+tile.mfr.decorative.brick.meat.cooked.name = Block o' Cooked Meat
 tile.mfr.decorative.brick.brick.large.name = Large Clay Bricks
 tile.mfr.decorative.brick.sugar_charcoal.name = Burnt Block o' Sugarrr
 

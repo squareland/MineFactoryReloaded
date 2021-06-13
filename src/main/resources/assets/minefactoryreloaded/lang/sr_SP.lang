@@ -111,8 +111,8 @@ tile.mfr.decorative.brick.lapis.large.name = Velike Lapis Cigle
 tile.mfr.decorative.brick.obsidian.large.name = Velike Opsidijanske Cigle
 tile.mfr.decorative.brick.snow.large.name = Velike Snežne Cigle
 tile.mfr.machine_block.prc.name = Kućište Programerskog RedNet Kontrolera
-tile.mfr.decorative.brick.meatraw.name = Kocka Sirovog Mesa
-tile.mfr.decorative.brick.meatcooked.name = Kocka Kuvanog Mesa
+tile.mfr.decorative.brick.meat.raw.name = Kocka Sirovog Mesa
+tile.mfr.decorative.brick.meat.cooked.name = Kocka Kuvanog Mesa
 
 tile.mfr.decorative.stone.black.smooth.name = Glatak Crnokamen
 tile.mfr.decorative.stone.black.cobble.name = Kaldrmasti Crnokamen

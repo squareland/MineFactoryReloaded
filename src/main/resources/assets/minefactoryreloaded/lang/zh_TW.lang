@@ -141,7 +141,7 @@ tile.mfr.decorative.stone.white.brick.large.name = 大型白岩磚塊
 tile.mfr.decorative.stone.white.gravel.name = 白岩砂礫
 tile.mfr.decorative.stone.white.paved.name = 鋪路白岩
 
-tile.mfr.pink_slime.block.name = 粉紅史萊姆磚
+tile.mfr.pinkslime.block.name = 粉紅史萊姆磚
 
 tile.ice.unmelting.name = 不融冰
 
@@ -410,7 +410,7 @@ chat.info.mfr.safarinet.release=切換為釋放模式
 
 chat.info.mfr.spyglass.nosight=視野內空無一物
 chat.info.mfr.spyglass.hitentity=發現%s位於%.1f, %.1f, %.1f
-chat.info.mfr.spyglass.hitblock=發現%s [%d:%d]位於%.1f, %.1f, %.1f
+chat.info.mfr.spyglass.hitblock=發現%s [%s]位於%.1f, %.1f, %.1f
 chat.info.mfr.spyglass.hitunknown=發現不明物體(來自某個出bug的模組?)位於%.1f, %.1f, %.1f
 
 chat.info.mfr.ruler.nosight = 視野內空無一物

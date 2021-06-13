@@ -119,8 +119,8 @@ tile.mfr.decorative.brick.lapis.large.name = Large Lapis Bricks
 tile.mfr.decorative.brick.obsidian.large.name = Large Obsidian Bricks
 tile.mfr.decorative.brick.pavedstone.large.name = Large Paved Stone Bricks
 tile.mfr.decorative.brick.snow.large.name = Large Snow Bricks
-tile.mfr.decorative.brick.meatraw.name = Raw Meat Block
-tile.mfr.decorative.brick.meatcooked.name = Cooked Meat Block
+tile.mfr.decorative.brick.meat.raw.name = Raw Meat Block
+tile.mfr.decorative.brick.meat.cooked.name = Cooked Meat Block
 tile.mfr.decorative.brick.brick.large.name = Large Bricks
 tile.mfr.decorative.brick.sugar_charcoal.name = Sugar Charcoal Block
 
@@ -137,7 +137,7 @@ tile.mfr.decorative.stone.white.brick.large.name = Large Whitestone Bricks
 tile.mfr.decorative.stone.white.gravel.name = Whitestone Gravel
 tile.mfr.decorative.stone.white.paved.name = Paved Whitestone
 
-tile.mfr.pink_slime.block.name = ピンクスライムブロック
+tile.mfr.pinkslime.block.name = ピンクスライムブロック
 
 tile.ice.unmelting.name = 不溶氷
 

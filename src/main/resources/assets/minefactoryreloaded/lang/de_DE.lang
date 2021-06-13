@@ -119,8 +119,8 @@ tile.mfr.decorative.brick.lapis.large.name = Großer Lapislazuliziegel
 tile.mfr.decorative.brick.obsidian.large.name = Großer Obsidianziegel
 tile.mfr.decorative.brick.pavedstone.large.name = Große Gepflasterte Steinziegel
 tile.mfr.decorative.brick.snow.large.name = Großer Schneeziegel
-tile.mfr.decorative.brick.meatraw.name = Roher Fleischblock
-tile.mfr.decorative.brick.meatcooked.name = Gekochter Fleischblock
+tile.mfr.decorative.brick.meat.raw.name = Roher Fleischblock
+tile.mfr.decorative.brick.meat.cooked.name = Gekochter Fleischblock
 tile.mfr.decorative.brick.brick.large.name = Große Ziegel
 tile.mfr.decorative.brick.sugar_charcoal.name = Zuckerkohleblock
 
@@ -137,7 +137,7 @@ tile.mfr.decorative.stone.white.brick.large.name = Große weiße Ziegel
 tile.mfr.decorative.stone.white.gravel.name = Weißer Kies
 tile.mfr.decorative.stone.white.paved.name = Weißer gepflasterter Stein
 
-tile.mfr.pink_slime.block.name = Rosa Schleimblock
+tile.mfr.pinkslime.block.name = Rosa Schleimblock
 
 tile.ice.unmelting.name = Nichtschmelzendes Eis
 

@@ -119,8 +119,8 @@ tile.mfr.decorative.brick.lapis.large.name = Tijolos Largos de Lápis-Lazúli
 tile.mfr.decorative.brick.obsidian.large.name = Tijolos Largos de Obsidiana
 tile.mfr.decorative.brick.pavedstone.large.name = Tijolos Largos de Pedra Pavimentada
 tile.mfr.decorative.brick.snow.large.name = Tijolos Largos de Neve
-tile.mfr.decorative.brick.meatraw.name = Bloco de Carne Cru
-tile.mfr.decorative.brick.meatcooked.name = Bloco de Carne Cozido
+tile.mfr.decorative.brick.meat.raw.name = Bloco de Carne Cru
+tile.mfr.decorative.brick.meat.cooked.name = Bloco de Carne Cozido
 tile.mfr.decorative.brick.brick.large.name = Tijolos Largos
 tile.mfr.decorative.brick.sugar_charcoal.name = Bloco de Carvão Vegetal de Açúcar
 
@@ -137,7 +137,7 @@ tile.mfr.decorative.stone.white.brick.large.name = Tijolos Largos de Pedra-Branc
 tile.mfr.decorative.stone.white.gravel.name = Cascalho de Pedra-Branca
 tile.mfr.decorative.stone.white.paved.name = Pedra-Branca Pavimentada
 
-tile.mfr.pink_slime.block.name = Bloco de Gosma Rosa
+tile.mfr.pinkslime.block.name = Bloco de Gosma Rosa
 
 tile.ice.unmelting.name = Gelo (Inderretível)
 

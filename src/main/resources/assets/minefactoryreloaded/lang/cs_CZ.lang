@@ -119,8 +119,8 @@ tile.mfr.decorative.brick.lapis.large.name = Velké lapisové cihly
 tile.mfr.decorative.brick.obsidian.large.name = Velké obsidianové cihly
 tile.mfr.decorative.brick.pavedstone.large.name = Velké zpevněné kamenné cihly
 tile.mfr.decorative.brick.snow.large.name = Velké sněhové cihly
-tile.mfr.decorative.brick.meatraw.name = Blok surového masa
-tile.mfr.decorative.brick.meatcooked.name = Blok pečeného masa
+tile.mfr.decorative.brick.meat.raw.name = Blok surového masa
+tile.mfr.decorative.brick.meat.cooked.name = Blok pečeného masa
 tile.mfr.decorative.brick.brick.large.name = Velké cihly
 tile.mfr.decorative.brick.sugar_charcoal.name = Blok cukrového dřevěného uhlí
 
@@ -137,7 +137,7 @@ tile.mfr.decorative.stone.white.brick.large.name = Velké bělokamenné cihly
 tile.mfr.decorative.stone.white.gravel.name = Bělokamenný štěrk
 tile.mfr.decorative.stone.white.paved.name = Zpevněný bílý kámen
 
-tile.mfr.pink_slime.block.name = Blok růžového slizu
+tile.mfr.pinkslime.block.name = Blok růžového slizu
 
 tile.ice.unmelting.name = Led (Netající)
 

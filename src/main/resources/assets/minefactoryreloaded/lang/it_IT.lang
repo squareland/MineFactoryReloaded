@@ -119,8 +119,8 @@ tile.mfr.decorative.brick.lapis.large.name = Lapislazzuli conci
 tile.mfr.decorative.brick.obsidian.large.name = Ossidiana concia
 tile.mfr.decorative.brick.pavedstone.large.name = Strada lastricata concia
 tile.mfr.decorative.brick.snow.large.name = Neve concia
-tile.mfr.decorative.brick.meatraw.name = Blocco di carne cruda
-tile.mfr.decorative.brick.meatcooked.name = Blocco di carne cotta
+tile.mfr.decorative.brick.meat.raw.name = Blocco di carne cruda
+tile.mfr.decorative.brick.meat.cooked.name = Blocco di carne cotta
 tile.mfr.decorative.brick.brick.large.name = Mattoni conci
 tile.mfr.decorative.brick.sugar_charcoal.name = Blocco di carbonella di zucchero
 
@@ -137,7 +137,7 @@ tile.mfr.decorative.stone.white.brick.large.name = Pietrabianca concia
 tile.mfr.decorative.stone.white.gravel.name = Ghiaia di pietrabianca
 tile.mfr.decorative.stone.white.paved.name = Pietrabianca lastricata
 
-tile.mfr.pink_slime.block.name = Blocco di gelatina rosa
+tile.mfr.pinkslime.block.name = Blocco di gelatina rosa
 
 tile.ice.unmelting.name = Ghiaccio (inscioglibile)
 

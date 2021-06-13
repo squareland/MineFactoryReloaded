@@ -119,8 +119,8 @@ tile.mfr.decorative.brick.lapis.large.name=Большие лазуритовые
 tile.mfr.decorative.brick.obsidian.large.name=Большие обсидиановые кирпичи
 tile.mfr.decorative.brick.pavedstone.large.name=Большие мощённые каменные кирпичи
 tile.mfr.decorative.brick.snow.large.name=Большие снежные кирпичи
-tile.mfr.decorative.brick.meatraw.name=Блок сырого мяса
-tile.mfr.decorative.brick.meatcooked.name=Блок приготовленного мяса
+tile.mfr.decorative.brick.meat.raw.name=Блок сырого мяса
+tile.mfr.decorative.brick.meat.cooked.name=Блок приготовленного мяса
 tile.mfr.decorative.brick.brick.large.name=Большие кирпичи
 tile.mfr.decorative.brick.sugar_charcoal.name=Сахарный древесноугольный блок
 
@@ -137,7 +137,7 @@ tile.mfr.decorative.stone.white.brick.large.name=Большие белые ки�
 tile.mfr.decorative.stone.white.gravel.name=Гравиевый белый камень
 tile.mfr.decorative.stone.white.paved.name=Мощёный белый камень
 
-tile.mfr.pink_slime.block.name=Блок розовой слизи
+tile.mfr.pinkslime.block.name=Блок розовой слизи
 
 tile.ice.unmelting.name=Укреплённый лёд
 
@@ -415,7 +415,7 @@ chat.info.mfr.safarinet.release=Режим изменён на освобожд�
 
 chat.info.mfr.spyglass.nosight=Ничто не видно
 chat.info.mfr.spyglass.hitentity=Найдено %s на %.1f, %.1f, %.1f
-chat.info.mfr.spyglass.hitblock=Найдено %s [%s#%d] на %.0f, %.0f, %.0f
+chat.info.mfr.spyglass.hitblock=Найдено %s [%s] на %.0f, %.0f, %.0f
 chat.info.mfr.spyglass.hitunknown=Найден НЕИЗВЕСТНЫЙ (ошибочный мод?) на %.1f, %.1f, %.1f
 
 chat.info.mfr.ruler.nosight=Ничто не видно
