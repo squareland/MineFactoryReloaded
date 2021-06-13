@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 public class GuiNeedlegun extends GuiContainer {
     private static final ResourceLocation needleGunGUI = new ResourceLocation(MFRProps.GUI_FOLDER + "needlegun.png");
-    private String name;
+    private final String name;
 
     public GuiNeedlegun(Container container, @Nonnull ItemStack item) {
         super(container);
@@ -20,17 +20,22 @@ public class GuiNeedlegun extends GuiContainer {
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        fontRenderer.drawString(name, 8, 6, 4210752);
-        fontRenderer.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 4, 0xEFEFEF);
+        fontRenderer.drawString(name, 8, 6, 0xEFEFEF);
+        fontRenderer.drawString(I18n.translateToLocal("container.inventory"), 8, ySize - 96 + 4, 0x404040);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float gameTicks, int mouseX, int mouseY) {
-        super.drawDefaultBackground();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(needleGunGUI);
         int x = (width - xSize) / 2;

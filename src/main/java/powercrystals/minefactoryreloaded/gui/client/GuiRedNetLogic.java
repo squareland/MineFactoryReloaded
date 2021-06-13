@@ -91,14 +91,19 @@ public class GuiRedNetLogic extends GuiContainerCore {
 	}
 
 	@Override
-	public FontRenderer getFontRenderer() {
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		drawDefaultBackground();
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		renderHoveredToolTip(mouseX, mouseY);
+	}
 
+	@Override
+	public FontRenderer getFontRenderer() {
 		return rFontRenderer;
 	}
 
 	@Override
 	public void initGui() {
-
 		uFontRenderer = new FontRenderer(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, true);
 		uFontRenderer.onResourceManagerReload(mc.getResourceManager());
 
@@ -355,8 +360,6 @@ public class GuiRedNetLogic extends GuiContainerCore {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float gameTicks, int x, int y) {
-		super.drawDefaultBackground();
-		
 		mouseX = x - guiLeft;
 		mouseY = y - guiTop;
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
