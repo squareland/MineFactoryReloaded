@@ -10,38 +10,31 @@ import powercrystals.minefactoryreloaded.setup.MFRThings;
 
 import javax.annotation.Nonnull;
 
-public abstract class ItemSyringe extends ItemFactory implements ISyringe
-{
-	public ItemSyringe()
-	{
-		setMaxStackSize(1);
-	}
+public abstract class ItemSyringe extends ItemFactory implements ISyringe {
+    public ItemSyringe() {
+        setMaxStackSize(1);
+    }
 
-	@Override
-	public boolean itemInteractionForEntity(@Nonnull ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand)
-	{
-		if (!entity.world.isRemote && canInject(entity.world, entity, stack))
-		{
-			if (inject(entity.world, entity, stack))
-			{
-				player.setHeldItem(hand, new ItemStack(MFRThings.syringeEmptyItem));
-				return true;
-			}
-		}
+    @Override
+    public boolean itemInteractionForEntity(@Nonnull ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+        if (!entity.world.isRemote && canInject(entity.world, entity, stack)) {
+            if (inject(entity.world, entity, stack) && !player.capabilities.isCreativeMode) {
+                player.setHeldItem(hand, new ItemStack(MFRThings.syringeEmptyItem));
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public boolean isEmpty(@Nonnull ItemStack syringe)
-	{
-		return false;
-	}
+    @Override
+    public boolean isEmpty(@Nonnull ItemStack syringe) {
+        return false;
+    }
 
-	@Nonnull
-	@Override
-	public ItemStack getEmptySyringe(@Nonnull ItemStack syringe)
-	{
-		return new ItemStack(MFRThings.syringeEmptyItem);
-	}
+    @Nonnull
+    @Override
+    public ItemStack getEmptySyringe(@Nonnull ItemStack syringe) {
+        return new ItemStack(MFRThings.syringeEmptyItem);
+    }
 }

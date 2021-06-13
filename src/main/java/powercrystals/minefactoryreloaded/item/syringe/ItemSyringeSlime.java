@@ -17,41 +17,36 @@ import java.lang.reflect.Method;
 
 public class ItemSyringeSlime extends ItemSyringe {
 
-	public ItemSyringeSlime() {
+    public ItemSyringeSlime() {
+        setUnlocalizedName("mfr.syringe.slime");
+        setContainerItem(MFRThings.syringeEmptyItem);
+    }
 
-		setUnlocalizedName("mfr.syringe.slime");
-		setContainerItem(MFRThings.syringeEmptyItem);
-	}
+    @Override
+    public boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe) {
+        return entity instanceof EntitySlime && ((EntitySlime) entity).getSlimeSize() < 8;
+    }
 
-	@Override
-	public boolean canInject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe) {
+    @Override
+    public boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe) {
+        EntitySlime slime = (EntitySlime) entity;
+        setSlimeSize(slime, slime.getSlimeSize() << 1, true);
+        return true;
+    }
 
-		return entity instanceof EntitySlime && ((EntitySlime) entity).getSlimeSize() < 8;
-	}
+    private static final Method SET_SLIME_SIZE = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class, boolean.class);
 
-	@Override
-	public boolean inject(World world, EntityLivingBase entity, @Nonnull ItemStack syringe) {
+    private void setSlimeSize(EntitySlime slime, int size, boolean resetHealth) {
+        try {
+            SET_SLIME_SIZE.invoke(slime, size, resetHealth);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            MineFactoryReloadedCore.log().error("Can't set slime size\n", e);
+        }
+    }
 
-		EntitySlime slime = (EntitySlime) entity;
-		setSlimeSize(slime, slime.getSlimeSize() << 1, true);
-		return true;
-	}
-
-	private static final Method SET_SLIME_SIZE = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class, boolean.class);
-
-	private void setSlimeSize(EntitySlime slime, int size, boolean resetHealth) {
-
-		try {
-			SET_SLIME_SIZE.invoke(slime, size, resetHealth);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			MineFactoryReloadedCore.log().error("Can't set slime size\n", e);
-		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerModels() {
-
-		ModelHelper.registerModel(this, "syringe", "variant=slime");
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerModels() {
+        ModelHelper.registerModel(this, "syringe", "variant=slime");
+    }
 }
