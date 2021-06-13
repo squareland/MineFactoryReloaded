@@ -174,16 +174,16 @@ tile.mfr.machine_block.prc.name = Encaixe do Controlador Programável de RedNet
 
 tile.mfr.tank.name = Tanque de Plástico
 
-fluid.mfr.milk.fluid.name = Leite
-fluid.mfr.sludge.fluid.name = Lodo
-fluid.mfr.sewage.fluid.name = Esgoto
-fluid.mfr.mobessence.fluid.name = Essência
-fluid.mfr.biofuel.fluid.name = Bio-Combustível
-fluid.mfr.meat.fluid.name = Carne
-fluid.mfr.pink_slime.fluid.name = Gosma Rosa
-fluid.mfr.chocolatemilk.fluid.name = Leite com Chocolate
-fluid.mfr.mushroomsoup.fluid.name = Sopa de Cogumelos
-fluid.mfr.steam.fluid.name = Vapor
+fluid.mfr.milk.name = Leite
+fluid.mfr.sludge.name = Lodo
+fluid.mfr.sewage.name = Esgoto
+fluid.mfr.mobessence.name = Essência
+fluid.mfr.biofuel.name = Bio-Combustível
+fluid.mfr.meat.name = Carne
+fluid.mfr.pink_slime.name = Gosma Rosa
+fluid.mfr.chocolatemilk.name = Leite com Chocolate
+fluid.mfr.mushroomsoup.name = Sopa de Cogumelos
+fluid.mfr.steam.name = Vapor
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Gosma Rosa
 

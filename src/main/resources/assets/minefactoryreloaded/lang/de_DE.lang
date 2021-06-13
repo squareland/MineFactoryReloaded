@@ -174,16 +174,16 @@ tile.mfr.machine_block.prc.name = Gehäuse für den Programmierbaren RedNet-Cont
 
 tile.mfr.tank.name = Plastiktank
 
-fluid.mfr.milk.fluid.name = Milch
-fluid.mfr.sludge.fluid.name = Schlacke
-fluid.mfr.sewage.fluid.name = Gülle
-fluid.mfr.mobessence.fluid.name = Essenz
-fluid.mfr.biofuel.fluid.name = Biodiesel
-fluid.mfr.meat.fluid.name = Fleischmasse
-fluid.mfr.pink_slime.fluid.name = Rosa Schleim
-fluid.mfr.chocolatemilk.fluid.name = Kakao
-fluid.mfr.mushroomsoup.fluid.name = Pilzsuppe
-fluid.mfr.steam.fluid.name = Dampf
+fluid.mfr.milk.name = Milch
+fluid.mfr.sludge.name = Schlacke
+fluid.mfr.sewage.name = Gülle
+fluid.mfr.mobessence.name = Essenz
+fluid.mfr.biofuel.name = Biodiesel
+fluid.mfr.meat.name = Fleischmasse
+fluid.mfr.pink_slime.name = Rosa Schleim
+fluid.mfr.chocolatemilk.name = Kakao
+fluid.mfr.mushroomsoup.name = Pilzsuppe
+fluid.mfr.steam.name = Dampf
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Rosa Schleim
 

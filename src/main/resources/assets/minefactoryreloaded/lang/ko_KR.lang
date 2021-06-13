@@ -144,15 +144,15 @@ tile.mfr.cable.redstone.name = 레드넷 케이블
 tile.mfr.rednet.logic.name = 프로그램 가능한 레드넷 제어기(PRC)
 tile.mfr.rednet.panel.historian.name = 레드넷 파형 기록기
 
-fluid.mfr.milk.fluid.name = 우유
-fluid.mfr.sludge.fluid.name = 찌꺼기
-fluid.mfr.sewage.fluid.name = 하수
-fluid.mfr.mobessence.fluid.name = 에센스
-fluid.mfr.biofuel.fluid.name = 바이오 연료
-fluid.mfr.meat.fluid.name = 고기
-fluid.mfr.pink_slime.fluid.name = 분홍 슬라임
-fluid.mfr.chocolatemilk.fluid.name = 초콜릿 우유
-fluid.mfr.mushroomsoup.fluid.name = 버섯 수프
+fluid.mfr.milk.name = 우유
+fluid.mfr.sludge.name = 찌꺼기
+fluid.mfr.sewage.name = 하수
+fluid.mfr.mobessence.name = 에센스
+fluid.mfr.biofuel.name = 바이오 연료
+fluid.mfr.meat.name = 고기
+fluid.mfr.pink_slime.name = 분홍 슬라임
+fluid.mfr.chocolatemilk.name = 초콜릿 우유
+fluid.mfr.mushroomsoup.name = 버섯 수프
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = 분홍 슬라임
 

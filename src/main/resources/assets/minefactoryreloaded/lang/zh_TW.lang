@@ -178,16 +178,16 @@ tile.mfr.machine_block.prc.name = 可燒錄式 RedNet 控制器外殼
 
 tile.mfr.tank.name = 塑膠水槽
 
-fluid.mfr.milk.fluid.name = 牛奶
-fluid.mfr.sludge.fluid.name = 污泥
-fluid.mfr.sewage.fluid.name = 污水
-fluid.mfr.mobessence.fluid.name = 怪物精華液
-fluid.mfr.biofuel.fluid.name = 生物燃油
-fluid.mfr.meat.fluid.name = 肉湯
-fluid.mfr.pink_slime.fluid.name = 粉色黏液
-fluid.mfr.chocolatemilk.fluid.name = 巧克力牛奶
-fluid.mfr.mushroomsoup.fluid.name = 蘑菇湯
-fluid.mfr.steam.fluid.name = 蒸氣
+fluid.mfr.milk.name = 牛奶
+fluid.mfr.sludge.name = 污泥
+fluid.mfr.sewage.name = 污水
+fluid.mfr.mobessence.name = 怪物精華液
+fluid.mfr.biofuel.name = 生物燃油
+fluid.mfr.meat.name = 肉湯
+fluid.mfr.pink_slime.name = 粉色黏液
+fluid.mfr.chocolatemilk.name = 巧克力牛奶
+fluid.mfr.mushroomsoup.name = 蘑菇湯
+fluid.mfr.steam.name = 蒸氣
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = 粉紅史萊姆
 

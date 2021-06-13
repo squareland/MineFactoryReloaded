@@ -301,7 +301,7 @@ public class MFRFluids {
 			fluid.setLuminosity(lightValue);
 		if (temp >= 0)
 			fluid.setTemperature(temp);
-		fluid.setUnlocalizedName("mfr." + name + ".still.name");
+		fluid.setUnlocalizedName("mfr." + name + ".name");
 		fluid.setRarity(rarity);
 	}
 

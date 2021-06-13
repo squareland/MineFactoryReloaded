@@ -112,16 +112,16 @@ tile.mfr.rail.cargo.pickup.name = Cargo Pickup Track
 tile.mfr.rail.passenger.dropoff.name = Passenger Dropoff Track
 tile.mfr.rail.passenger.pickup.name = Passenger Pickup Track
 
-fluid.mfr.milk.fluid.name = Cow's Juice
-fluid.mfr.sludge.fluid.name = Sludge
-fluid.mfr.sewage.fluid.name = Poop
-fluid.mfr.mobessence.fluid.name = Elder Rum
-fluid.mfr.biofuel.fluid.name = PlantFuel
-fluid.mfr.meat.fluid.name = Meat
-fluid.mfr.pink_slime.fluid.name = Pink Slime
-fluid.mfr.chocolatemilk.fluid.name = Chocolate Cow's Juice
-fluid.mfr.mushroomsoup.fluid.name = 'Shroom Goulash
-fluid.mfr.steam.fluid.name = Steam
+fluid.mfr.milk.name = Cow's Juice
+fluid.mfr.sludge.name = Sludge
+fluid.mfr.sewage.name = Poop
+fluid.mfr.mobessence.name = Elder Rum
+fluid.mfr.biofuel.name = PlantFuel
+fluid.mfr.meat.name = Meat
+fluid.mfr.pink_slime.name = Pink Slime
+fluid.mfr.chocolatemilk.name = Chocolate Cow's Juice
+fluid.mfr.mushroomsoup.name = 'Shroom Goulash
+fluid.mfr.steam.name = Steam
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Cube o' Pink Slime
 

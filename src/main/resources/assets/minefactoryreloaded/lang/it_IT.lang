@@ -174,16 +174,16 @@ tile.mfr.machine_block.prc.name = Custodia per regolatrice programmabile RedNet
 
 tile.mfr.tank.name = Serbatoio di plastica
 
-fluid.mfr.milk.fluid.name = Latte
-fluid.mfr.sludge.fluid.name = Melma
-fluid.mfr.sewage.fluid.name = Escrementi
-fluid.mfr.mobessence.fluid.name = Essenza
-fluid.mfr.biofuel.fluid.name = Combustibile biologico
-fluid.mfr.meat.fluid.name = Carne
-fluid.mfr.pink_slime.fluid.name = Gelatina rosa
-fluid.mfr.chocolatemilk.fluid.name = Latte al cioccolato
-fluid.mfr.mushroomsoup.fluid.name = Zuppa di funghi
-fluid.mfr.steam.fluid.name = Vapore
+fluid.mfr.milk.name = Latte
+fluid.mfr.sludge.name = Melma
+fluid.mfr.sewage.name = Escrementi
+fluid.mfr.mobessence.name = Essenza
+fluid.mfr.biofuel.name = Combustibile biologico
+fluid.mfr.meat.name = Carne
+fluid.mfr.pink_slime.name = Gelatina rosa
+fluid.mfr.chocolatemilk.name = Latte al cioccolato
+fluid.mfr.mushroomsoup.name = Zuppa di funghi
+fluid.mfr.steam.name = Vapore
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Gelatina rosa
 

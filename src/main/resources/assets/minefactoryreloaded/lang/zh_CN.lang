@@ -180,16 +180,16 @@ tile.mfr.machine_block.prc.name = 可编程红石网络控制器外壳
 
 tile.mfr.tank.name = 塑料水槽
 
-fluid.mfr.milk.fluid.name = 牛奶
-fluid.mfr.sludge.fluid.name = 污泥
-fluid.mfr.sewage.fluid.name = 污水
-fluid.mfr.mobessence.fluid.name = 精华液
-fluid.mfr.biofuel.fluid.name = 生物燃油
-fluid.mfr.meat.fluid.name = 肉汤
-fluid.mfr.pink_slime.fluid.name = 粉色粘液
-fluid.mfr.chocolatemilk.fluid.name = 巧克力牛奶
-fluid.mfr.mushroomsoup.fluid.name = 蘑菇汤
-fluid.mfr.steam.fluid.name = 蒸汽
+fluid.mfr.milk.name = 牛奶
+fluid.mfr.sludge.name = 污泥
+fluid.mfr.sewage.name = 污水
+fluid.mfr.mobessence.name = 精华液
+fluid.mfr.biofuel.name = 生物燃油
+fluid.mfr.meat.name = 肉汤
+fluid.mfr.pink_slime.name = 粉色粘液
+fluid.mfr.chocolatemilk.name = 巧克力牛奶
+fluid.mfr.mushroomsoup.name = 蘑菇汤
+fluid.mfr.steam.name = 蒸汽
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = 粉色史莱姆
 

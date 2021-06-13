@@ -174,16 +174,16 @@ tile.mfr.machine_block.prc.name = レッドネットコントローラハウジ�
 
 tile.mfr.tank.name = プラスチックタンク
 
-fluid.mfr.milk.fluid.name = 牛乳
-fluid.mfr.sludge.fluid.name = 汚泥
-fluid.mfr.sewage.fluid.name = 汚水
-fluid.mfr.mobessence.fluid.name = モブエッセンス
-fluid.mfr.biofuel.fluid.name = バイオ燃料
-fluid.mfr.meat.fluid.name = 肉
-fluid.mfr.pink_slime.fluid.name = ピンクスライム
-fluid.mfr.chocolatemilk.fluid.name = チョコレート牛乳
-fluid.mfr.mushroomsoup.fluid.name = キノコシチュー
-fluid.mfr.steam.fluid.name = スチーム
+fluid.mfr.milk.name = 牛乳
+fluid.mfr.sludge.name = 汚泥
+fluid.mfr.sewage.name = 汚水
+fluid.mfr.mobessence.name = モブエッセンス
+fluid.mfr.biofuel.name = バイオ燃料
+fluid.mfr.meat.name = 肉
+fluid.mfr.pink_slime.name = ピンクスライム
+fluid.mfr.chocolatemilk.name = チョコレート牛乳
+fluid.mfr.mushroomsoup.name = キノコシチュー
+fluid.mfr.steam.name = スチーム
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = ピンクスライム
 

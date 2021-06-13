@@ -174,16 +174,16 @@ tile.mfr.machine_block.prc.name = Pouzdro programovatelného RedNet ovladače
 
 tile.mfr.tank.name = Plastová nádrž
 
-fluid.mfr.milk.fluid.name = Mléko
-fluid.mfr.sludge.fluid.name = Splašky
-fluid.mfr.sewage.fluid.name = Kal
-fluid.mfr.mobessence.fluid.name = Esence
-fluid.mfr.biofuel.fluid.name = Biopalivo
-fluid.mfr.meat.fluid.name = Maso
-fluid.mfr.pink_slime.fluid.name = Růžový sliz
-fluid.mfr.chocolatemilk.fluid.name = Čokoládové mléko
-fluid.mfr.mushroomsoup.fluid.name = Houbová polévka
-fluid.mfr.steam.fluid.name = Pára
+fluid.mfr.milk.name = Mléko
+fluid.mfr.sludge.name = Splašky
+fluid.mfr.sewage.name = Kal
+fluid.mfr.mobessence.name = Esence
+fluid.mfr.biofuel.name = Biopalivo
+fluid.mfr.meat.name = Maso
+fluid.mfr.pink_slime.name = Růžový sliz
+fluid.mfr.chocolatemilk.name = Čokoládové mléko
+fluid.mfr.mushroomsoup.name = Houbová polévka
+fluid.mfr.steam.name = Pára
 
 entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Růžový sliz
 

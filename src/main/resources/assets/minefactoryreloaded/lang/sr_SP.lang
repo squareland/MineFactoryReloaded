@@ -144,15 +144,15 @@ tile.mfr.cable.redstone.name = RedNet Kabl
 tile.mfr.rednet.logic.name = Programerski RedNet Kontroler
 tile.mfr.rednet.panel.historian.name = RedNet Istoričar
 
-fluid.mfr.milk.fluid.name = Mleko
-fluid.mfr.sludge.fluid.name = Mulj
-fluid.mfr.sewage.fluid.name = Izmet
-fluid.mfr.mobessence.fluid.name = Esencija
-fluid.mfr.biofuel.fluid.name = BioGorivo
-fluid.mfr.meat.fluid.name = Meso
-fluid.mfr.pink_slime.fluid.name = Roze Glib
-fluid.mfr.chocolatemilk.fluid.name = Čokoladno Mleko
-fluid.mfr.mushroomsoup.fluid.name = Čorba od Pečuraka
+fluid.mfr.milk.name = Mleko
+fluid.mfr.sludge.name = Mulj
+fluid.mfr.sewage.name = Izmet
+fluid.mfr.mobessence.name = Esencija
+fluid.mfr.biofuel.name = BioGorivo
+fluid.mfr.meat.name = Meso
+fluid.mfr.pink_slime.name = Roze Glib
+fluid.mfr.chocolatemilk.name = Čokoladno Mleko
+fluid.mfr.mushroomsoup.name = Čorba od Pečuraka
 
 item.mfr.bucket.milk.name = Kofa Mleka
 item.mfr.bucket.sewage.name = Kofa Mulja
