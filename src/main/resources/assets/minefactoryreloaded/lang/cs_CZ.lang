@@ -185,7 +185,7 @@ fluid.mfr.chocolatemilk.name = Čokoládové mléko
 fluid.mfr.mushroomsoup.name = Houbová polévka
 fluid.mfr.steam.name = Pára
 
-entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Růžový sliz
+entity.mfrEntityPinkSlime.name = Růžový sliz
 
 item.mfr.bucket.milk.name = Kbelík mléka
 item.mfr.bucket.sewage.name = Kbelík splašků

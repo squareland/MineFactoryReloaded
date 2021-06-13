@@ -123,7 +123,7 @@ fluid.mfr.chocolatemilk.name = Chocolate Cow's Juice
 fluid.mfr.mushroomsoup.name = 'Shroom Goulash
 fluid.mfr.steam.name = Steam
 
-entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Cube o' Pink Slime
+entity.mfrEntityPinkSlime.name = Cube o' Pink Slime
 
 item.mfr.bucket.milk.name = Pail o' Cow's Juice
 item.mfr.bucket.sewage.name = Pail o' Poop

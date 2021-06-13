@@ -191,7 +191,7 @@ fluid.mfr.chocolatemilk.name = 巧克力牛奶
 fluid.mfr.mushroomsoup.name = 蘑菇汤
 fluid.mfr.steam.name = 蒸汽
 
-entity.MineFactoryReloaded.mfrEntityPinkSlime.name = 粉色史莱姆
+entity.mfrEntityPinkSlime.name = 粉色史莱姆
 
 item.mfr.bucket.milk.name = 牛奶桶
 item.mfr.bucket.sewage.name = 污水桶

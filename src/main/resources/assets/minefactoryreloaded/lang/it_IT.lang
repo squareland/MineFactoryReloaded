@@ -185,7 +185,7 @@ fluid.mfr.chocolatemilk.name = Latte al cioccolato
 fluid.mfr.mushroomsoup.name = Zuppa di funghi
 fluid.mfr.steam.name = Vapore
 
-entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Gelatina rosa
+entity.mfrEntityPinkSlime.name = Gelatina rosa
 
 item.mfr.bucket.milk.name = Secchio di latte
 item.mfr.bucket.sewage.name = Secchio di melma

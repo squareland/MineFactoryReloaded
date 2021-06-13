@@ -185,7 +185,7 @@ fluid.mfr.chocolate_milk.name=Молочный шоколад
 fluid.mfr.mushroom_soup.name=Грибной суп
 fluid.mfr.steam.name=Пар
 
-entity.MineFactoryReloaded.mfrEntityPinkSlime.name=Розовый слизень
+entity.mfrEntityPinkSlime.name=Розовый слизень
 
 item.mfr.bucket.milk.name=Ведро молока
 item.mfr.bucket.sewage.name=Ведро навоза

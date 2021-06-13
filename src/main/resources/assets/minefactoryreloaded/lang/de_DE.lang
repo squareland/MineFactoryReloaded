@@ -185,7 +185,7 @@ fluid.mfr.chocolatemilk.name = Kakao
 fluid.mfr.mushroomsoup.name = Pilzsuppe
 fluid.mfr.steam.name = Dampf
 
-entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Rosa Schleim
+entity.mfrEntityPinkSlime.name = Rosa Schleim
 
 item.mfr.bucket.milk.name = Milcheimer
 item.mfr.bucket.sewage.name = Gülleeimer

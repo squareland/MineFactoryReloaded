@@ -185,7 +185,7 @@ fluid.mfr.chocolatemilk.name = Leite com Chocolate
 fluid.mfr.mushroomsoup.name = Sopa de Cogumelos
 fluid.mfr.steam.name = Vapor
 
-entity.MineFactoryReloaded.mfrEntityPinkSlime.name = Gosma Rosa
+entity.mfrEntityPinkSlime.name = Gosma Rosa
 
 item.mfr.bucket.milk.name = Balde de Leite
 item.mfr.bucket.sewage.name = Balde de Esgoto
