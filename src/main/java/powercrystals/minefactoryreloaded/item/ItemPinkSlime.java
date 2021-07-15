@@ -10,7 +10,7 @@ public class ItemPinkSlime extends ItemMulti {
 	public ItemPinkSlime() {
 
 		setNames("ball", "gem");
-		setUnlocalizedName("mfr.pink_slime");
+		setTranslationKey("mfr.pink_slime");
 	}
 
 	@Override

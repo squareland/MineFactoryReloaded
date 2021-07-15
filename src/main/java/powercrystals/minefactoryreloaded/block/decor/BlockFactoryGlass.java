@@ -59,7 +59,7 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	{
 		super(Material.GLASS, false);
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
-		setUnlocalizedName("mfr.stained_glass.block");
+		setTranslationKey("mfr.stained_glass.block");
 		setHardness(0.3F);
 		setSoundType(SoundType.GLASS);
 		setCreativeTab(MFRCreativeTab.tab);
@@ -166,7 +166,7 @@ public class BlockFactoryGlass extends BlockGlass implements IRedNetDecorative, 
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		
 		return BlockRenderLayer.TRANSLUCENT;
 	}

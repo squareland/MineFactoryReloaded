@@ -55,7 +55,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	public static final String[] NAMES = new String[17];
 	static {
 		for (MFRDyeColor color : MFRDyeColor.values()) {
-			NAMES[color.getMetadata()] = color.getUnlocalizedName();
+			NAMES[color.getMetadata()] = color.getTranslationKey();
 		}
 		NAMES[16] = "default";
 	}
@@ -72,7 +72,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 
 		super(Material.CIRCUITS);
 		setHardness(0.5F);
-		setUnlocalizedName("mfr.conveyor");
+		setTranslationKey("mfr.conveyor");
 		setCreativeTab(MFRCreativeTab.tab);
 		MineFactoryReloadedCore.proxy.addColorRegister(this);
 	}
@@ -124,7 +124,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 
 		return BlockRenderLayer.CUTOUT;
 	}
@@ -156,7 +156,7 @@ public class BlockConveyor extends BlockFactory implements IRedNetInputNode, ICo
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 
 		boolean isItem = entity instanceof EntityItem || entity instanceof EntityXPOrb;
 		if(!isItem)

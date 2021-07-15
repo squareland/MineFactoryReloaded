@@ -26,7 +26,7 @@ public class BlockPinkSlime extends BlockBreakable implements IInitializer, IMod
 
 		super(Material.CLAY, false, MapColor.PINK);
 		setCreativeTab(MFRCreativeTab.tab);
-		setUnlocalizedName("mfr.pinkslime.block"); // FIXME: relocalize to pink_slime.block
+		setTranslationKey("mfr.pinkslime.block"); // FIXME: relocalize to pink_slime.block
 		slipperiness = 0.8f;
 		setHardness(0.5f);
 		setHarvestLevel("shovel", 0);
@@ -36,7 +36,7 @@ public class BlockPinkSlime extends BlockBreakable implements IInitializer, IMod
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 

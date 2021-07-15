@@ -45,7 +45,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	public BlockVineScaffold() {
 
 		super(Material.LEAVES);
-		setUnlocalizedName("mfr.vine.scaffold");
+		setTranslationKey("mfr.vine.scaffold");
 		setSoundType(SoundType.PLANT);
 		setHardness(0.1F);
 		setTickRandomly(true);
@@ -56,7 +56,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 
 		float shrinkAmount = 1f / 45f;
 		float oneTenComp = world.isRemote ? 0 : 0.12f; // sync the player's server desync so they don't float on the client and get kicked
@@ -93,7 +93,7 @@ public class BlockVineScaffold extends Block implements IRedNetDecorative, IInit
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		
 		return BlockRenderLayer.CUTOUT;
 	}

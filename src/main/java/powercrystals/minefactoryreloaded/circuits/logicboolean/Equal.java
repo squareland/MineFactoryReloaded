@@ -23,7 +23,7 @@ public class Equal extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.boolean.equal";
 	}

@@ -33,7 +33,7 @@ public class BlockFactoryRoad extends Block implements IInitializer, IModelRegis
 
 		super(Material.ROCK);
 		setHardness(2.0F);
-		setUnlocalizedName("mfr.road");
+		setTranslationKey("mfr.road");
 		setResistance(25.0F);
 		setSoundType(SoundType.STONE);
 		setCreativeTab(MFRCreativeTab.tab);

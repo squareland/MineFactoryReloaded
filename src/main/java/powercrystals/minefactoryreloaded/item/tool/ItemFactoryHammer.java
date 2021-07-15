@@ -44,7 +44,7 @@ public class ItemFactoryHammer extends ItemFactoryTool
 	public ItemFactoryHammer() {
 
 		setHarvestLevel("wrench", 1);
-		setUnlocalizedName("mfr.hammer");
+		setTranslationKey("mfr.hammer");
 		setMaxStackSize(1);
 	}
 
@@ -171,7 +171,7 @@ public class ItemFactoryHammer extends ItemFactoryTool
 				Vec3d vec31 = new Vec3d((rnd.nextFloat() - 0.5D) * 0.3D, rnd.nextFloat(), 0.6D);
 				vec31.rotatePitch(-player.rotationPitch * (float) Math.PI / 180.0F);
 				vec31.rotateYaw(-player.rotationYaw * (float) Math.PI / 180.0F);
-				vec31 = vec31.addVector(player.posX, player.posY + player.getEyeHeight(), player.posZ);
+				vec31 = vec31.add(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 				player.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, vec31.x, vec31.y, vec31.z, vec3.x,
 						vec3.y + 0.05D, vec3.z, Block.getStateId(Blocks.FIRE.getDefaultState()));
 			}

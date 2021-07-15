@@ -18,7 +18,7 @@ public class ItemSyringeGrowth extends ItemSyringe
 {
 	public ItemSyringeGrowth()
 	{
-		setUnlocalizedName("mfr.syringe.growth");
+		setTranslationKey("mfr.syringe.growth");
 		setContainerItem(MFRThings.syringeEmptyItem);
 	}
 

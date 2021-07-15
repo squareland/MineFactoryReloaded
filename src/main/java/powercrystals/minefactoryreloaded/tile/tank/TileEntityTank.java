@@ -84,7 +84,7 @@ public class TileEntityTank extends TileEntityFactory implements ITankContainerB
 
 		if (!inWorld) return;
 		for (EnumFacing to : EnumFacing.VALUES) {
-			if (to.getFrontOffsetY() != 0 || !world.isBlockLoaded(pos.offset(to)))
+			if (to.getYOffset() != 0 || !world.isBlockLoaded(pos.offset(to)))
 				continue;
 			TileEntityTank tank = MFRUtil.getTile(world, pos.offset(to), TileEntityTank.class);
 			if (tank != null && tank.grid != null && FluidHelper.isFluidEqualOrNull(tank.grid.getStorage().getFluid(), _tank.getFluid())) {

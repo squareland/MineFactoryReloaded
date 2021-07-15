@@ -37,7 +37,7 @@ public class Square implements IRedNetLogicCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.wavegenerator.square";
 	}

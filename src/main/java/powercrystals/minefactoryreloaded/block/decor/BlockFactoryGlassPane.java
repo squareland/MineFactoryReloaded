@@ -70,7 +70,7 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 		if (mfr)
 		{
 			setCreativeTab(MFRCreativeTab.tab);
-			setUnlocalizedName("mfr.stained_glass.pane");
+			setTranslationKey("mfr.stained_glass.pane");
 		}
 		else
 			setCreativeTab(CreativeTabs.DECORATIONS);
@@ -182,7 +182,7 @@ public class BlockFactoryGlassPane extends BlockPane implements IRedNetDecorativ
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer()
+	public BlockRenderLayer getRenderLayer()
 	{
 		return BlockRenderLayer.TRANSLUCENT;
 	}

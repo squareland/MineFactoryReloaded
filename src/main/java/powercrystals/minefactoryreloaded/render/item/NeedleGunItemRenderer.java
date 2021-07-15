@@ -59,7 +59,7 @@ public class NeedleGunItemRenderer extends BaseItemRenderer {
 		
 		gunModel.render(ccrs);
 		if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("ammo") &&
-				!stack.getTagCompound().getCompoundTag("ammo").hasNoTags()) {
+				!stack.getTagCompound().getCompoundTag("ammo").isEmpty()) {
 			magazineModel.render(ccrs);
 		}
 

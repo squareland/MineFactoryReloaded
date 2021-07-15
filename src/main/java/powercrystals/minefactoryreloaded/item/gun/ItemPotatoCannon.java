@@ -43,7 +43,7 @@ public class ItemPotatoCannon extends ItemFactoryGun {
 
 	public ItemPotatoCannon() {
 
-		setUnlocalizedName("mfr.potato_launcher");
+		setTranslationKey("mfr.potato_launcher");
 		setMaxStackSize(1);
 	}
 

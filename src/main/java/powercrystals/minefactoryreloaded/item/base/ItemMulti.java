@@ -59,9 +59,9 @@ public class ItemMulti extends ItemFactory {
 	}
 
 	@Override
-	public String getUnlocalizedName(@Nonnull ItemStack stack) {
+	public String getTranslationKey(@Nonnull ItemStack stack) {
 
-		return getName(getUnlocalizedName(), _names.get(stack.getItemDamage()));
+		return getName(getTranslationKey(), _names.get(stack.getItemDamage()));
 	}
 
 	public static String getName(String name, String postfix) {
@@ -74,7 +74,7 @@ public class ItemMulti extends ItemFactory {
 
 		StringBuilder b = new StringBuilder(getClass().getName());
 		b.append('@').append(System.identityHashCode(this)).append('{');
-		b.append("l:").append(getUnlocalizedName()).append(", n:");
+		b.append("l:").append(getTranslationKey()).append(", n:");
 		b.append(_names).append('}');
 		return b.toString();
 	}

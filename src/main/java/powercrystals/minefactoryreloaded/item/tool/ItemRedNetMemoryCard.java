@@ -27,7 +27,7 @@ public class ItemRedNetMemoryCard extends ItemFactory {
 
 	public ItemRedNetMemoryCard() {
 
-		setUnlocalizedName("mfr.rednet.memorycard");
+		setTranslationKey("mfr.rednet.memorycard");
 		setMaxStackSize(1);
 	}
 

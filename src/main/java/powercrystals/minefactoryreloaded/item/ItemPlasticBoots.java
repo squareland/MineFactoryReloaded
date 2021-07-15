@@ -21,7 +21,7 @@ public class ItemPlasticBoots extends ItemFactoryArmor {
 	public ItemPlasticBoots() {
 
 		super(ItemFactoryArmor.PLASTIC_ARMOR, EntityEquipmentSlot.FEET);
-		setUnlocalizedName("mfr.plastic.armor.boots");
+		setTranslationKey("mfr.plastic.armor.boots");
 	}
 
 	@Override

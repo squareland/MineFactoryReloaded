@@ -46,7 +46,7 @@ public class GuiRedNetLogic extends GuiContainerCore {
 			boolean a = arg0 instanceof Noop, b = arg1 instanceof Noop;
 			if (a != b)
 				return a ? -1 : 1;
-			return MFRUtil.localize(arg0.getUnlocalizedName()).compareTo(MFRUtil.localize(arg1.getUnlocalizedName()));
+			return MFRUtil.localize(arg0.getTranslationKey()).compareTo(MFRUtil.localize(arg1.getTranslationKey()));
 		}
 	}
 
@@ -117,7 +117,7 @@ public class GuiRedNetLogic extends GuiContainerCore {
 		circuits.sort(new CircuitComparator());
 		boolean unicode = false;
 		for (IRedNetLogicCircuit e : circuits) {
-			if (MFRUtil.containsForcedUnicode(MFRUtil.localize(e.getUnlocalizedName()))) {
+			if (MFRUtil.containsForcedUnicode(MFRUtil.localize(e.getTranslationKey()))) {
 				unicode = true;
 				break;
 			}

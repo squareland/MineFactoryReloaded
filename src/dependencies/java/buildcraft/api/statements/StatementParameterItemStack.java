@@ -115,7 +115,7 @@ public class StatementParameterItemStack implements IStatementParameter {
         }
         List<String> tooltip = stack.getTooltip(null, ITooltipFlag.TooltipFlags.NORMAL);
         if (!tooltip.isEmpty()) {
-            tooltip.set(0, stack.getRarity().rarityColor + tooltip.get(0));
+            tooltip.set(0, stack.getRarity().getColor() + tooltip.get(0));
             for (int i = 1; i < tooltip.size(); i++) {
                 tooltip.set(i, TextFormatting.GRAY + tooltip.get(i));
             }

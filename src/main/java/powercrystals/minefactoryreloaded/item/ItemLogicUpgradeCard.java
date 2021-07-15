@@ -23,7 +23,7 @@ public class ItemLogicUpgradeCard extends ItemMulti {
 	public ItemLogicUpgradeCard() {
 
 		setNames(_upgradeNames);
-		setUnlocalizedName("mfr.upgrade.logic");
+		setTranslationKey("mfr.upgrade.logic");
 		setMaxStackSize(1);
 	}
 

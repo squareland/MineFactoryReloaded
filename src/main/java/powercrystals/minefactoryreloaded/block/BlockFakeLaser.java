@@ -50,7 +50,7 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 		super(laser);
 		setHardness(-1);
 		setResistance(Float.POSITIVE_INFINITY);
-		setUnlocalizedName("mfr.fake_laser");
+		setTranslationKey("mfr.fake_laser");
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
 	}
@@ -86,7 +86,7 @@ public class BlockFakeLaser extends Block implements IRedNetNoConnection, IIniti
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 
 		if (world.isRemote)
 			return;

@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 public class ItemSyringeSlime extends ItemSyringe {
 
     public ItemSyringeSlime() {
-        setUnlocalizedName("mfr.syringe.slime");
+        setTranslationKey("mfr.syringe.slime");
         setContainerItem(MFRThings.syringeEmptyItem);
     }
 

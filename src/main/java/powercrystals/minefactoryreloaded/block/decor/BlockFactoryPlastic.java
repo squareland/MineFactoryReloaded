@@ -19,7 +19,7 @@ public class BlockFactoryPlastic extends BlockFactory {
 
 		super(0.3f);
 		slipperiness = 1f / 0.9801f;
-		setUnlocalizedName("mfr.plastic.block");
+		setTranslationKey("mfr.plastic.block");
 		setHarvestLevel("axe", 0);
 		providesPower = false;
 	}

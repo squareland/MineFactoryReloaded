@@ -69,9 +69,9 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 
-		super.onEntityCollidedWithBlock(world, pos, state, entity);
+		super.onEntityCollision(world, pos, state, entity);
 
 		if (entity instanceof EntityLivingBase) {
 			NBTTagCompound data = entity.getEntityData();
@@ -215,7 +215,7 @@ public class BlockFactoryFluid extends BlockFluidCore implements IRedNetDecorati
 	}
 
 	@Override
-	public String getUnlocalizedName() {
+	public String getTranslationKey() {
 
 		return "fluid.mfr." + fluidName.toLowerCase(Locale.ROOT) + ".fluid";
 	}

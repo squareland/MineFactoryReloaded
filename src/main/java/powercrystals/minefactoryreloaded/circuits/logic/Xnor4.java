@@ -27,7 +27,7 @@ public class Xnor4 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.xnor.4";
 	}

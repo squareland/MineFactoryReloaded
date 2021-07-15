@@ -27,7 +27,7 @@ public class Or4 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.or.4";
 	}

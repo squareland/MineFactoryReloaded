@@ -48,9 +48,9 @@ public class FluidFillingManager implements IHarvestManager {
 		for (EnumFacing side : EnumFacing.VALUES) {
 
 			cur = BlockPool.getNext(
-					bn.x + side.getFrontOffsetX(),
-					bn.y + side.getFrontOffsetY(),
-					bn.z + side.getFrontOffsetZ()
+					bn.x + side.getXOffset(),
+					bn.y + side.getYOffset(),
+					bn.z + side.getZOffset()
 			);
 			if (isValid(cur))
 				_blocks.push(cur);

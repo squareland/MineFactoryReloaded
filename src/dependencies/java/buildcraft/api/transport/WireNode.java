@@ -39,9 +39,9 @@ public class WireNode {
     }
 
     public WireNode offset(EnumFacing face) {
-        int nx = (part.x == AxisDirection.POSITIVE ? 1 : 0) + face.getFrontOffsetX();
-        int ny = (part.y == AxisDirection.POSITIVE ? 1 : 0) + face.getFrontOffsetY();
-        int nz = (part.z == AxisDirection.POSITIVE ? 1 : 0) + face.getFrontOffsetZ();
+        int nx = (part.x == AxisDirection.POSITIVE ? 1 : 0) + face.getXOffset();
+        int ny = (part.y == AxisDirection.POSITIVE ? 1 : 0) + face.getYOffset();
+        int nz = (part.z == AxisDirection.POSITIVE ? 1 : 0) + face.getZOffset();
         EnumWirePart nPart = EnumWirePart.get(nx, ny, nz);
         if (nx < 0 || ny < 0 || nz < 0 || nx > 1 || ny > 1 || nz > 1) {
             return new WireNode(pos.offset(face), nPart);

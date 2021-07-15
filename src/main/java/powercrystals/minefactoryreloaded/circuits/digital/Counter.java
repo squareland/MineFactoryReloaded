@@ -60,7 +60,7 @@ public class Counter implements IRedNetLogicCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.counter";
 	}

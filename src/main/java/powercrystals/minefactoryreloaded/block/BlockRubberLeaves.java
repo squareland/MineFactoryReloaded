@@ -48,7 +48,7 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 	
 	public BlockRubberLeaves() {
 
-		setUnlocalizedName("mfr.rubber_wood.leaves");
+		setTranslationKey("mfr.rubber_wood.leaves");
 		setCreativeTab(MFRCreativeTab.tab);
 		MFRThings.registerInitializer(this);
 		MineFactoryReloadedCore.proxy.addModelRegister(this);
@@ -69,9 +69,9 @@ public class BlockRubberLeaves extends BlockLeaves implements IRedNetNoConnectio
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public BlockRenderLayer getBlockLayer()	{
+	public BlockRenderLayer getRenderLayer()	{
 		
-		return Blocks.LEAVES.getBlockLayer();
+		return Blocks.LEAVES.getRenderLayer();
 	}
 
 	@Override

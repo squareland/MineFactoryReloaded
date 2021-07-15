@@ -22,7 +22,7 @@ public class ItemCeramicDye extends ItemFactoryColored {
 
 	public ItemCeramicDye() {
 
-		setUnlocalizedName("mfr.ceramic.dye");
+		setTranslationKey("mfr.ceramic.dye");
 	}
 
 	@Override

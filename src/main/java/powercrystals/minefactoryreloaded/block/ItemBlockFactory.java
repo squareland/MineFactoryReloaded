@@ -56,15 +56,15 @@ public class ItemBlockFactory extends ItemBlock
 	}
 
 	@Override
-	public String getUnlocalizedName(@Nonnull ItemStack stack)
+	public String getTranslationKey(@Nonnull ItemStack stack)
 	{
-		return getName(getUnlocalizedName(), name(stack));
+		return getName(getTranslationKey(), name(stack));
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
-		String str = getName("tip.info" + getUnlocalizedName().substring(4), name(stack));
+		String str = getName("tip.info" + getTranslationKey().substring(4), name(stack));
 		str = MFRUtil.localize(str, true, null);
 		if (str != null)
 			tooltip.add(str);

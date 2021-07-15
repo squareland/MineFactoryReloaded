@@ -25,7 +25,7 @@ public class Mux16Analog extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.mux.16.analog";
 	}

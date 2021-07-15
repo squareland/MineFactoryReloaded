@@ -23,7 +23,7 @@ public class Min3 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.min.3";
 	}

@@ -19,7 +19,7 @@ public class BlockRailCargoDropoff extends BlockFactoryRail {
 	public BlockRailCargoDropoff() {
 
 		super(true, false);
-		setUnlocalizedName("mfr.rail.cargo.dropoff");
+		setTranslationKey("mfr.rail.cargo.dropoff");
 	}
 
 	@Override

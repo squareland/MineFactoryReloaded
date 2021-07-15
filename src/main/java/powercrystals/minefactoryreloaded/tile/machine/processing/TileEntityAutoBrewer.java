@@ -350,7 +350,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 			tagB.removeTag("ench");
 			tagB.removeTag("RepairCost");
 		}
-		return tagA == null ? tagB.hasNoTags() : (tagB == null ? tagA.hasNoTags() : tagA.equals(tagB));
+		return tagA == null ? tagB.isEmpty() : (tagB == null ? tagA.isEmpty() : tagA.equals(tagB));
 	}
 
 	@Override
@@ -365,7 +365,7 @@ public class TileEntityAutoBrewer extends TileEntityFactoryPowered {
 					tagA.removeTag("display");
 					tagA.removeTag("ench");
 					tagA.removeTag("RepairCost");
-					if (tagA.hasNoTags()) {
+					if (tagA.isEmpty()) {
 						itemstack.setTagCompound(null);
 					}
 				}

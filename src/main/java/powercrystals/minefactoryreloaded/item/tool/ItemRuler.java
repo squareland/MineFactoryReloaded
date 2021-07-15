@@ -23,7 +23,7 @@ public class ItemRuler extends ItemFactoryTool {
 
 	public ItemRuler() {
 
-		setUnlocalizedName("mfr.ruler");
+		setTranslationKey("mfr.ruler");
 		setMaxStackSize(1);
 	}
 

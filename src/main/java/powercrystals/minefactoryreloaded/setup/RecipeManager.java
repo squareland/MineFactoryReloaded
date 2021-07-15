@@ -231,7 +231,7 @@ public class RecipeManager {
 				if (isArray) {
 					final ArrayList<IMFRRecipeSet.IRecipeHolder> data = new ArrayList<>(32);
 					recipes.iterator().forEachRemaining(v -> {
-						if (v.getName().getResourcePath().startsWith(desiredValue))
+						if (v.getName().getPath().startsWith(desiredValue))
 							data.add(v);
 					});
 					IMFRRecipeSet.IRecipeHolder[] dataArray;
@@ -329,11 +329,11 @@ public class RecipeManager {
 		private String getGroup() {
 
 			if (recipeName == null) {
-				String domain = output.getItem().getRegistryName().getResourceDomain();
+				String domain = output.getItem().getRegistryName().getNamespace();
 				if (domain.equals("minecraft")) {
-					recipeName = "minecraft:" + MFRRegistry.remapName(output.getUnlocalizedName(), 1);
+					recipeName = "minecraft:" + MFRRegistry.remapName(output.getTranslationKey(), 1);
 				} else {
-					recipeName = domain + ":" + MFRRegistry.remapName(output.getUnlocalizedName(), 2);
+					recipeName = domain + ":" + MFRRegistry.remapName(output.getTranslationKey(), 2);
 				}
 			}
 			return recipeName;

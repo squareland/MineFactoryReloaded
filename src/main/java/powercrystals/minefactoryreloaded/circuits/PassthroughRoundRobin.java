@@ -40,7 +40,7 @@ public class PassthroughRoundRobin implements IRedNetLogicCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.passthrough.roundrobin";
 	}

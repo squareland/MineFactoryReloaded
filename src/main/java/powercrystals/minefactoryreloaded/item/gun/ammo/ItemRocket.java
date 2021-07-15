@@ -14,7 +14,7 @@ public class ItemRocket extends ItemMulti {
 	public ItemRocket() {
 
 		setNames("smart", null);
-		setUnlocalizedName("mfr.rocket");
+		setTranslationKey("mfr.rocket");
 		setMaxStackSize(16);
 	}
 

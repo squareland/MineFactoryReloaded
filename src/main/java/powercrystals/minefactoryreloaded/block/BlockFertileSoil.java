@@ -48,7 +48,7 @@ public class BlockFertileSoil extends Block implements IGrowable, IInitializer, 
 		setTickRandomly(false);
 		setHarvestLevel("hoe", 0);
 		setHarvestLevel("shovel", 0);
-		setUnlocalizedName("mfr.farmland");
+		setTranslationKey("mfr.farmland");
 		setSoundType(SoundType.GROUND);
 		setCreativeTab(MFRCreativeTab.tab);
 		useNeighborBrightness = true; // THIS IS SET IN THE DUMBEST DAMN WAY ON FARMLAND

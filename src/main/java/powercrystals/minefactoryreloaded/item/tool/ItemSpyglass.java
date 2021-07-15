@@ -36,7 +36,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 
 	public ItemSpyglass() {
 
-		setUnlocalizedName("mfr.spyglass");
+		setTranslationKey("mfr.spyglass");
 		setMaxStackSize(1);
 	}
 
@@ -137,7 +137,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 		RayTraceResult objHit = renderViewEntity.rayTrace(range, 1.0F);
 		double blockDist = range;
 		Vec3d playerPos = new Vec3d(renderViewEntity.posX, renderViewEntity.posY, renderViewEntity.posZ);
-		playerPos = playerPos.addVector(0, renderViewEntity.getEyeHeight(), 0);
+		playerPos = playerPos.add(0, renderViewEntity.getEyeHeight(), 0);
 
 		if (objHit != null) {
 			if (objHit.typeOfHit == RayTraceResult.Type.MISS) {
@@ -149,7 +149,7 @@ public class ItemSpyglass extends ItemFactoryTool {
 
 		Vec3d playerLook = renderViewEntity.getLook(1.0F);
 		Vec3d playerLookRel = playerPos
-				.addVector(playerLook.x * range, playerLook.y * range, playerLook.z * range);
+				.add(playerLook.x * range, playerLook.y * range, playerLook.z * range);
 		List<Entity> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 				renderViewEntity,
 				renderViewEntity

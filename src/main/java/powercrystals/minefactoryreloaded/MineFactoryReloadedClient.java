@@ -401,7 +401,7 @@ public class MineFactoryReloadedClient implements IResourceManagerReloadListener
 		Vec3d playerPos = Minecraft.getMinecraft().getRenderViewEntity().getPositionEyes(1);
 
 		Vec3d playerLook = Minecraft.getMinecraft().getRenderViewEntity().getLook(1);
-		Vec3d playerLookRel = playerPos.addVector(playerLook.x * range, playerLook.y * range, playerLook.z * range);
+		Vec3d playerLookRel = playerPos.add(playerLook.x * range, playerLook.y * range, playerLook.z * range);
 		List<Entity> list = Minecraft.getMinecraft().world.getEntitiesWithinAABBExcludingEntity(
 			Minecraft.getMinecraft().getRenderViewEntity(),
 			Minecraft.getMinecraft().getRenderViewEntity().getEntityBoundingBox().expand(playerLook.x * range, playerLook.y * range,

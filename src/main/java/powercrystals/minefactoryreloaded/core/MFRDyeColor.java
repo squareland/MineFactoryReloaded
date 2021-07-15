@@ -42,7 +42,7 @@ public enum MFRDyeColor implements IStringSerializable {
 		return this.meta;
 	}
 
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return this.unlocalizedName;
 	}
@@ -79,7 +79,7 @@ public enum MFRDyeColor implements IStringSerializable {
 		{
 			META_LOOKUP[color.getMetadata()] = color;
 			NAMES[color.getMetadata()] = color.getName();
-			UNLOC_NAMES[color.getMetadata()] = color.getUnlocalizedName();
+			UNLOC_NAMES[color.getMetadata()] = color.getTranslationKey();
 		}
 	}
 }

@@ -23,7 +23,7 @@ public class SawtoothFalling extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.wavegenerator.sawtooth.falling";
 	}

@@ -38,7 +38,7 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister {
 	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag tooltipFlag) {
 
 		super.addInformation(stack, world, tooltip, tooltipFlag);
-		String str = "tip.info" + getUnlocalizedName(stack).substring(4);
+		String str = "tip.info" + getTranslationKey(stack).substring(4);
 		str = MFRUtil.localize(str, true, null);
 		if (str != null)
 			tooltip.add(str);
@@ -57,7 +57,7 @@ public class ItemFactory extends Item implements IInitializer, IModelRegister {
 
 		StringBuilder b = new StringBuilder(getClass().getName());
 		b.append('@').append(System.identityHashCode(this)).append('{');
-		b.append("l:").append(getUnlocalizedName());
+		b.append("l:").append(getTranslationKey());
 		b.append('}');
 		return b.toString();
 	}

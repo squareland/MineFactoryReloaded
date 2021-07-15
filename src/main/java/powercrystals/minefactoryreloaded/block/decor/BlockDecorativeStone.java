@@ -39,7 +39,7 @@ public class BlockDecorativeStone extends BlockFactory {
 		setHardness(2.0F);
 		setResistance(10.0F);
 		setSoundType(SoundType.STONE);
-		setUnlocalizedName("mfr.decorative.stone");
+		setTranslationKey("mfr.decorative.stone");
 		providesPower = false;
 	}
 

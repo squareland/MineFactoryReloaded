@@ -22,7 +22,7 @@ public class ItemSyringeZombie extends ItemSyringe {
 
 	public ItemSyringeZombie() {
 
-		setUnlocalizedName("mfr.syringe.zombie");
+		setTranslationKey("mfr.syringe.zombie");
 		setContainerItem(MFRThings.syringeEmptyItem);
 	}
 

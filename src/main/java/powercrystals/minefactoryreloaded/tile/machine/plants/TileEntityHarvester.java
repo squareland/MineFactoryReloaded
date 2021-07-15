@@ -363,7 +363,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			if (!SettingNames.PLAY_SOUNDS.equals(key))
 				list.setBoolean(key, _immutableSettings.getBoolean(key));
 		});
-		if (!list.hasNoTags())
+		if (!list.isEmpty())
 			tag.setTag("harvesterSettings", list);
 	}
 
@@ -377,7 +377,7 @@ public class TileEntityHarvester extends TileEntityFactoryPowered {
 			if (!SettingNames.PLAY_SOUNDS.equals(key))
 				list.setBoolean(key, _immutableSettings.getBoolean(key));
 		});
-		if (!list.hasNoTags())
+		if (!list.isEmpty())
 			tag.setTag("harvesterSettings", list);
 
 		_treeManager.writeToNBT(tag);

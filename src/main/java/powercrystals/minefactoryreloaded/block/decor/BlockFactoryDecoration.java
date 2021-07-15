@@ -20,7 +20,7 @@ public class BlockFactoryDecoration extends BlockFactory
 	public BlockFactoryDecoration() {
 		
 		super(0.5f);
-		setUnlocalizedName("mfr.machine_block");
+		setTranslationKey("mfr.machine_block");
 	}
 
 	@Override

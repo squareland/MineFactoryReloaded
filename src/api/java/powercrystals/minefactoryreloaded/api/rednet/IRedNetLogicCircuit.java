@@ -11,7 +11,7 @@ public interface IRedNetLogicCircuit {
 
 	int[] recalculateOutputValues(long worldTime, int[] inputValues);
 
-	String getUnlocalizedName();
+	String getTranslationKey();
 
 	String getInputPinLabel(int pin);
 

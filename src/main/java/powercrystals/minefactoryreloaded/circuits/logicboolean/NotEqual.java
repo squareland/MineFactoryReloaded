@@ -23,7 +23,7 @@ public class NotEqual extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.boolean.notequal";
 	}

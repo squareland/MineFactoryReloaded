@@ -38,7 +38,7 @@ public class ItemRedNetMeter extends ItemMulti {
 
 	public ItemRedNetMeter() {
 		setNames(null, "info", "debug");
-		setUnlocalizedName("mfr.rednet.meter");
+		setTranslationKey("mfr.rednet.meter");
 		setMaxStackSize(1);
 	}
 

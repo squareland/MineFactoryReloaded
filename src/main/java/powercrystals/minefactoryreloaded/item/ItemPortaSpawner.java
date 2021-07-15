@@ -40,7 +40,7 @@ public class ItemPortaSpawner extends ItemFactory {
 
 	public ItemPortaSpawner() {
 
-		setUnlocalizedName("mfr.porta_spawner");
+		setTranslationKey("mfr.porta_spawner");
 		setMaxStackSize(1);
 	}
 

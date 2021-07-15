@@ -29,7 +29,7 @@ public interface IPipeRegistry {
      * lib in order to register.
      * 
      * @param postCreate A function to call in order to setup the {@link Item#setRegistryName(ResourceLocation)} and
-     *            {@link Item#setUnlocalizedName(String)}. */
+     *            {@link Item#setTranslationKey(String)}. */
     IItemPipe createUnnamedItemForPipe(PipeDefinition definition, Consumer<Item> postCreate);
 
     Iterable<PipeDefinition> getAllRegisteredPipes();

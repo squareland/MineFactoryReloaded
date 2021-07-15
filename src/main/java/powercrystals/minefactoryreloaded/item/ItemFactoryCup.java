@@ -61,7 +61,7 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 		useHandlers = new LinkedList<>();
 		useHandlers.add(defaultUseAction);
 		useHandlers.add(drinkUseAction);
-		setUnlocalizedName("mfr.plastic.cup");
+		setTranslationKey("mfr.plastic.cup");
 	}
 
 	@Override
@@ -73,10 +73,10 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 	}
 
 	@Override
-	public String getUnlocalizedName(@Nonnull ItemStack stack) {
+	public String getTranslationKey(@Nonnull ItemStack stack) {
 		if (getFluid(stack) != null)
-			return getUnlocalizedName() + (_prefix ? ".prefix" : ".suffix");
-		return getUnlocalizedName();
+			return getTranslationKey() + (_prefix ? ".prefix" : ".suffix");
+		return getTranslationKey();
 	}
 
 	private FluidStack getFluid(@Nonnull ItemStack stack) {
@@ -90,7 +90,7 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 	}
 
 	public String getLocalizedName(String str) {
-		String name = getUnlocalizedName() + "." + str;
+		String name = getTranslationKey() + "." + str;
 		if (I18n.canTranslate(name))
 			return I18n.translateToLocal(name);
 		return null;
@@ -142,7 +142,7 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 			tag.removeTag("drained");
 			tag.removeTag("fluid");
 			tag.removeTag("toDrain");
-			if (tag.hasNoTags())
+			if (tag.isEmpty())
 				r.setTagCompound(null);
 		}
 		return r;
@@ -241,7 +241,7 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 		{
 			d3 = ((net.minecraft.entity.player.EntityPlayerMP)entity).interactionManager.getBlockReachDistance();
 		}
-		Vec3d vec3d1 = vec3d.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
+		Vec3d vec3d1 = vec3d.add((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
 		return world.rayTraceBlocks(vec3d, vec3d1, useLiquids, !useLiquids, false);
 	}
 
@@ -316,7 +316,7 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
 			FluidStack fluid = null;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
+					(fluidTag = tag.getCompoundTag("fluid")).isEmpty() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				fillAmount = Math.min(capacity, resource.amount);
 			if (fluid == null) {
@@ -347,7 +347,7 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag;
 			FluidStack fluid;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
+					(fluidTag = tag.getCompoundTag("fluid")).isEmpty() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null ||
 					!(fluid.getFluid().equals(resource.getFluid())))
 				return null;
@@ -362,7 +362,7 @@ public class ItemFactoryCup extends ItemFactory implements IUsable {
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag;
 			FluidStack fluid;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
+					(fluidTag = tag.getCompoundTag("fluid")).isEmpty() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				return null;
 			return drain(maxDrain, doDrain, tag, fluid);

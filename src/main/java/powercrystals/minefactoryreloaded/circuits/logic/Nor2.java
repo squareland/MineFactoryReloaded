@@ -27,7 +27,7 @@ public class Nor2 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.nor.2";
 	}

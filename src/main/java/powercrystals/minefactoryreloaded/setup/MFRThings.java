@@ -197,11 +197,11 @@ public class MFRThings {
 				.setModelLocation("armor", "type=glass_helm");
 		{
 			int i = MFRConfig.armorStacks.getBoolean(false) ? 4 : 1;
-			plasticHelmetItem.setRepairIngot("itemPlastic").setUnlocalizedName("mfr.plastic.armor.helm").setMaxStackSize(i);
-			plasticChestplateItem.setRepairIngot("itemPlastic").setUnlocalizedName("mfr.plastic.armor.chest").setMaxStackSize(i);
-			plasticLeggingsItem.setRepairIngot("itemPlastic").setUnlocalizedName("mfr.plastic.armor.legs").setMaxStackSize(i);
+			plasticHelmetItem.setRepairIngot("itemPlastic").setTranslationKey("mfr.plastic.armor.helm").setMaxStackSize(i);
+			plasticChestplateItem.setRepairIngot("itemPlastic").setTranslationKey("mfr.plastic.armor.chest").setMaxStackSize(i);
+			plasticLeggingsItem.setRepairIngot("itemPlastic").setTranslationKey("mfr.plastic.armor.legs").setMaxStackSize(i);
 			plasticBootsItem.setRepairIngot("itemPlastic").setMaxStackSize(i);
-			plasticGlasses.setRepairIngot("itemPlastic").setUnlocalizedName("mfr.glass.armor.helm");
+			plasticGlasses.setRepairIngot("itemPlastic").setTranslationKey("mfr.glass.armor.helm");
 		}
 
 		rawRubberItem = (new ItemFactory() {
@@ -211,7 +211,7 @@ public class MFRThings {
 
 				return 30;
 			}
-		}).setModelLocation("material", "type=rubber_raw").setUnlocalizedName("mfr.rubber.raw");
+		}).setModelLocation("material", "type=rubber_raw").setTranslationKey("mfr.rubber.raw");
 		rubberBarItem = (new ItemFactory() {
 
 			@Override
@@ -219,12 +219,12 @@ public class MFRThings {
 
 				return 90;
 			}
-		}).setModelLocation("material", "type=rubber_bar").setUnlocalizedName("mfr.rubber.bar");
+		}).setModelLocation("material", "type=rubber_bar").setTranslationKey("mfr.rubber.bar");
 
 		rawPlasticItem = (new ItemFactory()).setModelLocation("material", "type=plastic_raw")
-				.setUnlocalizedName("mfr.plastic.raw");
+				.setTranslationKey("mfr.plastic.raw");
 		plasticSheetItem = (new ItemFactory()).setModelLocation("material", "type=plastic_sheet")
-				.setUnlocalizedName("mfr.plastic.sheet").setMaxStackSize(96);
+				.setTranslationKey("mfr.plastic.sheet").setMaxStackSize(96);
 
 		upgradeItem = new ItemUpgrade();
 
@@ -235,20 +235,20 @@ public class MFRThings {
 		float meatNuggetSaturation = MFRConfig.meatSaturation.getBoolean(false) ? 0.1F : 0.2F;
 		float meatIngotSaturation = MFRConfig.meatSaturation.getBoolean(false) ? 0.2F : 0.8F;
 		meatIngotRawItem = (new ItemFactoryFood(4, meatIngotSaturation))
-				.setModelLocation("food", "variant=meat_ingot_raw").setUnlocalizedName("mfr.meat.ingot.raw");
+				.setModelLocation("food", "variant=meat_ingot_raw").setTranslationKey("mfr.meat.ingot.raw");
 		meatIngotCookedItem = (new ItemFactoryFood(10, meatIngotSaturation))
-				.setModelLocation("food", "variant=meat_ingot_cooked").setUnlocalizedName("mfr.meat.ingot.cooked");
+				.setModelLocation("food", "variant=meat_ingot_cooked").setTranslationKey("mfr.meat.ingot.cooked");
 		meatNuggetRawItem = (new ItemFactoryFood(1, meatNuggetSaturation))
-				.setModelLocation("food", "variant=meat_nugget_raw").setUnlocalizedName("mfr.meat.nugget.raw");
+				.setModelLocation("food", "variant=meat_nugget_raw").setTranslationKey("mfr.meat.nugget.raw");
 		meatNuggetCookedItem = (new ItemFactoryFood(4, meatNuggetSaturation))
-				.setModelLocation("food", "variant=meat_nugget_cooked").setUnlocalizedName("mfr.meat.nugget.cooked");
+				.setModelLocation("food", "variant=meat_nugget_cooked").setTranslationKey("mfr.meat.nugget.cooked");
 		pinkSlimeItem = new ItemPinkSlime();
 
 		if (MFRConfig.enableLiquidSyringe.getBoolean(true))
 			syringeEmptyItem = new ItemSyringeLiquid();
 		else
 			syringeEmptyItem = (new ItemFactory()).setModelLocation("syringe", "variant=empty")
-					.setUnlocalizedName("mfr.syringe.empty").setRegistryName(MFRProps.MOD_ID, "syringe_empty");
+					.setTranslationKey("mfr.syringe.empty").setRegistryName(MFRProps.MOD_ID, "syringe_empty");
 		syringeHealthItem = new ItemSyringeHealth();
 		syringeGrowthItem = new ItemSyringeGrowth();
 		syringeZombieItem = new ItemSyringeZombie();
@@ -257,13 +257,13 @@ public class MFRThings {
 
 		safariNetLauncherItem = new ItemSafariNetLauncher();
 		safariNetItem = (new ItemSafariNet(0, true)).setModelLocation("safari_net", "reusable")
-				.setUnlocalizedName("mfr.safarinet.reusable");
+				.setTranslationKey("mfr.safarinet.reusable");
 		safariNetSingleItem = (new ItemSafariNet(0)).setModelLocation("safari_net", "single_use")
-				.setUnlocalizedName("mfr.safarinet.single_use");
+				.setTranslationKey("mfr.safarinet.single_use");
 		safariNetJailerItem = (new ItemSafariNet(1)).setModelLocation("safari_net", "jailer")
-				.setUnlocalizedName("mfr.safarinet.jailer");
+				.setTranslationKey("mfr.safarinet.jailer");
 		safariNetFancyJailerItem = (new ItemSafariNet(3)).setModelLocation("safari_net", "jailer_fancy")
-				.setUnlocalizedName("mfr.safarinet.jailer.fancy");
+				.setTranslationKey("mfr.safarinet.jailer.fancy");
 
 		portaSpawnerItem = new ItemPortaSpawner();
 
@@ -289,15 +289,15 @@ public class MFRThings {
 				return 400;
 			}
 		}).setModelLocation("material", "type=sugar_charcoal")
-				.setUnlocalizedName("mfr.sugar_charcoal");
-		fertilizerItem = (new ItemFactory()).setModelLocation("material", "type=fertilizer").setUnlocalizedName("mfr.fertilizer");
+				.setTranslationKey("mfr.sugar_charcoal");
+		fertilizerItem = (new ItemFactory()).setModelLocation("material", "type=fertilizer").setTranslationKey("mfr.fertilizer");
 
 		ceramicDyeItem = new ItemCeramicDye();
-		(laserFocusItem = new ItemFactoryColored()).setModelLocation("laser_focus", "").setUnlocalizedName("mfr.laser.focus")
+		(laserFocusItem = new ItemFactoryColored()).setModelLocation("laser_focus", "").setTranslationKey("mfr.laser.focus")
 				.setMaxStackSize(1);
 
 		blankRecordItem = (new ItemFactory()).setModelLocation("material", "type=blank_record")
-				.setUnlocalizedName("mfr.record.blank").setMaxStackSize(1);
+				.setTranslationKey("mfr.record.blank").setMaxStackSize(1);
 		spyglassItem = new ItemSpyglass();
 		rulerItem = new ItemRuler();
 		fishingRodItem = new ItemFishingRod();
@@ -306,19 +306,19 @@ public class MFRThings {
 
 		needlegunItem = new ItemNeedleGun();
 		needlegunAmmoEmptyItem = (new ItemFactory()).setModelLocation("needle_gun_ammo", "variant=empty")
-				.setUnlocalizedName("mfr.needlegun.ammo.empty");
+				.setTranslationKey("mfr.needlegun.ammo.empty");
 		needlegunAmmoStandardItem = (new ItemNeedlegunAmmoStandard())
-				.setModelLocation("needle_gun_ammo", "variant=standard").setUnlocalizedName("mfr.needlegun.ammo.standard");
+				.setModelLocation("needle_gun_ammo", "variant=standard").setTranslationKey("mfr.needlegun.ammo.standard");
 		needlegunAmmoPierceItem = (new ItemNeedlegunAmmoStandard(16, 2f, 8))
-				.setModelLocation("needle_gun_ammo", "variant=pierce").setUnlocalizedName("mfr.needlegun.ammo.pierce");
+				.setModelLocation("needle_gun_ammo", "variant=pierce").setTranslationKey("mfr.needlegun.ammo.pierce");
 		needlegunAmmoLavaItem = (new ItemNeedlegunAmmoBlock(Blocks.FLOWING_LAVA.getDefaultState(), 3))
-				.setModelLocation("needle_gun_ammo", "variant=lava").setUnlocalizedName("mfr.needlegun.ammo.lava");
+				.setModelLocation("needle_gun_ammo", "variant=lava").setTranslationKey("mfr.needlegun.ammo.lava");
 		needlegunAmmoSludgeItem = (new ItemNeedlegunAmmoBlock(MFRFluids.sludgeLiquid.getDefaultState(), 6))
-				.setModelLocation("needle_gun_ammo", "variant=sludge").setUnlocalizedName("mfr.needlegun.ammo.sludge");
+				.setModelLocation("needle_gun_ammo", "variant=sludge").setTranslationKey("mfr.needlegun.ammo.sludge");
 		needlegunAmmoSewageItem = (new ItemNeedlegunAmmoBlock(MFRFluids.sewageLiquid.getDefaultState(), 6))
-				.setModelLocation("needle_gun_ammo", "variant=sewage").setUnlocalizedName("mfr.needlegun.ammo.sewage");
-		needlegunAmmoFireItem = (new ItemNeedlegunAmmoFire()).setUnlocalizedName("mfr.needlegun.ammo.fire");
-		needlegunAmmoAnvilItem = (new ItemNeedlegunAmmoAnvil()).setUnlocalizedName("mfr.needlegun.ammo.anvil");
+				.setModelLocation("needle_gun_ammo", "variant=sewage").setTranslationKey("mfr.needlegun.ammo.sewage");
+		needlegunAmmoFireItem = (new ItemNeedlegunAmmoFire()).setTranslationKey("mfr.needlegun.ammo.fire");
+		needlegunAmmoAnvilItem = (new ItemNeedlegunAmmoAnvil()).setTranslationKey("mfr.needlegun.ammo.anvil");
 
 		rocketLauncherItem = new ItemRocketLauncher();
 		rocketItem = new ItemRocket();

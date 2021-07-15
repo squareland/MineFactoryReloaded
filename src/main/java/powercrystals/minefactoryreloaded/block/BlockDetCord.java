@@ -28,7 +28,7 @@ public class BlockDetCord extends BlockFactory {
 		setHardness(2.0F);
 		setResistance(10.0F);
 		setSoundType(SoundType.SNOW);
-		setUnlocalizedName("mfr.detcord");
+		setTranslationKey("mfr.detcord");
 		setCreativeTab(MFRCreativeTab.tab);
 	}
 

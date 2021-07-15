@@ -590,7 +590,7 @@ public class WorldGenMassiveTree extends WorldGenerator {
 
 		Chunk chunk = chunkMap.get(pos);
 		if (chunk == null) {
-			chunk = world.getChunkFromBlockCoords(blockPos);
+			chunk = world.getChunk(blockPos);
 			chunkMap.put(pos, chunk);
 		}
 

@@ -36,7 +36,7 @@ public class NeedlegunContainerWrapper implements IInventory
 	@Override
 	public ItemStack getStackInSlot(int i)
 	{
-		if(!_stack.getTagCompound().hasKey("ammo") || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
+		if(!_stack.getTagCompound().hasKey("ammo") || _stack.getTagCompound().getCompoundTag("ammo").isEmpty())
 		{
 			return ItemStack.EMPTY;
 		}
@@ -50,7 +50,7 @@ public class NeedlegunContainerWrapper implements IInventory
 	@Override
 	public ItemStack decrStackSize(int i, int j)
 	{
-		if(!_stack.getTagCompound().hasKey("ammo") || _stack.getTagCompound().getCompoundTag("ammo").hasNoTags())
+		if(!_stack.getTagCompound().hasKey("ammo") || _stack.getTagCompound().getCompoundTag("ammo").isEmpty())
 		{
 			return ItemStack.EMPTY;
 		}

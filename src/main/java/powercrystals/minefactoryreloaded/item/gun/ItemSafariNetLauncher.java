@@ -33,7 +33,7 @@ import java.util.List;
 public class ItemSafariNetLauncher extends ItemFactoryGun {
 
 	public ItemSafariNetLauncher() {
-		setUnlocalizedName("mfr.safarinet.launcher");
+		setTranslationKey("mfr.safarinet.launcher");
 		setMaxStackSize(1);
 	}
 

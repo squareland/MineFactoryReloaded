@@ -32,7 +32,7 @@ public class ItemFactoryBag extends ItemFactory implements IInventoryContainerIt
 
 	public ItemFactoryBag() {
 
-		setUnlocalizedName("mfr.plastic.bag");
+		setTranslationKey("mfr.plastic.bag");
 		setMaxStackSize(24);
 	}
 

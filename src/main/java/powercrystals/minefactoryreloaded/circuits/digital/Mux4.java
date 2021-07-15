@@ -31,7 +31,7 @@ public class Mux4 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.mux.4";
 	}

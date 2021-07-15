@@ -255,7 +255,7 @@ public class MFRFluids {
 
 		if (MFRConfig.vanillaOverrideMilkBucket.getBoolean(true)) {
 			//needs to be the vanilla milk bucket registry name to properly replace vanilla one
-			ForgeRegistries.ITEMS.register(new ItemBucket(milkLiquid).setUnlocalizedName("mfr.bucket.milk").setRegistryName("minecraft:milk_bucket"));
+			ForgeRegistries.ITEMS.register(new ItemBucket(milkLiquid).setTranslationKey("mfr.bucket.milk").setRegistryName("minecraft:milk_bucket"));
 		}
 	}
 

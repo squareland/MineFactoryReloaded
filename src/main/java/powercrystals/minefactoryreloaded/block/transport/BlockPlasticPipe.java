@@ -64,7 +64,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	public BlockPlasticPipe() {
 
 		super(0.8F);
-		setUnlocalizedName("mfr.plastic.pipe");
+		setTranslationKey("mfr.plastic.pipe");
 		providesPower = true;
 	}
 
@@ -87,7 +87,7 @@ public class BlockPlasticPipe extends BlockFactory implements IBlockInfo, IBaker
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 
 		return BlockRenderLayer.CUTOUT;
 	}

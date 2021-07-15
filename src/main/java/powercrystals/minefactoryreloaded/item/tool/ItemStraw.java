@@ -34,7 +34,7 @@ public class ItemStraw extends ItemFactoryTool {
 
 	public ItemStraw() {
 
-		setUnlocalizedName("mfr.straw");
+		setTranslationKey("mfr.straw");
 		setMaxStackSize(1);
 	}
 

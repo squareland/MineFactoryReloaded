@@ -74,7 +74,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 		if (stack.isEmpty())
 			return false;
 		if (slot == 0) {
-			return !stack.getEnchantmentTagList().hasNoTags() || stack.getItem().equals(Items.ENCHANTED_BOOK);
+			return !stack.getEnchantmentTagList().isEmpty() || stack.getItem().equals(Items.ENCHANTED_BOOK);
 		} else if (slot == 1) {
 			return stack.getItem().equals(Items.BOOK);
 		}
@@ -127,7 +127,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 					list.removeTag(enchIndex);
 					if (list.tagCount() == 0) {
 						stack.getTagCompound().removeTag("ench");
-						if (stack.getTagCompound().hasNoTags()) {
+						if (stack.getTagCompound().isEmpty()) {
 							stack.setTagCompound(null);
 						}
 					}
@@ -142,7 +142,7 @@ public class TileEntityAutoDisenchanter extends TileEntityFactoryPowered {
 					}
 				}
 
-				if (!_repeatDisenchant || (!_inventory.get(4).isEmpty() && _inventory.get(4).getEnchantmentTagList().hasNoTags())) {
+				if (!_repeatDisenchant || (!_inventory.get(4).isEmpty() && _inventory.get(4).getEnchantmentTagList().isEmpty())) {
 					_inventory.set(2, _inventory.get(4));
 					_inventory.set(4, ItemStack.EMPTY);
 				}

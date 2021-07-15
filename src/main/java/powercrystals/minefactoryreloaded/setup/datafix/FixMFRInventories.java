@@ -20,7 +20,7 @@ public class FixMFRInventories implements IDataWalker {
 	public NBTTagCompound process(IDataFixer fixer, NBTTagCompound tag, int versionIn) {
 
 		ResourceLocation id = new ResourceLocation(tag.getString("id"));
-		if (MFRProps.MOD_ID.equals(id.getResourceDomain())) {
+		if (MFRProps.MOD_ID.equals(id.getNamespace())) {
 			for (String s : INVENTORY_TAGS)
 				tag = DataFixesManager.processInventory(fixer, tag, versionIn, s);
 

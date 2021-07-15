@@ -63,7 +63,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 		}
 		if (slot == 0) return (item.isEnchantable(stack) || item.equals(Items.ENCHANTED_BOOK)) || item.isRepairable();
 		if (slot == 1 && !_inventory.get(0).isEmpty()) {
-			if (item.equals(Items.ENCHANTED_BOOK) && !ItemEnchantedBook.getEnchantments(stack).hasNoTags())
+			if (item.equals(Items.ENCHANTED_BOOK) && !ItemEnchantedBook.getEnchantments(stack).isEmpty())
 				return true;
 			return (item.equals(_inventory.get(0).getItem()) &&
 					stack.isItemStackDamageable() && item.isRepairable()) ||
@@ -221,7 +221,7 @@ public class TileEntityAutoAnvil extends TileEntityFactoryPowered {
 				}
 				{ // eclipse is indenting weird again
 					enchantingWithBook = addedItem.getItem().equals(Items.ENCHANTED_BOOK) &&
-							!ItemEnchantedBook.getEnchantments(addedItem).hasNoTags();
+							!ItemEnchantedBook.getEnchantments(addedItem).isEmpty();
 				}
 				int addedEnchants = 0;
 

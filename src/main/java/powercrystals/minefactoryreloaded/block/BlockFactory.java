@@ -233,7 +233,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		{
 			NBTTagCompound tag = new NBTTagCompound();
 			((TileEntityBase)te).writeItemNBT(tag);
-			if (!tag.hasNoTags())
+			if (!tag.isEmpty())
 				machine.setTagCompound(tag);
 		}
 
@@ -300,7 +300,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
 		if (world.isRemote)
 			return;
@@ -309,7 +309,7 @@ public class BlockFactory extends Block implements IRedNetConnection, IDismantle
 		if (te instanceof IEntityCollidable)
 			((IEntityCollidable)te).onEntityCollided(entity);
 
-		super.onEntityCollidedWithBlock(world, pos, state, entity);
+		super.onEntityCollision(world, pos, state, entity);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

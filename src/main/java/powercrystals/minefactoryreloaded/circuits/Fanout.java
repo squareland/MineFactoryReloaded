@@ -24,7 +24,7 @@ public class Fanout extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.fanout";
 	}

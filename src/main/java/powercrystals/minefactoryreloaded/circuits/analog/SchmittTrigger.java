@@ -42,7 +42,7 @@ public class SchmittTrigger implements IRedNetLogicCircuit
 	}
 
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.schmitttrigger";
 	}

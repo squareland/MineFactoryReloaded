@@ -22,7 +22,7 @@ public class ItemUpgrade extends ItemMulti implements IAugmentItem {
 
 		setNames(0, "lapis", "tin", "iron", "copper", "bronze", "silver", "gold", "quartz", "diamond", "platinum", "emerald");
 		setNames(NEGATIVE_START, "cobble");
-		setUnlocalizedName("mfr.upgrade.radius");
+		setTranslationKey("mfr.upgrade.radius");
 		setMaxStackSize(64);
 	}
 

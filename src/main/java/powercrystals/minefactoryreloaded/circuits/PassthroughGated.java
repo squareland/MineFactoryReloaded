@@ -24,7 +24,7 @@ public class PassthroughGated extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.passthrough.gated";
 	}

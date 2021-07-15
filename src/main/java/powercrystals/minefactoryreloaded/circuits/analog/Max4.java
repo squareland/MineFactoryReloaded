@@ -23,7 +23,7 @@ public class Max4 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.max.4";
 	}

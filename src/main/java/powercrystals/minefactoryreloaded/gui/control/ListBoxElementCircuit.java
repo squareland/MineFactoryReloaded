@@ -31,12 +31,12 @@ public class ListBoxElementCircuit implements IListBoxElement {
 	@Override
 	public int getWidth() {
 
-		return gui.getFontRenderer().getStringWidth(MFRUtil.localize(_circuit.getUnlocalizedName()));
+		return gui.getFontRenderer().getStringWidth(MFRUtil.localize(_circuit.getTranslationKey()));
 	}
 
 	@Override
 	public void draw(ElementListBox listBox, int x, int y, int backColor, int textColor) {
 
-		listBox.getFontRenderer().drawString(MFRUtil.localize(_circuit.getUnlocalizedName()), x, y, textColor);
+		listBox.getFontRenderer().drawString(MFRUtil.localize(_circuit.getTranslationKey()), x, y, textColor);
 	}
 }

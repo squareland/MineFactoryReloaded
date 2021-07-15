@@ -36,7 +36,7 @@ public class BlockRubberWood extends BlockLog implements IRedNetDecorative, IIni
 
 	public BlockRubberWood()
 	{
-		setUnlocalizedName("mfr.rubber_wood.log");
+		setTranslationKey("mfr.rubber_wood.log");
 		setCreativeTab(MFRCreativeTab.tab);
 		setHarvestLevel("axe", 0);
 		setDefaultState(blockState.getBaseState().withProperty(RUBBER_FILLED, true).withProperty(LOG_AXIS, EnumAxis.Y));

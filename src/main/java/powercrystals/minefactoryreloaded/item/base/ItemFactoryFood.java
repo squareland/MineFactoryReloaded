@@ -27,9 +27,9 @@ public class ItemFactoryFood extends ItemFood implements IInitializer, IModelReg
 	}
 
 	@Override
-	public Item setUnlocalizedName(String name) {
+	public Item setTranslationKey(String name) {
 
-		super.setUnlocalizedName(name);
+		super.setTranslationKey(name);
 		return this;
 	}
 
@@ -38,7 +38,7 @@ public class ItemFactoryFood extends ItemFood implements IInitializer, IModelReg
 
 		StringBuilder b = new StringBuilder(getClass().getName());
 		b.append('@').append(System.identityHashCode(this)).append('{');
-		b.append("l:").append(getUnlocalizedName());
+		b.append("l:").append(getTranslationKey());
 		b.append('}');
 		return b.toString();
 	}

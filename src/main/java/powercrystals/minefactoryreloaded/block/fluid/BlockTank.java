@@ -91,7 +91,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 	public BlockTank() {
 
 		super(0.5f);
-		setUnlocalizedName("mfr.tank");
+		setTranslationKey("mfr.tank");
 		setLightOpacity(1);
 	}
 
@@ -108,7 +108,7 @@ public class BlockTank extends BlockFactory implements IBlockInfo, IBakeryProvid
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 
 		return BlockRenderLayer.TRANSLUCENT;
 	}

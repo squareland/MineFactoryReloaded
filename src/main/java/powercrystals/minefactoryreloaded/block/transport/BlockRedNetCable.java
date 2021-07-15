@@ -180,7 +180,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	public BlockRedNetCable() {
 
 		super(0.8F);
-		setUnlocalizedName("mfr.cable.redstone"); // FIXME: relocalize to rednet_cable
+		setTranslationKey("mfr.cable.redstone"); // FIXME: relocalize to rednet_cable
 		providesPower = true;
 	}
 
@@ -205,7 +205,7 @@ public class BlockRedNetCable extends BlockFactory implements IRedNetNetworkCont
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 
 		return BlockRenderLayer.CUTOUT;
 	}

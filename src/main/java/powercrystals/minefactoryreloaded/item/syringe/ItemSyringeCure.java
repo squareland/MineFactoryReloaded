@@ -21,7 +21,7 @@ public class ItemSyringeCure extends ItemSyringe {
 
 	public ItemSyringeCure() {
 
-		setUnlocalizedName("mfr.syringe.cure");
+		setTranslationKey("mfr.syringe.cure");
 		setContainerItem(MFRThings.syringeEmptyItem);
 	}
 

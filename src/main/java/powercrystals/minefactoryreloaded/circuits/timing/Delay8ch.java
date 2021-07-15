@@ -66,7 +66,7 @@ public class Delay8ch extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.delay8ch";
 	}

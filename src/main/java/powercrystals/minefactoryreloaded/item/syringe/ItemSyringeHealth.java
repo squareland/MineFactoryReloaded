@@ -16,7 +16,7 @@ public class ItemSyringeHealth extends ItemSyringe
 
 	public ItemSyringeHealth() {
 
-		setUnlocalizedName("mfr.syringe.health");
+		setTranslationKey("mfr.syringe.health");
 		setContainerItem(MFRThings.syringeEmptyItem);
 	}
 	@Override

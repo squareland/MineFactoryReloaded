@@ -32,7 +32,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 
 	public ItemNeedleGun() {
 
-		setUnlocalizedName("mfr.needlegun"); // FIXME: relocalize to needle_gun
+		setTranslationKey("mfr.needlegun"); // FIXME: relocalize to needle_gun
 		setMaxStackSize(1);
 	}
 
@@ -44,7 +44,7 @@ public class ItemNeedleGun extends ItemFactoryGun {
 	@Override
 	protected boolean openGUI(@Nonnull ItemStack stack, World world, EntityPlayer player) {
 		NBTTagCompound tag = stack.getSubCompound("ammo");
-		boolean needsAmmo = tag == null || tag.hasNoTags() || player.isSneaking();
+		boolean needsAmmo = tag == null || tag.isEmpty() || player.isSneaking();
 		if (needsAmmo & !world.isRemote)
 			player.openGui(MineFactoryReloadedCore.instance(), 1, world, 0, 0, 0);
 

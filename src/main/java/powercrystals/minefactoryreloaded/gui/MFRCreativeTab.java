@@ -19,13 +19,13 @@ public class MFRCreativeTab extends CreativeTabs
 
 	@Nonnull
 	@Override
-	public ItemStack getIconItemStack()
+	public ItemStack getIcon()
 	{
 		return new ItemStack(MFRThings.conveyorBlock, 1, 16);
 	}
 
 	@Override
-	public String getTranslatedTabLabel()
+	public String getTranslationKey()
 	{
 		return this.getTabLabel();
 	}
@@ -33,7 +33,7 @@ public class MFRCreativeTab extends CreativeTabs
 	@Nonnull
 	@Override
 	@SideOnly(Side.CLIENT)
-	public ItemStack getTabIconItem()
+	public ItemStack createIcon()
 	{
 		return ItemStack.EMPTY;
 	}

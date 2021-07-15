@@ -42,7 +42,7 @@ public class LatchSR implements IRedNetLogicCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.latch.sr";
 	}

@@ -30,7 +30,7 @@ public class DeMux4 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.demux.4";
 	}

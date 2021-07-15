@@ -460,7 +460,7 @@ public class TileEntityRedNetLogic extends TileEntityBase implements IRotatableT
 
 			NBTTagCompound circuitState = new NBTTagCompound();
 			_circuits[c].writeToNBT(circuitState);
-			if (!circuitState.hasNoTags())
+			if (!circuitState.isEmpty())
 				circuit.setTag("state", circuitState);
 
 			circuits.appendTag(circuit);

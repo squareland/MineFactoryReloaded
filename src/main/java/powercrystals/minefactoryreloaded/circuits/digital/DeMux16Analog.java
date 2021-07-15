@@ -28,7 +28,7 @@ public class DeMux16Analog extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.demux.16.analog";
 	}

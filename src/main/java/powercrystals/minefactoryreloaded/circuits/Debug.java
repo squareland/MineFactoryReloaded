@@ -16,7 +16,7 @@ public class Debug extends Noop {
 	}
 
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "######### Debug #########";
 	}

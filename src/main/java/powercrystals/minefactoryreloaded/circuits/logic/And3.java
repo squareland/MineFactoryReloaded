@@ -27,7 +27,7 @@ public class And3 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.and.3";
 	}

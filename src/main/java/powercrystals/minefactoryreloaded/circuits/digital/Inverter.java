@@ -30,7 +30,7 @@ public class Inverter extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.inverter";
 	}

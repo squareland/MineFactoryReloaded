@@ -668,9 +668,9 @@ public abstract class MFRRegistry {
 
 		Block block = blocks.get(remaps.get(id.toString()));
 		if (block == null)
-			block = blocks.get(id.getResourcePath());
+			block = blocks.get(id.getPath());
 		if (block == null) {
-			String name = id.getResourcePath();
+			String name = id.getPath();
 			name = remapInternal(name.split("[._]"), 0, name.length());
 			if (name != null)
 				block = blocks.get(name);
@@ -683,9 +683,9 @@ public abstract class MFRRegistry {
 
 		Item item = items.get(remaps.get(id.toString()));
 		if (item == null)
-			item = items.get(id.getResourcePath());
+			item = items.get(id.getPath());
 		if (item == null) {
-			String name = id.getResourcePath();
+			String name = id.getPath();
 			name = remapInternal(name.split("[._]"), 0, name.length());
 			if (name != null)
 				item = items.get(name);
@@ -695,7 +695,7 @@ public abstract class MFRRegistry {
 
 	public static void registerBlock(Block block, ItemBlock itemBlock) {
 
-		String name = remapName(block.getUnlocalizedName());
+		String name = remapName(block.getTranslationKey());
 		blocks.put(name, block.setRegistryName(MFRProps.MOD_ID, name));
 		if (itemBlock != null) {
 			items.put(name, itemBlock.setRegistryName(MFRProps.MOD_ID, name));
@@ -704,13 +704,13 @@ public abstract class MFRRegistry {
 	
 	public static void registerItem(Item item) {
 
-		String name = remapName(item.getUnlocalizedName());
+		String name = remapName(item.getTranslationKey());
 		items.put(name, item.setRegistryName(MFRProps.MOD_ID, name));
 	}
 
 	public static Item getItemBlock(Block block) {
 
-		return items.get(block.getRegistryName().getResourcePath());
+		return items.get(block.getRegistryName().getPath());
 	}
 
 	@Mod.EventBusSubscriber(modid = MFRProps.MOD_ID)
@@ -741,7 +741,7 @@ public abstract class MFRRegistry {
 				Block block = MFRRegistry.remapBlock(mapping.key);
 				if (block != null)
 					mapping.remap(block);
-				else if ("tile.null".equals(mapping.key.getResourcePath()))
+				else if ("tile.null".equals(mapping.key.getPath()))
 					mapping.remap(fakeLaserBlock);
 				else
 					mapping.warn();

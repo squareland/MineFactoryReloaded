@@ -39,7 +39,7 @@ public class RandomizerAnalog extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.randomizer.analog";
 	}

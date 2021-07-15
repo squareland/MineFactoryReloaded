@@ -51,7 +51,7 @@ public class Delay extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.delay";
 	}

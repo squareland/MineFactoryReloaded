@@ -34,7 +34,7 @@ public class ItemBlockFactoryMachine extends ItemBlockFactory implements IEnergy
 	}
 
 	@Override
-	public String getUnlocalizedName(@Nonnull ItemStack stack) {
+	public String getTranslationKey(@Nonnull ItemStack stack) {
 
 		return _names[Math.min(stack.getItemDamage(), _names.length - 1)];
 	}

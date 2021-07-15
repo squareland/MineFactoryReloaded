@@ -30,20 +30,20 @@ public class ItemSyringeLiquid extends ItemSyringe
 
 	public ItemSyringeLiquid() {
 
-		setUnlocalizedName("mfr.syringe.empty");
+		setTranslationKey("mfr.syringe.empty");
 	}
 
 	@Override
-	public String getUnlocalizedName(@Nonnull ItemStack stack)
+	public String getTranslationKey(@Nonnull ItemStack stack)
 	{
 		if (getFluidHandler(stack).getTankProperties()[0].getContents() != null)
-			return getUnlocalizedName() + (_prefix ? ".prefix" : ".suffix");
-		return getUnlocalizedName();
+			return getTranslationKey() + (_prefix ? ".prefix" : ".suffix");
+		return getTranslationKey();
 	}
 
 	public String getLocalizedName(String str)
 	{
-		String name = getUnlocalizedName() + "." + str;
+		String name = getTranslationKey() + "." + str;
 		if (I18n.canTranslate(name))
 			return I18n.translateToLocal(name);
 		return null;
@@ -194,7 +194,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
 			FluidStack fluid = null;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
+					(fluidTag = tag.getCompoundTag("fluid")).isEmpty() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				fillAmount = Math.min(capacity, resource.amount);
 			if (fluid == null)
@@ -230,7 +230,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag;
 			FluidStack fluid;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
+					(fluidTag = tag.getCompoundTag("fluid")).isEmpty() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null ||
 					!(fluid.getFluid().equals(resource.getFluid())))
 				return null;
@@ -245,7 +245,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 			NBTTagCompound tag = stack.getTagCompound(), fluidTag;
 			FluidStack fluid;
 			if (tag == null || !tag.hasKey("fluid") ||
-					(fluidTag = tag.getCompoundTag("fluid")).hasNoTags() ||
+					(fluidTag = tag.getCompoundTag("fluid")).isEmpty() ||
 					(fluid = FluidStack.loadFluidStackFromNBT(fluidTag)) == null)
 				return null;
 
@@ -259,7 +259,7 @@ public class ItemSyringeLiquid extends ItemSyringe
 				tag.removeTag("fluid");
 				tag.removeTag("uniqifier");
 				tag.removeTag("fluidName");
-				if (tag.hasNoTags())
+				if (tag.isEmpty())
 					stack.setTagCompound(null);
 				fluid.amount -= drainAmount;
 				if (fluid.amount > 0)

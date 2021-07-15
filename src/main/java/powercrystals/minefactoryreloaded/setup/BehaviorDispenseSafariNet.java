@@ -22,7 +22,7 @@ public class BehaviorDispenseSafariNet extends BehaviorDefaultDispenseItem {
 		EnumFacing dispenserFacing = dispenser.getBlockState().getValue(BlockDispenser.FACING);
 		EntitySafariNet proj = new EntitySafariNet(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ(),
 				stack.splitStack(1));
-		proj.shoot(dispenserFacing.getFrontOffsetX(), dispenserFacing.getFrontOffsetY() + 0.1, dispenserFacing.getFrontOffsetZ(),
+		proj.shoot(dispenserFacing.getXOffset(), dispenserFacing.getYOffset() + 0.1, dispenserFacing.getZOffset(),
 				1.1F, 6.0F);
 		world.spawnEntity(proj);
 		return stack;

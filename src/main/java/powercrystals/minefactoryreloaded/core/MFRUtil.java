@@ -274,7 +274,7 @@ public class MFRUtil {
 	public static TileEntity getTile(IBlockAccess world, BlockPos pos) {
 
 		if (world instanceof World) {
-			return ((World) world).getChunkFromBlockCoords(pos).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK);
+			return ((World) world).getChunk(pos).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK);
 		}
 		return world.getTileEntity(pos);
 	}

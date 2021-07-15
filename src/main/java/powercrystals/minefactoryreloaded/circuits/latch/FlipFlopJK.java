@@ -52,7 +52,7 @@ public class FlipFlopJK implements IRedNetLogicCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.flipflop.jk";
 	}

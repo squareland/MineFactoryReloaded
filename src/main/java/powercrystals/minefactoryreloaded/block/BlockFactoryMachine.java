@@ -63,7 +63,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 	public BlockFactoryMachine(int index) {
 
 		super(1.5F);
-		setUnlocalizedName("mfr.machine." + index);
+		setTranslationKey("mfr.machine." + index);
 		_mfrMachineBlockIndex = index;
 		providesPower = true;
 		setHarvestLevel("wrench", 0);
@@ -98,7 +98,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 		if (world.getTileEntity(pos) instanceof TileEntityFactory) {
 			TileEntityFactory te = (TileEntityFactory) world.getTileEntity(pos);
 
-			state = state.withProperty(FACING, EnumFacing.getHorizontal(te.getDirectionFacing().getHorizontalIndex()))
+			state = state.withProperty(FACING, EnumFacing.byHorizontalIndex(te.getDirectionFacing().getHorizontalIndex()))
 					.withProperty(CB, CoreProps.enableColorBlindTextures);
 
 			if (te instanceof TileEntityFactoryInventory) {
@@ -200,7 +200,7 @@ public class BlockFactoryMachine extends BlockFactory implements IRedNetOmniNode
 
 			NBTTagCompound tag = new NBTTagCompound();
 			((TileEntityBase) te).writeItemNBT(tag);
-			if (!tag.hasNoTags())
+			if (!tag.isEmpty())
 				machine.setTagCompound(tag);
 		}
 		world.setBlockToAir(pos);

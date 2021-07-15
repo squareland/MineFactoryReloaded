@@ -27,7 +27,7 @@ public class Nand4 extends StatelessCircuit
 	}
 	
 	@Override
-	public String getUnlocalizedName()
+	public String getTranslationKey()
 	{
 		return "circuit.mfr.nand.4";
 	}
