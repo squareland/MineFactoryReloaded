@@ -8,7 +8,7 @@ tile.mfr.machine.vet.name=Ветеринарная станция
 tile.mfr.machine.itemcollector.name=Сборщик предметов
 tile.mfr.machine.blockbreaker.name=Разрушитель блоков
 tile.mfr.machine.weathercollector.name=Погодный коллектор
-tile.mfr.machine.sludgeboiler.name=Перерабатывающий котёл
+tile.mfr.machine.sludgeboiler.name=Шламовый бойлер
 tile.mfr.machine.sewer.name=Коллектор
 tile.mfr.machine.composter.name=Компостер
 tile.mfr.machine.breeder.name=Селекционер
@@ -260,8 +260,8 @@ item.mfr.rednet.meter.info.name=RedNet мультиметр
 item.mfr.rednet.meter.debug.name=Предмет отладки
 item.mfr.rednet.memorycard.name=Карта памяти PRC
 
-item.mfr.meat.ingot.raw.name=Сырой слиток мяса
-item.mfr.meat.ingot.cooked.name=Приготовленный слиток мяса
+item.mfr.meat.ingot.raw.name=Сырой мясной брикет
+item.mfr.meat.ingot.cooked.name=Приготовленный мясной брикет
 item.mfr.meat.nugget.raw.name=Кусочек сырого мяса
 item.mfr.meat.nugget.cooked.name=Кусочек приготовленного мяса
 
