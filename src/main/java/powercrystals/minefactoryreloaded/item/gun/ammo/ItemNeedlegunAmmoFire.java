@@ -5,6 +5,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import powercrystals.minefactoryreloaded.render.ModelHelper;
@@ -21,8 +27,10 @@ public class ItemNeedlegunAmmoFire extends ItemNeedlegunAmmoBlock {
 
 	@Override
 	public boolean onHitEntity(@Nonnull ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
-		hit.setFire(10);
-		super.onHitEntity(stack, owner, hit, distance);
+		if (!MinecraftForge.EVENT_BUS.post(new AttackEntityEvent(owner, hit))) {
+			hit.setFire(10);
+			super.onHitEntity(stack, owner, hit, distance);
+		}
 		return true;
 	}
 

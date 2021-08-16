@@ -4,13 +4,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.BlockSnapshot;
+import net.minecraftforge.event.world.BlockEvent;
 
 import javax.annotation.Nonnull;
 
@@ -30,7 +38,12 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 
 	@Override
 	public void onHitBlock(@Nonnull ItemStack stack, EntityPlayer owner, World world, BlockPos pos, EnumFacing side, double distance) {
-		placeBlockAt(world, pos.offset(side), distance);
+		BlockPos offPos = pos.offset(side);
+		net.minecraftforge.common.util.BlockSnapshot snapshot = net.minecraftforge.common.util.BlockSnapshot.getBlockSnapshot(world, offPos);
+		placeBlockAt(world, offPos, distance);
+		if (net.minecraftforge.event.ForgeEventFactory.onPlayerBlockPlace(owner, snapshot, net.minecraft.util.EnumFacing.UP, EnumHand.MAIN_HAND).isCanceled()) {
+			snapshot.restore(true, false);
+		}
 	}
 
 	protected Vec3d calculatePlacement(Entity hit) {
@@ -46,8 +59,13 @@ public class ItemNeedlegunAmmoBlock extends ItemNeedlegunAmmoStandard {
 	public boolean onHitEntity(@Nonnull ItemStack stack, EntityPlayer owner, Entity hit, double distance) {
 		super.onHitEntity(stack, owner, hit, distance);
 		Vec3d placement = calculatePlacement(hit);
-		placeBlockAt(hit.world, new BlockPos((int)placement.x, (int)placement.y, (int)placement.z),
-				distance);
+		BlockPos pos = new BlockPos((int) placement.x, (int) placement.y, (int) placement.z);
+
+		net.minecraftforge.common.util.BlockSnapshot snapshot = net.minecraftforge.common.util.BlockSnapshot.getBlockSnapshot(hit.world, pos);
+		placeBlockAt(hit.world, pos, distance);
+		if (net.minecraftforge.event.ForgeEventFactory.onPlayerBlockPlace(owner, snapshot, net.minecraft.util.EnumFacing.UP, EnumHand.MAIN_HAND).isCanceled()) {
+			snapshot.restore(true, false);
+		}
 		return true;
 	}
 
