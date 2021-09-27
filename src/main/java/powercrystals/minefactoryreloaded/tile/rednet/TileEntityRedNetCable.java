@@ -219,7 +219,7 @@ public class TileEntityRedNetCable extends TileEntityBase implements INode, ITra
 			if (world.isBlockLoaded(offsetPos) && !world.getBlockState(offsetPos).getBlock().equals(rednetCableBlock))
 				isRSNode |= _connectionState[i].isConnected;
 		}
-		if (lastNode != isRSNode)
+		if (lastNode != isRSNode && _network != null)
 			_network.addConduit(this);
 		markChunkDirty();
 		if (dirty) {
