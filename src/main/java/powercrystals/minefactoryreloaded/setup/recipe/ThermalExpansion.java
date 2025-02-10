@@ -680,7 +680,7 @@ public class ThermalExpansion implements IMFRRecipeSet {
 				'T', "stickWood"
 		);
 
-		spyglass.addShaped(
+		/*spyglass.addShaped(
 				"GLG",
 				"PLP",
 				" S ",
@@ -688,7 +688,7 @@ public class ThermalExpansion implements IMFRRecipeSet {
 				'L', "blockGlass",
 				'P', "sheetPlastic",
 				'S', "stickWood"
-		);
+		);*/
 
 		porta_spawner.addShaped(
 				"GLG",
