@@ -43,7 +43,7 @@
 	<property name="mcp.stsh" value="${mcp.dir}/mcp_snapshot/${mcp.mapping}"/>
 	<property name="forge.jar" value="${forge.stsh}/forgeSrc-${forge.version}.jar"/>
 	<property name="reobf.cmd" value="${download.dir}/bon${bon.verison}.jar"/>
-	<property name="forge.url" value="http://files.minecraftforge.net/maven/net/minecraftforge/forge/${forge.version}/forge-${forge.version}-mdk.zip"/>
+	<property name="forge.url" value="https://files.minecraftforge.net/maven/net/minecraftforge/forge/${forge.version}/forge-${forge.version}-mdk.zip"/>
 
 	<!-- Classpaths -->
 	<path id="compiledeps"/>
@@ -100,7 +100,7 @@
 			<remoteRepository id="covers" url="http://maven.covers1624.net/"/>
 			<remoteRepository id="cc" url="http://chickenbones.net/maven/"/>
 			<remoteRepository id="prog" url="http://dvs1.progwml6.com/files/maven"/>
-			<remoteRepository id="ic2" url="http://maven.ic2.player.to/"/>
+			<remoteRepository id="ic2" url="https://maven.ic2.player.to/"/>
 
 			<!--<remoteRepository id="curseforge" url="https://minecraft.curseforge.com/api/maven/${curse.maven.token}/">
 				<releases checksumpolicy="ignore"/>
