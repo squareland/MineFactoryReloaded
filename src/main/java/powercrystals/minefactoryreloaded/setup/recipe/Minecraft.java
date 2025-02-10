@@ -581,7 +581,7 @@ public class Minecraft implements IMFRRecipeSet {
 
 	private void registerMachines() {
 
-		Planter.addShaped(
+		/*Planter.addShaped(
 				"GGG",
 				"CPC",
 				" M ",
@@ -1051,7 +1051,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'B', IRON_BARS,
 				'U', BUCKET,
 				'M', machine_block
-		);
+		);*/
 
 		MobRouter.addShaped(
 				"GGG",
@@ -2262,16 +2262,16 @@ public class Minecraft implements IMFRRecipeSet {
 				plastic_pipe
 		);
 
-		rednet_cable_energy_single.addShapeless(
+		/*rednet_cable_energy_single.addShapeless(
 				"nuggetGold",
 				"nuggetGold",
 				"nuggetGold",
 				"dustRedstone",
 				"dustRedstone",
 				rednet_cable
-		);
+		);*/
 
-		rednet_cable_energy_multi.addShapeless(
+		/*rednet_cable_energy_multi.addShapeless(
 				"ingotGold",
 				"ingotGold",
 				"blockRedstone",
@@ -2281,7 +2281,7 @@ public class Minecraft implements IMFRRecipeSet {
 				rednet_cable,
 				rednet_cable,
 				rednet_cable
-		);
+		);*/
 
 		rednet_controller_housing.addShaped(
 				"PRP",
@@ -2344,7 +2344,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'R', "dustRedstone"
 		);
 
-		rednet_multimeter.addShaped(
+		/*rednet_multimeter.addShaped(
 				"RGR",
 				"IMI",
 				"PPP",
@@ -2353,7 +2353,7 @@ public class Minecraft implements IMFRRecipeSet {
 				'I', "ingotIron",
 				'R', "dustRedstone",
 				'M', rednet_meter
-		);
+		);*/
 
 		rednet_memorycard.addShaped(
 				"GGG",
