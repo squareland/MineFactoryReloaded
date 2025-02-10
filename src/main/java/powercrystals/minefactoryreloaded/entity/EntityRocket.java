@@ -146,14 +146,15 @@ public class EntityRocket extends Entity
 			
 			if(hit != null && !world.isRemote)
 			{
+				Entity exploder = owner == null ? this : owner;
 				if(hit.entityHit != null)
 				{
-					world.newExplosion(this, hit.entityHit.posX, hit.entityHit.posY,
+					world.newExplosion(exploder, hit.entityHit.posX, hit.entityHit.posY,
 							hit.entityHit.posZ, 4.0F, true, true);
 				}
 				else
 				{ // spawn explosion at nextPos x/y/z?
-					world.newExplosion(this, hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ(), 4.0F, true, true);
+					world.newExplosion(exploder, hit.getBlockPos().getX(), hit.getBlockPos().getY(), hit.getBlockPos().getZ(), 4.0F, true, true);
 				}
 				setDead();
 			}
