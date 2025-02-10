@@ -130,7 +130,7 @@ public class RecipeManager {
 			recipes.iterator().forEachRemaining(v -> v.finalizing = true);
 			VANILLA.registerRecipes(); // catch missed recipes
 		}
-		recipes.iterator().forEachRemaining(RecipeContainer::register);
+		recipes.forEach(RecipeContainer::register);
 	}
 
 	private static class RecipeSetContainer {
